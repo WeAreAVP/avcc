@@ -5,3 +5,7 @@ application_front:
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+_welcome:
+    pattern:  /
+    defaults: { _controller: FOSUserBundle:Security:login} 
