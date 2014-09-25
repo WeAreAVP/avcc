@@ -9,4 +9,6 @@
 /vendor/
 /bin/
 /composer.phar
+nbproject
 /nbproject/private/
+.DS_Store
