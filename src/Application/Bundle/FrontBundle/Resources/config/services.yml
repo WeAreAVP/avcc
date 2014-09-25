@@ -1,0 +1,6 @@
+## YAML Template.
+services:
+    application_user.registration.form.type:
+        class: Application\Bundle\FrontBundle\Form\Type\RegistrationFormType
+        tags:
+            - { name: form.type, alias: application_user_registration }

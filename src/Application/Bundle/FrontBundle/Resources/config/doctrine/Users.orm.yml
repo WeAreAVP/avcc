@@ -1,0 +1,13 @@
+# src/Application/Bundle/FrontBundle/Resources/config/doctrine/Users.orm.yml
+Application\Bundle\FrontBundle\Entity\Users:
+    type:  entity
+    table: users
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+          type: string
+          length: 50
