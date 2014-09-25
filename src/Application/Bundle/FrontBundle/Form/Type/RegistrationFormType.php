@@ -19,8 +19,8 @@ class RegistrationFormType extends AbstractType
             ->add('plainPassword', 'repeated', array(
                 'type' => 'password',
                 'options' => array('translation_domain' => 'FOSUserBundle'),
-                'first_options' => array('attr' => array('class' => 'form-control', 'placeholder' => 'Password')),
-                'second_options' => array('label' => ' ', 'attr' => array('class' => 'form-control', 'placeholder' => 'Confirm Password')),
+                'first_options' => array('label' => '', 'attr' => array('class' => 'form-control', 'placeholder' => 'Password'),'label_attr' => array('style' => 'visibility:hidden;display:none')),
+                'second_options' => array('label' => ' ', 'attr' => array('class' => 'form-control', 'placeholder' => 'Confirm Password'),'label_attr' => array('style' => 'visibility:hidden;display:none')),
                 'invalid_message' => 'fos_user.password.mismatch',
                 )
         );

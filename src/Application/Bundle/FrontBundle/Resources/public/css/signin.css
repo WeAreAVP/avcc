@@ -42,3 +42,6 @@ body {
   padding: 15px;
   margin: 0 auto;
 }
+.form-control{
+    margin-bottom: 10px!important;
+}
