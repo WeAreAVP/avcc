@@ -10,7 +10,7 @@ body {
 }
 .form-signin .form-signin-heading, .form-registration .form-signin-heading,
 .form-signin .checkbox {
-    margin-bottom: 0px;
+    margin-bottom: 6px;
 }
 .form-signin .checkbox {
     font-weight: normal;
@@ -44,4 +44,7 @@ body {
 }
 .form-control{
     margin-bottom: 10px!important;
+}
+.remember-me{
+    margin-left:22px;
 }
