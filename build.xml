@@ -7,14 +7,14 @@
 		<pathelement path="${basedir}/src/Application/Bundle/FrontBundle/Controller" />
 		<pathelement path="${basedir}/src/Application/Bundle/FrontBundle/Entity" />
 
-        
+
 	</path>
-   
-	<pathconvert targetos="unix" property="filesProcess.processed" refid="filesProcess" pathsep=" " />           
-	<pathconvert targetos="unix" property="filesProcess.processed.comma" refid="filesProcess" pathsep="," />           
+
+	<pathconvert targetos="unix" property="filesProcess.processed" refid="filesProcess" pathsep=" " />
+	<pathconvert targetos="unix" property="filesProcess.processed.comma" refid="filesProcess" pathsep="," />
 
 	<target name="clean" description="Clean up and create artifact directories">
-     
+
 		<delete dir="${basedir}/build/api"/>
 		<delete dir="${basedir}/build/code-browser"/>
 		<delete dir="${basedir}/build/coverage"/>
@@ -31,7 +31,7 @@
 
 
 	<target name="parallelTasks" description="Run the pdepend, phpmd, phpcpd, phpcs, phpdoc and phploc tasks in parallel using a maximum of 2 threads.">
-     
+
 		<parallel threadCount="2">
 			<sequential>
 				<antcall target="pdepend"/>
@@ -101,6 +101,6 @@
 	</target>
 
 	<target name="build" depends="clean,parallelTasks,phpcb">
-     
+
 	</target>
 </project>

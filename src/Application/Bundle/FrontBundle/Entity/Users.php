@@ -36,7 +36,6 @@ class Users extends BaseUser
      */
     protected $name;
 
-   
     public function __construct()
     {
         parent::__construct();
@@ -54,12 +53,12 @@ class Users extends BaseUser
 
     /**
      * Get Name
-     * 
+     *
      * @return string
      */
     public function getName()
     {
         return $this->name;
     }
-    
+
 }

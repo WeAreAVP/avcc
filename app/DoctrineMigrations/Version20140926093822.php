@@ -14,7 +14,7 @@ class Version20140926093822 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('ALTER TABLE users ADD test_field VARCHAR(50) NOT NULL');
     }
 
@@ -22,7 +22,7 @@ class Version20140926093822 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('ALTER TABLE users DROP test_field');
     }
 }

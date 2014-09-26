@@ -2,10 +2,15 @@ application_front:
     resource: "@ApplicationFrontBundle/Controller/"
     type:     annotation
     prefix:   /
+    defaults: { _controller: FOSUserBundle:Security:login}
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
 _welcome:
     pattern:  /
-    defaults: { _controller: FOSUserBundle:Security:login} 
+    defaults: { _controller: ApplicationFrontBundle:Default:index}
+    
+_profile:
+    pattern:  /profile
+    defaults: { _controller: FOSUserBundle:Profile:show}

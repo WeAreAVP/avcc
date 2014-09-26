@@ -14,5 +14,5 @@
             <tag name="form.type" alias="application_user_registration" />
         </service>
     </services>
-   
+
 </container>

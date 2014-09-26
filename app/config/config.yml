@@ -72,7 +72,7 @@ fos_user:
     registration:
         form:
             type: application_user_registration
-            
+
 doctrine_migrations:
     dir_name: %kernel.root_dir%/DoctrineMigrations
     namespace: Application\Migrations
