@@ -26,10 +26,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-//        if (false === $this->get('security.context')->isGranted('ROLE_USER'))
-//        {
-//            throw new AccessDeniedException();
-//        }
         $user = $this->container->get('security.context')->getToken()->getUser();
         if ( ! is_object($user) || ! $user instanceof UserInterface)
         {
