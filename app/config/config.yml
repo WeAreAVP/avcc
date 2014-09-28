@@ -68,7 +68,7 @@ swiftmailer:
     #spool:     { type: memory }
 
 fos_user:
-    db_driver: orm 
+    db_driver: orm
     firewall_name: main
     user_class: Application\Bundle\FrontBundle\Entity\Users
     registration:
@@ -78,7 +78,7 @@ fos_user:
             enabled:    true
     from_email:
         address:        noreply@avpreserve.com
-        sender_name:    AVCC AVPreserve 
+        sender_name:    AVCC AVPreserve
 
 doctrine_migrations:
     dir_name: %kernel.root_dir%/DoctrineMigrations

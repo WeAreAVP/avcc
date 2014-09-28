@@ -10,7 +10,7 @@ fos_user:
 _welcome:
     pattern:  /
     defaults: { _controller: ApplicationFrontBundle:Default:index}
-    
+
 _profile:
     pattern:  /profile
     defaults: { _controller: FOSUserBundle:Profile:show}
