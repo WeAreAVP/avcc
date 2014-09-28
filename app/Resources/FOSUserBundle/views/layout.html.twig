@@ -11,29 +11,29 @@
         <title>AVCC</title>
 
         <!-- Bootstrap core CSS -->
-    {% block stylesheets %}
-        <link href="{{ asset('css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
-        <!-- Custom styles for this template -->
-        <link href="{{ asset('bundles/applicationfront/css/style.css') }}" rel="stylesheet">
-{% endblock %}
+		{% block stylesheets %}
+			<link href="{{ asset('css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+			<!-- Custom styles for this template -->
+			<link href="{{ asset('bundles/applicationfront/css/style.css') }}" rel="stylesheet">
+		{% endblock %}
 
 
-{% block javascripts %}
-        <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-        <!--[if lt IE 9]><script src="{{ asset('ie8-responsive-file-warning.js') }}"></script><![endif]-->
-        <script src="{{ asset('js/ie-emulation-modes-warning.js') }}"></script>
+		{% block javascripts %}
+			<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+			<!--[if lt IE 9]><script src="{{ asset('ie8-responsive-file-warning.js') }}"></script><![endif]-->
+			<script src="{{ asset('js/ie-emulation-modes-warning.js') }}"></script>
 
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-{% endblock %}
+			<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+			<!--[if lt IE 9]>
+			  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+			  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+			<![endif]-->
+		{% endblock %}
     </head>
 
     <body>
         <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
                         <span class="sr-only">Toggle navigation</span>
@@ -45,20 +45,20 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-{#                        {{ dump(app.user.username) }}#}
+						
                         {% if app.user %}
-                        <li><a href="{{ path('fos_user_security_logout') }}">Log Out</a></li>
-                        {% else %}
-                        <li><a href="{{ path('fos_user_security_login') }}">Log In</a></li>
-                        <li><a href="{{ path('fos_user_registration_register') }}">Sign Up</a></li>
-                        {% endif %}
+							<li><a href="{{ path('fos_user_security_logout') }}">Log Out</a></li>
+							{% else %}
+							<li><a href="{{ path('fos_user_security_login') }}">Log In</a></li>
+							<li><a href="{{ path('fos_user_registration_register') }}">Sign Up</a></li>
+							{% endif %}
                     </ul>
                 </div>
             </div>
         </div>
 
         <div class="container">
-             {% block fos_user_content %}
+			{% block fos_user_content %}
             {% endblock fos_user_content %}
         </div> <!-- /container -->
 
