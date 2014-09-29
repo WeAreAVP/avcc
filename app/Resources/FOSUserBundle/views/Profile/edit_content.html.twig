@@ -35,7 +35,10 @@
     <br />
     <div class="form-group form-group-sm">
         <label class="col-sm-2 control-label no-left-padding"></label>
-        <div class="col-sm-4">
+        <div class="col-sm-2">
+            <button class="btn btn-m btn-default btn-block"  type="button" id="_submit" name="_submit" onclick="window.location = '{{ path('fos_user_profile_show') }}'">Cancel</button>
+        </div>
+        <div class="col-sm-2">            
             <button class="btn btn-m btn-primary btn-block"  type="submit" id="_submit" name="_submit">{{ 'profile.edit.submit'|trans }}</button>
         </div>    
     </div>

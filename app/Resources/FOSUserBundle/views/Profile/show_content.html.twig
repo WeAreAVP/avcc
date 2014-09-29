@@ -22,7 +22,10 @@
         </div>
         <div class="form-group form-group-sm">
             <label class="col-sm-2 control-label no-left-padding"></label>
-            <div class="col-sm-4">
+            <div class="col-sm-2">
+                <button class="btn btn-m btn-default btn-block"  type="button" id="_submit" name="_submit" onclick="window.location = '{{ path('_welcome') }}'">Cancel</button>
+            </div>
+            <div class="col-sm-2">                
                 <button class="btn btn-m btn-primary btn-block"  type="button" id="_submit" name="_submit" onclick="window.location = '{{ path('fos_user_profile_edit') }}'">Edit</button>
             </div>    
         </div>
