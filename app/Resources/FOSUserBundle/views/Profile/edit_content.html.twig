@@ -4,21 +4,22 @@
     <h3 class="form-signin-heading">Edit Profile</h3>
     {{ form_start(form) }}
     {{ form_errors(form) }}
-    <div class="form-group form-group-sm">
-        <label class="col-sm-2 control-label no-left-padding">{{ 'profile.show.username'|trans }}</label>
-        <div class="col-sm-4">
-            {{ form_widget(form.username, {attr: {class:'form-control'} }) }}
-            {% for errorItem in form.username.vars.errors %}
-                <span class="has-error text-danger" for="{{ form.username.vars.id }}">{{ errorItem.message }}</span>
-            {% endfor %}
-        </div>
-    </div>
+     
     <div class="form-group form-group-sm">
         <label class="col-sm-2 control-label no-left-padding">{{ 'profile.show.email'|trans }}</label>
         <div class="col-sm-4">
             {{ form_widget(form.email, {attr: {class:'form-control'} }) }}
             {% for errorItem in form.email.vars.errors %}
-                <span class="has-error text-danger" for="{{ form.email.vars.id }}">{{ errorItem.message }}</span>
+            <span class="has-error text-danger" for="{{ form.email.vars.id }}">{{ errorItem.message }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="form-group form-group-sm">
+        <label class="col-sm-2 control-label no-left-padding">{{ 'profile.show.username'|trans }}</label>
+        <div class="col-sm-4">
+            {{ form_widget(form.username, {attr: {class:'form-control'} }) }}
+            {% for errorItem in form.username.vars.errors %}
+            <span class="has-error text-danger" for="{{ form.username.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
         </div>
     </div>
@@ -27,7 +28,7 @@
         <div class="col-sm-4">
             {{ form_widget(form.current_password, {attr: {class:'form-control'} }) }}
             {% for errorItem in form.current_password.vars.errors %}
-                <span class="has-error text-danger" for="{{ form.current_password.vars.id }}">{{ errorItem.message }}</span>
+            <span class="has-error text-danger" for="{{ form.current_password.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
         </div>
     </div>
