@@ -27,7 +27,7 @@ class DefaultController extends Controller
             $this->redirect($this->generateUrl("application_front"));
         }
 
-        return $this->render('ApplicationFrontBundle:Default:index.html.twig', array('name' => 'me'));
+        return $this->render('ApplicationFrontBundle:Default:index.html.twig', array('name' => $user->getUsername()));
     }
 
 }
