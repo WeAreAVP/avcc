@@ -1,26 +1,30 @@
 {% trans_default_domain 'FOSUserBundle' %}
-<div class="navbar-collapse collapse">
-    <ul class="nav navbar-nav navbar-left">
-        <li><a href="{{ path('fos_user_profile_edit') }}">Edit</a></li>
-    </ul>
-</div>
 <div class="fos_user_user_show">
-    <div class="form-group">
-        <label class="col-sm-2 control-label">{{ 'profile.show.username'|trans }}</label>
-        <div class="col-sm-10">
-            <p class="form-control-static">{{ user.username }}</p>
+    <form action="#" method="POST" class="form-horizontal">   
+        <h3 class="form-signin-heading">Profile</h3>
+        <div class="form-group form-group-sm">
+            <label class="col-sm-2 control-label">{{ 'profile.show.username'|trans }}</label>
+            <div class="col-sm-10">
+                <p class="form-control-static">{{ user.username }}</p>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label">{{ 'profile.show.name'|trans }}</label>
-        <div class="col-sm-10">
-            <p class="form-control-static">{{ user.name }}</p>
+        <div class="form-group form-group-sm">
+            <label class="col-sm-2 control-label">{{ 'profile.show.name'|trans }}</label>
+            <div class="col-sm-10">
+                <p class="form-control-static">{{ user.name }}</p>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-2 control-label">{{ 'profile.show.email'|trans }}</label>
-        <div class="col-sm-10">
-            <p class="form-control-static">{{ user.email }}</p>
+        <div class="form-group form-group-sm">
+            <label class="col-sm-2 control-label">{{ 'profile.show.email'|trans }}</label>
+            <div class="col-sm-10">
+                <p class="form-control-static">{{ user.email }}</p>
+            </div>
         </div>
-    </div>
+        <div class="form-group form-group-sm">
+            <label class="col-sm-2 control-label no-left-padding"></label>
+            <div class="col-sm-4">
+                <button class="btn btn-m btn-primary btn-block"  type="button" id="_submit" name="_submit" onclick="window.location = '{{ path('fos_user_profile_edit') }}'">Edit</button>
+            </div>    
+        </div>
+    </form>
 </div>
