@@ -4,7 +4,7 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% if error %}
-    <div>{{ error|trans }}</div>
+    <div>{{ error }}</div>
 {% endif %}
             <form class="form-signin" role="form" action="{{ path("fos_user_security_check") }}" method="post">
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
