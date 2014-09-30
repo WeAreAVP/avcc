@@ -75,7 +75,7 @@ class DefaultController extends Controller
      */
     protected function renderLogin(array $data)
     {
-        $template = sprintf('ApplicationFrontBundle:Default:login.html.twing');
+        $template = sprintf('ApplicationFrontBundle:Default:login.html.twig');
 
         return $this->container->get('templating')->renderResponse($template, $data);
     }
