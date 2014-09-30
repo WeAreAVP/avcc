@@ -11,45 +11,25 @@ _welcome:
     pattern:  /
     defaults: { _controller: ApplicationFrontBundle:Default:index}
 
-_profile:
-    pattern:  /profile
-    defaults: { _controller: FOSUserBundle:Profile:show}
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /profile
 
-fos_user_registration_register:
-    pattern:  /register
-    defaults: { _controller: FOSUserBundle:Registration:register}
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /register
 
-fos_user_resetting_request:
-    pattern:  /request
-    defaults: { _controller: FOSUserBundle:Resetting:request}
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /resetting
 
 fos_user_change_password:
-    pattern:  /change-password
-    defaults: { _controller: FOSUserBundle:ChangePassword:changePassword}
-
-fos_user_profile_show:
-    pattern:  /profile
-    defaults: { _controller: FOSUserBundle:Profile:show}
-    
-fos_user_profile_edit:
-    pattern:  /edit
-    defaults: { _controller: FOSUserBundle:Profile:edit}
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /profile
 
 fos_user_security_logout:
-    pattern:  /logout
+    path: /logout
     defaults: { _controller: FOSUserBundle:Security:logout}
-
-fos_user_resetting_check_email:
-    pattern:  /check-email
-    defaults: { _controller: FOSUserBundle:Resetting:checkEmail}
-
-fos_user_resetting_send_email:
-    pattern:  /send-email
-    defaults: { _controller: FOSUserBundle:Resetting:sendEmail}
-    
-fos_user_resetting_reset:
-    pattern:  /reset/{token}
-    defaults: { _controller: FOSUserBundle:Resetting:reset}
     
 login:
     path: /login
