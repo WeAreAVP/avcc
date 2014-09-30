@@ -4,17 +4,17 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% if error %}
-    <div>{{ error }}</div>
+<div>{{ error }}</div>
 {% endif %}
-            <form class="form-signin" role="form" action="{{ path("fos_user_security_check") }}" method="post">
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-                <h3 class="form-signin-heading">Please sign in</h3>
-                <input type="text" class="form-control" placeholder="User Name" id="username" name="_username"  required="required" autofocus />
-                <input type="password" class="form-control" placeholder="Password"  name="_password" required="required" />
-                <label class="checkbox remember-me">
-                    <input type="checkbox" value="remember-me"> Remember me
-                </label>
-                <button class="btn btn-m btn-primary btn-block"  type="submit" id="_submit" name="_submit">Sign in</button>
-                <div class="text-right"><a href="{{ path('fos_user_resetting_request') }}"><small>Forgot password ?</small></a></div>
-            </form>
+<form class="form-signin" role="form" action="{{ path("fos_user_security_check") }}" method="post">
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+    <h3 class="form-signin-heading">Please sign in</h3>   
+    <input type="text" class="form-control" placeholder="User Name" id="username" name="_username" required="required" autofocus />
+    <input type="password" class="form-control" placeholder="Password"  name="_password" required="required" />
+    <label class="checkbox remember-me">
+        <input type="checkbox" id="remember_me" name="_remember_me" value="on" /> Remember me
+    </label>
+    <button class="btn btn-m btn-primary btn-block"  type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans }}</button>
+    <div class="text-right"><a href="{{ path('fos_user_resetting_request') }}"><small>Forgot password ?</small></a></div>
+</form>
 {% endblock fos_user_content %}
