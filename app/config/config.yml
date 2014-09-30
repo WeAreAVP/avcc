@@ -76,6 +76,9 @@ fos_user:
             type: application_user_registration
         confirmation:
             enabled:    true
+    profile:
+        form:
+            type: application_user_profile
     from_email:
         address:        noreply@avpreserve.com
         sender_name:    AVCC AVPreserve

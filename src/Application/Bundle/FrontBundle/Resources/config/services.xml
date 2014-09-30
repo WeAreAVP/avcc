@@ -13,6 +13,9 @@
         <service id="application_user.registration.form.type" class="Application\Bundle\FrontBundle\Form\Type\RegistrationFormType">
             <tag name="form.type" alias="application_user_registration" />
         </service>
+        <service id="application_user.profile.form.type" class="Application\Bundle\FrontBundle\Form\Type\ProfileFormType">
+            <tag name="form.type" alias="application_user_profile" />
+        </service>
     </services>
 
 </container>
