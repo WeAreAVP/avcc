@@ -75,7 +75,7 @@ class DefaultController extends Controller
      */
     protected function renderLogin(array $data)
     {
-        $template = sprintf('ApplicationFrontBundle:Default:login.html.%s', $this->container->getParameter('fos_user.template.engine'));
+        $template = sprintf('ApplicationFrontBundle:Default:login.html.twing');
 
         return $this->container->get('templating')->renderResponse($template, $data);
     }
