@@ -49,8 +49,11 @@ class DefaultController extends Controller
 
         if ($error) {
             // TODO: this is a potential security risk (see http://trac.symfony-project.org/ticket/9523)
-//            $error = $error->getMessage();
-            $error = "Invalid username or password";
+            $error = $error->getMessage();
+            if(strtolower($error)==='bad credentials'){
+                $error = "Invalid username or password.";
+            }
+//            $error = "Invalid username or password";
         }
         // last username entered by the user
         $lastUsername = (null === $session) ? '' : $session->get(SecurityContext::LAST_USERNAME);
