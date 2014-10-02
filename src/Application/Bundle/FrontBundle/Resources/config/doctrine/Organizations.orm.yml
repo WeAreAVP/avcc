@@ -1,0 +1,50 @@
+# src/Application/Bundle/FrontBundle/Resources/config/doctrine/Organizations.orm.yml
+Application\Bundle\FrontBundle\Entity\Organizations:
+    type:  entity
+    table: organizations
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+          
+    fields:
+        name:
+          type: string
+          length: 50
+        department_name:
+          type: string
+          lenght: 255
+          nullable: true
+        address:
+          type: string
+          length: 255
+          nullable: true
+        contact_person_name:
+          type: string
+          length: 255
+          nullable: true
+        contact_person_email:
+          type: string
+          length: 255
+          nullable: true
+        contact_person_phone:
+          type: string
+          length: 255  
+          nullable: true
+        created_on:
+            type: datetime
+        updated_on:
+            type: datetime
+            nullable: true
+    oneToMany:
+        created_by:
+          targetEntity: Users
+          mappedBy: Organizatons
+        updated_by:
+          targetEntity: Users
+          mappedBy: Organizatons
+              
+    lifecycleCallbacks:
+        prePersist: [ setCreatedOnValue ]
+        preUpdate: [ setUpdatedOnValue ]

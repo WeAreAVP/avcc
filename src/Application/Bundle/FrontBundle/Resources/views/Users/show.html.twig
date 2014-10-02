@@ -1,0 +1,54 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+<h3>User <a class="btn btn-default btn-group-sm pull-right" href="{{ path('users_new') }}">Back</a></h3>
+<div class="form-group form-group-sm">
+    <label class="col-sm-2 control-label">Name</label>
+    <div class="col-sm-10">
+        <p class="form-control-static">{{ entity.name }}</p>
+    </div>
+</div>
+<div class="form-group form-group-sm">
+    <label class="col-sm-2 control-label">Username</label>
+    <div class="col-sm-10">
+        <p class="form-control-static">{{ entity.username }}</p>
+    </div>
+</div>
+<div class="form-group form-group-sm">
+    <label class="col-sm-2 control-label">Email</label>
+    <div class="col-sm-10">
+        <p class="form-control-static">{{ entity.email }}</p>
+    </div>
+</div>
+<div class="form-group form-group-sm">
+    <label class="col-sm-2 control-label">Organizations</label>
+    <div class="col-sm-10">
+        <p class="form-control-static">
+                    {{ entity.organization_id }}
+        </p>
+    </div>
+</div>
+<div class="form-group form-group-sm">
+    <label class="col-sm-2 control-label">Roles</label>
+    <div class="col-sm-10">
+        <p class="form-control-static">
+                    {% for role in entity.roles %}
+                     {{ role }}
+                    {% endfor %}
+        </p>
+    </div>
+</div>
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('users') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('users_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock fos_user_content %}

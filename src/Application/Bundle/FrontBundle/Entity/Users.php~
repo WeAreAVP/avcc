@@ -274,9 +274,4 @@ class Users extends BaseUser
     {
         return $this->organizations;
     }
-    
-    public function __toString()
-    {
-        return $this->getName();
-    }
 }

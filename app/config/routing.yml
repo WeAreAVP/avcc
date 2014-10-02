@@ -2,7 +2,7 @@ application_front:
     resource: "@ApplicationFrontBundle/Controller/"
     type:     annotation
     prefix:   /
-    defaults: { _controller: FrontBundle:Default:login}
+#    defaults: { _controller: ApplicationFrontBundle:Default:login}
 
 #fos_user:
 #    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

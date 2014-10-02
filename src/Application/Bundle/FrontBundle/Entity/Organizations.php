@@ -1,31 +1,49 @@
 <?php
 
-// src/Application/Bundle/FrontBundle/Entity/Users.php
-
 namespace Application\Bundle\FrontBundle\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="users")
+ * Organizations
  */
-class Users extends BaseUser
+class Organizations
 {
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var integer
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      */
     private $name;
+
+    /**
+     * @var string
+     */
+    private $department_name;
+
+    /**
+     * @var string
+     */
+    private $address;
+
+    /**
+     * @var string
+     */
+    private $contact_person_name;
+
+    /**
+     * @var string
+     */
+    private $contact_person_email;
+
+    /**
+     * @var string
+     */
+    private $contact_person_phone;
 
     /**
      * @var \DateTime
@@ -48,14 +66,6 @@ class Users extends BaseUser
     private $updated_by;
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-//        $this->organization_id = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
      * Get id
      *
      * @return integer 
@@ -69,7 +79,7 @@ class Users extends BaseUser
      * Set name
      *
      * @param string $name
-     * @return Users
+     * @return Organizations
      */
     public function setName($name)
     {
@@ -89,10 +99,125 @@ class Users extends BaseUser
     }
 
     /**
+     * Set department_name
+     *
+     * @param string $departmentName
+     * @return Organizations
+     */
+    public function setDepartmentName($departmentName)
+    {
+        $this->department_name = $departmentName;
+
+        return $this;
+    }
+
+    /**
+     * Get department_name
+     *
+     * @return string 
+     */
+    public function getDepartmentName()
+    {
+        return $this->department_name;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     * @return Organizations
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string 
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set contact_person_name
+     *
+     * @param string $contactPersonName
+     * @return Organizations
+     */
+    public function setContactPersonName($contactPersonName)
+    {
+        $this->contact_person_name = $contactPersonName;
+
+        return $this;
+    }
+
+    /**
+     * Get contact_person_name
+     *
+     * @return string 
+     */
+    public function getContactPersonName()
+    {
+        return $this->contact_person_name;
+    }
+
+    /**
+     * Set contact_person_email
+     *
+     * @param string $contactPersonEmail
+     * @return Organizations
+     */
+    public function setContactPersonEmail($contactPersonEmail)
+    {
+        $this->contact_person_email = $contactPersonEmail;
+
+        return $this;
+    }
+
+    /**
+     * Get contact_person_email
+     *
+     * @return string 
+     */
+    public function getContactPersonEmail()
+    {
+        return $this->contact_person_email;
+    }
+
+    /**
+     * Set contact_person_phone
+     *
+     * @param string $contactPersonPhone
+     * @return Organizations
+     */
+    public function setContactPersonPhone($contactPersonPhone)
+    {
+        $this->contact_person_phone = $contactPersonPhone;
+
+        return $this;
+    }
+
+    /**
+     * Get contact_person_phone
+     *
+     * @return string 
+     */
+    public function getContactPersonPhone()
+    {
+        return $this->contact_person_phone;
+    }
+
+    /**
      * Set created_on
      *
      * @param \DateTime $createdOn
-     * @return Users
+     * @return Organizations
      */
     public function setCreatedOn($createdOn)
     {
@@ -115,7 +240,7 @@ class Users extends BaseUser
      * Set updated_on
      *
      * @param \DateTime $updatedOn
-     * @return Users
+     * @return Organizations
      */
     public function setUpdatedOn($updatedOn)
     {
@@ -138,7 +263,7 @@ class Users extends BaseUser
      * Set created_by
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
-     * @return Users
+     * @return Organizations
      */
     public function setCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy = null)
     {
@@ -161,7 +286,7 @@ class Users extends BaseUser
      * Set updated_by
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
-     * @return Users
+     * @return Organizations
      */
     public function setUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy = null)
     {
@@ -178,14 +303,14 @@ class Users extends BaseUser
     public function getUpdatedBy()
     {
         return $this->updated_by;
-    }   
+    }
 
     /**
      * @ORM\PrePersist
      */
     public function setCreatedOnValue()
     {
-        if(!$this->getCreatedOn())
+        if ( ! $this->getCreatedOn())
         {
             $this->created_on = new \DateTime();
         }
@@ -199,12 +324,20 @@ class Users extends BaseUser
         $this->updated_on = new \DateTime();
     }
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->created_by = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->updated_by = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Add created_by
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
-     * @return Users
+     * @return Organizations
      */
     public function addCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy)
     {
@@ -227,7 +360,7 @@ class Users extends BaseUser
      * Add updated_by
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
-     * @return Users
+     * @return Organizations
      */
     public function addUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy)
     {
@@ -246,37 +379,9 @@ class Users extends BaseUser
         $this->updated_by->removeElement($updatedBy);
     }
 
-    /**
-     * @var \Application\Bundle\FrontBundle\Entity\Organizations
-     */
-    private $organizations;
-
-
-    /**
-     * Set organizations
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Organizations $organizations
-     * @return Users
-     */
-    public function setOrganizations(\Application\Bundle\FrontBundle\Entity\Organizations $organizations = null)
-    {
-        $this->organizations = $organizations;
-
-        return $this;
-    }
-
-    /**
-     * Get organizations
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Organizations 
-     */
-    public function getOrganizations()
-    {
-        return $this->organizations;
-    }
-    
     public function __toString()
     {
         return $this->getName();
     }
+
 }

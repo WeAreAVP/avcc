@@ -2,6 +2,7 @@
 Application\Bundle\FrontBundle\Entity\Users:
     type:  entity
     table: users
+    
     id:
         id:
             type: integer
@@ -10,4 +11,26 @@ Application\Bundle\FrontBundle\Entity\Users:
     fields:
         name:
           type: string
-          length: 50
+          length: 50   
+        created_on:
+            type: datetime
+        updated_on:
+            type: datetime
+            nullable: true
+    manyToOne:
+        organizations:
+            targetEntity: Organizations
+            inversedBy: users
+            joinColumn:
+                name: organization_id
+                referencedColumnName: id
+    oneToMany:
+        created_by:
+          targetEntity: Users
+          mappedBy: Users
+        updated_by:
+          targetEntity: Users
+          mappedBy: Users
+    lifecycleCallbacks:
+        prePersist: [ setCreatedOnValue ]
+        preUpdate: [ setUpdatedOnValue ]
