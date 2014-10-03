@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Organizations
 {
+
     /**
      * @var integer
      */
@@ -53,17 +54,6 @@ class Organizations
      * @var \DateTime
      */
     private $updated_on;
-
-    /**
-     * @var \Application\Bundle\FrontBundle\Entity\Users
-     */
-    private $created_by;
-
-    /**
-     * @var \Application\Bundle\FrontBundle\Entity\Users
-     */
-    private $updated_by;
-
 
     /**
      * Get id
@@ -260,6 +250,41 @@ class Organizations
     }
 
     /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedOnValue()
+    {
+        if ( ! $this->getCreatedOn())
+        {
+            $this->created_on = new \DateTime();
+        }
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedOnValue()
+    {
+        $this->updated_on = new \DateTime();
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
+    
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Users
+     */
+    private $created_by;
+
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Users
+     */
+    private $updated_by;
+
+
+    /**
      * Set created_by
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
@@ -303,78 +328,5 @@ class Organizations
     public function getUpdatedBy()
     {
         return $this->updated_by;
-    }
-    
-    /**
-     * @ORM\PrePersist
-     */
-    public function setCreatedOnValue()
-    {
-        if(!$this->getCreatedOn())
-        {
-            $this->created_on = new \DateTime();
-        }
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function setUpdatedOnValue()
-    {
-        $this->updated_on = new \DateTime();
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->created_by = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->updated_by = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add created_by
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
-     * @return Organizations
-     */
-    public function addCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy)
-    {
-        $this->created_by[] = $createdBy;
-
-        return $this;
-    }
-
-    /**
-     * Remove created_by
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
-     */
-    public function removeCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy)
-    {
-        $this->created_by->removeElement($createdBy);
-    }
-
-    /**
-     * Add updated_by
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
-     * @return Organizations
-     */
-    public function addUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy)
-    {
-        $this->updated_by[] = $updatedBy;
-
-        return $this;
-    }
-
-    /**
-     * Remove updated_by
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
-     */
-    public function removeUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy)
-    {
-        $this->updated_by->removeElement($updatedBy);
     }
 }

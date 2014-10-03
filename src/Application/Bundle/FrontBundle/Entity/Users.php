@@ -11,6 +11,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table(name="users")
+ * @ORM\AttributeOverrides({
+ *      @ORM\AttributeOverride(name="roles", column=@ORM\Column(type="string", name="roles", length=255)),
+ *      @ORM\AttributeOverride(name="enabled", column=@ORM\Column( name="enabled", options={"default" = 1})),
+ * }) 
  */
 class Users extends BaseUser
 {
@@ -38,21 +42,11 @@ class Users extends BaseUser
     private $updated_on;
 
     /**
-     * @var \Application\Bundle\FrontBundle\Entity\Users
-     */
-    private $created_by;
-
-    /**
-     * @var \Application\Bundle\FrontBundle\Entity\Users
-     */
-    private $updated_by;
-
-    /**
      * Constructor
      */
     public function __construct()
     {
-//        $this->organization_id = new \Doctrine\Common\Collections\ArrayCollection();
+        parent::__construct();
     }
 
     /**
@@ -135,6 +129,69 @@ class Users extends BaseUser
     }
 
     /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedOnValue()
+    {
+        if(!$this->getCreatedOn())
+        {
+            $this->created_on = new \DateTime();
+        }
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedOnValue()
+    {
+        $this->updated_on = new \DateTime();
+    }
+
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    private $organizations;
+
+
+    /**
+     * Set organizations
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Organizations $organizations
+     * @return Users
+     */
+    public function setOrganizations(\Application\Bundle\FrontBundle\Entity\Organizations $organizations = null)
+    {
+        $this->organizations = $organizations;
+
+        return $this;
+    }
+
+    /**
+     * Get organizations
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations 
+     */
+    public function getOrganizations()
+    {
+        return $this->organizations;
+    }
+    
+    public function __toString()
+    {
+        return $this->getName();
+    }
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Users
+     */
+    private $created_by;
+
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Users
+     */
+    private $updated_by;
+
+
+    /**
      * Set created_by
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
@@ -178,105 +235,5 @@ class Users extends BaseUser
     public function getUpdatedBy()
     {
         return $this->updated_by;
-    }   
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function setCreatedOnValue()
-    {
-        if(!$this->getCreatedOn())
-        {
-            $this->created_on = new \DateTime();
-        }
-    }
-
-    /**
-     * @ORM\PreUpdate
-     */
-    public function setUpdatedOnValue()
-    {
-        $this->updated_on = new \DateTime();
-    }
-
-
-    /**
-     * Add created_by
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
-     * @return Users
-     */
-    public function addCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy)
-    {
-        $this->created_by[] = $createdBy;
-
-        return $this;
-    }
-
-    /**
-     * Remove created_by
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
-     */
-    public function removeCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy)
-    {
-        $this->created_by->removeElement($createdBy);
-    }
-
-    /**
-     * Add updated_by
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
-     * @return Users
-     */
-    public function addUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy)
-    {
-        $this->updated_by[] = $updatedBy;
-
-        return $this;
-    }
-
-    /**
-     * Remove updated_by
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
-     */
-    public function removeUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy)
-    {
-        $this->updated_by->removeElement($updatedBy);
-    }
-
-    /**
-     * @var \Application\Bundle\FrontBundle\Entity\Organizations
-     */
-    private $organizations;
-
-
-    /**
-     * Set organizations
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Organizations $organizations
-     * @return Users
-     */
-    public function setOrganizations(\Application\Bundle\FrontBundle\Entity\Organizations $organizations = null)
-    {
-        $this->organizations = $organizations;
-
-        return $this;
-    }
-
-    /**
-     * Get organizations
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Organizations 
-     */
-    public function getOrganizations()
-    {
-        return $this->organizations;
-    }
-    
-    public function __toString()
-    {
-        return $this->getName();
     }
 }

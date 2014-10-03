@@ -9,9 +9,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\Users;
 use Application\Bundle\FrontBundle\Form\UsersType;
-
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\SecurityContext;
 /**
  * Users controller.
  *
@@ -47,17 +47,29 @@ class UsersController extends Controller
      */
     public function createAction(Request $request)
     {
+        $role_options = $this->getRoleHierarchy();
+        
+         $user_info = $request->request->get("application_bundle_frontbundle_users");
+//         echo'<pre>';
+//         print_r(array($user_info['roles']));exit;
         $entity = new Users();
-        $form = $this->createCreateForm($entity);
+        $user = $this->container->get('security.context')->getToken()->getUser(); 
+//        echo'<pre>';
+//         print_r($user->getId());exit;
+        $entity->setCreatedBy($user);
+        $entity->setRoles(array($user_info['roles']));
+        $form = $this->createCreateForm($entity,$role_options);
+        
         $form->handleRequest($request);
-
+        
         if ($form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('users_show', array('id' => $entity->getId())));
+//            return $this->redirect($this->generateUrl('users_show', array('id' => $entity->getId())));
+               return $this->redirect($this->generateUrl('users'));
         }
 
         return array(
@@ -73,9 +85,9 @@ class UsersController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Users $entity)
-    {
-        $form = $this->createForm(new UsersType(), $entity, array(
+    private function createCreateForm(Users $entity, $rolesField = array())
+    {   
+        $form = $this->createForm(new UsersType($rolesField), $entity, array(
             'action' => $this->generateUrl('users_create'),
             'method' => 'POST',
         ));
@@ -94,8 +106,9 @@ class UsersController extends Controller
      */
     public function newAction()
     {
+        $role_options = $this->getRoleHierarchy();
         $entity = new Users();
-        $form = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity,$role_options);
 
         return array(
             'entity' => $entity,
@@ -193,8 +206,8 @@ class UsersController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $user_info = $request->request->get("application_bundle_frontbundle_users");
-        $user_info['roles'] = array($user_info['roles']);
+//        $user_info = $request->request->get("application_bundle_frontbundle_users");
+//        $user_info['roles'] = array($user_info['roles']);
         $entity = $em->getRepository('ApplicationFrontBundle:Users')->find($id);
 
         if ( ! $entity)
@@ -299,7 +312,7 @@ class UsersController extends Controller
         }
         $role_options['role'] = $role; 
         $role_options['roles'] = $roles_choices; 
-//        echo '<pre>';print_r($roles_choices);exit;
+//        echo 'asdfsdf<pre>';print_r($role_options);exit;
         return $role_options;
     }
 

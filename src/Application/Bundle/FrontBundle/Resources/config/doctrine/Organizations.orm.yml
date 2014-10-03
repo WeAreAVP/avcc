@@ -37,13 +37,17 @@ Application\Bundle\FrontBundle\Entity\Organizations:
         updated_on:
             type: datetime
             nullable: true
-    oneToMany:
+    oneToOne:
         created_by:
           targetEntity: Users
-          mappedBy: Organizatons
+          joinColumn:
+              name: created_by
+              referencedColumnName: id
         updated_by:
           targetEntity: Users
-          mappedBy: Organizatons
+          joinColumn:
+              name: updated_by
+              referencedColumnName: id
               
     lifecycleCallbacks:
         prePersist: [ setCreatedOnValue ]

@@ -5,6 +5,8 @@ namespace Application\Bundle\FrontBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Security\Core\Validator\Constraint\UserPassword as OldUserPassword;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 
 class UsersType extends AbstractType
 {
@@ -24,13 +26,30 @@ class UsersType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        if (class_exists('Symfony\Component\Security\Core\Validator\Constraints\UserPassword')) {
+            $constraint = new UserPassword();
+        } else {
+            // Symfony 2.1 support with the old constraint class
+            $constraint = new OldUserPassword();
+        }
+        
         $builder
             ->add('name')
             ->add('username')
+            ->add('email')
             ->add('organizations')
+            ->add('plainPassword', 'repeated', array(
+                'type' => 'password',
+                'required'=>false,
+                'options' => array('translation_domain' => 'FOSUserBundle'),
+                'first_options' => array('label' => '', 'attr' => array('class' => 'form-control', 'placeholder' => 'Password')),
+                'second_options' => array('label' => ' ', 'attr' => array('class' => 'form-control', 'placeholder' => 'Confirm Password')),
+                'invalid_message' => 'fos_user.password.mismatch',
+                )
+            )
             ->add('roles', 'choice', array(
                 'choices' => $this->roles,
-                'data' => $this->role,
+                'data' => '',
                 )
             )
         ;
