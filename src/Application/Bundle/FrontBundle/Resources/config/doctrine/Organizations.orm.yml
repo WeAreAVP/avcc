@@ -37,7 +37,7 @@ Application\Bundle\FrontBundle\Entity\Organizations:
         updated_on:
             type: datetime
             nullable: true
-    oneToOne:
+    manyToOne:
         created_by:
           targetEntity: Users
           joinColumn:
