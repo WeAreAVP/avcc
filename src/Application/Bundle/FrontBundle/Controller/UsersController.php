@@ -48,22 +48,16 @@ class UsersController extends Controller
     public function createAction(Request $request)
     {
         $role_options = $this->getRoleHierarchy();
-        
-         $user_info = $request->request->get("application_bundle_frontbundle_users");
-//         echo'<pre>';
-//         print_r(array($user_info['roles']));exit;
         $entity = new Users();
-        $user = $this->container->get('security.context')->getToken()->getUser(); 
-//        echo'<pre>';
-//         print_r($user->getId());exit;
-        $entity->setCreatedBy($user);
-        $entity->setRoles(array($user_info['roles']));
+        $user = $this->container->get('security.context')->getToken()->getUser();           
         $form = $this->createCreateForm($entity,$role_options);
         
         $form->handleRequest($request);
         
         if ($form->isValid())
         {
+            $entity->setEnabled(true);
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -205,6 +199,7 @@ class UsersController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
+        $user = $this->container->get('security.context')->getToken()->getUser();  
         $em = $this->getDoctrine()->getManager();
 //        $user_info = $request->request->get("application_bundle_frontbundle_users");
 //        $user_info['roles'] = array($user_info['roles']);
@@ -225,9 +220,10 @@ class UsersController extends Controller
     
         if ($editForm->isValid())
         {
+            $entity->setUpdatedBy($user);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('users_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('users'));
         }
 
         return array(

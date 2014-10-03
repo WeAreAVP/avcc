@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Security\Core\Validator\Constraint\UserPassword as OldUserPassword;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
+use Application\Bundle\FrontBundle\Form\DataTransformer\StringToArrayTransformer;
 
 class UsersType extends AbstractType
 {
@@ -32,7 +33,7 @@ class UsersType extends AbstractType
             // Symfony 2.1 support with the old constraint class
             $constraint = new OldUserPassword();
         }
-        
+        $transformer = new StringToArrayTransformer();
         $builder
             ->add('name')
             ->add('username')
@@ -47,11 +48,12 @@ class UsersType extends AbstractType
                 'invalid_message' => 'fos_user.password.mismatch',
                 )
             )
-            ->add('roles', 'choice', array(
-                'choices' => $this->roles,
-                'data' => '',
-                )
-            )
+//            ->add($builder->create('roles', 'choice', array(
+//                'mapped' => true,
+//                'expanded' => true,
+//                'multiple' => false,
+//                'choices' => $this->roles
+//              )))->addModelTransformer($transformer)
         ;
     }
 

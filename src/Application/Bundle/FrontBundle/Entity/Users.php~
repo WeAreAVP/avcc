@@ -11,10 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table(name="users")
- * @ORM\AttributeOverrides({
- *      @ORM\AttributeOverride(name="roles", column=@ORM\Column(type="string", name="roles", length=255)),
- *      @ORM\AttributeOverride(name="enabled", column=@ORM\Column( name="enabled", default=1)),
- * }) 
+ *
  */
 class Users extends BaseUser
 {
@@ -47,7 +44,6 @@ class Users extends BaseUser
     public function __construct()
     {
         parent::__construct();
-//        $this->organization_id = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -148,39 +144,14 @@ class Users extends BaseUser
         $this->updated_on = new \DateTime();
     }
 
-    /**
-     * @var \Application\Bundle\FrontBundle\Entity\Organizations
-     */
-    private $organizations;
-
-
-    /**
-     * Set organizations
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Organizations $organizations
-     * @return Users
-     */
-    public function setOrganizations(\Application\Bundle\FrontBundle\Entity\Organizations $organizations = null)
-    {
-        $this->organizations = $organizations;
-
-        return $this;
-    }
-
-    /**
-     * Get organizations
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Organizations 
-     */
-    public function getOrganizations()
-    {
-        return $this->organizations;
-    }
+   
     
     public function __toString()
     {
         return $this->getName();
-    }
+    }       
+   
+    
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Users
      */
@@ -236,5 +207,163 @@ class Users extends BaseUser
     public function getUpdatedBy()
     {
         return $this->updated_by;
+    }
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    private $organizations;
+
+
+    /**
+     * Set organizations
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Organizations $organizations
+     * @return Users
+     */
+    public function setOrganizations(\Application\Bundle\FrontBundle\Entity\Organizations $organizations = null)
+    {
+        $this->organizations = $organizations;
+
+        return $this;
+    }
+
+    /**
+     * Get organizations
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations 
+     */
+    public function getOrganizations()
+    {
+        return $this->organizations;
+    }
+
+    /**
+     * Add created_by
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
+     * @return Users
+     */
+    public function addCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy)
+    {
+        $this->created_by[] = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Remove created_by
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
+     */
+    public function removeCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy)
+    {
+        $this->created_by->removeElement($createdBy);
+    }
+
+    /**
+     * Add updated_by
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
+     * @return Users
+     */
+    public function addUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy)
+    {
+        $this->updated_by[] = $updatedBy;
+
+        return $this;
+    }
+
+    /**
+     * Remove updated_by
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
+     */
+    public function removeUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy)
+    {
+        $this->updated_by->removeElement($updatedBy);
+    }
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Users
+     */
+    private $users;
+
+
+    /**
+     * Set users
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $users
+     * @return Users
+     */
+    public function setUsers(\Application\Bundle\FrontBundle\Entity\Users $users = null)
+    {
+        $this->users = $users;
+
+        return $this;
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Users 
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Users
+     */
+    private $users_created;
+
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Users
+     */
+    private $users_updated;
+
+
+    /**
+     * Set users_created
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $usersCreated
+     * @return Users
+     */
+    public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated = null)
+    {
+        $this->users_created = $usersCreated;
+
+        return $this;
+    }
+
+    /**
+     * Get users_created
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Users 
+     */
+    public function getUsersCreated()
+    {
+        return $this->users_created;
+    }
+
+    /**
+     * Set users_updated
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
+     * @return Users
+     */
+    public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated = null)
+    {
+        $this->users_updated = $usersUpdated;
+
+        return $this;
+    }
+
+    /**
+     * Get users_updated
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Users 
+     */
+    public function getUsersUpdated()
+    {
+        return $this->users_updated;
     }
 }

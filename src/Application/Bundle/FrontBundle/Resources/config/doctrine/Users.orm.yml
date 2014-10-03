@@ -24,17 +24,29 @@ Application\Bundle\FrontBundle\Entity\Users:
             joinColumn:
                 name: organization_id
                 referencedColumnName: id
-    oneToOne:
-        created_by:
+        users_created:
           targetEntity: Users
+          inversedBy: users
           joinColumn:
               name: created_by
               referencedColumnName: id
-        updated_by:
+        users_updated:
           targetEntity: Users
+          inversedBy: users  
           joinColumn:
               name: updated_by
-              referencedColumnName: id
+              referencedColumnName: id 
+          
+    oneToMany:
+        created_by:
+          targetEntity: Users
+          mappedBy: users_created
+          
+        updated_by:
+          targetEntity: Users
+          mappedBy: users_updated
+          
+           
     lifecycleCallbacks:
         prePersist: [ setCreatedOnValue ]
         preUpdate: [ setUpdatedOnValue ]
