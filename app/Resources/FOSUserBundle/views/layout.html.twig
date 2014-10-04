@@ -8,29 +8,29 @@
         <meta name="author" content="">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
-        <title>AVCC</title>
+        <title>{% block title %}AVCC - AVPreserve{% endblock %}</title>
 
         <!-- Bootstrap core CSS -->
 		{% block stylesheets %}
-        <link href="{{ asset('css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
-        <link href="{{ asset('css/chosen.css') }}" type="text/css" rel="stylesheet" />
-        <!-- Custom styles for this template -->
-        <link href="{{ asset('bundles/applicationfront/css/style.css') }}" rel="stylesheet">
+			<link href="{{ asset('css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+			<link href="{{ asset('css/chosen.css') }}" type="text/css" rel="stylesheet" />
+			<!-- Custom styles for this template -->
+			<link href="{{ asset('bundles/applicationfront/css/style.css') }}" rel="stylesheet">
 		{% endblock %}
 
 
 		{% block javascripts %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="{{ asset('js/chosen.jquery.js') }}"></script>
-        <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-        <!--[if lt IE 9]><script src="{{ asset('ie8-responsive-file-warning.js') }}"></script><![endif]-->
-        <script src="{{ asset('js/ie-emulation-modes-warning.js') }}"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+			<script src="{{ asset('js/chosen.jquery.js') }}"></script>
+			<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+			<!--[if lt IE 9]><script src="{{ asset('ie8-responsive-file-warning.js') }}"></script><![endif]-->
+			<script src="{{ asset('js/ie-emulation-modes-warning.js') }}"></script>
 
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+			<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+			<!--[if lt IE 9]>
+			  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+			  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+			<![endif]-->
 		{% endblock %}
     </head>
 
@@ -50,19 +50,18 @@
                     <ul class="nav navbar-nav navbar-right">
 
                         {% if app.user %}
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('organizations') }}">Organizations</a></li>
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" id="dropdownMenu1" type="button" class="dropdown-toggle" href="#">Settings <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('fos_user_profile_show') }}">Profile</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('fos_user_change_password') }}">Change Password</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('users') }}">Users</a></li>                                
-                                <li><a href="{{ path('fos_user_security_logout') }}">Log Out</a></li>
-                            </ul>
-                        </li>
-		        {% else %}
-                        <li><a href="{{ path('login') }}">Log In</a></li>
-			{% endif %}
+							<li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('organizations') }}">Organizations</a></li>
+							<li class="dropdown">
+								<a data-toggle="dropdown" id="dropdownMenu1" type="button" class="dropdown-toggle" href="#">Settings <span class="caret"></span></a>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('fos_user_profile_show') }}">Profile</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('fos_user_change_password') }}">Change Password</a></li>
+									<li role="presentation"><a role="menuitem" tabindex="-1" href="{{ path('users') }}">Users</a></li>                                
+									<li><a href="{{ path('fos_user_security_logout') }}">Log Out</a></li>
+								</ul>
+							</li>
+
+						{% endif %}
                     </ul>
                 </div>
             </div>
@@ -72,10 +71,10 @@
 			{% block fos_user_content %}
             {% endblock fos_user_content %}
 
-                    {% block main_content %}
-                    {% endblock main_content %}
+			{% block main_content %}
+			{% endblock main_content %}
             {% block error_block %}
-                    {% endblock error_block %}
+			{% endblock error_block %}
         </div> <!-- /container -->
 
         <!-- Placed at the end of the document so the pages load faster -->
@@ -83,9 +82,9 @@
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <script src="{{ asset('js/ie10-viewport-bug-workaround.js') }}"></script>
         <script type="text/javascript">
-            $(document).ready(function() {
-                $('.dropdown-toggle').dropdown()
-            });
+			$(document).ready(function () {
+				$('.dropdown-toggle').dropdown()
+			});
         </script>
     </body>
 </html>

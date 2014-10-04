@@ -1,4 +1,13 @@
-  {% extends 'FOSUserBundle::layout.html.twig' %}
+{% extends 'FOSUserBundle::layout.html.twig' %}
+{% block title %}AVCC - Access Denied{% endblock %}
 {% block error_block %}
-    <h3>Access Denied. </h3>
+
+	<center>
+		<div>
+			<h2>Access Denied</h2>
+		</div>
+		<div>
+			You do not have permission to access this page. Head back to <a href="{{ path('_welcome')}}">home</a>.
+		</div>
+	</center>
 {% endblock error_block %}

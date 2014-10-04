@@ -1,4 +1,12 @@
-  {% extends 'FOSUserBundle::layout.html.twig' %}
+{% extends 'FOSUserBundle::layout.html.twig' %}
+{% block title %}AVCC - Error (404){% endblock %}
 {% block error_block %}
-    <h3>Page not found.</h3>
+    <center>
+		<div>
+			<h2>Error (404)</h2>
+		</div>
+		<div>
+			We can't find the page you're looking for. Head back to <a href="{{ path('_welcome')}}">home</a>.
+		</div>
+	</center>
 {% endblock error_block %}
