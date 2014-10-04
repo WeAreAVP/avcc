@@ -10,7 +10,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 use \Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
- * @ORM\Entity  Users entity
+ * Users
+ * 
+ * @ORM\Entity  
  * 
  * @ORM\Table(name="users")
  *
