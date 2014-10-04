@@ -96,7 +96,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * 
      * @throws \RuntimeException
      */
     public function checkAction()
