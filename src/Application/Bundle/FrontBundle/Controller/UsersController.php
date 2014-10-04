@@ -42,20 +42,20 @@ class UsersController extends Controller
     /**
      * Creates a new Users entity.
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @Route("/", name="users_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:Users:new.html.twig")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array/redirect to list page
      */
     public function createAction(Request $request)
     {
-        $role_options = $this->getRoleHierarchy();
+
         $entity = new Users();
         $user = $this->container->get('security.context')->getToken()->getUser();
-        $form = $this->createCreateForm($entity, $role_options);
+        $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
         if ($form->isValid()) {
             $entity->setEnabled(true);
@@ -77,13 +77,13 @@ class UsersController extends Controller
      * Creates a form to create a Users entity.
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $entity
-     * @param array                                        $rolesField
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Users $entity, $rolesField = array())
+    private function createCreateForm(Users $entity)
     {
-        $form = $this->createForm(new UsersType($rolesField), $entity, array(
+        $roleOptions = $this->getRoleHierarchy();
+        $form = $this->createForm(new UsersType($roleOptions), $entity, array(
             'action' => $this->generateUrl('users_create'),
             'method' => 'POST',
         ));
@@ -99,13 +99,14 @@ class UsersController extends Controller
      * @Route("/new", name="users_new")
      * @Method("GET")
      * @Template()
+     *
      * @return array
      */
     public function newAction()
     {
-        $role_options = $this->getRoleHierarchy();
+
         $entity = new Users();
-        $form = $this->createCreateForm($entity, $role_options);
+        $form = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
@@ -116,10 +117,12 @@ class UsersController extends Controller
     /**
      * Finds and displays a Users entity.
      *
+     * @param integer $id
+     *
      * @Route("/{id}", name="users_show")
      * @Method("GET")
      * @Template()
-     * @param  integer $id
+     *
      * @return array
      *
      */
@@ -129,7 +132,7 @@ class UsersController extends Controller
 
         $entity = $em->getRepository('ApplicationFrontBundle:Users')->find($id);
 
-        if (!$entity) {
+        if (! $entity) {
             throw $this->createNotFoundException('Unable to find Users entity.');
         }
 
@@ -144,28 +147,30 @@ class UsersController extends Controller
     /**
      * Displays a form to edit an existing Users entity.
      *
+     * @param integer $id user id
+     *
      * @Route("/{id}/edit", name="users_edit")
      * @Method("GET")
      * @Template()
      *
-     * @param integer $id user id
+     * @return array
      */
     public function editAction($id)
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
-        if (!is_object($user) || !$user instanceof UserInterface) {
+        if ( ! is_object($user) || ! $user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
         }
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Users')->find($id);
 
-        if (!$entity) {
+        if (! $entity) {
             throw $this->createNotFoundException('Unable to find Users entity.');
         }
 
         $roleOptions = $this->getRoleHierarchy();
-        $roleOptions['user_role']  = $entity->getRoles();
+        $roleOptions['user_role'] = $entity->getRoles();
         $editForm = $this->createEditForm($entity, $roleOptions);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -199,12 +204,12 @@ class UsersController extends Controller
     /**
      * Edits an existing Users entity.
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param integer                                   $id      user id
+     *
      * @Route("/{id}", name="users_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:Users:edit.html.twig")
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param integer                                   $id      user id
      *
      * @return type
      */
@@ -214,13 +219,13 @@ class UsersController extends Controller
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('ApplicationFrontBundle:Users')->find($id);
 
-        if (!$entity) {
+        if (! $entity) {
             throw $this->createNotFoundException('Unable to find Users entity.');
         }
 
-        $role_options = $this->getRoleHierarchy();
+        $roleOptions = $this->getRoleHierarchy();
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity, $role_options);
+        $editForm = $this->createEditForm($entity, $roleOptions);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -242,11 +247,11 @@ class UsersController extends Controller
     /**
      * Deletes a Users entity.
      *
-     * @Route("/{id}", name="users_delete")
-     * @Method("DELETE")
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param integer                                   $id
+     *
+     * @Route("/{id}", name="users_delete")
+     * @Method("DELETE")
      *
      * @return redirect to user list page
      */
@@ -259,7 +264,7 @@ class UsersController extends Controller
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('ApplicationFrontBundle:Users')->find($id);
 
-            if (!$entity) {
+            if (! $entity) {
                 throw $this->createNotFoundException('Unable to find Users entity.');
             }
 
@@ -280,10 +285,10 @@ class UsersController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-                        ->setAction($this->generateUrl('users_delete', array('id' => $id)))
-                        ->setMethod('DELETE')
-                        ->add('submit', 'submit', array('label' => 'Delete'))
-                        ->getForm();
+        ->setAction($this->generateUrl('users_delete', array('id' => $id)))
+        ->setMethod('DELETE')
+        ->add('submit', 'submit', array('label' => 'Delete'))
+        ->getForm();
     }
 
     /**
@@ -296,17 +301,17 @@ class UsersController extends Controller
         $rolesChoices = array();
 
         $roles = $this->container->getParameter('security.role_hierarchy.roles');
-        foreach ($roles as $role => $inherited_roles) {
-            foreach ($inherited_roles as $id => $inherited_role) {
-                if (!array_key_exists($inherited_role, $rolesChoices)) {
-                    $arrInheritedRoles = explode("_", $inherited_role);
+        foreach ($roles as $role => $inheritedRoles) {
+            foreach ($inheritedRoles as $id => $inheritedRole) {
+                if ( ! array_key_exists($inheritedRole, $rolesChoices)) {
+                    $arrInheritedRoles = explode("_", $inheritedRole);
                     array_shift($arrInheritedRoles);
                     $rInRoles = implode(" ", $arrInheritedRoles);
-                    $rolesChoices[$inherited_role] = $rInRoles;
+                    $rolesChoices[$inheritedRole] = $rInRoles;
                 }
             }
 
-            if (!array_key_exists($role, $rolesChoices)) {
+            if ( ! array_key_exists($role, $rolesChoices)) {
                 $arrRoles = explode("_", $role);
                 array_shift($arrRoles);
 
