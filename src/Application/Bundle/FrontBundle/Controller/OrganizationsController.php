@@ -191,7 +191,7 @@ class OrganizationsController extends Controller
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:Organizations:edit.html.twig")
      * @param \Symfony\Component\HttpFoundation\Request $request form data variable
-     * @param integer                                   $id organization id
+     * @param integer                                   $id      organization id
      * 
      * @return array
      */
@@ -229,7 +229,7 @@ class OrganizationsController extends Controller
      * @Route("/{id}", name="organizations_delete")
      * @Method("DELETE")
      * @param \Symfony\Component\HttpFoundation\Request $request form data variable
-     * @param integer                                   $id organization id
+     * @param integer                                   $id      organization id
      * 
      * @return redirect to organization list page
      */
