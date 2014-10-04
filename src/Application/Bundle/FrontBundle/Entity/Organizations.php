@@ -219,6 +219,7 @@ class Organizations
     public function setCreatedOn($createdOn)
     {
         $this->created_on = $createdOn;
+        
         return $this;
     }
 
@@ -241,6 +242,7 @@ class Organizations
     public function setUpdatedOn($updatedOn)
     {
         $this->updated_on = $updatedOn;
+        
         return $this;
     }
 
