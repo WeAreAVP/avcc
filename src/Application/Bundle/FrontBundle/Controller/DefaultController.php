@@ -28,6 +28,8 @@ class DefaultController extends Controller
 
     /**
      * @Template()
+     * 
+     * @return type renders index.html.twig template
      */
     public function indexAction()
     {
