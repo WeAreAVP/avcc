@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use \Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
- * @ORM\Entity 
+ * @ORM\Entity  Users entity
  * 
  * @ORM\Table(name="users")
  *
@@ -81,6 +81,7 @@ class Users extends BaseUser
      * Set name
      *
      * @param string $name
+     * 
      * @return Users
      */
     public function setName($name)
@@ -104,6 +105,7 @@ class Users extends BaseUser
      * Set created_on
      *
      * @param \DateTime $createdOn
+     * 
      * @return Users
      */
     public function setCreatedOn($createdOn)
@@ -234,6 +236,7 @@ class Users extends BaseUser
      * Set organizations
      *
      * @param \Application\Bundle\FrontBundle\Entity\Organizations $organizations
+     * 
      * @return Users
      */
     public function setOrganizations(\Application\Bundle\FrontBundle\Entity\Organizations $organizations = null)
@@ -280,6 +283,7 @@ class Users extends BaseUser
      * Add updated_by
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
+     * 
      * @return Users
      */
     public function addUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy)
@@ -308,6 +312,7 @@ class Users extends BaseUser
      * Set users
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $users
+     * 
      * @return Users
      */
     public function setUsers(\Application\Bundle\FrontBundle\Entity\Users $users = null)
@@ -341,6 +346,7 @@ class Users extends BaseUser
      * Set users_created
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $usersCreated
+     * 
      * @return Users
      */
     public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated = null)
@@ -364,6 +370,7 @@ class Users extends BaseUser
      * Set users_updated
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
+     * 
      * @return Users
      */
     public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated = null)
