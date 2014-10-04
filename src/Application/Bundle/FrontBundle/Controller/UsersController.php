@@ -165,7 +165,7 @@ class UsersController extends Controller
         }
 
         $roleOptions = $this->getRoleHierarchy();
-
+        $roleOptions['user_role']  = $entity->getRoles();
         $editForm = $this->createEditForm($entity, $roleOptions);
         $deleteForm = $this->createDeleteForm($id);
 
