@@ -40,10 +40,11 @@ class OrganizationsController extends Controller
     /**
      * Creates a new Organizations entity.
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request form data variable
+     *
      * @Route("/", name="organizations_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:Organizations:new.html.twig")
-     * @param \Symfony\Component\HttpFoundation\Request $request form data variable
      *
      * @return array
      */
@@ -110,10 +111,11 @@ class OrganizationsController extends Controller
     /**
      * Finds and displays a Organizations entity.
      *
+     * @param integer $id organization id
+     *
      * @Route("/{id}", name="organizations_show")
      * @Method("GET")
      * @Template()     *
-     * @param integer $id organization id
      *
      * @return array
      */
@@ -138,10 +140,10 @@ class OrganizationsController extends Controller
     /**
      * Displays a form to edit an existing Organizations entity.
      *
-     * @Route("/{id}/edit", name="organizations_edit")
-     * @Method("GET")
      * @param integer $id organization id
      *
+     * @Route("/{id}/edit", name="organizations_edit")
+     * @Method("GET")
      * @Template()
      * @return array
      */
@@ -187,11 +189,12 @@ class OrganizationsController extends Controller
     /**
      * Edits an existing Organizations entity.
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request form data variable
+     * @param integer                                   $id      organization id
+     *
      * @Route("/{id}", name="organizations_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:Organizations:edit.html.twig")
-     * @param \Symfony\Component\HttpFoundation\Request $request form data variable
-     * @param integer                                   $id      organization id
      *
      * @return array
      */
@@ -226,10 +229,12 @@ class OrganizationsController extends Controller
     /**
      * Deletes a Organizations entity.
      *
-     * @Route("/{id}", name="organizations_delete")
-     * @Method("DELETE")
      * @param \Symfony\Component\HttpFoundation\Request $request form data variable
      * @param integer                                   $id      organization id
+     *
+     * @Route("/{id}", name="organizations_delete")
+     * @Method("DELETE")
+     *
      *
      * @return redirect to organization list page
      */
