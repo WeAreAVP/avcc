@@ -3,12 +3,11 @@
 namespace Application\Bundle\FrontBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class StringToArrayTransformer implements DataTransformerInterface
 {
     /**
-     * Transforms an array to a string. 
+     * Transforms an array to a string.
      * POSSIBLE LOSS OF DATA
      *
      * @return string
@@ -21,7 +20,7 @@ class StringToArrayTransformer implements DataTransformerInterface
     /**
      * Transforms a string to an array.
      *
-     * @param  string $string
+     * @param string $string
      *
      * @return array
      */

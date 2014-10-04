@@ -71,7 +71,7 @@
 <div class="form-group form-group-sm">
     <label class="col-sm-2 control-label no-left-padding"></label>
     <div class="col-sm-2">
-            {{ form_widget(form.submit, {attr: {class:'btn btn-m btn-primary btn-block'} }) }}            
+            {{ form_widget(form.submit, {attr: {class:'btn btn-m btn-primary btn-block'} }) }}
     </div>
     <div class="col-sm-2">
         <button class="btn btn-m btn-default btn-block"  type="button" id="_submit" name="_submit" onclick="window.location = '{{ path('users') }}'">Cancel</button>
@@ -84,5 +84,5 @@
     $(document).ready(function() {
         initialize_form();
     });
-</script>   
+</script>
 {% endblock fos_user_content %}

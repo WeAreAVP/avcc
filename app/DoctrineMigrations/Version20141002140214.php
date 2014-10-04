@@ -14,7 +14,7 @@ class Version20141002140214 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('DROP TABLE organizations_users');
         $this->addSql('ALTER TABLE organizations DROP FOREIGN KEY FK_427C1C7F16FE72E1');
         $this->addSql('ALTER TABLE organizations DROP FOREIGN KEY FK_427C1C7FDE12AB56');
@@ -34,7 +34,7 @@ class Version20141002140214 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('CREATE TABLE organizations_users (user_id INT NOT NULL, organization_id INT NOT NULL, INDEX IDX_9328CA68A76ED395 (user_id), INDEX IDX_9328CA6832C8A3DE (organization_id), PRIMARY KEY(user_id, organization_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('ALTER TABLE organizations_users ADD CONSTRAINT FK_9328CA6832C8A3DE FOREIGN KEY (organization_id) REFERENCES organizations (id)');
         $this->addSql('ALTER TABLE organizations_users ADD CONSTRAINT FK_9328CA68A76ED395 FOREIGN KEY (user_id) REFERENCES users (id)');

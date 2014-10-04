@@ -7,7 +7,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Security\Core\Validator\Constraint\UserPassword as OldUserPassword;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
-use Application\Bundle\FrontBundle\Form\DataTransformer\StringToArrayTransformer;
 
 class UsersType extends AbstractType
 {
@@ -23,7 +22,7 @@ class UsersType extends AbstractType
 
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -38,9 +37,9 @@ class UsersType extends AbstractType
         if (is_array($this->user_role) && !$this->user_role) {
             $data = array('ROLE_USER');
             $required = FALSE;
-        }else{
+        } else {
             $data = $this->user_role;
-        }        
+        }
         $builder
                 ->add('name')
                 ->add('username')

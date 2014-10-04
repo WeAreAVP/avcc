@@ -7,7 +7,7 @@ Application\Bundle\FrontBundle\Entity\Organizations:
             type: integer
             generator:
                 strategy: AUTO
-          
+
     fields:
         name:
           type: string
@@ -30,7 +30,7 @@ Application\Bundle\FrontBundle\Entity\Organizations:
           nullable: true
         contact_person_phone:
           type: string
-          length: 255  
+          length: 255
           nullable: true
         created_on:
             type: datetime
@@ -46,11 +46,11 @@ Application\Bundle\FrontBundle\Entity\Organizations:
               referencedColumnName: id
         users_updated:
           targetEntity: Users
-          inversedBy: users  
+          inversedBy: users
           joinColumn:
               name: updated_by
-              referencedColumnName: id         
-              
+              referencedColumnName: id
+
     lifecycleCallbacks:
         prePersist: [ setCreatedOnValue ]
         preUpdate: [ setUpdatedOnValue ]

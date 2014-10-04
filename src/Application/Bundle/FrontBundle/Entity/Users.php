@@ -6,14 +6,12 @@ namespace Application\Bundle\FrontBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use \Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * Users
- * 
- * @ORM\Entity  
- * 
+ *
+ * @ORM\Entity
+ *
  * @ORM\Table(name="users")
  *
  */
@@ -52,7 +50,7 @@ class Users extends BaseUser
 
     /**
      * Override the mapping of setRoles
-     * 
+     *
      * @param array $roles
      */
     public function setRoles(array $roles)
@@ -72,7 +70,7 @@ class Users extends BaseUser
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -83,7 +81,7 @@ class Users extends BaseUser
      * Set name
      *
      * @param string $name
-     * 
+     *
      * @return Users
      */
     public function setName($name)
@@ -96,7 +94,7 @@ class Users extends BaseUser
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -107,7 +105,7 @@ class Users extends BaseUser
      * Set created_on
      *
      * @param \DateTime $createdOn
-     * 
+     *
      * @return Users
      */
     public function setCreatedOn($createdOn)
@@ -120,7 +118,7 @@ class Users extends BaseUser
     /**
      * Get created_on
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedOn()
     {
@@ -131,7 +129,7 @@ class Users extends BaseUser
      * Set updated_on
      *
      * @param \DateTime $updatedOn
-     * 
+     *
      * @return Users
      */
     public function setUpdatedOn($updatedOn)
@@ -144,7 +142,7 @@ class Users extends BaseUser
     /**
      * Get updated_on
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedOn()
     {
@@ -171,7 +169,7 @@ class Users extends BaseUser
 
     /**
      * Returns user name
-     * 
+     *
      * @return string
      */
     public function __toString()
@@ -193,7 +191,7 @@ class Users extends BaseUser
      * Set created_by
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
-     * 
+     *
      * @return Users
      */
     public function setCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy = null)
@@ -206,7 +204,7 @@ class Users extends BaseUser
     /**
      * Get created_by
      *
-     * @return \Application\Bundle\FrontBundle\Entity\Users 
+     * @return \Application\Bundle\FrontBundle\Entity\Users
      */
     public function getCreatedBy()
     {
@@ -217,7 +215,7 @@ class Users extends BaseUser
      * Set updated_by
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
-     * 
+     *
      * @return Users
      */
     public function setUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy = null)
@@ -230,7 +228,7 @@ class Users extends BaseUser
     /**
      * Get updated_by
      *
-     * @return \Application\Bundle\FrontBundle\Entity\Users 
+     * @return \Application\Bundle\FrontBundle\Entity\Users
      */
     public function getUpdatedBy()
     {
@@ -246,7 +244,7 @@ class Users extends BaseUser
      * Set organizations
      *
      * @param \Application\Bundle\FrontBundle\Entity\Organizations $organizations
-     * 
+     *
      * @return Users
      */
     public function setOrganizations(\Application\Bundle\FrontBundle\Entity\Organizations $organizations = null)
@@ -259,7 +257,7 @@ class Users extends BaseUser
     /**
      * Get organizations
      *
-     * @return \Application\Bundle\FrontBundle\Entity\Organizations 
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganizations()
     {
@@ -270,7 +268,7 @@ class Users extends BaseUser
      * Add created_by
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
-     * 
+     *
      * @return Users
      */
     public function addCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy)
@@ -294,7 +292,7 @@ class Users extends BaseUser
      * Add updated_by
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
-     * 
+     *
      * @return Users
      */
     public function addUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy)
@@ -323,7 +321,7 @@ class Users extends BaseUser
      * Set users
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $users
-     * 
+     *
      * @return Users
      */
     public function setUsers(\Application\Bundle\FrontBundle\Entity\Users $users = null)
@@ -336,7 +334,7 @@ class Users extends BaseUser
     /**
      * Get users
      *
-     * @return \Application\Bundle\FrontBundle\Entity\Users 
+     * @return \Application\Bundle\FrontBundle\Entity\Users
      */
     public function getUsers()
     {
@@ -357,7 +355,7 @@ class Users extends BaseUser
      * Set users_created
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $usersCreated
-     * 
+     *
      * @return Users
      */
     public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated = null)
@@ -370,7 +368,7 @@ class Users extends BaseUser
     /**
      * Get users_created
      *
-     * @return \Application\Bundle\FrontBundle\Entity\Users 
+     * @return \Application\Bundle\FrontBundle\Entity\Users
      */
     public function getUsersCreated()
     {
@@ -381,7 +379,7 @@ class Users extends BaseUser
      * Set users_updated
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
-     * 
+     *
      * @return Users
      */
     public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated = null)
@@ -394,7 +392,7 @@ class Users extends BaseUser
     /**
      * Get users_updated
      *
-     * @return \Application\Bundle\FrontBundle\Entity\Users 
+     * @return \Application\Bundle\FrontBundle\Entity\Users
      */
     public function getUsersUpdated()
     {

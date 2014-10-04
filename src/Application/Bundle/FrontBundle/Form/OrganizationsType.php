@@ -10,7 +10,7 @@ class OrganizationsType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -23,7 +23,7 @@ class OrganizationsType extends AbstractType
             ->add('contact_person_phone')
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

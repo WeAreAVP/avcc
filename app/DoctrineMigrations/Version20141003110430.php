@@ -14,7 +14,7 @@ class Version20141003110430 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('ALTER TABLE organizations ADD created_by INT DEFAULT NULL, ADD updated_by INT DEFAULT NULL');
         $this->addSql('ALTER TABLE organizations ADD CONSTRAINT FK_427C1C7FDE12AB56 FOREIGN KEY (created_by) REFERENCES users (id)');
         $this->addSql('ALTER TABLE organizations ADD CONSTRAINT FK_427C1C7F16FE72E1 FOREIGN KEY (updated_by) REFERENCES users (id)');
@@ -31,7 +31,7 @@ class Version20141003110430 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('ALTER TABLE organizations DROP FOREIGN KEY FK_427C1C7FDE12AB56');
         $this->addSql('ALTER TABLE organizations DROP FOREIGN KEY FK_427C1C7F16FE72E1');
         $this->addSql('DROP INDEX UNIQ_427C1C7FDE12AB56 ON organizations');

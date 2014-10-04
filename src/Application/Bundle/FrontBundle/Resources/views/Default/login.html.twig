@@ -5,8 +5,8 @@
 
 
 <form class="form-signin" role="form" action="{{ path("login_check") }}" method="post">
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />    
-    <h3 class="form-signin-heading">Please sign in</h3>   
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+    <h3 class="form-signin-heading">Please sign in</h3>
     {% if error %}
     <span class="has-error text-danger" style="margin-bottom: 10px;display:block;">{{ error }}</span>
     {% endif %}

@@ -14,7 +14,7 @@ class Version20141002140537 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('ALTER TABLE users DROP FOREIGN KEY FK_1483A5E9F1C37890');
         $this->addSql('DROP INDEX IDX_1483A5E9F1C37890 ON users');
         $this->addSql('ALTER TABLE users CHANGE organization_id_id organizations_id INT DEFAULT NULL');
@@ -26,7 +26,7 @@ class Version20141002140537 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('ALTER TABLE users DROP FOREIGN KEY FK_1483A5E986288A55');
         $this->addSql('DROP INDEX IDX_1483A5E986288A55 ON users');
         $this->addSql('ALTER TABLE users CHANGE organizations_id organization_id_id INT DEFAULT NULL');

@@ -30,11 +30,11 @@ fos_user_change_password:
 fos_user_security_logout:
     path: /logout
     defaults: { _controller: FOSUserBundle:Security:logout}
-    
+
 login:
     path: /login
     defaults: { _controller: ApplicationFrontBundle:Default:login}
-    
+
 login_check:
     path: /login_check
-    defaults: { _controller: ApplicationFrontBundle:Default:check} 
+    defaults: { _controller: ApplicationFrontBundle:Default:check}

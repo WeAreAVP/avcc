@@ -11,7 +11,6 @@ use Application\Bundle\FrontBundle\Entity\Users;
 use Application\Bundle\FrontBundle\Form\UsersType;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\SecurityContext;
 
 /**
  * Users controller.
@@ -46,9 +45,9 @@ class UsersController extends Controller
      * @Route("/", name="users_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:Users:new.html.twig")
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * 
+     *
      * @return array/redirect to list page
      */
     public function createAction(Request $request)
@@ -64,6 +63,7 @@ class UsersController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+
             return $this->redirect($this->generateUrl('users'));
         }
 
@@ -77,7 +77,7 @@ class UsersController extends Controller
      * Creates a form to create a Users entity.
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $entity
-     * @param array $rolesField
+     * @param array                                        $rolesField
      *
      * @return \Symfony\Component\Form\Form The form
      */
@@ -119,9 +119,9 @@ class UsersController extends Controller
      * @Route("/{id}", name="users_show")
      * @Method("GET")
      * @Template()
-     * @param integer $id
-     * @return array 
-     * 
+     * @param  integer $id
+     * @return array
+     *
      */
     public function showAction($id)
     {
@@ -147,7 +147,7 @@ class UsersController extends Controller
      * @Route("/{id}/edit", name="users_edit")
      * @Method("GET")
      * @Template()
-     * 
+     *
      * @param integer $id user id
      */
     public function editAction($id)
@@ -179,9 +179,9 @@ class UsersController extends Controller
     /**
      * Creates a form to edit a Users entity.
      *
-     * @param Users $entity The entity
+     * @param Users $entity     The entity
      * @param array $rolesField roles array
-     * 
+     *
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(Users $entity, $rolesField = array())
@@ -202,10 +202,10 @@ class UsersController extends Controller
      * @Route("/{id}", name="users_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:Users:edit.html.twig")
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param integer $id user id
-     * 
+     * @param integer                                   $id      user id
+     *
      * @return type
      */
     public function updateAction(Request $request, $id)
@@ -244,10 +244,10 @@ class UsersController extends Controller
      *
      * @Route("/{id}", name="users_delete")
      * @Method("DELETE")
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param integer $id
-     * 
+     * @param integer                                   $id
+     *
      * @return redirect to user list page
      */
     public function deleteAction(Request $request, $id)
@@ -288,7 +288,7 @@ class UsersController extends Controller
 
     /**
      * Get roles form defined hierarchy in security.yml
-     * 
+     *
      * @return roles array
      */
     private function getRoleHierarchy()
@@ -316,6 +316,7 @@ class UsersController extends Controller
         }
         $roleOptions['role'] = $role;
         $roleOptions['roles'] = $rolesChoices;
+
         return $roleOptions;
     }
 

@@ -12,9 +12,9 @@ class RegistrationFormType extends AbstractType
 
     /**
      * registration form fields modified to apply bootstrap and new field added
-     * 
+     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
+     * @param array                                        $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -34,7 +34,7 @@ class RegistrationFormType extends AbstractType
 
     /**
      * Returns parent form type
-     * 
+     *
      * @return string
      */
     public function getParent()
@@ -44,7 +44,7 @@ class RegistrationFormType extends AbstractType
 
     /**
      * Returns new form type
-     * 
+     *
      * @return string
      */
     public function getName()

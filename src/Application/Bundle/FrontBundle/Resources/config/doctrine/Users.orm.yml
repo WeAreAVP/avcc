@@ -2,7 +2,7 @@
 Application\Bundle\FrontBundle\Entity\Users:
     type:  entity
     table: users
-    
+
     id:
         id:
             type: integer
@@ -11,7 +11,7 @@ Application\Bundle\FrontBundle\Entity\Users:
     fields:
         name:
           type: string
-          length: 50   
+          length: 50
         created_on:
             type: datetime
         updated_on:
@@ -32,11 +32,11 @@ Application\Bundle\FrontBundle\Entity\Users:
               referencedColumnName: id
         users_updated:
           targetEntity: Users
-          inversedBy: users  
+          inversedBy: users
           joinColumn:
               name: updated_by
-              referencedColumnName: id 
-          
+              referencedColumnName: id
+
     lifecycleCallbacks:
         prePersist: [ setCreatedOnValue ]
         preUpdate: [ setUpdatedOnValue ]

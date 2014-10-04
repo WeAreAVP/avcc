@@ -8,7 +8,7 @@
 {% endif %}
 <form class="form-signin" role="form" action="{{ path("fos_user_security_check") }}" method="post">
     <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-    <h3 class="form-signin-heading">Please sign in</h3>   
+    <h3 class="form-signin-heading">Please sign in</h3>
     <input type="text" class="form-control" placeholder="User Name" id="username" name="_username" required="required" autofocus />
     <input type="password" class="form-control" placeholder="Password"  name="_password" required="required" />
     <label class="checkbox remember-me">

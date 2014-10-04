@@ -58,7 +58,7 @@ class Organizations
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -69,7 +69,7 @@ class Organizations
      * Set name
      *
      * @param string $name
-     * 
+     *
      * @return Organizations
      */
     public function setName($name)
@@ -82,7 +82,7 @@ class Organizations
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -93,7 +93,7 @@ class Organizations
      * Set department_name
      *
      * @param string $departmentName
-     * 
+     *
      * @return Organizations
      */
     public function setDepartmentName($departmentName)
@@ -106,7 +106,7 @@ class Organizations
     /**
      * Get department_name
      *
-     * @return string 
+     * @return string
      */
     public function getDepartmentName()
     {
@@ -117,7 +117,7 @@ class Organizations
      * Set address
      *
      * @param string $address
-     * 
+     *
      * @return Organizations
      */
     public function setAddress($address)
@@ -130,7 +130,7 @@ class Organizations
     /**
      * Get address
      *
-     * @return string 
+     * @return string
      */
     public function getAddress()
     {
@@ -141,7 +141,7 @@ class Organizations
      * Set contact_person_name
      *
      * @param string $contactPersonName
-     * 
+     *
      * @return Organizations
      */
     public function setContactPersonName($contactPersonName)
@@ -154,7 +154,7 @@ class Organizations
     /**
      * Get contact_person_name
      *
-     * @return string 
+     * @return string
      */
     public function getContactPersonName()
     {
@@ -165,7 +165,7 @@ class Organizations
      * Set contact_person_email
      *
      * @param string $contactPersonEmail
-     * 
+     *
      * @return Organizations
      */
     public function setContactPersonEmail($contactPersonEmail)
@@ -178,7 +178,7 @@ class Organizations
     /**
      * Get contact_person_email
      *
-     * @return string 
+     * @return string
      */
     public function getContactPersonEmail()
     {
@@ -189,7 +189,7 @@ class Organizations
      * Set contact_person_phone
      *
      * @param string $contactPersonPhone
-     * 
+     *
      * @return Organizations
      */
     public function setContactPersonPhone($contactPersonPhone)
@@ -202,7 +202,7 @@ class Organizations
     /**
      * Get contact_person_phone
      *
-     * @return string 
+     * @return string
      */
     public function getContactPersonPhone()
     {
@@ -213,7 +213,7 @@ class Organizations
      * Set created_on
      *
      * @param \DateTime $createdOn
-     * 
+     *
      * @return Organizations
      */
     public function setCreatedOn($createdOn)
@@ -226,7 +226,7 @@ class Organizations
     /**
      * Get created_on
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedOn()
     {
@@ -236,7 +236,7 @@ class Organizations
     /**
      * Set updated_on
      *
-     * @param \DateTime $updatedOn
+     * @param  \DateTime     $updatedOn
      * @return Organizations
      */
     public function setUpdatedOn($updatedOn)
@@ -249,7 +249,7 @@ class Organizations
     /**
      * Get updated_on
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedOn()
     {
@@ -276,7 +276,7 @@ class Organizations
 
     /**
      * Returns Orgnaizaition name
-     * 
+     *
      * @return string
      */
     public function __toString()
@@ -298,7 +298,7 @@ class Organizations
      * Set created_by
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
-     * 
+     *
      * @return Organizations
      */
     public function setCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy = null)
@@ -311,7 +311,7 @@ class Organizations
     /**
      * Get created_by
      *
-     * @return \Application\Bundle\FrontBundle\Entity\Users 
+     * @return \Application\Bundle\FrontBundle\Entity\Users
      */
     public function getCreatedBy()
     {
@@ -322,7 +322,7 @@ class Organizations
      * Set updated_by
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
-     * 
+     *
      * @return Organizations
      */
     public function setUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy = null)
@@ -335,7 +335,7 @@ class Organizations
     /**
      * Get updated_by
      *
-     * @return \Application\Bundle\FrontBundle\Entity\Users 
+     * @return \Application\Bundle\FrontBundle\Entity\Users
      */
     public function getUpdatedBy()
     {
@@ -349,7 +349,7 @@ class Organizations
 
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Users
-     * 
+     *
      */
     private $users_updated;
 
@@ -357,7 +357,7 @@ class Organizations
      * Set users_created
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $usersCreated
-     * 
+     *
      * @return Organizations
      */
     public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated = null)
@@ -370,8 +370,8 @@ class Organizations
     /**
      * Get users_created
      *
-     * @return \Application\Bundle\FrontBundle\Entity\Users 
-     * 
+     * @return \Application\Bundle\FrontBundle\Entity\Users
+     *
      */
     public function getUsersCreated()
     {
@@ -382,7 +382,7 @@ class Organizations
      * Set users_updated
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
-     * 
+     *
      * @return Organizations
      */
     public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated = null)
@@ -395,7 +395,7 @@ class Organizations
     /**
      * Get users_updated
      *
-     * @return \Application\Bundle\FrontBundle\Entity\Users 
+     * @return \Application\Bundle\FrontBundle\Entity\Users
      */
     public function getUsersUpdated()
     {
