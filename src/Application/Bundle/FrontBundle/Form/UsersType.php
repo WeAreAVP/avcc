@@ -34,11 +34,13 @@ class UsersType extends AbstractType
             $constraint = new OldUserPassword();
         }
         $data = array();
+        $required = true;
         if (is_array($this->user_role) && !$this->user_role) {
             $data = array('ROLE_USER');
+            $required = FALSE;
         }else{
             $data = $this->user_role;
-        }
+        }        
         $builder
                 ->add('name')
                 ->add('username')
@@ -46,7 +48,7 @@ class UsersType extends AbstractType
                 ->add('organizations')
                 ->add('plainPassword', 'repeated', array(
                     'type' => 'password',
-                    'required' => false,
+                    'required' => $required,
                     'options' => array('translation_domain' => 'FOSUserBundle'),
                     'first_options' => array('label' => '', 'attr' => array('class' => 'form-control', 'placeholder' => 'Password')),
                     'second_options' => array('label' => ' ', 'attr' => array('class' => 'form-control', 'placeholder' => 'Confirm Password')),
