@@ -167,7 +167,12 @@ class Users extends BaseUser
     {
         $this->updated_on = new \DateTime();
     }
-
+   
+    /**
+     * Returns user name
+     * 
+     * @return string
+     */
     public function __toString()
     {
         return $this->getName();
@@ -187,6 +192,7 @@ class Users extends BaseUser
      * Set created_by
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
+     * 
      * @return Users
      */
     public function setCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy = null)
@@ -210,6 +216,7 @@ class Users extends BaseUser
      * Set updated_by
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
+     * 
      * @return Users
      */
     public function setUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy = null)

@@ -213,6 +213,7 @@ class Organizations
      * Set created_on
      *
      * @param \DateTime $createdOn
+     * 
      * @return Organizations
      */
     public function setCreatedOn($createdOn)
@@ -271,7 +272,12 @@ class Organizations
     {
         $this->updated_on = new \DateTime();
     }
-
+    
+    /**
+     * Returns Orgnaizaition name
+     * 
+     * @return string
+     */
     public function __toString()
     {
         return $this->getName();
@@ -291,6 +297,7 @@ class Organizations
      * Set created_by
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
+     * 
      * @return Organizations
      */
     public function setCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy = null)
@@ -314,6 +321,7 @@ class Organizations
      * Set updated_by
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
+     * 
      * @return Organizations
      */
     public function setUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy = null)
@@ -348,6 +356,7 @@ class Organizations
      * Set users_created
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $usersCreated
+     * 
      * @return Organizations
      */
     public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated = null)
@@ -372,6 +381,7 @@ class Organizations
      * Set users_updated
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
+     * 
      * @return Organizations
      */
     public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated = null)
