@@ -29,7 +29,7 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
-        - { path: ^/users, role: ROLE_USER }
+        - { path: ^/users, role: ROLE_SUPER_ADMIN }
         - { path: ^/organizations, role: ROLE_MANAGER }
 
     acl:
