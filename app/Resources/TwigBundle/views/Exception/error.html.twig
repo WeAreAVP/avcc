@@ -1,0 +1,5 @@
+  {% extends 'FOSUserBundle::layout.html.twig' %}
+{% block error_block %}
+    <h3>Oops! An Error Occurred</h3>
+    <h4>The server returned a "{{ status_code }} {{ status_text }}".</h4>
+{% endblock error_block %}
