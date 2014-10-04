@@ -262,6 +262,7 @@ class Users extends BaseUser
      * Add created_by
      *
      * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
+     * 
      * @return Users
      */
     public function addCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy)
