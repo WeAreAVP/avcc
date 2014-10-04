@@ -41,7 +41,8 @@ class DefaultController extends Controller
     }
 
     /**
-     *  
+     * Login function 
+     * 
      * @param \Symfony\Component\HttpFoundation\Request $request
      * 
      * @return type
