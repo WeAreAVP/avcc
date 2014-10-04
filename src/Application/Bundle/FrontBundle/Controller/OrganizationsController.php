@@ -42,7 +42,7 @@ class OrganizationsController extends Controller
      *
      * @Route("/", name="organizations_create")
      * @Method("POST")
-     * @Template("ApplicationFrontBundle:Organizations:new.html.twig")     * 
+     * @Template("ApplicationFrontBundle:Organizations:new.html.twig")
      * @param \Symfony\Component\HttpFoundation\Request $request form data variable
      * 
      * @return array
