@@ -195,7 +195,7 @@ class OrganizationsController extends Controller
      * @Template("ApplicationFrontBundle:Organizations:edit.html.twig")
      * 
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param integer $id
+     * @param integer                                   $id
      * 
      * @return array
      */
