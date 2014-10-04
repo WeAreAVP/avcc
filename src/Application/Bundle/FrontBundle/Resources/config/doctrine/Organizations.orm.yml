@@ -38,16 +38,18 @@ Application\Bundle\FrontBundle\Entity\Organizations:
             type: datetime
             nullable: true
     manyToOne:
-        created_by:
+        users_created:
           targetEntity: Users
+          inversedBy: users
           joinColumn:
               name: created_by
               referencedColumnName: id
-        updated_by:
+        users_updated:
           targetEntity: Users
+          inversedBy: users  
           joinColumn:
               name: updated_by
-              referencedColumnName: id
+              referencedColumnName: id         
               
     lifecycleCallbacks:
         prePersist: [ setCreatedOnValue ]

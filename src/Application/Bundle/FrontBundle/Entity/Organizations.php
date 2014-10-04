@@ -329,4 +329,60 @@ class Organizations
     {
         return $this->updated_by;
     }
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Users
+     */
+    private $users_created;
+
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Users
+     */
+    private $users_updated;
+
+
+    /**
+     * Set users_created
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $usersCreated
+     * @return Organizations
+     */
+    public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated = null)
+    {
+        $this->users_created = $usersCreated;
+
+        return $this;
+    }
+
+    /**
+     * Get users_created
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Users 
+     */
+    public function getUsersCreated()
+    {
+        return $this->users_created;
+    }
+
+    /**
+     * Set users_updated
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
+     * @return Organizations
+     */
+    public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated = null)
+    {
+        $this->users_updated = $usersUpdated;
+
+        return $this;
+    }
+
+    /**
+     * Get users_updated
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Users 
+     */
+    public function getUsersUpdated()
+    {
+        return $this->users_updated;
+    }
 }

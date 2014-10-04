@@ -44,12 +44,14 @@ class OrganizationsController extends Controller
      */
     public function createAction(Request $request)
     {
+        $user = $this->getUser();
         $entity = new Organizations();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $entity->setUsersCreated($user);
             $em->persist($entity);
             $em->flush();
 
@@ -179,7 +181,7 @@ class OrganizationsController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $user = $this->getUser();
         $entity = $em->getRepository('ApplicationFrontBundle:Organizations')->find($id);
 
         if (!$entity) {
@@ -191,6 +193,7 @@ class OrganizationsController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            $entity->setUsersUpdated($user);
             $em->flush();
 
           return $this->redirect($this->generateUrl('organizations'));

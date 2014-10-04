@@ -37,16 +37,6 @@ Application\Bundle\FrontBundle\Entity\Users:
               name: updated_by
               referencedColumnName: id 
           
-#    oneToMany:
-#        created_by:
-#          targetEntity: Users
-#          mappedBy: users_created
-#          
-#        updated_by:
-#          targetEntity: Users
-#          mappedBy: users_updated
-#          
-           
     lifecycleCallbacks:
-        prePersist: [ setCreatedOn ]
-        preUpdate: [ setUpdatedOn ]
+        prePersist: [ setCreatedOnValue ]
+        preUpdate: [ setUpdatedOnValue ]
