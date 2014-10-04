@@ -205,7 +205,7 @@ class UsersController extends Controller
      * Edits an existing Users entity.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param integer                                   $id      user id
+     * @param integer                                   $id
      *
      * @Route("/{id}", name="users_update")
      * @Method("PUT")
