@@ -113,6 +113,7 @@ class Users extends BaseUser
     public function setCreatedOn($createdOn)
     {
         $this->created_on = $createdOn;
+        
         return $this;
     }
 
@@ -130,6 +131,7 @@ class Users extends BaseUser
      * Set updated_on
      *
      * @param \DateTime $updatedOn
+     * 
      * @return Users
      */
     public function setUpdatedOn($updatedOn)
