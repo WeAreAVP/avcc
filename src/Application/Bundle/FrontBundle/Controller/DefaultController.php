@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContext;
 
 /**
- * Log In
+ * Default controller.
  * 
  */
 class DefaultController extends Controller

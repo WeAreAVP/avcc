@@ -24,6 +24,7 @@ class OrganizationsController extends Controller
      * @Route("/", name="organizations")
      * @Method("GET")
      * @Template()
+     * @return array
      */
     public function indexAction()
     {
@@ -41,7 +42,11 @@ class OrganizationsController extends Controller
      * @Route("/", name="organizations_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:Organizations:new.html.twig")
-     */
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * 
+     * @return array
+     */   
     public function createAction(Request $request)
     {
         $user = $this->getUser();
@@ -89,6 +94,7 @@ class OrganizationsController extends Controller
      * @Route("/new", name="organizations_new")
      * @Method("GET")
      * @Template()
+     * @return array
      */
     public function newAction()
     {
@@ -107,7 +113,11 @@ class OrganizationsController extends Controller
      * @Route("/{id}", name="organizations_show")
      * @Method("GET")
      * @Template()
-     */
+     * 
+     * @param integer $id
+     * 
+     * @return array
+     */    
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -131,7 +141,11 @@ class OrganizationsController extends Controller
      *
      * @Route("/{id}/edit", name="organizations_edit")
      * @Method("GET")
+     * 
+     * @param integer $id
+     * 
      * @Template()
+     * @return array
      */
     public function editAction($id)
     {
@@ -177,7 +191,12 @@ class OrganizationsController extends Controller
      * @Route("/{id}", name="organizations_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:Organizations:edit.html.twig")
-     */
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param integer $id
+     * 
+     * @return array
+     */   
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -196,8 +215,7 @@ class OrganizationsController extends Controller
             $entity->setUsersUpdated($user);
             $em->flush();
 
-          return $this->redirect($this->generateUrl('organizations'));
-            
+          return $this->redirect($this->generateUrl('organizations'));            
         }
 
         return array(
@@ -211,7 +229,12 @@ class OrganizationsController extends Controller
      *
      * @Route("/{id}", name="organizations_delete")
      * @Method("DELETE")
-     */
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param integer $id
+     * 
+     * @return redirect to organization list page
+     */       
     public function deleteAction(Request $request, $id)
     {
         $form = $this->createDeleteForm($id);
