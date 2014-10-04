@@ -212,7 +212,6 @@ class Organizations
     public function setCreatedOn($createdOn)
     {
         $this->created_on = $createdOn;
-
         return $this;
     }
 
@@ -235,7 +234,6 @@ class Organizations
     public function setUpdatedOn($updatedOn)
     {
         $this->updated_on = $updatedOn;
-
         return $this;
     }
 
@@ -272,7 +270,7 @@ class Organizations
     {
         return $this->getName();
     }
-    
+
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Users
      */
@@ -282,7 +280,6 @@ class Organizations
      * @var \Application\Bundle\FrontBundle\Entity\Users
      */
     private $updated_by;
-
 
     /**
      * Set created_by
@@ -329,6 +326,7 @@ class Organizations
     {
         return $this->updated_by;
     }
+
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Users
      */
@@ -338,7 +336,6 @@ class Organizations
      * @var \Application\Bundle\FrontBundle\Entity\Users
      */
     private $users_updated;
-
 
     /**
      * Set users_created
@@ -385,4 +382,5 @@ class Organizations
     {
         return $this->users_updated;
     }
+
 }

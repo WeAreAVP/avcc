@@ -10,378 +10,376 @@ use Symfony\Component\Validator\Constraints as Assert;
 use \Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity 
+ * 
  * @ORM\Table(name="users")
  *
  */
 class Users extends BaseUser
 {
 
-	/**
-	 * @ORM\Id
-	 * @ORM\Column(type="integer")
-	 * @ORM\GeneratedValue(strategy="AUTO")
-	 */
-	protected $id;
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
 
-	/**
-	 * @var string
-	 */
-	private $name;
+    /**
+     * @var string
+     */
+    private $name;
 
-	/**
-	 * @var \DateTime
-	 */
-	private $created_on;
+    /**
+     * @var \DateTime
+     */
+    private $created_on;
 
-	/**
-	 * @var \DateTime
-	 */
-	private $updated_on;
+    /**
+     * @var \DateTime
+     */
+    private $updated_on;
 
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-		
-	}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	/**
-	 * Override the mapping of setRoles
-	 * 
-	 * @param array $roles
-	 */
-	public function setRoles(array $roles)
-	{
-		$this->roles = $roles;
-	}
+    /**
+     * Override the mapping of setRoles
+     * 
+     * @param array $roles
+     */
+    public function setRoles(array $roles)
+    {
+        $this->roles = $roles;
+    }
 
-	/**
-	 * Get Roles
-	 * @return type
-	 */
-	public function getRoles()
-	{
-		return $this->roles;
-	}
+    /**
+     * Get Roles
+     * @return type
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
 
-	/**
-	 * Get id
-	 *
-	 * @return integer 
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
-	/**
-	 * Set name
-	 *
-	 * @param string $name
-	 * @return Users
-	 */
-	public function setName($name)
-	{
-		$this->name = $name;
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Users
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Get name
-	 *
-	 * @return string 
-	 */
-	public function getName()
-	{
-		return $this->name;
-	}
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 
-	/**
-	 * Set created_on
-	 *
-	 * @param \DateTime $createdOn
-	 * @return Users
-	 */
-	public function setCreatedOn($createdOn)
-	{
-		$this->created_on = $createdOn;
+    /**
+     * Set created_on
+     *
+     * @param \DateTime $createdOn
+     * @return Users
+     */
+    public function setCreatedOn($createdOn)
+    {
+        $this->created_on = $createdOn;
+        return $this;
+    }
+    /**
+     * Get created_on
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedOn()
+    {
+        return $this->created_on;
+    }
 
-		return $this;
-	}
+    /**
+     * Set updated_on
+     *
+     * @param \DateTime $updatedOn
+     * @return Users
+     */
+    public function setUpdatedOn($updatedOn)
+    {
+        $this->updated_on = $updatedOn;
 
-	/**
-	 * Get created_on
-	 *
-	 * @return \DateTime 
-	 */
-	public function getCreatedOn()
-	{
-		return $this->created_on;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set updated_on
-	 *
-	 * @param \DateTime $updatedOn
-	 * @return Users
-	 */
-	public function setUpdatedOn($updatedOn)
-	{
-		$this->updated_on = $updatedOn;
+    /**
+     * Get updated_on
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedOn()
+    {
+        return $this->updated_on;
+    }
 
-		return $this;
-	}
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedOnValue()
+    {
+        if ( ! $this->getCreatedOn())
+        {
+            $this->created_on = new \DateTime();
+        }
+    }
 
-	/**
-	 * Get updated_on
-	 *
-	 * @return \DateTime 
-	 */
-	public function getUpdatedOn()
-	{
-		return $this->updated_on;
-	}
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedOnValue()
+    {
+        $this->updated_on = new \DateTime();
+    }
 
-	/**
-	 * @ORM\PrePersist
-	 */
-	public function setCreatedOnValue()
-	{
-		if ( ! $this->getCreatedOn())
-		{
-			$this->created_on = new \DateTime();
-		}
-	}
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
-	/**
-	 * @ORM\PreUpdate
-	 */
-	public function setUpdatedOnValue()
-	{
-		$this->updated_on = new \DateTime();
-	}
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Users
+     */
+    private $created_by;
 
-	public function __toString()
-	{
-		return $this->getName();
-	}
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Users
+     */
+    private $updated_by;
 
-	/**
-	 * @var \Application\Bundle\FrontBundle\Entity\Users
-	 */
-	private $created_by;
+    /**
+     * Set created_by
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
+     * @return Users
+     */
+    public function setCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy = null)
+    {
+        $this->created_by = $createdBy;
 
-	/**
-	 * @var \Application\Bundle\FrontBundle\Entity\Users
-	 */
-	private $updated_by;
+        return $this;
+    }
 
-	/**
-	 * Set created_by
-	 *
-	 * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
-	 * @return Users
-	 */
-	public function setCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy = null)
-	{
-		$this->created_by = $createdBy;
+    /**
+     * Get created_by
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Users 
+     */
+    public function getCreatedBy()
+    {
+        return $this->created_by;
+    }
 
-		return $this;
-	}
+    /**
+     * Set updated_by
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
+     * @return Users
+     */
+    public function setUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy = null)
+    {
+        $this->updated_by = $updatedBy;
 
-	/**
-	 * Get created_by
-	 *
-	 * @return \Application\Bundle\FrontBundle\Entity\Users 
-	 */
-	public function getCreatedBy()
-	{
-		return $this->created_by;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set updated_by
-	 *
-	 * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
-	 * @return Users
-	 */
-	public function setUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy = null)
-	{
-		$this->updated_by = $updatedBy;
+    /**
+     * Get updated_by
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Users 
+     */
+    public function getUpdatedBy()
+    {
+        return $this->updated_by;
+    }
 
-		return $this;
-	}
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    private $organizations;
 
-	/**
-	 * Get updated_by
-	 *
-	 * @return \Application\Bundle\FrontBundle\Entity\Users 
-	 */
-	public function getUpdatedBy()
-	{
-		return $this->updated_by;
-	}
+    /**
+     * Set organizations
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Organizations $organizations
+     * @return Users
+     */
+    public function setOrganizations(\Application\Bundle\FrontBundle\Entity\Organizations $organizations = null)
+    {
+        $this->organizations = $organizations;
 
-	/**
-	 * @var \Application\Bundle\FrontBundle\Entity\Organizations
-	 */
-	private $organizations;
+        return $this;
+    }
 
-	/**
-	 * Set organizations
-	 *
-	 * @param \Application\Bundle\FrontBundle\Entity\Organizations $organizations
-	 * @return Users
-	 */
-	public function setOrganizations(\Application\Bundle\FrontBundle\Entity\Organizations $organizations = null)
-	{
-		$this->organizations = $organizations;
+    /**
+     * Get organizations
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations 
+     */
+    public function getOrganizations()
+    {
+        return $this->organizations;
+    }
 
-		return $this;
-	}
+    /**
+     * Add created_by
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
+     * @return Users
+     */
+    public function addCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy)
+    {
+        $this->created_by[] = $createdBy;
 
-	/**
-	 * Get organizations
-	 *
-	 * @return \Application\Bundle\FrontBundle\Entity\Organizations 
-	 */
-	public function getOrganizations()
-	{
-		return $this->organizations;
-	}
+        return $this;
+    }
 
-	/**
-	 * Add created_by
-	 *
-	 * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
-	 * @return Users
-	 */
-	public function addCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy)
-	{
-		$this->created_by[] = $createdBy;
+    /**
+     * Remove created_by
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
+     */
+    public function removeCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy)
+    {
+        $this->created_by->removeElement($createdBy);
+    }
 
-		return $this;
-	}
+    /**
+     * Add updated_by
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
+     * @return Users
+     */
+    public function addUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy)
+    {
+        $this->updated_by[] = $updatedBy;
 
-	/**
-	 * Remove created_by
-	 *
-	 * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
-	 */
-	public function removeCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy)
-	{
-		$this->created_by->removeElement($createdBy);
-	}
+        return $this;
+    }
 
-	/**
-	 * Add updated_by
-	 *
-	 * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
-	 * @return Users
-	 */
-	public function addUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy)
-	{
-		$this->updated_by[] = $updatedBy;
+    /**
+     * Remove updated_by
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
+     */
+    public function removeUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy)
+    {
+        $this->updated_by->removeElement($updatedBy);
+    }
 
-		return $this;
-	}
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Users
+     */
+    private $users;
 
-	/**
-	 * Remove updated_by
-	 *
-	 * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
-	 */
-	public function removeUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy)
-	{
-		$this->updated_by->removeElement($updatedBy);
-	}
+    /**
+     * Set users
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $users
+     * @return Users
+     */
+    public function setUsers(\Application\Bundle\FrontBundle\Entity\Users $users = null)
+    {
+        $this->users = $users;
 
-	/**
-	 * @var \Application\Bundle\FrontBundle\Entity\Users
-	 */
-	private $users;
+        return $this;
+    }
 
-	/**
-	 * Set users
-	 *
-	 * @param \Application\Bundle\FrontBundle\Entity\Users $users
-	 * @return Users
-	 */
-	public function setUsers(\Application\Bundle\FrontBundle\Entity\Users $users = null)
-	{
-		$this->users = $users;
+    /**
+     * Get users
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Users 
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
 
-		return $this;
-	}
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Users
+     */
+    private $users_created;
 
-	/**
-	 * Get users
-	 *
-	 * @return \Application\Bundle\FrontBundle\Entity\Users 
-	 */
-	public function getUsers()
-	{
-		return $this->users;
-	}
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Users
+     */
+    private $users_updated;
 
-	/**
-	 * @var \Application\Bundle\FrontBundle\Entity\Users
-	 */
-	private $users_created;
+    /**
+     * Set users_created
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $usersCreated
+     * @return Users
+     */
+    public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated = null)
+    {
+        $this->users_created = $usersCreated;
 
-	/**
-	 * @var \Application\Bundle\FrontBundle\Entity\Users
-	 */
-	private $users_updated;
+        return $this;
+    }
 
-	/**
-	 * Set users_created
-	 *
-	 * @param \Application\Bundle\FrontBundle\Entity\Users $usersCreated
-	 * @return Users
-	 */
-	public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated = null)
-	{
-		$this->users_created = $usersCreated;
+    /**
+     * Get users_created
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Users 
+     */
+    public function getUsersCreated()
+    {
+        return $this->users_created;
+    }
 
-		return $this;
-	}
+    /**
+     * Set users_updated
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
+     * @return Users
+     */
+    public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated = null)
+    {
+        $this->users_updated = $usersUpdated;
 
-	/**
-	 * Get users_created
-	 *
-	 * @return \Application\Bundle\FrontBundle\Entity\Users 
-	 */
-	public function getUsersCreated()
-	{
-		return $this->users_created;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set users_updated
-	 *
-	 * @param \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
-	 * @return Users
-	 */
-	public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated = null)
-	{
-		$this->users_updated = $usersUpdated;
-
-		return $this;
-	}
-
-	/**
-	 * Get users_updated
-	 *
-	 * @return \Application\Bundle\FrontBundle\Entity\Users 
-	 */
-	public function getUsersUpdated()
-	{
-		return $this->users_updated;
-	}
+    /**
+     * Get users_updated
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Users 
+     */
+    public function getUsersUpdated()
+    {
+        return $this->users_updated;
+    }
 
 }
