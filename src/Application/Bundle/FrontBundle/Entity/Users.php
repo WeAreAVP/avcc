@@ -113,7 +113,7 @@ class Users extends BaseUser
     public function setCreatedOn($createdOn)
     {
         $this->created_on = $createdOn;
-        
+
         return $this;
     }
 
@@ -156,8 +156,7 @@ class Users extends BaseUser
      */
     public function setCreatedOnValue()
     {
-        if ( ! $this->getCreatedOn())
-        {
+        if (!$this->getCreatedOn()) {
             $this->created_on = new \DateTime();
         }
     }
@@ -169,7 +168,7 @@ class Users extends BaseUser
     {
         $this->updated_on = new \DateTime();
     }
-   
+
     /**
      * Returns user name
      * 

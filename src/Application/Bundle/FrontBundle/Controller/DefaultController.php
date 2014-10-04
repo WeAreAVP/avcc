@@ -32,8 +32,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $user = $this->container->get('security.context')->getToken()->getUser();
-        if ( ! is_object($user) || ! $user instanceof UserInterface)
-        {
+        if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
             $this->redirect($this->generateUrl("application_front"));
         }
@@ -52,26 +51,19 @@ class DefaultController extends Controller
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();
         // get the error if any (works with forward and redirect -- see below)
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR))
-        {
+        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
-        }
-        elseif (null !== $session && $session->has(SecurityContext::AUTHENTICATION_ERROR))
-        {
+        } elseif (null !== $session && $session->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
-        }
-        else
-        {
+        } else {
             $error = '';
         }
 
-        if ($error)
-        {
+        if ($error) {
             // TODO: this is a potential security risk (see http://trac.symfony-project.org/ticket/9523)
             $error = $error->getMessage();
-            if (strtolower($error) === 'bad credentials')
-            {
+            if (strtolower($error) === 'bad credentials') {
                 $error = "Invalid username or password.";
             }
 //            $error = "Invalid username or password";
@@ -82,9 +74,9 @@ class DefaultController extends Controller
         $csrfToken = $this->container->has('form.csrf_provider') ? $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate') : null;
 
         return $this->renderLogin(array(
-                'last_username' => $lastUsername,
-                'error' => $error,
-                'csrf_token' => $csrfToken,
+                    'last_username' => $lastUsername,
+                    'error' => $error,
+                    'csrf_token' => $csrfToken,
         ));
     }
 
@@ -102,7 +94,7 @@ class DefaultController extends Controller
 
         return $this->container->get('templating')->renderResponse($template, $data);
     }
-    
+
     /**
      * 
      * @throws \RuntimeException

@@ -219,7 +219,7 @@ class Organizations
     public function setCreatedOn($createdOn)
     {
         $this->created_on = $createdOn;
-        
+
         return $this;
     }
 
@@ -242,7 +242,7 @@ class Organizations
     public function setUpdatedOn($updatedOn)
     {
         $this->updated_on = $updatedOn;
-        
+
         return $this;
     }
 
@@ -261,8 +261,7 @@ class Organizations
      */
     public function setCreatedOnValue()
     {
-        if ( ! $this->getCreatedOn())
-        {
+        if (!$this->getCreatedOn()) {
             $this->created_on = new \DateTime();
         }
     }
@@ -274,7 +273,7 @@ class Organizations
     {
         $this->updated_on = new \DateTime();
     }
-    
+
     /**
      * Returns Orgnaizaition name
      * 

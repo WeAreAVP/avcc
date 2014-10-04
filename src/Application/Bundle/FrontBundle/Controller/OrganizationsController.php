@@ -36,6 +36,7 @@ class OrganizationsController extends Controller
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new Organizations entity.
      *
@@ -46,7 +47,7 @@ class OrganizationsController extends Controller
      * @param \Symfony\Component\HttpFoundation\Request $request
      * 
      * @return array
-     */   
+     */
     public function createAction(Request $request)
     {
         $user = $this->getUser();
@@ -65,7 +66,7 @@ class OrganizationsController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -99,11 +100,11 @@ class OrganizationsController extends Controller
     public function newAction()
     {
         $entity = new Organizations();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -117,7 +118,7 @@ class OrganizationsController extends Controller
      * @param integer $id
      * 
      * @return array
-     */    
+     */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -131,7 +132,7 @@ class OrganizationsController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -161,19 +162,19 @@ class OrganizationsController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-    * Creates a form to edit a Organizations entity.
-    *
-    * @param Organizations $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Organizations entity.
+     *
+     * @param Organizations $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(Organizations $entity)
     {
         $form = $this->createForm(new OrganizationsType(), $entity, array(
@@ -185,6 +186,7 @@ class OrganizationsController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Organizations entity.
      *
@@ -196,7 +198,7 @@ class OrganizationsController extends Controller
      * @param integer $id
      * 
      * @return array
-     */   
+     */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -215,15 +217,16 @@ class OrganizationsController extends Controller
             $entity->setUsersUpdated($user);
             $em->flush();
 
-          return $this->redirect($this->generateUrl('organizations'));            
+            return $this->redirect($this->generateUrl('organizations'));
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a Organizations entity.
      *
@@ -234,7 +237,7 @@ class OrganizationsController extends Controller
      * @param integer $id
      * 
      * @return redirect to organization list page
-     */       
+     */
     public function deleteAction(Request $request, $id)
     {
         $form = $this->createDeleteForm($id);
@@ -265,10 +268,11 @@ class OrganizationsController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('organizations_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
+                        ->setAction($this->generateUrl('organizations_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm()
         ;
     }
+
 }
