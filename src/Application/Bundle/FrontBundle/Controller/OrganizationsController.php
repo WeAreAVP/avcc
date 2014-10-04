@@ -234,7 +234,7 @@ class OrganizationsController extends Controller
      * @Method("DELETE")
      * 
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param integer $id
+     * @param integer                                   $id
      * 
      * @return redirect to organization list page
      */
