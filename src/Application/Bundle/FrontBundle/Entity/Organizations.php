@@ -69,6 +69,7 @@ class Organizations
      * Set name
      *
      * @param string $name
+     * 
      * @return Organizations
      */
     public function setName($name)
@@ -92,6 +93,7 @@ class Organizations
      * Set department_name
      *
      * @param string $departmentName
+     * 
      * @return Organizations
      */
     public function setDepartmentName($departmentName)
@@ -115,6 +117,7 @@ class Organizations
      * Set address
      *
      * @param string $address
+     * 
      * @return Organizations
      */
     public function setAddress($address)
@@ -138,6 +141,7 @@ class Organizations
      * Set contact_person_name
      *
      * @param string $contactPersonName
+     * 
      * @return Organizations
      */
     public function setContactPersonName($contactPersonName)
@@ -161,6 +165,7 @@ class Organizations
      * Set contact_person_email
      *
      * @param string $contactPersonEmail
+     * 
      * @return Organizations
      */
     public function setContactPersonEmail($contactPersonEmail)
@@ -184,6 +189,7 @@ class Organizations
      * Set contact_person_phone
      *
      * @param string $contactPersonPhone
+     * 
      * @return Organizations
      */
     public function setContactPersonPhone($contactPersonPhone)
@@ -334,6 +340,7 @@ class Organizations
 
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Users
+     * 
      */
     private $users_updated;
 
@@ -354,6 +361,7 @@ class Organizations
      * Get users_created
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users 
+     * 
      */
     public function getUsersCreated()
     {

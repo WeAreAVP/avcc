@@ -111,6 +111,7 @@ class Users extends BaseUser
         $this->created_on = $createdOn;
         return $this;
     }
+
     /**
      * Get created_on
      *
