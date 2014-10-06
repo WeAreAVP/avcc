@@ -1,7 +1,10 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-    <h3>Edit Organization</h3>
+    <h1>
+		<a href="{{ path('organizations') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+		Edit Organization
+	</h1>
     {{ form_start(edit_form, {attr: {class:'form-horizontal'} }) }}
     {{ form_errors(edit_form) }}
     <br />
@@ -10,7 +13,7 @@
         <div class="col-sm-4">
             {{ form_widget(edit_form.name, {attr: {class:'form-control'} }) }}
             {% for errorItem in edit_form.name.vars.errors %}
-            <span class="has-error text-danger" for="{{ edit_form.name.vars.id }}">{{ errorItem.message }}</span>
+				<span class="has-error text-danger" for="{{ edit_form.name.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
         </div>
     </div>
@@ -19,7 +22,7 @@
         <div class="col-sm-4">
             {{ form_widget(edit_form.department_name, {attr: {class:'form-control'} }) }}
             {% for errorItem in edit_form.department_name.vars.errors %}
-            <span class="has-error text-danger" for="{{ edit_form.department_name.vars.id }}">{{ errorItem.message }}</span>
+				<span class="has-error text-danger" for="{{ edit_form.department_name.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
         </div>
     </div>
@@ -28,7 +31,7 @@
         <div class="col-sm-4">
             {{ form_widget(edit_form.address, {attr: {class:'form-control'} }) }}
             {% for errorItem in edit_form.address.vars.errors %}
-            <span class="has-error text-danger" for="{{ edit_form.address.vars.id }}">{{ errorItem.message }}</span>
+				<span class="has-error text-danger" for="{{ edit_form.address.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
         </div>
     </div>
@@ -37,7 +40,7 @@
         <div class="col-sm-4">
             {{ form_widget(edit_form.contact_person_name, {attr: {class:'form-control'} }) }}
             {% for errorItem in edit_form.contact_person_name.vars.errors %}
-            <span class="has-error text-danger" for="{{ edit_form.contact_person_name.vars.id }}">{{ errorItem.message }}</span>
+				<span class="has-error text-danger" for="{{ edit_form.contact_person_name.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
         </div>
     </div>
@@ -46,7 +49,7 @@
         <div class="col-sm-4">
             {{ form_widget(edit_form.contact_person_email, {attr: {class:'form-control'} }) }}
             {% for errorItem in edit_form.contact_person_email.vars.errors %}
-            <span class="has-error text-danger" for="{{ edit_form.contact_person_email.vars.id }}">{{ errorItem.message }}</span>
+				<span class="has-error text-danger" for="{{ edit_form.contact_person_email.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
         </div>
     </div>
@@ -55,7 +58,7 @@
         <div class="col-sm-4">
             {{ form_widget(edit_form.contact_person_phone, {attr: {class:'form-control'} }) }}
             {% for errorItem in edit_form.contact_person_phone.vars.errors %}
-            <span class="has-error text-danger" for="{{ edit_form.contact_person_phone.vars.id }}">{{ errorItem.message }}</span>
+				<span class="has-error text-danger" for="{{ edit_form.contact_person_phone.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
         </div>
     </div>

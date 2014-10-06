@@ -1,4 +1,25 @@
 {% extends 'FOSUserBundle::layout.html.twig' %}
 {% block main_content %}
-Hello {{ name }}!
+	<h1>
+		Dashboard
+	</h1>
+
+	<div class="tile double bg-cyan">
+		<div class="tile-content icon">
+			<i class="icon-list"></i>
+		</div>
+		<div class="brand bg-black">
+			<span class="label fg-white">Projects</span>
+
+		</div>
+	</div>
+	<div class="tile double bg-green">
+		<div class="tile-content icon">
+			<i class="icon-search"></i>
+		</div>
+		<div class="brand bg-black">
+			<span class="label fg-white">Search records</span>
+
+		</div>
+	</div>
 {% endblock main_content %}
