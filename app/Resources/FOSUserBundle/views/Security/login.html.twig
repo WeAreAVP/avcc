@@ -1,6 +1,6 @@
         {% extends 'FOSUserBundle::layout.html.twig' %}
 
-   {% block fos_user_content %}
+   {% block body %}
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% if error %}
@@ -17,4 +17,4 @@
     <button class="btn btn-m btn-primary btn-block"  type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans }}</button>
     <div class="text-right"><a href="{{ path('fos_user_resetting_request') }}"><small>Forgot password ?</small></a></div>
 </form>
-{% endblock fos_user_content %}
+{% endblock body %}

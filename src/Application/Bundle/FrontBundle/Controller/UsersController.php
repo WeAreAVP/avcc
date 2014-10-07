@@ -82,8 +82,9 @@ class UsersController extends Controller
      */
     private function createCreateForm(Users $entity)
     {
-        $roleOptions = $this->getRoleHierarchy();
-        $form = $this->createForm(new UsersType($roleOptions), $entity, array(
+        $formOptions = $this->getRoleHierarchy();
+        $formOptions['currentUser'] = $this->getUser();
+        $form = $this->createForm(new UsersType($formOptions), $entity, array(
             'action' => $this->generateUrl('users_create'),
             'method' => 'POST',
         ));
@@ -168,10 +169,7 @@ class UsersController extends Controller
         if (! $entity) {
             throw $this->createNotFoundException('Unable to find Users entity.');
         }
-
-        $roleOptions = $this->getRoleHierarchy();
-        $roleOptions['user_role'] = $entity->getRoles();
-        $editForm = $this->createEditForm($entity, $roleOptions);
+        $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -189,9 +187,12 @@ class UsersController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(Users $entity, $rolesField = array())
+    private function createEditForm(Users $entity)
     {
-        $form = $this->createForm(new UsersType($rolesField), $entity, array(
+        $formOptions = $this->getRoleHierarchy();
+        $formOptions['userRole'] = $entity->getRoles();
+        $formOptions['currentUser'] = $this->getUser();
+        $form = $this->createForm(new UsersType($formOptions), $entity, array(
             'action' => $this->generateUrl('users_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
@@ -223,9 +224,8 @@ class UsersController extends Controller
             throw $this->createNotFoundException('Unable to find Users entity.');
         }
 
-        $roleOptions = $this->getRoleHierarchy();
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity, $roleOptions);
+        $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {

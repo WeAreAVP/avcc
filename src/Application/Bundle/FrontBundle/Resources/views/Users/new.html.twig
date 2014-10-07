@@ -1,6 +1,6 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
-{% block fos_user_content %}
+{% block body %}
 	<h1>
 		<a href="{{ path('users') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
 		New User
@@ -35,15 +35,17 @@
             {% endfor %}
 		</div>
 	</div>
-	<div class="form-group form-group-sm">
-		<label class="col-sm-2 control-label no-left-padding">Organizations</label>
-		<div class="col-sm-4">
-            {{ form_widget(form.organizations, {attr: {class:'form-control'} }) }}
-            {% for errorItem in form.organizations.vars.errors %}
-				<span class="has-error text-danger" for="{{ form.organizations.vars.id }}">{{ errorItem.message }}</span>
-            {% endfor %}
+	{% if is_granted('ROLE_SUPER_ADMIN') %}
+		<div class="form-group form-group-sm">
+			<label class="col-sm-2 control-label no-left-padding">Organizations</label>
+			<div class="col-sm-4">
+				{{ form_widget(form.organizations, {attr: {class:'form-control'} }) }}
+				{% for errorItem in form.organizations.vars.errors %}
+					<span class="has-error text-danger" for="{{ form.organizations.vars.id }}">{{ errorItem.message }}</span>
+				{% endfor %}
+			</div>
 		</div>
-	</div>
+	{% endif %}
 	<div class="form-group form-group-sm">
 		<label class="col-sm-2 control-label no-left-padding">Password</label>
 		<div class="col-sm-4">
@@ -88,4 +90,4 @@
 			initialize_form();
 		});
 	</script>
-{% endblock fos_user_content %}
+{% endblock body %}

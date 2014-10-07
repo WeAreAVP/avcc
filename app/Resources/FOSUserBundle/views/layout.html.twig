@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
@@ -12,7 +12,7 @@
 
         <!-- Bootstrap core CSS -->
 		{% block stylesheets %}
-{#						<link href="{{ asset('css/bootstrap.css') }}" type="text/css" rel="stylesheet" />#}
+			{#						<link href="{{ asset('css/bootstrap.css') }}" type="text/css" rel="stylesheet" />#}
 			<link href="{{ asset('css/metro-bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
 			<link href="{{ asset('css/metro-bootstrap-responsive.min.css') }}" type="text/css" rel="stylesheet" />
 			<link href="{{ asset('css/iconFont.min.css') }}" type="text/css" rel="stylesheet" />
@@ -22,15 +22,7 @@
 		{% endblock %}
 
 
-		{% block javascripts %}
-			<script src="{{ asset('js/jquery.min.js') }}"></script>
-			<script src="{{ asset('js/jquery.widget.min.js') }}"></script>
-			<script src="{{ asset('js/jquery.mousewheel.js') }}"></script>
-			<script src="{{ asset('js/metro.min.js') }}"></script>
-			<script src="{{ asset('js/chosen.jquery.js') }}"></script>
 
-
-		{% endblock %}
     </head>
 
     <body class="metro">
@@ -58,8 +50,8 @@
 								<a class="dropdown-toggle" href="#"><span class="icon-cog"></span>
 								</a>
 								<ul class="dropdown-menu dark" data-role="dropdown">
-									<li><a href="{{ path('users') }}">Manage Users</a></li>
-									<li><a href="{{ path('organizations') }}">Manage Organization</a></li>
+									<li><a href="{{ path('users') }}">Users</a></li>
+									<li><a href="{{ path('organizations') }}">Organization</a></li>
 
 								</ul>
 							</li>
@@ -70,16 +62,28 @@
 		</header>
 
         <div class="container">
-			{% block fos_user_content %}
-            {% endblock fos_user_content %}
+			{% for type, messages in app.session.flashbag.all() %}
+				{% for message in messages %}
+					<div class="flash-{{ type }}">
+						{{ message }}
+					</div>
+				{% endfor %}
+			{% endfor %}
+			{% block body %}
+            {% endblock body %}
 
-			{% block main_content %}
-			{% endblock main_content %}
-            {% block error_block %}
-			{% endblock error_block %}
+
         </div> <!-- /container -->
 
+		{% block javascripts %}
+			<script src="{{ asset('js/jquery.min.js') }}"></script>
+			<script src="{{ asset('js/jquery.widget.min.js') }}"></script>
+			<script src="{{ asset('js/jquery.mousewheel.js') }}"></script>
+			<script src="{{ asset('js/metro.min.js') }}"></script>
+			<script src="{{ asset('js/chosen.jquery.js') }}"></script>
 
+
+		{% endblock %}
 
 
     </body>

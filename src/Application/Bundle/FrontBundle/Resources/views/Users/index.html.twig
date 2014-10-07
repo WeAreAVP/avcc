@@ -1,8 +1,8 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
-{% block fos_user_content %}
+{% block body %}
 	<h1>Users
-		{% if is_granted('ROLE_SUPER_ADMIN') %}
+		{% if is_granted('ROLE_MANAGER') %}
 			<small class="on-right">
 				<a href="{{ path('users_new') }}"><i class="icon-plus"></i> New</a>
 			</small>
@@ -45,4 +45,4 @@
 			</tbody>
 		</table>
 	</div>
-{% endblock fos_user_content %}
+{% endblock body %}

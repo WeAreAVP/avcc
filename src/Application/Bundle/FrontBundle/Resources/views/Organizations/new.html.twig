@@ -1,6 +1,6 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
-{% block fos_user_content %}
+{% block body %}
     <h1>
 		<a href="{{ path('organizations') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
 		New Organization
@@ -74,4 +74,4 @@
 {#    {{ form(form) }}#}
 {{ form_end(form) }}
 
-{% endblock fos_user_content %}
+{% endblock body %}

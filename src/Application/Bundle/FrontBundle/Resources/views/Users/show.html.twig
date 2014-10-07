@@ -1,6 +1,6 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
-{% block fos_user_content %}
+{% block body %}
 <h3>User <a class="btn btn-default btn-group-sm pull-right" href="{{ path('users_new') }}">Back</a></h3>
 <div class="form-group form-group-sm">
     <label class="col-sm-2 control-label">Name</label>
@@ -51,4 +51,4 @@
     </li>
     <li>{{ form(delete_form) }}</li>
 </ul>
-{% endblock fos_user_content %}
+{% endblock body %}
