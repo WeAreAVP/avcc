@@ -6,41 +6,41 @@
     {{ form_errors(form) }}
     <div class="form-group form-group-sm">
         <div class="col-sm-8">
-           {{ form_widget(form.name)}}
+			{{ form_widget(form.name)}}
             {% for errorItem in form.name.vars.errors %}
-            <span class="has-error text-danger" for="{{ form.name.vars.id }}">{{ errorItem.message }}</span>
+				<span class="has-error text-danger" for="{{ form.name.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
         </div>
     </div>
     <div class="form-group form-group-sm">
         <div class="col-sm-8">
-          {{ form_widget(form.email) }}
+			{{ form_widget(form.email) }}
             {% for errorItem in form.email.vars.errors %}
-            <span class="has-error text-danger" for="{{ form.email.vars.id }}">{{ errorItem.message }}</span>
+				<span class="has-error text-danger" for="{{ form.email.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
         </div>
     </div>
     <div class="form-group form-group-sm">
         <div class="col-sm-8">
-           {{ form_widget(form.username) }}
+			{{ form_widget(form.username) }}
             {% for errorItem in form.username.vars.errors %}
-            <span class="has-error text-danger" for="{{ form.username.vars.id }}">{{ errorItem.message }}</span>
+				<span class="has-error text-danger" for="{{ form.username.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
         </div>
     </div>
     <div class="form-group form-group-sm">
         <div class="col-sm-8">
-         {{ form_widget(form.plainPassword.first)}}
-             {% for errorItem in form.plainPassword.first.vars.errors %}
-            <span class="has-error text-danger" for="{{ form.plainPassword.first.vars.id }}">{{ errorItem.message }}</span>
+			{{ form_widget(form.plainPassword.first)}}
+			{% for errorItem in form.plainPassword.first.vars.errors %}
+				<span class="has-error text-danger" for="{{ form.plainPassword.first.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
         </div>
     </div>
     <div class="form-group form-group-sm">
         <div class="col-sm-8">
-         {{ form_widget(form.plainPassword.second) }}
+			{{ form_widget(form.plainPassword.second) }}
             {% for errorItem in form.plainPassword.second.vars.errors %}
-            <span class="has-error text-danger" for="{{ form.plainPassword.second.vars.id }}">{{ errorItem.message }}</span>
+				<span class="has-error text-danger" for="{{ form.plainPassword.second.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
         </div>
     </div>

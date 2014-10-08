@@ -2,12 +2,27 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<!-- Apple devices fullscreen -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<!-- Apple devices fullscreen -->
+		<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <title>{% block title %}AVCC - AVPreserve{% endblock %}</title>
+		{% block stylesheets %}
+			<link href="{{ asset('css/bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+			<link href="{{ asset('css/login-style.css') }}" type="text/css" rel="stylesheet" />
+		{% endblock %}
+		<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+	</head>
+	<body class="theme-gray login ">
+		<div class="wrapper">
+		<h1> 
+			<a href="http://www.eakroko.de/flat/index.html">
+				{#				<img src="" alt="" class="retina-ready" width="59" height="49">#}
+				AVCC</a>
+		</h1>
+	{% block body %}{% endblock %}
+	</div>
+{% block javascripts %}{% endblock %}
+</body>
 </html>

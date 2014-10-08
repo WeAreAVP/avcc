@@ -18,236 +18,237 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Users extends BaseUser
 {
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    protected $id;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="id", type="integer")
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="IDENTITY")
+	 */
+	protected $id;
 
-    /**
-     * @var string $name
-     *
-     * @ORM\Column(name="name", type="string", length=50)
-     */
-    private $name;
+	/**
+	 * @var string $name
+	 *
+	 * @ORM\Column(name="name", type="string", length=50)
+	 */
+	private $name;
 
-    /**
-     * @var \DateTime $createdOn
-     *
-     * @ORM\Column(name="created_on", type="datetime")
-     */
-    private $createdOn;
+	/**
+	 * @var \DateTime $createdOn
+	 *
+	 * @ORM\Column(name="created_on", type="datetime")
+	 */
+	private $createdOn;
 
-    /**
-     * @var \DateTime $updatedOn
-     *
-     * @ORM\Column(name="updated_on", type="datetime", nullable=true)
-     */
-    private $updatedOn;
+	/**
+	 * @var \DateTime $updatedOn
+	 *
+	 * @ORM\Column(name="updated_on", type="datetime", nullable=true)
+	 */
+	private $updatedOn;
 
-    /**
-     * @var \Application\Bundle\FrontBundle\Entity\Organizations
-     *
-     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Organizations")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="organization_id", referencedColumnName="id")
-     * })
-     */
-    private $organizations;
+	/**
+	 * @var \Application\Bundle\FrontBundle\Entity\Organizations
+	 *
+	 * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Organizations")
+	 * @ORM\JoinColumns({
+	 *   @ORM\JoinColumn(name="organization_id", referencedColumnName="id")
+	 * })
+	 */
+	private $organizations;
 
-    /**
-     * @var \Application\Bundle\FrontBundle\Entity\Users $usersCreated
-     *
-     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="created_by", referencedColumnName="id")
-     * })
-     */
-    private $usersCreated;
+	/**
+	 * @var \Application\Bundle\FrontBundle\Entity\Users $usersCreated
+	 *
+	 * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
+	 * @ORM\JoinColumns({
+	 *   @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+	 * })
+	 */
+	private $usersCreated;
 
-    /**
-     * @var \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
-     *
-     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="updated_by", referencedColumnName="id")
-     * })
-     */
-    private $usersUpdated;
+	/**
+	 * @var \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
+	 *
+	 * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
+	 * @ORM\JoinColumns({
+	 *   @ORM\JoinColumn(name="updated_by", referencedColumnName="id")
+	 * })
+	 */
+	private $usersUpdated;
 
-    /**
-     * @ORM\PrePersist
-     */
-    public function setCreatedOnValue()
-    {
-        if ( ! $this->getCreatedOn()) {
-            $this->createdOn = new \DateTime();
-        }
-    }
+	/**
+	 * @ORM\PrePersist
+	 */
+	public function setCreatedOnValue()
+	{
+		if ( ! $this->getCreatedOn())
+		{
+			$this->createdOn = new \DateTime();
+		}
+	}
 
-    /**
-     * @ORM\PreUpdate
-     */
-    public function setUpdatedOnValue()
-    {
-        $this->updatedOn = new \DateTime();
-    }
+	/**
+	 * @ORM\PreUpdate
+	 */
+	public function setUpdatedOnValue()
+	{
+		$this->updatedOn = new \DateTime();
+	}
 
-    /**
-     * Returns user name
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getName();
-    }
+	/**
+	 * Returns user name
+	 *
+	 * @return string
+	 */
+	public function __toString()
+	{
+		return $this->getName();
+	}
 
-    /**
-     * Get Name of user.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
+	/**
+	 * Get Name of user.
+	 *
+	 * @return string
+	 */
+	public function getName()
+	{
+		return $this->name;
+	}
 
-    /**
-     * Get Created on time.
-     *
-     * @return \Datetime
-     */
-    public function getCreatedOn()
-    {
-        return $this->createdOn;
-    }
+	/**
+	 * Get Created on time.
+	 *
+	 * @return \Datetime
+	 */
+	public function getCreatedOn()
+	{
+		return $this->createdOn;
+	}
 
-    /**
-     * Get Update on time.
-     *
-     * @return \Datetime
-     */
-    public function getUpdatedOn()
-    {
-        return $this->updatedOn;
-    }
+	/**
+	 * Get Update on time.
+	 *
+	 * @return \Datetime
+	 */
+	public function getUpdatedOn()
+	{
+		return $this->updatedOn;
+	}
 
-    /**
-     * Get user organization.
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Organizations
-     */
-    public function getOrganizations()
-    {
-        return $this->organizations;
-    }
+	/**
+	 * Get user organization.
+	 *
+	 * @return \Application\Bundle\FrontBundle\Entity\Organizations
+	 */
+	public function getOrganizations()
+	{
+		return $this->organizations;
+	}
 
-    /**
-     * Get user created.
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Users
-     */
-    public function getUsersCreated()
-    {
-        return $this->usersCreated;
-    }
+	/**
+	 * Get user created.
+	 *
+	 * @return \Application\Bundle\FrontBundle\Entity\Users
+	 */
+	public function getUsersCreated()
+	{
+		return $this->usersCreated;
+	}
 
-    /**
-     * Get user updated.
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Users
-     */
-    public function getUsersUpdated()
-    {
-        return $this->usersUpdated;
-    }
+	/**
+	 * Get user updated.
+	 *
+	 * @return \Application\Bundle\FrontBundle\Entity\Users
+	 */
+	public function getUsersUpdated()
+	{
+		return $this->usersUpdated;
+	}
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Users
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
+	/**
+	 * Set name.
+	 *
+	 * @param string $name
+	 *
+	 * @return \Application\Bundle\FrontBundle\Entity\Users
+	 */
+	public function setName($name)
+	{
+		$this->name = $name;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Set Created on.
-     *
-     * @param \DateTime $createdOn
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Users
-     */
-    public function setCreatedOn(\DateTime $createdOn)
-    {
-        $this->createdOn = $createdOn;
+	/**
+	 * Set Created on.
+	 *
+	 * @param \DateTime $createdOn
+	 *
+	 * @return \Application\Bundle\FrontBundle\Entity\Users
+	 */
+	public function setCreatedOn(\DateTime $createdOn)
+	{
+		$this->createdOn = $createdOn;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Set update on.
-     *
-     * @param \DateTime $updatedOn
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Users
-     */
-    public function setUpdatedOn(\DateTime $updatedOn)
-    {
-        $this->updatedOn = $updatedOn;
+	/**
+	 * Set update on.
+	 *
+	 * @param \DateTime $updatedOn
+	 *
+	 * @return \Application\Bundle\FrontBundle\Entity\Users
+	 */
+	public function setUpdatedOn(\DateTime $updatedOn)
+	{
+		$this->updatedOn = $updatedOn;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Set Organization.
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Organizations $organizations
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Users
-     */
-    public function setOrganizations(\Application\Bundle\FrontBundle\Entity\Organizations $organizations)
-    {
-        $this->organizations = $organizations;
+	/**
+	 * Set Organization.
+	 *
+	 * @param \Application\Bundle\FrontBundle\Entity\Organizations $organizations
+	 *
+	 * @return \Application\Bundle\FrontBundle\Entity\Users
+	 */
+	public function setOrganizations(\Application\Bundle\FrontBundle\Entity\Organizations $organizations)
+	{
+		$this->organizations = $organizations;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Set creator.
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Users $usersCreated
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Users
-     */
-    public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated)
-    {
-        $this->usersCreated = $usersCreated;
+	/**
+	 * Set creator.
+	 *
+	 * @param \Application\Bundle\FrontBundle\Entity\Users $usersCreated
+	 *
+	 * @return \Application\Bundle\FrontBundle\Entity\Users
+	 */
+	public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated)
+	{
+		$this->usersCreated = $usersCreated;
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Set modifier.
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Users
-     */
-    public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated)
-    {
-        $this->usersUpdated = $usersUpdated;
+	/**
+	 * Set modifier.
+	 *
+	 * @param \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
+	 *
+	 * @return \Application\Bundle\FrontBundle\Entity\Users
+	 */
+	public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated)
+	{
+		$this->usersUpdated = $usersUpdated;
 
-        return $this;
-    }
+		return $this;
+	}
 
 }

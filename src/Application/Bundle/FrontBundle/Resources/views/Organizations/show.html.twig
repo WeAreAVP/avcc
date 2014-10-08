@@ -1,60 +1,62 @@
-{% extends '::base.html.twig' %}
+{% extends 'FOSUserBundle::layout.html.twig' %}
 
 {% block body %}
-    <h1>Organizations</h1>
+    <div class="grid fluid">
+		<h1>
+			<a href="{{ path('organizations') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+			Organization Detail
+		</h1>
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ entity.name }}</td>
-            </tr>
-            <tr>
-                <th>Department_name</th>
-                <td>{{ entity.departmentname }}</td>
-            </tr>
-            <tr>
-                <th>Address</th>
-                <td>{{ entity.address }}</td>
-            </tr>
-            <tr>
-                <th>Contact_person_name</th>
-                <td>{{ entity.contactpersonname }}</td>
-            </tr>
-            <tr>
-                <th>Contact_person_email</th>
-                <td>{{ entity.contactpersonemail }}</td>
-            </tr>
-            <tr>
-                <th>Contact_person_phone</th>
-                <td>{{ entity.contactpersonphone }}</td>
-            </tr>
-            <tr>
-                <th>Created_on</th>
-                <td>{{ entity.createdon|date('Y-m-d H:i:s') }}</td>
-            </tr>
-            <tr>
-                <th>Updated_on</th>
-                <td>{{ entity.updatedon|date('Y-m-d H:i:s') }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('organizations') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('organizations_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+		<ul class="inline">
+			<li>
+				<a href="{{ path('organizations_edit', { 'id': entity.id }) }}" class="button primary">
+					Edit
+				</a>
+			</li>
+{#			<li>{{ form(delete_form) }}</li>#}
+		</ul>
+		<dl class="horizontal">
+			<dt>Name</dt>
+			<dd>{{ entity.name }}</dd>
+		</dl>
+		<dl class="horizontal">
+			<dt>Department</dt>
+			<dd>{{ entity.departmentname }}</dd>
+		</dl>
+		<dl class="horizontal">
+			<dt>Address</dt>
+			<dd>{{ entity.address }}</dd>
+		</dl>
+		<dl class="horizontal">
+			<dt>Contact Name</dt>
+			<dd>{{ entity.contactpersonname }}</dd>
+		</dl>
+		<dl class="horizontal">
+			<dt>Contact Email</dt>
+			<dd>{{ entity.contactpersonemail }}</dd>
+		</dl>
+		<dl class="horizontal">
+			<dt>Contact Phone</dt>
+			<dd>{{ entity.contactpersonphone }}</dd>
+		</dl>
+		<dl class="horizontal">
+			<dt>Created On</dt>
+			<dd>{{ entity.createdon|date('Y-m-d H:i:s') }}</dd>
+		</dl>
+		<dl class="horizontal">
+			<dt>Updated On</dt>
+			<dd>{{ entity.updatedon|date('Y-m-d H:i:s') }}</dd>
+		</dl>
+		<dl class="horizontal">
+			<dt>Created by</dt>
+			<dd>{{ entity.userscreated }}</dd>
+		</dl>
+		<dl class="horizontal">
+			<dt>Updated by</dt>
+			<dd>{{ entity.usersupdated }}</dd>
+		</dl>
+
+	</div>
+
 {% endblock %}

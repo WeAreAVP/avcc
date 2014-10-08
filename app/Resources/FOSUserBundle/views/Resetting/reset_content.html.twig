@@ -1,29 +1,44 @@
 {% trans_default_domain 'FOSUserBundle' %}
+<div class="login-body">
+	<h2>Reset Password</h2>
+	<form class="form-signin" role="form" action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST">
+		{{ form_start(form) }}
+		{{ form_errors(form) }}
+		{% if invalid_username is defined %}
+			<span class="has-error text-danger" style="margin-bottom: 10px;display:block;">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</span>
+		{% endif %}
+		<div class="form-group">
+			<div class="email controls">
+				{{ form_widget(form.plainPassword.first, { 'attr':{'class': 'form-control','placeholder':'Password'},'label_attr':{'style': 'visibility:hidden;display:none'} })}}
+				{% for errorItem in form.plainPassword.first.vars.errors %}
+					<span class="has-error text-danger" for="{{ form.plainPassword.first.vars.id }}">{{ errorItem.message }}</span>
+				{% endfor %}
 
-<form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="form-signin form-horizontal">
-    <h2 class="form-signin-heading">Reset Password</h2>
-    {{ form_start(form) }}
-    {{ form_errors(form) }}
-    <div class="form-group form-group-sm">
-        <div class="col-xm-2">
-          {{ form_widget(form.plainPassword.first, { 'attr':{'class': 'form-control','placeholder':'Password'},'label_attr':{'style': 'visibility:hidden;display:none'} })}}
-            {% for errorItem in form.plainPassword.first.vars.errors %}
-            <span class="has-error text-danger" for="{{ form.plainPassword.first.vars.id }}">{{ errorItem.message }}</span>
-            {% endfor %}
-        </div>
-    </div>
-    <div class="form-group form-group-sm">
-        <div class="col-xm-2">
-          {{ form_widget(form.plainPassword.second, { 'attr':{'class': 'form-control','placeholder':'Confirm Password'},'label_attr':{'style': 'visibility:hidden;display:none'} }) }}
-            {% for errorItem in form.plainPassword.second.vars.errors %}
-            <span class="has-error text-danger" for="{{ form.plainPassword.second.vars.id }}">{{ errorItem.message }}</span>
-            {% endfor %}
-        </div>
-    </div>
-    <div class="form-group form-group-sm">
-        <div class="col-xm-2">
-            <button class="btn btn-lm btn-primary btn-block"  type="submit" id="_submit" name="_submit">{{ 'resetting.reset.submit'|trans }}</button>
-        </div>
-    </div>
-    {{ form_end(form) }}
-</form>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="email controls">
+				{{ form_widget(form.plainPassword.second, { 'attr':{'class': 'form-control','placeholder':'Confirm Password'},'label_attr':{'style': 'visibility:hidden;display:none'} }) }}
+				{% for errorItem in form.plainPassword.second.vars.errors %}
+					<span class="has-error text-danger" for="{{ form.plainPassword.second.vars.id }}">{{ errorItem.message }}</span>
+				{% endfor %}
+
+			</div>
+		</div>
+
+		<div class="submit">
+
+			<input type="submit" id="_submit" name="_submit" value="{{ 'resetting.reset.submit'|trans }}" class="btn btn-primary">
+			<a href="{{ path('_welcome') }}" style="line-height: 26px;">
+				<span>Back to Login</span>
+			</a>
+		</div>
+		{{ form_end(form) }}
+	</form>
+	<div class="forget">
+
+		<a href="{{ path('fos_user_registration_register') }}">
+			<span>Don't have an account. Sign up now.</span>
+		</a>
+	</div>
+</div>

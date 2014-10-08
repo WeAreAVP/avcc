@@ -95,9 +95,11 @@ class UsersType extends AbstractType
         $userInfo = $event->getData();
         $form = $event->getForm();
         $role = self::$DEFAULT_ROLE;
+		
         if (count($this->userRole) > 0)
             $role = $this->userRole[self::$DEFAULT_ROLE_INDEX];
         $loggedInUserRole = $this->user->getRoles();
+		
         if ($loggedInUserRole[self::$DEFAULT_ROLE_INDEX] == self::$DEFAULT_SUPER_ADMIN_ROLE) {
             $form->add('organizations');
         } else {

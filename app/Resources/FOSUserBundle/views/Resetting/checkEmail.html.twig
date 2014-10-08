@@ -1,9 +1,20 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends "::base.html.twig" %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block body %}
-<p>
-{{ 'resetting.check_email'|trans({'%email%': email}) }}
-</p>
+	<div class="login-body">
+		<h2><b>Password Request</b>
+			<hr/>
+			{{ 'resetting.check_email'|trans({'%email%': email}) }}
+		</h2>
+
+		<div class="forget">
+
+			<a href="{{ path('_welcome') }}" class="btn btn-primary">
+				<span>Back to Home</span>
+			</a>
+		</div>
+
+	</div>
 {% endblock %}

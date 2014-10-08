@@ -1,21 +1,48 @@
-        {% extends 'FOSUserBundle::layout.html.twig' %}
+{% extends '::base.html.twig' %}
 
-   {% block body %}
-{% trans_default_domain 'FOSUserBundle' %}
+{% block body %}
+	{% trans_default_domain 'FOSUserBundle' %}
+
+	<div class="login-body">
+		<h2>SIGN IN</h2>
+		<form class="form-signin" role="form" action="{{ path("login_check") }}" method="post">
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+			{% if error %}
+				<span class="has-error text-danger" style="margin-bottom: 10px;display:block;">{{ error }}</span>
+			{% endif %}
+			<div class="form-group">
+				<div class="email controls">
+					<input type="text" id="username" name="_username" placeholder="Email or username" class="form-control" data-rule-required="true" data-rule-email="true" required="required" autofocus> 
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="pw controls">
+					<input type="password" name="_password" placeholder="Password" required="required" class="form-control" data-rule-required="true">
+				</div>
+			</div>
+			<div class="submit">
+				<div class="remember">
+					<div class="icheckbox_square-blue" style="position: relative;">
+
+						<input type="checkbox" id="remember_me" name="_remember_me" value="on"  class="icheck-me" data-skin="square" data-color="blue" id="remember" ></div>
+					<label for="remember">Remember me</label>
+				</div>
+				<a href="{{ path('fos_user_resetting_request') }}" class="pull-right" style="padding-top: 5px;">
+					<span>Forgot password?</span>
+				</a>
+
+			</div>
+			<div class="submit">
+				<input type="submit" value="Sign me in" id="_submit" name="_submit" class="btn btn-primary">
 
 
-<form class="form-signin" role="form" action="{{ path("login_check") }}" method="post">
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-    <h3 class="form-signin-heading">Please sign in</h3>
-    {% if error %}
-    <span class="has-error text-danger" style="margin-bottom: 10px;display:block;">{{ error }}</span>
-    {% endif %}
-    <input type="text" class="form-control" placeholder="User Name" id="username" name="_username" required="required" autofocus />
-    <input type="password" class="form-control" placeholder="Password"  name="_password" required="required" />
-    <label class="checkbox remember-me">
-        <input type="checkbox" id="remember_me" name="_remember_me" value="on" /> Remember me
-    </label>
-    <button class="btn btn-m btn-primary btn-block"  type="submit" id="_submit" name="_submit">{{ 'security.login.submit'|trans }}</button>
-    <div class="text-right"><a href="{{ path('fos_user_resetting_request') }}"><small>Forgot password ?</small></a></div>
-</form>
+			</div>
+		</form>
+		<div class="forget">
+			<a href="{{ path('fos_user_registration_register') }}">
+				<span>Don't have an account. Sign up now.</span>
+			</a>
+		</div>
+	</div>
+
 {% endblock body %}

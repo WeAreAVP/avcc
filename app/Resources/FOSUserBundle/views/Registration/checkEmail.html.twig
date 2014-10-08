@@ -1,7 +1,26 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
+{% extends "::base.html.twig" %}
 
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block body %}
-    <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
+	<div class="login-body">
+		<h2><b>Activation Email</b>
+			<hr/>
+			{{ 'registration.check_email'|trans({'%email%': user.email}) }}
+		</h2>
+
+		<div class="forget">
+
+			<a href="{{ path('_welcome') }}" class="btn btn-primary">
+				<span>Back to Home</span>
+			</a>
+		</div>
+
+	</div>
+
+
+
+
+
+
 {% endblock body %}
