@@ -62,16 +62,16 @@ class UsersType extends AbstractType
         } else {
             $constraint = new OldUserPassword();
         }
-        $required = true;
+        $isRequired = true;
         if ($options['data']->getId())
-            $required = false;
+            $isRequired = false;
         $builder
         ->add('name')
         ->add('username')
         ->add('email')
         ->add('plainPassword', 'repeated', array(
             'type' => 'password',
-            'required' => $required,
+            'required' => $isRequired,
             'options' => array('translation_domain' => 'FOSUserBundle'),
             'first_options' => array('label' => '', 'attr' => array('class' => 'form-control', 'placeholder' => 'Password')),
             'second_options' => array('label' => ' ', 'attr' => array('class' => 'form-control', 'placeholder' => 'Confirm Password')),

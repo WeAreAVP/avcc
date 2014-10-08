@@ -3,266 +3,115 @@
 namespace Application\Bundle\FrontBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Organizations
+ *
+ * @ORM\Table(name="organizations")
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\OrganizationRepository")
+ * @ORM\HasLifecycleCallbacks
  */
 class Organizations
 {
 
     /**
      * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=50)
+     * @Assert\NotBlank(message="Organization name is required")
      */
     private $name;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="department_name", type="string", nullable=true)
      */
-    private $department_name;
+    private $departmentName;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
      */
     private $address;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="contact_person_name", type="string", length=255, nullable=true)
      */
-    private $contact_person_name;
+    private $contactPersonName;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="contact_person_email", type="string", length=255, nullable=true)
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email.",
+     *     checkMX = true
+     * )
      */
-    private $contact_person_email;
+    private $contactPersonEmail;
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="contact_person_phone", type="string", length=255, nullable=true)
      */
-    private $contact_person_phone;
+    private $contactPersonPhone;
 
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="created_on", type="datetime")
      */
-    private $created_on;
+    private $createdOn;
 
     /**
      * @var \DateTime
+     *
+     * @ORM\Column(name="updated_on", type="datetime", nullable=true)
      */
-    private $updated_on;
+    private $updatedOn;
 
     /**
-     * Get id
+     * @var \Application\Bundle\FrontBundle\Entity\Users
      *
-     * @return integer
+     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+     * })
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    private $usersCreated;
 
     /**
-     * Set name
+     * @var \Application\Bundle\FrontBundle\Entity\Users
      *
-     * @param string $name
-     *
-     * @return Organizations
+     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="updated_by", referencedColumnName="id")
+     * })
      */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set department_name
-     *
-     * @param string $departmentName
-     *
-     * @return Organizations
-     */
-    public function setDepartmentName($departmentName)
-    {
-        $this->department_name = $departmentName;
-
-        return $this;
-    }
-
-    /**
-     * Get department_name
-     *
-     * @return string
-     */
-    public function getDepartmentName()
-    {
-        return $this->department_name;
-    }
-
-    /**
-     * Set address
-     *
-     * @param string $address
-     *
-     * @return Organizations
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * Get address
-     *
-     * @return string
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
-
-    /**
-     * Set contact_person_name
-     *
-     * @param string $contactPersonName
-     *
-     * @return Organizations
-     */
-    public function setContactPersonName($contactPersonName)
-    {
-        $this->contact_person_name = $contactPersonName;
-
-        return $this;
-    }
-
-    /**
-     * Get contact_person_name
-     *
-     * @return string
-     */
-    public function getContactPersonName()
-    {
-        return $this->contact_person_name;
-    }
-
-    /**
-     * Set contact_person_email
-     *
-     * @param string $contactPersonEmail
-     *
-     * @return Organizations
-     */
-    public function setContactPersonEmail($contactPersonEmail)
-    {
-        $this->contact_person_email = $contactPersonEmail;
-
-        return $this;
-    }
-
-    /**
-     * Get contact_person_email
-     *
-     * @return string
-     */
-    public function getContactPersonEmail()
-    {
-        return $this->contact_person_email;
-    }
-
-    /**
-     * Set contact_person_phone
-     *
-     * @param string $contactPersonPhone
-     *
-     * @return Organizations
-     */
-    public function setContactPersonPhone($contactPersonPhone)
-    {
-        $this->contact_person_phone = $contactPersonPhone;
-
-        return $this;
-    }
-
-    /**
-     * Get contact_person_phone
-     *
-     * @return string
-     */
-    public function getContactPersonPhone()
-    {
-        return $this->contact_person_phone;
-    }
-
-    /**
-     * Set created_on
-     *
-     * @param \DateTime $createdOn
-     *
-     * @return Organizations
-     */
-    public function setCreatedOn($createdOn)
-    {
-        $this->created_on = $createdOn;
-
-        return $this;
-    }
-
-    /**
-     * Get created_on
-     *
-     * @return \DateTime
-     */
-    public function getCreatedOn()
-    {
-        return $this->created_on;
-    }
-
-    /**
-     * Set updated_on
-     *
-     * @param  \DateTime     $updatedOn
-     * @return Organizations
-     */
-    public function setUpdatedOn($updatedOn)
-    {
-        $this->updated_on = $updatedOn;
-
-        return $this;
-    }
-
-    /**
-     * Get updated_on
-     *
-     * @return \DateTime
-     */
-    public function getUpdatedOn()
-    {
-        return $this->updated_on;
-    }
+    private $usersUpdated;
 
     /**
      * @ORM\PrePersist
      */
     public function setCreatedOnValue()
     {
-        if (!$this->getCreatedOn()) {
-            $this->created_on = new \DateTime();
+        if ( ! $this->getCreatedOn()) {
+            $this->createdOn = new \DateTime();
         }
     }
 
@@ -271,7 +120,7 @@ class Organizations
      */
     public function setUpdatedOnValue()
     {
-        $this->updated_on = new \DateTime();
+        $this->updatedOn = new \DateTime();
     }
 
     /**
@@ -285,121 +134,267 @@ class Organizations
     }
 
     /**
-     * @var \Application\Bundle\FrontBundle\Entity\Users
-     */
-    private $created_by;
-
-    /**
-     * @var \Application\Bundle\FrontBundle\Entity\Users
-     */
-    private $updated_by;
-
-    /**
-     * Set created_by
+     * Get Id.
      *
-     * @param \Application\Bundle\FrontBundle\Entity\Users $createdBy
-     *
-     * @return Organizations
+     * @return integer
      */
-    public function setCreatedBy(\Application\Bundle\FrontBundle\Entity\Users $createdBy = null)
+    public function getId()
     {
-        $this->created_by = $createdBy;
-
-        return $this;
+        return $this->id;
     }
 
     /**
-     * Get created_by
+     * Get name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get department Name.
+     *
+     * @return string
+     */
+    public function getDepartmentName()
+    {
+        return $this->departmentName;
+    }
+
+    /**
+     * Get Address.
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Get Contact person name.
+     *
+     * @return string
+     */
+    public function getContactPersonName()
+    {
+        return $this->contactPersonName;
+    }
+
+    /**
+     * Get Contact person email.
+     *
+     * @return string
+     */
+    public function getContactPersonEmail()
+    {
+        return $this->contactPersonEmail;
+    }
+
+    /**
+     * Get Contact person phone.
+     *
+     * @return string
+     */
+    public function getContactPersonPhone()
+    {
+        return $this->contactPersonPhone;
+    }
+
+    /**
+     * Get Created on.
+     *
+     * @return \Datetime
+     */
+    public function getCreatedOn()
+    {
+        return $this->createdOn;
+    }
+
+    /**
+     * Get Updated on.
+     *
+     * @return \Datetime
+     */
+    public function getUpdatedOn()
+    {
+        return $this->updatedOn;
+    }
+
+    /**
+     * Get Creater.
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
-     */
-    public function getCreatedBy()
-    {
-        return $this->created_by;
-    }
-
-    /**
-     * Set updated_by
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Users $updatedBy
-     *
-     * @return Organizations
-     */
-    public function setUpdatedBy(\Application\Bundle\FrontBundle\Entity\Users $updatedBy = null)
-    {
-        $this->updated_by = $updatedBy;
-
-        return $this;
-    }
-
-    /**
-     * Get updated_by
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Users
-     */
-    public function getUpdatedBy()
-    {
-        return $this->updated_by;
-    }
-
-    /**
-     * @var \Application\Bundle\FrontBundle\Entity\Users
-     */
-    private $users_created;
-
-    /**
-     * @var \Application\Bundle\FrontBundle\Entity\Users
-     *
-     */
-    private $users_updated;
-
-    /**
-     * Set users_created
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Users $usersCreated
-     *
-     * @return Organizations
-     */
-    public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated = null)
-    {
-        $this->users_created = $usersCreated;
-
-        return $this;
-    }
-
-    /**
-     * Get users_created
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Users
-     *
      */
     public function getUsersCreated()
     {
-        return $this->users_created;
+        return $this->usersCreated;
     }
 
     /**
-     * Set users_updated
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
-     *
-     * @return Organizations
-     */
-    public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated = null)
-    {
-        $this->users_updated = $usersUpdated;
-
-        return $this;
-    }
-
-    /**
-     * Get users_updated
+     * Get Modifier.
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
     public function getUsersUpdated()
     {
-        return $this->users_updated;
+        return $this->usersUpdated;
+    }
+
+    /**
+     * Set id.
+     *
+     * @param integer $id
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Set name.
+     *
+     * @param string $name
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Set dapartment name.
+     *
+     * @param string $departmentName
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    public function setDepartmentName($departmentName)
+    {
+        $this->departmentName = $departmentName;
+
+        return $this;
+    }
+
+    /**
+     * Set Address.
+     *
+     * @param string $address
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Set contact person name.
+     *
+     * @param string $contactPersonName
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    public function setContactPersonName($contactPersonName)
+    {
+        $this->contactPersonName = $contactPersonName;
+
+        return $this;
+    }
+
+    /**
+     * Set contact person email.
+     *
+     * @param string $contactPersonEmail
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    public function setContactPersonEmail($contactPersonEmail)
+    {
+        $this->contactPersonEmail = $contactPersonEmail;
+
+        return $this;
+    }
+
+    /**
+     * Set contact person phone.
+     *
+     * @param string $contactPersonPhone
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    public function setContactPersonPhone($contactPersonPhone)
+    {
+        $this->contactPersonPhone = $contactPersonPhone;
+
+        return $this;
+    }
+
+    /**
+     * Set created on.
+     *
+     * @param \DateTime $createdOn
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    public function setCreatedOn(\DateTime $createdOn)
+    {
+        $this->createdOn = $createdOn;
+
+        return $this;
+    }
+
+    /**
+     * Set updated on.
+     *
+     * @param \DateTime $updatedOn
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    public function setUpdatedOn(\DateTime $updatedOn)
+    {
+        $this->updatedOn = $updatedOn;
+
+        return $this;
+    }
+
+    /**
+     * Set creator.
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $usersCreated
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated)
+    {
+        $this->usersCreated = $usersCreated;
+
+        return $this;
+    }
+
+    /**
+     * Set modifier.
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated)
+    {
+        $this->usersUpdated = $usersUpdated;
+
+        return $this;
     }
 
 }
