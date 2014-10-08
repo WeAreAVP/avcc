@@ -182,8 +182,7 @@ class UsersController extends Controller
     /**
      * Creates a form to edit a Users entity.
      *
-     * @param Users $entity     The entity
-     * @param array $rolesField roles array
+     * @param Users $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
