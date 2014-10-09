@@ -1,93 +1,76 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block body %}
-	<h1>
-		<a href="{{ path('users') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
-		Edit User
-	</h1>
+<div class="grid fluid">
+    <h1>
+        <a href="{{ path('users') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+        Edit User
+    </h1>
     {{ form_start(edit_form, {attr: {class:'form-horizontal'} }) }}
+    <fieldset>
     {{ form_errors(edit_form) }}
-
-	<div class="form-group form-group-sm">
-		<label class="col-sm-2 control-label no-left-padding">Name</label>
-		<div class="col-sm-4">
-            {{ form_widget(edit_form.name, {attr: {class:'form-control'} }) }}
+        <br />
+        <label>Name</label>
+        <div class="input-control text" data-role="input-control">
+            {{ form_widget(edit_form.name, {attr: {class:'size4'} }) }}
             {% for errorItem in edit_form.name.vars.errors %}
-				<span class="has-error text-danger" for="{{ edit_form.name.vars.id }}">{{ errorItem.message }}</span>
+            <span class="has-error text-danger" for="{{ edit_form.name.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
-		</div>
-	</div>
-	<div class="form-group form-group-sm">
-		<label class="col-sm-2 control-label no-left-padding">Username</label>
-		<div class="col-sm-4">
-            {{ form_widget(edit_form.username, {attr: {class:'form-control'} }) }}
+        </div>
+        <label>Username</label>
+        <div class="input-control text" data-role="input-control">
+            {{ form_widget(edit_form.username, {attr: {class:'size4'} }) }}
             {% for errorItem in edit_form.username.vars.errors %}
-				<span class="has-error text-danger" for="{{ edit_form.username.vars.id }}">{{ errorItem.message }}</span>
+            <span class="has-error text-danger" for="{{ edit_form.username.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
-		</div>
-	</div>
-	<div class="form-group form-group-sm">
-		<label class="col-sm-2 control-label no-left-padding">Email</label>
-		<div class="col-sm-4">
-            {{ form_widget(edit_form.email, {attr: {class:'form-control'} }) }}
+        </div>
+        <label>Email</label>
+        <div class="input-control text" data-role="input-control">
+            {{ form_widget(edit_form.email, {attr: {class:'size4'} }) }}
             {% for errorItem in edit_form.email.vars.errors %}
-				<span class="has-error text-danger" for="{{ edit_form.email.vars.id }}">{{ errorItem.message }}</span>
+            <span class="has-error text-danger" for="{{ edit_form.email.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
-		</div>
-	</div>
+        </div>
 	{% if is_granted('ROLE_SUPER_ADMIN') %}
-		<div class="form-group form-group-sm">
-			<label class="col-sm-2 control-label no-left-padding">Organizations</label>
-			<div class="col-sm-4">
-				{{ form_widget(edit_form.organizations, {attr: {class:'form-control'} }) }}
+        <label>Organizations</label>
+        <div class="input-control text" data-role="input-control">
+				{{ form_widget(edit_form.organizations, {attr: {class:'size4'} }) }}
 				{% for errorItem in edit_form.organizations.vars.errors %}
-					<span class="has-error text-danger" for="{{ edit_form.organizations.vars.id }}">{{ errorItem.message }}</span>
+            <span class="has-error text-danger" for="{{ edit_form.organizations.vars.id }}">{{ errorItem.message }}</span>
 				{% endfor %}
-			</div>
-		</div>
+        </div>
 	{% endif %}
-	<div class="form-group form-group-sm">
-		<label class="col-sm-2 control-label no-left-padding">Password</label>
-		<div class="col-sm-4">
-            {{ form_widget(edit_form.plainPassword.first, {attr: {class:'form-control'} }) }}
+        <label>Password</label>
+        <div class="input-control text" data-role="input-control">
+            {{ form_widget(edit_form.plainPassword.first, {attr: {class:'size4'} }) }}
             {% for errorItem in edit_form.plainPassword.first.vars.errors %}
-				<span class="has-error text-danger" for="{{ edit_form.plainPassword.first.vars.id }}">{{ errorItem.message }}</span>
+            <span class="has-error text-danger" for="{{ edit_form.plainPassword.first.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
-		</div>
-	</div>
-	<div class="form-group form-group-sm">
-		<label class="col-sm-2 control-label no-left-padding">Confirm Password</label>
-		<div class="col-sm-4">
-            {{ form_widget(edit_form.plainPassword.second, {attr: {class:'form-control'} }) }}
+        </div>
+        <label>Confirm Password</label>
+        <div class="input-control text" data-role="input-control">
+            {{ form_widget(edit_form.plainPassword.second, {attr: {class:'size4'} }) }}
             {% for errorItem in edit_form.plainPassword.second.vars.errors %}
-				<span class="has-error text-danger" for="{{ edit_form.plainPassword.second.vars.id }}">{{ errorItem.message }}</span>
+            <span class="has-error text-danger" for="{{ edit_form.plainPassword.second.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
-		</div>
-	</div>
-	<div class="form-group form-group-sm">
-		<label class="col-sm-2 control-label no-left-padding">Roles</label>
-		<div class="col-sm-4">
-            {{ form_widget(edit_form.roles, {attr: {class:'form-control'} }) }}
+        </div>
+        <label>Roles</label>
+        <div class="input-control text" data-role="input-control">
+            {{ form_widget(edit_form.roles, {attr: {class:'size4'} }) }}
             {% for errorItem in edit_form.roles.vars.errors %}
-				<span class="has-error text-danger" for="{{ edit_form.roles.vars.id }}">{{ errorItem.message }}</span>
+            <span class="has-error text-danger" for="{{ edit_form.roles.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
-		</div>
-	</div>
-	<div class="form-group form-group-sm">
-		<label class="col-sm-2 control-label no-left-padding"></label>
-		<div class="col-sm-2">
-            {{ form_widget(edit_form.submit, {attr: {class:'btn btn-m btn-primary btn-block'} }) }}
-		</div>
-		<div class="col-sm-2">
-			<button class="btn btn-m btn-default btn-block"  type="button" id="_submit" name="_submit" onclick="window.location = '{{ path('users') }}'">Cancel</button>
-		</div>
-
-	</div>
+        </div>
+        {{ form_widget(edit_form.submit, {attr: {class:'button primary'} }) }}
+        or
+        <a class="button"   href="{{ path('users') }}">Cancel</a>	
+    </fieldset>
     {{ form_end(edit_form) }}
-	<script type="text/javascript" src="{{ asset('bundles/applicationfront/js/users.js') }}"></script>
-	<script type="text/javascript">
-		$(document).ready(function () {
-			initialize_form();
-		});
-	</script>
+</div>
+    <script type="text/javascript" src="{{ asset('bundles/applicationfront/js/users.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            initialize_form();
+        });
+    </script>
 {% endblock body %}
