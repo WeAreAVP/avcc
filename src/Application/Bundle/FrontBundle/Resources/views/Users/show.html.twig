@@ -1,54 +1,47 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block body %}
-	<h3>User <a class="btn btn-default btn-group-sm pull-right" href="{{ path('users_new') }}">Back</a></h3>
-	<div class="form-group form-group-sm">
-		<label class="col-sm-2 control-label">Name</label>
-		<div class="col-sm-10">
-			<p class="form-control-static">{{ entity.name }}</p>
-		</div>
-	</div>
-	<div class="form-group form-group-sm">
-		<label class="col-sm-2 control-label">Username</label>
-		<div class="col-sm-10">
-			<p class="form-control-static">{{ entity.username }}</p>
-		</div>
-	</div>
-	<div class="form-group form-group-sm">
-		<label class="col-sm-2 control-label">Email</label>
-		<div class="col-sm-10">
-			<p class="form-control-static">{{ entity.email }}</p>
-		</div>
-	</div>
-	<div class="form-group form-group-sm">
-		<label class="col-sm-2 control-label">Organizations</label>
-		<div class="col-sm-10">
-			<p class="form-control-static">
-				{{ entity.organizations }}
-			</p>
-		</div>
-	</div>
-	<div class="form-group form-group-sm">
-		<label class="col-sm-2 control-label">Roles</label>
-		<div class="col-sm-10">
-			<p class="form-control-static">
-				{% for role in entity.roles %}
+<div class="grid fluid">
+    <h1>
+        <a href="{{ path('organizations') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+        User Details 
+    </h1>
+    <ul class="inline">
+        <li>
+            <a href="{{ path('users_edit', { 'id': entity.id }) }}" class="button primary">
+                Edit
+            </a>
+        </li>
+{#			<li>{{ form(delete_form) }}</li>#}
+    </ul>
+    <dl class="horizontal">
+        <dt>Name</dt>
+        <dd>
+            {{ entity.name }}
+        </dd>
+    </dl>
+    <dl class="horizontal">
+        <dt>Username</dt>
+        <dd>
+            {{ entity.username }}
+        </dd>
+    </dl>
+    <dl class="horizontal">
+        <dt>Email</dt>
+        <dd>
+            {{ entity.email }}
+        </dd>
+    </dl>
+    <dl class="horizontal">
+        <dt>Organizations</dt>
+        <dd>{{ entity.organizations }}</dd>
+    </dl>
+    <dl class="horizontal">
+        <dt>Roles</dt>
+        <dd>{% for role in entity.roles %}
 					{{ role }}
 				{% endfor %}
-			</p>
-		</div>
-	</div>
-	<ul class="record_actions">
-		<li>
-			<a href="{{ path('users') }}">
-				Back to the list
-			</a>
-		</li>
-		<li>
-			<a href="{{ path('users_edit', { 'id': entity.id }) }}">
-				Edit
-			</a>
-		</li>
-		<li>{{ form(delete_form) }}</li>
-	</ul>
+        </dd>
+    </dl>    
+</div>        
 {% endblock body %}
