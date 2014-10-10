@@ -6,6 +6,9 @@ namespace Application\Bundle\FrontBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Application\Bundle\FrontBundle\Form\OrganizationsType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class RegistrationFormType extends AbstractType
 {
@@ -20,16 +23,29 @@ class RegistrationFormType extends AbstractType
     {
         // add your custom field
         $builder->add('name', 'text', array('label' => '', 'attr' => array('class' => 'form-control', 'placeholder' => 'Name')))
-            ->add('username', 'text', array('label' => '', 'attr' => array('class' => 'form-control', 'placeholder' => 'Username')))
-            ->add('email', 'email', array('label' => '', 'translation_domain' => 'FOSUserBundle', 'attr' => array('class' => 'form-control', 'placeholder' => 'Email')))
-            ->add('plainPassword', 'repeated', array(
-                'type' => 'password',
-                'options' => array('translation_domain' => 'FOSUserBundle'),
-                'first_options' => array('label' => '', 'attr' => array('class' => 'form-control', 'placeholder' => 'Password'), 'label_attr' => array('style' => 'visibility:hidden;display:none')),
-                'second_options' => array('label' => ' ', 'attr' => array('class' => 'form-control', 'placeholder' => 'Confirm Password'), 'label_attr' => array('style' => 'visibility:hidden;display:none')),
-                'invalid_message' => 'fos_user.password.mismatch',
-                )
-        );
+                ->add('username', 'text', array('label' => '', 'attr' => array('class' => 'form-control', 'placeholder' => 'Username')))
+                ->add('email', 'email', array('label' => '', 'translation_domain' => 'FOSUserBundle', 'attr' => array('class' => 'form-control', 'placeholder' => 'Email')))
+                ->add('plainPassword', 'repeated', array(
+                    'type' => 'password',
+                    'options' => array('translation_domain' => 'FOSUserBundle'),
+                    'first_options' => array('label' => '', 'attr' => array('class' => 'form-control', 'placeholder' => 'Password'), 'label_attr' => array('style' => 'visibility:hidden;display:none')),
+                    'second_options' => array('label' => ' ', 'attr' => array('class' => 'form-control', 'placeholder' => 'Confirm Password'), 'label_attr' => array('style' => 'visibility:hidden;display:none')),
+                    'invalid_message' => 'fos_user.password.mismatch',
+                        )
+                )->add('organizations', new OrganizationsType(), array(
+            'data_class' => 'Application\Bundle\FrontBundle\Entity\Organizations'
+        ))
+//                ->addEventListener(
+//                FormEvents::POST_SUBMIT, array($this, 'onPostSubmitData'));
+        ;
+    }
+
+    public function onPostSubmitData(FormEvent $event)
+    {
+        $formData = $event->getData();
+        if ($formData->getOrganizations() instanceof \Application\Bundle\FrontBundle\Entity\Organizations) {      
+            
+        }
     }
 
     /**

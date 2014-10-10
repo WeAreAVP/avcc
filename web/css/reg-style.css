@@ -7178,11 +7178,8 @@ body.error .wrapper .buttons {
 }
 .registration .wrapper {
     width: 42% !important;
-    left: 41% !important;
     height: auto !important;
-    top: 35% !important;    
-    margin: -200px -200px;
-    position: absolute;
+    margin: 0 auto;
 }
 .registration .wrapper fieldset{
     float:left;
@@ -7204,56 +7201,56 @@ body.error .wrapper .buttons {
     margin-right: 20px;
     margin-top: -8px;
 }
-.registration .wrapper .login-body {
+.registration .wrapper .reg-body {
     padding-bottom: 20px;
     margin-top: 20px;
     background: #fff;
 }
-.login .wrapper .login-body {
+.login .wrapper .reg-body {
     margin-top: 20px;
     background: #fff;
 }
-.login .wrapper .login-body form,.registration .wrapper .login-body form {
+.login .wrapper .reg-body form,.registration .wrapper .reg-body form {
     padding: 0 30px;
 }
-.login .wrapper .login-body h2 , .registration .wrapper .login-body h2{
+.login .wrapper .reg-body h2 , .registration .wrapper .reg-body h2{
     font-weight: 300;
     color: #333;
     font-size: 24px;
     padding: 30px 30px 15px 30px;
 }
-.login .wrapper .login-body .email input, .login .wrapper .login-body .pw input {
+.login .wrapper .reg-body .email input, .login .wrapper .reg-body .pw input {
     padding: 8px 12px;
     height: 35px;
 }
-.login .wrapper .login-body .submit {
+.login .wrapper .reg-body .submit {
     margin-top: 15px;
     *zoom: 1;
 }
-.login .wrapper .login-body .submit:after {
+.login .wrapper .reg-body .submit:after {
     content: "";
     display: table;
     clear: both;
 }
-.login .wrapper .login-body .submit input {
+.login .wrapper .reg-body .submit input {
     float: right;
 }
-.login .wrapper .login-body .submit .remember {
+.login .wrapper .reg-body .submit .remember {
     float: left;
     margin-top: 5px;
     margin-left: 1px;
 }
-.login .wrapper .login-body .submit .remember [class*=icheckbox], .login .wrapper .login-body .submit .remember label {
+.login .wrapper .reg-body .submit .remember [class*=icheckbox], .login .wrapper .reg-body .submit .remember label {
     float: left;
 }
-.login .wrapper .login-body .submit .remember label {
+.login .wrapper .reg-body .submit .remember label {
     margin-left: 10px;
     font-weight: normal;
 }
-.login .wrapper .login-body .forget {
+.login .wrapper .reg-body .forget {
     margin-top: 50px;
 }
-.login .wrapper .login-body .forget a {
+.login .wrapper .reg-body .forget a {
     background: #eee;
     padding: 10px 0;
     text-align: center;
@@ -7261,10 +7258,10 @@ body.error .wrapper .buttons {
     text-decoration: none;
     color: #555;
 }
-.login .wrapper .login-body .forget a:hover {
+.login .wrapper .reg-body .forget a:hover {
     background: #ddd;
 }
-.login .wrapper .login-body .forget a span {
+.login .wrapper .reg-body .forget a span {
     line-height: 30px;
     margin-bottom: 10px;
     position: relative;

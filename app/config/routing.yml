@@ -38,3 +38,7 @@ login:
 login_check:
     path: /login_check
     defaults: { _controller: ApplicationFrontBundle:Default:check}
+    
+signup:
+    path: /signup
+    defaults: { _controller: ApplicationFrontBundle:Default:signup}
