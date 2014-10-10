@@ -61,12 +61,14 @@
 			</div>
 		</header>
 
-		<div class="container" style="margin-bottom:20px;">
+		<div class="container" style="margin-top:20px;margin-bottom:20px;">
 			{% for type, messages in app.session.flashbag.all() %}
 				{% for message in messages %}
-					<div class="flash-{{ type }}">
-						{{ message }}
+{#                                     {% if type == 'success' %}#}
+					<div class="flash-{{ type }} text-success">
+                                            {{ message }}
 					</div>
+{#                                     {% endif %}  #}
 				{% endfor %}
 			{% endfor %}
 			{% block body %}

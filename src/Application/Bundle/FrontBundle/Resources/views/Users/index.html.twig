@@ -27,9 +27,9 @@
 						<td><a href="{{ path('users_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
 						<td><a href="{{ path('users_show', { 'id': entity.id }) }}">{{ entity.email }}</a></td>
 						<td>
-							{% for role in entity.roles %}
-								{{ role }}
-							{% endfor %}
+{#							{% set user_role = entity.roles[0]|lower|replace({'_': ' ', 'role': ""})|capitalize %}#}
+                                                       {# {{user_role}}#}
+                                                    {{entity.roles[0]|replace({'_': '', 'ROLE': " "})|trim(" ")|capitalize}}
 						</td>
 						<td>
 							{{entity.organizations }}

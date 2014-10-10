@@ -5,13 +5,13 @@
 		{{ form_start(form) }}
 		{{ form_errors(form) }}
 		{% if invalid_username is defined %}
-			<span class="has-error text-danger" style="margin-bottom: 10px;display:block;">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</span>
+			<span class="has-error text-alert" style="margin-bottom: 10px;display:block;">{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</span>
 		{% endif %}
 		<div class="form-group">
 			<div class="email controls">
 				{{ form_widget(form.plainPassword.first, { 'attr':{'class': 'form-control','placeholder':'Password'},'label_attr':{'style': 'visibility:hidden;display:none'} })}}
 				{% for errorItem in form.plainPassword.first.vars.errors %}
-					<span class="has-error text-danger" for="{{ form.plainPassword.first.vars.id }}">{{ errorItem.message }}</span>
+					<span class="has-error text-alert" for="{{ form.plainPassword.first.vars.id }}">{{ errorItem.message }}</span>
 				{% endfor %}
 
 			</div>
@@ -20,7 +20,7 @@
 			<div class="email controls">
 				{{ form_widget(form.plainPassword.second, { 'attr':{'class': 'form-control','placeholder':'Confirm Password'},'label_attr':{'style': 'visibility:hidden;display:none'} }) }}
 				{% for errorItem in form.plainPassword.second.vars.errors %}
-					<span class="has-error text-danger" for="{{ form.plainPassword.second.vars.id }}">{{ errorItem.message }}</span>
+					<span class="has-error text-alert" for="{{ form.plainPassword.second.vars.id }}">{{ errorItem.message }}</span>
 				{% endfor %}
 
 			</div>

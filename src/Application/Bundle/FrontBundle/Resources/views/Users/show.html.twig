@@ -3,7 +3,7 @@
 {% block body %}
 <div class="grid fluid">
     <h1>
-        <a href="{{ path('organizations') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+        <a href="{{ path('users') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
         User Details 
     </h1>
     <ul class="inline">
@@ -36,11 +36,11 @@
         <dt>Organizations</dt>
         <dd>{{ entity.organizations }}</dd>
     </dl>
+    <div class="clearfix"></div>
     <dl class="horizontal">
         <dt>Roles</dt>
-        <dd>{% for role in entity.roles %}
-					{{ role }}
-				{% endfor %}
+        <dd>
+            {{entity.roles[0]|replace({'_': '', 'ROLE': " "})|trim()|capitalize}}
         </dd>
     </dl>    
 </div>        

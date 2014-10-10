@@ -303,7 +303,7 @@ class UsersController extends Controller
         foreach ($roles as $role => $inheritedRoles) {
             foreach ($inheritedRoles as $id => $inheritedRole) {
                 if ( ! array_key_exists($inheritedRole, $rolesChoices)) {
-                    $arrInheritedRoles = explode("_", $inheritedRole);
+                    $arrInheritedRoles = explode("_", ucfirst(strtolower(trim($inheritedRole))));
                     array_shift($arrInheritedRoles);
                     $rInRoles = implode(" ", $arrInheritedRoles);
                     $rolesChoices[$inheritedRole] = $rInRoles;
@@ -311,7 +311,7 @@ class UsersController extends Controller
             }
 
             if ( ! array_key_exists($role, $rolesChoices)) {
-                $arrRoles = explode("_", $role);
+                $arrRoles = explode("_", ucfirst(strtolower(trim($role))));
                 array_shift($arrRoles);
 
                 $rrRoles = implode(" ", $arrRoles);

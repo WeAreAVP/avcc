@@ -1,37 +1,41 @@
 {% trans_default_domain 'FOSUserBundle' %}
-<h1>
-	Profile
-</h1>
-<div class="fos_user_user_show">
-    <form action="#" method="POST" class="form-horizontal">
+<div class="grid fluid">
+    <h1>
+        <a href="{{ path('_welcome') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+        Profile
+    </h1>
+    <ul class="inline">
+        <li>
+            <a href="{{ path('fos_user_profile_edit') }}" class="button primary">
+                Edit
+            </a>
+        </li>
+        <li><a href="{{ path('_welcome') }}" class="button">
+                Cancel
+            </a></li>
+    </ul>
+    <div class="fos_user_user_show">
+        <form action="#" method="POST" class="form-horizontal">
 
-        <div class="form-group form-group-sm">
-            <label class="col-sm-2 control-label">Name</label>
-            <div class="col-sm-10">
-                <p class="form-control-static">{{ user.name }}</p>
-            </div>
-        </div>
-        <div class="form-group form-group-sm">
-            <label class="col-sm-2 control-label">{{ 'profile.show.username'|trans }}</label>
-            <div class="col-sm-10">
-                <p class="form-control-static">{{ user.username }}</p>
-            </div>
-        </div>
-        <div class="form-group form-group-sm">
-            <label class="col-sm-2 control-label">{{ 'profile.show.email'|trans }}</label>
-            <div class="col-sm-10">
-                <p class="form-control-static">{{ user.email }}</p>
-            </div>
-        </div>
-        <div class="form-group form-group-sm">
-            <label class="col-sm-2 control-label no-left-padding"></label>
-			<div class="col-sm-2">
-                <button class="btn btn-m btn-primary btn-block"  type="button" id="_submit" name="_submit" onclick="window.location = '{{ path('fos_user_profile_edit') }}'">Edit</button>
-            </div>
-			<div class="col-sm-2">
-                <button class="btn btn-m btn-default btn-block"  type="button" id="_submit" name="_submit" onclick="window.location = '{{ path('_welcome') }}'">Cancel</button>
-            </div>
-
-        </div>
-    </form>
+            <dl class="horizontal">
+                <dt>Name</dt>
+                <dd>
+                    <p class="form-control-static">{{ user.name }}</p>
+                </dd>
+            </dl>
+            <dl class="horizontal">
+                <dt>{{ 'profile.show.username'|trans }}</dt>
+                <dd>
+                    <p class="form-control-static">{{ user.username }}</p>
+                </dd>
+            </dl>
+            <dl class="horizontal">
+                <dt>{{ 'profile.show.email'|trans }}</dt>
+                <dd>
+                    <p class="form-control-static">{{ user.email }}</p>
+                </dd>
+            </dl>
+           
+        </form>
+    </div>
 </div>
