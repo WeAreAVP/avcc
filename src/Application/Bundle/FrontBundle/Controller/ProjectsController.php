@@ -28,8 +28,11 @@ class ProjectsController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
+         if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+            $entities = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
+        } else {
+            $entities = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $this->getUser()->getOrganizations()));
+        }
 
         return array(
             'entities' => $entities,

@@ -25,7 +25,13 @@
 			<tbody>
 				{% for entity in entities %}
 					<tr>
-						<td><a href="{{ path('projects_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+						<td>
+							{% if is_granted('ROLE_MANAGER') %}
+								<a href="{{ path('projects_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+							{% else %}
+								{{ entity.name }}
+							{% endif %}
+
 						<td>{{ entity.organization }}</td>
 						<td>{% if entity.createdOn %}{{ entity.createdOn|date('Y-m-d H:i:s') }}{% endif %}</td>
 						<td>{% if entity.updatedOn %}{{ entity.updatedOn|date('Y-m-d H:i:s') }}{% endif %}</td>
