@@ -32,7 +32,7 @@ class RegistrationFormType extends AbstractType
                     'second_options' => array('label' => ' ', 'attr' => array('class' => 'form-control', 'placeholder' => 'Confirm Password'), 'label_attr' => array('style' => 'visibility:hidden;display:none')),
                     'invalid_message' => 'fos_user.password.mismatch',
                         )
-                )->add('organizations', new OrganizationsType(), array(
+                )->add('organizations', new OrganizationsType(array('from_registration'=>true)), array(
             'data_class' => 'Application\Bundle\FrontBundle\Entity\Organizations'
         ))
 //                ->addEventListener(
@@ -43,8 +43,8 @@ class RegistrationFormType extends AbstractType
     public function onPostSubmitData(FormEvent $event)
     {
         $formData = $event->getData();
-        if ($formData->getOrganizations() instanceof \Application\Bundle\FrontBundle\Entity\Organizations) {      
-            
+        if ($formData->getOrganizations() instanceof \Application\Bundle\FrontBundle\Entity\Organizations) {
+
         }
     }
 

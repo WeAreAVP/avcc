@@ -32,7 +32,11 @@ class UsersController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ApplicationFrontBundle:Users')->findAll();
+        if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+            $entities = $em->getRepository('ApplicationFrontBundle:Users')->findAll();
+        } else {
+            $entities = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $this->getUser()->getOrganizations()));
+        }
 
         return array(
             'entities' => $entities,

@@ -17,7 +17,9 @@
 					<th>Email</th>
 					<th>Roles</th>
 					<th>Organizations</th>
-					<th>Action</th>
+						{% if is_granted('ROLE_MANAGER') %}
+						<th>Action</th>
+						{% endif %}
 				</tr>
 			</thead>
 			<tbody>
@@ -27,19 +29,20 @@
 						<td><a href="{{ path('users_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
 						<td><a href="{{ path('users_show', { 'id': entity.id }) }}">{{ entity.email }}</a></td>
 						<td>
-{#							{% set user_role = entity.roles[0]|lower|replace({'_': ' ', 'role': ""})|capitalize %}#}
-                                                       {# {{user_role}}#}
-                                                    {{entity.roles[0]|replace({'_': '', 'ROLE': " "})|trim(" ")|capitalize}}
+							{#							{% set user_role = entity.roles[0]|lower|replace({'_': ' ', 'role': ""})|capitalize %}#}
+							{# {{user_role}}#}
+							{{entity.roles[0]|replace({'_': ' ', 'ROLE': " "})|trim(" ")|capitalize}}
 						</td>
 						<td>
 							{{entity.organizations }}
 						</td>
-
-						<td class="text-center">
-							{# <a class="glyphicon glyphicon-list-alt" title="View detail" href="{{ path('users_show', { 'id': entity.id }) }}"></a>&nbsp;#}
-							<a class="icon-pencil" title="Edit" href="{{ path('users_edit', { 'id': entity.id }) }}"></a> |
-							<a class="icon-remove" title="Delete" href="{{ path('users_delete', { 'id': entity.id }) }}"></a>
-						</td>
+						{% if is_granted('ROLE_MANAGER') %}
+							<td class="text-center">
+								{# <a class="glyphicon glyphicon-list-alt" title="View detail" href="{{ path('users_show', { 'id': entity.id }) }}"></a>&nbsp;#}
+								<a class="icon-pencil" title="Edit" href="{{ path('users_edit', { 'id': entity.id }) }}"></a> |
+								<a class="icon-remove" title="Delete" href="{{ path('users_delete', { 'id': entity.id }) }}"></a>
+							</td>
+						{% endif %}
 					</tr>
 				{% endfor %}
 			</tbody>

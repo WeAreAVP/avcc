@@ -9,7 +9,7 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
         <title>{% block title %}AVCC - AVPreserve{% endblock %}</title>
-			<script src="{{ asset('js/jquery.min.js') }}"></script>
+		<script src="{{ asset('js/jquery.min.js') }}"></script>
         <!-- Bootstrap core CSS -->
 		{% block stylesheets %}
 			{#						<link href="{{ asset('css/bootstrap.css') }}" type="text/css" rel="stylesheet" />#}
@@ -44,18 +44,20 @@
 								</ul>
 							</li>
 						</ul>
-						<a class="element1 pull-menu" href="#"></a>
-						<ul class="element-menu place-right" style="">
-							<li>
-								<a class="dropdown-toggle" href="#"><span class="icon-cog"></span> Settings
-								</a>
-								<ul class="dropdown-menu dark" data-role="dropdown">
-									<li><a href="{{ path('users') }}">Users</a></li>
-									<li><a href="{{ path('organizations') }}">Organization</a></li>
+						{% if is_granted('ROLE_MANAGER') %}
+							<a class="element1 pull-menu" href="#"></a>
+							<ul class="element-menu place-right" style="">
+								<li>
+									<a class="dropdown-toggle" href="#"><span class="icon-cog"></span> Settings
+									</a>
+									<ul class="dropdown-menu dark" data-role="dropdown">
+										<li><a href="{{ path('users') }}">Users</a></li>
+										<li><a href="{{ path('organizations') }}">Organization</a></li>
 
-								</ul>
-							</li>
-						</ul>
+									</ul>
+								</li>
+							</ul>
+						{% endif %}
 					{% endif %}
 				</div>
 			</div>
@@ -64,11 +66,11 @@
 		<div class="container" style="margin-top:20px;margin-bottom:20px;">
 			{% for type, messages in app.session.flashbag.all() %}
 				{% for message in messages %}
-{#                                     {% if type == 'success' %}#}
+					{#                                     {% if type == 'success' %}#}
 					<div class="flash-{{ type }} text-success">
-                                            {{ message }}
+						{{ message }}
 					</div>
-{#                                     {% endif %}  #}
+					{#                                     {% endif %}  #}
 				{% endfor %}
 			{% endfor %}
 			{% block body %}

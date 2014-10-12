@@ -19,7 +19,7 @@ class OrganizationsType extends AbstractType
             ->add('department_name')
             ->add('address')
             ->add('contact_person_name')
-            ->add('contact_person_email','email', array('required'=>false))
+            ->add('contact_person_email','email')
             ->add('contact_person_phone')
         ;
     }

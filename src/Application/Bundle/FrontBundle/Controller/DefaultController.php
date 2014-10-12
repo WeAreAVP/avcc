@@ -37,7 +37,7 @@ class DefaultController extends Controller
     {
 
         $user = $this->container->get('security.context')->getToken()->getUser();
-        if (!is_object($user) || !$user instanceof UserInterface) {
+        if ( ! is_object($user) || ! $user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
             $this->redirect($this->generateUrl("application_front"));
         }
@@ -79,9 +79,9 @@ class DefaultController extends Controller
         $csrfToken = $this->container->has('form.csrf_provider') ? $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate') : null;
 
         return $this->renderLogin(array(
-                    'last_username' => $lastUsername,
-                    'error' => $error,
-                    'csrf_token' => $csrfToken,
+            'last_username' => $lastUsername,
+            'error' => $error,
+            'csrf_token' => $csrfToken,
         ));
     }
 
@@ -131,13 +131,13 @@ class DefaultController extends Controller
                 $data = $form->getData();
                 $em->persist($data->getOrganizations());
                 $em->persist($data);
-                
                 $em->flush();
             }
         }
+
         return $this->renderSignup(array(
-                    'csrf_token' => $csrfToken,
-                    'form' => $form->createView()
+            'csrf_token' => $csrfToken,
+            'form' => $form->createView()
         ));
     }
 

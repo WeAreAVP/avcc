@@ -29,8 +29,11 @@ class OrganizationsController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('ApplicationFrontBundle:Organizations')->findAll();
+        if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+            $entities = $em->getRepository('ApplicationFrontBundle:Organizations')->findAll();
+        } else {
+            $entities = $em->getRepository('ApplicationFrontBundle:Organizations')->findBy(array('id' => $this->getUser()->getOrganizations()->getId()));
+        }
 
         return array(
             'entities' => $entities,
@@ -45,6 +48,8 @@ class OrganizationsController extends Controller
      * @Route("/", name="organizations_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:Organizations:new.html.twig")
+     *
+     *
      *
      * @return array
      */

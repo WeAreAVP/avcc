@@ -1,117 +1,156 @@
-{% extends "::reg_base.html.twig" %}
+{% extends "::base.html.twig" %}
 
 {% block body %}
 	{% trans_default_domain 'FOSUserBundle' %}
-<div class="reg-body">
-            <h2 class="form-signin-heading">Register</h2>
-            <form action="{{ path('signup') }}" {{ form_enctype(form) }} method="POST" class="form-signin" role="form" >
+	<div class="login-body" style="margin-bottom: 50px;">
+		<h2>Register</h2>
+		<form action="{{ path('signup') }}" {{ form_enctype(form) }} method="POST" class="form-signin" role="form" >
 
-    {{ form_start(form) }}
-    {{ form_errors(form) }}
-                <fieldset class="userinfo"><legend>User Info</legend>
-                    <div class="form-group">
-                        <div class="controls">
-			{{ form_widget(form.name)}}
-            {% for errorItem in form.name.vars.errors %}
-                            <span class="has-error text-danger" for="{{ form.name.vars.id }}">{{ errorItem.message }}</span>
-            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="controls email">
-			{{ form_widget(form.email) }}
-            {% for errorItem in form.email.vars.errors %}
-                            <span class="has-error text-danger" for="{{ form.email.vars.id }}">{{ errorItem.message }}</span>
-            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="controls">
-			{{ form_widget(form.username) }}
-            {% for errorItem in form.username.vars.errors %}
-                            <span class="has-error text-danger" for="{{ form.username.vars.id }}">{{ errorItem.message }}</span>
-            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="controls pw">
-			{{ form_widget(form.plainPassword.first)}}
-			{% for errorItem in form.plainPassword.first.vars.errors %}
-                            <span class="has-error text-danger" for="{{ form.plainPassword.first.vars.id }}">{{ errorItem.message }}</span>
-            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="controls">
-			{{ form_widget(form.plainPassword.second) }}
-            {% for errorItem in form.plainPassword.second.vars.errors %}
-                            <span class="has-error text-danger" for="{{ form.plainPassword.second.vars.id }}">{{ errorItem.message }}</span>
-            {% endfor %}
-                        </div>
-                    </div>
-                </fieldset>
-                <fieldset class="orginfo"><legend>Organization Info</legend>
-                    <div class="form-group">
-                        <div class="controls">
-			{{ form_widget(form.organizations.name, {attr: {class:'form-control',placeholder:'Organization Name'} }) }}
-            {% for errorItem in form.organizations.name.vars.errors %}
-                            <span class="has-error text-danger" for="{{ form.organizations.name.vars.id }}">{{ errorItem.message }}</span>
-            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="controls">
-			{{ form_widget(form.organizations.department_name, {attr: {class:'form-control',placeholder:'Department Name'} }) }}
-            {% for errorItem in form.organizations.department_name.vars.errors %}
-                            <span class="has-error text-danger" for="{{ form.organizations.department_name.vars.id }}">{{ errorItem.message }}</span>
-            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="controls">
-			{{ form_widget(form.organizations.address, {attr: {class:'form-control',placeholder:'Address'} }) }}
-            {% for errorItem in form.organizations.address.vars.errors %}
-                            <span class="has-error text-danger" for="{{ form.organizations.address.vars.id }}">{{ errorItem.message }}</span>
-            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="controls">
-			{{ form_widget(form.organizations.contact_person_name, {attr: {class:'form-control',placeholder:'Contact Person Name'} }) }}
-            {% for errorItem in form.organizations.contact_person_name.vars.errors %}
-                            <span class="has-error text-danger" for="{{ form.organizations.contact_person_name.vars.id }}">{{ errorItem.message }}</span>
-            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="controls">
-			{{ form_widget(form.organizations.contact_person_email, {attr: {class:'form-control',placeholder:'Contact Person Email'} }) }}
-            {% for errorItem in form.organizations.contact_person_email.vars.errors %}
-                            <span class="has-error text-danger" for="{{ form.organizations.contact_person_email.vars.id }}">{{ errorItem.message }}</span>
-            {% endfor %}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="controls">
-			{{ form_widget(form.organizations.contact_person_phone, {attr: {class:'form-control',placeholder:'Contact Person Phone'} }) }}
-            {% for errorItem in form.organizations.contact_person_phone.vars.errors %}
-                            <span class="has-error text-danger" for="{{ form.organizations.contact_person_phone.vars.id }}">{{ errorItem.message }}</span>
-            {% endfor %}
-                        </div>
-                    </div>
-                </fieldset><div class="clearfix"></div>
-                <div class="form-group">
-                    <div class="col-sm-4">
-                        <button class="btn btn-lm btn-primary btn-block"  type="submit" id="_submit" name="_submit">{{ 'registration.submit'|trans }}</button>
-                    </div>
-                    <div class="col-sm-4">
-                        <a class="btn btn-lm btn-default btn-block" href="{{ path('_welcome') }}">Cancel</a>
-                    </div>
-                </div>
-    {{ form_end(form) }}
+			{{ form_start(form) }}
+			{{ form_errors(form) }}
+			<fieldset class="user-info">
+				<legend>Your Info</legend>
+				<div class="form-group">
+					<div class="controls">
+						{{ form_widget(form.name)}}
+						{% for errorItem in form.name.vars.errors %}
+							<span class="has-error text-danger" for="{{ form.name.vars.id }}">{{ errorItem.message }}</span>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="controls email">
+						{{ form_widget(form.email) }}
+						{% for errorItem in form.email.vars.errors %}
+							<span class="has-error text-danger" for="{{ form.email.vars.id }}">{{ errorItem.message }}</span>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="controls">
+						{{ form_widget(form.username) }}
+						{% for errorItem in form.username.vars.errors %}
+							<span class="has-error text-danger" for="{{ form.username.vars.id }}">{{ errorItem.message }}</span>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="controls pw">
+						{{ form_widget(form.plainPassword.first)}}
+						{% for errorItem in form.plainPassword.first.vars.errors %}
+							<span class="has-error text-danger" for="{{ form.plainPassword.first.vars.id }}">{{ errorItem.message }}</span>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="controls">
+						{{ form_widget(form.plainPassword.second) }}
+						{% for errorItem in form.plainPassword.second.vars.errors %}
+							<span class="has-error text-danger" for="{{ form.plainPassword.second.vars.id }}">{{ errorItem.message }}</span>
+						{% endfor %}
+					</div>
+				</div>
+			</fieldset>
+			<fieldset class="organization-info">
+				<legend>Organization Info</legend>
+				<div class="form-group">
+					<div class="controls">
+						{{ form_widget(form.organizations.name, {attr: {class:'form-control',placeholder:'Organization Name'} }) }}
+						{% for errorItem in form.organizations.name.vars.errors %}
+							<span class="has-error text-danger" for="{{ form.organizations.name.vars.id }}">{{ errorItem.message }}</span>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="controls">
+						{{ form_widget(form.organizations.department_name, {attr: {class:'form-control',placeholder:'Department Name'} }) }}
+						{% for errorItem in form.organizations.department_name.vars.errors %}
+							<span class="has-error text-danger" for="{{ form.organizations.department_name.vars.id }}">{{ errorItem.message }}</span>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="controls">
+						{{ form_widget(form.organizations.address, {attr: {class:'form-control',placeholder:'Address'} }) }}
+						{% for errorItem in form.organizations.address.vars.errors %}
+							<span class="has-error text-danger" for="{{ form.organizations.address.vars.id }}">{{ errorItem.message }}</span>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="controls">
+						{{ form_widget(form.organizations.contact_person_name, {attr: {class:'form-control',placeholder:'Contact Person Name'} }) }}
+						{% for errorItem in form.organizations.contact_person_name.vars.errors %}
+							<span class="has-error text-danger" for="{{ form.organizations.contact_person_name.vars.id }}">{{ errorItem.message }}</span>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="controls">
+						{{ form_widget(form.organizations.contact_person_email, {attr: {class:'form-control',placeholder:'Contact Person Email'} }) }}
+						{% for errorItem in form.organizations.contact_person_email.vars.errors %}
+							<span class="has-error text-danger" for="{{ form.organizations.contact_person_email.vars.id }}">{{ errorItem.message }}</span>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="controls">
+						{{ form_widget(form.organizations.contact_person_phone, {attr: {class:'form-control',placeholder:'Contact Person Phone'} }) }}
+						{% for errorItem in form.organizations.contact_person_phone.vars.errors %}
+							<span class="has-error text-danger" for="{{ form.organizations.contact_person_phone.vars.id }}">{{ errorItem.message }}</span>
+						{% endfor %}
+					</div>
+				</div>
+			</fieldset>
+			<div class="submit pull-right">
 
-            </form>
+				<a class="btn" href="{{ path('_welcome')  }}">Back to Login</a>
+				<button class="btn btn-primary"  type="submit" id="_submit" name="_submit">{{ 'registration.submit'|trans }}</button>
 
-            <div class="clearfix"></div>
-        </div>
+
+
+			</div>
+			<div class="clearfix"></div>
+
+
+			{{ form_end(form) }}
+
+		</form>
+		<div class="forget">
+			<a href="{{ path('login') }}">
+				<span>Already have account. Login.</span>
+			</a>
+		</div>
+
+	</div>
+	<style type="text/css">
+		.login .wrapper{
+			width: 600px;
+			margin: -200px -300px;
+		}
+		.user-info{
+			width: 49%;
+			float: left;
+		}
+		.organization-info{
+			width: 49%;
+			float: left;
+			margin-left: 5px;
+		}
+		@media (max-width: 600px) {
+			.login .wrapper{
+				width: 400px;
+				margin: -200px -200px;
+			}
+			.user-info{
+				width: 100%;
+				float: none
+			}
+			.organization-info{
+				width: 100%;
+				float: none;
+				margin-left: 0;
+			}
+		}
+	</style>
 {% endblock body %}

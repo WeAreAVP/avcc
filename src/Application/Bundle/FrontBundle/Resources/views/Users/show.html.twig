@@ -4,7 +4,7 @@
 <div class="grid fluid">
     <h1>
         <a href="{{ path('users') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
-        User Details 
+        User Details
     </h1>
     <ul class="inline">
         <li>
@@ -42,6 +42,6 @@
         <dd>
             {{entity.roles[0]|replace({'_': '', 'ROLE': " "})|trim()|capitalize}}
         </dd>
-    </dl>    
-</div>        
+    </dl>
+</div>
 {% endblock body %}

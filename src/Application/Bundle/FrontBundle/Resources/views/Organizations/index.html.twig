@@ -2,9 +2,11 @@
 
 {% block body %}
 	<h1>Organizations
-		<small class="on-right">
-			<a href="{{ path('organizations_new') }}"><i class="icon-plus"></i> New</a>
-		</small>
+		{% if is_granted('ROLE_SUPER_ADMIN') %}
+			<small class="on-right">
+				<a href="{{ path('organizations_new') }}"><i class="icon-plus"></i> New</a>
+			</small>
+		{% endif %}
 	</h1>
 
 	<div class="table-responsive">
@@ -17,7 +19,9 @@
 					<th>Contact person name</th>
 					<th>Contact person email</th>
 					<th>Contact person phone</th>
-					<th>Action</th>
+						{% if is_granted('ROLE_MANAGER') %}
+						<th>Action</th>
+						{% endif %}
 				</tr>
 			</thead>
 			<tbody>
@@ -29,10 +33,12 @@
 						<td>{{ entity.contactpersonname }}</td>
 						<td>{{ entity.contactpersonemail }}</td>
 						<td>{{ entity.contactpersonphone }}</td>
-						<td>
-							<a title="Edit" href="{{ path('organizations_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i></a>
+						{% if is_granted('ROLE_MANAGER') %}
+							<td>
+								<a title="Edit" href="{{ path('organizations_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i></a>
 
-						</td>
+							</td>
+						{% endif %}
 					</tr>
 				{% endfor %}
 			</tbody>

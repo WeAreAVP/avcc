@@ -18,28 +18,28 @@
             {% endfor %}
     </div>
         <label>{{ 'profile.show.email'|trans }}</label>
-    <div class="input-control text" data-role="input-control">    
+    <div class="input-control text" data-role="input-control">
             {{ form_widget(form.email, {attr: {class:'size4'} }) }}
             {% for errorItem in form.email.vars.errors %}
             <span class="has-error text-alert" for="{{ form.email.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
     </div>
         <label>{{ 'profile.show.username'|trans }}</label>
-    <div class="input-control text" data-role="input-control"> 
+    <div class="input-control text" data-role="input-control">
             {{ form_widget(form.username, {attr: {class:'size4'} }) }}
             {% for errorItem in form.username.vars.errors %}
             <span class="has-error text-alert" for="{{ form.username.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
     </div>
          <label>Current password</label>
-    <div class="input-control text" data-role="input-control">  
+    <div class="input-control text" data-role="input-control">
             {{ form_widget(form.current_password, {attr: {class:'size4'} }) }}
             {% for errorItem in form.current_password.vars.errors %}
             <span class="has-error text-alert" for="{{ form.current_password.vars.id }}">{{ errorItem.message }}</span>
             {% endfor %}
     </div>
          <div class="clearfix"></div>
-    <br />    
+    <br />
     <button class="button primary"  type="submit" id="_submit" name="_submit">{{ 'profile.edit.submit'|trans }}</button>
         or
         <a class="button"   href="{{ path('fos_user_profile_show') }}">Cancel</a>
