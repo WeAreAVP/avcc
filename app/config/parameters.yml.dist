@@ -10,6 +10,6 @@ parameters:
     mailer_host:       127.0.0.1
     mailer_user:       ~
     mailer_password:   ~
-	mail_from_email    noreply@domain.com
+    mail_from_email    noreply@domain.com
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
