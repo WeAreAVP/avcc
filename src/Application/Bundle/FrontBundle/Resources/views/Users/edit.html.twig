@@ -33,7 +33,7 @@
         </div>
 	{% if is_granted('ROLE_SUPER_ADMIN') %}
         <label>Organizations</label>
-        <div class="input-control text" data-role="input-control">
+        <div class="input-control select" data-role="input-control">
 				{{ form_widget(edit_form.organizations, {attr: {class:'size4'} }) }}
 				{% for errorItem in edit_form.organizations.vars.errors %}
             <span class="has-error text-danger" for="{{ edit_form.organizations.vars.id }}">{{ errorItem.message }}</span>
@@ -55,7 +55,7 @@
             {% endfor %}
         </div>
         <label>Roles</label>
-        <div class="input-control text" data-role="input-control">
+        <div class="input-control select" data-role="input-control">
             {{ form_widget(edit_form.roles, {attr: {class:'size4'} }) }}
             {% for errorItem in edit_form.roles.vars.errors %}
             <span class="has-error text-danger" for="{{ edit_form.roles.vars.id }}">{{ errorItem.message }}</span>
@@ -67,10 +67,6 @@
     </fieldset>
     {{ form_end(edit_form) }}
 </div>
-    <script type="text/javascript" src="{{ asset('bundles/applicationfront/js/users.js') }}"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            initialize_form();
-        });
-    </script>
+
+
 {% endblock body %}

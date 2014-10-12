@@ -35,6 +35,7 @@ class ProjectsController extends Controller
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new Projects entity.
      *
@@ -55,12 +56,14 @@ class ProjectsController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('projects_show', array('id' => $entity->getId())));
+            $this->get('session')->getFlashBag()->add('success', 'Project added succesfully.');
+
+            return $this->redirect($this->generateUrl('projects', array('id' => $entity->getId())));
         }
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -93,11 +96,11 @@ class ProjectsController extends Controller
     public function newAction()
     {
         $entity = new Projects();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -114,14 +117,14 @@ class ProjectsController extends Controller
 
         $entity = $em->getRepository('ApplicationFrontBundle:Projects')->find($id);
 
-        if (!$entity) {
+        if (! $entity) {
             throw $this->createNotFoundException('Unable to find Projects entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -139,7 +142,7 @@ class ProjectsController extends Controller
 
         $entity = $em->getRepository('ApplicationFrontBundle:Projects')->find($id);
 
-        if (!$entity) {
+        if (! $entity) {
             throw $this->createNotFoundException('Unable to find Projects entity.');
         }
 
@@ -147,19 +150,19 @@ class ProjectsController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-    * Creates a form to edit a Projects entity.
-    *
-    * @param Projects $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a Projects entity.
+     *
+     * @param Projects $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(Projects $entity)
     {
         $form = $this->createForm(new ProjectsType(), $entity, array(
@@ -171,6 +174,7 @@ class ProjectsController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Projects entity.
      *
@@ -184,7 +188,7 @@ class ProjectsController extends Controller
         $user = $this->getUser();
         $entity = $em->getRepository('ApplicationFrontBundle:Projects')->find($id);
 
-        if (!$entity) {
+        if (! $entity) {
             throw $this->createNotFoundException('Unable to find Projects entity.');
         }
 
@@ -196,15 +200,18 @@ class ProjectsController extends Controller
             $entity->setUsersUpdated($user);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('projects_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add('success', 'Project updated succesfully.');
+
+            return $this->redirect($this->generateUrl('projects'));
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a Projects entity.
      *
@@ -220,12 +227,13 @@ class ProjectsController extends Controller
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('ApplicationFrontBundle:Projects')->find($id);
 
-            if (!$entity) {
+            if (! $entity) {
                 throw $this->createNotFoundException('Unable to find Projects entity.');
             }
 
             $em->remove($entity);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Project deleted succesfully.');
         }
 
         return $this->redirect($this->generateUrl('projects'));
@@ -241,10 +249,11 @@ class ProjectsController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('projects_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
+        ->setAction($this->generateUrl('projects_delete', array('id' => $id)))
+        ->setMethod('DELETE')
+        ->add('submit', 'submit', array('label' => 'Delete'))
+        ->getForm()
         ;
     }
+
 }
