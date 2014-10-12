@@ -35,7 +35,7 @@
 						<a class="element1 pull-menu" href="#"></a>
 						<ul class="element-menu place-right" style="">
 							<li>
-								<a class="dropdown-toggle" href="#">{{ app.user.name}}&nbsp;</a>
+								<a class="dropdown-toggle" href="#">Welcome, {{ app.user.name}}&nbsp;&nbsp;</a>
 								<ul class="dropdown-menu dark" data-role="dropdown">
 									<li><a href="{{ path('fos_user_profile_show') }}">Profile</a></li>
 									<li><a href="{{ path('fos_user_change_password') }}">Change Password</a></li>
@@ -58,6 +58,14 @@
 								</li>
 							</ul>
 						{% endif %}
+						<a class="element1 pull-menu" href="#"></a>
+						<ul class="element-menu place-right" style="">
+							<li>
+								<a class="" href="{{ path('projects') }}">Projects</a>
+
+							</li>
+						</ul>
+
 					{% endif %}
 				</div>
 			</div>
@@ -85,7 +93,11 @@
 			<script src="{{ asset('js/jquery.mousewheel.js') }}"></script>
 			<script src="{{ asset('js/metro.min.js') }}"></script>
 			<script src="{{ asset('js/chosen.jquery.js') }}"></script>
-
+			<script type="text/javascript">
+				setTimeout(function () {
+					$('.text-success').hide();
+				}, 5000);
+			</script>
 
 		{% endblock %}
 

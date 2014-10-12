@@ -1,0 +1,53 @@
+{% extends 'FOSUserBundle::layout.html.twig' %}
+
+{% block body -%}
+	<h1>Projects
+		{% if is_granted('ROLE_MANAGER') %}
+			<small class="on-right">
+				<a href="{{ path('projects_new') }}"><i class="icon-plus"></i> New</a>
+			</small>
+		{% endif %}
+	</h1>
+
+	<div class="table-responsive">
+		<table class="table bordered">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Organization</th>
+					<th>Created On</th>
+					<th>Updated On</th>
+						{% if is_granted('ROLE_MANAGER') %}
+						<th>Action</th>
+						{% endif %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for entity in entities %}
+					<tr>
+						<td><a href="{{ path('projects_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+						<td>{{ entity.organization }}</td>
+						<td>{% if entity.createdOn %}{{ entity.createdOn|date('Y-m-d H:i:s') }}{% endif %}</td>
+						<td>{% if entity.updatedOn %}{{ entity.updatedOn|date('Y-m-d H:i:s') }}{% endif %}</td>
+						{% if is_granted('ROLE_MANAGER') %}
+							<td>
+								<a title="Edit" href="{{ path('projects_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i> Edit</a>
+
+							</td>
+						{% endif %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

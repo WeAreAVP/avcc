@@ -1,0 +1,15 @@
+{% extends 'FOSUserBundle::layout.html.twig' %}
+
+{% block body -%}
+    <h1>Projects creation</h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('projects') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

@@ -65,6 +65,7 @@ class OrganizationsController extends Controller
             $entity->setUsersCreated($user);
             $em->persist($entity);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Organization added succesfully.');
 
             return $this->redirect($this->generateUrl('organizations', array('id' => $entity->getId())));
         }
@@ -220,6 +221,7 @@ class OrganizationsController extends Controller
         if ($editForm->isValid()) {
             $entity->setUsersUpdated($user);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Organization updated succesfully.');
 
             return $this->redirect($this->generateUrl('organizations'));
         }

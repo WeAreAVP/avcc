@@ -67,6 +67,7 @@ class UsersController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'User added succesfully.');
 
             return $this->redirect($this->generateUrl('users'));
         }
@@ -236,6 +237,7 @@ class UsersController extends Controller
 
             $em->persist($entity);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'User updated succesfully.');
 
             return $this->redirect($this->generateUrl('users'));
         }
@@ -273,6 +275,7 @@ class UsersController extends Controller
 
             $em->remove($entity);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'User deleted succesfully.');
         }
 
         return $this->redirect($this->generateUrl('users'));
