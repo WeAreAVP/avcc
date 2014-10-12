@@ -80,7 +80,7 @@ fos_user:
         form:
             type: application_user_profile
     from_email:
-        address:        noreply@avcc.avpreserve.com
+        address:        "%from_email%"
         sender_name:    AVCC AVPreserve
 
 doctrine_migrations:
@@ -88,3 +88,6 @@ doctrine_migrations:
     namespace: Application\Migrations
     table_name: migration_versions
     name: Application Migrations
+
+parameters:
+    from_email: "%mail_from_email%"

@@ -18,6 +18,7 @@ use Application\Bundle\FrontBundle\Form\Type\RegistrationFormType;
 class DefaultController extends Controller
 {
 
+    static $DEFAULT_ROLE='ROLE_ADMIN';
     /**
      * calling parent bundle
      *
@@ -127,11 +128,24 @@ class DefaultController extends Controller
         if ('POST' === $request->getMethod()) {
             $form->bind($request);
             if ($form->isValid()) {
+                $tokenGenerator = $this->container->get('fos_user.util.token_generator');
+                $entity->setConfirmationToken($tokenGenerator->generateToken());
                 $em = $this->getDoctrine()->getManager();
                 $data = $form->getData();
                 $em->persist($data->getOrganizations());
                 $em->persist($data);
+                $data->addRole(DefaultController::$DEFAULT_ROLE);
+                $data->getOrganizations()->setUsersCreated($data);
                 $em->flush();
+                $url = $this->get('router')->generate('fos_user_registration_confirm', array('token' => $entity->getConfirmationToken()), true);
+                $rendered = $this->renderView('FOSUserBundle:Registration:email.txt.twig', array(
+                    'user' => $entity,
+                    'confirmationUrl' => $url
+                ));
+                $this->sendEmailMessage($rendered,  $this->container->getParameter('from_email'), $entity->getEmail());
+                $this->get('session')->set('fos_user_send_confirmation_email/email', $entity->getEmail());
+
+                return $this->redirect($this->generateUrl('fos_user_registration_check_email'));
             }
         }
 
@@ -154,6 +168,31 @@ class DefaultController extends Controller
         $template = sprintf('ApplicationFrontBundle:Default:signup.html.twig');
 
         return $this->container->get('templating')->renderResponse($template, $data);
+    }
+
+    /**
+     * Send activation email to user.
+     *
+     * @param string $renderedTemplate
+     * @param string $fromEmail
+     * @param string $toEmail
+     *
+     * @return void
+     */
+    protected function sendEmailMessage($renderedTemplate, $fromEmail, $toEmail)
+    {
+        // Render the email, use the first line as the subject, and the rest as the body
+        $renderedLines = explode("\n", trim($renderedTemplate));
+        $subject = $renderedLines[0];
+        $body = implode("\n", array_slice($renderedLines, 1));
+
+        $message = \Swift_Message::newInstance()
+        ->setSubject($subject)
+        ->setFrom($fromEmail)
+        ->setTo($toEmail)
+        ->setBody($body);
+
+        $this->get('mailer')->send($message);
     }
 
 }
