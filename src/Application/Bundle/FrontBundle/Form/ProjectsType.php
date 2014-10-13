@@ -5,6 +5,8 @@ namespace Application\Bundle\FrontBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class ProjectsType extends AbstractType
 {
@@ -15,7 +17,7 @@ class ProjectsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')            
+            ->add('name')   
             ->addEventListener(
                         FormEvents::POST_SET_DATA, array($this, 'onPreSetData'))     
             ->addEventListener(
