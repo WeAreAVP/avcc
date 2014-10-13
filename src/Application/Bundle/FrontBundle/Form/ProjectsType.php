@@ -19,7 +19,7 @@ class ProjectsType extends AbstractType
     static $DEFAULT_ROLE = 'ROLE_USER';
     static $DEFAULT_SUPER_ADMIN_ROLE = 'ROLE_SUPER_ADMIN';
     static $DEFAULT_ROLE_INDEX = 0;
-    
+
     public function __construct($options = array())
     {
         $this->user = $options['currentUser'];
@@ -31,25 +31,25 @@ class ProjectsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')   
+            ->add('name')
             ->addEventListener(
-                        FormEvents::POST_SET_DATA, array($this, 'onPreSetData'))     
+                        FormEvents::POST_SET_DATA, array($this, 'onPreSetData'))
             ->addEventListener(
-                        FormEvents::POST_SUBMIT, array($this, 'onPostSubmitData'));    
+                        FormEvents::POST_SUBMIT, array($this, 'onPostSubmitData'));
         ;
     }
-    
+
         public function onPreSetData(FormEvent $event)
     {
         $form = $event->getForm();
-       
+
         $loggedInUserRole = $this->user->getRoles();
 
         if ($loggedInUserRole[self::$DEFAULT_ROLE_INDEX] == self::$DEFAULT_SUPER_ADMIN_ROLE) {
             $form->add('organization');
-        } 
+        }
     }
-    
+
     public function onPostSubmitData(FormEvent $event)
     {
         $projectInfo = $event->getData();
