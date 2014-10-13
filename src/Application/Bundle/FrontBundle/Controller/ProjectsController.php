@@ -15,8 +15,7 @@ use Application\Bundle\FrontBundle\Form\ProjectsType;
  *
  * @Route("/projects")
  */
-class ProjectsController extends Controller
-{
+class ProjectsController extends Controller {
 
     /**
      * Lists all Projects entities.
@@ -24,11 +23,11 @@ class ProjectsController extends Controller
      * @Route("/", name="projects")
      * @Method("GET")
      * @Template()
+     * @return stdObject 
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-         if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+        if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
             $entities = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
         } else {
             $entities = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $this->getUser()->getOrganizations()));
@@ -45,9 +44,12 @@ class ProjectsController extends Controller
      * @Route("/", name="projects_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:Projects:new.html.twig")
+     * 
+     * @param Request $request 
+     * 
+     * @return array entity and form
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $user = $this->getUser();
         $entity = new Projects();
         $form = $this->createCreateForm($entity);
@@ -77,8 +79,7 @@ class ProjectsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Projects $entity)
-    {
+    private function createCreateForm(Projects $entity) {
         $formOptions['currentUser'] = $this->getUser();
         $form = $this->createForm(new ProjectsType($formOptions), $entity, array(
             'action' => $this->generateUrl('projects_create'),
@@ -96,9 +97,10 @@ class ProjectsController extends Controller
      * @Route("/new", name="projects_new")
      * @Method("GET")
      * @Template()
+     * @return array project entity and form
      */
-    public function newAction()
-    {
+    
+    public function newAction() {
         $entity = new Projects();
         $form = $this->createCreateForm($entity);
 
@@ -114,14 +116,17 @@ class ProjectsController extends Controller
      * @Route("/{id}", name="projects_show")
      * @Method("GET")
      * @Template()
+     * 
+     * @param integer $id project id
+     * 
+     * @return array 
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Projects')->find($id);
 
-        if (! $entity) {
+        if (!$entity) {
             throw $this->createNotFoundException('Unable to find Projects entity.');
         }
 
@@ -139,14 +144,17 @@ class ProjectsController extends Controller
      * @Route("/{id}/edit", name="projects_edit")
      * @Method("GET")
      * @Template()
+     * 
+     * @param integer $id project id
+     * 
+     * @return array
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Projects')->find($id);
 
-        if (! $entity) {
+        if (!$entity) {
             throw $this->createNotFoundException('Unable to find Projects entity.');
         }
 
@@ -167,8 +175,7 @@ class ProjectsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(Projects $entity)
-    {
+    private function createEditForm(Projects $entity) {
         $formOptions['currentUser'] = $this->getUser();
         $form = $this->createForm(new ProjectsType($formOptions), $entity, array(
             'action' => $this->generateUrl('projects_update', array('id' => $entity->getId())),
@@ -186,14 +193,18 @@ class ProjectsController extends Controller
      * @Route("/{id}", name="projects_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:Projects:edit.html.twig")
+     * 
+     * @param Request $request 
+     * @param integer $id 
+     * 
+     * @return array 
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $entity = $em->getRepository('ApplicationFrontBundle:Projects')->find($id);
 
-        if (! $entity) {
+        if (!$entity) {
             throw $this->createNotFoundException('Unable to find Projects entity.');
         }
 
@@ -222,9 +233,14 @@ class ProjectsController extends Controller
      *
      * @Route("/{id}", name="projects_delete")
      * @Method("DELETE")
+     * 
+     * @param Request $request 
+     * @param integer $id 
+     * 
+     * @return Redirect
      */
-    public function deleteAction(Request $request, $id)
-    {
+    
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -232,7 +248,7 @@ class ProjectsController extends Controller
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('ApplicationFrontBundle:Projects')->find($id);
 
-            if (! $entity) {
+            if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Projects entity.');
             }
 
@@ -251,13 +267,12 @@ class ProjectsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
-        ->setAction($this->generateUrl('projects_delete', array('id' => $id)))
-        ->setMethod('DELETE')
-        ->add('submit', 'submit', array('label' => 'Delete'))
-        ->getForm()
+                        ->setAction($this->generateUrl('projects_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm();
         ;
     }
 
