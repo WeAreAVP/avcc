@@ -10,7 +10,21 @@ use Symfony\Component\Form\FormEvents;
 
 class ProjectsType extends AbstractType
 {
-        /**
+    /**
+     * Current logged in user data.
+     *
+     * @var string
+     */
+    public $user;
+    static $DEFAULT_ROLE = 'ROLE_USER';
+    static $DEFAULT_SUPER_ADMIN_ROLE = 'ROLE_SUPER_ADMIN';
+    static $DEFAULT_ROLE_INDEX = 0;
+    
+    public function __construct($options = array())
+    {
+        $this->user = $options['currentUser'];
+    }
+    /**
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
@@ -32,7 +46,7 @@ class ProjectsType extends AbstractType
         $loggedInUserRole = $this->user->getRoles();
 
         if ($loggedInUserRole[self::$DEFAULT_ROLE_INDEX] == self::$DEFAULT_SUPER_ADMIN_ROLE) {
-            $form->add('organizations');
+            $form->add('organization');
         } 
     }
     
@@ -44,7 +58,7 @@ class ProjectsType extends AbstractType
         if ($loggedInUserRole[self::$DEFAULT_ROLE_INDEX] !== self::$DEFAULT_SUPER_ADMIN_ROLE) {
 
             if ($this->user->getOrganizations() instanceof \Application\Bundle\FrontBundle\Entity\Organizations)
-                $projectInfo->setOrganizations($this->user->getOrganizations());
+                $projectInfo->setOrganization($this->user->getOrganizations());
         }
     }
     /**

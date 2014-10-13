@@ -79,7 +79,8 @@ class ProjectsController extends Controller
      */
     private function createCreateForm(Projects $entity)
     {
-        $form = $this->createForm(new ProjectsType(), $entity, array(
+        $formOptions['currentUser'] = $this->getUser();
+        $form = $this->createForm(new ProjectsType($formOptions), $entity, array(
             'action' => $this->generateUrl('projects_create'),
             'method' => 'POST',
         ));
@@ -168,7 +169,8 @@ class ProjectsController extends Controller
      */
     private function createEditForm(Projects $entity)
     {
-        $form = $this->createForm(new ProjectsType(), $entity, array(
+        $formOptions['currentUser'] = $this->getUser();
+        $form = $this->createForm(new ProjectsType($formOptions), $entity, array(
             'action' => $this->generateUrl('projects_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
