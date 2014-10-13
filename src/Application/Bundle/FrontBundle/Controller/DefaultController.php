@@ -142,7 +142,7 @@ class DefaultController extends Controller
                     'user' => $entity,
                     'confirmationUrl' => $url
                 ));
-                $this->sendEmailMessage($rendered,  $this->container->getParameter('from_email'), $entity->getEmail());
+                $this->sendEmailMessage($rendered, $this->container->getParameter('from_email'), $entity->getEmail());
                 $this->get('session')->set('fos_user_send_confirmation_email/email', $entity->getEmail());
 
                 return $this->redirect($this->generateUrl('fos_user_registration_check_email'));
