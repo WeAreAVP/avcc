@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * AcidDeductionStrips
+ * Commercial
  *
- * @ORM\Table(name="acid_deduction_strips")
+ * @ORM\Table(name="commercial_unique")
  * @ORM\Entity
  */
-class AcidDeductionStrips
+class Commercial
 {
 
     /**
@@ -27,12 +27,12 @@ class AcidDeductionStrips
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=50)
-     * @Assert\NotBlank(message="Color name is required")
+     * @Assert\NotBlank(message="Name is required")
      */
     private $name;
 
     /**
-     * Returns acid deduction strip
+     * Returns Commercial/unique
      *
      * @return string
      */
@@ -66,7 +66,7 @@ class AcidDeductionStrips
      *
      * @param string $name
      *
-     * @return \Application\Bundle\FrontBundle\Entity\AcidDeductionStrips
+     * @return \Application\Bundle\FrontBundle\Entity\Commercial
      */
     public function setName($name)
     {

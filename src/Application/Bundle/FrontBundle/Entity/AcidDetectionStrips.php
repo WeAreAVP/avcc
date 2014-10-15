@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * MonoStreo
+ * AcidDetectionStrips
  *
- * @ORM\Table(name="mono_stero")
+ * @ORM\Table(name="acid_detection_strips")
  * @ORM\Entity
  */
-class MonoStreo
+class AcidDetectionStrips
 {
 
     /**
@@ -27,12 +27,12 @@ class MonoStreo
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=50)
-     * @Assert\NotBlank(message="Mono stero name is required")
+     * @Assert\NotBlank(message="Color name is required")
      */
     private $name;
 
     /**
-     * Returns Mono/Streo
+     * Returns acid deduction strip
      *
      * @return string
      */
@@ -66,7 +66,7 @@ class MonoStreo
      *
      * @param string $name
      *
-     * @return \Application\Bundle\FrontBundle\Entity\MonoStero
+     * @return \Application\Bundle\FrontBundle\Entity\AcidDeductionStrips
      */
     public function setName($name)
     {
