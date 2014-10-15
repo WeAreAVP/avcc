@@ -44,6 +44,18 @@ class TrackTypes
     private $trackTypeFormat;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Organizations", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="trackTypeOrg")
+     * @ORM\JoinColumn(
+     *     name="organization_id",
+     *     referencedColumnName="id",
+     *     nullable=true,
+     *     onDelete="CASCADE"
+     * )
+     * @var integer 
+     */
+    private $organization;
+    
+    /**
      * Returns track type
      *
      * @return string
@@ -111,4 +123,27 @@ class TrackTypes
         return $this->trackTypeFormat;
     }
 
+    /**
+     * Set organization.
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Organizations $organization
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\TrackTypes
+     */
+    public function setOrganization(\Application\Bundle\FrontBundle\Entity\Organizations $organization)
+    {
+        $this->organization = $organization;
+
+        return $this;
+    }
+
+    /**
+     * Get organization
+     * 
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    public function getOrganization()
+    {
+        return $this->organization;
+    }
 }

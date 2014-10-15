@@ -44,6 +44,18 @@ class TapeThickness
     private $tapeThicknessFormat;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Organizations", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="tapeThicknessOrg")
+     * @ORM\JoinColumn(
+     *     name="organization_id",
+     *     referencedColumnName="id",
+     *     nullable=true,
+     *     onDelete="CASCADE"
+     * )
+     * @var integer 
+     */
+    private $organization;
+    
+    /**
      * Returns tape thickness
      *
      * @return string
@@ -109,6 +121,30 @@ class TapeThickness
     public function getTapeThicknessFormat()
     {
         return $this->tapeThicknessFormat;
+    }
+    
+    /**
+     * Set organization.
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Organizations $organization
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\TapeThickness
+     */
+    public function setOrganization(\Application\Bundle\FrontBundle\Entity\Organizations $organization)
+    {
+        $this->organization = $organization;
+
+        return $this;
+    }
+
+    /**
+     * Get organization
+     * 
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    public function getOrganization()
+    {
+        return $this->organization;
     }
 
 }

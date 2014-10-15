@@ -161,6 +161,18 @@ class Formats
      */ 
     private $formatVersion;
     
+    /**
+     * @ORM\ManyToOne(targetEntity="Organizations", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="formatOrg")
+     * @ORM\JoinColumn(
+     *     name="organization_id",
+     *     referencedColumnName="id",
+     *     nullable=true,
+     *     onDelete="CASCADE"
+     * )
+     * @var integer 
+     */
+    private $organization;
+    
     public function __construct()
     {
         $this->diskDiameter = new ArrayCollection();   
@@ -474,5 +486,29 @@ class Formats
     public function removeFormatVersion(FormatVersions $fv)
     {
          $this->formatVersion->remove($fv);
+    }
+    
+    /**
+     * Set organization.
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Organizations $organization
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Formats
+     */
+    public function setOrganization(\Application\Bundle\FrontBundle\Entity\Organizations $organization)
+    {
+        $this->organization = $organization;
+
+        return $this;
+    }
+
+    /**
+     * Get organization
+     * 
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    public function getOrganization()
+    {
+        return $this->organization;
     }
 }

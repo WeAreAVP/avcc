@@ -32,6 +32,18 @@ class ReelCore
     private $name;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Organizations", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="reelCoreOrg")
+     * @ORM\JoinColumn(
+     *     name="organization_id",
+     *     referencedColumnName="id",
+     *     nullable=true,
+     *     onDelete="CASCADE"
+     * )
+     * @var integer 
+     */
+    private $organization;
+    
+    /**
      * Returns reel core
      *
      * @return string
@@ -75,4 +87,27 @@ class ReelCore
         return $this;
     }
     
+    /**
+     * Set organization.
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Organizations $organization
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\ReelCore
+     */
+    public function setOrganization(\Application\Bundle\FrontBundle\Entity\Organizations $organization)
+    {
+        $this->organization = $organization;
+
+        return $this;
+    }
+
+    /**
+     * Get organization
+     * 
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    public function getOrganization()
+    {
+        return $this->organization;
+    }
 }
