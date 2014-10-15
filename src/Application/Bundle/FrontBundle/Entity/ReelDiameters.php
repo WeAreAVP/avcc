@@ -39,7 +39,7 @@ class ReelDiameters
      *     nullable=false,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $reelFormat;
 
@@ -51,10 +51,10 @@ class ReelDiameters
      *     nullable=true,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     /**
      * Returns reel diameter
      *
@@ -101,9 +101,9 @@ class ReelDiameters
 
     /**
      * Set reel formats
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Formats $reelFormat
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\ReelDiameters
      */
     public function setReelFormat(\Application\Bundle\FrontBundle\Entity\Formats $reelFormat)
@@ -115,7 +115,7 @@ class ReelDiameters
 
     /**
      * Get reel formats
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Formats
      */
     public function getReelFormat()
@@ -139,7 +139,7 @@ class ReelDiameters
 
     /**
      * Get organization
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()

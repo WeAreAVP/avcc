@@ -14,7 +14,7 @@ class Version20141014094516 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('CREATE TABLE disk_diameters (id INT AUTO_INCREMENT NOT NULL, format_id INT NOT NULL, name VARCHAR(50) NOT NULL, INDEX IDX_DD84FBDCD629F605 (format_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE media_diameters (id INT AUTO_INCREMENT NOT NULL, format_id INT NOT NULL, name VARCHAR(50) NOT NULL, INDEX IDX_BB7F6A02D629F605 (format_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE reel_diameters (id INT AUTO_INCREMENT NOT NULL, format_id INT NOT NULL, name VARCHAR(50) NOT NULL, INDEX IDX_13506862D629F605 (format_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
@@ -27,7 +27,7 @@ class Version20141014094516 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('DROP TABLE disk_diameters');
         $this->addSql('DROP TABLE media_diameters');
         $this->addSql('DROP TABLE reel_diameters');

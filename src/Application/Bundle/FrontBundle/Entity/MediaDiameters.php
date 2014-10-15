@@ -39,7 +39,7 @@ class MediaDiameters
      *     nullable=false,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $mediaDiameterFormat;
 
@@ -51,10 +51,10 @@ class MediaDiameters
      *     nullable=true,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     /**
      * Returns media diameter
      *
@@ -101,9 +101,9 @@ class MediaDiameters
 
     /**
      * Set media diameter formats
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Formats $mediaDiameterFormat
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\MediaDiameters
      */
     public function setMediaDiameterFormat(\Application\Bundle\FrontBundle\Entity\Formats $mediaDiameterFormat)
@@ -115,14 +115,14 @@ class MediaDiameters
 
     /**
      * Get media diameter formats
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Formats
      */
     public function getMediaDiameterFormat()
     {
         return $this->mediaDiameterFormat;
     }
-    
+
     /**
      * Set organization.
      *
@@ -139,7 +139,7 @@ class MediaDiameters
 
     /**
      * Get organization
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()

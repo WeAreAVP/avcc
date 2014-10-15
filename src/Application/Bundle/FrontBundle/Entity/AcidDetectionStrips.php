@@ -39,10 +39,10 @@ class AcidDetectionStrips
      *     nullable=false,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     /**
      * Returns acid deduction strip
      *
@@ -86,7 +86,7 @@ class AcidDetectionStrips
 
         return $this;
     }
-    
+
     /**
      * Set organization.
      *
@@ -103,7 +103,7 @@ class AcidDetectionStrips
 
     /**
      * Get formate media type
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()

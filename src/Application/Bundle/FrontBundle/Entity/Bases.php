@@ -39,7 +39,7 @@ class Bases
      *     nullable=false,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $baseFormat;
 
@@ -51,10 +51,10 @@ class Bases
      *     nullable=true,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     /**
      * Returns Base
      *
@@ -101,9 +101,9 @@ class Bases
 
     /**
      * Set base formats
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Formats $baseFormat
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Bases
      */
     public function setBaseFormat(\Application\Bundle\FrontBundle\Entity\Formats $baseFormat)
@@ -115,7 +115,7 @@ class Bases
 
     /**
      * Get base formats
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Formats
      */
     public function getBaseFormat()
@@ -139,7 +139,7 @@ class Bases
 
     /**
      * Get organization
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()

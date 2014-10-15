@@ -39,10 +39,10 @@ class PrintTypes
      *     nullable=true,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     /**
      * Returns Print Type name
      *
@@ -86,7 +86,7 @@ class PrintTypes
 
         return $this;
     }
-    
+
     /**
      * Set organization.
      *
@@ -103,7 +103,7 @@ class PrintTypes
 
     /**
      * Get organization
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()

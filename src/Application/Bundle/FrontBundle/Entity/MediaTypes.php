@@ -12,7 +12,7 @@ use Application\Bundle\FrontBundle\Entity\Formats as Formats;
  * @ORM\Table(name="media_types")
  * @ORM\Entity
  */
-class MediaTypes 
+class MediaTypes
 {
     /**
      * @var integer
@@ -27,10 +27,10 @@ class MediaTypes
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=50)
-     * @Assert\NotBlank(message="Media type name is required")     
+     * @Assert\NotBlank(message="Media type name is required")
      */
-    private $name;   
-    
+    private $name;
+
     /**
      * @ORM\OneToMany(
      *     targetEntity="Formats",
@@ -40,15 +40,14 @@ class MediaTypes
      *     cascade={"all","merge","persist","refresh","remove"}
      * )
      * @ORM\OrderBy({"id"="ASC"})
-     */    
+     */
     private $formats;
-    
-    
+
     public function __construct()
     {
-        $this->formats = new ArrayCollection();        
+        $this->formats = new ArrayCollection();
     }
-    
+
     /**
      * Returns Media type name
      *
@@ -78,7 +77,7 @@ class MediaTypes
     {
         return $this->name;
     }
-    
+
     /**
      * Set name.
      *
@@ -92,12 +91,12 @@ class MediaTypes
 
         return $this;
     }
-    
+
     /**
      * Add format
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Formats $f
-     * 
+     *
      */
     public function addFormat(Formats $f)
     {
@@ -107,16 +106,16 @@ class MediaTypes
              $f->setMediaType($this);
          }
     }
-    
+
     /**
      * Remove format
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Formats $f
-     * 
+     *
      */
     public function removeFormat(Formats $f)
     {
          $this->formats->remove($f);
     }
-    
+
 }

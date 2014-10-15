@@ -8,15 +8,16 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20141014101657 extends AbstractMigration
+class Version20141015132037 extends AbstractMigration
 {
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE bases (id INT AUTO_INCREMENT NOT NULL, format_id INT NOT NULL, name VARCHAR(50) NOT NULL, INDEX IDX_217B2A3BD629F605 (format_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE bases ADD CONSTRAINT FK_217B2A3BD629F605 FOREIGN KEY (format_id) REFERENCES formats (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE formats ADD organization_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE formats ADD CONSTRAINT FK_DBCBA3C32C8A3DE FOREIGN KEY (organization_id) REFERENCES organizations (id) ON DELETE CASCADE');
+        $this->addSql('CREATE INDEX IDX_DBCBA3C32C8A3DE ON formats (organization_id)');
     }
 
     public function down(Schema $schema)
@@ -24,6 +25,8 @@ class Version20141014101657 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP TABLE bases');
+        $this->addSql('ALTER TABLE formats DROP FOREIGN KEY FK_DBCBA3C32C8A3DE');
+        $this->addSql('DROP INDEX IDX_DBCBA3C32C8A3DE ON formats');
+        $this->addSql('ALTER TABLE formats DROP organization_id');
     }
 }

@@ -39,10 +39,10 @@ class Colors
      *     nullable=true,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     /**
      * Returns color
      *
@@ -86,7 +86,7 @@ class Colors
 
         return $this;
     }
-    
+
     /**
      * Set organization.
      *
@@ -103,12 +103,12 @@ class Colors
 
     /**
      * Get organization
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()
     {
         return $this->organization;
     }
-    
+
 }

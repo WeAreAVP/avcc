@@ -39,10 +39,10 @@ class Commercial
      *     nullable=true,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     /**
      * Returns Commercial/unique
      *
@@ -86,7 +86,7 @@ class Commercial
 
         return $this;
     }
-    
+
     /**
      * Set organization.
      *
@@ -103,7 +103,7 @@ class Commercial
 
     /**
      * Get organization
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()

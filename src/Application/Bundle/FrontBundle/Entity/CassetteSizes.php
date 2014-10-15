@@ -39,7 +39,7 @@ class CassetteSizes
      *     nullable=false,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $cassetteSizeFormat;
 
@@ -51,10 +51,10 @@ class CassetteSizes
      *     nullable=true,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     /**
      * Returns Cassestte size
      *
@@ -101,9 +101,9 @@ class CassetteSizes
 
     /**
      * Set base formats
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Formats $cassetteSizeFormat
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\CassetteSizes
      */
     public function setCassetteSizeFormat(\Application\Bundle\FrontBundle\Entity\Formats $cassetteSizeFormat)
@@ -115,7 +115,7 @@ class CassetteSizes
 
     /**
      * Get base formats
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Formats
      */
     public function getCassetteSizeFormat()
@@ -139,7 +139,7 @@ class CassetteSizes
 
     /**
      * Get organization
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()

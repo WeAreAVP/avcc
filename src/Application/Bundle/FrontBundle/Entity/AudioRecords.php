@@ -3,7 +3,6 @@
 namespace Application\Bundle\FrontBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Application\Bundle\FrontBundle\Entity\DiskDiameters as DiskDiameters;
 use Application\Bundle\FrontBundle\Entity\MediaDiameters as MediaDiameters ;
 use Application\Bundle\FrontBundle\Entity\Bases as Bases ;
@@ -49,7 +48,7 @@ class AudioRecords
      * })
      */
     private $mediaDiameters;
-    
+
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Bases
      *
@@ -59,14 +58,14 @@ class AudioRecords
      * })
      */
     private $bases;
-    
+
     /**
      * @var integer
      *
      * @ORM\Column(name="media_duration", type="integer")
      */
     private $mediaDuration;
-    
+
     /**
      * @var \Application\Bundle\FrontBundle\Entity\RecordingSpeed
      *
@@ -76,7 +75,7 @@ class AudioRecords
      * })
      */
     private $recordingSpeed;
-    
+
     /**
      * @var \Application\Bundle\FrontBundle\Entity\TapeThickness
      *
@@ -86,7 +85,7 @@ class AudioRecords
      * })
      */
     private $tapeThickness;
-    
+
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Sides
      *
@@ -96,7 +95,7 @@ class AudioRecords
      * })
      */
     private $slides;
-    
+
     /**
      * @var \Application\Bundle\FrontBundle\Entity\TrackTypes
      *
@@ -106,7 +105,7 @@ class AudioRecords
      * })
      */
     private $trackTypes;
-    
+
     /**
      * @var \Application\Bundle\FrontBundle\Entity\MonoStereo
      *
@@ -116,7 +115,7 @@ class AudioRecords
      * })
      */
     private $monoStereo;
-    
+
     /**
      * @var \Application\Bundle\FrontBundle\Entity\NoiceReduction
      *
@@ -126,7 +125,7 @@ class AudioRecords
      * })
      */
     private $noiceReduction;
-    
+
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Records
      *
@@ -136,7 +135,7 @@ class AudioRecords
      * })
      */
     private $record;
-    
+
     /**
      * Get Id.
      *
@@ -146,7 +145,7 @@ class AudioRecords
     {
         return $this->id;
     }
-    
+
     /**
      * Set disk diameter.
      *
@@ -160,7 +159,7 @@ class AudioRecords
 
         return $this;
     }
-    
+
     /**
      * Get disk diameter.
      *
@@ -194,7 +193,7 @@ class AudioRecords
     {
         return $this->mediaDiameters;
     }
-    
+
     /**
      * Set base.
      *
@@ -208,7 +207,7 @@ class AudioRecords
 
         return $this;
     }
-    
+
     /**
      * Get base.
      *
@@ -218,7 +217,7 @@ class AudioRecords
     {
         return $this->bases;
     }
-    
+
     /**
      * Set media duration.
      *
@@ -227,9 +226,10 @@ class AudioRecords
     public function setMediaDuration($mediaDuration)
     {
         $this->mediaDuration = $mediaDuration;
+
         return $this;
     }
-    
+
     /**
      * Get media duration.
      *
@@ -239,7 +239,7 @@ class AudioRecords
     {
         return $this->mediaDuration;
     }
-    
+
     /**
      * Set recording speed.
      *
@@ -253,7 +253,7 @@ class AudioRecords
 
         return $this;
     }
-    
+
     /**
      * Get recording speed.
      *
@@ -263,7 +263,7 @@ class AudioRecords
     {
         return $this->recordingSpeed;
     }
-    
+
     /**
      * Set tape thickness.
      *
@@ -277,7 +277,7 @@ class AudioRecords
 
         return $this;
     }
-    
+
     /**
      * Get tapeThickness
      *
@@ -287,7 +287,7 @@ class AudioRecords
     {
         return $this->tapeThickness;
     }
-    
+
     /**
      * Set slide.
      *
@@ -301,7 +301,7 @@ class AudioRecords
 
         return $this;
     }
-    
+
     /**
      * Get slide
      *
@@ -311,7 +311,7 @@ class AudioRecords
     {
         return $this->slides;
     }
-    
+
     /**
      * Set track type.
      *
@@ -325,7 +325,7 @@ class AudioRecords
 
         return $this;
     }
-    
+
     /**
      * Get track type
      *
@@ -335,7 +335,7 @@ class AudioRecords
     {
         return $this->trackTypes;
     }
-    
+
     /**
      * Set mono stereo.
      *
@@ -349,7 +349,7 @@ class AudioRecords
 
         return $this;
     }
-    
+
     /**
      * Get mono stereo.
      *
@@ -359,7 +359,7 @@ class AudioRecords
     {
         return $this->monoStereo;
     }
-    
+
     /**
      * Set noice reduction.
      *
@@ -373,7 +373,7 @@ class AudioRecords
 
         return $this;
     }
-    
+
     /**
      * Get NoiceReduction.
      *
@@ -383,7 +383,7 @@ class AudioRecords
     {
         return $this->noiceReduction;
     }
-    
+
     /**
      * Set record.
      *

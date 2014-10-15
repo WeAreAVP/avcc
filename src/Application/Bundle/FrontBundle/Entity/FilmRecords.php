@@ -3,7 +3,6 @@
 namespace Application\Bundle\FrontBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Application\Bundle\FrontBundle\Entity\PrintTypes as PrintTypes;
 use Application\Bundle\FrontBundle\Entity\ReelCore as ReelCore;
 use Application\Bundle\FrontBundle\Entity\Colors as Colors;
@@ -55,14 +54,14 @@ class FilmRecords
      * @ORM\Column(name="footage", type="integer")
      */
     private $footage;
-    
+
     /**
      * @var integer
      *
      * @ORM\Column(name="media_diameter", type="integer")
      */
     private $mediaDiameter;
-    
+
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Bases
      *
@@ -72,7 +71,7 @@ class FilmRecords
      * })
      */
     private $bases;
-    
+
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Colors
      *
@@ -82,7 +81,7 @@ class FilmRecords
      * })
      */
     private $colors;
-    
+
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Sounds
      *
@@ -92,7 +91,7 @@ class FilmRecords
      * })
      */
     private $sound;
-    
+
     /**
      * @var \Application\Bundle\FrontBundle\Entity\FrameRates
      *
@@ -102,7 +101,7 @@ class FilmRecords
      * })
      */
     private $frameRate;
-    
+
     /**
      * @var \Application\Bundle\FrontBundle\Entity\AcidDetectionStrips
      *
@@ -112,14 +111,14 @@ class FilmRecords
      * })
      */
     private $acidDetectionStrip;
-    
+
     /**
      * @var float
      *
      * @ORM\Column(name="shrinkage", type="float")
      */
     private $shrinkage;
-    
+
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Records
      *
@@ -196,6 +195,7 @@ class FilmRecords
     public function setFootage($footage)
     {
         $this->footage = $footage;
+
         return $this;
     }
 
@@ -217,6 +217,7 @@ class FilmRecords
     public function setMediaDiameter($mediaDiameter)
     {
         $this->mediaDiameter = $mediaDiameter;
+
         return $this;
     }
 
@@ -243,7 +244,7 @@ class FilmRecords
 
         return $this;
     }
-    
+
     /**
      * Get base.
      *
@@ -253,7 +254,7 @@ class FilmRecords
     {
         return $this->bases;
     }
-    
+
     /**
      * Set color.
      *
@@ -267,7 +268,7 @@ class FilmRecords
 
         return $this;
     }
-    
+
     /**
      * Get color.
      *
@@ -277,7 +278,7 @@ class FilmRecords
     {
         return $this->colors;
     }
-    
+
     /**
      * Set sound.
      *
@@ -291,7 +292,7 @@ class FilmRecords
 
         return $this;
     }
-    
+
     /**
      * Get sound.
      *
@@ -301,7 +302,7 @@ class FilmRecords
     {
         return $this->sound;
     }
-    
+
     /**
      * Set frame rate.
      *
@@ -315,7 +316,7 @@ class FilmRecords
 
         return $this;
     }
-    
+
     /**
      * Get sound.
      *
@@ -325,7 +326,7 @@ class FilmRecords
     {
         return $this->frameRate;
     }
-    
+
     /**
      * Set acid detection strip.
      *
@@ -339,7 +340,7 @@ class FilmRecords
 
         return $this;
     }
-    
+
     /**
      * Get acid detection strip.
      *
@@ -349,17 +350,18 @@ class FilmRecords
     {
         return $this->acidDetectionStrip;
     }
-    
+
     /**
      * Set shrinkage
-     * 
+     *
      * @param float $shrinkage
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\FilmRecords
      */
     public function setShrinkage($shrinkage)
     {
         $this->shrinkage = $shrinkage;
+
         return $this;
     }
 
@@ -372,7 +374,7 @@ class FilmRecords
     {
         return $this->shrinkage;
     }
-    
+
     /**
      * Set record.
      *

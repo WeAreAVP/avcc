@@ -39,10 +39,10 @@ class RecordingStandards
      *     nullable=true,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     /**
      * Returns recording standard
      *
@@ -86,7 +86,7 @@ class RecordingStandards
 
         return $this;
     }
-    
+
     /**
      * Set organization.
      *
@@ -103,7 +103,7 @@ class RecordingStandards
 
     /**
      * Get organization
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()

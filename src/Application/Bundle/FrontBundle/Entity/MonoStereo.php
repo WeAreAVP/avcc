@@ -39,10 +39,10 @@ class MonoStereo
      *     nullable=true,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     /**
      * Returns Mono/Streo
      *
@@ -86,7 +86,7 @@ class MonoStereo
 
         return $this;
     }
-    
+
     /**
      * Set organization.
      *
@@ -103,12 +103,12 @@ class MonoStereo
 
     /**
      * Get organization
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()
     {
         return $this->organization;
     }
-    
+
 }

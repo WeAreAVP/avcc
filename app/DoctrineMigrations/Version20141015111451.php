@@ -14,7 +14,7 @@ class Version20141015111451 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('CREATE TABLE acid_detection_strips (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(50) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE audio_records (id INT AUTO_INCREMENT NOT NULL, disk_diameter_id INT DEFAULT NULL, media_diameter_id INT DEFAULT NULL, base_id INT DEFAULT NULL, recording_speed_id INT DEFAULT NULL, tape_thickness_id INT DEFAULT NULL, side_id INT DEFAULT NULL, track_type_id INT DEFAULT NULL, mono_stero_id INT DEFAULT NULL, noice_reduction_id INT DEFAULT NULL, record_id INT NOT NULL, media_duration INT NOT NULL, INDEX IDX_A32A519A898CA4D7 (disk_diameter_id), INDEX IDX_A32A519A113F896F (media_diameter_id), INDEX IDX_A32A519A6967DF41 (base_id), INDEX IDX_A32A519A2C09D5DC (recording_speed_id), INDEX IDX_A32A519ABC2C1E65 (tape_thickness_id), INDEX IDX_A32A519A965D81C4 (side_id), INDEX IDX_A32A519A1CD2148E (track_type_id), INDEX IDX_A32A519A885ED7C5 (mono_stero_id), INDEX IDX_A32A519A68EA871 (noice_reduction_id), UNIQUE INDEX UNIQ_A32A519A4DFD750C (record_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE commercial_unique (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(50) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
@@ -60,7 +60,7 @@ class Version20141015111451 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('ALTER TABLE film_records DROP FOREIGN KEY FK_7C23436571401907');
         $this->addSql('ALTER TABLE records DROP FOREIGN KEY FK_9C9D58467854071C');
         $this->addSql('ALTER TABLE audio_records DROP FOREIGN KEY FK_A32A519A885ED7C5');

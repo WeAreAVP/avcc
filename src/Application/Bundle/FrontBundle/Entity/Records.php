@@ -241,7 +241,7 @@ class Records
      * )
      */
     private $videoRecord;
-    
+
     /**
      * @ORM\OneToOne(
      *     targetEntity="FilmRecords",
@@ -314,7 +314,7 @@ class Records
 
     /**
      * Get user
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
     public function getUser()
@@ -324,9 +324,9 @@ class Records
 
     /**
      * Set unique id
-     * 
+     *
      * @param string $uniqueId
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setUniqueId($uniqueId)
@@ -338,7 +338,7 @@ class Records
 
     /**
      * Get unique id
-     * 
+     *
      * @return string
      */
     public function getUniqueId()
@@ -386,7 +386,7 @@ class Records
 
     /**
      * Get formate media type
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\MediaTypes
      */
     public function getMediaType()
@@ -396,20 +396,21 @@ class Records
 
     /**
      * Set Location
-     * 
+     *
      * @param string $location
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setLocation($location)
     {
         $this->location = $location;
+
         return $this;
     }
 
     /**
      * Get location
-     * 
+     *
      * @return string
      */
     public function getLocation()
@@ -433,7 +434,7 @@ class Records
 
     /**
      * Get format
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function getFormat()
@@ -443,20 +444,21 @@ class Records
 
     /**
      * Set title
-     * 
+     *
      * @param string $title
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this;
     }
 
     /**
      * Get title
-     * 
+     *
      * @return string
      */
     public function getTitle()
@@ -466,20 +468,21 @@ class Records
 
     /**
      * Set collection name
-     * 
+     *
      * @param string $collectionName
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setCollectionName($collectionName)
     {
         $this->collectionName = $collectionName;
+
         return $this;
     }
 
     /**
      * Get title
-     * 
+     *
      * @return string
      */
     public function getCollectionName()
@@ -489,20 +492,21 @@ class Records
 
     /**
      * Set description
-     * 
+     *
      * @param string $description
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
     /**
      * Get title
-     * 
+     *
      * @return string
      */
     public function getDescription()
@@ -526,7 +530,7 @@ class Records
 
     /**
      * Get commercial
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function getCommercial()
@@ -550,7 +554,7 @@ class Records
 
     /**
      * Get reel diameter
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function getReelDiameter()
@@ -560,20 +564,21 @@ class Records
 
     /**
      * Set content duration
-     * 
+     *
      * @param integer $contentDuration
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setContentDuration($contentDuration)
     {
         $this->contentDuration = $contentDuration;
+
         return $this;
     }
 
     /**
      * Get title
-     * 
+     *
      * @return integer
      */
     public function getContentDuration()
@@ -583,20 +588,21 @@ class Records
 
     /**
      * Set creation date
-     * 
+     *
      * @param string $creationDate
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setCreationDate($creationDate)
     {
         $this->creationDate = $creationDate;
+
         return $this;
     }
 
     /**
      * Get creation date
-     * 
+     *
      * @return string
      */
     public function getCreationDate()
@@ -606,20 +612,21 @@ class Records
 
     /**
      * Set content date
-     * 
+     *
      * @param string $contentDate
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setContentDate($contentDate)
     {
         $this->contentDate = $contentDate;
+
         return $this;
     }
 
     /**
      * Get content date
-     * 
+     *
      * @return string
      */
     public function getContentDate()
@@ -629,20 +636,21 @@ class Records
 
     /**
      * Set flag for review
-     * 
+     *
      * @param boolean $isReview
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setIsReview($isReview)
     {
         $this->isReview = $isReview;
+
         return $this;
     }
 
     /**
      * Get content date
-     * 
+     *
      * @return boolean
      */
     public function getIsReview()
@@ -652,20 +660,21 @@ class Records
 
     /**
      * Set genre terms
-     * 
+     *
      * @param string $genreTerms
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setGenreTerms($genreTerms)
     {
         $this->genreTerms = $genreTerms;
+
         return $this;
     }
 
     /**
      * Get genre terms
-     * 
+     *
      * @return string
      */
     public function getGenreTerms()
@@ -675,20 +684,21 @@ class Records
 
     /**
      * Set contributor
-     * 
+     *
      * @param string $contributor
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setContributor($contributor)
     {
         $this->contributor = $contributor;
+
         return $this;
     }
 
     /**
      * Get Contributor
-     * 
+     *
      * @return string
      */
     public function getContributor()
@@ -698,20 +708,21 @@ class Records
 
     /**
      * Set generation
-     * 
+     *
      * @param string $generation
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setGeneration($generation)
     {
         $this->generation = $generation;
+
         return $this;
     }
 
     /**
      * Get Contributor
-     * 
+     *
      * @return string
      */
     public function getGeneration()
@@ -721,20 +732,21 @@ class Records
 
     /**
      * Set part
-     * 
+     *
      * @param string $part
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setPart($part)
     {
         $this->part = $part;
+
         return $this;
     }
 
     /**
      * Get part
-     * 
+     *
      * @return string
      */
     public function getPart()
@@ -744,20 +756,21 @@ class Records
 
     /**
      * Set copyright restriction
-     * 
+     *
      * @param string $copyrightRestrictions
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setCopyrightRestrictions($copyrightRestrictions)
     {
         $this->copyrightRestrictions = $copyrightRestrictions;
+
         return $this;
     }
 
     /**
      * Get copyright restriction
-     * 
+     *
      * @return string
      */
     public function getCopyrightRestrictions()
@@ -767,20 +780,21 @@ class Records
 
     /**
      * Set duplicates derivatives
-     * 
+     *
      * @param string $duplicatesDerivatives
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setDuplicatesDerivatives($duplicatesDerivatives)
     {
         $this->duplicatesDerivatives = $duplicatesDerivatives;
+
         return $this;
     }
 
     /**
      * Get duplicates derivatives
-     * 
+     *
      * @return string
      */
     public function getDuplicatesDerivatives()
@@ -790,20 +804,21 @@ class Records
 
     /**
      * Set related material
-     * 
+     *
      * @param string $relatedMaterial
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setRelatedMaterial($relatedMaterial)
     {
         $this->relatedMaterial = $relatedMaterial;
+
         return $this;
     }
 
     /**
      * Get related material
-     * 
+     *
      * @return string
      */
     public function getRelatedMaterial()
@@ -813,20 +828,21 @@ class Records
 
     /**
      * Set condition note
-     * 
+     *
      * @param string $conditionNote
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setConditionNote($conditionNote)
     {
         $this->conditionNote = $conditionNote;
+
         return $this;
     }
 
     /**
      * Get condition note
-     * 
+     *
      * @return string
      */
     public function getConditionNote()
@@ -836,63 +852,66 @@ class Records
 
     /**
      * Set audio record
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\AudioRecords $ar
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setAudioRecord(AudioRecords $ar)
     {
         $this->audioRecord = $ar;
+
         return $this;
     }
- 
+
     /**
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\AudioRecords
      */
     public function getAudioRecord()
     {
         return $this->audioRecord;
     }
-    
+
     /**
      * Set video record
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\VideoRecords $vr
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setVideoRecord(VideoRecords $vr)
     {
         $this->videoRecord = $vr;
+
         return $this;
     }
- 
+
     /**
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\VideoRecords
      */
     public function getVideoRecord()
     {
         return $this->videoRecord;
     }
-    
+
     /**
      * Set film record
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\FilmsRecords $fr
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
     public function setFilmRecord(FilmRecords $fr)
     {
         $this->filmRecord = $fr;
+
         return $this;
     }
- 
+
     /**
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\FilmRecords
      */
     public function getFilmRecord()

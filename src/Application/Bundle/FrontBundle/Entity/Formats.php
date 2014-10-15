@@ -49,7 +49,7 @@ class Formats
      *     nullable=false,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $mediaType;
 
@@ -62,9 +62,9 @@ class Formats
      *     cascade={"all","merge","persist","refresh","remove"}
      * )
      * @ORM\OrderBy({"id"="ASC"})
-     */    
+     */
     private $diskDiameter;
-    
+
     /**
      * @ORM\OneToMany(
      *     targetEntity="ReelDiameters",
@@ -74,7 +74,7 @@ class Formats
      *     cascade={"all","merge","persist","refresh","remove"}
      * )
      * @ORM\OrderBy({"id"="ASC"})
-     */ 
+     */
     private $reelDiameter;
 
     /**
@@ -86,9 +86,9 @@ class Formats
      *     cascade={"all","merge","persist","refresh","remove"}
      * )
      * @ORM\OrderBy({"id"="ASC"})
-     */ 
+     */
     private $mediaDiameter;
-    
+
     /**
      * @ORM\OneToMany(
      *     targetEntity="Bases",
@@ -98,9 +98,9 @@ class Formats
      *     cascade={"all","merge","persist","refresh","remove"}
      * )
      * @ORM\OrderBy({"id"="ASC"})
-     */ 
+     */
     private $base;
-    
+
     /**
      * @ORM\OneToMany(
      *     targetEntity="RecordingSpeed",
@@ -110,9 +110,9 @@ class Formats
      *     cascade={"all","merge","persist","refresh","remove"}
      * )
      * @ORM\OrderBy({"id"="ASC"})
-     */ 
+     */
     private $recordingSpeed;
-    
+
     /**
      * @ORM\OneToMany(
      *     targetEntity="TapeThickness",
@@ -122,9 +122,9 @@ class Formats
      *     cascade={"all","merge","persist","refresh","remove"}
      * )
      * @ORM\OrderBy({"id"="ASC"})
-     */ 
+     */
     private $tapeThickness;
-    
+
     /**
      * @ORM\OneToMany(
      *     targetEntity="TrackTypes",
@@ -134,9 +134,9 @@ class Formats
      *     cascade={"all","merge","persist","refresh","remove"}
      * )
      * @ORM\OrderBy({"id"="ASC"})
-     */ 
+     */
     private $trackType;
-    
+
     /**
      * @ORM\OneToMany(
      *     targetEntity="CassetteSizes",
@@ -146,9 +146,9 @@ class Formats
      *     cascade={"all","merge","persist","refresh","remove"}
      * )
      * @ORM\OrderBy({"id"="ASC"})
-     */ 
+     */
     private $cassetteSize;
-    
+
     /**
      * @ORM\OneToMany(
      *     targetEntity="FormatVersions",
@@ -158,9 +158,9 @@ class Formats
      *     cascade={"all","merge","persist","refresh","remove"}
      * )
      * @ORM\OrderBy({"id"="ASC"})
-     */ 
+     */
     private $formatVersion;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Organizations", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="formatOrg")
      * @ORM\JoinColumn(
@@ -169,15 +169,15 @@ class Formats
      *     nullable=true,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     public function __construct()
     {
-        $this->diskDiameter = new ArrayCollection();   
-        $this->reelDiameter = new ArrayCollection();   
-        $this->mediaDiameter = new ArrayCollection();   
+        $this->diskDiameter = new ArrayCollection();
+        $this->reelDiameter = new ArrayCollection();
+        $this->mediaDiameter = new ArrayCollection();
         $this->base = new ArrayCollection();
         $this->recordingSpeed = new ArrayCollection();
         $this->tapeThickness = new ArrayCollection();
@@ -185,7 +185,7 @@ class Formats
         $this->cassetteSize = new ArrayCollection();
         $this->formatVersion = new ArrayCollection();
     }
-    
+
     /**
      * Returns format
      *
@@ -246,7 +246,7 @@ class Formats
 
     /**
      * Get formate media type
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\MediaTypes
      */
     public function getMediaType()
@@ -256,9 +256,9 @@ class Formats
 
     /**
      * Add disk diameter
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\DiskDiameters $dd
-     * 
+     *
      */
     public function addDiskDiameter(DiskDiameters $dd)
     {
@@ -268,23 +268,23 @@ class Formats
              $dd->setDiskFormat($this);
          }
     }
-    
+
     /**
      * Remove disk diameter
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\DiskDiameters $dd
-     * 
+     *
      */
     public function removeDiskDiameter(DiskDiameters $dd)
     {
          $this->diskDiameter->remove($dd);
     }
-    
+
     /**
      * Add reel diameter
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\ReelDiameters $rd
-     * 
+     *
      */
     public function addReelDiameter(ReelDiameters $rd)
     {
@@ -294,23 +294,23 @@ class Formats
              $rd->setReelFormat($this);
          }
     }
-    
+
     /**
      * Remove reel diameter
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\ReelDiameters $rd
-     * 
+     *
      */
     public function removeReelDiameter(ReelDiameters $rd)
     {
          $this->reelDiameter->remove($rd);
     }
-    
+
     /**
      * Add media diameter
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\MediaDiameters $md
-     * 
+     *
      */
     public function addMediaDiameterFormat(MediaDiameters $md)
     {
@@ -320,23 +320,23 @@ class Formats
              $md->setMediaDiameterFormat($this);
          }
     }
-    
+
     /**
      * Remove media diameter
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\MediaDiameters $md
-     * 
+     *
      */
     public function removeMediaDiameterFormat(MediaDiameters $md)
     {
          $this->mediaDiameter->remove($md);
     }
-    
+
     /**
      * Add base
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Bases $b
-     * 
+     *
      */
     public function addBase(Bases $b)
     {
@@ -346,23 +346,23 @@ class Formats
              $b->setBaseFormat($this);
          }
     }
-    
+
     /**
      * Remove base
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Bases $b
-     * 
+     *
      */
     public function removeBase(Bases $b)
     {
          $this->base->remove($b);
     }
-    
+
     /**
      * Add recording speed
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\RecordingSpeed $rs
-     * 
+     *
      */
     public function addRecordingSpeed(RecordingSpeed $rs)
     {
@@ -372,23 +372,23 @@ class Formats
              $rs->setRecSpeedFormat($this);
          }
     }
-    
+
     /**
      * Remove recording speed
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\RecordingSpeed $rs
-     * 
+     *
      */
     public function removeRecordingSpeed(RecordingSpeed $rs)
     {
          $this->recordingSpeed->remove($rs);
     }
-    
+
     /**
      * Add tape Thickness
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\TapeThickness $tt
-     * 
+     *
      */
     public function addTapeThickness(TapeThickness $tt)
     {
@@ -398,23 +398,23 @@ class Formats
              $tt->setTapeThicknessFormat($this);
          }
     }
-    
+
     /**
      * Remove tape thickness
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\TapeThickness $tt
-     * 
+     *
      */
     public function removeTapeThickness(TapeThickness $tt)
     {
          $this->tapeThickness->remove($tt);
     }
-    
+
     /**
      * Add track type
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\TrackTypes $tty
-     * 
+     *
      */
     public function addTrackType(TrackTypes $tty)
     {
@@ -424,23 +424,23 @@ class Formats
              $tty->setTrackTypeFormat($this);
          }
     }
-    
+
     /**
      * Remove tape thickness
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\TapeThickness $tt
-     * 
+     *
      */
     public function removeTrackType(TrackTypes $tty)
     {
          $this->trackType->remove($tty);
-    }    
-    
+    }
+
     /**
      * Add cassetteSize
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\CassetteSizes $cs
-     * 
+     *
      */
     public function addCassetteSize(CassetteSizes $cs)
     {
@@ -450,23 +450,23 @@ class Formats
              $cs->setCassetteSizeFormat($this);
          }
     }
-    
+
     /**
      * Remove cassette sizes
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\CassetteSizes $cs
-     * 
+     *
      */
     public function removeCassetteSize(CassetteSizes $cs)
     {
          $this->cassetteSize->remove($cs);
     }
-    
+
      /**
      * Add format versions
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\FormatVersions $fv
-     * 
+     *
      */
     public function addFormatVersion(FormatVersions $fv)
     {
@@ -476,18 +476,18 @@ class Formats
              $fv->setFormatVersionFormat($this);
          }
     }
-    
+
     /**
      * Remove format versions
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\FormatVersions $fv
-     * 
+     *
      */
     public function removeFormatVersion(FormatVersions $fv)
     {
          $this->formatVersion->remove($fv);
     }
-    
+
     /**
      * Set organization.
      *
@@ -504,7 +504,7 @@ class Formats
 
     /**
      * Get organization
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()

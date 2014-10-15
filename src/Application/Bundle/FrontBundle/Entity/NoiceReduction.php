@@ -39,10 +39,10 @@ class NoiceReduction
      *     nullable=true,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     /**
      * Returns noice reduction
      *
@@ -86,7 +86,7 @@ class NoiceReduction
 
         return $this;
     }
-    
+
     /**
      * Set organization.
      *
@@ -103,12 +103,12 @@ class NoiceReduction
 
     /**
      * Get organization
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()
     {
         return $this->organization;
     }
-    
+
 }

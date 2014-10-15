@@ -39,7 +39,7 @@ class DiskDiameters
      *     nullable=false,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $diskFormat;
 
@@ -51,10 +51,10 @@ class DiskDiameters
      *     nullable=true,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     /**
      * Returns disk diameter
      *
@@ -101,9 +101,9 @@ class DiskDiameters
 
     /**
      * Set disk formats
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Formats $diskFormat
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\DiskDiameters
      */
     public function setDiskFormat(\Application\Bundle\FrontBundle\Entity\Formats $diskFormat)
@@ -115,7 +115,7 @@ class DiskDiameters
 
     /**
      * Get disk formats
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Formats
      */
     public function getDiskFormat()
@@ -139,7 +139,7 @@ class DiskDiameters
 
     /**
      * Get organization
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()

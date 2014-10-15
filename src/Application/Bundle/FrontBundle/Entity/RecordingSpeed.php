@@ -39,7 +39,7 @@ class RecordingSpeed
      *     nullable=false,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $recSpeedFormat;
 
@@ -51,10 +51,10 @@ class RecordingSpeed
      *     nullable=true,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     /**
      * Returns recording speed
      *
@@ -101,9 +101,9 @@ class RecordingSpeed
 
     /**
      * Set base formats
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Formats $recSpeedFormat
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\RecordingSpeed
      */
     public function setRecSpeedFormat(\Application\Bundle\FrontBundle\Entity\Formats $recSpeedFormat)
@@ -115,7 +115,7 @@ class RecordingSpeed
 
     /**
      * Get base formats
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Formats
      */
     public function getRecSpeedFormat()
@@ -139,7 +139,7 @@ class RecordingSpeed
 
     /**
      * Get organization
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()

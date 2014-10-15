@@ -39,10 +39,10 @@ class Slides
      *     nullable=true,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     /**
      * Returns Slide name
      *
@@ -86,7 +86,7 @@ class Slides
 
         return $this;
     }
-    
+
     /**
      * Set organization.
      *
@@ -103,12 +103,12 @@ class Slides
 
     /**
      * Get organization
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()
     {
         return $this->organization;
     }
-    
+
 }

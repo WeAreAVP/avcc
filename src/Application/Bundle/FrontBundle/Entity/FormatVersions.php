@@ -39,10 +39,10 @@ class FormatVersions
      *     nullable=false,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $formatVersionFormat;
-   
+
     /**
      * @ORM\ManyToOne(targetEntity="Organizations", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="formatOrg")
      * @ORM\JoinColumn(
@@ -51,10 +51,10 @@ class FormatVersions
      *     nullable=true,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     /**
      * Returns Base
      *
@@ -101,9 +101,9 @@ class FormatVersions
 
     /**
      * Set base formats
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Formats $formatVersionFormat
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\FormatVersions
      */
     public function setFormatVersionFormat(\Application\Bundle\FrontBundle\Entity\Formats $formatVersionFormat)
@@ -115,7 +115,7 @@ class FormatVersions
 
     /**
      * Get base formats
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Formats
      */
     public function getFormatVersionFormat()
@@ -139,7 +139,7 @@ class FormatVersions
 
     /**
      * Get organization
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()

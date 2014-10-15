@@ -39,7 +39,7 @@ class TapeThickness
      *     nullable=false,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $tapeThicknessFormat;
 
@@ -51,10 +51,10 @@ class TapeThickness
      *     nullable=true,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     /**
      * Returns tape thickness
      *
@@ -101,9 +101,9 @@ class TapeThickness
 
     /**
      * Set base formats
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Formats $tapeThicknessFormat
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\TapeThickness
      */
     public function setTapeThicknessFormat(\Application\Bundle\FrontBundle\Entity\Formats $tapeThicknessFormat)
@@ -115,14 +115,14 @@ class TapeThickness
 
     /**
      * Get base formats
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Formats
      */
     public function getTapeThicknessFormat()
     {
         return $this->tapeThicknessFormat;
     }
-    
+
     /**
      * Set organization.
      *
@@ -139,7 +139,7 @@ class TapeThickness
 
     /**
      * Get organization
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()

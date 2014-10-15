@@ -39,10 +39,10 @@ class Sounds
      *     nullable=true,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     /**
      * Returns sound
      *
@@ -86,7 +86,7 @@ class Sounds
 
         return $this;
     }
-    
+
     /**
      * Set organization.
      *
@@ -103,7 +103,7 @@ class Sounds
 
     /**
      * Get organization
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()

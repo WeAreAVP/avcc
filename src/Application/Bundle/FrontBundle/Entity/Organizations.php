@@ -664,9 +664,9 @@ class Organizations
 
     /**
      * Add acid detection strips
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\AcidDetectionStrips $ads
-     * 
+     *
      */
     public function addAcidDetectionStripOrg(AcidDetectionStrips $ads)
     {
@@ -679,9 +679,9 @@ class Organizations
 
     /**
      * Remove acid detection strip
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\AcidDetectionStrips $ads
-     * 
+     *
      */
     public function removeAcidDetectionStripOrg(AcidDetectionStrips $ads)
     {
@@ -690,9 +690,9 @@ class Organizations
 
     /**
      * Add base
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Bases $base
-     * 
+     *
      */
     public function addBaseOrg(Bases $base)
     {
@@ -705,9 +705,9 @@ class Organizations
 
     /**
      * Remove base org
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Bases $base
-     * 
+     *
      */
     public function removeBaseOrg(Bases $base)
     {
@@ -716,9 +716,9 @@ class Organizations
 
     /**
      * Add cassette size
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\CassetteSizes $cs
-     * 
+     *
      */
     public function addCassetteOrg(CassetteSizes $cs)
     {
@@ -731,9 +731,9 @@ class Organizations
 
     /**
      * Remove cassette size org
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\CassetteSizes $cs
-     * 
+     *
      */
     public function removeCassetteOrg(CassetteSizes $cs)
     {
@@ -742,9 +742,9 @@ class Organizations
 
     /**
      * Add color
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Colors $color
-     * 
+     *
      */
     public function addColorOrg(Colors $color)
     {
@@ -757,20 +757,20 @@ class Organizations
 
     /**
      * Remove color org
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Colors $color
-     * 
+     *
      */
     public function removeColorOrg(Colors $color)
     {
         $this->colorOrg->remove($color);
     }
-    
+
     /**
      * Add Commercial
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Commercial $commercial
-     * 
+     *
      */
     public function addCommercialOrg(Colors $commercial)
     {
@@ -783,20 +783,20 @@ class Organizations
 
     /**
      * Remove Commercial org
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Commercial $commercial
-     * 
+     *
      */
     public function removeCommercialOrg(Commercial $commercial)
     {
         $this->commercialOrg->remove($commercial);
     }
-    
+
     /**
      * Add diskDiamaeterOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\DiskDiameters $dd
-     * 
+     *
      */
     public function addDiskDiamaeterOrg(DiskDiameters $dd)
     {
@@ -809,20 +809,20 @@ class Organizations
 
     /**
      * Remove diskDiamaeterOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\DiskDiameters $dd
-     * 
+     *
      */
     public function removeDiskDiamaeterOrg(DiskDiameters $dd)
     {
         $this->diskDiamaeterOrg->remove($dd);
     }
-    
+
     /**
      * Add formatOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Formats $f
-     * 
+     *
      */
     public function addFormatOrg(Formats $f)
     {
@@ -835,20 +835,20 @@ class Organizations
 
     /**
      * Remove formatOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Formats $f
-     * 
+     *
      */
     public function removeFormatOrg(Formats $f)
     {
         $this->formatOrg->remove($f);
     }
-    
+
     /**
      * Add frameRateOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\FrameRates $fr
-     * 
+     *
      */
     public function addFrameRateOrg(FrameRates $fr)
     {
@@ -861,20 +861,20 @@ class Organizations
 
     /**
      * Remove frameRateOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\FrameRates $fr
-     * 
+     *
      */
     public function removeFrameRateOrg(FrameRates $fr)
     {
         $this->frameRateOrg->remove($fr);
     }
-    
+
     /**
      * Add mediaDiameterOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\MediaDiameters $md
-     * 
+     *
      */
     public function addMediaDiameterOrg(MediaDiameters $md)
     {
@@ -887,20 +887,20 @@ class Organizations
 
     /**
      * Remove mediaDiameterOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\MediaDiameters $md
-     * 
+     *
      */
     public function removeMediaDiameterOrg(MediaDiameters $md)
     {
         $this->mediaDiameterOrg->remove($md);
     }
-    
+
     /**
      * Add monoOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\MonoStereo $ms
-     * 
+     *
      */
     public function addMonoOrg(MonoStereo $ms)
     {
@@ -913,20 +913,20 @@ class Organizations
 
     /**
      * Remove monoOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\MonoStereo $ms
-     * 
+     *
      */
     public function removeMonoOrg(MonoStereo $ms)
     {
         $this->monoOrg->remove($ms);
     }
-    
+
     /**
      * Add NoiceReduction
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\NoiceReduction $nr
-     * 
+     *
      */
     public function addNoiceReductionOrg(NoiceReduction $nr)
     {
@@ -939,20 +939,20 @@ class Organizations
 
     /**
      * Remove NoiceReduction
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\NoiceReduction $nr
-     * 
+     *
      */
     public function removeNoiceReductionOrg(NoiceReduction $nr)
     {
         $this->noiceReductionOrg->remove($nr);
     }
-    
+
     /**
      * Add printTypeOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\PrintTypes $pt
-     * 
+     *
      */
     public function addPrintTypeOrg(PrintTypes $pt)
     {
@@ -965,20 +965,20 @@ class Organizations
 
     /**
      * Remove printTypeOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\PrintTypes $pt
-     * 
+     *
      */
     public function removePrintTypeOrg(PrintTypes $pt)
     {
         $this->printTypeOrg->remove($pt);
     }
-    
+
     /**
      * Add recordingSpeedOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\RecordingSpeed $rs
-     * 
+     *
      */
     public function addRecordingSpeedOrg(RecordingSpeed $rs)
     {
@@ -991,20 +991,20 @@ class Organizations
 
     /**
      * Remove recordingSpeedOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\RecordingSpeed $rs
-     * 
+     *
      */
     public function removeRecordingSpeedOrg(RecordingSpeed $rs)
     {
         $this->recordingSpeedOrg->remove($rs);
     }
-    
+
     /**
      * Add recordingStandardOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\RecordingStandards $rst
-     * 
+     *
      */
     public function addRecordingStandardOrg(RecordingStandards $rst)
     {
@@ -1017,20 +1017,20 @@ class Organizations
 
     /**
      * Remove recordingStandardOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\RecordingStandards $rst
-     * 
+     *
      */
     public function removeRecordingStandardOrg(RecordingStandards $rst)
     {
         $this->recordingStandardOrg->remove($rst);
     }
-    
+
     /**
      * Add reelCoreOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\ReelCore $rc
-     * 
+     *
      */
     public function addReelCoreOrg(ReelCore $rc)
     {
@@ -1043,20 +1043,20 @@ class Organizations
 
     /**
      * Remove reelCoreOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\ReelCore $rc
-     * 
+     *
      */
     public function removeReelCoreOrg(ReelCore $rc)
     {
         $this->reelCoreOrg->remove($rc);
     }
-    
+
     /**
      * Add reelDiameterOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\ReelDiameters $rd
-     * 
+     *
      */
     public function addReelDiameterOrg(ReelDiameters $rd)
     {
@@ -1069,20 +1069,20 @@ class Organizations
 
     /**
      * Remove reelDiameterOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\ReelDiameters $rd
-     * 
+     *
      */
     public function removeReelDiameterOrg(ReelDiameters $rd)
     {
         $this->reelDiameterOrg->remove($rd);
     }
-    
+
     /**
      * Add slidesOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Slides $s
-     * 
+     *
      */
     public function addSlidesOrg(Slides $s)
     {
@@ -1095,20 +1095,20 @@ class Organizations
 
     /**
      * Remove slidesOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Slides $s
-     * 
+     *
      */
     public function removeSlidesOrg(Slides $s)
     {
         $this->slidesOrg->remove($s);
     }
-    
+
     /**
      * Add soundsOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Sounds $sound
-     * 
+     *
      */
     public function addSoundsOrg(Sounds $sound)
     {
@@ -1121,20 +1121,20 @@ class Organizations
 
     /**
      * Remove soundsOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Sounds $sound
-     * 
+     *
      */
     public function removeSoundsOrg(Sounds $sound)
     {
         $this->soundsOrg->remove($sound);
     }
-    
+
     /**
      * Add tapeThicknessOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\TapeThickness $tt
-     * 
+     *
      */
     public function addTapeThicknessOrg(TapeThickness $tt)
     {
@@ -1147,20 +1147,20 @@ class Organizations
 
     /**
      * Remove tapeThicknessOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\TapeThickness $tt
-     * 
+     *
      */
     public function removeTapeThicknessOrg(TapeThickness $tt)
     {
         $this->tapeThicknessOrg->remove($tt);
     }
-    
+
     /**
      * Add trackTypeOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\TrackTypes $tts
-     * 
+     *
      */
     public function addTrackTypeOrg(TrackTypes $tts)
     {
@@ -1173,9 +1173,9 @@ class Organizations
 
     /**
      * Remove trackTypeOrg
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\TrackTypes $tts
-     * 
+     *
      */
     public function removeTrackTypeOrg(TrackTypes $tts)
     {

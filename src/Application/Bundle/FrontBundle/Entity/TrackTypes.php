@@ -39,7 +39,7 @@ class TrackTypes
      *     nullable=false,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $trackTypeFormat;
 
@@ -51,10 +51,10 @@ class TrackTypes
      *     nullable=true,
      *     onDelete="CASCADE"
      * )
-     * @var integer 
+     * @var integer
      */
     private $organization;
-    
+
     /**
      * Returns track type
      *
@@ -101,9 +101,9 @@ class TrackTypes
 
     /**
      * Set base formats
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Formats $trackTypeFormat
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\TrackTypes
      */
     public function setTrackTypeFormat(\Application\Bundle\FrontBundle\Entity\Formats $trackTypeFormat)
@@ -115,7 +115,7 @@ class TrackTypes
 
     /**
      * Get base formats
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Formats
      */
     public function getTrackTypeFormat()
@@ -139,7 +139,7 @@ class TrackTypes
 
     /**
      * Get organization
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function getOrganization()

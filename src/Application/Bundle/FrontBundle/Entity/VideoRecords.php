@@ -3,7 +3,6 @@
 namespace Application\Bundle\FrontBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Application\Bundle\FrontBundle\Entity\CassetteSizes as CassetteSizes;
 use Application\Bundle\FrontBundle\Entity\FormatVersions as FormatVersions;
 use Application\Bundle\FrontBundle\Entity\RecordingSpeed as RecordingSpeed;
@@ -151,6 +150,7 @@ class VideoRecords
     public function setMediaDuration($mediaDuration)
     {
         $this->mediaDuration = $mediaDuration;
+
         return $this;
     }
 
@@ -177,17 +177,17 @@ class VideoRecords
 
         return $this;
     }
-    
+
     /**
      * get Recording speed
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\RecordingSpeed
      */
     public function getRecordingSpeed()
     {
         return $this->recordingSpeed;
     }
-    
+
     /**
      * Set recording standard.
      *
@@ -201,10 +201,10 @@ class VideoRecords
 
         return $this;
     }
-    
+
     /**
      * get Recording standard
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\RecordingStandards
      */
     public function getRecordingStandard()
