@@ -1,0 +1,209 @@
+{% extends 'FOSUserBundle::layout.html.twig' %}
+
+{% block body -%}
+
+	<div class="grid fluid">
+		<h1>
+			<a href="{{ path('record') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+			New Record - Audio
+		</h1>
+		{{ form_start(form) }}
+		<fieldset>
+			{{ form_errors(form) }}
+			<br />
+			{{ form_label(form.record.uniqueId) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(form.record.uniqueId, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.uniqueId) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.uniqueId) }}</span>
+			</div>
+			{{ form_label(form.record.location) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(form.record.location, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.location) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.location) }}</span>
+			</div>
+			{{ form_label(form.record.format) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(form.record.format, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.format) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.format) }}</span>
+			</div>
+			{{ form_label(form.record.title) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(form.record.title, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.title) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.title) }}</span>
+			</div>
+			{{ form_label(form.record.collectionName) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(form.record.collectionName, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.collectionName) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.collectionName) }}</span>
+			</div>
+			{{ form_label(form.record.description) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(form.record.description, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.description) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.description) }}</span>
+			</div>
+			{{ form_label(form.record.commercial) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(form.record.commercial, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.commercial) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.commercial) }}</span>
+			</div>
+			{{ form_label(form.diskDiameters) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(form.diskDiameters, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.diskDiameters) }}
+				<span class="has-error text-danger">{{ form_errors(form.diskDiameters) }}</span>
+			</div>
+			{{ form_label(form.record.reelDiameters) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(form.record.reelDiameters, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.reelDiameters) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.reelDiameters) }}</span>
+			</div>
+			{{ form_label(form.mediaDiameters) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(form.mediaDiameters, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.mediaDiameters) }}
+				<span class="has-error text-danger">{{ form_errors(form.mediaDiameters) }}</span>
+			</div>
+			{{ form_label(form.bases) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(form.bases, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.bases) }}
+				<span class="has-error text-danger">{{ form_errors(form.bases) }}</span>
+			</div>
+			{{ form_label(form.record.contentDuration) }}
+			<div class="input-control number" data-role="input-control">
+				{{ form_widget(form.record.contentDuration, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.contentDuration) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.contentDuration) }}</span>
+			</div>
+			{{ form_label(form.mediaDuration) }}
+			<div class="input-control number" data-role="input-control">
+				{{ form_widget(form.mediaDuration, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.mediaDuration) }}
+				<span class="has-error text-danger">{{ form_errors(form.mediaDuration) }}</span>
+			</div>
+			{{ form_label(form.record.creationDate) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(form.record.creationDate, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.creationDate) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.creationDate) }}</span>
+			</div>
+			{{ form_label(form.record.contentDate) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(form.record.contentDate, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.contentDate) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.contentDate) }}</span>
+			</div>
+			{{ form_label(form.record.isReview) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(form.record.isReview, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.isReview) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.isReview) }}</span>
+			</div>
+			{# Second page			#}
+			{{ form_label(form.recordingSpeed) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(form.recordingSpeed, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.recordingSpeed) }}
+				<span class="has-error text-danger">{{ form_errors(form.recordingSpeed) }}</span>
+			</div>
+			{{ form_label(form.tapeThickness) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(form.tapeThickness, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.tapeThickness) }}
+				<span class="has-error text-danger">{{ form_errors(form.tapeThickness) }}</span>
+			</div>
+			{{ form_label(form.slides) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(form.slides, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.slides) }}
+				<span class="has-error text-danger">{{ form_errors(form.slides) }}</span>
+			</div>
+			{{ form_label(form.trackTypes) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(form.trackTypes, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.trackTypes) }}
+				<span class="has-error text-danger">{{ form_errors(form.trackTypes) }}</span>
+			</div>
+			{{ form_label(form.monoStereo) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(form.monoStereo, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.monoStereo) }}
+				<span class="has-error text-danger">{{ form_errors(form.monoStereo) }}</span>
+			</div>
+			{{ form_label(form.noiceReduction) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(form.noiceReduction, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.noiceReduction) }}
+				<span class="has-error text-danger">{{ form_errors(form.noiceReduction) }}</span>
+			</div>
+			{{ form_label(form.record.genreTerms) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(form.record.genreTerms, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.genreTerms) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.genreTerms) }}</span>
+			</div>
+			{{ form_label(form.record.contributor) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(form.record.contributor, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.contributor) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.contributor) }}</span>
+			</div>
+			{{ form_label(form.record.generation) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(form.record.generation, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.generation) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.generation) }}</span>
+			</div>
+			{{ form_label(form.record.part) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(form.record.part, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.part) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.part) }}</span>
+			</div>
+			{{ form_label(form.record.copyrightRestrictions) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(form.record.copyrightRestrictions, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.copyrightRestrictions) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.copyrightRestrictions) }}</span>
+			</div>
+			{{ form_label(form.record.duplicatesDerivatives) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(form.record.duplicatesDerivatives, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.duplicatesDerivatives) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.duplicatesDerivatives) }}</span>
+			</div>
+			{{ form_label(form.record.relatedMaterial) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(form.record.relatedMaterial, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.relatedMaterial) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.relatedMaterial) }}</span>
+			</div>
+			{{ form_label(form.record.conditionNote) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(form.record.conditionNote, {attr: {class:'size4'} }) }}
+				{{ form_errors(form.record.conditionNote) }}
+				<span class="has-error text-danger">{{ form_errors(form.record.conditionNote) }}</span>
+			</div>
+		</fieldset>
+		{{ form_end(form) }}
+	</div>
+
+
+    {#{{ form(form) }}
+
+	<ul class="record_actions">
+		<li>
+			<a href="{{ path('record') }}">
+				Back to the list
+			</a>
+		</li>
+	</ul>#}
+{% endblock %}

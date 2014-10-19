@@ -12,12 +12,14 @@ use Application\Bundle\FrontBundle\Entity\MediaTypes as MediaTypes;
 use Application\Bundle\FrontBundle\Entity\AudioRecords as AudioRecords;
 use Application\Bundle\FrontBundle\Entity\VideoRecords as VideoRecords;
 use Application\Bundle\FrontBundle\Entity\FilmRecords as FilmRecords;
+use Application\Bundle\FrontBundle\Entity\ReelDiameters as ReelDiameters;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Records
  *
  * @ORM\Table(name="records")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  * @UniqueEntity(fields="unique_id", message="Unique id already exist.")
  */
 class Records
@@ -139,6 +141,7 @@ class Records
      * })
      */
     private $reelDiameters;
+   
 
     /**
      * @var integer
@@ -164,7 +167,7 @@ class Records
     /**
      * @var boolean
      *
-     * @ORM\Column(name="is_review", type="boolean", options={"default" = 0}) )
+     * @ORM\Column(name="is_review", type="boolean", nullable=true, options={"default" = 0}) )
      */
     private $isReview;
 
@@ -545,7 +548,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setReelDiameter(ReelDiameters $reeldiameter)
+    public function setReelDiameters(ReelDiameters $reeldiameter)
     {
         $this->reelDiameters = $reeldiameter;
 
@@ -557,10 +560,11 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function getReelDiameter()
+    public function getReelDiameters()
     {
         return $this->reelDiameters;
     }
+    
 
     /**
      * Set content duration

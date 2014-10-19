@@ -1,0 +1,209 @@
+{% extends 'FOSUserBundle::layout.html.twig' %}
+
+{% block body -%}
+
+	<div class="grid fluid">
+		<h1>
+			<a href="{{ path('record') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+			Edit Record - Audio
+		</h1>
+		{{ form_start(edit_form) }}
+		<fieldset>
+			{{ form_errors(edit_form) }}
+			<br />
+			{{ form_label(edit_form.record.uniqueId) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(edit_form.record.uniqueId, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.uniqueId) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.uniqueId) }}</span>
+			</div>
+			{{ form_label(edit_form.record.location) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(edit_form.record.location, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.location) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.location) }}</span>
+			</div>
+			{{ form_label(edit_form.record.format) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(edit_form.record.format, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.format) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.format) }}</span>
+			</div>
+			{{ form_label(edit_form.record.title) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(edit_form.record.title, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.title) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.title) }}</span>
+			</div>
+			{{ form_label(edit_form.record.collectionName) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(edit_form.record.collectionName, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.collectionName) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.collectionName) }}</span>
+			</div>
+			{{ form_label(edit_form.record.description) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(edit_form.record.description, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.description) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.description) }}</span>
+			</div>
+			{{ form_label(edit_form.record.commercial) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(edit_form.record.commercial, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.commercial) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.commercial) }}</span>
+			</div>
+			{{ form_label(edit_form.diskDiameters) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(edit_form.diskDiameters, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.diskDiameters) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.diskDiameters) }}</span>
+			</div>
+			{{ form_label(edit_form.record.reelDiameters) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(edit_form.record.reelDiameters, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.reelDiameters) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.reelDiameters) }}</span>
+			</div>
+			{{ form_label(edit_form.mediaDiameters) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(edit_form.mediaDiameters, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.mediaDiameters) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.mediaDiameters) }}</span>
+			</div>
+			{{ form_label(edit_form.bases) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(edit_form.bases, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.bases) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.bases) }}</span>
+			</div>
+			{{ form_label(edit_form.record.contentDuration) }}
+			<div class="input-control number" data-role="input-control">
+				{{ form_widget(edit_form.record.contentDuration, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.contentDuration) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.contentDuration) }}</span>
+			</div>
+			{{ form_label(edit_form.mediaDuration) }}
+			<div class="input-control number" data-role="input-control">
+				{{ form_widget(edit_form.mediaDuration, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.mediaDuration) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.mediaDuration) }}</span>
+			</div>
+			{{ form_label(edit_form.record.creationDate) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(edit_form.record.creationDate, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.creationDate) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.creationDate) }}</span>
+			</div>
+			{{ form_label(edit_form.record.contentDate) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(edit_form.record.contentDate, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.contentDate) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.contentDate) }}</span>
+			</div>
+			{{ form_label(edit_form.record.isReview) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(edit_form.record.isReview, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.isReview) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.isReview) }}</span>
+			</div>
+			{# Second page			#}
+			{{ form_label(edit_form.recordingSpeed) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(edit_form.recordingSpeed, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.recordingSpeed) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.recordingSpeed) }}</span>
+			</div>
+			{{ form_label(edit_form.tapeThickness) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(edit_form.tapeThickness, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.tapeThickness) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.tapeThickness) }}</span>
+			</div>
+			{{ form_label(edit_form.slides) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(edit_form.slides, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.slides) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.slides) }}</span>
+			</div>
+			{{ form_label(edit_form.trackTypes) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(edit_form.trackTypes, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.trackTypes) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.trackTypes) }}</span>
+			</div>
+			{{ form_label(edit_form.monoStereo) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(edit_form.monoStereo, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.monoStereo) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.monoStereo) }}</span>
+			</div>
+			{{ form_label(edit_form.noiceReduction) }}
+			<div class="input-control select" data-role="input-control">
+				{{ form_widget(edit_form.noiceReduction, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.noiceReduction) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.noiceReduction) }}</span>
+			</div>
+			{{ form_label(edit_form.record.genreTerms) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(edit_form.record.genreTerms, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.genreTerms) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.genreTerms) }}</span>
+			</div>
+			{{ form_label(edit_form.record.contributor) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(edit_form.record.contributor, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.contributor) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.contributor) }}</span>
+			</div>
+			{{ form_label(edit_form.record.generation) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(edit_form.record.generation, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.generation) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.generation) }}</span>
+			</div>
+			{{ form_label(edit_form.record.part) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(edit_form.record.part, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.part) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.part) }}</span>
+			</div>
+			{{ form_label(edit_form.record.copyrightRestrictions) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(edit_form.record.copyrightRestrictions, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.copyrightRestrictions) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.copyrightRestrictions) }}</span>
+			</div>
+			{{ form_label(edit_form.record.duplicatesDerivatives) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(edit_form.record.duplicatesDerivatives, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.duplicatesDerivatives) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.duplicatesDerivatives) }}</span>
+			</div>
+			{{ form_label(edit_form.record.relatedMaterial) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(edit_form.record.relatedMaterial, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.relatedMaterial) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.relatedMaterial) }}</span>
+			</div>
+			{{ form_label(edit_form.record.conditionNote) }}
+			<div class="input-control text" data-role="input-control">
+				{{ form_widget(edit_form.record.conditionNote, {attr: {class:'size4'} }) }}
+				{{ form_errors(edit_form.record.conditionNote) }}
+				<span class="has-error text-danger">{{ form_errors(edit_form.record.conditionNote) }}</span>
+			</div>
+		</fieldset>
+		{{ form_end(edit_form) }}
+	</div>
+
+
+    {#{{ form(form) }}
+
+	<ul class="record_actions">
+		<li>
+			<a href="{{ path('record') }}">
+				Back to the list
+			</a>
+		</li>
+	</ul>#}
+{% endblock %}

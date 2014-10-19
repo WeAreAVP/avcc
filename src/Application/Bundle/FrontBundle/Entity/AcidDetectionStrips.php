@@ -36,7 +36,7 @@ class AcidDetectionStrips
      * @ORM\JoinColumn(
      *     name="organization_id",
      *     referencedColumnName="id",
-     *     nullable=false,
+     *     nullable=true,
      *     onDelete="CASCADE"
      * )
      * @var integer

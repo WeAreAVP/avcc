@@ -295,7 +295,7 @@ class AudioRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\AudtioRecords
      */
-    public function setSlide(Slides $slides)
+    public function setSlides(Slides $slides)
     {
         $this->slides = $slides;
 
@@ -307,7 +307,7 @@ class AudioRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\Slides
      */
-    public function getSlide()
+    public function getSlides()
     {
         return $this->slides;
     }
@@ -319,7 +319,7 @@ class AudioRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\AudtioRecords
      */
-    public function setTrackType(TrackTypes $trackTypes)
+    public function setTrackTypes(TrackTypes $trackTypes)
     {
         $this->trackTypes = $trackTypes;
 
@@ -331,7 +331,7 @@ class AudioRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\TrackTypes
      */
-    public function getTrackType()
+    public function getTrackTypes()
     {
         return $this->trackTypes;
     }
@@ -406,5 +406,14 @@ class AudioRecords
     public function getRecord()
     {
         return $this->record;
+    }
+	 /**
+     * Returns user name
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }
