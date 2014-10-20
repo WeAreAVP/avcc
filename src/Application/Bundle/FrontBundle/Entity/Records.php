@@ -141,7 +141,6 @@ class Records
      * })
      */
     private $reelDiameters;
-   
 
     /**
      * @var integer
@@ -564,7 +563,6 @@ class Records
     {
         return $this->reelDiameters;
     }
-    
 
     /**
      * Set content duration

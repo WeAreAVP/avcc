@@ -196,6 +196,7 @@ class MediaDiametersController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Media diameter updated succesfully.');
+
             return $this->redirect($this->generateUrl('vocabularies_mediadiameters_edit', array('id' => $id)));
         }
 

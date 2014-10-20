@@ -17,11 +17,11 @@
                 {% for errorItem in form.name.vars.errors %}
                     <span class="has-error text-danger" for="{{ form.name.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
-            </div>           
+            </div>
             {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
 			or
 			<a class="button"   href="{{ path('vocabularies_framerates') }}">Cancel</a>
         </fieldset>
-        {{ form_end(form) }}        
-    </div> 
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

@@ -14,7 +14,7 @@ class Version20141020121512 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('ALTER TABLE formats DROP FOREIGN KEY FK_DBCBA3C32C8A3DE');
         $this->addSql('DROP INDEX IDX_DBCBA3C32C8A3DE ON formats');
         $this->addSql('ALTER TABLE formats DROP organization_id');
@@ -24,7 +24,7 @@ class Version20141020121512 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('ALTER TABLE formats ADD organization_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE formats ADD CONSTRAINT FK_DBCBA3C32C8A3DE FOREIGN KEY (organization_id) REFERENCES organizations (id) ON DELETE CASCADE');
         $this->addSql('CREATE INDEX IDX_DBCBA3C32C8A3DE ON formats (organization_id)');

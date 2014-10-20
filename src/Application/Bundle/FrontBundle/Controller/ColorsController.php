@@ -54,6 +54,7 @@ class ColorsController extends Controller
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Color added succesfully.');
+
             return $this->redirect($this->generateUrl('vocabularies_colors_show', array('id' => $entity->getId())));
         }
 
@@ -195,6 +196,7 @@ class ColorsController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Color updated succesfully.');
+
             return $this->redirect($this->generateUrl('vocabularies_colors_edit', array('id' => $id)));
         }
 

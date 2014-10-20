@@ -24,11 +24,11 @@
                 {% for errorItem in form.mediaType.vars.errors %}
                     <span class="has-error text-danger" for="{{ form.mediaType.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
-            </div> 
+            </div>
             {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
 			or
 			<a class="button"   href="{{ path('vocabularies_formats') }}">Cancel</a>
         </fieldset>
-        {{ form_end(form) }}        
-    </div> 
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

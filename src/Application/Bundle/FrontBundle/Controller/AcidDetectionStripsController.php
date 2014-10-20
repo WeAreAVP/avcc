@@ -54,6 +54,7 @@ class AcidDetectionStripsController extends Controller
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Acid detection strip added succesfully.');
+
             return $this->redirect($this->generateUrl('vocabularies_aciddetectionstrips_show', array('id' => $entity->getId())));
         }
 
@@ -90,7 +91,7 @@ class AcidDetectionStripsController extends Controller
      * @Template()
      */
     public function newAction()
-    {        
+    {
         $entity = new AcidDetectionStrips();
         $form = $this->createCreateForm($entity);
 
@@ -195,6 +196,7 @@ class AcidDetectionStripsController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Acid detection strip updated succesfully.');
+
             return $this->redirect($this->generateUrl('vocabularies_aciddetectionstrips_edit', array('id' => $id)));
         }
 

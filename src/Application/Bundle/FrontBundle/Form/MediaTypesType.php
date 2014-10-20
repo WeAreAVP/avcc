@@ -10,7 +10,7 @@ class MediaTypesType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -18,7 +18,7 @@ class MediaTypesType extends AbstractType
             ->add('name')
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

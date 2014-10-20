@@ -53,7 +53,7 @@ class FormatsController extends Controller
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Media types added succesfully.');
-            
+
             return $this->redirect($this->generateUrl('vocabularies_formats_show', array('id' => $entity->getId())));
         }
 
@@ -194,7 +194,7 @@ class FormatsController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Media type updated succesfully.');
-            
+
             return $this->redirect($this->generateUrl('vocabularies_formats_edit', array('id' => $id)));
         }
 

@@ -160,7 +160,6 @@ class Formats
      * @ORM\OrderBy({"id"="ASC"})
      */
     private $formatVersion;
-    
 
     public function __construct()
     {
@@ -476,5 +475,5 @@ class Formats
     {
          $this->formatVersion->remove($fv);
     }
-    
+
 }

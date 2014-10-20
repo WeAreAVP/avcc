@@ -54,6 +54,7 @@ class BasesController extends Controller
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Base added succesfully.');
+
             return $this->redirect($this->generateUrl('vocabularies_bases_show', array('id' => $entity->getId())));
         }
 
@@ -195,6 +196,7 @@ class BasesController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Base updated succesfully.');
+
             return $this->redirect($this->generateUrl('vocabularies_bases_edit', array('id' => $id)));
         }
 

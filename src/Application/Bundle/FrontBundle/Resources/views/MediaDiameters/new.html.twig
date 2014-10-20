@@ -17,18 +17,18 @@
                 {% for errorItem in form.name.vars.errors %}
                     <span class="has-error text-danger" for="{{ form.name.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
-            </div> 
+            </div>
             <label>Formats</label>
             <div class="input-control select" data-role="input-control">
                 {{ form_widget(form.mediaDiameterFormat, {attr: {class:'size4',id:'formats',required:'required'} }) }}
                 {% for errorItem in form.mediaDiameterFormat.vars.errors %}
                     <span class="has-error text-danger" for="{{ form.mediaDiameterFormat.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
-            </div>            
+            </div>
             {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
 			or
 			<a class="button"   href="{{ path('vocabularies_mediadiameters') }}">Cancel</a>
         </fieldset>
-        {{ form_end(form) }}        
-    </div> 
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

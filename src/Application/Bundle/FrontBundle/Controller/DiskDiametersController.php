@@ -196,6 +196,7 @@ class DiskDiametersController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Disk diameter updated succesfully.');
+
             return $this->redirect($this->generateUrl('vocabularies_diskdiameters_edit', array('id' => $id)));
         }
 

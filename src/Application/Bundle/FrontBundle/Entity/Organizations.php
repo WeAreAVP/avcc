@@ -177,7 +177,7 @@ class Organizations
      * @ORM\OrderBy({"id"="ASC"})
      */
     private $diskDiamaeterOrg;
-    
+
     /**
      * @ORM\OneToMany(
      *     targetEntity="FormatVersions",
@@ -816,7 +816,7 @@ class Organizations
     public function removeDiskDiamaeterOrg(DiskDiameters $dd)
     {
         $this->diskDiamaeterOrg->remove($dd);
-    }    
+    }
 
     /**
      * Add formatOrg

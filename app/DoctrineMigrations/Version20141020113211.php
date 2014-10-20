@@ -14,7 +14,7 @@ class Version20141020113211 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('ALTER TABLE acid_detection_strips CHANGE organization_id organization_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE records CHANGE is_review is_review TINYINT(1) DEFAULT \'0\'');
     }
@@ -23,7 +23,7 @@ class Version20141020113211 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('ALTER TABLE acid_detection_strips CHANGE organization_id organization_id INT NOT NULL');
         $this->addSql('ALTER TABLE records CHANGE is_review is_review TINYINT(1) DEFAULT \'0\' NOT NULL');
     }

@@ -23,12 +23,12 @@
                 {% for errorItem in edit_form.baseFormat.vars.errors %}
                     <span class="has-error text-danger" for="{{ edit_form.baseFormat.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
-            </div>            
+            </div>
             {{ form_widget(edit_form.submit, {attr: {class:'button primary'} }) }}
             or
             <a class="button"   href="{{ path('vocabularies_bases') }}">Cancel</a>
         </fieldset>
-        {{ form_end(edit_form) }} 
+        {{ form_end(edit_form) }}
 
         {#{{ form(delete_form) }}#}
     </div>
