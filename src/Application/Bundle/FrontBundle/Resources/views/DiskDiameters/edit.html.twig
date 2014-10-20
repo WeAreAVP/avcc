@@ -1,16 +1,35 @@
-{% extends '::base.html.twig' %}
+{% extends "FOSUserBundle::layout.html.twig" %}
 
-{% block body -%}
-    <h1>DiskDiameters edit</h1>
+{% block body %}
+    <div class="grid fluid">
+        <h1>
+            <a href="{{ path('vocabularies_diskdiameters') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+            Edit Disk Diameter
+        </h1>
+        {{ form_start(edit_form, {attr: {class:'form-horizontal'} }) }}
+        <fieldset>
+            {{ form_errors(edit_form) }}
+            <br />
+            <label>Name</label>
+            <div class="input-control text" data-role="input-control">
+                {{ form_widget(edit_form.name, {attr: {class:'size4'} }) }}
+                {% for errorItem in edit_form.name.vars.errors %}
+                    <span class="has-error text-danger" for="{{ edit_form.name.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            <label>Formats</label>
+            <div class="input-control select" data-role="input-control">
+                {{ form_widget(edit_form.diskFormat, {attr: {class:'size4',id:'formats',required:'required'} }) }}
+                {% for errorItem in edit_form.diskFormat.vars.errors %}
+                    <span class="has-error text-danger" for="{{ edit_form.diskFormat.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>            
+            {{ form_widget(edit_form.submit, {attr: {class:'button primary'} }) }}
+            or
+            <a class="button"   href="{{ path('vocabularies_diskdiameters') }}">Cancel</a>
+        </fieldset>
+        {{ form_end(edit_form) }} 
 
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('vocabularies_diskdiameters') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+        {#{{ form(delete_form) }}#}
+    </div>
 {% endblock %}

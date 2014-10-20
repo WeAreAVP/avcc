@@ -3,12 +3,12 @@
 {% block body %}
 <div class="grid fluid">
     <h1>
-        <a href="{{ path('vocabularies_formatversions') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
-        Format Version Details
+        <a href="{{ path('vocabularies_mediadiameters') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+        Media Diameter Details
     </h1>
     <ul class="inline">
         <li>
-            <a href="{{ path('vocabularies_formatversions_edit', { 'id': entity.id }) }}" class="button primary">
+            <a href="{{ path('vocabularies_mediadiameters_edit', { 'id': entity.id }) }}" class="button primary">
                 Edit
             </a>
         </li>
@@ -23,7 +23,7 @@
     <dl class="horizontal">
         <dt>Format</dt>
         <dd>
-            {{ entity.formatVersionFormat }}
+            {{ entity.mediaDiameterFormat }}
         </dd>
     </dl> 
 </div>
