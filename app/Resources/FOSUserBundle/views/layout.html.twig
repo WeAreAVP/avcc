@@ -31,6 +31,7 @@
 				<div class="navigation-bar-content container">
 					<a href="{{ path('_welcome')}}" class="element"> AVCC </a>
 					<span class="element-divider"></span>
+{#                                        {{ dump(app.user) }}#}
 					{% if app.user %}
 						<a class="element1 pull-menu" href="#"></a>
 						<ul class="element-menu place-right" style="">
@@ -53,7 +54,13 @@
 									<ul class="dropdown-menu dark" data-role="dropdown">
 										<li><a href="{{ path('users') }}">Users</a></li>
 										<li><a href="{{ path('organizations') }}">Organization</a></li>
-
+                                                                                <li><a href="{{path('vocabularies_colors')}}">Colors</a></li>
+                                                                                <li><a href="{{path('vocabularies_aciddetectionstrips')}}">Acid Detection Strips</a></li> 
+                                                                                <li><a href="{{path('vocabularies_bases')}}">Bases</a></li>
+                                                                                <li><a href="{{path('vocabularies_mediatypes')}}">Media Types</a></li>
+                                                                                <li><a href="{{path('vocabularies_formats')}}">Formats</a></li>
+                                                                                <li><a href="{{path('vocabularies_cassettessizes')}}">Cassette Sizes</a></li>
+                                                                                <li><a href="{{path('vocabularies_commercial')}}">Commercial</a></li>
 									</ul>
 								</li>
 							</ul>

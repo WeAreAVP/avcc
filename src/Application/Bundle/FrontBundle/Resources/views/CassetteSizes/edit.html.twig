@@ -1,0 +1,35 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+    <div class="grid fluid">
+        <h1>
+            <a href="{{ path('vocabularies_cassettessizes') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+            Edit Cassette Size
+        </h1>
+        {{ form_start(edit_form, {attr: {class:'form-horizontal'} }) }}
+        <fieldset>
+            {{ form_errors(edit_form) }}
+            <br />
+            <label>Name</label>
+            <div class="input-control text" data-role="input-control">
+                {{ form_widget(edit_form.name, {attr: {class:'size4'} }) }}
+                {% for errorItem in edit_form.name.vars.errors %}
+                    <span class="has-error text-danger" for="{{ edit_form.name.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            <label>Formats</label>
+            <div class="input-control select" data-role="input-control">
+                {{ form_widget(edit_form.cassetteSizeFormat, {attr: {class:'size4',id:'formats',required:'required'} }) }}
+                {% for errorItem in edit_form.cassetteSizeFormat.vars.errors %}
+                    <span class="has-error text-danger" for="{{ edit_form.cassetteSizeFormat.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>            
+            {{ form_widget(edit_form.submit, {attr: {class:'button primary'} }) }}
+            or
+            <a class="button"   href="{{ path('vocabularies_cassettessizes') }}">Cancel</a>
+        </fieldset>
+        {{ form_end(edit_form) }} 
+
+        {#{{ form(delete_form) }}#}
+    </div>
+{% endblock %}

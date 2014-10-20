@@ -1,0 +1,34 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+    <div class="grid fluid">
+        <h1>
+            <a href="{{ path('vocabularies_formats') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+            New Format
+        </h1>
+
+        {{ form_start(form, {attr: {class:'form-horizontal'} }) }}
+        <fieldset>
+            {{ form_errors(form) }}
+            <br />
+            <label>Name</label>
+            <div class="input-control text" data-role="input-control">
+                {{ form_widget(form.name, {attr: {class:'size4'} }) }}
+                {% for errorItem in form.name.vars.errors %}
+                    <span class="has-error text-danger" for="{{ form.name.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            <label>Media Type</label>
+            <div class="input-control text" data-role="input-control">
+                {{ form_widget(form.mediaType, {attr: {class:'size4'} }) }}
+                {% for errorItem in form.mediaType.vars.errors %}
+                    <span class="has-error text-danger" for="{{ form.mediaType.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div> 
+            {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
+			or
+			<a class="button"   href="{{ path('vocabularies_formats') }}">Cancel</a>
+        </fieldset>
+        {{ form_end(form) }}        
+    </div> 
+{% endblock %}

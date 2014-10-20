@@ -177,7 +177,7 @@ class Organizations
      * @ORM\OrderBy({"id"="ASC"})
      */
     private $diskDiamaeterOrg;
-
+    
     /**
      * @ORM\OneToMany(
      *     targetEntity="FormatVersions",
@@ -816,15 +816,15 @@ class Organizations
     public function removeDiskDiamaeterOrg(DiskDiameters $dd)
     {
         $this->diskDiamaeterOrg->remove($dd);
-    }
+    }    
 
     /**
      * Add formatOrg
      *
-     * @param \Application\Bundle\FrontBundle\Entity\Formats $f
+     * @param \Application\Bundle\FrontBundle\Entity\FormatVersions $f
      *
      */
-    public function addFormatOrg(Formats $f)
+    public function addFormatOrg(FormatVersions $f)
     {
         if (!$this->formatOrg->contains($f)) {
 
@@ -836,10 +836,10 @@ class Organizations
     /**
      * Remove formatOrg
      *
-     * @param \Application\Bundle\FrontBundle\Entity\Formats $f
+     * @param \Application\Bundle\FrontBundle\Entity\FormatVersions $f
      *
      */
-    public function removeFormatOrg(Formats $f)
+    public function removeFormatOrg(FormatVersions $f)
     {
         $this->formatOrg->remove($f);
     }

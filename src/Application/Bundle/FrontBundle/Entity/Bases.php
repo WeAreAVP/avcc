@@ -39,6 +39,7 @@ class Bases
      *     nullable=false,
      *     onDelete="CASCADE"
      * )
+     * @Assert\NotBlank(message="Format is required")
      * @var integer
      */
     private $baseFormat;
