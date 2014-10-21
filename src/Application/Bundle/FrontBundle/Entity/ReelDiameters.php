@@ -32,24 +32,25 @@ class ReelDiameters
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Formats", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="reelDiameter")
+     * @ORM\ManyToOne(targetEntity="Formats", fetch="EAGER", inversedBy="reelDiameter")
      * @ORM\JoinColumn(
      *     name="format_id",
      *     referencedColumnName="id",
-     *     nullable=false,
-     *     onDelete="CASCADE"
+     *     nullable=true,
+     *     onDelete="SET NULL"
      * )
      * @var integer
+     * @Assert\NotBlank(message="Format is required")
      */
     private $reelFormat;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Organizations", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="reelDiameterOrg")
+     * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="reelDiameterOrg")
      * @ORM\JoinColumn(
      *     name="organization_id",
      *     referencedColumnName="id",
      *     nullable=true,
-     *     onDelete="CASCADE"
+     *     onDelete="SET NULL"
      * )
      * @var integer
      */

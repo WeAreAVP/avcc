@@ -32,12 +32,12 @@ class Slides
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Organizations", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="slidesOrg")
+     * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="slidesOrg")
      * @ORM\JoinColumn(
      *     name="organization_id",
      *     referencedColumnName="id",
      *     nullable=true,
-     *     onDelete="CASCADE"
+     *     onDelete="SET NULL"
      * )
      * @var integer
      */

@@ -32,12 +32,12 @@ class RecordingStandards
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Organizations", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="recordingStandardOrg")
+     * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="recordingStandardOrg")
      * @ORM\JoinColumn(
      *     name="organization_id",
      *     referencedColumnName="id",
      *     nullable=true,
-     *     onDelete="CASCADE"
+     *     onDelete="SET NULL"
      * )
      * @var integer
      */

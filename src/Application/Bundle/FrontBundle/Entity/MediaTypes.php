@@ -36,8 +36,7 @@ class MediaTypes
      *     targetEntity="Formats",
      *     mappedBy="mediaType",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */

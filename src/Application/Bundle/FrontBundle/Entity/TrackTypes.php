@@ -32,24 +32,25 @@ class TrackTypes
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Formats", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="trackType")
+     * @ORM\ManyToOne(targetEntity="Formats", fetch="EAGER", inversedBy="trackType")
      * @ORM\JoinColumn(
      *     name="format_id",
      *     referencedColumnName="id",
-     *     nullable=false,
-     *     onDelete="CASCADE"
+     *     nullable=true,
+     *     onDelete="SET NULL"
      * )
      * @var integer
+     * @Assert\NotBlank(message="Format is required")
      */
     private $trackTypeFormat;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Organizations", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="trackTypeOrg")
+     * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="trackTypeOrg")
      * @ORM\JoinColumn(
      *     name="organization_id",
      *     referencedColumnName="id",
      *     nullable=true,
-     *     onDelete="CASCADE"
+     *     onDelete="SET NULL"
      * )
      * @var integer
      */

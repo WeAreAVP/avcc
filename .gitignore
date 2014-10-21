@@ -12,3 +12,4 @@
 nbproject
 /nbproject/private/
 .DS_Store
+/app/DoctrineMigrations/*

@@ -111,8 +111,7 @@ class Organizations
      *     targetEntity="AcidDetectionStrips",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -123,8 +122,7 @@ class Organizations
      *     targetEntity="Bases",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -135,8 +133,7 @@ class Organizations
      *     targetEntity="CassetteSizes",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -147,8 +144,7 @@ class Organizations
      *     targetEntity="Colors",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -159,8 +155,7 @@ class Organizations
      *     targetEntity="Commercial",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -171,8 +166,7 @@ class Organizations
      *     targetEntity="DiskDiameters",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -183,8 +177,7 @@ class Organizations
      *     targetEntity="FormatVersions",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -195,8 +188,7 @@ class Organizations
      *     targetEntity="FrameRates",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -207,8 +199,7 @@ class Organizations
      *     targetEntity="MediaDiameters",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -219,8 +210,7 @@ class Organizations
      *     targetEntity="MonoStereo",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -231,8 +221,7 @@ class Organizations
      *     targetEntity="NoiceReduction",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -243,8 +232,7 @@ class Organizations
      *     targetEntity="PrintTypes",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -255,8 +243,7 @@ class Organizations
      *     targetEntity="RecordingSpeed",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -267,8 +254,7 @@ class Organizations
      *     targetEntity="RecordingStandards",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -279,8 +265,7 @@ class Organizations
      *     targetEntity="ReelCore",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -291,8 +276,7 @@ class Organizations
      *     targetEntity="ReelDiameters",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -303,8 +287,7 @@ class Organizations
      *     targetEntity="Slides",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -315,8 +298,7 @@ class Organizations
      *     targetEntity="Sounds",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -327,8 +309,7 @@ class Organizations
      *     targetEntity="TapeThickness",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -339,8 +320,7 @@ class Organizations
      *     targetEntity="TrackTypes",
      *     mappedBy="organization",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */

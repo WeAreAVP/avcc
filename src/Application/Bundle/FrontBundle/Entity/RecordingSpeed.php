@@ -32,24 +32,25 @@ class RecordingSpeed
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Formats", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="recordingSpeed")
+     * @ORM\ManyToOne(targetEntity="Formats", fetch="EAGER", inversedBy="recordingSpeed")
      * @ORM\JoinColumn(
      *     name="format_id",
      *     referencedColumnName="id",
-     *     nullable=false,
-     *     onDelete="CASCADE"
+     *     nullable=true,
+     *     onDelete="SET NULL"
      * )
      * @var integer
+     * @Assert\NotBlank(message="Format is required")
      */
     private $recSpeedFormat;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Organizations", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="recordingSpeedOrg")
+     * @ORM\ManyToOne(targetEntity="Organizations",  fetch="EAGER", inversedBy="recordingSpeedOrg")
      * @ORM\JoinColumn(
      *     name="organization_id",
      *     referencedColumnName="id",
      *     nullable=true,
-     *     onDelete="CASCADE"
+     *     onDelete="SET NULL"
      * )
      * @var integer
      */

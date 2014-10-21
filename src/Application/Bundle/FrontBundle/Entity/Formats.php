@@ -42,14 +42,15 @@ class Formats
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MediaTypes", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="formats")
+     * @ORM\ManyToOne(targetEntity="MediaTypes", fetch="EAGER", inversedBy="formats")
      * @ORM\JoinColumn(
      *     name="media_format_id",
      *     referencedColumnName="id",
-     *     nullable=false,
-     *     onDelete="CASCADE"
+     *     nullable=true,
+     *     onDelete="SET NULL"
      * )
      * @var integer
+     * @Assert\NotBlank(message="Media type is required")
      */
     private $mediaType;
 
@@ -82,8 +83,7 @@ class Formats
      *     targetEntity="MediaDiameters",
      *     mappedBy="mediaDiameterFormat",
      *     fetch="EAGER",
-     *     indexBy="id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
