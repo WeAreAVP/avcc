@@ -6,27 +6,28 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class MonoStereoType extends AbstractType
+class TrackTypesType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
-     * @param array                $options
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('name')
+            ->add('trackTypeFormat')
 //            ->add('organization')
         ;
     }
-
+    
     /**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Application\Bundle\FrontBundle\Entity\MonoStereo'
+            'data_class' => 'Application\Bundle\FrontBundle\Entity\TrackTypes'
         ));
     }
 
@@ -35,6 +36,6 @@ class MonoStereoType extends AbstractType
      */
     public function getName()
     {
-        return 'application_bundle_frontbundle_monostereo';
+        return 'application_bundle_frontbundle_tracktypes';
     }
 }

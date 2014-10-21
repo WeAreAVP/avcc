@@ -3,8 +3,8 @@
 {% block body %}
     <div class="grid fluid">
         <h1>
-            <a href="{{ path('vocabularies_monostereo') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
-            New
+            <a href="{{ path('vocabularies_recordingspeed') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+            New Recording Speed
         </h1>
 
         {{ form_start(form, {attr: {class:'form-horizontal'} }) }}
@@ -18,9 +18,16 @@
                     <span class="has-error text-danger" for="{{ form.name.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
             </div>
+            <label>Formats</label>
+            <div class="input-control select" data-role="input-control">
+                {{ form_widget(form.recSpeedFormat, {attr: {class:'size4',id:'formats',required:'required'} }) }}
+                {% for errorItem in form.recSpeedFormat.vars.errors %}
+                    <span class="has-error text-danger" for="{{ form.recSpeedFormat.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
             {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
 			or
-			<a class="button"   href="{{ path('vocabularies_monostereo') }}">Cancel</a>
+			<a class="button"   href="{{ path('vocabularies_recordingspeed') }}">Cancel</a>
         </fieldset>
         {{ form_end(form) }}
     </div>

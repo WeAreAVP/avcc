@@ -16,7 +16,7 @@ class NoiceReductionType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('organization')
+//            ->add('organization')
         ;
     }
 

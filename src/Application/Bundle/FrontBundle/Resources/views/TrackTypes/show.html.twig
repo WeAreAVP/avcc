@@ -3,12 +3,12 @@
 {% block body %}
 <div class="grid fluid">
     <h1>
-        <a href="{{ path('vocabularies_monostereo') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
-        Details
+        <a href="{{ path('vocabularies_tracktypes') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+        Track Type Details
     </h1>
     <ul class="inline">
         <li>
-            <a href="{{ path('vocabularies_monostereo_edit', { 'id': entity.id }) }}" class="button primary">
+            <a href="{{ path('vocabularies_tracktypes_edit', { 'id': entity.id }) }}" class="button primary">
                 Edit
             </a>
         </li>
@@ -18,6 +18,12 @@
         <dt>Name</dt>
         <dd>
             {{ entity.name }}
+        </dd>
+    </dl>
+    <dl class="horizontal">
+        <dt>Format</dt>
+        <dd>
+            {{ entity.trackTypeFormat }}
         </dd>
     </dl>
 </div>

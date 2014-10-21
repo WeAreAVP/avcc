@@ -3,8 +3,8 @@
 {% block body %}
     <div class="grid fluid">
         <h1>
-            <a href="{{ path('vocabularies_noicereduction') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
-            Edit Noice Reduction
+            <a href="{{ path('vocabularies_tracktypes') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+            Edit Track Types
         </h1>
         {{ form_start(edit_form, {attr: {class:'form-horizontal'} }) }}
         <fieldset>
@@ -17,9 +17,16 @@
                     <span class="has-error text-danger" for="{{ edit_form.name.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
             </div>
+            <label>Formats</label>
+            <div class="input-control select" data-role="input-control">
+                {{ form_widget(edit_form.trackTypeFormat, {attr: {class:'size4',id:'formats',required:'required'} }) }}
+                {% for errorItem in edit_form.trackTypeFormat.vars.errors %}
+                    <span class="has-error text-danger" for="{{ edit_form.trackTypeFormat.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
             {{ form_widget(edit_form.submit, {attr: {class:'button primary'} }) }}
             or
-            <a class="button"   href="{{ path('vocabularies_noicereduction') }}">Cancel</a>
+            <a class="button"   href="{{ path('vocabularies_tracktypes') }}">Cancel</a>
         </fieldset>
         {{ form_end(edit_form) }}
 

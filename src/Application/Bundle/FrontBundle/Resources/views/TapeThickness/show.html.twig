@@ -1,0 +1,30 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+<div class="grid fluid">
+    <h1>
+        <a href="{{ path('vocabularies_tapethickness') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+        Casette Size details
+    </h1>
+    <ul class="inline">
+        <li>
+            <a href="{{ path('vocabularies_tapethickness_edit', { 'id': entity.id }) }}" class="button primary">
+                Edit
+            </a>
+        </li>
+{#			<li>{{ form(delete_form) }}</li>#}
+    </ul>
+    <dl class="horizontal">
+        <dt>Name</dt>
+        <dd>
+            {{ entity.name }}
+        </dd>
+    </dl>
+    <dl class="horizontal">
+        <dt>Format</dt>
+        <dd>
+            {{ entity.tapeThicknessFormat }}
+        </dd>
+    </dl>
+</div>
+{% endblock %}

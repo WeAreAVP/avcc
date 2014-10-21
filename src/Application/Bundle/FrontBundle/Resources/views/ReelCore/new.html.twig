@@ -3,8 +3,8 @@
 {% block body %}
     <div class="grid fluid">
         <h1>
-            <a href="{{ path('vocabularies_monostereo') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
-            New
+            <a href="{{ path('vocabularies_reelcore') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+            New Reel Core
         </h1>
 
         {{ form_start(form, {attr: {class:'form-horizontal'} }) }}
@@ -20,7 +20,7 @@
             </div>
             {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
 			or
-			<a class="button"   href="{{ path('vocabularies_monostereo') }}">Cancel</a>
+			<a class="button"   href="{{ path('vocabularies_reelcore') }}">Cancel</a>
         </fieldset>
         {{ form_end(form) }}
     </div>

@@ -3,8 +3,8 @@
 {% block body %}
     <div class="grid fluid">
         <h1>
-            <a href="{{ path('vocabularies_noicereduction') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
-            Edit Noice Reduction
+            <a href="{{ path('vocabularies_slides') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+            Edit Slide
         </h1>
         {{ form_start(edit_form, {attr: {class:'form-horizontal'} }) }}
         <fieldset>
@@ -19,7 +19,7 @@
             </div>
             {{ form_widget(edit_form.submit, {attr: {class:'button primary'} }) }}
             or
-            <a class="button"   href="{{ path('vocabularies_noicereduction') }}">Cancel</a>
+            <a class="button"   href="{{ path('vocabularies_slides') }}">Cancel</a>
         </fieldset>
         {{ form_end(edit_form) }}
 
