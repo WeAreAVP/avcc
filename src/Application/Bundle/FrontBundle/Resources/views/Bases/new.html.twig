@@ -20,15 +20,20 @@
             </div>
             <label>Formats</label>
             <div class="input-control select" data-role="input-control">
-                {{ form_widget(form.baseFormat, {attr: {class:'size4',id:'formats',required:'required'} }) }}
+                {{ form_widget(form.baseFormat, {attr: {class:'size4 formats_dd',id:'formats',required:'required',multiple:'multiple',name:'formats[]'} }) }}
                 {% for errorItem in form.baseFormat.vars.errors %}
                     <span class="has-error text-danger" for="{{ form.baseFormat.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
             </div>
             {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
-			or
-			<a class="button"   href="{{ path('vocabularies_bases') }}">Cancel</a>
+            or
+            <a class="button"   href="{{ path('vocabularies_bases') }}">Cancel</a>
         </fieldset>
         {{ form_end(form) }}
     </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.formats_dd').chosen();
+        });
+    </script>
 {% endblock %}

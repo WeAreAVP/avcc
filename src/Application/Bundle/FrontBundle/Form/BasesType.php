@@ -5,20 +5,48 @@ namespace Application\Bundle\FrontBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 class BasesType extends AbstractType
 {
-        /**
+
+    public $formats;
+    public $selectedFormats;
+    private $em;
+
+    public function __construct($sel_format = NULL)
+    {
+        $this->selectedFormats = $sel_format;
+    }
+
+    /**
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('name')
-            ->add('baseFormat')
-//            ->add('organization')
-        ;
+        $isNew = true;
+        if ($options['data']->getId())
+            $isNew = false;
+        if ($isNew) {
+            $builder
+                    ->add('name')
+                    ->add('baseFormat', 'entity', array(
+                        'class' => 'ApplicationFrontBundle:Formats',
+                        'query_builder' => function(EntityRepository $er) {
+                            return $er->createQueryBuilder('f')
+                                    ->orderBy('f.name', 'ASC');
+                        },
+                        'multiple' => true,
+                        'mapped' => false
+                    ))
+            ;
+        } else {
+            $builder
+                    ->add('name')
+                    ->add('baseFormat')
+            ;
+        }
     }
 
     /**
@@ -38,4 +66,5 @@ class BasesType extends AbstractType
     {
         return 'application_bundle_frontbundle_bases';
     }
+
 }

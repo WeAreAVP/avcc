@@ -50,12 +50,24 @@ class BasesController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $posted_value = $this->get('request')->request->get('application_bundle_frontbundle_bases');
+
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $f = $form->getData();
+            foreach ($posted_value['baseFormat'] as $key => $value) {
+                $entity = new Bases();
+                $entity->setName($f->getName());
+                $format = $this->getDoctrine()->getRepository('ApplicationFrontBundle:Formats')->find($value);
+                $entity->setBaseFormat($format);
+                $em->persist($entity);
+                $em->flush();
+            }
+//            $em->persist($entity);
+//            $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Base added succesfully.');
 
-            return $this->redirect($this->generateUrl('vocabularies_bases_show', array('id' => $entity->getId())));
+//            return $this->redirect($this->generateUrl('vocabularies_bases_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('vocabularies_bases'));
         }
 
         return array(
@@ -162,7 +174,14 @@ class BasesController extends Controller
      */
     private function createEditForm(Bases $entity)
     {
-        $form = $this->createForm(new BasesType(), $entity, array(
+        $em = $this->getDoctrine()->getManager();
+        $bases = $em->getRepository('ApplicationFrontBundle:Bases')->findBy(array('name' => $entity->getName()));
+        $sel_format = null;
+        foreach($bases as $format){
+            $sel_format[] = $format->getBaseFormat()->getId();
+        }
+//        print_r($sel_format);exit;
+        $form = $this->createForm(new BasesType($sel_format), $entity, array(
             'action' => $this->generateUrl('vocabularies_bases_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
