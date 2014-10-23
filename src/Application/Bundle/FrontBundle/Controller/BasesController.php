@@ -62,11 +62,8 @@ class BasesController extends Controller
                 $em->persist($entity);
                 $em->flush();
             }
-//            $em->persist($entity);
-//            $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Base added succesfully.');
-
-//            return $this->redirect($this->generateUrl('vocabularies_bases_show', array('id' => $entity->getId())));
+            
             return $this->redirect($this->generateUrl('vocabularies_bases'));
         }
 
@@ -173,15 +170,8 @@ class BasesController extends Controller
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(Bases $entity)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $bases = $em->getRepository('ApplicationFrontBundle:Bases')->findBy(array('name' => $entity->getName()));
-        $sel_format = null;
-        foreach($bases as $format){
-            $sel_format[] = $format->getBaseFormat()->getId();
-        }
-//        print_r($sel_format);exit;
-        $form = $this->createForm(new BasesType($sel_format), $entity, array(
+    {        
+        $form = $this->createForm(new BasesType(), $entity, array(
             'action' => $this->generateUrl('vocabularies_bases_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));

@@ -20,7 +20,7 @@
             </div>
             <label>Formats</label>
             <div class="input-control select" data-role="input-control">
-                {{ form_widget(form.recSpeedFormat, {attr: {class:'size4',id:'formats',required:'required'} }) }}
+                {{ form_widget(form.recSpeedFormat, {attr: {class:'size4 formats_dd',id:'formats',required:'required'} }) }}
                 {% for errorItem in form.recSpeedFormat.vars.errors %}
                     <span class="has-error text-danger" for="{{ form.recSpeedFormat.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}

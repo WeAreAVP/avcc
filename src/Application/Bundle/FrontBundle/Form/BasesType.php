@@ -10,13 +10,10 @@ use Doctrine\ORM\EntityRepository;
 class BasesType extends AbstractType
 {
 
-    public $formats;
-    public $selectedFormats;
-    private $em;
+    public $formats;    
 
-    public function __construct($sel_format = NULL)
-    {
-        $this->selectedFormats = $sel_format;
+    public function __construct()
+    {        
     }
 
     /**

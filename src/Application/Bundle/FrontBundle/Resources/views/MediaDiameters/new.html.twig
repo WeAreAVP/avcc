@@ -20,7 +20,7 @@
             </div>
             <label>Formats</label>
             <div class="input-control select" data-role="input-control">
-                {{ form_widget(form.mediaDiameterFormat, {attr: {class:'size4',id:'formats',required:'required'} }) }}
+                {{ form_widget(form.mediaDiameterFormat, {attr: {class:'size4 formats_dd',id:'formats',required:'required'} }) }}
                 {% for errorItem in form.mediaDiameterFormat.vars.errors %}
                     <span class="has-error text-danger" for="{{ form.mediaDiameterFormat.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}

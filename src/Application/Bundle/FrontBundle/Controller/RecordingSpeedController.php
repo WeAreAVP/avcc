@@ -49,11 +49,20 @@ class RecordingSpeedController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $posted_value = $this->get('request')->request->get('application_bundle_frontbundle_recordingspeed');
 
-            return $this->redirect($this->generateUrl('vocabularies_recordingspeed_show', array('id' => $entity->getId())));
+            $em = $this->getDoctrine()->getManager();
+            $f = $form->getData();
+            foreach ($posted_value['recSpeedFormat'] as $key => $value) {
+                $entity = new RecordingSpeed();
+                $entity->setName($f->getName());
+                $format = $this->getDoctrine()->getRepository('ApplicationFrontBundle:Formats')->find($value);
+                $entity->setRecSpeedFormat($format);
+                $em->persist($entity);
+                $em->flush();
+            }
+
+            return $this->redirect($this->generateUrl('vocabularies_recordingspeed'));
         }
 
         return array(

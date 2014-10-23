@@ -40,7 +40,7 @@ class RecordingSpeed
      *     onDelete="SET NULL"
      * )
      * @var integer
-     * @Assert\NotBlank(message="Format is required")
+     * 
      */
     private $recSpeedFormat;
 

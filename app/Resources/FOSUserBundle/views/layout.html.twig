@@ -9,132 +9,136 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
         <title>{% block title %}AVCC - AVPreserve{% endblock %}</title>
-		<script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
         <!-- Bootstrap core CSS -->
-		{% block stylesheets %}
-			{#						<link href="{{ asset('css/bootstrap.css') }}" type="text/css" rel="stylesheet" />#}
-			<link href="{{ asset('css/metro-bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
-			<link href="{{ asset('css/metro-bootstrap-responsive.min.css') }}" type="text/css" rel="stylesheet" />
-			<link href="{{ asset('css/iconFont.min.css') }}" type="text/css" rel="stylesheet" />
-			<link href="{{ asset('css/chosen.css') }}" type="text/css" rel="stylesheet" />
-			<!-- Custom styles for this template -->
-			<link href="{{ asset('bundles/applicationfront/css/style.css') }}" rel="stylesheet">
-                        <link rel="stylesheet" href="{{ asset('css/jquery.mCustomScrollbar.css') }}" />
-		{% endblock %}
+        {% block stylesheets %}
+            {#						<link href="{{ asset('css/bootstrap.css') }}" type="text/css" rel="stylesheet" />#}
+            <link href="{{ asset('css/metro-bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('css/metro-bootstrap-responsive.min.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('css/iconFont.min.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('css/chosen.css') }}" type="text/css" rel="stylesheet" />
+            <!-- Custom styles for this template -->
+            <link href="{{ asset('bundles/applicationfront/css/style.css') }}" rel="stylesheet">
+            <link rel="stylesheet" href="{{ asset('css/jquery.mCustomScrollbar.css') }}" />
+        {% endblock %}
 
 
 
     </head>
 
     <body class="metro">
-		<header class="bg-dark nav-container">
-			<div class="navigation-bar dark fixed-top shadow">
-				<div class="navigation-bar-content container">
-					<a href="{{ path('_welcome')}}" class="element"> AVCC </a>
-					<span class="element-divider"></span>
-{#                                        {{ dump(app.user) }}#}
-					{% if app.user %}
-						<a class="element1 pull-menu" href="#"></a>
-						<ul class="element-menu place-right" style="">
-							<li>
-								<a class="dropdown-toggle" href="#">Welcome, {{ app.user.name}}&nbsp;&nbsp;</a>
-								<ul class="dropdown-menu dark" data-role="dropdown">
-									<li><a href="{{ path('fos_user_profile_show') }}">Profile</a></li>
-									<li><a href="{{ path('fos_user_change_password') }}">Change Password</a></li>
-									<li class="divider"></li>
-									<li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
-								</ul>
-							</li>
-						</ul>
-						{% if is_granted('ROLE_MANAGER') %}
-							<a class="element1 pull-menu" href="#"></a>
-							<ul class="element-menu place-right" style="">
-								<li>
-									<a class="dropdown-toggle" href="#"><span class="icon-cog"></span> Settings
-									</a>
-									<ul class="dropdown-menu dark" data-role="dropdown">
-										<li><a href="{{ path('users') }}">Users</a></li>
-										<li><a href="{{ path('organizations') }}">Organization</a></li>
-									</ul>
-								</li>
-							</ul>
-						{% endif %}
-                                                {% if is_granted('ROLE_SUPER_ADMIN') %}
-							<a class="element1 pull-menu" href="#"></a>
-							<ul class="element-menu place-right" style="">
-								<li>
-									<a class="dropdown-toggle" href="#"><span class=""></span> Vocabularies
-									</a>
-									<ul class="dropdown-menu dark content mCustomScrollbar" data-role="dropdown" style="height: 480px;">
-                                                                                <li><a href="{{path('vocabularies_colors')}}">Colors</a></li>
-                                                                                <li><a href="{{path('vocabularies_aciddetectionstrips')}}">Acid Detection Strips</a></li>
-                                                                                <li><a href="{{path('vocabularies_bases')}}">Bases</a></li>
-                                                                                <li><a href="{{path('vocabularies_mediatypes')}}">Media Types</a></li>
-                                                                                <li><a href="{{path('vocabularies_formats')}}">Formats</a></li>
-                                                                                <li><a href="{{path('vocabularies_cassettessizes')}}">Cassette Sizes</a></li>
-                                                                                <li><a href="{{path('vocabularies_commercial')}}">Commercial</a></li>
-                                                                                <li><a href="{{path('vocabularies_diskdiameters')}}">Disk Diameter</a></li>
-                                                                                <li><a href="{{path('vocabularies_formatversions')}}">Format Version</a></li>
-                                                                                <li><a href="{{path('vocabularies_framerates')}}">Frame Rates</a></li>
-                                                                                <li><a href="{{path('vocabularies_mediadiameters')}}">Media diameters</a></li>
-                                                                                <li><a href="{{path('vocabularies_monostereo')}}">Mono Stereo</a></li>
-                                                                                <li><a href="{{path('vocabularies_noicereduction')}}">Noice Reduction</a></li>
-                                                                                <li><a href="{{path('vocabularies_printtypes')}}">Print Types</a></li>
-                                                                                <li><a href="{{path('vocabularies_recordingspeed')}}">Recording Speed</a></li>
-                                                                                <li><a href="{{path('vocabularies_recordingstandards')}}">Recording Standards</a></li>
-                                                                                <li><a href="{{path('vocabularies_reelcore')}}">Reel Core</a></li>
-                                                                                <li><a href="{{path('vocabularies_reeldiameters')}}">Reel Diameters</a></li>
-                                                                                <li><a href="{{path('vocabularies_slides')}}">Slides</a></li>
-                                                                                <li><a href="{{path('vocabularies_sounds')}}">Sounds</a></li>
-                                                                                <li><a href="{{path('vocabularies_tapethickness')}}">Tape Thickness</a></li>
-                                                                                <li><a href="{{path('vocabularies_tracktypes')}}">Track Types</a></li>
-									</ul>
-								</li>
-							</ul>
-						{% endif %}
-						<a class="element1 pull-menu" href="#"></a>
-						<ul class="element-menu place-right" style="">
-							<li>
-								<a class="" href="{{ path('projects') }}">Projects</a>
+        <header class="bg-dark nav-container">
+            <div class="navigation-bar dark fixed-top shadow">
+                <div class="navigation-bar-content container">
+                    <a href="{{ path('_welcome')}}" class="element"> AVCC </a>
+                    <span class="element-divider"></span>
+                    {#                                        {{ dump(app.user) }}#}
+                    {% if app.user %}
+                        <a class="element1 pull-menu" href="#"></a>
+                        <ul class="element-menu place-right" style="">
+                            <li>
+                                <a class="dropdown-toggle" href="#">Welcome, {{ app.user.name}}&nbsp;&nbsp;</a>
+                                <ul class="dropdown-menu dark" data-role="dropdown">
+                                    <li><a href="{{ path('fos_user_profile_show') }}">Profile</a></li>
+                                    <li><a href="{{ path('fos_user_change_password') }}">Change Password</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        {% if is_granted('ROLE_MANAGER') %}
+                            <a class="element1 pull-menu" href="#"></a>
+                            <ul class="element-menu place-right" style="">
+                                <li>
+                                    <a class="dropdown-toggle" href="#"><span class="icon-cog"></span> Settings
+                                    </a>
+                                    <ul class="dropdown-menu dark" data-role="dropdown">
+                                        <li><a href="{{ path('users') }}">Users</a></li>
+                                        <li><a href="{{ path('organizations') }}">Organization</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        {% endif %}
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <a class="element1 pull-menu" href="#"></a>
+                            <ul class="element-menu place-right" style="">
+                                <li>
+                                    <a class="dropdown-toggle" href="#"><span class=""></span> Vocabularies
+                                    </a>
+                                    <ul class="dropdown-menu dark content mCustomScrollbar" data-role="dropdown" style="height: 480px;">
+                                        <li><a href="{{path('vocabularies_colors')}}">Colors</a></li>
+                                        <li><a href="{{path('vocabularies_aciddetectionstrips')}}">Acid Detection Strips</a></li>
+                                        <li><a href="{{path('vocabularies_bases')}}">Bases</a></li>
+                                        <li><a href="{{path('vocabularies_mediatypes')}}">Media Types</a></li>
+                                        <li><a href="{{path('vocabularies_formats')}}">Formats</a></li>
+                                        <li><a href="{{path('vocabularies_cassettessizes')}}">Cassette Sizes</a></li>
+                                        <li><a href="{{path('vocabularies_commercial')}}">Commercial</a></li>
+                                        <li><a href="{{path('vocabularies_diskdiameters')}}">Disk Diameter</a></li>
+                                        <li><a href="{{path('vocabularies_formatversions')}}">Format Version</a></li>
+                                        <li><a href="{{path('vocabularies_framerates')}}">Frame Rates</a></li>
+                                        <li><a href="{{path('vocabularies_mediadiameters')}}">Media diameters</a></li>
+                                        <li><a href="{{path('vocabularies_monostereo')}}">Mono Stereo</a></li>
+                                        <li><a href="{{path('vocabularies_noicereduction')}}">Noice Reduction</a></li>
+                                        <li><a href="{{path('vocabularies_printtypes')}}">Print Types</a></li>
+                                        <li><a href="{{path('vocabularies_recordingspeed')}}">Recording Speed</a></li>
+                                        <li><a href="{{path('vocabularies_recordingstandards')}}">Recording Standards</a></li>
+                                        <li><a href="{{path('vocabularies_reelcore')}}">Reel Core</a></li>
+                                        <li><a href="{{path('vocabularies_reeldiameters')}}">Reel Diameters</a></li>
+                                        <li><a href="{{path('vocabularies_slides')}}">Slides</a></li>
+                                        <li><a href="{{path('vocabularies_sounds')}}">Sounds</a></li>
+                                        <li><a href="{{path('vocabularies_tapethickness')}}">Tape Thickness</a></li>
+                                        <li><a href="{{path('vocabularies_tracktypes')}}">Track Types</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        {% endif %}
+                        <a class="element1 pull-menu" href="#"></a>
+                        <ul class="element-menu place-right" style="">
+                            <li>
+                                <a class="" href="{{ path('projects') }}">Projects</a>
 
-							</li>
-						</ul>
+                            </li>
+                        </ul>
 
-					{% endif %}
-				</div>
-			</div>
-		</header>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
 
-		<div class="container" style="margin-top:20px;margin-bottom:20px;">
-			{% for type, messages in app.session.flashbag.all() %}
-				{% for message in messages %}
-					{#                                     {% if type == 'success' %}#}
-					<div class="flash-{{ type }} text-success">
-						{{ message }}
-					</div>
-					{#                                     {% endif %}  #}
-				{% endfor %}
-			{% endfor %}
-			{% block body %}
+        <div class="container" style="margin-top:20px;margin-bottom:20px;">
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    {#                                     {% if type == 'success' %}#}
+                    <div class="flash-{{ type }} text-success">
+                        {{ message }}
+                    </div>
+                    {#                                     {% endif %}  #}
+                {% endfor %}
+            {% endfor %}
+            {% block body %}
             {% endblock body %}
 
 
         </div> <!-- /container -->
 
-		{% block javascripts %}
-			<script src="{{ asset('js/jquery.min.js') }}"></script>
-			<script src="{{ asset('js/jquery.widget.min.js') }}"></script>
-			<script src="{{ asset('js/jquery.mousewheel.js') }}"></script>
-			<script src="{{ asset('js/metro.min.js') }}"></script>
-			<script src="{{ asset('js/chosen.jquery.js') }}"></script>
-                        <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
-			<script type="text/javascript">
-				setTimeout(function () {
-					$('.text-success').hide();
-				}, 5000);
-			</script>
+        {% block javascripts %}
+            <script src="{{ asset('js/jquery.min.js') }}"></script>
+            <script src="{{ asset('js/jquery.widget.min.js') }}"></script>
+            <script src="{{ asset('js/jquery.mousewheel.js') }}"></script>
+            <script src="{{ asset('js/metro.min.js') }}"></script>
+            <script src="{{ asset('js/chosen.jquery.js') }}"></script>
+            <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+            <script type="text/javascript">
+                setTimeout(function () {
+                    $('.text-success').hide();
+                }, 5000);
+                $(document).ready(function () {
+                    $('.formats_dd').chosen();
+                });
 
-		{% endblock %}
+            </script>
+
+        {% endblock %}
 
 
     </body>

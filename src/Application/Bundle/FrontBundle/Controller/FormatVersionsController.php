@@ -50,12 +50,21 @@ class FormatVersionsController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $posted_value = $this->get('request')->request->get('application_bundle_frontbundle_formatversions');
+
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $f = $form->getData();
+            foreach ($posted_value['formatVersionFormat'] as $key => $value) {
+                $entity = new FormatVersions();
+                $entity->setName($f->getName());
+                $format = $this->getDoctrine()->getRepository('ApplicationFrontBundle:Formats')->find($value);
+                $entity->setFormatVersionFormat($format);
+                $em->persist($entity);
+                $em->flush();
+            }
             $this->get('session')->getFlashBag()->add('success', 'Format version added succesfully.');
 
-            return $this->redirect($this->generateUrl('vocabularies_formatversions_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('vocabularies_formatversions'));
         }
 
         return array(

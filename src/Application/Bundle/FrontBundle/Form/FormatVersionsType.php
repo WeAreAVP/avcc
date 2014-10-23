@@ -5,20 +5,40 @@ namespace Application\Bundle\FrontBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 class FormatVersionsType extends AbstractType
 {
-        /**
+
+    /**
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('name')
-            ->add('formatVersionFormat')
+        $isNew = true;
+        if ($options['data']->getId())
+            $isNew = false;
+        if ($isNew) {
+            $builder
+                    ->add('name')
+                    ->add('formatVersionFormat', 'entity', array(
+                        'class' => 'ApplicationFrontBundle:Formats',
+                        'query_builder' => function(EntityRepository $er) {
+                            return $er->createQueryBuilder('f')
+                                    ->orderBy('f.name', 'ASC');
+                        },
+                        'multiple' => true,
+                        'mapped' => false
+                    ))
+            ;
+        } else {
+            $builder
+                    ->add('name')
+                    ->add('formatVersionFormat')
 //            ->add('organization')
-        ;
+            ;
+        }
     }
 
     /**
@@ -38,4 +58,5 @@ class FormatVersionsType extends AbstractType
     {
         return 'application_bundle_frontbundle_formatversions';
     }
+
 }

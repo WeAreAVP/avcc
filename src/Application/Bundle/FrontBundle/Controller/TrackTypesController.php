@@ -35,6 +35,7 @@ class TrackTypesController extends Controller
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new TrackTypes entity.
      *
@@ -49,16 +50,26 @@ class TrackTypesController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $posted_value = $this->get('request')->request->get('application_bundle_frontbundle_tracktypes');
 
-            return $this->redirect($this->generateUrl('vocabularies_tracktypes_show', array('id' => $entity->getId())));
+            $em = $this->getDoctrine()->getManager();
+            $f = $form->getData();
+            foreach ($posted_value['trackTypeFormat'] as $key => $value) {
+                $entity = new TrackTypes();
+                $entity->setName($f->getName());
+                $format = $this->getDoctrine()->getRepository('ApplicationFrontBundle:Formats')->find($value);
+                $entity->setTrackTypeFormat($format);
+                $em->persist($entity);
+                $em->flush();
+            }
+            $this->get('session')->getFlashBag()->add('success', 'Track type added succesfully.');
+
+            return $this->redirect($this->generateUrl('vocabularies_tracktypes'));
         }
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -91,11 +102,11 @@ class TrackTypesController extends Controller
     public function newAction()
     {
         $entity = new TrackTypes();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -119,7 +130,7 @@ class TrackTypesController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -145,19 +156,19 @@ class TrackTypesController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-    * Creates a form to edit a TrackTypes entity.
-    *
-    * @param TrackTypes $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a TrackTypes entity.
+     *
+     * @param TrackTypes $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(TrackTypes $entity)
     {
         $form = $this->createForm(new TrackTypesType(), $entity, array(
@@ -169,6 +180,7 @@ class TrackTypesController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing TrackTypes entity.
      *
@@ -192,16 +204,17 @@ class TrackTypesController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-
+            $this->get('session')->getFlashBag()->add('success', 'Track type updated succesfully.');
             return $this->redirect($this->generateUrl('vocabularies_tracktypes_edit', array('id' => $id)));
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a TrackTypes entity.
      *
@@ -238,10 +251,11 @@ class TrackTypesController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('vocabularies_tracktypes_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
+                        ->setAction($this->generateUrl('vocabularies_tracktypes_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm()
         ;
     }
+
 }
