@@ -39,9 +39,9 @@ class FormatVersionsController extends Controller
 
     /**
      * Creates a new FormatVersions entity.
-     * 
+     *
      * @param Request $request
-     * 
+     *
      * @Route("/", name="vocabularies_formatversions_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:FormatVersions:new.html.twig")
@@ -117,13 +117,13 @@ class FormatVersionsController extends Controller
 
     /**
      * Finds and displays a FormatVersions entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_formatversions_show")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function showAction($id)
     {
@@ -145,9 +145,9 @@ class FormatVersionsController extends Controller
 
     /**
      * Displays a form to edit an existing FormatVersions entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}/edit", name="vocabularies_formatversions_edit")
      * @Method("GET")
      * @Template()
@@ -194,14 +194,14 @@ class FormatVersionsController extends Controller
 
     /**
      * Edits an existing FormatVersions entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_formatversions_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:FormatVersions:edit.html.twig")
-     * @return array 
+     * @return array
      */
     public function updateAction(Request $request, $id)
     {
@@ -233,10 +233,10 @@ class FormatVersionsController extends Controller
 
     /**
      * Deletes a FormatVersions entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_formatversions_delete")
      * @Method("DELETE")
      * @return redirect

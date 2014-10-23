@@ -220,11 +220,11 @@ class AudioRecords
 
     /**
      * Set media duration.
-     * 
-     * @param string $mediaDuration 
-     * 
+     *
+     * @param string $mediaDuration
+     *
      * @return \Application\Bundle\FrontBundle\Entity\AudioRecords
-     */    
+     */
     public function setMediaDuration($mediaDuration)
     {
         $this->mediaDuration = $mediaDuration;

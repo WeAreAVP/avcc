@@ -189,11 +189,11 @@ class FilmRecords
 
     /**
      * Set footage.
-     * 
+     *
      * @param string $footage
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\FilmRecords
-     */   
+     */
     public function setFootage($footage)
     {
         $this->footage = $footage;
@@ -215,9 +215,9 @@ class FilmRecords
      * Set media diameter.
      *
      * @param string $mediaDiameter
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\FilmRecords
-     */    
+     */
     public function setMediaDiameter($mediaDiameter)
     {
         $this->mediaDiameter = $mediaDiameter;

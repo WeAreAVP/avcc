@@ -30,7 +30,7 @@ class RecordingSpeedType extends AbstractType
                         },
                         'multiple' => true,
                         'mapped' => false,
-                        'required'=> false        
+                        'required'=> false
                     ))
             ;
         } else {

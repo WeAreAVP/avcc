@@ -39,13 +39,13 @@ class RecordingSpeedController extends Controller
 
     /**
      * Creates a new RecordingSpeed entity.
-     * 
-     * @param Request $request 
-     * 
+     *
+     * @param Request $request
+     *
      * @Route("/", name="vocabularies_recordingspeed_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:RecordingSpeed:new.html.twig")
-     * @return array 
+     * @return array
      */
     public function createAction(Request $request)
     {
@@ -71,6 +71,7 @@ class RecordingSpeedController extends Controller
                 $em->persist($entity);
                 $em->flush();
             }
+
             return $this->redirect($this->generateUrl('vocabularies_recordingspeed'));
         }
 
@@ -101,11 +102,11 @@ class RecordingSpeedController extends Controller
 
     /**
      * Displays a form to create a new RecordingSpeed entity.
-     * 
+     *
      * @Route("/new", name="vocabularies_recordingspeed_new")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function newAction()
     {
@@ -120,13 +121,13 @@ class RecordingSpeedController extends Controller
 
     /**
      * Finds and displays a RecordingSpeed entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_recordingspeed_show")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function showAction($id)
     {
@@ -148,13 +149,13 @@ class RecordingSpeedController extends Controller
 
     /**
      * Displays a form to edit an existing RecordingSpeed entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}/edit", name="vocabularies_recordingspeed_edit")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function editAction($id)
     {
@@ -197,10 +198,10 @@ class RecordingSpeedController extends Controller
 
     /**
      * Edits an existing RecordingSpeed entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_recordingspeed_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:RecordingSpeed:edit.html.twig")
@@ -235,13 +236,13 @@ class RecordingSpeedController extends Controller
 
     /**
      * Deletes a RecordingSpeed entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_recordingspeed_delete")
      * @Method("DELETE")
-     * @return redirect 
+     * @return redirect
      */
     public function deleteAction(Request $request, $id)
     {

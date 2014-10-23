@@ -24,7 +24,7 @@ class MediaTypesController extends Controller
      * @Route("/", name="vocabularies_mediatypes")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function indexAction()
     {
@@ -38,11 +38,11 @@ class MediaTypesController extends Controller
     }
     /**
      * Creates a new MediaTypes entity.
-     * @param Request $request 
+     * @param  Request $request
      * @Route("/", name="vocabularies_mediatypes_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:MediaTypes:new.html.twig")
-     * @return array 
+     * @return array
      */
     public function createAction(Request $request)
     {
@@ -90,7 +90,7 @@ class MediaTypesController extends Controller
      * @Route("/new", name="vocabularies_mediatypes_new")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function newAction()
     {
@@ -105,13 +105,13 @@ class MediaTypesController extends Controller
 
     /**
      * Finds and displays a MediaTypes entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_mediatypes_show")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function showAction($id)
     {
@@ -133,13 +133,13 @@ class MediaTypesController extends Controller
 
     /**
      * Displays a form to edit an existing MediaTypes entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}/edit", name="vocabularies_mediatypes_edit")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function editAction($id)
     {
@@ -181,14 +181,14 @@ class MediaTypesController extends Controller
     }
     /**
      * Edits an existing MediaTypes entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_mediatypes_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:MediaTypes:edit.html.twig")
-     * @return array 
+     * @return array
      */
     public function updateAction(Request $request, $id)
     {
@@ -219,10 +219,10 @@ class MediaTypesController extends Controller
     }
     /**
      * Deletes a MediaTypes entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_mediatypes_delete")
      * @Method("DELETE")
      * @return redirect

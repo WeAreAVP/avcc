@@ -24,7 +24,7 @@ class SoundsController extends Controller
      * @Route("/", name="vocabularies_sounds")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function indexAction()
     {
@@ -38,13 +38,13 @@ class SoundsController extends Controller
     }
     /**
      * Creates a new Sounds entity.
-     * 
-     * @param Request $request 
-     * 
+     *
+     * @param Request $request
+     *
      * @Route("/", name="vocabularies_sounds_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:Sounds:new.html.twig")
-     * @return array 
+     * @return array
      */
     public function createAction(Request $request)
     {
@@ -91,7 +91,7 @@ class SoundsController extends Controller
      * @Route("/new", name="vocabularies_sounds_new")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function newAction()
     {
@@ -106,13 +106,13 @@ class SoundsController extends Controller
 
     /**
      * Finds and displays a Sounds entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_sounds_show")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function showAction($id)
     {
@@ -134,9 +134,9 @@ class SoundsController extends Controller
 
     /**
      * Displays a form to edit an existing Sounds entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}/edit", name="vocabularies_sounds_edit")
      * @Method("GET")
      * @Template()
@@ -182,10 +182,10 @@ class SoundsController extends Controller
     }
     /**
      * Edits an existing Sounds entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_sounds_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:Sounds:edit.html.twig")
@@ -219,13 +219,13 @@ class SoundsController extends Controller
     }
     /**
      * Deletes a Sounds entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_sounds_delete")
      * @Method("DELETE")
-     * @return redirect 
+     * @return redirect
      */
     public function deleteAction(Request $request, $id)
     {

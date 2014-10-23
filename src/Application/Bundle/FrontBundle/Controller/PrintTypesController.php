@@ -24,7 +24,7 @@ class PrintTypesController extends Controller
      * @Route("/", name="vocabularies_printtypes")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function indexAction()
     {
@@ -38,14 +38,14 @@ class PrintTypesController extends Controller
     }
     /**
      * Creates a new PrintTypes entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/", name="vocabularies_printtypes_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:PrintTypes:new.html.twig")
-     * @return array 
+     * @return array
      */
     public function createAction(Request $request)
     {
@@ -92,7 +92,7 @@ class PrintTypesController extends Controller
      * @Route("/new", name="vocabularies_printtypes_new")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function newAction()
     {
@@ -107,13 +107,13 @@ class PrintTypesController extends Controller
 
     /**
      * Finds and displays a PrintTypes entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_printtypes_show")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function showAction($id)
     {
@@ -135,13 +135,13 @@ class PrintTypesController extends Controller
 
     /**
      * Displays a form to edit an existing PrintTypes entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}/edit", name="vocabularies_printtypes_edit")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function editAction($id)
     {
@@ -183,14 +183,14 @@ class PrintTypesController extends Controller
     }
     /**
      * Edits an existing PrintTypes entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_printtypes_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:PrintTypes:edit.html.twig")
-     * @return array 
+     * @return array
      */
     public function updateAction(Request $request, $id)
     {
@@ -220,13 +220,13 @@ class PrintTypesController extends Controller
     }
     /**
      * Deletes a PrintTypes entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_printtypes_delete")
      * @Method("DELETE")
-     * @return array 
+     * @return array
      */
     public function deleteAction(Request $request, $id)
     {

@@ -145,7 +145,7 @@ class VideoRecords
     /**
      * Set media duration.
      *
-     * @param string $mediaDuration
+     * @param  string                                              $mediaDuration
      * @return \Application\Bundle\FrontBundle\Entity\VideoRecords
      */
     public function setMediaDuration($mediaDuration)

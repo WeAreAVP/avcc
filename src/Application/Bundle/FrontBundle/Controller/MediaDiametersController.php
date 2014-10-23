@@ -24,7 +24,7 @@ class MediaDiametersController extends Controller
      * @Route("/", name="vocabularies_mediadiameters")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function indexAction()
     {
@@ -39,9 +39,9 @@ class MediaDiametersController extends Controller
 
     /**
      * Creates a new MediaDiameters entity.
-     * 
+     *
      * @param Request $request
-     * 
+     *
      * @Route("/", name="vocabularies_mediadiameters_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:MediaDiameters:new.html.twig")
@@ -93,7 +93,7 @@ class MediaDiametersController extends Controller
      * @Route("/new", name="vocabularies_mediadiameters_new")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function newAction()
     {
@@ -108,9 +108,9 @@ class MediaDiametersController extends Controller
 
     /**
      * Finds and displays a MediaDiameters entity.
-     * 
+     *
      * @param integer $id
-     * 
+     *
      * @Route("/{id}", name="vocabularies_mediadiameters_show")
      * @Method("GET")
      * @Template()
@@ -136,9 +136,9 @@ class MediaDiametersController extends Controller
 
     /**
      * Displays a form to edit an existing MediaDiameters entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}/edit", name="vocabularies_mediadiameters_edit")
      * @Method("GET")
      * @Template()
@@ -185,14 +185,14 @@ class MediaDiametersController extends Controller
 
     /**
      * Edits an existing MediaDiameters entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_mediadiameters_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:MediaDiameters:edit.html.twig")
-     * @return array 
+     * @return array
      */
     public function updateAction(Request $request, $id)
     {
@@ -224,13 +224,13 @@ class MediaDiametersController extends Controller
 
     /**
      * Deletes a MediaDiameters entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_mediadiameters_delete")
      * @Method("DELETE")
-     * @return redirect 
+     * @return redirect
      */
     public function deleteAction(Request $request, $id)
     {

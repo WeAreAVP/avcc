@@ -39,13 +39,13 @@ class ColorsController extends Controller
 
     /**
      * Creates a new Colors entity.
-     * 
+     *
      * @param Request $request
-     * 
+     *
      * @Route("/", name="vocabularies_colors_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:Colors:new.html.twig")
-     * @return array 
+     * @return array
      */
     public function createAction(Request $request)
     {
@@ -93,7 +93,7 @@ class ColorsController extends Controller
      * @Route("/new", name="vocabularies_colors_new")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function newAction()
     {
@@ -108,13 +108,13 @@ class ColorsController extends Controller
 
     /**
      * Finds and displays a Colors entity.
-     * 
+     *
      * @param integer $id
-     * 
+     *
      * @Route("/{id}", name="vocabularies_colors_show")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function showAction($id)
     {
@@ -136,11 +136,11 @@ class ColorsController extends Controller
 
     /**
      * Displays a form to edit an existing Colors entity.
-     * @param integer $id
+     * @param  integer $id
      * @Route("/{id}/edit", name="vocabularies_colors_edit")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function editAction($id)
     {
@@ -183,10 +183,10 @@ class ColorsController extends Controller
 
     /**
      * Edits an existing Colors entity.
-     * 
-     * @param Request $request 
-     * @param integer $id 
-     * 
+     *
+     * @param Request $request
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_colors_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:Colors:edit.html.twig")
@@ -222,13 +222,13 @@ class ColorsController extends Controller
 
     /**
      * Deletes a Colors entity.
-     * 
-     * @param Request $request 
-     * @param integer $id 
-     * 
+     *
+     * @param Request $request
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_colors_delete")
      * @Method("DELETE")
-     * @return redirect 
+     * @return redirect
      */
     public function deleteAction(Request $request, $id)
     {

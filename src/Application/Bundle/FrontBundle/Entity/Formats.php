@@ -5,14 +5,8 @@ namespace Application\Bundle\FrontBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
-use Application\Bundle\FrontBundle\Entity\DiskDiameters as DiskDiameters;
-use Application\Bundle\FrontBundle\Entity\ReelDiameters as ReelDiameters;
-use Application\Bundle\FrontBundle\Entity\MediaDiameters as MediaDiameters ;
 use Application\Bundle\FrontBundle\Entity\Bases as Bases ;
 use Application\Bundle\FrontBundle\Entity\RecordingSpeed as RecordingSpeed;
-use Application\Bundle\FrontBundle\Entity\TapeThickness as TapeThickness;
-use Application\Bundle\FrontBundle\Entity\TrackTypes as TrackTypes;
-use Application\Bundle\FrontBundle\Entity\CassetteSizes as CassetteSizes;
 use Application\Bundle\FrontBundle\Entity\FormatVersions as FormatVersions;
 
 /**
@@ -52,8 +46,8 @@ class Formats
      * @var integer
      * @Assert\NotBlank(message="Media type is required")
      */
-    private $mediaType; 
-    
+    private $mediaType;
+
     /**
      * @ORM\OneToMany(
      *     targetEntity="Bases",
@@ -77,7 +71,7 @@ class Formats
      * @ORM\OrderBy({"id"="ASC"})
      */
     private $recordingSpeed;
-    
+
     /**
      * @ORM\OneToMany(
      *     targetEntity="FormatVersions",
@@ -89,9 +83,9 @@ class Formats
      * @ORM\OrderBy({"id"="ASC"})
      */
     private $formatVersion;
-    
+
     /**
-     * Formats constructor 
+     * Formats constructor
      */
     public function __construct()
     {
@@ -167,7 +161,7 @@ class Formats
     {
         return $this->mediaType;
     }
-   
+
     /**
      * Add base
      *
@@ -219,7 +213,7 @@ class Formats
     {
          $this->recordingSpeed->remove($rs);
     }
-    
+
      /**
      * Add format versions
      *

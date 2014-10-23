@@ -41,7 +41,7 @@ class MediaTypes
      * @ORM\OrderBy({"id"="ASC"})
      */
     private $formats;
-    
+
     /**
      * Media types construct
      */
@@ -97,7 +97,7 @@ class MediaTypes
     /**
      * Add format
      *
-     * @param \Application\Bundle\FrontBundle\Entity\Formats $f     *
+     * @param \Application\Bundle\FrontBundle\Entity\Formats $f *
      */
     public function addFormat(Formats $f)
     {
@@ -111,7 +111,7 @@ class MediaTypes
     /**
      * Remove format
      *
-     * @param \Application\Bundle\FrontBundle\Entity\Formats $f     *
+     * @param \Application\Bundle\FrontBundle\Entity\Formats $f *
      */
     public function removeFormat(Formats $f)
     {

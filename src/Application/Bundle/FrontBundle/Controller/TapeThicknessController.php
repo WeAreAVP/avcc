@@ -24,7 +24,7 @@ class TapeThicknessController extends Controller
      * @Route("/", name="vocabularies_tapethickness")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function indexAction()
     {
@@ -39,9 +39,9 @@ class TapeThicknessController extends Controller
 
     /**
      * Creates a new TapeThickness entity.
-     * 
+     *
      * @param Request $request Description
-     * 
+     *
      * @Route("/", name="vocabularies_tapethickness_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:TapeThickness:new.html.twig")
@@ -94,7 +94,7 @@ class TapeThicknessController extends Controller
      * @Route("/new", name="vocabularies_tapethickness_new")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function newAction()
     {
@@ -109,13 +109,13 @@ class TapeThicknessController extends Controller
 
     /**
      * Finds and displays a TapeThickness entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_tapethickness_show")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function showAction($id)
     {
@@ -137,9 +137,9 @@ class TapeThicknessController extends Controller
 
     /**
      * Displays a form to edit an existing TapeThickness entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}/edit", name="vocabularies_tapethickness_edit")
      * @Method("GET")
      * @Template()
@@ -186,10 +186,10 @@ class TapeThicknessController extends Controller
 
     /**
      * Edits an existing TapeThickness entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_tapethickness_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:TapeThickness:edit.html.twig")
@@ -227,8 +227,8 @@ class TapeThicknessController extends Controller
      * Deletes a TapeThickness entity.
      *
      * @param Request $request
-     * @param integer $id 
-     *  
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_tapethickness_delete")
      * @Method("DELETE")
      * @return redirect

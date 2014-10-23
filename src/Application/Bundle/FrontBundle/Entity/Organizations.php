@@ -521,8 +521,8 @@ class Organizations
     /**
      * Set dapartment name.
      *
-     * @param string $departmentName
-     *      *
+     * @param  string                                               $departmentName
+     *                                                                              *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function setDepartmentName($departmentName)

@@ -24,7 +24,7 @@ class ReelDiametersController extends Controller
      * @Route("/", name="vocabularies_reeldiameters")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function indexAction()
     {
@@ -39,13 +39,13 @@ class ReelDiametersController extends Controller
 
     /**
      * Creates a new ReelDiameters entity.
-     * 
-     * @param Request $request 
-     * 
+     *
+     * @param Request $request
+     *
      * @Route("/", name="vocabularies_reeldiameters_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:ReelDiameters:new.html.twig")
-     * @return array 
+     * @return array
      */
     public function createAction(Request $request)
     {
@@ -93,7 +93,7 @@ class ReelDiametersController extends Controller
      * @Route("/new", name="vocabularies_reeldiameters_new")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function newAction()
     {
@@ -108,13 +108,13 @@ class ReelDiametersController extends Controller
 
     /**
      * Finds and displays a ReelDiameters entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_reeldiameters_show")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function showAction($id)
     {
@@ -136,13 +136,13 @@ class ReelDiametersController extends Controller
 
     /**
      * Displays a form to edit an existing ReelDiameters entity.
-     * 
+     *
      * @param integer $id
-     * 
+     *
      * @Route("/{id}/edit", name="vocabularies_reeldiameters_edit")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function editAction($id)
     {
@@ -185,14 +185,14 @@ class ReelDiametersController extends Controller
 
     /**
      * Edits an existing ReelDiameters entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_reeldiameters_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:ReelDiameters:edit.html.twig")
-     * @return array 
+     * @return array
      */
     public function updateAction(Request $request, $id)
     {
@@ -224,13 +224,13 @@ class ReelDiametersController extends Controller
 
     /**
      * Deletes a ReelDiameters entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_reeldiameters_delete")
      * @Method("DELETE")
-     * @return array 
+     * @return array
      */
     public function deleteAction(Request $request, $id)
     {

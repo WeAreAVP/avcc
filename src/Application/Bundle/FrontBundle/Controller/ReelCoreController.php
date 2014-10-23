@@ -24,7 +24,7 @@ class ReelCoreController extends Controller
      * @Route("/", name="vocabularies_reelcore")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function indexAction()
     {
@@ -38,13 +38,13 @@ class ReelCoreController extends Controller
     }
     /**
      * Creates a new ReelCore entity.
-     * 
-     * @param Request $request 
-     * 
+     *
+     * @param Request $request
+     *
      * @Route("/", name="vocabularies_reelcore_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:ReelCore:new.html.twig")
-     * @return array 
+     * @return array
      */
     public function createAction(Request $request)
     {
@@ -91,7 +91,7 @@ class ReelCoreController extends Controller
      * @Route("/new", name="vocabularies_reelcore_new")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function newAction()
     {
@@ -106,9 +106,9 @@ class ReelCoreController extends Controller
 
     /**
      * Finds and displays a ReelCore entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_reelcore_show")
      * @Method("GET")
      * @Template()
@@ -134,13 +134,13 @@ class ReelCoreController extends Controller
 
     /**
      * Displays a form to edit an existing ReelCore entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}/edit", name="vocabularies_reelcore_edit")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function editAction($id)
     {
@@ -182,14 +182,14 @@ class ReelCoreController extends Controller
     }
     /**
      * Edits an existing ReelCore entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_reelcore_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:ReelCore:edit.html.twig")
-     * @return array 
+     * @return array
      */
     public function updateAction(Request $request, $id)
     {
@@ -219,13 +219,13 @@ class ReelCoreController extends Controller
     }
     /**
      * Deletes a ReelCore entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_reelcore_delete")
      * @Method("DELETE")
-     * @return array 
+     * @return array
      */
     public function deleteAction(Request $request, $id)
     {

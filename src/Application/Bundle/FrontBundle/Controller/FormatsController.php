@@ -36,12 +36,12 @@ class FormatsController extends Controller
             'entities' => $entities,
         );
     }
-    
+
     /**
      * Creates a new Formats entity.
-     * 
+     *
      * @param Request $request
-     * 
+     *
      * @Route("/", name="vocabularies_formats_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:Formats:new.html.twig")
@@ -108,9 +108,9 @@ class FormatsController extends Controller
 
     /**
      * Finds and displays a Formats entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_formats_show")
      * @Method("GET")
      * @Template()
@@ -136,13 +136,13 @@ class FormatsController extends Controller
 
     /**
      * Displays a form to edit an existing Formats entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}/edit", name="vocabularies_formats_edit")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function editAction($id)
     {
@@ -184,14 +184,14 @@ class FormatsController extends Controller
     }
     /**
      * Edits an existing Formats entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_formats_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:Formats:edit.html.twig")
-     * @return array 
+     * @return array
      */
     public function updateAction(Request $request, $id)
     {
@@ -222,10 +222,10 @@ class FormatsController extends Controller
     }
     /**
      * Deletes a Formats entity.
-     * 
+     *
      * @param Request $request
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_formats_delete")
      * @Method("DELETE")
      * @return redirect

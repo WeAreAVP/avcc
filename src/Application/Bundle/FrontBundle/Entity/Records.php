@@ -868,7 +868,7 @@ class Records
 
     /**
      * Get audio record
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\AudioRecords
      */
     public function getAudioRecord()
@@ -892,7 +892,7 @@ class Records
 
     /**
      * Get video record
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\VideoRecords
      */
     public function getVideoRecord()
@@ -916,7 +916,7 @@ class Records
 
     /**
      * Get file record
-     * 
+     *
      * @return \Application\Bundle\FrontBundle\Entity\FilmRecords
      */
     public function getFilmRecord()

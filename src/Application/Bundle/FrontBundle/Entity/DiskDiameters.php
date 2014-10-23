@@ -29,7 +29,7 @@ class DiskDiameters
      * @ORM\Column(name="name", type="string", length=50)
      * @Assert\NotBlank(message="Disk diameter name is required")
      */
-    private $name;    
+    private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="diskDiamaeterOrg")

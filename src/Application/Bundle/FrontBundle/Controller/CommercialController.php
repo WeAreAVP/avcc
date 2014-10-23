@@ -24,7 +24,7 @@ class CommercialController extends Controller
      * @Route("/", name="vocabularies_commercial")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function indexAction()
     {
@@ -39,13 +39,13 @@ class CommercialController extends Controller
 
     /**
      * Creates a new Commercial entity.
-     * 
-     * @param Request $request 
-     * 
+     *
+     * @param Request $request
+     *
      * @Route("/", name="vocabularies_commercial_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:Commercial:new.html.twig")
-     * @return array 
+     * @return array
      */
     public function createAction(Request $request)
     {
@@ -93,7 +93,7 @@ class CommercialController extends Controller
      * @Route("/new", name="vocabularies_commercial_new")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function newAction()
     {
@@ -109,12 +109,12 @@ class CommercialController extends Controller
     /**
      * Finds and displays a Commercial entity.
      *
-     * @param integer $id 
-     * 
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_commercial_show")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function showAction($id)
     {
@@ -136,9 +136,9 @@ class CommercialController extends Controller
 
     /**
      * Displays a form to edit an existing Commercial entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}/edit", name="vocabularies_commercial_edit")
      * @Method("GET")
      * @Template()
@@ -185,14 +185,14 @@ class CommercialController extends Controller
 
     /**
      * Edits an existing Commercial entity.
-     * 
-     * @param Request $request 
+     *
+     * @param Request $request
      * @param integer $id
-     * 
+     *
      * @Route("/{id}", name="vocabularies_commercial_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:Commercial:edit.html.twig")
-     * @return array 
+     * @return array
      */
     public function updateAction(Request $request, $id)
     {
@@ -225,13 +225,13 @@ class CommercialController extends Controller
     /**
      * Deletes a Commercial entity.
      *
-     * @param Request $request 
+     * @param Request $request
      * @param integer $id
-     *  
+     *
      * @Route("/{id}", name="vocabularies_commercial_delete")
      * @Method("DELETE")
      * @return redirect
-     * 
+     *
      */
     public function deleteAction(Request $request, $id)
     {

@@ -29,7 +29,7 @@ class ReelDiameters
      * @ORM\Column(name="name", type="string", length=50)
      * @Assert\NotBlank(message="Reel diameter name is required")
      */
-    private $name;    
+    private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="reelDiameterOrg")

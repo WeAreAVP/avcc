@@ -39,9 +39,9 @@ class AcidDetectionStripsController extends Controller
 
     /**
      * Creates a new AcidDetectionStrips entity.
-     * 
+     *
      * @param Request $request
-     * 
+     *
      * @Route("/", name="vocabularies_aciddetectionstrips_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:AcidDetectionStrips:new.html.twig")
@@ -108,14 +108,14 @@ class AcidDetectionStripsController extends Controller
 
     /**
      * Finds and displays a AcidDetectionStrips entity.
-     * 
+     *
      * @param integer $id
-     * 
+     *
      * @Route("/{id}", name="vocabularies_aciddetectionstrips_show")
      * @Method("GET")
      * @Template()
      * @return array
-     */    
+     */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -138,11 +138,11 @@ class AcidDetectionStripsController extends Controller
      * Displays a form to edit an existing AcidDetectionStrips entity.
      *
      * @param integer $id
-     * 
+     *
      * @Route("/{id}/edit", name="vocabularies_aciddetectionstrips_edit")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function editAction($id)
     {
@@ -185,10 +185,10 @@ class AcidDetectionStripsController extends Controller
 
     /**
      * Edits an existing AcidDetectionStrips entity.
-     * 
+     *
      * @param Request $request
-     * @param type $id
-     * 
+     * @param type    $id
+     *
      * @Route("/{id}", name="vocabularies_aciddetectionstrips_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:AcidDetectionStrips:edit.html.twig")
@@ -224,10 +224,10 @@ class AcidDetectionStripsController extends Controller
 
     /**
      * Deletes a AcidDetectionStrips entity.
-     * 
+     *
      * @param Request $request
-     * @param type $id
-     * 
+     * @param type    $id
+     *
      * @Route("/{id}", name="vocabularies_aciddetectionstrips_delete")
      * @Method("DELETE")
      * @return redirect redirect to list page

@@ -24,7 +24,7 @@ class CassetteSizesController extends Controller
      * @Route("/", name="vocabularies_cassettessizes")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function indexAction()
     {
@@ -39,9 +39,9 @@ class CassetteSizesController extends Controller
 
     /**
      * Creates a new CassetteSizes entity.
-     * 
+     *
      * @param Request $request
-     * 
+     *
      * @Route("/", name="vocabularies_cassettessizes_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:CassetteSizes:new.html.twig")
@@ -93,7 +93,7 @@ class CassetteSizesController extends Controller
      * @Route("/new", name="vocabularies_cassettessizes_new")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function newAction()
     {
@@ -108,13 +108,13 @@ class CassetteSizesController extends Controller
 
     /**
      * Finds and displays a CassetteSizes entity.
-     * 
-     * @param integer $id 
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_cassettessizes_show")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function showAction($id)
     {
@@ -136,11 +136,11 @@ class CassetteSizesController extends Controller
 
     /**
      * Displays a form to edit an existing CassetteSizes entity.
-     * @param integer $id 
+     * @param  integer $id
      * @Route("/{id}/edit", name="vocabularies_cassettessizes_edit")
      * @Method("GET")
      * @Template()
-     * @return array 
+     * @return array
      */
     public function editAction($id)
     {
@@ -183,10 +183,10 @@ class CassetteSizesController extends Controller
 
     /**
      * Edits an existing CassetteSizes entity.
-     * 
+     *
      * @param Request $request
-     * @param type $id
-     * 
+     * @param type    $id
+     *
      * @Route("/{id}", name="vocabularies_cassettessizes_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:CassetteSizes:edit.html.twig")
@@ -222,10 +222,10 @@ class CassetteSizesController extends Controller
 
     /**
      * Deletes a CassetteSizes entity.
-     * 
+     *
      * @param Request $request
-     * @param type $id
-     * 
+     * @param type    $id
+     *
      * @Route("/{id}", name="vocabularies_cassettessizes_delete")
      * @Method("DELETE")
      * @return redirect

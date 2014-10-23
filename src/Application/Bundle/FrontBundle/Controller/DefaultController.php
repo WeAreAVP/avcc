@@ -19,7 +19,7 @@ class DefaultController extends Controller
 {
     /**
      *
-     * @var string 
+     * @var string
      */
     static $DEFAULT_ROLE='ROLE_ADMIN';
     /**
