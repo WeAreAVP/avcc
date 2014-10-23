@@ -164,7 +164,6 @@ class Formats
 
     /**
      * Add base
-     *
      * @param \Application\Bundle\FrontBundle\Entity\Bases $b
      *
      */
@@ -179,7 +178,6 @@ class Formats
 
     /**
      * Remove base
-     *
      * @param \Application\Bundle\FrontBundle\Entity\Bases $b
      *
      */
@@ -190,7 +188,6 @@ class Formats
 
     /**
      * Add recording speed
-     *
      * @param \Application\Bundle\FrontBundle\Entity\RecordingSpeed $rs
      *
      */
@@ -205,7 +202,6 @@ class Formats
 
     /**
      * Remove recording speed
-     *
      * @param \Application\Bundle\FrontBundle\Entity\RecordingSpeed $rs
      *
      */
@@ -216,7 +212,6 @@ class Formats
 
      /**
      * Add format versions
-     *
      * @param \Application\Bundle\FrontBundle\Entity\FormatVersions $fv
      *
      */
@@ -231,7 +226,6 @@ class Formats
 
     /**
      * Remove format versions
-     *
      * @param \Application\Bundle\FrontBundle\Entity\FormatVersions $fv
      *
      */
