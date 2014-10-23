@@ -24,6 +24,7 @@ class NoiceReductionController extends Controller
      * @Route("/", name="vocabularies_noicereduction")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function indexAction()
     {
@@ -37,10 +38,14 @@ class NoiceReductionController extends Controller
     }
     /**
      * Creates a new NoiceReduction entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     * 
      * @Route("/", name="vocabularies_noicereduction_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:NoiceReduction:new.html.twig")
+     * @return array 
      */
     public function createAction(Request $request)
     {
@@ -87,6 +92,7 @@ class NoiceReductionController extends Controller
      * @Route("/new", name="vocabularies_noicereduction_new")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function newAction()
     {
@@ -101,10 +107,13 @@ class NoiceReductionController extends Controller
 
     /**
      * Finds and displays a NoiceReduction entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_noicereduction_show")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function showAction($id)
     {
@@ -126,10 +135,13 @@ class NoiceReductionController extends Controller
 
     /**
      * Displays a form to edit an existing NoiceReduction entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}/edit", name="vocabularies_noicereduction_edit")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function editAction($id)
     {
@@ -171,10 +183,14 @@ class NoiceReductionController extends Controller
     }
     /**
      * Edits an existing NoiceReduction entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_noicereduction_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:NoiceReduction:edit.html.twig")
+     * @return array 
      */
     public function updateAction(Request $request, $id)
     {
@@ -204,9 +220,13 @@ class NoiceReductionController extends Controller
     }
     /**
      * Deletes a NoiceReduction entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_noicereduction_delete")
      * @Method("DELETE")
+     * @return redirect 
      */
     public function deleteAction(Request $request, $id)
     {

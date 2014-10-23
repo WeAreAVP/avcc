@@ -17,7 +17,10 @@ use Application\Bundle\FrontBundle\Form\Type\RegistrationFormType;
  */
 class DefaultController extends Controller
 {
-
+    /**
+     *
+     * @var string 
+     */
     static $DEFAULT_ROLE='ROLE_ADMIN';
     /**
      * calling parent bundle

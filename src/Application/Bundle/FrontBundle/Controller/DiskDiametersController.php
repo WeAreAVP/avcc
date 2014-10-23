@@ -24,6 +24,7 @@ class DiskDiametersController extends Controller
      * @Route("/", name="vocabularies_diskdiameters")
      * @Method("GET")
      * @Template()
+     * @return array
      */
     public function indexAction()
     {
@@ -38,10 +39,13 @@ class DiskDiametersController extends Controller
 
     /**
      * Creates a new DiskDiameters entity.
-     *
+     * 
+     * @param Request $request 
+     * 
      * @Route("/", name="vocabularies_diskdiameters_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:DiskDiameters:new.html.twig")
+     * @return array
      */
     public function createAction(Request $request)
     {
@@ -50,18 +54,9 @@ class DiskDiametersController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $posted_value = $this->get('request')->request->get('application_bundle_frontbundle_diskdiameters');
-
             $em = $this->getDoctrine()->getManager();
-            $f = $form->getData();
-            foreach ($posted_value['diskFormat'] as $key => $value) {
-                $entity = new DiskDiameters();
-                $entity->setName($f->getName());
-                $format = $this->getDoctrine()->getRepository('ApplicationFrontBundle:Formats')->find($value);
-                $entity->setDiskFormat($format);
-                $em->persist($entity);
-                $em->flush();
-            }
+            $em->persist($entity);
+            $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Disk diameter added succesfully.');
 
             return $this->redirect($this->generateUrl('vocabularies_diskdiameters'));
@@ -98,6 +93,7 @@ class DiskDiametersController extends Controller
      * @Route("/new", name="vocabularies_diskdiameters_new")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function newAction()
     {
@@ -112,10 +108,11 @@ class DiskDiametersController extends Controller
 
     /**
      * Finds and displays a DiskDiameters entity.
-     *
+     * @param integer $id 
      * @Route("/{id}", name="vocabularies_diskdiameters_show")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function showAction($id)
     {
@@ -137,10 +134,13 @@ class DiskDiametersController extends Controller
 
     /**
      * Displays a form to edit an existing DiskDiameters entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}/edit", name="vocabularies_diskdiameters_edit")
      * @Method("GET")
      * @Template()
+     * @return array
      */
     public function editAction($id)
     {
@@ -183,10 +183,14 @@ class DiskDiametersController extends Controller
 
     /**
      * Edits an existing DiskDiameters entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_diskdiameters_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:DiskDiameters:edit.html.twig")
+     * @return array 
      */
     public function updateAction(Request $request, $id)
     {
@@ -218,9 +222,13 @@ class DiskDiametersController extends Controller
 
     /**
      * Deletes a DiskDiameters entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_diskdiameters_delete")
      * @Method("DELETE")
+     * @return redirect
      */
     public function deleteAction(Request $request, $id)
     {

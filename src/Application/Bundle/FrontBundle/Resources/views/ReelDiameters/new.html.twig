@@ -18,13 +18,6 @@
                     <span class="has-error text-danger" for="{{ form.name.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
             </div>
-            <label>Formats</label>
-            <div class="input-control select" data-role="input-control">
-                {{ form_widget(form.reelFormat, {attr: {class:'size4 formats_dd',id:'formats',required:'required'} }) }}
-                {% for errorItem in form.reelFormat.vars.errors %}
-                    <span class="has-error text-danger" for="{{ form.reelFormat.vars.id }}">{{ errorItem.message }}</span>
-                {% endfor %}
-            </div>
             {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
 			or
 			<a class="button"   href="{{ path('vocabularies_reeldiameters') }}">Cancel</a>

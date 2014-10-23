@@ -48,9 +48,6 @@ class OrganizationsController extends Controller
      * @Route("/", name="organizations_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:Organizations:new.html.twig")
-     *
-     *
-     *
      * @return array
      */
     public function createAction(Request $request)

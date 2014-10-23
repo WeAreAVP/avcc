@@ -24,6 +24,7 @@ class BasesController extends Controller
      * @Route("/", name="vocabularies_bases")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function indexAction()
     {
@@ -38,10 +39,13 @@ class BasesController extends Controller
 
     /**
      * Creates a new Bases entity.
-     *
+     * 
+     * @param Request $request 
+     * 
      * @Route("/", name="vocabularies_bases_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:Bases:new.html.twig")
+     * @return array 
      */
     public function createAction(Request $request)
     {
@@ -98,6 +102,7 @@ class BasesController extends Controller
      * @Route("/new", name="vocabularies_bases_new")
      * @Method("GET")
      * @Template()
+     * @return array
      */
     public function newAction()
     {
@@ -112,10 +117,13 @@ class BasesController extends Controller
 
     /**
      * Finds and displays a Bases entity.
-     *
+     * 
+     * @param integer $id
+     * 
      * @Route("/{id}", name="vocabularies_bases_show")
      * @Method("GET")
      * @Template()
+     * @return array
      */
     public function showAction($id)
     {
@@ -137,10 +145,13 @@ class BasesController extends Controller
 
     /**
      * Displays a form to edit an existing Bases entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}/edit", name="vocabularies_bases_edit")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function editAction($id)
     {
@@ -183,10 +194,14 @@ class BasesController extends Controller
 
     /**
      * Edits an existing Bases entity.
-     *
+     * 
+     * @param Request $request
+     * @param type $id 
+     * 
      * @Route("/{id}", name="vocabularies_bases_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:Bases:edit.html.twig")
+     * @return array
      */
     public function updateAction(Request $request, $id)
     {
@@ -218,9 +233,13 @@ class BasesController extends Controller
 
     /**
      * Deletes a Bases entity.
-     *
+     * 
+     * @param Request $request
+     * @param type $id 
+     * 
      * @Route("/{id}", name="vocabularies_bases_delete")
      * @Method("DELETE")
+     * @return redirect 
      */
     public function deleteAction(Request $request, $id)
     {

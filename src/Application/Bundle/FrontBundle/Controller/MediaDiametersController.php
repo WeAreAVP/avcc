@@ -24,6 +24,7 @@ class MediaDiametersController extends Controller
      * @Route("/", name="vocabularies_mediadiameters")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function indexAction()
     {
@@ -38,10 +39,13 @@ class MediaDiametersController extends Controller
 
     /**
      * Creates a new MediaDiameters entity.
-     *
+     * 
+     * @param Request $request
+     * 
      * @Route("/", name="vocabularies_mediadiameters_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:MediaDiameters:new.html.twig")
+     * @return array
      */
     public function createAction(Request $request)
     {
@@ -50,18 +54,9 @@ class MediaDiametersController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $posted_value = $this->get('request')->request->get('application_bundle_frontbundle_mediadiameters');
-
             $em = $this->getDoctrine()->getManager();
-            $f = $form->getData();
-            foreach ($posted_value['mediaDiameterFormat'] as $key => $value) {
-                $entity = new MediaDiameters();
-                $entity->setName($f->getName());
-                $format = $this->getDoctrine()->getRepository('ApplicationFrontBundle:Formats')->find($value);
-                $entity->setMediaDiameterFormat($format);
-                $em->persist($entity);
-                $em->flush();
-            }
+            $em->persist($entity);
+            $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Media diameter added succesfully.');
 
             return $this->redirect($this->generateUrl('vocabularies_mediadiameters'));
@@ -98,6 +93,7 @@ class MediaDiametersController extends Controller
      * @Route("/new", name="vocabularies_mediadiameters_new")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function newAction()
     {
@@ -112,10 +108,13 @@ class MediaDiametersController extends Controller
 
     /**
      * Finds and displays a MediaDiameters entity.
-     *
+     * 
+     * @param integer $id
+     * 
      * @Route("/{id}", name="vocabularies_mediadiameters_show")
      * @Method("GET")
      * @Template()
+     * @return array
      */
     public function showAction($id)
     {
@@ -137,10 +136,13 @@ class MediaDiametersController extends Controller
 
     /**
      * Displays a form to edit an existing MediaDiameters entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}/edit", name="vocabularies_mediadiameters_edit")
      * @Method("GET")
      * @Template()
+     * @return array
      */
     public function editAction($id)
     {
@@ -183,10 +185,14 @@ class MediaDiametersController extends Controller
 
     /**
      * Edits an existing MediaDiameters entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_mediadiameters_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:MediaDiameters:edit.html.twig")
+     * @return array 
      */
     public function updateAction(Request $request, $id)
     {
@@ -218,9 +224,13 @@ class MediaDiametersController extends Controller
 
     /**
      * Deletes a MediaDiameters entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_mediadiameters_delete")
      * @Method("DELETE")
+     * @return redirect 
      */
     public function deleteAction(Request $request, $id)
     {

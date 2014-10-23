@@ -16,29 +16,10 @@ class DiskDiametersType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $isNew = true;
-        if ($options['data']->getId())
-            $isNew = false;
-        if ($isNew) {
             $builder
                     ->add('name')
-                    ->add('diskFormat', 'entity', array(
-                        'class' => 'ApplicationFrontBundle:Formats',
-                        'query_builder' => function (EntityRepository $er) {
-                            return $er->createQueryBuilder('f')
-                                    ->orderBy('f.name', 'ASC');
-                        },
-                        'multiple' => true,
-                        'mapped' => false
-                    ))
-            ;
-        } else {
-            $builder
-                    ->add('name')
-                    ->add('diskFormat')
 //            ->add('organization')
             ;
-        }
     }
 
     /**

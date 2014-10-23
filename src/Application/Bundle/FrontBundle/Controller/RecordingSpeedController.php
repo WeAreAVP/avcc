@@ -24,6 +24,7 @@ class RecordingSpeedController extends Controller
      * @Route("/", name="vocabularies_recordingspeed")
      * @Method("GET")
      * @Template()
+     * @return array
      */
     public function indexAction()
     {
@@ -35,12 +36,16 @@ class RecordingSpeedController extends Controller
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new RecordingSpeed entity.
-     *
+     * 
+     * @param Request $request 
+     * 
      * @Route("/", name="vocabularies_recordingspeed_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:RecordingSpeed:new.html.twig")
+     * @return array 
      */
     public function createAction(Request $request)
     {
@@ -53,21 +58,25 @@ class RecordingSpeedController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $f = $form->getData();
-            foreach ($posted_value['recSpeedFormat'] as $key => $value) {
-                $entity = new RecordingSpeed();
-                $entity->setName($f->getName());
-                $format = $this->getDoctrine()->getRepository('ApplicationFrontBundle:Formats')->find($value);
-                $entity->setRecSpeedFormat($format);
+            if (isset($posted_value['recSpeedFormat'])) {
+                foreach ($posted_value['recSpeedFormat'] as $key => $value) {
+                    $entity = new RecordingSpeed();
+                    $entity->setName($f->getName());
+                    $format = $this->getDoctrine()->getRepository('ApplicationFrontBundle:Formats')->find($value);
+                    $entity->setRecSpeedFormat($format);
+                    $em->persist($entity);
+                    $em->flush();
+                }
+            } else {
                 $em->persist($entity);
                 $em->flush();
             }
-
             return $this->redirect($this->generateUrl('vocabularies_recordingspeed'));
         }
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -92,28 +101,32 @@ class RecordingSpeedController extends Controller
 
     /**
      * Displays a form to create a new RecordingSpeed entity.
-     *
+     * 
      * @Route("/new", name="vocabularies_recordingspeed_new")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function newAction()
     {
         $entity = new RecordingSpeed();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
     /**
      * Finds and displays a RecordingSpeed entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_recordingspeed_show")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function showAction($id)
     {
@@ -128,17 +141,20 @@ class RecordingSpeedController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
      * Displays a form to edit an existing RecordingSpeed entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}/edit", name="vocabularies_recordingspeed_edit")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function editAction($id)
     {
@@ -154,19 +170,19 @@ class RecordingSpeedController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-    * Creates a form to edit a RecordingSpeed entity.
-    *
-    * @param RecordingSpeed $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a RecordingSpeed entity.
+     *
+     * @param RecordingSpeed $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(RecordingSpeed $entity)
     {
         $form = $this->createForm(new RecordingSpeedType(), $entity, array(
@@ -178,12 +194,17 @@ class RecordingSpeedController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing RecordingSpeed entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_recordingspeed_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:RecordingSpeed:edit.html.twig")
+     * @return array
      */
     public function updateAction(Request $request, $id)
     {
@@ -206,16 +227,21 @@ class RecordingSpeedController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a RecordingSpeed entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_recordingspeed_delete")
      * @Method("DELETE")
+     * @return redirect 
      */
     public function deleteAction(Request $request, $id)
     {
@@ -247,10 +273,11 @@ class RecordingSpeedController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('vocabularies_recordingspeed_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
+                        ->setAction($this->generateUrl('vocabularies_recordingspeed_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm()
         ;
     }
+
 }

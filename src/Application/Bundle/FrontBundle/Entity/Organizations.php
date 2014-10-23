@@ -326,6 +326,9 @@ class Organizations
      */
     private $trackTypeOrg;
 
+    /**
+     * Organization construct
+     */
     public function __construct()
     {
         $this->acidDetectionStripOrg = new ArrayCollection();
@@ -504,7 +507,6 @@ class Organizations
 
     /**
      * Set name.
-     *
      * @param string $name
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
@@ -520,7 +522,7 @@ class Organizations
      * Set dapartment name.
      *
      * @param string $departmentName
-     *
+     *      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function setDepartmentName($departmentName)

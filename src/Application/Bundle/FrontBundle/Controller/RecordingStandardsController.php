@@ -24,6 +24,7 @@ class RecordingStandardsController extends Controller
      * @Route("/", name="vocabularies_recordingstandards")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function indexAction()
     {
@@ -37,10 +38,13 @@ class RecordingStandardsController extends Controller
     }
     /**
      * Creates a new RecordingStandards entity.
-     *
+     * 
+     * @param Request $request 
+     * 
      * @Route("/", name="vocabularies_recordingstandards_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:RecordingStandards:new.html.twig")
+     * @return array 
      */
     public function createAction(Request $request)
     {
@@ -87,6 +91,7 @@ class RecordingStandardsController extends Controller
      * @Route("/new", name="vocabularies_recordingstandards_new")
      * @Method("GET")
      * @Template()
+     * @return array
      */
     public function newAction()
     {
@@ -101,10 +106,13 @@ class RecordingStandardsController extends Controller
 
     /**
      * Finds and displays a RecordingStandards entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_recordingstandards_show")
      * @Method("GET")
      * @Template()
+     * @return array
      */
     public function showAction($id)
     {
@@ -126,10 +134,13 @@ class RecordingStandardsController extends Controller
 
     /**
      * Displays a form to edit an existing RecordingStandards entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}/edit", name="vocabularies_recordingstandards_edit")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function editAction($id)
     {
@@ -171,10 +182,14 @@ class RecordingStandardsController extends Controller
     }
     /**
      * Edits an existing RecordingStandards entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_recordingstandards_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:RecordingStandards:edit.html.twig")
+     * @return array
      */
     public function updateAction(Request $request, $id)
     {
@@ -204,9 +219,13 @@ class RecordingStandardsController extends Controller
     }
     /**
      * Deletes a RecordingStandards entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_recordingstandards_delete")
      * @Method("DELETE")
+     * @return arra 
      */
     public function deleteAction(Request $request, $id)
     {

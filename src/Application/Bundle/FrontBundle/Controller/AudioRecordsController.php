@@ -24,6 +24,7 @@ class AudioRecordsController extends Controller
      * @Route("/", name="record")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function indexAction()
     {
@@ -37,10 +38,13 @@ class AudioRecordsController extends Controller
     }
     /**
      * Creates a new AudioRecords entity.
-     *
+     * 
+     * @param Request $request
+     * 
      * @Route("/", name="record_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:AudioRecords:new.html.twig")
+     * @return array
      */
     public function createAction(Request $request)
     {
@@ -87,6 +91,7 @@ class AudioRecordsController extends Controller
      * @Route("/new", name="record_new")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function newAction()
     {
@@ -102,10 +107,13 @@ class AudioRecordsController extends Controller
 
     /**
      * Finds and displays a AudioRecords entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="record_show")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function showAction($id)
     {
@@ -127,10 +135,13 @@ class AudioRecordsController extends Controller
 
     /**
      * Displays a form to edit an existing AudioRecords entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}/edit", name="record_edit")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function editAction($id)
     {
@@ -172,10 +183,14 @@ class AudioRecordsController extends Controller
     }
     /**
      * Edits an existing AudioRecords entity.
-     *
+     * 
+     * @param Request $request
+     * @param type $id
+     * 
      * @Route("/{id}", name="record_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:AudioRecords:edit.html.twig")
+     * @return array 
      */
     public function updateAction(Request $request, $id)
     {
@@ -205,9 +220,13 @@ class AudioRecordsController extends Controller
     }
     /**
      * Deletes a AudioRecords entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id
+     * 
      * @Route("/{id}", name="record_delete")
      * @Method("DELETE")
+     * @return redirect
      */
     public function deleteAction(Request $request, $id)
     {
@@ -242,7 +261,6 @@ class AudioRecordsController extends Controller
             ->setAction($this->generateUrl('record_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

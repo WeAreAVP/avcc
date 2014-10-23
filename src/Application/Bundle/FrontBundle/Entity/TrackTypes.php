@@ -32,19 +32,6 @@ class TrackTypes
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Formats", fetch="EAGER", inversedBy="trackType")
-     * @ORM\JoinColumn(
-     *     name="format_id",
-     *     referencedColumnName="id",
-     *     nullable=true,
-     *     onDelete="SET NULL"
-     * )
-     * @var integer
-     *
-     */
-    private $trackTypeFormat;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="trackTypeOrg")
      * @ORM\JoinColumn(
      *     name="organization_id",
@@ -98,30 +85,6 @@ class TrackTypes
         $this->name = $name;
 
         return $this;
-    }
-
-    /**
-     * Set base formats
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Formats $trackTypeFormat
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\TrackTypes
-     */
-    public function setTrackTypeFormat(\Application\Bundle\FrontBundle\Entity\Formats $trackTypeFormat)
-    {
-        $this->trackTypeFormat = $trackTypeFormat;
-
-        return $this;
-    }
-
-    /**
-     * Get base formats
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Formats
-     */
-    public function getTrackTypeFormat()
-    {
-        return $this->trackTypeFormat;
     }
 
     /**

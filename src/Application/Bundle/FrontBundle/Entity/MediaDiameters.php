@@ -32,19 +32,6 @@ class MediaDiameters
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Formats", fetch="EAGER", inversedBy="mediaDiameter")
-     * @ORM\JoinColumn(
-     *     name="format_id",
-     *     referencedColumnName="id",
-     *     nullable=true,
-     *     onDelete="SET NULL"
-     * )
-     * @var integer
-     *
-     */
-    private $mediaDiameterFormat;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="mediaDiameterOrg")
      * @ORM\JoinColumn(
      *     name="organization_id",
@@ -98,30 +85,6 @@ class MediaDiameters
         $this->name = $name;
 
         return $this;
-    }
-
-    /**
-     * Set media diameter formats
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Formats $mediaDiameterFormat
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\MediaDiameters
-     */
-    public function setMediaDiameterFormat(\Application\Bundle\FrontBundle\Entity\Formats $mediaDiameterFormat)
-    {
-        $this->mediaDiameterFormat = $mediaDiameterFormat;
-
-        return $this;
-    }
-
-    /**
-     * Get media diameter formats
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Formats
-     */
-    public function getMediaDiameterFormat()
-    {
-        return $this->mediaDiameterFormat;
     }
 
     /**

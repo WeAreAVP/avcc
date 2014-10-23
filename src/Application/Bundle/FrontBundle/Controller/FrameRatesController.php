@@ -24,6 +24,7 @@ class FrameRatesController extends Controller
      * @Route("/", name="vocabularies_framerates")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function indexAction()
     {
@@ -38,10 +39,13 @@ class FrameRatesController extends Controller
 
     /**
      * Creates a new FrameRates entity.
-     *
+     * 
+     * @param Request $request
+     * 
      * @Route("/", name="vocabularies_framerates_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:FrameRates:new.html.twig")
+     * @return array 
      */
     public function createAction(Request $request)
     {
@@ -89,6 +93,7 @@ class FrameRatesController extends Controller
      * @Route("/new", name="vocabularies_framerates_new")
      * @Method("GET")
      * @Template()
+     * @return array
      */
     public function newAction()
     {
@@ -103,10 +108,13 @@ class FrameRatesController extends Controller
 
     /**
      * Finds and displays a FrameRates entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_framerates_show")
      * @Method("GET")
      * @Template()
+     * @return array
      */
     public function showAction($id)
     {
@@ -128,10 +136,13 @@ class FrameRatesController extends Controller
 
     /**
      * Displays a form to edit an existing FrameRates entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}/edit", name="vocabularies_framerates_edit")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function editAction($id)
     {
@@ -174,10 +185,14 @@ class FrameRatesController extends Controller
 
     /**
      * Edits an existing FrameRates entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_framerates_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:FrameRates:edit.html.twig")
+     * @return arra 
      */
     public function updateAction(Request $request, $id)
     {
@@ -209,9 +224,13 @@ class FrameRatesController extends Controller
 
     /**
      * Deletes a FrameRates entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_framerates_delete")
      * @Method("DELETE")
+     * @return redirect 
      */
     public function deleteAction(Request $request, $id)
     {

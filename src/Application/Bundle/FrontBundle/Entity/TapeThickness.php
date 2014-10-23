@@ -32,19 +32,6 @@ class TapeThickness
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Formats", fetch="EAGER", inversedBy="tapeThickness")
-     * @ORM\JoinColumn(
-     *     name="format_id",
-     *     referencedColumnName="id",
-     *     nullable=true,
-     *     onDelete="SET NULL"
-     * )
-     * @var integer
-     *
-     */
-    private $tapeThicknessFormat;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="tapeThicknessOrg")
      * @ORM\JoinColumn(
      *     name="organization_id",
@@ -98,30 +85,6 @@ class TapeThickness
         $this->name = $name;
 
         return $this;
-    }
-
-    /**
-     * Set base formats
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Formats $tapeThicknessFormat
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\TapeThickness
-     */
-    public function setTapeThicknessFormat(\Application\Bundle\FrontBundle\Entity\Formats $tapeThicknessFormat)
-    {
-        $this->tapeThicknessFormat = $tapeThicknessFormat;
-
-        return $this;
-    }
-
-    /**
-     * Get base formats
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Formats
-     */
-    public function getTapeThicknessFormat()
-    {
-        return $this->tapeThicknessFormat;
     }
 
     /**

@@ -12,7 +12,6 @@
                 <tr>
                     <th>Id</th>
                     <th>Name</th>
-                    <th>Formats</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -21,7 +20,6 @@
                     <tr>
                         <td><a href="{{ path('vocabularies_reeldiameters_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                         <td>{{ entity.name }}</td>
-                        <td>{{ entity.reelFormat }}</td>
                         <td class="text-center">
                             <a class="icon-pencil" title="Edit" href="{{ path('vocabularies_reeldiameters_edit', { 'id': entity.id }) }}"></a> |
                             <a class="icon-remove" title="Delete" href="{{ path('vocabularies_reeldiameters_delete', { 'id': entity.id }) }}"></a>

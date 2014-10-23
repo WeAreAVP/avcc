@@ -24,6 +24,7 @@ class TapeThicknessController extends Controller
      * @Route("/", name="vocabularies_tapethickness")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function indexAction()
     {
@@ -38,10 +39,13 @@ class TapeThicknessController extends Controller
 
     /**
      * Creates a new TapeThickness entity.
-     *
+     * 
+     * @param Request $request Description
+     * 
      * @Route("/", name="vocabularies_tapethickness_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:TapeThickness:new.html.twig")
+     * @return array
      */
     public function createAction(Request $request)
     {
@@ -50,18 +54,10 @@ class TapeThicknessController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $posted_value = $this->get('request')->request->get('application_bundle_frontbundle_tapethickness');
-
             $em = $this->getDoctrine()->getManager();
-            $f = $form->getData();
-            foreach ($posted_value['tapeThicknessFormat'] as $key => $value) {
-                $entity = new TapeThickness();
-                $entity->setName($f->getName());
-                $format = $this->getDoctrine()->getRepository('ApplicationFrontBundle:Formats')->find($value);
-                $entity->setTapeThicknessFormat($format);
-                $em->persist($entity);
-                $em->flush();
-            }
+            $em->persist($entity);
+            $em->flush();
+
             $this->get('session')->getFlashBag()->add('success', 'Tape thickness added succesfully.');
 
             return $this->redirect($this->generateUrl('vocabularies_tapethickness'));
@@ -98,6 +94,7 @@ class TapeThicknessController extends Controller
      * @Route("/new", name="vocabularies_tapethickness_new")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function newAction()
     {
@@ -112,10 +109,13 @@ class TapeThicknessController extends Controller
 
     /**
      * Finds and displays a TapeThickness entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_tapethickness_show")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function showAction($id)
     {
@@ -137,10 +137,13 @@ class TapeThicknessController extends Controller
 
     /**
      * Displays a form to edit an existing TapeThickness entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}/edit", name="vocabularies_tapethickness_edit")
      * @Method("GET")
      * @Template()
+     * @return array
      */
     public function editAction($id)
     {
@@ -183,10 +186,14 @@ class TapeThicknessController extends Controller
 
     /**
      * Edits an existing TapeThickness entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_tapethickness_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:TapeThickness:edit.html.twig")
+     * @return array
      */
     public function updateAction(Request $request, $id)
     {
@@ -219,8 +226,12 @@ class TapeThicknessController extends Controller
     /**
      * Deletes a TapeThickness entity.
      *
+     * @param Request $request
+     * @param integer $id 
+     *  
      * @Route("/{id}", name="vocabularies_tapethickness_delete")
      * @Method("DELETE")
+     * @return redirect
      */
     public function deleteAction(Request $request, $id)
     {

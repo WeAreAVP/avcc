@@ -41,7 +41,10 @@ class MediaTypes
      * @ORM\OrderBy({"id"="ASC"})
      */
     private $formats;
-
+    
+    /**
+     * Media types construct
+     */
     public function __construct()
     {
         $this->formats = new ArrayCollection();
@@ -94,8 +97,7 @@ class MediaTypes
     /**
      * Add format
      *
-     * @param \Application\Bundle\FrontBundle\Entity\Formats $f
-     *
+     * @param \Application\Bundle\FrontBundle\Entity\Formats $f     *
      */
     public function addFormat(Formats $f)
     {
@@ -109,8 +111,7 @@ class MediaTypes
     /**
      * Remove format
      *
-     * @param \Application\Bundle\FrontBundle\Entity\Formats $f
-     *
+     * @param \Application\Bundle\FrontBundle\Entity\Formats $f     *
      */
     public function removeFormat(Formats $f)
     {

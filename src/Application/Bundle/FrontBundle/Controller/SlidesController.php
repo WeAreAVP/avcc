@@ -24,6 +24,7 @@ class SlidesController extends Controller
      * @Route("/", name="vocabularies_slides")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function indexAction()
     {
@@ -37,10 +38,13 @@ class SlidesController extends Controller
     }
     /**
      * Creates a new Slides entity.
-     *
+     * 
+     * @param Request $request 
+     * 
      * @Route("/", name="vocabularies_slides_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:Slides:new.html.twig")
+     * @return array 
      */
     public function createAction(Request $request)
     {
@@ -87,6 +91,7 @@ class SlidesController extends Controller
      * @Route("/new", name="vocabularies_slides_new")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function newAction()
     {
@@ -101,10 +106,13 @@ class SlidesController extends Controller
 
     /**
      * Finds and displays a Slides entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_slides_show")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function showAction($id)
     {
@@ -126,10 +134,13 @@ class SlidesController extends Controller
 
     /**
      * Displays a form to edit an existing Slides entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}/edit", name="vocabularies_slides_edit")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function editAction($id)
     {
@@ -171,10 +182,14 @@ class SlidesController extends Controller
     }
     /**
      * Edits an existing Slides entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     *  
      * @Route("/{id}", name="vocabularies_slides_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:Slides:edit.html.twig")
+     * @return array 
      */
     public function updateAction(Request $request, $id)
     {
@@ -204,9 +219,13 @@ class SlidesController extends Controller
     }
     /**
      * Deletes a Slides entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_slides_delete")
      * @Method("DELETE")
+     * @return redirect 
      */
     public function deleteAction(Request $request, $id)
     {

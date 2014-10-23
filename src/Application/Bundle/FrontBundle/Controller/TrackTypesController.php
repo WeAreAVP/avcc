@@ -24,6 +24,7 @@ class TrackTypesController extends Controller
      * @Route("/", name="vocabularies_tracktypes")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function indexAction()
     {
@@ -38,10 +39,13 @@ class TrackTypesController extends Controller
 
     /**
      * Creates a new TrackTypes entity.
-     *
+     * 
+     * @param Request $request 
+     * 
      * @Route("/", name="vocabularies_tracktypes_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:TrackTypes:new.html.twig")
+     * @return array 
      */
     public function createAction(Request $request)
     {
@@ -50,18 +54,10 @@ class TrackTypesController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $posted_value = $this->get('request')->request->get('application_bundle_frontbundle_tracktypes');
 
             $em = $this->getDoctrine()->getManager();
-            $f = $form->getData();
-            foreach ($posted_value['trackTypeFormat'] as $key => $value) {
-                $entity = new TrackTypes();
-                $entity->setName($f->getName());
-                $format = $this->getDoctrine()->getRepository('ApplicationFrontBundle:Formats')->find($value);
-                $entity->setTrackTypeFormat($format);
-                $em->persist($entity);
-                $em->flush();
-            }
+            $em->persist($entity);
+            $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Track type added succesfully.');
 
             return $this->redirect($this->generateUrl('vocabularies_tracktypes'));
@@ -98,6 +94,7 @@ class TrackTypesController extends Controller
      * @Route("/new", name="vocabularies_tracktypes_new")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function newAction()
     {
@@ -112,10 +109,13 @@ class TrackTypesController extends Controller
 
     /**
      * Finds and displays a TrackTypes entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_tracktypes_show")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function showAction($id)
     {
@@ -137,10 +137,11 @@ class TrackTypesController extends Controller
 
     /**
      * Displays a form to edit an existing TrackTypes entity.
-     *
+     * @param integer $id 
      * @Route("/{id}/edit", name="vocabularies_tracktypes_edit")
      * @Method("GET")
      * @Template()
+     * @return array
      */
     public function editAction($id)
     {
@@ -183,10 +184,14 @@ class TrackTypesController extends Controller
 
     /**
      * Edits an existing TrackTypes entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     *  
      * @Route("/{id}", name="vocabularies_tracktypes_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:TrackTypes:edit.html.twig")
+     * @return array
      */
     public function updateAction(Request $request, $id)
     {
@@ -218,9 +223,13 @@ class TrackTypesController extends Controller
 
     /**
      * Deletes a TrackTypes entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_tracktypes_delete")
      * @Method("DELETE")
+     * @return array 
      */
     public function deleteAction(Request $request, $id)
     {

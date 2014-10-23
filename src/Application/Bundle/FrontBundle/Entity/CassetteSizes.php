@@ -32,19 +32,6 @@ class CassetteSizes
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Formats", fetch="EAGER", inversedBy="cassetteSize")
-     * @ORM\JoinColumn(
-     *     name="format_id",
-     *     referencedColumnName="id",
-     *     nullable=true,
-     *     onDelete="SET NULL"
-     * )
-     * @var integer
-     *
-     */
-    private $cassetteSizeFormat;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="cassetteOrg")
      * @ORM\JoinColumn(
      *     name="organization_id",
@@ -98,30 +85,6 @@ class CassetteSizes
         $this->name = $name;
 
         return $this;
-    }
-
-    /**
-     * Set base formats
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Formats $cassetteSizeFormat
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\CassetteSizes
-     */
-    public function setCassetteSizeFormat(\Application\Bundle\FrontBundle\Entity\Formats $cassetteSizeFormat)
-    {
-        $this->cassetteSizeFormat = $cassetteSizeFormat;
-
-        return $this;
-    }
-
-    /**
-     * Get base formats
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Formats
-     */
-    public function getCassetteSizeFormat()
-    {
-        return $this->cassetteSizeFormat;
     }
 
     /**

@@ -29,7 +29,8 @@ class RecordingSpeedType extends AbstractType
                                     ->orderBy('f.name', 'ASC');
                         },
                         'multiple' => true,
-                        'mapped' => false
+                        'mapped' => false,
+                        'required'=> false        
                     ))
             ;
         } else {

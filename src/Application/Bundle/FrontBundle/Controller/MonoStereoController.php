@@ -24,6 +24,7 @@ class MonoStereoController extends Controller
      * @Route("/", name="vocabularies_monostereo")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function indexAction()
     {
@@ -37,10 +38,13 @@ class MonoStereoController extends Controller
     }
     /**
      * Creates a new MonoStereo entity.
-     *
+     * 
+     * @param Request $request 
+     * 
      * @Route("/", name="vocabularies_monostereo_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:MonoStereo:new.html.twig")
+     * @return array
      */
     public function createAction(Request $request)
     {
@@ -87,6 +91,7 @@ class MonoStereoController extends Controller
      * @Route("/new", name="vocabularies_monostereo_new")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function newAction()
     {
@@ -101,10 +106,13 @@ class MonoStereoController extends Controller
 
     /**
      * Finds and displays a MonoStereo entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_monostereo_show")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function showAction($id)
     {
@@ -126,10 +134,13 @@ class MonoStereoController extends Controller
 
     /**
      * Displays a form to edit an existing MonoStereo entity.
-     *
+     * 
+     * @param integer $id
+     * 
      * @Route("/{id}/edit", name="vocabularies_monostereo_edit")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function editAction($id)
     {
@@ -171,10 +182,14 @@ class MonoStereoController extends Controller
     }
     /**
      * Edits an existing MonoStereo entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_monostereo_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:MonoStereo:edit.html.twig")
+     * @return array
      */
     public function updateAction(Request $request, $id)
     {
@@ -204,9 +219,13 @@ class MonoStereoController extends Controller
     }
     /**
      * Deletes a MonoStereo entity.
-     *
+     * 
+     * @param Request $request
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_monostereo_delete")
      * @Method("DELETE")
+     * @return redirect 
      */
     public function deleteAction(Request $request, $id)
     {

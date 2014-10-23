@@ -24,6 +24,7 @@ class CassetteSizesController extends Controller
      * @Route("/", name="vocabularies_cassettessizes")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function indexAction()
     {
@@ -38,10 +39,13 @@ class CassetteSizesController extends Controller
 
     /**
      * Creates a new CassetteSizes entity.
-     *
+     * 
+     * @param Request $request
+     * 
      * @Route("/", name="vocabularies_cassettessizes_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:CassetteSizes:new.html.twig")
+     * @return array
      */
     public function createAction(Request $request)
     {
@@ -50,18 +54,9 @@ class CassetteSizesController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $posted_value = $this->get('request')->request->get('application_bundle_frontbundle_cassettesizes');
-//            print_r($posted_value);exit;
             $em = $this->getDoctrine()->getManager();
-            $f = $form->getData();
-            foreach ($posted_value['cassetteSizeFormat'] as $key => $value) {
-                $entity = new CassetteSizes();
-                $entity->setName($f->getName());
-                $format = $this->getDoctrine()->getRepository('ApplicationFrontBundle:Formats')->find($value);
-                $entity->setCassetteSizeFormat($format);
-                $em->persist($entity);
-                $em->flush();
-            }
+            $em->persist($entity);
+            $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Cassette size added succesfully.');
 
             return $this->redirect($this->generateUrl('vocabularies_cassettessizes'));
@@ -98,6 +93,7 @@ class CassetteSizesController extends Controller
      * @Route("/new", name="vocabularies_cassettessizes_new")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function newAction()
     {
@@ -112,10 +108,13 @@ class CassetteSizesController extends Controller
 
     /**
      * Finds and displays a CassetteSizes entity.
-     *
+     * 
+     * @param integer $id 
+     * 
      * @Route("/{id}", name="vocabularies_cassettessizes_show")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function showAction($id)
     {
@@ -137,10 +136,11 @@ class CassetteSizesController extends Controller
 
     /**
      * Displays a form to edit an existing CassetteSizes entity.
-     *
+     * @param integer $id 
      * @Route("/{id}/edit", name="vocabularies_cassettessizes_edit")
      * @Method("GET")
      * @Template()
+     * @return array 
      */
     public function editAction($id)
     {
@@ -183,10 +183,14 @@ class CassetteSizesController extends Controller
 
     /**
      * Edits an existing CassetteSizes entity.
-     *
+     * 
+     * @param Request $request
+     * @param type $id
+     * 
      * @Route("/{id}", name="vocabularies_cassettessizes_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:CassetteSizes:edit.html.twig")
+     * @return array
      */
     public function updateAction(Request $request, $id)
     {
@@ -218,9 +222,13 @@ class CassetteSizesController extends Controller
 
     /**
      * Deletes a CassetteSizes entity.
-     *
+     * 
+     * @param Request $request
+     * @param type $id
+     * 
      * @Route("/{id}", name="vocabularies_cassettessizes_delete")
      * @Method("DELETE")
+     * @return redirect
      */
     public function deleteAction(Request $request, $id)
     {

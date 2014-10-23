@@ -29,20 +29,7 @@ class ReelDiameters
      * @ORM\Column(name="name", type="string", length=50)
      * @Assert\NotBlank(message="Reel diameter name is required")
      */
-    private $name;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Formats", fetch="EAGER", inversedBy="reelDiameter")
-     * @ORM\JoinColumn(
-     *     name="format_id",
-     *     referencedColumnName="id",
-     *     nullable=true,
-     *     onDelete="SET NULL"
-     * )
-     * @var integer
-     *
-     */
-    private $reelFormat;
+    private $name;    
 
     /**
      * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="reelDiameterOrg")

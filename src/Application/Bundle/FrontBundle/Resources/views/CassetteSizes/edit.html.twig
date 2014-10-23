@@ -17,13 +17,6 @@
                     <span class="has-error text-danger" for="{{ edit_form.name.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
             </div>
-            <label>Formats</label>
-            <div class="input-control select" data-role="input-control">
-                {{ form_widget(edit_form.cassetteSizeFormat, {attr: {class:'size4',id:'formats',required:'required'} }) }}
-                {% for errorItem in edit_form.cassetteSizeFormat.vars.errors %}
-                    <span class="has-error text-danger" for="{{ edit_form.cassetteSizeFormat.vars.id }}">{{ errorItem.message }}</span>
-                {% endfor %}
-            </div>
             {{ form_widget(edit_form.submit, {attr: {class:'button primary'} }) }}
             or
             <a class="button"   href="{{ path('vocabularies_cassettessizes') }}">Cancel</a>

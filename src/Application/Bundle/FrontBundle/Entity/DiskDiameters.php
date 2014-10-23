@@ -29,20 +29,7 @@ class DiskDiameters
      * @ORM\Column(name="name", type="string", length=50)
      * @Assert\NotBlank(message="Disk diameter name is required")
      */
-    private $name;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Formats", fetch="EAGER", inversedBy="diskDiameter")
-     * @ORM\JoinColumn(
-     *     name="format_id",
-     *     referencedColumnName="id",
-     *     nullable=true,
-     *     onDelete="SET NULL"
-     * )
-     * @var integer
-     *
-     */
-    private $diskFormat;
+    private $name;    
 
     /**
      * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="diskDiamaeterOrg")
@@ -98,30 +85,6 @@ class DiskDiameters
         $this->name = $name;
 
         return $this;
-    }
-
-    /**
-     * Set disk formats
-     *
-     * @param \Application\Bundle\FrontBundle\Entity\Formats $diskFormat
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\DiskDiameters
-     */
-    public function setDiskFormat(\Application\Bundle\FrontBundle\Entity\Formats $diskFormat)
-    {
-        $this->diskFormat = $diskFormat;
-
-        return $this;
-    }
-
-    /**
-     * Get disk formats
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Formats
-     */
-    public function getDiskFormat()
-    {
-        return $this->diskFormat;
     }
 
     /**
