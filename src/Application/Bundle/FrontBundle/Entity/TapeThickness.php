@@ -40,7 +40,7 @@ class TapeThickness
      *     onDelete="SET NULL"
      * )
      * @var integer
-     * 
+     *
      */
     private $tapeThicknessFormat;
 

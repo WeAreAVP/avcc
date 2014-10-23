@@ -40,7 +40,7 @@ class MediaDiameters
      *     onDelete="SET NULL"
      * )
      * @var integer
-     * 
+     *
      */
     private $mediaDiameterFormat;
 

@@ -10,10 +10,10 @@ use Doctrine\ORM\EntityRepository;
 class BasesType extends AbstractType
 {
 
-    public $formats;    
+    public $formats;
 
     public function __construct()
-    {        
+    {
     }
 
     /**
@@ -30,7 +30,7 @@ class BasesType extends AbstractType
                     ->add('name')
                     ->add('baseFormat', 'entity', array(
                         'class' => 'ApplicationFrontBundle:Formats',
-                        'query_builder' => function(EntityRepository $er) {
+                        'query_builder' => function (EntityRepository $er) {
                             return $er->createQueryBuilder('f')
                                     ->orderBy('f.name', 'ASC');
                         },

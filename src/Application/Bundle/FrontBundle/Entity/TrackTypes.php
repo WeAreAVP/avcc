@@ -40,7 +40,7 @@ class TrackTypes
      *     onDelete="SET NULL"
      * )
      * @var integer
-     * 
+     *
      */
     private $trackTypeFormat;
 

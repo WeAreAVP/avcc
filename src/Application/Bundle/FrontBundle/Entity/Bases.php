@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Bases
  *
- * @ORM\Table(name="bases") 
+ * @ORM\Table(name="bases")
  * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\BasesRepository")
  * @ORM\Entity
  */
@@ -40,7 +40,7 @@ class Bases
      *     nullable=true,
      *     onDelete="SET NULL"
      * )
-     * 
+     *
      * @var integer
      */
     private $baseFormat;

@@ -40,7 +40,7 @@ class ReelDiameters
      *     onDelete="SET NULL"
      * )
      * @var integer
-     * 
+     *
      */
     private $reelFormat;
 

@@ -205,6 +205,7 @@ class TrackTypesController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Track type updated succesfully.');
+
             return $this->redirect($this->generateUrl('vocabularies_tracktypes_edit', array('id' => $id)));
         }
 

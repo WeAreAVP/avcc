@@ -205,6 +205,7 @@ class TapeThicknessController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Tape thickness updated succesfully.');
+
             return $this->redirect($this->generateUrl('vocabularies_tapethickness_edit', array('id' => $id)));
         }
 

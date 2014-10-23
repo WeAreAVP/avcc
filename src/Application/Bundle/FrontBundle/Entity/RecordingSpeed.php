@@ -40,7 +40,7 @@ class RecordingSpeed
      *     onDelete="SET NULL"
      * )
      * @var integer
-     * 
+     *
      */
     private $recSpeedFormat;
 

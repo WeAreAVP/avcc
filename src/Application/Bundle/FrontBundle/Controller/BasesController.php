@@ -63,7 +63,7 @@ class BasesController extends Controller
                 $em->flush();
             }
             $this->get('session')->getFlashBag()->add('success', 'Base added succesfully.');
-            
+
             return $this->redirect($this->generateUrl('vocabularies_bases'));
         }
 
@@ -170,7 +170,7 @@ class BasesController extends Controller
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(Bases $entity)
-    {        
+    {
         $form = $this->createForm(new BasesType(), $entity, array(
             'action' => $this->generateUrl('vocabularies_bases_update', array('id' => $entity->getId())),
             'method' => 'PUT',

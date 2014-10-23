@@ -40,7 +40,7 @@ class CassetteSizes
      *     onDelete="SET NULL"
      * )
      * @var integer
-     * 
+     *
      */
     private $cassetteSizeFormat;
 

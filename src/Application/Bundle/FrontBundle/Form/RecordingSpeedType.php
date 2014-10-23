@@ -24,7 +24,7 @@ class RecordingSpeedType extends AbstractType
                     ->add('name')
                     ->add('recSpeedFormat', 'entity', array(
                         'class' => 'ApplicationFrontBundle:Formats',
-                        'query_builder' => function(EntityRepository $er) {
+                        'query_builder' => function (EntityRepository $er) {
                             return $er->createQueryBuilder('f')
                                     ->orderBy('f.name', 'ASC');
                         },

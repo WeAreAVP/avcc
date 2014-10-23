@@ -40,7 +40,7 @@ class DiskDiameters
      *     onDelete="SET NULL"
      * )
      * @var integer
-     * 
+     *
      */
     private $diskFormat;
 

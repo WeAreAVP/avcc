@@ -205,6 +205,7 @@ class ReelDiametersController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Reel diameter updated succesfully.');
+
             return $this->redirect($this->generateUrl('vocabularies_reeldiameters_edit', array('id' => $id)));
         }
 

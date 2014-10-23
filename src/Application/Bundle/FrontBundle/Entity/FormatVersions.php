@@ -39,7 +39,7 @@ class FormatVersions
      *     nullable=true,
      *     onDelete="SET NULL"
      * )
-     * 
+     *
      * @var integer
      */
     private $formatVersionFormat;
