@@ -1,0 +1,30 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+    <h1>Feild Settings
+    </h1>
+    <div data-role="tab-control" class="tab-control">
+        <ul class="tabs">
+            <li class="active"><a href="#_audio">Audio</a></li>
+            <li class=""><a href="#_video">Video</a></li>
+            <li class=""><a href="#_film">Film</a></li>
+        </ul>
+
+        <div class="frames">
+            <div id="_audio" class="frame" style="display: block;">
+                <p>
+                    <?php
+                      
+                    ?>
+                </p>
+            </div>
+            <div id="_video" class="frame" style="display: none;">
+                <p></p>
+            </div>
+            <div id="_film" class="frame" style="display: none;">
+                <p></p>
+            </div>            
+        </div>
+
+    </div>
+{% endblock %}

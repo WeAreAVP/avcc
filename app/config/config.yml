@@ -91,3 +91,4 @@ doctrine_migrations:
 
 parameters:
     from_email: "%mail_from_email%"
+    field_settings: "%default_field_settings%"

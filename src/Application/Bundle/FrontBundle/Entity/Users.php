@@ -5,6 +5,7 @@ namespace Application\Bundle\FrontBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * Users
@@ -78,6 +79,26 @@ class Users extends BaseUser
      */
     private $usersUpdated;
 
+    /**
+     * @ORM\OneToMany(
+     *     targetEntity="UserSettings",
+     *     mappedBy="user",
+     *     fetch="EAGER",
+     *     indexBy="user_id",
+     *     cascade={"all","merge","persist","refresh","remove"}
+     * )
+     * @ORM\OrderBy({"id"="ASC"})
+     */
+    private $userSetting;
+    
+    /**
+     * Users constructor
+     */
+    public function __construct()
+    {
+        $this->userSetting = new ArrayCollection();
+    }
+    
     /**
      * @ORM\PrePersist
      */
@@ -250,4 +271,27 @@ class Users extends BaseUser
         return $this;
     }
 
+    /**
+     * Add userSetting
+     * @param \Application\Bundle\FrontBundle\Entity\UserSettings $us
+     *
+     */
+    public function addUserSetting(UserSettings $us)
+    {
+         if (!$this->userSetting->contains($us)) {
+
+             $this->userSetting[] = $us;
+             $us->setUser($this);
+         }
+    }
+
+    /**
+     * Remove userSetting
+     * @param \Application\Bundle\FrontBundle\Entity\UserSettings $us
+     *
+     */
+    public function removeUserSetting(UserSettings $us)
+    {
+         $this->userSetting->remove($us);
+    }
 }

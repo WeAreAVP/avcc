@@ -43,11 +43,23 @@ class MediaTypes
     private $formats;
 
     /**
+     * @ORM\OneToMany(
+     *     targetEntity="UserSettings",
+     *     mappedBy="mediaType",
+     *     fetch="EAGER",
+     *     indexBy="media_type_id"
+     * )
+     * @ORM\OrderBy({"id"="ASC"})
+     */
+    private $mediaSetting;
+    
+    /**
      * Media types construct
      */
     public function __construct()
     {
         $this->formats = new ArrayCollection();
+        $this->mediaSetting = new ArrayCollection();
     }
 
     /**
@@ -116,6 +128,30 @@ class MediaTypes
     public function removeFormat(Formats $f)
     {
          $this->formats->remove($f);
+    }
+    
+    /**
+     * Add mediaSetting
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\MediaTypes $mt
+     */
+    public function addMediaSetting(MediaTypes $mt)
+    {
+         if (!$this->mediaSetting->contains($mt)) {
+
+             $this->mediaSetting[] = $mt;
+             $f->setMediaType($this);
+         }
+    }
+
+    /**
+     * Remove mediaSetting
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\MediaTypes $mt 
+     */
+    public function removeMediaSetting(Formats $mt)
+    {
+         $this->mediaSetting->remove($mt);
     }
 
 }

@@ -136,7 +136,7 @@ class DefaultController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $data = $form->getData();
                 $em->persist($data->getOrganizations());
-                $em->persist($data);
+                $em->persist($data);                
                 $data->addRole(DefaultController::$DEFAULT_ROLE);
                 $data->getOrganizations()->setUsersCreated($data);
                 $em->flush();
