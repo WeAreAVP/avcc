@@ -2,7 +2,7 @@
 
 {% block body %}
     <h1>Feild Settings
-    </h1>
+    </h1><br />
     <div data-role="tab-control" class="tab-control">
         <ul class="tabs">
             <li class="active"><a href="#_audio">Audio</a></li>
@@ -13,18 +13,75 @@
         <div class="frames">
             <div id="_audio" class="frame" style="display: block;">
                 <p>
-                    <?php
-                      
-                    ?>
-                </p>
-            </div>
-            <div id="_video" class="frame" style="display: none;">
-                <p></p>
-            </div>
-            <div id="_film" class="frame" style="display: none;">
-                <p></p>
-            </div>            
-        </div>
+                <table class="table bordered sortable" id="sortableAudio">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for audio in entities.audio %} 
+                            <tr id="{{ audio.field }}" class="sortTr" data-sort="{{ audio.field }}" data-hide_it="{{audio.hidden}}" data-title="{{ audio.title }}"  data-is_required="{{audio.is_required}}">
+                                <td>{{ audio.title }}</td>
+                                <td>{% if audio.is_required==false %} 
+                                    <input type="checkbox" name="audio{{loop.index}}" id="audio{{loop.index}}" {% if audio.hidden==1 %} checked='checked' {% endif%}onclick="hideIt(this)" vlaue="1" />
+                                    {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            </p>                
+                        </div>
+                        <div id="_video" class="frame" style="display: none;">
+                            <p>
+                            <table class="table bordered sortable" id="sortableVideo">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {#{% for video in entities.video %}
+                                        <tr id="{{ video.title }}" class="sortTr" data-sort="{{ video.title }}" data-hide_it="{{video.hidden}}">
+                                            <td>{{ video.field }}
+                                            </td>
+                                            <td><input type="checkbox" name="video{{loop.index}}" id="video{{loop.index}}" onclick="hideIt(this)" vlaue="1" /></td>
+                                        </tr>
+                                    {% endfor %}#}
+                                </tbody>
+                            </table>
+                            </p>
+                        </div>
+                        <div id="_film" class="frame" style="display: none;">
+                            <p>
+                            <table class="table bordered sortable" id="sortableFilm">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {#{% for film in entities.film %}
+                                        <tr id="{{ film.title }}" class="sortTr" data-sort="{{ film.title }}" data-hide_it="{{film.hidden}}">
+                                            <td>{{ film.field }}
+                                            </td>
+                                            <td><input type="checkbox" name="film{{loop.index}}" id="film{{loop.index}}" onclick="hideIt(this)" vlaue="1" /></td>
+                                        </tr>
+                                    {% endfor %}#}
+                                </tbody>
+                            </table>
+                            </p>
+                        </div>            
+                    </div><br />
+                    <p><input type="button" id="updatesettings" class="button primary" onclick="updateSettings();" value="Update" /></p>
 
-    </div>
-{% endblock %}
+                </div>
+                <script type="text/javascript">
+                    var site_url = "{{ app.request.baseUrl }}";
+                </script>
+                <script src="{{ asset('js/user-settings.js') }}"></script>
+                {% endblock %}

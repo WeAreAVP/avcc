@@ -20,6 +20,7 @@
             <!-- Custom styles for this template -->
             <link href="{{ asset('bundles/applicationfront/css/style.css') }}" rel="stylesheet">
             <link rel="stylesheet" href="{{ asset('css/jquery.mCustomScrollbar.css') }}" />
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
         {% endblock %}
 
 
@@ -55,6 +56,7 @@
                                     <ul class="dropdown-menu dark" data-role="dropdown">
                                         <li><a href="{{ path('users') }}">Users</a></li>
                                         <li><a href="{{ path('organizations') }}">Organization</a></li>
+                                        <li><a href="{{ path('field_settings') }}">Field Settings</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -128,12 +130,29 @@
             <script src="{{ asset('js/metro.min.js') }}"></script>
             <script src="{{ asset('js/chosen.jquery.js') }}"></script>
             <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+            <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+            
             <script type="text/javascript">
                 setTimeout(function () {
                     $('.text-success').hide();
                 }, 5000);
                 $(document).ready(function () {
                     $('.formats_dd').chosen();
+                    var fixHelper = function (e, ui) {
+                        ui.children().each(function () {
+                            $(this).width($(this).width());
+                        });
+                        return ui;
+                    };
+
+                    $(".sortable tbody").sortable({
+                        helper: fixHelper,
+                        //handle: ".icon-align-justify",
+                        {#update: function (event, ui) {
+                            var newOrder = $(this).sortable('toArray').toString();
+                            $.post(base_url + 'settings/save_sort', {order: newOrder});
+                        }#}
+                    }).disableSelection();
                 });
 
             </script>

@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContext;
 use Application\Bundle\FrontBundle\Entity\Users;
 use Application\Bundle\FrontBundle\Form\Type\RegistrationFormType;
+use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 
 /**
  * Default controller.
@@ -17,11 +18,13 @@ use Application\Bundle\FrontBundle\Form\Type\RegistrationFormType;
  */
 class DefaultController extends Controller
 {
+
     /**
      *
      * @var string
      */
-    static $DEFAULT_ROLE='ROLE_ADMIN';
+    static $DEFAULT_ROLE = 'ROLE_ADMIN';
+
     /**
      * calling parent bundle
      *
@@ -41,7 +44,7 @@ class DefaultController extends Controller
     {
 
         $user = $this->container->get('security.context')->getToken()->getUser();
-        if ( ! is_object($user) || ! $user instanceof UserInterface) {
+        if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
             $this->redirect($this->generateUrl("application_front"));
         }
@@ -77,15 +80,16 @@ class DefaultController extends Controller
                 $error = "Invalid username or password.";
             }
         }
+
         // last username entered by the user
         $lastUsername = (null === $session) ? '' : $session->get(SecurityContext::LAST_USERNAME);
 
         $csrfToken = $this->container->has('form.csrf_provider') ? $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate') : null;
 
         return $this->renderLogin(array(
-            'last_username' => $lastUsername,
-            'error' => $error,
-            'csrf_token' => $csrfToken,
+                    'last_username' => $lastUsername,
+                    'error' => $error,
+                    'csrf_token' => $csrfToken,
         ));
     }
 
@@ -136,10 +140,21 @@ class DefaultController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $data = $form->getData();
                 $em->persist($data->getOrganizations());
-                $em->persist($data);                
+                $em->persist($data);
                 $data->addRole(DefaultController::$DEFAULT_ROLE);
                 $data->getOrganizations()->setUsersCreated($data);
                 $em->flush();
+                
+                $f_obj = new DefaultFields();
+                $view_settings = $f_obj->getDefaultOrder();
+
+                $user_entity = new UserSettings();
+                $user_entity->setUser($this->getUser());
+                $user_entity->setViewSetting($view_settings);
+                $user_entity->setCreatedOnValue(date('Y-m-d h:i:s'));
+                $em->persist($user_entity);
+                $em->flush();
+
                 $url = $this->get('router')->generate('fos_user_registration_confirm', array('token' => $entity->getConfirmationToken()), true);
                 $rendered = $this->renderView('FOSUserBundle:Registration:email.txt.twig', array(
                     'user' => $entity,
@@ -153,8 +168,8 @@ class DefaultController extends Controller
         }
 
         return $this->renderSignup(array(
-            'csrf_token' => $csrfToken,
-            'form' => $form->createView()
+                    'csrf_token' => $csrfToken,
+                    'form' => $form->createView()
         ));
     }
 
@@ -190,10 +205,10 @@ class DefaultController extends Controller
         $body = implode("\n", array_slice($renderedLines, 1));
 
         $message = \Swift_Message::newInstance()
-        ->setSubject($subject)
-        ->setFrom($fromEmail)
-        ->setTo($toEmail)
-        ->setBody($body);
+                ->setSubject($subject)
+                ->setFrom($fromEmail)
+                ->setTo($toEmail)
+                ->setBody($body);
 
         $this->get('mailer')->send($message);
     }
