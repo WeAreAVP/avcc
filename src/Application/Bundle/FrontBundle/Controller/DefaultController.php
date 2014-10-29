@@ -149,7 +149,7 @@ class DefaultController extends Controller
                 $view_settings = $f_obj->getDefaultOrder();
 
                 $user_entity = new UserSettings();
-                $user_entity->setUser($this->getUser());
+                $user_entity->setUser($entity->getId());
                 $user_entity->setViewSetting($view_settings);
                 $user_entity->setCreatedOnValue(date('Y-m-d h:i:s'));
                 $em->persist($user_entity);
