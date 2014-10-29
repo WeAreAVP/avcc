@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 use Application\Bundle\FrontBundle\Entity\Users;
 use Application\Bundle\FrontBundle\Form\Type\RegistrationFormType;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
-
+use Application\Bundle\FrontBundle\Entity\UserSettings as UserSettings;
 /**
  * Default controller.
  *
@@ -137,11 +137,12 @@ class DefaultController extends Controller
             if ($form->isValid()) {
                 $tokenGenerator = $this->container->get('fos_user.util.token_generator');
                 $entity->setConfirmationToken($tokenGenerator->generateToken());
+                $entity->setEnabled(0);
                 $em = $this->getDoctrine()->getManager();
                 $data = $form->getData();
                 $em->persist($data->getOrganizations());
                 $em->persist($data);
-                $data->addRole(DefaultController::$DEFAULT_ROLE);
+                $data->setRoles(array(DefaultController::$DEFAULT_ROLE));
                 $data->getOrganizations()->setUsersCreated($data);
                 $em->flush();
                 
@@ -149,7 +150,7 @@ class DefaultController extends Controller
                 $view_settings = $f_obj->getDefaultOrder();
 
                 $user_entity = new UserSettings();
-                $user_entity->setUser($entity->getId());
+                $user_entity->setUser($entity);
                 $user_entity->setViewSetting($view_settings);
                 $user_entity->setCreatedOnValue(date('Y-m-d h:i:s'));
                 $em->persist($user_entity);

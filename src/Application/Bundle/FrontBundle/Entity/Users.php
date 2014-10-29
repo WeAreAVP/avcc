@@ -97,6 +97,7 @@ class Users extends BaseUser
     public function __construct()
     {
         $this->userSetting = new ArrayCollection();
+        parent::__construct();
     }
     
     /**
