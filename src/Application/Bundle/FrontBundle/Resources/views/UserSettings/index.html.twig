@@ -24,7 +24,7 @@
                         {% for audio in entities.audio %} 
                             <tr id="{{ audio.field }}" class="sortTr" data-sort="{{ audio.field }}" data-hide_it="{{audio.hidden}}" data-title="{{ audio.title }}"  data-is_required="{{audio.is_required}}">
                                 <td><i class="icon-menu on-left"></i>&nbsp; {{ audio.title }}</td>
-                                <td>{% if audio.is_required==false %} 
+                                <td class="text-center">{% if audio.is_required==false %} 
                                     <input type="checkbox" name="audio{{loop.index}}" id="audio{{loop.index}}" {% if audio.hidden==1 %} checked='checked' {% endif%}onclick="hideIt(this)" vlaue="1" />
                                     {% endif %}
                                     </td>
@@ -74,7 +74,7 @@
                                             <td><i class="icon-menu on-left"></i>&nbsp; 
 {{ film.title }}
                                             </td>
-                                            <td>
+                                            <td class="text-center">
                                                 {% if film.is_required==false %}
                                                     <input type="checkbox" name="film{{loop.index}}" id="film{{loop.index}}" {% if film.hidden==1 %} checked='checked' {% endif%} onclick="hideIt(this)" vlaue="1" />
                                                 {% endif %}
