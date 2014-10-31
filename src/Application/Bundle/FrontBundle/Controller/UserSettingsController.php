@@ -35,13 +35,10 @@ class UserSettingsController extends Controller
         if (!$entities) {
             $f_obj = new DefaultFields();
             $view_settings = $f_obj->getDefaultOrder();
-            
         } else {
             $view_settings = $entities->getViewSetting();
         }
         $user_view_settings = json_decode($view_settings, true);
-//        print_r($user_view_settings);
-//        exit;
         return array(
             'entities' => $user_view_settings,
         );
@@ -57,6 +54,8 @@ class UserSettingsController extends Controller
      */
     public function updateAction(Request $request)
     {
+        $success = FALSE;
+        $reload = FALSE;
         if ($request->getMethod() == 'POST') {
             $settings = $this->get('request')->request->get('settings');
             $user_setting = json_encode($settings);
@@ -67,6 +66,9 @@ class UserSettingsController extends Controller
                 $user_entity->setUpdatedOnValue(date('Y-m-d h:i:s'));
                 $em->persist($user_entity);
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success', 'Settings updated succesfully.');
+                $success = TRUE;
+                $reload = TRUE;
             } else {
                 $user_entity = new UserSettings();
                 $user_entity->setUser($this->getUser());
@@ -74,8 +76,12 @@ class UserSettingsController extends Controller
                 $user_entity->setCreatedOnValue(date('Y-m-d h:i:s'));
                 $em->persist($user_entity);
                 $em->flush();
+                $this->get('session')->getFlashBag()->add('success', 'Settings added succesfully.');
+                $success = TRUE;
+                $reload = TRUE;
             }
         }
+        echo json_encode(array('success' => $success, 'reload' => $reload));
         exit;
     }
 

@@ -17,13 +17,13 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th></th>
+                            <th>Show/Hide</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for audio in entities.audio %} 
                             <tr id="{{ audio.field }}" class="sortTr" data-sort="{{ audio.field }}" data-hide_it="{{audio.hidden}}" data-title="{{ audio.title }}"  data-is_required="{{audio.is_required}}">
-                                <td>{{ audio.title }}</td>
+                                <td><i class="icon-menu on-left"></i>&nbsp; {{ audio.title }}</td>
                                 <td>{% if audio.is_required==false %} 
                                     <input type="checkbox" name="audio{{loop.index}}" id="audio{{loop.index}}" {% if audio.hidden==1 %} checked='checked' {% endif%}onclick="hideIt(this)" vlaue="1" />
                                     {% endif %}
@@ -40,17 +40,17 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th></th>
+                                        <th>Show/Hide</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {#{% for video in entities.video %}
-                                        <tr id="{{ video.title }}" class="sortTr" data-sort="{{ video.title }}" data-hide_it="{{video.hidden}}">
-                                            <td>{{ video.field }}
+                                    {% for video in entities.video %}
+                                        <tr id="{{ video.field }}" class="sortTr" data-sort="{{ video.field }}" data-hide_it="{{video.hidden}}" data-title="{{ video.title }}"  data-is_required="{{video.is_required}}">
+                                            <td><i class="icon-menu on-left"></i>&nbsp; {{ video.title }}
                                             </td>
-                                            <td><input type="checkbox" name="video{{loop.index}}" id="video{{loop.index}}" onclick="hideIt(this)" vlaue="1" /></td>
+                                            <td><input type="checkbox" name="video{{loop.index}}" id="video{{loop.index}}" {% if video.hidden==1 %} checked='checked' {% endif%} onclick="hideIt(this)" vlaue="1" /></td>
                                         </tr>
-                                    {% endfor %}#}
+                                    {% endfor %}
                                 </tbody>
                             </table>
                             </p>
@@ -61,17 +61,18 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th></th>
+                                        <th>Show/Hide</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {#{% for film in entities.film %}
-                                        <tr id="{{ film.title }}" class="sortTr" data-sort="{{ film.title }}" data-hide_it="{{film.hidden}}">
-                                            <td>{{ film.field }}
+                                    {% for film in entities.film %}
+                                        <tr id="{{ film.field }}" class="sortTr" data-sort="{{ film.field }}" data-hide_it="{{film.hidden}}" data-title="{{ film.title }}"  data-is_required="{{film.is_required}}">
+                                            <td><i class="icon-menu on-left"></i>&nbsp; 
+{{ film.title }}
                                             </td>
-                                            <td><input type="checkbox" name="film{{loop.index}}" id="film{{loop.index}}" onclick="hideIt(this)" vlaue="1" /></td>
+                                            <td><input type="checkbox" name="film{{loop.index}}" id="film{{loop.index}}" {% if film.hidden==1 %} checked='checked' {% endif%} onclick="hideIt(this)" vlaue="1" /></td>
                                         </tr>
-                                    {% endfor %}#}
+                                    {% endfor %}
                                 </tbody>
                             </table>
                             </p>

@@ -59,12 +59,12 @@ function updateSettings() {
         data: {
             settings: userSettings
         },
-        success: function (result) {
-
-//            if (refresh == 1)
-//                window.location.reload();
-
-
+        dataType: 'json',
+        success: function (response) {
+            console.log(response);
+            if(response.reload){
+                window.location.reload();
+            }     
         }
     });
 //    console.log(userSettings);

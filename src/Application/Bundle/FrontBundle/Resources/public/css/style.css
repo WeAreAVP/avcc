@@ -53,3 +53,8 @@
 #application_bundle_frontbundle_users_roles{
     text-transform: capitalize!important;
 }
+.sortTr:hover{
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+    cursor: grab;
+}
