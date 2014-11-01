@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\AudioRecords;
 use Application\Bundle\FrontBundle\Form\AudioRecordsType;
+use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 
 /**
  * AudioRecords controller.
@@ -36,6 +37,7 @@ class AudioRecordsController extends Controller
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new AudioRecords entity.
      *
@@ -62,7 +64,7 @@ class AudioRecordsController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -88,21 +90,28 @@ class AudioRecordsController extends Controller
     /**
      * Displays a form to create a new AudioRecords entity.
      *
-     * @Route("/new", name="record_new")
+     * @Route("/new/{mediaType}", name="record_new")
      * @Method("GET")
      * @Template()
      * @return array
      */
-    public function newAction()
+    public function newAction($mediaType)
     {
-        $entity = new AudioRecords();
-        $form   = $this->createCreateForm($entity);
-//		$displayOrder=array('record.uniqueId');
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-//            'displayOrder'   => $displayOrder,
-        );
+        $type = array('audio', 'video', 'film');
+        if(in_array($mediaType, $type)) {
+            $entity = new AudioRecords();
+            $form = $this->createCreateForm($entity);
+            $user_view_settings = $this->getFieldSettings();
+            return $this->render('ApplicationFrontBundle:AudioRecords:new.html.php', array(
+                        'entity' => $entity,
+                        'form' => $form->createView(),
+                        'fieldSettings' => $user_view_settings,
+                        'type'=>$mediaType,
+            ));
+        }else{
+            echo 'type not found';
+        }
+        
     }
 
     /**
@@ -128,7 +137,7 @@ class AudioRecordsController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -155,21 +164,22 @@ class AudioRecordsController extends Controller
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
-
+        $user_view_settings = $this->getFieldSettings();
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'fieldSettings' => $user_view_settings,
         );
     }
 
     /**
-    * Creates a form to edit a AudioRecords entity.
-    *
-    * @param AudioRecords $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a AudioRecords entity.
+     *
+     * @param AudioRecords $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(AudioRecords $entity)
     {
         $form = $this->createForm(new AudioRecordsType(), $entity, array(
@@ -181,6 +191,7 @@ class AudioRecordsController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing AudioRecords entity.
      *
@@ -213,11 +224,12 @@ class AudioRecordsController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a AudioRecords entity.
      *
@@ -258,9 +270,27 @@ class AudioRecordsController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('record_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm();
+                        ->setAction($this->generateUrl('record_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm();
     }
+
+    /**
+     *  Get Field settings
+     */
+    private function getFieldSettings()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $settings = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $this->getUser()->getId()));
+        if ($settings) {
+            $view_settings = $settings->getViewSetting();
+        } else {
+            $f_obj = new DefaultFields();
+            $view_settings = $f_obj->getDefaultOrder();
+        }
+        $user_view_settings = json_decode($view_settings, true);
+        return $user_view_settings;
+    }
+
 }

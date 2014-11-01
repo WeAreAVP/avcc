@@ -48,7 +48,7 @@
                                         <tr id="{{ video.field }}" class="sortTr" data-sort="{{ video.field }}" data-hide_it="{{video.hidden}}" data-title="{{ video.title }}"  data-is_required="{{video.is_required}}">
                                             <td><i class="icon-menu on-left"></i>&nbsp; {{ video.title }}
                                             </td>
-                                            <td>{% if video.is_required==false %} 
+                                            <td class="text-center">{% if video.is_required==false %} 
                                                 <input type="checkbox" name="video{{loop.index}}" id="video{{loop.index}}" {% if video.hidden==1 %} checked='checked' {% endif%} onclick="hideIt(this)" vlaue="1" />
                                                 {% endif %}
                                             </td>
