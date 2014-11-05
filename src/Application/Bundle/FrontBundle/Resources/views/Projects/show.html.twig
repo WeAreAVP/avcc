@@ -15,6 +15,11 @@
 				</a>
 			</li>
 			<li>{{ form(delete_form) }}</li>
+                        <li>
+				<a href="{{ path('record_add_project', { 'id': entity.id }) }}" class="button primary">
+					Add Record
+				</a>
+			</li>
 		</ul>
 		<dl class="horizontal">
 			<dt>Name</dt>

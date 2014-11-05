@@ -14,6 +14,7 @@ class DefaultFields
     function getDefaultOrder()
     {
         $this->defaultOrder['audio'] = array(
+            "Media_Type" => array("title" => 'Media Type', 'field' => "record.mediaType", "is_required" => 1, "hidden" => 0),
             "Project_Name" => array("title" => 'Project Name', 'field' => "record.project", "is_required" => 1, "hidden" => 0),
             "Unique_Id" => array("title" => 'Unique Id', 'field' => "record.uniqueId", "is_required" => 1, "hidden" => 0),
             "Location" => array("title" => 'Location', 'field' => "record.location", "is_required" => 1, "hidden" => 0),
@@ -48,6 +49,7 @@ class DefaultFields
         );
 
         $this->defaultOrder['video'] = array(
+            "Media_Type" => array("title" => 'Media Type', 'field' => "record.mediaType", "is_required" => 1, "hidden" => 0),
             "Project_Name" => array("title" => 'Project Name', 'field' => "record.project", "is_required" => 1, "hidden" => 0),
             "Unique_Id" => array("title" => 'Unique Id', 'field' => "record.uniqueId", "is_required" => 1, "hidden" => 0),
             "Location" => array("title" => 'Location', 'field' => "record.location", "is_required" => 1, "hidden" => 0),
@@ -77,6 +79,7 @@ class DefaultFields
         );
         
         $this->defaultOrder['film'] = array(
+            "Media_Type" => array("title" => 'Media Type', 'field' => "record.mediaType", "is_required" => 1, "hidden" => 0),
             "Project_Name" => array("title" => 'Project Name', 'field' => "record.project", "is_required" => 1, "hidden" => 0),
             "Unique_Id" => array("title" => 'Unique Id', 'field' => "record.uniqueId", "is_required" => 1, "hidden" => 0),
             "Location" => array("title" => 'Location', 'field' => "record.location", "is_required" => 1, "hidden" => 0),

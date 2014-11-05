@@ -1,0 +1,39 @@
+{% extends 'FOSUserBundle::layout.html.twig' %}
+
+{% block body -%}
+
+    <div class="grid fluid">
+        <h1>
+            <a href="{{ path('record') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+            New Record
+        </h1>
+        <form action="{{ path('record_new')}}" method="post">
+            <fieldset>
+                <br />
+                <label>Project</label>
+                <div class="input-control text" data-role="input-control">
+                    <select name="project" class="size4" required>
+                        {% for project in projects %}
+                            <option value="{{project.id}}" {% if project.id == project_id %} selected="selected" {% endif%} >{{project.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="has-error text-danger"></span>
+                </div>
+                <label>Media Type</label>
+                <div class="input-control text" data-role="input-control">
+                    <select name="mediaType" class="size4" required>
+                        {% for mediaType in mediaTypes %}
+                            <option value="{{mediaType.id}}" >{{mediaType.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="has-error text-danger"></span>
+                </div>
+                <div class="input-control">
+                    <button class="button primary" name="submit" id="submit" type="submit">Next</button>
+                    or
+                    <a href="{{ path('record') }}" class="button">Cancel</a>
+                </div>     
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}

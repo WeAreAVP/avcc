@@ -50,10 +50,13 @@ class AudioRecordsController extends Controller
      */
     public function createAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $entity = new AudioRecords();
-        $form = $this->createCreateForm($entity);
+        $data = $this->getRelatedInfo($em, $request);
+        echo '<pre>';print_r($data);
+        $form = $this->createCreateForm($entity, $em , $data);
         $form->handleRequest($request);
-
+        $frmData = $form->getData();
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
@@ -75,9 +78,9 @@ class AudioRecordsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(AudioRecords $entity)
+    private function createCreateForm(AudioRecords $entity, $em, $data = null)
     {
-        $form = $this->createForm(new AudioRecordsType(), $entity, array(
+        $form = $this->createForm(new AudioRecordsType($em, $data), $entity, array(
             'action' => $this->generateUrl('record_create'),
             'method' => 'POST',
         ));
@@ -89,29 +92,30 @@ class AudioRecordsController extends Controller
 
     /**
      * Displays a form to create a new AudioRecords entity.
-     *
-     * @Route("/new/{mediaType}", name="record_new")
-     * @Method("GET")
+     * 
+     * @param Request $request
+     * 
+     * @Route("/new", name="record_new")
+     * @Method("POST")
      * @Template()
      * @return array
      */
-    public function newAction($mediaType)
+    public function newAction(Request $request)
     {
-        $type = array('audio', 'video', 'film');
-        if(in_array($mediaType, $type)) {
-            $entity = new AudioRecords();
-            $form = $this->createCreateForm($entity);
-            $user_view_settings = $this->getFieldSettings();
-            return $this->render('ApplicationFrontBundle:AudioRecords:new.html.php', array(
-                        'entity' => $entity,
-                        'form' => $form->createView(),
-                        'fieldSettings' => $user_view_settings,
-                        'type'=>$mediaType,
-            ));
-        }else{
-            echo 'type not found';
-        }
+        $mediaTypeId = $request->request->get('mediaType');
+        $em = $this->getDoctrine()->getManager();
+        $mediaType = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $mediaTypeId));
+        $data = $this->getRelatedInfo($em,$request);
         
+        $entity = new AudioRecords();
+        $form = $this->createCreateForm($entity, $em, $data);
+        $user_view_settings = $this->getFieldSettings();
+        return $this->render('ApplicationFrontBundle:AudioRecords:new.html.php', array(
+                    'entity' => $entity,
+                    'form' => $form->createView(),
+                    'fieldSettings' => $user_view_settings,
+                    'type' => $mediaType->getName(),
+        ));
     }
 
     /**
@@ -291,6 +295,65 @@ class AudioRecordsController extends Controller
         }
         $user_view_settings = json_decode($view_settings, true);
         return $user_view_settings;
+    }
+
+    /**
+     * Displays a form to select media type and projects.
+     *
+     * @param integer $id
+     *
+     * @Route("/add/{id}", name="record_add_project")
+     * @Method("GET")
+     * @Template()
+     */
+    public function addRecordProjectAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
+        $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
+
+        return $this->render('ApplicationFrontBundle:AudioRecords:addRecord.html.twig', array(
+                    'projects' => $projects,
+                    'project_id' => $id,
+                    'mediaTypes' => $mediaTypes
+        ));
+    }
+
+    /**
+     * Displays a form to select media type abd projects.
+     * @Route("/add-record", name="record_add")
+     * @Method("GET")
+     * @Template()
+     */
+    public function addRecordAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
+        $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
+
+        return $this->render('ApplicationFrontBundle:AudioRecords:addRecord.html.twig', array(
+                    'projects' => $projects,
+                    'mediaTypes' => $mediaTypes
+        ));
+    }
+
+    private function getRelatedInfo($em, $request)
+    {
+        $data['mediaTypeId'] = $request->request->get('mediaType');
+        $data['projectId'] = $request->request->get('project');
+
+        $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
+
+        foreach ($mediaTypes as $media) {
+            $data['mediaTypesArr'][] = array($media->getId() => $media->getName());
+        }
+
+        $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
+
+        foreach ($projects as $project) {
+            $data['projectsArr'][] = array($project->getId() => $project->getName());
+        }
+        return $data;
     }
 
 }
