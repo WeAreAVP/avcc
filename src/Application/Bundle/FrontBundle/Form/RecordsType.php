@@ -16,6 +16,7 @@ class RecordsType extends AbstractType
     private $em;
     private $mediaTyp;
     private $proj;
+    private $user;
 
     public function __construct(EntityManager $em, $selectedOptions = null)
     {
@@ -38,9 +39,9 @@ class RecordsType extends AbstractType
                 ->add('collectionName')
                 ->add('description')
                 ->add('commercial')
-                ->add('contentDuration')
-                ->add('creationDate')
-                ->add('contentDate')
+                ->add('contentDuration','text',array('required'=>false))
+                ->add('creationDate','text',array('required'=>false))
+                ->add('contentDate','text',array('required'=>false))
                 ->add('isReview')
                 ->add('genreTerms')
                 ->add('contributor')
@@ -55,15 +56,27 @@ class RecordsType extends AbstractType
                     'data' => $this->selectedOptions['projectId'],
                     'attr' => array('disabled' => 'disabled'),
                 ))
-//		->add('user')
+		->add('userId','hidden',array(
+                    'data' => $this->selectedOptions['userId'],
+                    'mapped'=>false,
+                    'required' => false,
+                ))
                 ->add('mediaType', 'choice', array(
                     'choices' => $this->selectedOptions['mediaTypesArr'],
                     'data' => $this->selectedOptions['mediaTypeId'],
                     'attr' => array('disabled' => 'disabled'),
                 ))
                 ->add('reelDiameters')
-                ->addEventListener(
-                        FormEvents::POST_SET_DATA, array($this, 'onPreSetData'))
+                ->add('mediaTypeHidden','hidden',array(
+                    'data' => $this->selectedOptions['mediaTypeId'],
+                    'mapped'=>false,
+                    'required' => false,
+                ))
+                ->add('projectHidden','hidden',array(
+                    'data' => $this->selectedOptions['projectId'],
+                    'mapped'=>false,
+                    'required' => false,
+                ))
                 ->addEventListener(
                         FormEvents::PRE_SUBMIT, array($this, 'onPreSubmitData'))
                 ->addEventListener(
@@ -73,35 +86,29 @@ class RecordsType extends AbstractType
 
     public function onPreSetData(FormEvent $event)
     {
-        $mediaType = $this->em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $this->selectedOptions['mediaTypeId']));
-        $this->mediaTyp = $mediaType;
         
-        $project = $this->em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $this->selectedOptions['projectId']));
-        $this->proj = $project;
-//        print_r($this->proj);exit;
     }
 
     public function onPreSubmitData(FormEvent $event)
     {
-//        $mediaType = $this->em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $this->selectedOptions['mediaTypeId']));
-//        $this->mediaTyp = $mediaType;
-//        
-//        $project = $this->em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $this->selectedOptions['projectId']));
-//        $this->proj = $project;
-//        print_r($this->selectedOptions['mediaTypeId']);exit;
+        $record = $event->getData();
+        $projectId= $record['projectHidden'];
+        $mediaTypeId= $record['mediaTypeHidden'];
+        $userId= $record['userId'];
+        
+        $this->mediaTyp = $this->em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $mediaTypeId));
+        
+        $this->proj = $this->em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
+        
+        $this->user = $this->em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
     }
 
     public function onPostSubmitData(FormEvent $event)
-    {
-        $recordFields = $event->getData();
-        print_r($this->mediaTyp);exit;
-        if ($this->mediaTyp) {
-            $recordFields->getRecords()->setMediaType($this->mediaTyp);
-        }
-        
-        if ($this->proj) {
-            $recordFields->setProject($this->proj);
-        }
+    {        
+        $record = $event->getData();
+        $record->setUser($this->user);
+        $record->setMediaType($this->mediaTyp);
+        $record->setProject($this->proj);
     }
 
     /**

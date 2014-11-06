@@ -26,9 +26,9 @@ class AudioRecordsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('record', new RecordsType($this->em ,$this->data), array(
+        ->add('record', new RecordsType($this->em, $this->data), array(
             'data_class' => 'Application\Bundle\FrontBundle\Entity\Records'))
-        ->add('mediaDuration')
+        ->add('mediaDuration','text',array('required'=>false))
         ->add('diskDiameters')
         ->add('mediaDiameters')
         ->add('bases')

@@ -52,11 +52,8 @@ class AudioRecordsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $entity = new AudioRecords();
-        $data = $this->getRelatedInfo($em, $request);
-        echo '<pre>';print_r($data);
-        $form = $this->createCreateForm($entity, $em , $data);
+        $form = $this->createCreateForm($entity, $em);  
         $form->handleRequest($request);
-        $frmData = $form->getData();
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
@@ -102,11 +99,24 @@ class AudioRecordsController extends Controller
      */
     public function newAction(Request $request)
     {
-        $mediaTypeId = $request->request->get('mediaType');
         $em = $this->getDoctrine()->getManager();
-        $mediaType = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $mediaTypeId));
-        $data = $this->getRelatedInfo($em,$request);
+        $data['mediaTypeId'] = $request->request->get('mediaType');
+        $data['projectId'] = $request->request->get('project');
+        $data['userId'] = $this->getUser()->getId();
+        $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
+
+        foreach ($mediaTypes as $media) {
+            $data['mediaTypesArr'][] = array($media->getId() => $media->getName());
+        }
+
+        $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
+
+        foreach ($projects as $project) {
+            $data['projectsArr'][] = array($project->getId() => $project->getName());
+        }
         
+        $mediaType = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $data['mediaTypeId']));
+         
         $entity = new AudioRecords();
         $form = $this->createCreateForm($entity, $em, $data);
         $user_view_settings = $this->getFieldSettings();
@@ -336,24 +346,58 @@ class AudioRecordsController extends Controller
                     'mediaTypes' => $mediaTypes
         ));
     }
-
-    private function getRelatedInfo($em, $request)
+    
+    /**
+     * Displays a form to select media type abd projects.
+     * 
+     * @param integer $format_id Format id
+     * 
+     * @Route("/getBase/{format_id}", name="record_get_base")
+     * @Method("GET")
+     * @Template()
+     */
+    public function getBaseAction($format_id)
     {
-        $data['mediaTypeId'] = $request->request->get('mediaType');
-        $data['projectId'] = $request->request->get('project');
-
-        $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
-
-        foreach ($mediaTypes as $media) {
-            $data['mediaTypesArr'][] = array($media->getId() => $media->getName());
-        }
-
-        $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
-
-        foreach ($projects as $project) {
-            $data['projectsArr'][] = array($project->getId() => $project->getName());
-        }
-        return $data;
+        $em = $this->getDoctrine()->getManager();
+        $bases = $em->getRepository('ApplicationFrontBundle:Bases')->findBy(array('baseFormat'=>$format_id));       
+        return $this->render('ApplicationFrontBundle:AudioRecords:getBase.html.php', array(
+                    'bases' => $bases
+        ));
     }
-
+    
+    /**
+     * get recording speed values to show in dropdown.
+     * 
+     * @param integer $format_id Format id
+     * 
+     * @Route("/getRecordingSpeed/{format_id}", name="record_get_speed")
+     * @Method("GET")
+     * @Template()
+     */
+    public function getRecordingSpeedAction($format_id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $speeds = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findBy(array('recSpeedFormat'=>$format_id));       
+        return $this->render('ApplicationFrontBundle:AudioRecords:getRecordingSpeed.html.php', array(
+                    'speeds' => $speeds
+        ));
+    }
+    
+    /**
+     * get format values to show in dropdown.
+     * 
+     * @param integer $media_type_id Media type id
+     * 
+     * @Route("/getFormat/{media_type_id}", name="record_get_format")
+     * @Method("GET")
+     * @Template()
+     */
+    public function getFormatAction($media_type_id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $formats = $em->getRepository('ApplicationFrontBundle:Formats')->findBy(array('mediaType'=>$media_type_id));       
+        return $this->render('ApplicationFrontBundle:AudioRecords:getFormat.html.php', array(
+                    'formats' => $formats
+        ));
+    }
 }

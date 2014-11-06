@@ -12,19 +12,19 @@
         <script src="<?php echo $view['assets']->getUrl('js/jquery.min.js') ?>"></script>
         <!-- Bootstrap core CSS -->
         <?php $view['slots']->start('stylesheets') ?>
-            <!--{#						<link href="{{ asset('css/bootstrap.css') }}" type="text/css" rel="stylesheet" />#}-->
-            <link href="<?php echo $view['assets']->getUrl('css/metro-bootstrap.min.css') ?>" type="text/css" rel="stylesheet" />
-            <link href="<?php echo $view['assets']->getUrl('css/metro-bootstrap-responsive.min.css') ?>" type="text/css" rel="stylesheet" />
-            <link href="<?php echo $view['assets']->getUrl('css/iconFont.min.css') ?>" type="text/css" rel="stylesheet" />
-            <link href="<?php echo $view['assets']->getUrl('css/chosen.css') ?>" type="text/css" rel="stylesheet" />
-            <!-- Custom styles for this template -->
-            <link href="<?php echo $view['assets']->getUrl('bundles/applicationfront/css/style.css') ?>" rel="stylesheet">
-            <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('css/jquery.mCustomScrollbar.css') ?>" />
-            <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
+        <!--{#						<link href="{{ asset('css/bootstrap.css') }}" type="text/css" rel="stylesheet" />#}-->
+        <link href="<?php echo $view['assets']->getUrl('css/metro-bootstrap.min.css') ?>" type="text/css" rel="stylesheet" />
+        <link href="<?php echo $view['assets']->getUrl('css/metro-bootstrap-responsive.min.css') ?>" type="text/css" rel="stylesheet" />
+        <link href="<?php echo $view['assets']->getUrl('css/iconFont.min.css') ?>" type="text/css" rel="stylesheet" />
+        <link href="<?php echo $view['assets']->getUrl('css/chosen.css') ?>" type="text/css" rel="stylesheet" />
+        <!-- Custom styles for this template -->
+        <link href="<?php echo $view['assets']->getUrl('bundles/applicationfront/css/style.css') ?>" rel="stylesheet">
+        <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('css/jquery.mCustomScrollbar.css') ?>" />
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
         <?php $view['slots']->stop() ?>
-<?php $view['slots']->output('stylesheets') ?>
-
-
+        <?php $view['slots']->output('stylesheets') ?>
+        <script src="<?php echo $view['assets']->getUrl('js/jquery.min.js') ?>"></script>
+        <script src="<?php echo $view['assets']->getUrl('js/jquery.maskedinput.js') ?>"></script>
     </head>
 
     <body class="metro">
@@ -33,12 +33,12 @@
                 <div class="navigation-bar-content container">
                     <a href="<?php echo $view['router']->generate('_welcome') ?>" class="element"> AVCC </a>
                     <span class="element-divider"></span>
-<!--                    {#                                        {{ dump(app.user) }}#}-->
+                    <!--                    {#                                        {{ dump(app.user) }}#}-->
                     <?php if ($app->getUser()): ?>
                         <a class="element1 pull-menu" href="#"></a>
                         <ul class="element-menu place-right" style="">
                             <li>
-                                <a class="dropdown-toggle" href="#">Welcome, <?php echo $app->getUser()->getName();?>&nbsp;&nbsp;</a>
+                                <a class="dropdown-toggle" href="#">Welcome, <?php echo $app->getUser()->getName(); ?>&nbsp;&nbsp;</a>
                                 <ul class="dropdown-menu dark" data-role="dropdown">
                                     <li><a href="<?php echo $view['router']->generate('fos_user_profile_show') ?>">Profile</a></li>
                                     <li><a href="<?php echo $view['router']->generate('fos_user_change_password') ?>">Change Password</a></li>
@@ -60,8 +60,8 @@
                                     </ul>
                                 </li>
                             </ul>
-                        <?php endif;?>
-                       <?php if ( $view['security']->isGranted('ROLE_SUPER_ADMIN')): ?>
+                        <?php endif; ?>
+                        <?php if ($view['security']->isGranted('ROLE_SUPER_ADMIN')): ?>
                             <a class="element1 pull-menu" href="#"></a>
                             <ul class="element-menu place-right" style="">
                                 <li>
@@ -102,17 +102,17 @@
                             </li>
                         </ul>
 
-<?php endif ?>
+                    <?php endif ?>
                 </div>
             </div>
         </header>
 
         <div class="container" style="margin-top:20px;margin-bottom:20px;">
- <?php foreach($app->getSession()->getFlashBag()->all() as $type => $message  ): ?>
+            <?php foreach ($app->getSession()->getFlashBag()->all() as $type => $message): ?>
                 <?php //for message in messages ?>
-                    <div class="flash-<?php echo $type; ?> text-success">
-                        <?php echo $message; ?>
-                    </div>
+                <div class="flash-<?php echo $type; ?> text-success">
+                    <?php echo $message; ?>
+                </div>
                 <?php //endfor ?>
             <?php endforeach; ?>
             <?php $view['slots']->output('body') ?>
@@ -120,25 +120,24 @@
 
         </div> <!-- /container -->
 
-        <?php $view['slots']->start('javascripts') ?>
-            <script src="<?php echo $view['assets']->getUrl('js/jquery.min.js') ?>"></script>
-            <script src="<?php echo $view['assets']->getUrl('js/jquery.widget.min.js') ?>"></script>
-            <script src="<?php echo $view['assets']->getUrl('js/jquery.mousewheel.js') ?>"></script>
-            <script src="<?php echo $view['assets']->getUrl('js/metro.min.js') ?>"></script>
-            <script src="<?php echo $view['assets']->getUrl('js/chosen.jquery.js') ?>"></script>
-            <script src="<?php echo $view['assets']->getUrl('js/jquery.mCustomScrollbar.concat.min.js') ?>"></script>
-            <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-            
-            <script type="text/javascript">
-                setTimeout(function () {
-                    $('.text-success').hide();
-                }, 5000);
-                $(document).ready(function () {
-                    $('.formats_dd').chosen();                    
-                });
+        <?php $view['slots']->start('javascripts') ?>            
+        <script src="<?php echo $view['assets']->getUrl('js/jquery.widget.min.js') ?>"></script>
+        <script src="<?php echo $view['assets']->getUrl('js/jquery.mousewheel.js') ?>"></script>
+        <script src="<?php echo $view['assets']->getUrl('js/metro.min.js') ?>"></script>
+        <script src="<?php echo $view['assets']->getUrl('js/chosen.jquery.js') ?>"></script>
+        <script src="<?php echo $view['assets']->getUrl('js/jquery.mCustomScrollbar.concat.min.js') ?>"></script>
+        <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
-            </script>
+        <script type="text/javascript">
+            setTimeout(function () {
+                $('.text-success').hide();
+            }, 5000);
+            $(document).ready(function () {
+                $('.formats_dd').chosen();
+            });
+
+        </script>
         <?php $view['slots']->stop() ?>
-            <?php $view['slots']->output('javascripts') ?>
+        <?php $view['slots']->output('javascripts') ?>
     </body>
 </html>
