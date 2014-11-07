@@ -51,11 +51,12 @@ class RecordsType extends AbstractType
                 ->add('duplicatesDerivatives')
                 ->add('relatedMaterial')
                 ->add('conditionNote')
-                ->add('project', 'choice', array(
-                    'choices' => $this->selectedOptions['projectsArr'],
-                    'data' => $this->selectedOptions['projectId'],
-                    'attr' => array('disabled' => 'disabled'),
-                ))
+                 ->add('project')
+//                ->add('project', 'choice', array(
+//                    'choices' => $this->selectedOptions['projectsArr'],
+//                    'data' => $this->selectedOptions['projectId'],
+////                    'attr' => array('disabled' => 'disabled'),
+//                ))
 		->add('userId','hidden',array(
                     'data' => $this->selectedOptions['userId'],
                     'mapped'=>false,
@@ -72,11 +73,11 @@ class RecordsType extends AbstractType
                     'mapped'=>false,
                     'required' => false,
                 ))
-                ->add('projectHidden','hidden',array(
-                    'data' => $this->selectedOptions['projectId'],
-                    'mapped'=>false,
-                    'required' => false,
-                ))
+//                ->add('projectHidden','hidden',array(
+//                    'data' => $this->selectedOptions['projectId'],
+//                    'mapped'=>false,
+//                    'required' => false,
+//                ))
                 ->addEventListener(
                         FormEvents::PRE_SUBMIT, array($this, 'onPreSubmitData'))
                 ->addEventListener(
@@ -92,13 +93,13 @@ class RecordsType extends AbstractType
     public function onPreSubmitData(FormEvent $event)
     {
         $record = $event->getData();
-        $projectId= $record['projectHidden'];
+//        $projectId= $record['projectHidden'];
         $mediaTypeId= $record['mediaTypeHidden'];
         $userId= $record['userId'];
         
         $this->mediaTyp = $this->em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $mediaTypeId));
         
-        $this->proj = $this->em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
+//        $this->proj = $this->em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
         
         $this->user = $this->em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
     }
@@ -108,7 +109,7 @@ class RecordsType extends AbstractType
         $record = $event->getData();
         $record->setUser($this->user);
         $record->setMediaType($this->mediaTyp);
-        $record->setProject($this->proj);
+//        $record->setProject($this->proj);
     }
 
     /**

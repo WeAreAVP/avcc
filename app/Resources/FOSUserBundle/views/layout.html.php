@@ -101,7 +101,26 @@
 
                             </li>
                         </ul>
-
+                        <?php if ($view['security']->isGranted('ROLE_MANAGER')): ?> 
+                            <ul class="element-menu place-right" style="">
+                                <li>
+                                    <a class="dropdown-toggle" href="#"><span class=""></span> Records</a>
+                                    <ul class="dropdown-menu dark content" data-role="dropdown">
+                                        <li><a class="" href="<?php echo $view['router']->generate('record') ?>">All</a></li>
+                                        <li>
+                                            <a class="dropdown-toggle" href="#"><span class=""></span> Add</a>
+                                            <ul class="dropdown-menu dark content" data-role="dropdown">
+                                                <li>
+                                                    <a class="" href="<?php echo $view['router']->generate('record_new') ?>">Audio</a>
+                                                    <a class="" href="<?php echo $view['router']->generate('record_video_new') ?>">Video</a>
+                                                    <a class="" href="<?php echo $view['router']->generate('record_film_new') ?>">Film</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        <?php endif ?>
                     <?php endif ?>
                 </div>
             </div>

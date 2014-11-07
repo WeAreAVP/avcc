@@ -101,7 +101,7 @@ class VideoRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\VideoRecords
      */
-    public function setCasseteSize(CassetteSizes $cs)
+    public function setCassetteSize(CassetteSizes $cs)
     {
         $this->cassetteSize = $cs;
 
@@ -113,7 +113,7 @@ class VideoRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\CassetteSizes
      */
-    public function getCasseteSize()
+    public function getCassetteSize()
     {
         return $this->cassetteSize;
     }

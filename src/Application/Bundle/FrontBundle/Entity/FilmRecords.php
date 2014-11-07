@@ -266,7 +266,7 @@ class FilmRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\FilmRecords
      */
-    public function setColor(Colors $color)
+    public function setColors(Colors $color)
     {
         $this->colors = $color;
 
@@ -278,7 +278,7 @@ class FilmRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\Colors
      */
-    public function getColor()
+    public function getColors()
     {
         return $this->colors;
     }

@@ -1,9 +1,9 @@
 <?php $view->extend('FOSUserBundle::default.layout.html.php') ?>
 <?php $view['slots']->start('body') ?>
 <?php
- foreach($speeds as $speed){
+ foreach($formatVersions as $formatVersion){
 ?>
-<option value="<?php echo $speed->getId()?>"><?php echo $speed->getName()?></option>
+<option value="<?php echo $formatVersion->getId()?>"><?php echo $formatVersion->getName()?></option>
 <?php
  }
 ?>

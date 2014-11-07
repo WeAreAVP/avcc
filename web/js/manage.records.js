@@ -4,14 +4,14 @@ function initialize_records_form() {
     $('#mediaDiameters_lbl').hide();
     $('#tapeThickness_lbl').hide();
     $('#trackTypes_lbl').hide();
+    $('#cassetteSize_lbl').hide();
+    $("#formatVersion_lbl").hide();
     showUpdateFields();
     $.mask.definitions['y'] = '[1-2,x]';
     $.mask.definitions['m'] = '[0-1,x]';
     $.mask.definitions['d'] = '[0-3,x]';
     $.mask.definitions['g'] = '[0-9,x]';
     $("#creationDate, #contentDate").mask("yggg-mg-dg", {optional: true});
-
-    console.log($("#mediaType").val());
     updateFormat();
 }
 function updateFormat() {
@@ -22,7 +22,7 @@ function updateFormat() {
         success: function (response) {
             if (response != "") {
                 $("#format").html(response);
-            } else {                
+            } else {
             }
         }
 
@@ -32,23 +32,17 @@ function updateFormat() {
 function showUpdateFields() {
     $('#format').change(function () {
         var showDiskDiameter = [16, 17, 18, 19, 20, 28];
-        var showReelDiameter = [1, 2, 3, 4, 5, 24];
         var showMediaDiameter = [1, 2, 3, 4, 5, 24];
         var showTapeThickness = [1, 2, 3, 4, 5];
         var showTrackType = [1, 2, 3, 4, 5];
+        var showCassetteSize = [59, 60, 33, 34, 35, 43, 44, 46, 47, 48, 52, 53, 54, 55, 57];
 
         if (jQuery.inArray(parseInt($(this).val()), showDiskDiameter) >= 0) {
             $('#diskDiameters_lbl').show();
         } else {
             $('#diskDiameters_lbl').hide();
         }
-
-        if (jQuery.inArray(parseInt($(this).val()), showReelDiameter) >= 0) {
-            $('#reelDiameters_lbl').show();
-        } else {
-            $('#reelDiameters_lbl').hide();
-        }
-
+        
         if (jQuery.inArray(parseInt($(this).val()), showMediaDiameter) >= 0) {
             $('#mediaDiameters_lbl').show();
         } else {
@@ -66,6 +60,12 @@ function showUpdateFields() {
         } else {
             $('#trackTypes_lbl').hide();
         }
+
+        if (jQuery.inArray(parseInt($(this).val()), showCassetteSize) >= 0) {
+            $('#cassetteSize_lbl').show();
+        } else {
+            $('#cassetteSize_lbl').hide();
+        }
         /// call to get base dropdown options
         $.ajax({
             type: "GET",
@@ -80,10 +80,24 @@ function showUpdateFields() {
             }
 
         }); // Ajax Call
+        /// call to get reel diameters dropdown options
+        $.ajax({
+            type: "GET",
+            url: baseUrl + 'getReelDiameter/' + $(this).val() + '/' + $("#mediaType").val(),
+            success: function (response) {
+                if (response != "") {
+                    $("#reelDiameters_lbl").show();
+                    $("#reelDiameters").html(response);
+                } else {
+                    $("#reelDiameters_lbl").hide();
+                }
+            }
+
+        }); // Ajax Call 
         /// call to get recording speed dropdown options
         $.ajax({
             type: "GET",
-            url: baseUrl + 'getRecordingSpeed/' + $(this).val(),
+            url: baseUrl + 'getRecordingSpeed/' + $(this).val() + '/' + $("#mediaType").val(),
             success: function (response) {
                 if (response != "") {
                     $("#recordingSpeed_lbl").show();
@@ -93,8 +107,22 @@ function showUpdateFields() {
                 }
             }
 
+        }); // Ajax Call        
+        /// call to get formatversion dropdown options
+        $.ajax({
+            type: "GET",
+            url: baseUrl + 'getFormatVersion/' + $(this).val(),
+            success: function (response) {
+                if (response != "") {
+                    $("#formatVersion_lbl").show();
+                    $("#formatVersion").html(response);
+                } else {
+                    $("#formatVersion_lbl").hide();
+                }
+            }
+
         }); // Ajax Call
-    });
+    }).change();
 
 }
     

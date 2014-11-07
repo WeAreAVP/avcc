@@ -1,9 +1,9 @@
 <?php $view->extend('FOSUserBundle::default.layout.html.php') ?>
 <?php $view['slots']->start('body') ?>
 <?php
- foreach($speeds as $speed){
+ foreach($reeldiameters as $reeldiameter){
 ?>
-<option value="<?php echo $speed->getId()?>"><?php echo $speed->getName()?></option>
+<option value="<?php echo $reeldiameter->getId()?>"><?php echo $reeldiameter->getName()?></option>
 <?php
  }
 ?>

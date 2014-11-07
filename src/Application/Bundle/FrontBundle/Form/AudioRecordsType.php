@@ -9,9 +9,9 @@ use Doctrine\ORM\EntityManager;
 
 class AudioRecordsType extends AbstractType
 {
+
     private $data;
     private $em;
-
 
     public function __construct(EntityManager $em, $data = null)
     {
@@ -24,24 +24,24 @@ class AudioRecordsType extends AbstractType
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-        ->add('record', new RecordsType($this->em, $this->data), array(
-            'data_class' => 'Application\Bundle\FrontBundle\Entity\Records'))
-        ->add('mediaDuration','text',array('required'=>false))
-        ->add('diskDiameters')
-        ->add('mediaDiameters')
-        ->add('bases')
-        ->add('recordingSpeed')
-        ->add('tapeThickness')
-        ->add('slides')
-        ->add('trackTypes')
-        ->add('monoStereo')
-        ->add('noiceReduction')
+    {        
+            $builder
+                    ->add('record', new RecordsType($this->em, $this->data), array(
+                        'data_class' => 'Application\Bundle\FrontBundle\Entity\Records'))
+                    ->add('mediaDuration', 'text', array('required' => false))
+                    ->add('diskDiameters')
+                    ->add('mediaDiameters')
+                    ->add('bases')
+                    ->add('recordingSpeed')
+                    ->add('tapeThickness')
+                    ->add('slides')
+                    ->add('trackTypes')
+                    ->add('monoStereo')
+                    ->add('noiceReduction')
 //		->add('nextStep', 'submit')
 //    ->add('previousStep', 'submit')
 
-        ;
+            ;
     }
 
     /**

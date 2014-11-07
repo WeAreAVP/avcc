@@ -83,6 +83,18 @@ class Formats
      * @ORM\OrderBy({"id"="ASC"})
      */
     private $formatVersion;
+    
+    /**
+     * @ORM\OneToMany(
+     *     targetEntity="ReelDiameters",
+     *     mappedBy="reelFormat",
+     *     fetch="EAGER",
+     *     indexBy="id",
+     *     cascade={"all","merge","persist","refresh","remove"}
+     * )
+     * @ORM\OrderBy({"id"="ASC"})
+     */
+    private $reelDiameter;
 
     /**
      * Formats constructor
@@ -92,6 +104,7 @@ class Formats
         $this->base = new ArrayCollection();
         $this->recordingSpeed = new ArrayCollection();
         $this->formatVersion = new ArrayCollection();
+        $this->reelDiameter = new ArrayCollection();
     }
 
     /**
@@ -232,6 +245,30 @@ class Formats
     public function removeFormatVersion(FormatVersions $fv)
     {
          $this->formatVersion->remove($fv);
+    }
+    
+    /**
+     * Add reel diameters
+     * @param \Application\Bundle\FrontBundle\Entity\ReelDiameters $rm
+     *
+     */
+    public function addReelDiameter(ReelDiameters $rm)
+    {
+         if (!$this->reelDiameter->contains($rm)) {
+
+             $this->reelDiameter[] = $rm;
+             $rm->setReelFormat($this);
+         }
+    }
+
+    /**
+     * Remove reel diameter
+     * @param \Application\Bundle\FrontBundle\Entity\ReelDiameters $rm
+     *
+     */
+    public function removeReelDiameter(ReelDiameters $fv)
+    {
+         $this->reelDiameter->remove($fv);
     }
 
 }

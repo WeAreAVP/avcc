@@ -1,13 +1,16 @@
 {% extends 'FOSUserBundle::layout.html.twig' %}
 
 {% block body -%}
-    <h1>AudioRecords list</h1>
+    <h1>Records list</h1>
 
-    <table class="records_list">
+    <table class="table striped hovered bordered">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Mediaduration</th>
+                <th>Media Type</th>
+                <th>Format</th>
+                <th>Unique Id</th>
+                <th>Project</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -15,27 +18,17 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('record_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.mediaDuration }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('record_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('record_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                <td>{{ entity.mediaType }}</td>
+                <td>{{ entity.format }}</td>
+                <td>{{ entity.uniqueId }}</td>
+                <td>{{ entity.project }}</td>
+                <td class="text-center"><a class="icon-grid-view" href="#"></a>
+                    &nbsp;|&nbsp; <a class="icon-pencil" href="#" title="Edit"></a>
+                    &nbsp;|&nbsp; <a class="icon-remove" href="#" title="Delete"></a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('record_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
     {% endblock %}

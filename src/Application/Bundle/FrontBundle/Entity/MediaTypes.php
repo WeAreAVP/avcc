@@ -1,4 +1,5 @@
 <?php
+
 namespace Application\Bundle\FrontBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -14,6 +15,7 @@ use Application\Bundle\FrontBundle\Entity\Formats as Formats;
  */
 class MediaTypes
 {
+
     /**
      * @var integer
      *
@@ -52,7 +54,7 @@ class MediaTypes
      * @ORM\OrderBy({"id"="ASC"})
      */
     private $mediaSetting;
-    
+
     /**
      * Media types construct
      */
@@ -113,11 +115,11 @@ class MediaTypes
      */
     public function addFormat(Formats $f)
     {
-         if (!$this->formats->contains($f)) {
+        if (!$this->formats->contains($f)) {
 
-             $this->formats[] = $f;
-             $f->setMediaType($this);
-         }
+            $this->formats[] = $f;
+            $f->setMediaType($this);
+        }
     }
 
     /**
@@ -127,9 +129,9 @@ class MediaTypes
      */
     public function removeFormat(Formats $f)
     {
-         $this->formats->remove($f);
+        $this->formats->remove($f);
     }
-    
+
     /**
      * Add mediaSetting
      *
@@ -137,11 +139,11 @@ class MediaTypes
      */
     public function addMediaSetting(MediaTypes $mt)
     {
-         if (!$this->mediaSetting->contains($mt)) {
+        if (!$this->mediaSetting->contains($mt)) {
 
-             $this->mediaSetting[] = $mt;
-             $f->setMediaType($this);
-         }
+            $this->mediaSetting[] = $mt;
+            $f->setMediaType($this);
+        }
     }
 
     /**
@@ -151,7 +153,7 @@ class MediaTypes
      */
     public function removeMediaSetting(Formats $mt)
     {
-         $this->mediaSetting->remove($mt);
+        $this->mediaSetting->remove($mt);
     }
 
 }

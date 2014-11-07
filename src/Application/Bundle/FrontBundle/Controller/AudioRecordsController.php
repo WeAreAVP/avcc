@@ -31,7 +31,7 @@ class AudioRecordsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ApplicationFrontBundle:AudioRecords')->findAll();
+        $entities = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
 
         return array(
             'entities' => $entities,
@@ -43,7 +43,7 @@ class AudioRecordsController extends Controller
      *
      * @param Request $request
      *
-     * @Route("/", name="record_create")
+     * @Route("/audio/", name="record_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:AudioRecords:new.html.twig")
      * @return array
@@ -52,14 +52,14 @@ class AudioRecordsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $entity = new AudioRecords();
-        $form = $this->createCreateForm($entity, $em);  
+        $form = $this->createCreateForm($entity, $em);
         $form->handleRequest($request);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('record_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('record'));
         }
 
         return array(
@@ -92,16 +92,16 @@ class AudioRecordsController extends Controller
      * 
      * @param Request $request
      * 
-     * @Route("/new", name="record_new")
-     * @Method("POST")
+     * @Route("/audio/new", name="record_new")
+     * @Method("GET")
      * @Template()
      * @return array
      */
     public function newAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $data['mediaTypeId'] = $request->request->get('mediaType');
-        $data['projectId'] = $request->request->get('project');
+        $data['mediaTypeId'] = 1;
+//        $data['projectId'] = $request->request->get('project');
         $data['userId'] = $this->getUser()->getId();
         $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
 
@@ -114,12 +114,13 @@ class AudioRecordsController extends Controller
         foreach ($projects as $project) {
             $data['projectsArr'][] = array($project->getId() => $project->getName());
         }
-        
+
         $mediaType = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $data['mediaTypeId']));
-         
+
         $entity = new AudioRecords();
         $form = $this->createCreateForm($entity, $em, $data);
-        $user_view_settings = $this->getFieldSettings();
+        $f_obj = new DefaultFields();
+        $user_view_settings = $f_obj->getFieldSettings($this->getUser(),$em);
         return $this->render('ApplicationFrontBundle:AudioRecords:new.html.php', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
@@ -161,7 +162,7 @@ class AudioRecordsController extends Controller
      *
      * @param integer $id
      *
-     * @Route("/{id}/edit", name="record_edit")
+     * @Route("/audio/{id}/edit", name="record_edit")
      * @Method("GET")
      * @Template()
      * @return array
@@ -212,7 +213,7 @@ class AudioRecordsController extends Controller
      * @param Request $request
      * @param type    $id
      *
-     * @Route("/{id}", name="record_update")
+     * @Route("/audio/{id}", name="record_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:AudioRecords:edit.html.twig")
      * @return array
@@ -291,23 +292,6 @@ class AudioRecordsController extends Controller
     }
 
     /**
-     *  Get Field settings
-     */
-    private function getFieldSettings()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $settings = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $this->getUser()->getId()));
-        if ($settings) {
-            $view_settings = $settings->getViewSetting();
-        } else {
-            $f_obj = new DefaultFields();
-            $view_settings = $f_obj->getDefaultOrder();
-        }
-        $user_view_settings = json_decode($view_settings, true);
-        return $user_view_settings;
-    }
-
-    /**
      * Displays a form to select media type and projects.
      *
      * @param integer $id
@@ -346,7 +330,7 @@ class AudioRecordsController extends Controller
                     'mediaTypes' => $mediaTypes
         ));
     }
-    
+
     /**
      * Displays a form to select media type abd projects.
      * 
@@ -359,30 +343,34 @@ class AudioRecordsController extends Controller
     public function getBaseAction($format_id)
     {
         $em = $this->getDoctrine()->getManager();
-        $bases = $em->getRepository('ApplicationFrontBundle:Bases')->findBy(array('baseFormat'=>$format_id));       
+        $bases = $em->getRepository('ApplicationFrontBundle:Bases')->findBy(array('baseFormat' => $format_id));
         return $this->render('ApplicationFrontBundle:AudioRecords:getBase.html.php', array(
                     'bases' => $bases
         ));
     }
-    
+
     /**
      * get recording speed values to show in dropdown.
      * 
      * @param integer $format_id Format id
      * 
-     * @Route("/getRecordingSpeed/{format_id}", name="record_get_speed")
+     * @Route("/getRecordingSpeed/{format_id}/{media_type_id}", name="record_get_speed")
      * @Method("GET")
      * @Template()
      */
-    public function getRecordingSpeedAction($format_id)
+    public function getRecordingSpeedAction($format_id, $media_type_id)
     {
         $em = $this->getDoctrine()->getManager();
-        $speeds = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findBy(array('recSpeedFormat'=>$format_id));       
+        if ($media_type_id == 3) {
+            $speeds = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findBy(array('recSpeedFormat' => NULL));
+        } else {
+            $speeds = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findBy(array('recSpeedFormat' => $format_id));
+        }
         return $this->render('ApplicationFrontBundle:AudioRecords:getRecordingSpeed.html.php', array(
                     'speeds' => $speeds
         ));
     }
-    
+
     /**
      * get format values to show in dropdown.
      * 
@@ -395,9 +383,49 @@ class AudioRecordsController extends Controller
     public function getFormatAction($media_type_id)
     {
         $em = $this->getDoctrine()->getManager();
-        $formats = $em->getRepository('ApplicationFrontBundle:Formats')->findBy(array('mediaType'=>$media_type_id));       
+        $formats = $em->getRepository('ApplicationFrontBundle:Formats')->findBy(array('mediaType' => $media_type_id));
         return $this->render('ApplicationFrontBundle:AudioRecords:getFormat.html.php', array(
                     'formats' => $formats
+        ));
+    }
+
+    /**
+     * get values to show in dropdown.
+     * 
+     * @param integer $format_id Format id
+     * 
+     * @Route("/getFormatVersion/{format_id}", name="record_get_formatversion")
+     * @Method("GET")
+     * @Template()
+     */
+    public function getFormatVersionAction($format_id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $formatVersions = $em->getRepository('ApplicationFrontBundle:FormatVersions')->findBy(array('formatVersionFormat' => $format_id));
+        return $this->render('ApplicationFrontBundle:AudioRecords:getFormatVersion.html.php', array(
+                    'formatVersions' => $formatVersions
+        ));
+    }
+
+    /**
+     * get reel diameters values to show in dropdown.
+     * 
+     * @param integer $format_id Format id
+     * 
+     * @Route("/getReelDiameter/{format_id}/{media_type_id}", name="record_get_reeldiameter")
+     * @Method("GET")
+     * @Template()
+     */
+    public function getReelDiameterAction($format_id, $media_type_id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if ($media_type_id == 2) {
+            $reeldiameters = $em->getRepository('ApplicationFrontBundle:ReelDiameters')->findBy(array('reelFormat' => NULL));
+        } else {
+            $reeldiameters = $em->getRepository('ApplicationFrontBundle:ReelDiameters')->findBy(array('reelFormat' => $format_id));
+        }
+        return $this->render('ApplicationFrontBundle:AudioRecords:getReelDiameter.html.php', array(
+                    'reeldiameters' => $reeldiameters
         ));
     }
 }

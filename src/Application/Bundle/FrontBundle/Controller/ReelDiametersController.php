@@ -54,9 +54,16 @@ class ReelDiametersController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $posted_value = $this->get('request')->request->get('application_bundle_frontbundle_reeldiameters');
+            $f = $form->getData();
+            foreach ($posted_value['formatVersionFormat'] as $key => $value) {
+                $entity = new ReelDiameters();
+                $entity->setName($f->getName());
+                $format = $this->getDoctrine()->getRepository('ApplicationFrontBundle:Formats')->find($value);
+                $entity->setReelFormat($format);
+                $em->persist($entity);
+                $em->flush();
+            }
             $this->get('session')->getFlashBag()->add('success', 'Reel diameter added succesfully.');
 
             return $this->redirect($this->generateUrl('vocabularies_reeldiameters'));

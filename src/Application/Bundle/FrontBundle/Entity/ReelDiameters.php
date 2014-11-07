@@ -32,6 +32,19 @@ class ReelDiameters
     private $name;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Formats" , fetch="EAGER", inversedBy="reelDiameter")
+     * @ORM\JoinColumn(
+     *     name="format_id",
+     *     referencedColumnName="id",
+     *     nullable=true,
+     *     onDelete="SET NULL"
+     * )
+     *
+     * @var integer
+     */
+    private $reelFormat;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="reelDiameterOrg")
      * @ORM\JoinColumn(
      *     name="organization_id",

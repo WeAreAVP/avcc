@@ -409,13 +409,5 @@ class AudioRecords
     {
         return $this->record;
     }
-     /**
-     * Returns user name
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getName();
-    }
+    
 }
