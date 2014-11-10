@@ -51,14 +51,14 @@ class FilmRecords
     /**
      * @var integer
      *
-     * @ORM\Column(name="footage", type="integer")
+     * @ORM\Column(name="footage", type="integer", nullable=true)
      */
     private $footage;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="media_diameter", type="integer")
+     * @ORM\Column(name="media_diameter", type="integer", nullable=true)
      */
     private $mediaDiameter;
 
