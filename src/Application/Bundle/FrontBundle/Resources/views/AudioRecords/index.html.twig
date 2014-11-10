@@ -2,7 +2,7 @@
 
 {% block body -%}
     <h1>Records list</h1>
-
+   
     <table class="table striped hovered bordered">
         <thead>
             <tr>
@@ -16,14 +16,24 @@
         </thead>
         <tbody>
         {% for entity in entities %}
+            {% if entity.mediaType == 'Audio' %}
+                {% set recId = entity.audioRecord.id %}
+                {% set eidtPath = 'record_edit' %}
+            {% elseif entity.mediaType == 'Video' %}
+                {% set recId = entity.videoRecord.id %}
+                {% set eidtPath = 'record_video_edit' %}
+            {% else %}    
+               {% set recId = entity.filmRecord.id %}
+                {% set eidtPath = 'record_film_edit' %}
+            {% endif %}
             <tr>
                 <td><a href="{{ path('record_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.mediaType }}</td>
                 <td>{{ entity.format }}</td>
                 <td>{{ entity.uniqueId }}</td>
                 <td>{{ entity.project }}</td>
-                <td class="text-center"><a class="icon-grid-view" href="#"></a>
-                    &nbsp;|&nbsp; <a class="icon-pencil" href="#" title="Edit"></a>
+                <td class="text-center"><a class="icon-grid-view" href="#" title="View"></a>
+                    &nbsp;|&nbsp; <a class="icon-pencil" href="{{ path( eidtPath , { 'id': recId }) }}" title="Edit"></a>
                     &nbsp;|&nbsp; <a class="icon-remove" href="#" title="Delete"></a>
                 </td>
             </tr>

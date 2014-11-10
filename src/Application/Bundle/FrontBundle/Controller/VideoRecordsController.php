@@ -54,7 +54,7 @@ class VideoRecordsController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
+            $this->get('session')->getFlashBag()->add('success', 'Video record added succesfully.');
             return $this->redirect($this->generateUrl('record'));
         }
 
@@ -163,15 +163,20 @@ class VideoRecordsController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find VideoRecords entity.');
         }
-
-        $editForm = $this->createEditForm($entity);
+        $data = $this->getData();        
+        $editForm = $this->createEditForm($entity, $em, $data);
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        $fieldsObj = new DefaultFields();
+        $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+        
+        return $this->render('ApplicationFrontBundle:VideoRecords:edit.html.php',array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
-        );
+            'fieldSettings' => $userViewSettings,
+            'type' => $data['mediaType']->getName(),
+        ));
     }
 
     /**
@@ -181,9 +186,9 @@ class VideoRecordsController extends Controller
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(VideoRecords $entity)
+    private function createEditForm(VideoRecords $entity, $em, $data = null)
     {
-        $form = $this->createForm(new VideoRecordsType(), $entity, array(
+        $form = $this->createForm(new VideoRecordsType($em, $data), $entity, array(
             'action' => $this->generateUrl('record_video_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
@@ -197,7 +202,7 @@ class VideoRecordsController extends Controller
      *
      * @Route("/{id}", name="record_video_update")
      * @Method("PUT")
-     * @Template("ApplicationFrontBundle:VideoRecords:edit.html.twig")
+     * @Template("ApplicationFrontBundle:VideoRecords:edit.html.php")
      */
     public function updateAction(Request $request, $id)
     {
@@ -208,15 +213,15 @@ class VideoRecordsController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find VideoRecords entity.');
         }
-
+        $data = $this->getData();
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($entity, $em, $data);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em->flush();
-
-            return $this->redirect($this->generateUrl('record_video_edit', array('id' => $id)));
+            $this->get('session')->getFlashBag()->add('success', 'Video record updated succesfully.');
+            return $this->redirect($this->generateUrl('record'));
         }
 
         return array(
@@ -268,21 +273,25 @@ class VideoRecordsController extends Controller
         ;
     }
     
-    /**
-     *  Get Field settings
-     */
-    private function getFieldSettings()
-    {
+    private function getData(){
         $em = $this->getDoctrine()->getManager();
-        $settings = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $this->getUser()->getId()));
-        if ($settings) {
-            $view_settings = $settings->getViewSetting();
-        } else {
-            $f_obj = new DefaultFields();
-            $view_settings = $f_obj->getDefaultOrder();
+        $data['mediaTypeId'] = 3;
+        $data['userId'] = $this->getUser()->getId();
+        $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
+
+        foreach ($mediaTypes as $media) {
+            $data['mediaTypesArr'][] = array($media->getId() => $media->getName());
         }
-        $user_view_settings = json_decode($view_settings, true);
-        return $user_view_settings;
+
+        $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
+
+        foreach ($projects as $project) {
+            $data['projectsArr'][] = array($project->getId() => $project->getName());
+        }
+
+        $data['mediaType'] = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $data['mediaTypeId']));
+
+        return $data;
     }
 
 }

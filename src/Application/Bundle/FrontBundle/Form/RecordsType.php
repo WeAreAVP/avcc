@@ -66,6 +66,7 @@ class RecordsType extends AbstractType
                     'choices' => $this->selectedOptions['mediaTypesArr'],
                     'data' => $this->selectedOptions['mediaTypeId'],
                     'attr' => array('disabled' => 'disabled'),
+                    'mapped'=>false,
                 ))
                 ->add('reelDiameters')
                 ->add('mediaTypeHidden','hidden',array(
@@ -96,16 +97,17 @@ class RecordsType extends AbstractType
 //        $projectId= $record['projectHidden'];
         $mediaTypeId= $record['mediaTypeHidden'];
         $userId= $record['userId'];
-        
         $this->mediaTyp = $this->em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $mediaTypeId));
         
 //        $this->proj = $this->em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
         
-        $this->user = $this->em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
+        $this->user = $this->em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));  
+        $record['mediaType'] = $this->mediaTyp;
     }
 
     public function onPostSubmitData(FormEvent $event)
-    {        
+    {     
+       
         $record = $event->getData();
         $record->setUser($this->user);
         $record->setMediaType($this->mediaTyp);

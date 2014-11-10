@@ -87,6 +87,7 @@ class Records
     private $uniqueId;
 
     /**
+     * @ORM\Column(name="location", type="string")
      * @var string
      * @Assert\NotBlank(message="Location is required")
      */
@@ -104,6 +105,7 @@ class Records
     private $format;
 
     /**
+     * @ORM\Column(name="title", type="string")
      * @var string
      * @Assert\NotBlank(message="Title is required")
      */
@@ -117,7 +119,7 @@ class Records
     private $collectionName;
 
     /**
-     *
+     * @ORM\Column(name="description", type="string")
      * @var string
      */
     private $description;
@@ -152,14 +154,14 @@ class Records
     /**
      * @var string
      *
-     * @ORM\Column(name="creation_date", type="string")
+     * @ORM\Column(name="creation_date", type="string", nullable=true)
      */
     private $creationDate;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="content_date", type="string")
+     * @ORM\Column(name="content_date", type="string", nullable=true)
      */
     private $contentDate;
 
@@ -924,4 +926,13 @@ class Records
         return $this->filmRecord;
     }
 
+    /**
+     * Returns title
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '';
+    }
 }
