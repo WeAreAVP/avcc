@@ -115,7 +115,7 @@ class FilmRecords
     /**
      * @var float
      *
-     * @ORM\Column(name="shrinkage", type="float")
+     * @ORM\Column(name="shrinkage", type="float", nullable=true)
      */
     private $shrinkage;
 

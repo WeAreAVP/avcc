@@ -147,7 +147,7 @@ class Records
     /**
      * @var integer
      *
-     * @ORM\Column(name="content_duration", type="integer")
+     * @ORM\Column(name="content_duration", type="integer", nullable=true)
      */
     private $contentDuration;
 
