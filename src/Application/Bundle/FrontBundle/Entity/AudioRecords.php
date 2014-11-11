@@ -62,7 +62,7 @@ class AudioRecords
     /**
      * @var integer
      *
-     * @ORM\Column(name="media_duration", type="integer")
+     * @ORM\Column(name="media_duration", type="integer", nullable = true)
      */
     private $mediaDuration;
 

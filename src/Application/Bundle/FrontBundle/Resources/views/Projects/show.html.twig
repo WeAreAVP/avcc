@@ -14,7 +14,12 @@
 					Edit
 				</a>
 			</li>
-			<li>{{ form(delete_form) }}</li>                       
+			<li>{{ form(delete_form) }}</li>
+                        <li>
+				<a href="{{ path('project_record_add', { 'id': entity.id } ) }}" class="button primary">
+					Add Record
+				</a>
+			</li>
 		</ul>
 		<dl class="horizontal">
 			<dt>Name</dt>

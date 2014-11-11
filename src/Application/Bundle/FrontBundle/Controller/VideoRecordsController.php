@@ -51,7 +51,6 @@ class VideoRecordsController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Video record added succesfully.');
@@ -87,38 +86,29 @@ class VideoRecordsController extends Controller
      * Displays a form to create a new VideoRecords entity.
      *
      * @Route("/new", name="record_video_new")
+     * @Route("/new/{projectId}", name="record_video_new_against_project")
      * @Method("GET")
      * @Template()
      */
-    public function newAction(Request $request)
+    public function newAction($projectId = null)
     {
+        $securityContext = $this->get('security.context');
+
+        // check for edit access
+        if (false === $securityContext->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager();
-        $data['mediaTypeId'] = 3;
-        $data['projectId'] = $request->request->get('project');
-        $data['userId'] = $this->getUser()->getId();
-        $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
-
-        foreach ($mediaTypes as $media) {
-            $data['mediaTypesArr'][] = array($media->getId() => $media->getName());
-        }
-
-        $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
-
-        foreach ($projects as $project) {
-            $data['projectsArr'][] = array($project->getId() => $project->getName());
-        }
-
-        $mediaType = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $data['mediaTypeId']));
-
+        $fieldsObj = new DefaultFields();
+        $data = $fieldsObj->getData(3, $em, $this->getUser(), $projectId);
         $entity = new VideoRecords();
         $form = $this->createCreateForm($entity, $em, $data);
-        $f_obj = new DefaultFields();
-        $user_view_settings = $f_obj->getFieldSettings($this->getUser(),$em);
+        $user_view_settings = $fieldsObj->getFieldSettings($this->getUser(),$em);
         return $this->render('ApplicationFrontBundle:VideoRecords:new.html.php', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
                     'fieldSettings' => $user_view_settings,
-                    'type' => $mediaType->getName(),
+                    'type' => $data['mediaType']->getName(),
         ));
     }
 
@@ -156,18 +146,23 @@ class VideoRecordsController extends Controller
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $securityContext = $this->get('security.context');
 
+        // check for edit access
+        if (false === $securityContext->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
+        $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('ApplicationFrontBundle:VideoRecords')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find VideoRecords entity.');
         }
-        $data = $this->getData();        
+        $fieldsObj = new DefaultFields();
+        $data = $fieldsObj->getData(3, $em, $this->getUser());       
         $editForm = $this->createEditForm($entity, $em, $data);
         $deleteForm = $this->createDeleteForm($id);
 
-        $fieldsObj = new DefaultFields();
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
         
         return $this->render('ApplicationFrontBundle:VideoRecords:edit.html.php',array(
@@ -213,7 +208,8 @@ class VideoRecordsController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find VideoRecords entity.');
         }
-        $data = $this->getData();
+        $fieldsObj = new DefaultFields();
+        $data = $fieldsObj->getData(3, $em, $this->getUser());
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity, $em, $data);
         $editForm->handleRequest($request);
@@ -272,26 +268,4 @@ class VideoRecordsController extends Controller
             ->getForm()
         ;
     }
-    
-    private function getData(){
-        $em = $this->getDoctrine()->getManager();
-        $data['mediaTypeId'] = 3;
-        $data['userId'] = $this->getUser()->getId();
-        $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
-
-        foreach ($mediaTypes as $media) {
-            $data['mediaTypesArr'][] = array($media->getId() => $media->getName());
-        }
-
-        $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
-
-        foreach ($projects as $project) {
-            $data['projectsArr'][] = array($project->getId() => $project->getName());
-        }
-
-        $data['mediaType'] = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $data['mediaTypeId']));
-
-        return $data;
-    }
-
 }

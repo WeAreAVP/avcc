@@ -45,26 +45,26 @@ class AudioRecordsController extends Controller
      *
      * @Route("/audio/", name="record_create")
      * @Method("POST")
-     * @Template("ApplicationFrontBundle:AudioRecords:new.html.twig")
+     * @Template("ApplicationFrontBundle:AudioRecords:new.html.php")
      * @return array
      */
     public function createAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = new AudioRecords();
+        $entity = new AudioRecords();        
         $form = $this->createCreateForm($entity, $em);
         $form->handleRequest($request);
+        
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Audio record added succesfully.');
             return $this->redirect($this->generateUrl('record'));
         }
-
+        
         return array(
             'entity' => $entity,
-            'form' => $form->createView(),
+            'form' => $form->createView(),            
         );
     }
 
@@ -90,20 +90,27 @@ class AudioRecordsController extends Controller
     /**
      * Displays a form to create a new AudioRecords entity.
      * 
-     * @param Request $request
+     * @param integer $projectId
      * 
      * @Route("/audio/new", name="record_new")
+     * @Route("/audio/new/{projectId}", name="record_new_against_project")
      * @Method("GET")
      * @Template()
      * @return array
      */
-    public function newAction(Request $request)
+    public function newAction($projectId = null)
     {
-        $em = $this->getDoctrine()->getManager();        
-        $data = $this->getData();
-        $entity = new AudioRecords();
-        $form = $this->createCreateForm($entity, $em, $data);
+        $securityContext = $this->get('security.context');
+
+        // check for edit access
+        if (false === $securityContext->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
         $fieldsObj = new DefaultFields();
+        $em = $this->getDoctrine()->getManager();
+        $data = $fieldsObj->getData(1, $em, $this->getUser(), $projectId);
+        $entity = new AudioRecords();
+        $form = $this->createCreateForm($entity, $em, $data);        
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
         return $this->render('ApplicationFrontBundle:AudioRecords:new.html.php', array(
                     'entity' => $entity,
@@ -137,9 +144,9 @@ class AudioRecordsController extends Controller
         $fieldsObj = new DefaultFields();
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
         return $this->render('ApplicationFrontBundle:AudioRecords:show.html.php', array(
-            'entity' => $entity,
-            'delete_form' => $deleteForm->createView(),
-            'fieldSettings'=>$userViewSettings
+                    'entity' => $entity,
+                    'delete_form' => $deleteForm->createView(),
+                    'fieldSettings' => $userViewSettings
         ));
     }
 
@@ -155,27 +162,31 @@ class AudioRecordsController extends Controller
      */
     public function editAction($id)
     {
+        $securityContext = $this->get('security.context');
+
+        // check for edit access
+        if (false === $securityContext->isGranted('ROLE_ADMIN')) {
+            throw new AccessDeniedException();
+        }
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->find($id);
-//        print_r($entity->getRecord()->getMediaType()->getName());exit;
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find AudioRecords entity.');
         }
-        $data = $this->getData();
-        
+        $fieldsObj = new DefaultFields();
+        $data = $fieldsObj->getData(1, $em, $this->getUser());
         $editForm = $this->createEditForm($entity, $em, $data);
         $deleteForm = $this->createDeleteForm($id);
         
-        $fieldsObj = new DefaultFields();
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
-        
-        return $this->render('ApplicationFrontBundle:AudioRecords:edit.html.php',array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-            'fieldSettings' => $userViewSettings,
-            'type' => $data['mediaType']->getName(),
+
+        return $this->render('ApplicationFrontBundle:AudioRecords:edit.html.php', array(
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                    'fieldSettings' => $userViewSettings,
+                    'type' => $data['mediaType']->getName(),
         ));
     }
 
@@ -190,7 +201,7 @@ class AudioRecordsController extends Controller
     {
         $form = $this->createForm(new AudioRecordsType($em, $data), $entity, array(
             'action' => $this->generateUrl('record_update', array('id' => $entity->getId())),
-            'method' => 'PUT',            
+            'method' => 'PUT',
         ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));
@@ -218,13 +229,11 @@ class AudioRecordsController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find AudioRecords entity.');
         }
-        $data = $this->getData();
+        $user = $this->getUser();
+        $fieldsObj = new DefaultFields();
+        $data = $fieldsObj->getData(1, $em, $user);
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity,$em,$data);
-        
-//        $m = $this->em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => 1));
-//        $efrm = $editForm->getData();
-//        
+        $editForm = $this->createEditForm($entity, $em, $data);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -284,28 +293,6 @@ class AudioRecordsController extends Controller
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
                         ->getForm();
-    }
-
-    /**
-     * Displays a form to select media type and projects.
-     *
-     * @param integer $id
-     *
-     * @Route("/add/{id}", name="record_add_project")
-     * @Method("GET")
-     * @Template()
-     */
-    public function addRecordProjectAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
-        $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
-
-        return $this->render('ApplicationFrontBundle:AudioRecords:addRecord.html.twig', array(
-                    'projects' => $projects,
-                    'project_id' => $id,
-                    'mediaTypes' => $mediaTypes
-        ));
     }
 
     /**
@@ -422,26 +409,5 @@ class AudioRecordsController extends Controller
         return $this->render('ApplicationFrontBundle:AudioRecords:getReelDiameter.html.php', array(
                     'reeldiameters' => $reeldiameters
         ));
-    }
-
-    private function getData(){
-        $em = $this->getDoctrine()->getManager();
-        $data['mediaTypeId'] = 1;
-        $data['userId'] = $this->getUser()->getId();
-        $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
-
-        foreach ($mediaTypes as $media) {
-            $data['mediaTypesArr'][] = array($media->getId() => $media->getName());
-        }
-
-        $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
-
-        foreach ($projects as $project) {
-            $data['projectsArr'][] = array($project->getId() => $project->getName());
-        }
-
-        $data['mediaType'] = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $data['mediaTypeId']));
-
-        return $data;
     }
 }

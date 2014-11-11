@@ -28,7 +28,7 @@
     </fieldset>
     <?php echo $view['form']->widget($edit_form['record']['userId']) ?>   
     <?php echo $view['form']->widget($edit_form['record']['mediaTypeHidden']) ?>   
-    <?php // echo $view['form']->widget($edit_form['record']['projectHidden']) ?>   
+    <?php echo $view['form']->widget($edit_form['record']['projectHidden']) ?>   
     <?php echo $view['form']->end($edit_form) ?>
 </div>
 <script src="<?php echo $view['assets']->getUrl('js/manage.records.js') ?>"></script>

@@ -133,4 +133,32 @@ class DefaultFields
         $user_view_settings = json_decode($view_settings, true);
         return $user_view_settings;
     }
+    
+    /**
+     * Get record related info 
+     * 
+     * @param integer $projectId
+     * @return array
+     */
+    public function getData($mediaType, EntityManager $em, Users $user, $projectId = null)
+    {        
+        $data['mediaTypeId'] = $mediaType;
+        $data['projectId'] = $projectId;
+        $data['userId'] = $user->getId();
+        $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
+
+        foreach ($mediaTypes as $media) {
+            $data['mediaTypesArr'][] = array($media->getId() => $media->getName());
+        }
+
+        $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
+
+        foreach ($projects as $project) {
+            $data['projectsArr'][] = array($project->getId() => $project->getName());
+        }
+
+        $data['mediaType'] = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $data['mediaTypeId']));
+        
+        return $data;
+    }
 }
