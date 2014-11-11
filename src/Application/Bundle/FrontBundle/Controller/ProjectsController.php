@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\Projects;
 use Application\Bundle\FrontBundle\Form\ProjectsType;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Projects controller.

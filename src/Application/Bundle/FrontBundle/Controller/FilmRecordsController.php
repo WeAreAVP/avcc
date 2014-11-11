@@ -28,13 +28,7 @@ class FilmRecordsController extends Controller
      */
     public function indexAction()
     {
-        $securityContext = $this->get('security.context');
-
-        // check for edit access
-        if (false === $securityContext->isGranted('ROLE_USER')) {
-            throw new AccessDeniedException();
-        }
-        $em = $this->getDoctrine()->getManager();
+       $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('ApplicationFrontBundle:FilmRecords')->findAll();
 
@@ -103,12 +97,6 @@ class FilmRecordsController extends Controller
      */
     public function newAction($projectId = null)
     {
-        $securityContext = $this->get('security.context');
-
-        // check for edit access
-        if (false === $securityContext->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
         $em = $this->getDoctrine()->getManager();
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(2, $em, $this->getUser(), $projectId); 
@@ -162,12 +150,6 @@ class FilmRecordsController extends Controller
      */
     public function editAction($id)
     {
-        $securityContext = $this->get('security.context');
-
-        // check for edit access
-        if (false === $securityContext->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
-        }
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:FilmRecords')->find($id);
