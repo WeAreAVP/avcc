@@ -36,12 +36,12 @@ class FilmRecordsController extends Controller
             'entities' => $entities,
         );
     }
-    
+
     /**
      * Creates a new FilmRecords entity.
      *
      * @param Request $request
-     * 
+     *
      * @Route("/", name="record_film_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:FilmRecords:new.html.php")
@@ -57,6 +57,7 @@ class FilmRecordsController extends Controller
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Film record added succesfully.');
+
             return $this->redirect($this->generateUrl('record'));
         }
 
@@ -69,10 +70,10 @@ class FilmRecordsController extends Controller
     /**
      * Creates a form to create a FilmRecords entity.
      *
-     * @param FilmRecords $entity The entity
+     * @param FilmRecords   $entity The entity
      * @param EntityManager $em
-     * @param array $data
-     * 
+     * @param array         $data
+     *
      * @return \Symfony\Component\Form\Form The form
      */
     private function createCreateForm(FilmRecords $entity, $em, $data = null)
@@ -100,7 +101,7 @@ class FilmRecordsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $fieldsObj = new DefaultFields();
-        $data = $fieldsObj->getData(2, $em, $this->getUser(), $projectId); 
+        $data = $fieldsObj->getData(2, $em, $this->getUser(), $projectId);
         if ($filmRecId) {
             $entity = $em->getRepository('ApplicationFrontBundle:FilmRecords')->find($filmRecId);
         } else {
@@ -108,20 +109,21 @@ class FilmRecordsController extends Controller
         }
         $form = $this->createCreateForm($entity, $em, $data);
         $user_view_settings = $fieldsObj->getFieldSettings($this->getUser(),$em);
+
         return $this->render('ApplicationFrontBundle:FilmRecords:new.html.php', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
                     'fieldSettings' => $user_view_settings,
                     'type' => $data['mediaType']->getName(),
         ));
-        
+
     }
 
     /**
      * Finds and displays a FilmRecords entity.
      *
      * @param integer $id
-     * 
+     *
      * @Route("/{id}", name="record_film_show")
      * @Method("GET")
      * @Template()
@@ -146,9 +148,9 @@ class FilmRecordsController extends Controller
 
     /**
      * Displays a form to edit an existing FilmRecords entity.
-     * 
+     *
      * @param integer $id
-     * 
+     *
      * @Route("/{id}/edit", name="record_film_edit")
      * @Method("GET")
      * @Template()
@@ -163,11 +165,11 @@ class FilmRecordsController extends Controller
             throw $this->createNotFoundException('Unable to find FilmRecords entity.');
         }
         $fieldsObj = new DefaultFields();
-        $data = $fieldsObj->getData(2, $em, $this->getUser()); 
+        $data = $fieldsObj->getData(2, $em, $this->getUser());
         $editForm = $this->createEditForm($entity, $em, $data);
         $deleteForm = $this->createDeleteForm($id);
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
-        
+
         return $this->render('ApplicationFrontBundle:FilmRecords:edit.html.php',array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
@@ -198,10 +200,10 @@ class FilmRecordsController extends Controller
     }
     /**
      * Edits an existing FilmRecords entity.
-     * 
+     *
      * @param Request $request
-     * @param type $id
-     * 
+     * @param type    $id
+     *
      * @Route("/{id}", name="record_film_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:FilmRecords:edit.html.php")
@@ -228,6 +230,7 @@ class FilmRecordsController extends Controller
                 return $this->redirect($this->generateUrl('record_film_duplicate',array('filmRecId'=>$id)));
             }
             $this->get('session')->getFlashBag()->add('success', 'Film record updated succesfully.');
+
             return $this->redirect($this->generateUrl('record'));
         }
 
@@ -239,10 +242,10 @@ class FilmRecordsController extends Controller
     }
     /**
      * Deletes a FilmRecords entity.
-     * 
+     *
      * @param Request $request
      * @param integer $id
-     * 
+     *
      * @Route("/{id}", name="record_film_delete")
      * @Method("DELETE")
      */
@@ -280,5 +283,5 @@ class FilmRecordsController extends Controller
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm();
-    }    
+    }
 }

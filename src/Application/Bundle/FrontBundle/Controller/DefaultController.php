@@ -145,7 +145,7 @@ class DefaultController extends Controller
                 $data->setRoles(array(DefaultController::$DEFAULT_ROLE));
                 $data->getOrganizations()->setUsersCreated($data);
                 $em->flush();
-                
+
                 $fieldsObj = new DefaultFields();
                 $view_settings = $fieldsObj->getDefaultOrder();
 

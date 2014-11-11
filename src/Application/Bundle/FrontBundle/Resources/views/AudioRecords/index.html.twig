@@ -2,7 +2,7 @@
 
 {% block body -%}
     <h1>Records list</h1>
-   
+
     <table class="table striped hovered bordered">
         <thead>
             <tr>
@@ -22,7 +22,7 @@
             {% elseif entity.mediaType == 'Video' %}
                 {% set recId = entity.videoRecord.id %}
                 {% set eidtPath = 'record_video_edit' %}
-            {% else %}    
+            {% else %}
                {% set recId = entity.filmRecord.id %}
                 {% set eidtPath = 'record_film_edit' %}
             {% endif %}

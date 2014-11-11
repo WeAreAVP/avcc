@@ -19,13 +19,13 @@ class VideoRecordsType extends AbstractType
     }
      /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('record', new RecordsType($this->em, $this->data), array(
-                        'data_class' => 'Application\Bundle\FrontBundle\Entity\Records'))    
+                        'data_class' => 'Application\Bundle\FrontBundle\Entity\Records'))
             ->add('mediaDuration')
             ->add('cassetteSize')
             ->add('formatVersion')
@@ -33,7 +33,7 @@ class VideoRecordsType extends AbstractType
             ->add('recordingStandard')
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

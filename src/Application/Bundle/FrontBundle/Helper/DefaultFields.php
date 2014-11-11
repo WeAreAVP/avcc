@@ -10,11 +10,11 @@ class DefaultFields
     private $defaultOrder = array();
     private $em;
 
-    function __construct()
+    public function __construct()
     {
     }
 
-    function getDefaultOrder()
+    public function getDefaultOrder()
     {
         $this->defaultOrder['audio'] = array(
             "Media_Type" => array("title" => 'Media Type', 'field' => "record.mediaType", "is_required" => 1, "hidden" => 0),
@@ -80,7 +80,7 @@ class DefaultFields
             "Related_Meterial" => array("title" => 'Related Meterial', 'field' => "record.relatedMaterial", "is_required" => 0, "hidden" => 0),
             "Condition_Note" => array("title" => 'Condition Note', 'field' => "record.conditionNote", "is_required" => 0, "hidden" => 0)
         );
-        
+
         $this->defaultOrder['film'] = array(
             "Media_Type" => array("title" => 'Media Type', 'field' => "record.mediaType", "is_required" => 1, "hidden" => 0),
             "Project_Name" => array("title" => 'Project Name', 'field' => "record.project", "is_required" => 1, "hidden" => 0),
@@ -92,7 +92,7 @@ class DefaultFields
             "Collection_Name" => array("title" => 'Collection Name', 'field' => "record.collectionName", "is_required" => 1, "hidden" => 0),
             "Description" => array("title" => 'Description', 'field' => "record.description", "is_required" => 0, "hidden" => 0),
             "Commercial" => array("title" => 'Commercial', 'field' => "record.commercial", "is_required" => 0, "hidden" => 0),
-            "Reel_Core" => array("title" => 'Reel or Core', 'field' => "reelCore", "is_required" => 0, "hidden" => 0),            
+            "Reel_Core" => array("title" => 'Reel or Core', 'field' => "reelCore", "is_required" => 0, "hidden" => 0),
             "Reel_Diameter" => array("title" => 'Reel Diameter', 'field' => "record.reelDiameters", "is_required" => 0, "hidden" => 0),
             "Footage" => array("title" => 'Footage', 'field' => "footage", "is_required" => 0, "hidden" => 0),
             "Media_Diameter" => array("title" => 'Media Diameter', 'field' => "mediaDiameter", "is_required" => 0, "hidden" => 0),
@@ -115,7 +115,7 @@ class DefaultFields
             "Related_Meterial" => array("title" => 'Related Meterial', 'field' => "record.relatedMaterial", "is_required" => 0, "hidden" => 0),
             "Condition_Note" => array("title" => 'Condition Note', 'field' => "record.conditionNote", "is_required" => 0, "hidden" => 0)
         );
-        
+
         return json_encode($this->defaultOrder);
     }
 
@@ -123,7 +123,7 @@ class DefaultFields
      *  Get Field settings
      */
     public function getFieldSettings(Users $user,EntityManager $em)
-    {        
+    {
         $settings = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $user->getId()));
         if ($settings) {
             $view_settings = $settings->getViewSetting();
@@ -131,17 +131,18 @@ class DefaultFields
             $view_settings = $this->getDefaultOrder();
         }
         $user_view_settings = json_decode($view_settings, true);
+
         return $user_view_settings;
     }
-    
+
     /**
-     * Get record related info 
-     * 
-     * @param integer $projectId
+     * Get record related info
+     *
+     * @param  integer $projectId
      * @return array
      */
     public function getData($mediaType, EntityManager $em, Users $user, $projectId = null)
-    {        
+    {
         $data['mediaTypeId'] = $mediaType;
         $data['projectId'] = $projectId;
         $data['userId'] = $user->getId();
@@ -158,7 +159,7 @@ class DefaultFields
         }
 
         $data['mediaType'] = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $data['mediaTypeId']));
-        
+
         return $data;
     }
 }

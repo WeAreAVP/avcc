@@ -43,7 +43,7 @@ class ReelDiameters
      * @var integer
      */
     private $reelFormat;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="reelDiameterOrg")
      * @ORM\JoinColumn(

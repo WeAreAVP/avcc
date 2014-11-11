@@ -19,7 +19,7 @@ class UserSettingsController extends Controller
 {
 
     /**
-     * 
+     *
      *
      * @Route("/", name="field_settings")
      * @Method("GET")
@@ -39,13 +39,14 @@ class UserSettingsController extends Controller
             $view_settings = $entities->getViewSetting();
         }
         $user_view_settings = json_decode($view_settings, true);
+
         return array(
             'entities' => $user_view_settings,
         );
     }
 
     /**
-     * 
+     *
      *
      * @Route("/update", name="field_settings_update")
      * @Method("POST")

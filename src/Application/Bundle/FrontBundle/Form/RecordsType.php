@@ -139,13 +139,13 @@ class RecordsType extends AbstractType
 
     public function onPreSetData(FormEvent $event)
     {
-        
+
     }
 
     public function onPreSubmitData(FormEvent $event)
     {
         $record = $event->getData();
-        
+
         $projectId = $record['projectHidden'];
         $mediaTypeId = $record['mediaTypeHidden'];
         $userId = $record['userId'];
@@ -155,7 +155,7 @@ class RecordsType extends AbstractType
         }
         $this->user = $this->em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
         $record['mediaType'] = $this->mediaTyp;
-        
+
     }
 
     public function onPostSubmitData(FormEvent $event)

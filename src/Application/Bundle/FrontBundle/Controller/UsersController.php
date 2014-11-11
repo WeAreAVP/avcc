@@ -78,7 +78,7 @@ class UsersController extends Controller
             $user_entity->setViewSetting($view_settings);
             $user_entity->setCreatedOnValue(date('Y-m-d h:i:s'));
             $em->persist($user_entity);
-            $em->flush();            
+            $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'User added succesfully.');
 
             return $this->redirect($this->generateUrl('users'));

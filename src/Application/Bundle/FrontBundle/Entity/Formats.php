@@ -83,7 +83,7 @@ class Formats
      * @ORM\OrderBy({"id"="ASC"})
      */
     private $formatVersion;
-    
+
     /**
      * @ORM\OneToMany(
      *     targetEntity="ReelDiameters",
@@ -246,7 +246,7 @@ class Formats
     {
          $this->formatVersion->remove($fv);
     }
-    
+
     /**
      * Add reel diameters
      * @param \Application\Bundle\FrontBundle\Entity\ReelDiameters $rm

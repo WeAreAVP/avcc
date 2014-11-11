@@ -17,16 +17,16 @@ class FilmRecordsType extends AbstractType
         $this->data = $data;
         $this->em = $em;
     }
-    
+
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('record', new RecordsType($this->em, $this->data), array(
-                        'data_class' => 'Application\Bundle\FrontBundle\Entity\Records'))      
+                        'data_class' => 'Application\Bundle\FrontBundle\Entity\Records'))
             ->add('footage')
             ->add('mediaDiameter')
             ->add('shrinkage')
@@ -36,10 +36,10 @@ class FilmRecordsType extends AbstractType
             ->add('colors')
             ->add('sound')
             ->add('frameRate')
-            ->add('acidDetectionStrip')            
+            ->add('acidDetectionStrip')
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

@@ -287,7 +287,7 @@ class ProjectsController extends Controller
      * Displays a form to select media type and projects.
      *
      * @param integer $id
-     * 
+     *
      * @Route("/add/{id}", name="project_record_add")
      * @Method("GET")
      * @Template()
@@ -298,7 +298,6 @@ class ProjectsController extends Controller
         $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
         $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
 
-
         return $this->render('ApplicationFrontBundle:Projects:addRecord.html.twig', array(
                     'projects' => $projects,
                     'project_id' => $id,
@@ -308,9 +307,9 @@ class ProjectsController extends Controller
 
     /**
      * Get media type and project id and redirect to add records.
-     * 
-     * @param Request $request      
-     * 
+     *
+     * @param Request $request
+     *
      * @Route("/addRec", name="project_add_rec")
      * @Method("POST")
      * @Template()
@@ -319,14 +318,17 @@ class ProjectsController extends Controller
     {
         $id = $request->request->get('project');
         $mediaTypeId = $request->request->get('mediaType');
-        
-        if($mediaTypeId == 1){ /// Audio
+
+        if ($mediaTypeId == 1) { /// Audio
+
             return $this->redirect($this->generateUrl('record_new_against_project',array('projectId'=>$id)));
-        }elseif($mediaTypeId == 2){ /// Film
+        } elseif ($mediaTypeId == 2) { /// Film
+
             return $this->redirect($this->generateUrl('record_film_new_against_project',array('projectId'=>$id)));
-        }elseif($mediaTypeId == 3){ /// Video
+        } elseif ($mediaTypeId == 3) { /// Video
+
             return $this->redirect($this->generateUrl('record_video_new_against_project',array('projectId'=>$id)));
-        }else{
+        } else {
             throw new AccessDeniedException();
         }
     }

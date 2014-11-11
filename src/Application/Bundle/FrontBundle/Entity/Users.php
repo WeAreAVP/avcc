@@ -90,7 +90,7 @@ class Users extends BaseUser
      * @ORM\OrderBy({"id"="ASC"})
      */
     private $userSetting;
-    
+
     /**
      * Users constructor
      */
@@ -99,7 +99,7 @@ class Users extends BaseUser
         $this->userSetting = new ArrayCollection();
         parent::__construct();
     }
-    
+
     /**
      * @ORM\PrePersist
      */

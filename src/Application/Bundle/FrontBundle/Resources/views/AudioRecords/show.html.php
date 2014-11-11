@@ -5,7 +5,7 @@
     <h1>
         <a href="<?php echo $view['router']->generate('record') ?>"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
         <?php // echo ucwords($type) ?>
-    </h1> 
+    </h1>
     <table class="record_properties">
         <tbody>
     <?php // echo $entity->getMediaType();exit;
@@ -13,16 +13,16 @@
        <?php
             $field = explode('.', $recordField['field']);
 //            print_r($field);
-//            $function = count($field==2)?'get'.ucwords($field[1]).'()':'get'.$entity->getMediaType().'()->get'.ucwords($field[0]).'()';            
+//            $function = count($field==2)?'get'.ucwords($field[1]).'()':'get'.$entity->getMediaType().'()->get'.ucwords($field[0]).'()';
 //            $fun =  '$entity->'.$function;
 //            echo '<br />';
-            
+
        ?>
             <tr>
                 <th><?php // echo $recordField['title']?></th>
                 <td><?php // echo ($function) ? exec($fun) :$fun?></td>
             </tr>
-        
+
     <?php endforeach;?>
             </tbody>
     </table>

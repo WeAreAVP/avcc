@@ -101,7 +101,7 @@
 
                             </li>
                         </ul>
-                        <?php if ($view['security']->isGranted('ROLE_MANAGER')): ?> 
+                        <?php if ($view['security']->isGranted('ROLE_MANAGER')): ?>
                             <ul class="element-menu place-right" style="">
                                 <li>
                                     <a class="dropdown-toggle" href="#"><span class=""></span> Records</a>
@@ -136,10 +136,9 @@
             <?php endforeach; ?>
             <?php $view['slots']->output('body') ?>
 
-
         </div> <!-- /container -->
 
-        <?php $view['slots']->start('javascripts') ?>            
+        <?php $view['slots']->start('javascripts') ?>
         <script src="<?php echo $view['assets']->getUrl('js/jquery.widget.min.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/jquery.mousewheel.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/metro.min.js') ?>"></script>

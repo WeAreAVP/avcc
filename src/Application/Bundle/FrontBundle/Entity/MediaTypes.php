@@ -149,7 +149,7 @@ class MediaTypes
     /**
      * Remove mediaSetting
      *
-     * @param \Application\Bundle\FrontBundle\Entity\MediaTypes $mt 
+     * @param \Application\Bundle\FrontBundle\Entity\MediaTypes $mt
      */
     public function removeMediaSetting(Formats $mt)
     {

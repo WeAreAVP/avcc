@@ -37,7 +37,7 @@ class UserSettings
     /**
      * @var string
      *
-     * @ORM\Column(name="view_setting", type="text") 
+     * @ORM\Column(name="view_setting", type="text")
      */
     private $viewSetting;
 
@@ -166,7 +166,7 @@ class UserSettings
     {
         $this->updatedOn = new \DateTime();
     }
-    
+
     /**
      * Get Created on time.
      *

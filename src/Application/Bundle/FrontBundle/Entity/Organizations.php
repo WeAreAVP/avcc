@@ -507,7 +507,7 @@ class Organizations
 
     /**
      * Set name.
-     * 
+     *
      * @param string $name
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
@@ -521,9 +521,9 @@ class Organizations
 
     /**
      * Set dapartment name.
-     * 
-     * @param  string  $departmentName                                              
-     * 
+     *
+     * @param string $departmentName
+     *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
     public function setDepartmentName($departmentName)
@@ -535,7 +535,7 @@ class Organizations
 
     /**
      * Set Address.
-     * 
+     *
      * @param string $address
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
@@ -549,7 +549,7 @@ class Organizations
 
     /**
      * Set contact person name.
-     * 
+     *
      * @param string $contactPersonName
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
@@ -563,7 +563,7 @@ class Organizations
 
     /**
      * Set contact person email.
-     * 
+     *
      * @param string $contactPersonEmail
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
@@ -577,7 +577,7 @@ class Organizations
 
     /**
      * Set contact person phone.
-     * 
+     *
      * @param string $contactPersonPhone
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
@@ -591,7 +591,7 @@ class Organizations
 
     /**
      * Set created on.
-     * 
+     *
      * @param \DateTime $createdOn
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
@@ -619,7 +619,7 @@ class Organizations
 
     /**
      * Set creator.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Users $usersCreated
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
@@ -633,7 +633,7 @@ class Organizations
 
     /**
      * Set modifier.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
@@ -647,7 +647,7 @@ class Organizations
 
     /**
      * Add acid detection strips.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\AcidDetectionStrips $ads
      *
      */
@@ -662,7 +662,7 @@ class Organizations
 
     /**
      * Remove acid detection strip
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\AcidDetectionStrips $ads
      *
      */
@@ -673,7 +673,7 @@ class Organizations
 
     /**
      * Add base.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Bases $base
      *
      */
@@ -688,7 +688,7 @@ class Organizations
 
     /**
      * Remove base org.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Bases $base
      *
      */
@@ -699,7 +699,7 @@ class Organizations
 
     /**
      * Add cassette size.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\CassetteSizes $cs
      *
      */
@@ -714,7 +714,7 @@ class Organizations
 
     /**
      * Remove cassette size org.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\CassetteSizes $cs
      *
      */
@@ -725,7 +725,7 @@ class Organizations
 
     /**
      * Add color.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Colors $color
      *
      */
@@ -740,7 +740,7 @@ class Organizations
 
     /**
      * Remove color org.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Colors $color
      *
      */
@@ -751,7 +751,7 @@ class Organizations
 
     /**
      * Add Commercial.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Commercial $commercial
      *
      */
@@ -766,7 +766,7 @@ class Organizations
 
     /**
      * Remove Commercial org.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Commercial $commercial
      *
      */
@@ -777,7 +777,7 @@ class Organizations
 
     /**
      * Add diskDiamaeterOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\DiskDiameters $dd
      *
      */
@@ -792,7 +792,7 @@ class Organizations
 
     /**
      * Remove diskDiamaeterOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\DiskDiameters $dd
      *
      */
@@ -803,7 +803,7 @@ class Organizations
 
     /**
      * Add formatOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\FormatVersions $f
      *
      */
@@ -818,7 +818,7 @@ class Organizations
 
     /**
      * Remove formatOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\FormatVersions $f
      *
      */
@@ -829,7 +829,7 @@ class Organizations
 
     /**
      * Add frameRateOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\FrameRates $fr
      *
      */
@@ -844,7 +844,7 @@ class Organizations
 
     /**
      * Remove frameRateOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\FrameRates $fr
      *
      */
@@ -855,7 +855,7 @@ class Organizations
 
     /**
      * Add mediaDiameterOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\MediaDiameters $md
      *
      */
@@ -870,7 +870,7 @@ class Organizations
 
     /**
      * Remove mediaDiameterOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\MediaDiameters $md
      *
      */
@@ -881,7 +881,7 @@ class Organizations
 
     /**
      * Add monoOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\MonoStereo $ms
      *
      */
@@ -896,7 +896,7 @@ class Organizations
 
     /**
      * Remove monoOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\MonoStereo $ms
      *
      */
@@ -907,7 +907,7 @@ class Organizations
 
     /**
      * Add NoiceReduction.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\NoiceReduction $nr
      *
      */
@@ -922,7 +922,7 @@ class Organizations
 
     /**
      * Remove NoiceReduction.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\NoiceReduction $nr
      *
      */
@@ -933,7 +933,7 @@ class Organizations
 
     /**
      * Add printTypeOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\PrintTypes $pt
      *
      */
@@ -948,7 +948,7 @@ class Organizations
 
     /**
      * Remove printTypeOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\PrintTypes $pt
      *
      */
@@ -959,7 +959,7 @@ class Organizations
 
     /**
      * Add recordingSpeedOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\RecordingSpeed $rs
      *
      */
@@ -974,7 +974,7 @@ class Organizations
 
     /**
      * Remove recordingSpeedOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\RecordingSpeed $rs
      *
      */
@@ -985,7 +985,7 @@ class Organizations
 
     /**
      * Add recordingStandardOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\RecordingStandards $rst
      *
      */
@@ -1000,7 +1000,7 @@ class Organizations
 
     /**
      * Remove recordingStandardOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\RecordingStandards $rst
      *
      */
@@ -1011,7 +1011,7 @@ class Organizations
 
     /**
      * Add reelCoreOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\ReelCore $rc
      *
      */
@@ -1026,7 +1026,7 @@ class Organizations
 
     /**
      * Remove reelCoreOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\ReelCore $rc
      *
      */
@@ -1037,7 +1037,7 @@ class Organizations
 
     /**
      * Add reelDiameterOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\ReelDiameters $rd
      *
      */
@@ -1052,7 +1052,7 @@ class Organizations
 
     /**
      * Remove reelDiameterOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\ReelDiameters $rd
      *
      */
@@ -1063,7 +1063,7 @@ class Organizations
 
     /**
      * Add slidesOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Slides $s
      *
      */
@@ -1078,7 +1078,7 @@ class Organizations
 
     /**
      * Remove slidesOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Slides $s
      *
      */
@@ -1089,7 +1089,7 @@ class Organizations
 
     /**
      * Add soundsOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Sounds $sound
      *
      */
@@ -1104,7 +1104,7 @@ class Organizations
 
     /**
      * Remove soundsOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\Sounds $sound
      *
      */
@@ -1115,7 +1115,7 @@ class Organizations
 
     /**
      * Add tapeThicknessOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\TapeThickness $tt
      *
      */
@@ -1141,7 +1141,7 @@ class Organizations
 
     /**
      * Add trackTypeOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\TrackTypes $tts
      *
      */
@@ -1156,7 +1156,7 @@ class Organizations
 
     /**
      * Remove trackTypeOrg.
-     * 
+     *
      * @param \Application\Bundle\FrontBundle\Entity\TrackTypes $tts
      *
      */

@@ -54,6 +54,7 @@ class VideoRecordsController extends Controller
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Video record added succesfully.');
+
             return $this->redirect($this->generateUrl('record'));
         }
 
@@ -103,6 +104,7 @@ class VideoRecordsController extends Controller
         }
         $form = $this->createCreateForm($entity, $em, $data);
         $user_view_settings = $fieldsObj->getFieldSettings($this->getUser(),$em);
+
         return $this->render('ApplicationFrontBundle:VideoRecords:new.html.php', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
@@ -152,12 +154,12 @@ class VideoRecordsController extends Controller
             throw $this->createNotFoundException('Unable to find VideoRecords entity.');
         }
         $fieldsObj = new DefaultFields();
-        $data = $fieldsObj->getData(3, $em, $this->getUser());       
+        $data = $fieldsObj->getData(3, $em, $this->getUser());
         $editForm = $this->createEditForm($entity, $em, $data);
         $deleteForm = $this->createDeleteForm($id);
 
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
-        
+
         return $this->render('ApplicationFrontBundle:VideoRecords:edit.html.php',array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
@@ -183,7 +185,7 @@ class VideoRecordsController extends Controller
 
         $form->add('submit', 'submit', array('label' => 'Update'));
         $form->add('save_and_duplicate', 'submit', array('label' => 'Duplicate'));
-        
+
         return $form;
     }
     /**
@@ -215,6 +217,7 @@ class VideoRecordsController extends Controller
                 return $this->redirect($this->generateUrl('record_video_duplicate',array('videoRecId'=>$id)));
             }
             $this->get('session')->getFlashBag()->add('success', 'Video record updated succesfully.');
+
             return $this->redirect($this->generateUrl('record'));
         }
 
