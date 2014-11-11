@@ -146,8 +146,8 @@ class DefaultController extends Controller
                 $data->getOrganizations()->setUsersCreated($data);
                 $em->flush();
                 
-                $f_obj = new DefaultFields();
-                $view_settings = $f_obj->getDefaultOrder();
+                $fieldsObj = new DefaultFields();
+                $view_settings = $fieldsObj->getDefaultOrder();
 
                 $user_entity = new UserSettings();
                 $user_entity->setUser($entity);

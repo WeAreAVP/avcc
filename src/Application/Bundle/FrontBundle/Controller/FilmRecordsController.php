@@ -92,15 +92,20 @@ class FilmRecordsController extends Controller
      *
      * @Route("/new", name="record_film_new")
      * @Route("/new/{projectId}", name="record_film_new_against_project")
+     * @Route("/new/{filmRecId}/duplicate", name="record_film_duplicate")
      * @Method("GET")
      * @Template()
      */
-    public function newAction($projectId = null)
+    public function newAction($projectId = null, $filmRecId = null)
     {
         $em = $this->getDoctrine()->getManager();
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(2, $em, $this->getUser(), $projectId); 
-        $entity = new FilmRecords();
+        if ($filmRecId) {
+            $entity = $em->getRepository('ApplicationFrontBundle:FilmRecords')->find($filmRecId);
+        } else {
+            $entity = new FilmRecords();
+        }
         $form = $this->createCreateForm($entity, $em, $data);
         $user_view_settings = $fieldsObj->getFieldSettings($this->getUser(),$em);
         return $this->render('ApplicationFrontBundle:FilmRecords:new.html.php', array(
@@ -187,6 +192,7 @@ class FilmRecordsController extends Controller
         ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('save_and_duplicate', 'submit', array('label' => 'Duplicate'));
 
         return $form;
     }
@@ -217,6 +223,10 @@ class FilmRecordsController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
+            // the save_and_dupplicate button was clicked
+            if ($editForm->get('save_and_duplicate')->isClicked()) {
+                return $this->redirect($this->generateUrl('record_film_duplicate',array('filmRecId'=>$id)));
+            }
             $this->get('session')->getFlashBag()->add('success', 'Film record updated succesfully.');
             return $this->redirect($this->generateUrl('record'));
         }

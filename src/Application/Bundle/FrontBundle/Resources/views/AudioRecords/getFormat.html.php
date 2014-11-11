@@ -3,7 +3,7 @@
 <?php
  foreach($formats as $format){
 ?>
-<option value="<?php echo $format->getId()?>"><?php echo $format->getName()?></option>
+<option value="<?php echo $format->getId()?>" <?php echo ($format->getId() == $formatId) ? 'selected=selected' : '';?>><?php echo $format->getName()?></option>
 <?php
  }
 ?>

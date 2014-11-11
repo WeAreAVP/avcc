@@ -16,9 +16,14 @@ function initialize_records_form() {
 }
 function updateFormat() {
     /// call to get base dropdown options
+    if(selectedFormat){
+        url = baseUrl + 'getFormat/' + $("#mediaType").val() + '/' + selectedFormat;
+    }else{
+        url = baseUrl + 'getFormat/' + $("#mediaType").val();
+    }
     $.ajax({
         type: "GET",
-        url: baseUrl + 'getFormat/' + $("#mediaType").val(),
+        url: url,
         success: function (response) {
             if (response != "") {
                 $("#format").html(response);
@@ -42,7 +47,7 @@ function showUpdateFields() {
         } else {
             $('#diskDiameters_lbl').hide();
         }
-        
+
         if (jQuery.inArray(parseInt($(this).val()), showMediaDiameter) >= 0) {
             $('#mediaDiameters_lbl').show();
         } else {

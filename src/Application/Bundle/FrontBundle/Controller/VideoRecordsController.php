@@ -87,15 +87,20 @@ class VideoRecordsController extends Controller
      *
      * @Route("/new", name="record_video_new")
      * @Route("/new/{projectId}", name="record_video_new_against_project")
+     * @Route("/new/{videoRecId}/duplicate", name="record_video_duplicate")
      * @Method("GET")
      * @Template()
      */
-    public function newAction($projectId = null)
+    public function newAction($projectId = null, $videoRecId = null)
     {
         $em = $this->getDoctrine()->getManager();
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(3, $em, $this->getUser(), $projectId);
-        $entity = new VideoRecords();
+        if ($videoRecId) {
+            $entity = $em->getRepository('ApplicationFrontBundle:VideoRecords')->find($videoRecId);
+        } else {
+            $entity = new VideoRecords();
+        }
         $form = $this->createCreateForm($entity, $em, $data);
         $user_view_settings = $fieldsObj->getFieldSettings($this->getUser(),$em);
         return $this->render('ApplicationFrontBundle:VideoRecords:new.html.php', array(
@@ -177,7 +182,8 @@ class VideoRecordsController extends Controller
         ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));
-
+        $form->add('save_and_duplicate', 'submit', array('label' => 'Duplicate'));
+        
         return $form;
     }
     /**
@@ -204,6 +210,10 @@ class VideoRecordsController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
+            // the save_and_dupplicate button was clicked
+            if ($editForm->get('save_and_duplicate')->isClicked()) {
+                return $this->redirect($this->generateUrl('record_video_duplicate',array('videoRecId'=>$id)));
+            }
             $this->get('session')->getFlashBag()->add('success', 'Video record updated succesfully.');
             return $this->redirect($this->generateUrl('record'));
         }

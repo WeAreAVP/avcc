@@ -51,20 +51,20 @@ class AudioRecordsController extends Controller
     public function createAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $entity = new AudioRecords();        
+        $entity = new AudioRecords();
         $form = $this->createCreateForm($entity, $em);
         $form->handleRequest($request);
-        
+
         if ($form->isValid()) {
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Audio record added succesfully.');
             return $this->redirect($this->generateUrl('record'));
         }
-        
+
         return array(
             'entity' => $entity,
-            'form' => $form->createView(),            
+            'form' => $form->createView(),
         );
     }
 
@@ -94,17 +94,23 @@ class AudioRecordsController extends Controller
      * 
      * @Route("/audio/new", name="record_new")
      * @Route("/audio/new/{projectId}", name="record_new_against_project")
+     * @Route("/audio/new/{audioRecId}/duplicate", name="record_audio_duplicate")
      * @Method("GET")
      * @Template()
      * @return array
      */
-    public function newAction($projectId = null)
+    public function newAction($projectId = null, $audioRecId = null)
     {
         $fieldsObj = new DefaultFields();
         $em = $this->getDoctrine()->getManager();
         $data = $fieldsObj->getData(1, $em, $this->getUser(), $projectId);
-        $entity = new AudioRecords();
-        $form = $this->createCreateForm($entity, $em, $data);        
+        if ($audioRecId) {
+            $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->find($audioRecId);
+        } else {
+            $entity = new AudioRecords();
+        }
+//        print_r($entity->getRecord()->getUniqueId());exit;
+        $form = $this->createCreateForm($entity, $em, $data);
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
         return $this->render('ApplicationFrontBundle:AudioRecords:new.html.php', array(
                     'entity' => $entity,
@@ -166,7 +172,7 @@ class AudioRecordsController extends Controller
         $data = $fieldsObj->getData(1, $em, $this->getUser());
         $editForm = $this->createEditForm($entity, $em, $data);
         $deleteForm = $this->createDeleteForm($id);
-        
+
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
 
         return $this->render('ApplicationFrontBundle:AudioRecords:edit.html.php', array(
@@ -193,6 +199,7 @@ class AudioRecordsController extends Controller
         ));
 
         $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('save_and_duplicate', 'submit', array('label' => 'Duplicate'));
 
         return $form;
     }
@@ -226,6 +233,10 @@ class AudioRecordsController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
+            // the save_and_dupplicate button was clicked
+            if ($editForm->get('save_and_duplicate')->isClicked()) {
+                return $this->redirect($this->generateUrl('record_audio_duplicate',array('audioRecId'=>$id)));
+            }
             $this->get('session')->getFlashBag()->add('success', 'Audio record updated succesfully.');
             return $this->redirect($this->generateUrl('record'));
         }
@@ -347,15 +358,17 @@ class AudioRecordsController extends Controller
      * @param integer $mediaTypeId Media type id
      * 
      * @Route("/getFormat/{mediaTypeId}", name="record_get_format")
+     * @Route("/getFormat/{mediaTypeId}/{formatId}", name="record_get_format_selected")
      * @Method("GET")
      * @Template()
      */
-    public function getFormatAction($mediaTypeId)
+    public function getFormatAction($mediaTypeId, $formatId = null )
     {
         $em = $this->getDoctrine()->getManager();
         $formats = $em->getRepository('ApplicationFrontBundle:Formats')->findBy(array('mediaType' => $mediaTypeId));
         return $this->render('ApplicationFrontBundle:AudioRecords:getFormat.html.php', array(
-                    'formats' => $formats
+                    'formats' => $formats,
+                     'formatId' => $formatId
         ));
     }
 
@@ -398,4 +411,5 @@ class AudioRecordsController extends Controller
                     'reeldiameters' => $reeldiameters
         ));
     }
+
 }
