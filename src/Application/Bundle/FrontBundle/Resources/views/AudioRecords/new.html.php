@@ -32,7 +32,7 @@
 <script src="<?php echo $view['assets']->getUrl('js/manage.records.js') ?>"></script>
 <script type="text/javascript">
     var baseUrl = '<?php echo $view['router']->generate('record')?>';
-    var selectedFormat = '';
+    var selectedFormat = <?php echo ($entity->getRecord()) ? $entity->getRecord()->getFormat()->getId() : '';?>;
     $(document).ready(function () {
         initialize_records_form();
     });
