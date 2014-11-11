@@ -36,11 +36,11 @@ class PrintTypesController extends Controller
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new PrintTypes entity.
      *
      * @param Request $request
-     * @param integer $id
      *
      * @Route("/", name="vocabularies_printtypes_create")
      * @Method("POST")
@@ -63,7 +63,7 @@ class PrintTypesController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -97,11 +97,11 @@ class PrintTypesController extends Controller
     public function newAction()
     {
         $entity = new PrintTypes();
-        $form   = $this->createCreateForm($entity);
+        $form = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -128,7 +128,7 @@ class PrintTypesController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -157,19 +157,19 @@ class PrintTypesController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-    * Creates a form to edit a PrintTypes entity.
-    *
-    * @param PrintTypes $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a PrintTypes entity.
+     *
+     * @param PrintTypes $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(PrintTypes $entity)
     {
         $form = $this->createForm(new PrintTypesType(), $entity, array(
@@ -181,6 +181,7 @@ class PrintTypesController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing PrintTypes entity.
      *
@@ -213,11 +214,12 @@ class PrintTypesController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a PrintTypes entity.
      *
@@ -258,10 +260,10 @@ class PrintTypesController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('vocabularies_printtypes_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+                        ->setAction($this->generateUrl('vocabularies_printtypes_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm();
     }
+
 }

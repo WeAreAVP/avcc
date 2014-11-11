@@ -136,7 +136,9 @@ class ColorsController extends Controller
 
     /**
      * Displays a form to edit an existing Colors entity.
+     * 
      * @param  integer $id
+     * 
      * @Route("/{id}/edit", name="vocabularies_colors_edit")
      * @Method("GET")
      * @Template()
@@ -263,8 +265,7 @@ class ColorsController extends Controller
                         ->setAction($this->generateUrl('vocabularies_colors_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
-                        ->getForm()
-        ;
+                        ->getForm();
     }
 
 }

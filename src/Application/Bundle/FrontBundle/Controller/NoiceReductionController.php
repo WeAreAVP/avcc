@@ -40,7 +40,6 @@ class NoiceReductionController extends Controller
      * Creates a new NoiceReduction entity.
      *
      * @param Request $request
-     * @param integer $id
      *
      * @Route("/", name="vocabularies_noicereduction_create")
      * @Method("POST")
@@ -261,7 +260,6 @@ class NoiceReductionController extends Controller
             ->setAction($this->generateUrl('vocabularies_noicereduction_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

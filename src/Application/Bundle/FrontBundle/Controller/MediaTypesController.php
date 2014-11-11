@@ -38,7 +38,9 @@ class MediaTypesController extends Controller
     }
     /**
      * Creates a new MediaTypes entity.
+     * 
      * @param  Request $request
+     * 
      * @Route("/", name="vocabularies_mediatypes_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:MediaTypes:new.html.twig")
@@ -260,7 +262,6 @@ class MediaTypesController extends Controller
             ->setAction($this->generateUrl('vocabularies_mediatypes_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

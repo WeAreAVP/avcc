@@ -96,6 +96,7 @@ class FilmRecordsController extends Controller
      * @Route("/new/{filmRecId}/duplicate", name="record_film_duplicate")
      * @Method("GET")
      * @Template()
+     * @return template
      */
     public function newAction($projectId = null, $filmRecId = null)
     {
@@ -127,6 +128,7 @@ class FilmRecordsController extends Controller
      * @Route("/{id}", name="record_film_show")
      * @Method("GET")
      * @Template()
+     * @return array
      */
     public function showAction($id)
     {
@@ -154,6 +156,7 @@ class FilmRecordsController extends Controller
      * @Route("/{id}/edit", name="record_film_edit")
      * @Method("GET")
      * @Template()
+     * @return template
      */
     public function editAction($id)
     {
@@ -207,6 +210,7 @@ class FilmRecordsController extends Controller
      * @Route("/{id}", name="record_film_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:FilmRecords:edit.html.php")
+     * @return template
      */
     public function updateAction(Request $request, $id)
     {
@@ -248,6 +252,7 @@ class FilmRecordsController extends Controller
      *
      * @Route("/{id}", name="record_film_delete")
      * @Method("DELETE")
+     * @return Redirect
      */
     public function deleteAction(Request $request, $id)
     {

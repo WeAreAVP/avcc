@@ -54,11 +54,11 @@ class BasesController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $posted_value = $this->get('request')->request->get('application_bundle_frontbundle_bases');
+            $postedValue = $this->get('request')->request->get('application_bundle_frontbundle_bases');
 
             $em = $this->getDoctrine()->getManager();
             $f = $form->getData();
-            foreach ($posted_value['baseFormat'] as $key => $value) {
+            foreach ($postedValue['baseFormat'] as $key => $value) {
                 $entity = new Bases();
                 $entity->setName($f->getName());
                 $format = $this->getDoctrine()->getRepository('ApplicationFrontBundle:Formats')->find($value);
@@ -274,8 +274,7 @@ class BasesController extends Controller
                         ->setAction($this->generateUrl('vocabularies_bases_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
-                        ->getForm()
-        ;
+                        ->getForm();
     }
 
 }

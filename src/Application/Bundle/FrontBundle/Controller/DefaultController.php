@@ -147,13 +147,13 @@ class DefaultController extends Controller
                 $em->flush();
 
                 $fieldsObj = new DefaultFields();
-                $view_settings = $fieldsObj->getDefaultOrder();
+                $viewSettings = $fieldsObj->getDefaultOrder();
 
-                $user_entity = new UserSettings();
-                $user_entity->setUser($entity);
-                $user_entity->setViewSetting($view_settings);
-                $user_entity->setCreatedOnValue(date('Y-m-d h:i:s'));
-                $em->persist($user_entity);
+                $userSetting = new UserSettings();
+                $userSetting->setUser($entity);
+                $userSetting->setViewSetting($viewSettings);
+                $userSetting->setCreatedOnValue(date('Y-m-d h:i:s'));
+                $em->persist($userSetting);
                 $em->flush();
 
                 $url = $this->get('router')->generate('fos_user_registration_confirm', array('token' => $entity->getConfirmationToken()), true);

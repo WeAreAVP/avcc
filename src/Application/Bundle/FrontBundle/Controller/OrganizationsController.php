@@ -128,7 +128,7 @@ class OrganizationsController extends Controller
 
         $entity = $em->getRepository('ApplicationFrontBundle:Organizations')->find($id);
 
-        if (! $entity) {
+        if (!$entity) {
             throw $this->createNotFoundException('Unable to find Organizations entity.');
         }
 
@@ -156,7 +156,7 @@ class OrganizationsController extends Controller
 
         $entity = $em->getRepository('ApplicationFrontBundle:Organizations')->find($id);
 
-        if (! $entity) {
+        if (!$entity) {
             throw $this->createNotFoundException('Unable to find Organizations entity.');
         }
 
@@ -207,7 +207,7 @@ class OrganizationsController extends Controller
         $user = $this->getUser();
         $entity = $em->getRepository('ApplicationFrontBundle:Organizations')->find($id);
 
-        if (! $entity) {
+        if (!$entity) {
             throw $this->createNotFoundException('Unable to find Organizations entity.');
         }
 
@@ -251,7 +251,7 @@ class OrganizationsController extends Controller
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('ApplicationFrontBundle:Organizations')->find($id);
 
-            if (! $entity) {
+            if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Organizations entity.');
             }
 
@@ -272,10 +272,10 @@ class OrganizationsController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-        ->setAction($this->generateUrl('organizations_delete', array('id' => $id)))
-        ->setMethod('DELETE')
-        ->add('submit', 'submit', array('label' => 'Delete'))
-        ->getForm();
+                        ->setAction($this->generateUrl('organizations_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm();
     }
 
 }

@@ -1,1 +1,1 @@
-<?php $view['slots']->output('body')
+<?php $view['slots']->output('body'); 

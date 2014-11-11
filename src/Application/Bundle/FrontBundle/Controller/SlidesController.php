@@ -260,7 +260,6 @@ class SlidesController extends Controller
             ->setAction($this->generateUrl('vocabularies_slides_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

@@ -36,6 +36,7 @@ class VideoRecordsController extends Controller
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new VideoRecords entity.
      *
@@ -60,7 +61,7 @@ class VideoRecordsController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -91,6 +92,7 @@ class VideoRecordsController extends Controller
      * @Route("/new/{videoRecId}/duplicate", name="record_video_duplicate")
      * @Method("GET")
      * @Template()
+     * @return template
      */
     public function newAction($projectId = null, $videoRecId = null)
     {
@@ -103,12 +105,12 @@ class VideoRecordsController extends Controller
             $entity = new VideoRecords();
         }
         $form = $this->createCreateForm($entity, $em, $data);
-        $user_view_settings = $fieldsObj->getFieldSettings($this->getUser(),$em);
+        $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
 
         return $this->render('ApplicationFrontBundle:VideoRecords:new.html.php', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
-                    'fieldSettings' => $user_view_settings,
+                    'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
         ));
     }
@@ -119,6 +121,7 @@ class VideoRecordsController extends Controller
      * @Route("/{id}", name="record_video_show")
      * @Method("GET")
      * @Template()
+     * @return template
      */
     public function showAction($id)
     {
@@ -133,7 +136,7 @@ class VideoRecordsController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -144,6 +147,7 @@ class VideoRecordsController extends Controller
      * @Route("/{id}/edit", name="record_video_edit")
      * @Method("GET")
      * @Template()
+     * @return template
      */
     public function editAction($id)
     {
@@ -160,22 +164,22 @@ class VideoRecordsController extends Controller
 
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
 
-        return $this->render('ApplicationFrontBundle:VideoRecords:edit.html.php',array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-            'fieldSettings' => $userViewSettings,
-            'type' => $data['mediaType']->getName(),
+        return $this->render('ApplicationFrontBundle:VideoRecords:edit.html.php', array(
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                    'fieldSettings' => $userViewSettings,
+                    'type' => $data['mediaType']->getName(),
         ));
     }
 
     /**
-    * Creates a form to edit a VideoRecords entity.
-    *
-    * @param VideoRecords $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a VideoRecords entity.
+     *
+     * @param VideoRecords $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(VideoRecords $entity, $em, $data = null)
     {
         $form = $this->createForm(new VideoRecordsType($em, $data), $entity, array(
@@ -188,12 +192,14 @@ class VideoRecordsController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing VideoRecords entity.
      *
      * @Route("/{id}", name="record_video_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:VideoRecords:edit.html.php")
+     * @return redirect
      */
     public function updateAction(Request $request, $id)
     {
@@ -214,7 +220,7 @@ class VideoRecordsController extends Controller
             $em->flush();
             // the save_and_dupplicate button was clicked
             if ($editForm->get('save_and_duplicate')->isClicked()) {
-                return $this->redirect($this->generateUrl('record_video_duplicate',array('videoRecId'=>$id)));
+                return $this->redirect($this->generateUrl('record_video_duplicate', array('videoRecId' => $id)));
             }
             $this->get('session')->getFlashBag()->add('success', 'Video record updated succesfully.');
 
@@ -222,16 +228,18 @@ class VideoRecordsController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a VideoRecords entity.
      *
      * @Route("/{id}", name="record_video_delete")
      * @Method("DELETE")
+     * @return redorect
      */
     public function deleteAction(Request $request, $id)
     {
@@ -263,10 +271,10 @@ class VideoRecordsController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('record_video_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+                        ->setAction($this->generateUrl('record_video_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm();
     }
+
 }

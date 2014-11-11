@@ -73,6 +73,8 @@ class AudioRecordsController extends Controller
      * Creates a form to create a AudioRecords entity.
      *
      * @param AudioRecords $entity The entity
+     * @param EntityManager $em
+     * @param form $data
      *
      * @return \Symfony\Component\Form\Form The form
      */
@@ -92,7 +94,8 @@ class AudioRecordsController extends Controller
      * Displays a form to create a new AudioRecords entity.
      *
      * @param integer $projectId
-     *
+     * @param integer $audioRecId
+     * 
      * @Route("/audio/new", name="record_new")
      * @Route("/audio/new/{projectId}", name="record_new_against_project")
      * @Route("/audio/new/{audioRecId}/duplicate", name="record_audio_duplicate")
@@ -110,7 +113,6 @@ class AudioRecordsController extends Controller
         } else {
             $entity = new AudioRecords();
         }
-//        print_r($entity->getRecord()->getUniqueId());exit;
         $form = $this->createCreateForm($entity, $em, $data);
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
 
@@ -191,7 +193,9 @@ class AudioRecordsController extends Controller
      * Creates a form to edit a AudioRecords entity.
      *
      * @param AudioRecords $entity The entity
-     *
+     * @param EntityManager $em 
+     * @param array $data 
+     * 
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(AudioRecords $entity, $em, $data = null)
@@ -238,7 +242,7 @@ class AudioRecordsController extends Controller
             $em->flush();
             // the save_and_dupplicate button was clicked
             if ($editForm->get('save_and_duplicate')->isClicked()) {
-                return $this->redirect($this->generateUrl('record_audio_duplicate',array('audioRecId'=>$id)));
+                return $this->redirect($this->generateUrl('record_audio_duplicate', array('audioRecId'=>$id)));
             }
             $this->get('session')->getFlashBag()->add('success', 'Audio record updated succesfully.');
 
@@ -303,6 +307,7 @@ class AudioRecordsController extends Controller
      * @Route("/add-record", name="record_add")
      * @Method("GET")
      * @Template()
+     * @return template
      */
     public function addRecordAction()
     {
@@ -324,6 +329,7 @@ class AudioRecordsController extends Controller
      * @Route("/getBase/{formatId}", name="record_get_base")
      * @Method("GET")
      * @Template()
+     * @return template
      */
     public function getBaseAction($formatId)
     {
@@ -339,10 +345,12 @@ class AudioRecordsController extends Controller
      * get recording speed values to show in dropdown.
      *
      * @param integer $formatId Format id
-     *
+     * @param integer $mediaTypeId 
+     * 
      * @Route("/getRecordingSpeed/{formatId}/{mediaTypeId}", name="record_get_speed")
      * @Method("GET")
      * @Template()
+     * @return template
      */
     public function getRecordingSpeedAction($formatId, $mediaTypeId)
     {
@@ -362,11 +370,13 @@ class AudioRecordsController extends Controller
      * get format values to show in dropdown.
      *
      * @param integer $mediaTypeId Media type id
-     *
+     * @param integer $formatId 
+     * 
      * @Route("/getFormat/{mediaTypeId}", name="record_get_format")
      * @Route("/getFormat/{mediaTypeId}/{formatId}", name="record_get_format_selected")
      * @Method("GET")
      * @Template()
+     * @return template 
      */
     public function getFormatAction($mediaTypeId, $formatId = null)
     {
@@ -387,6 +397,7 @@ class AudioRecordsController extends Controller
      * @Route("/getFormatVersion/{formatId}", name="record_get_formatversion")
      * @Method("GET")
      * @Template()
+     * @return template
      */
     public function getFormatVersionAction($formatId)
     {
@@ -402,10 +413,12 @@ class AudioRecordsController extends Controller
      * get reel diameters values to show in dropdown.
      *
      * @param integer $formatId Format id
-     *
+     * @param integer $mediaTypeId 
+     * 
      * @Route("/getReelDiameter/{formatId}/{mediaTypeId}", name="record_get_reeldiameter")
      * @Method("GET")
      * @Template()
+     * @return template
      */
     public function getReelDiameterAction($formatId, $mediaTypeId)
     {

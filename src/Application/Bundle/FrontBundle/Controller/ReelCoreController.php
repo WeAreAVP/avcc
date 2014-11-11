@@ -260,7 +260,6 @@ class ReelCoreController extends Controller
             ->setAction($this->generateUrl('vocabularies_reelcore_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

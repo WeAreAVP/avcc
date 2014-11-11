@@ -265,8 +265,7 @@ class MediaDiametersController extends Controller
                         ->setAction($this->generateUrl('vocabularies_mediadiameters_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
-                        ->getForm()
-        ;
+                        ->getForm();
     }
 
 }

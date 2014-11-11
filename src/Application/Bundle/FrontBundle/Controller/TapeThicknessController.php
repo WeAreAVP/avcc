@@ -266,8 +266,7 @@ class TapeThicknessController extends Controller
                         ->setAction($this->generateUrl('vocabularies_tapethickness_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
-                        ->getForm()
-        ;
+                        ->getForm();
     }
 
 }

@@ -54,11 +54,11 @@ class FormatVersionsController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $posted_value = $this->get('request')->request->get('application_bundle_frontbundle_formatversions');
+            $postedValue = $this->get('request')->request->get('application_bundle_frontbundle_formatversions');
 
             $em = $this->getDoctrine()->getManager();
             $f = $form->getData();
-            foreach ($posted_value['formatVersionFormat'] as $key => $value) {
+            foreach ($postedValue['formatVersionFormat'] as $key => $value) {
                 $entity = new FormatVersions();
                 $entity->setName($f->getName());
                 $format = $this->getDoctrine()->getRepository('ApplicationFrontBundle:Formats')->find($value);
@@ -274,8 +274,7 @@ class FormatVersionsController extends Controller
                         ->setAction($this->generateUrl('vocabularies_formatversions_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
-                        ->getForm()
-        ;
+                        ->getForm();
     }
 
 }

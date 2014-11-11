@@ -108,7 +108,9 @@ class DiskDiametersController extends Controller
 
     /**
      * Finds and displays a DiskDiameters entity.
+     * 
      * @param  integer $id
+     * 
      * @Route("/{id}", name="vocabularies_diskdiameters_show")
      * @Method("GET")
      * @Template()
@@ -263,8 +265,7 @@ class DiskDiametersController extends Controller
                         ->setAction($this->generateUrl('vocabularies_diskdiameters_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
-                        ->getForm()
-        ;
+                        ->getForm();
     }
 
 }

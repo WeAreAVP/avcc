@@ -137,7 +137,9 @@ class TrackTypesController extends Controller
 
     /**
      * Displays a form to edit an existing TrackTypes entity.
+     * 
      * @param  integer $id
+     * 
      * @Route("/{id}/edit", name="vocabularies_tracktypes_edit")
      * @Method("GET")
      * @Template()
@@ -264,8 +266,7 @@ class TrackTypesController extends Controller
                         ->setAction($this->generateUrl('vocabularies_tracktypes_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
-                        ->getForm()
-        ;
+                        ->getForm();
     }
 
 }

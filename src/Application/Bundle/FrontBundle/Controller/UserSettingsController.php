@@ -19,8 +19,8 @@ class UserSettingsController extends Controller
 {
 
     /**
-     *
-     *
+     * User settings
+     * 
      * @Route("/", name="field_settings")
      * @Method("GET")
      * @Template()
@@ -33,21 +33,23 @@ class UserSettingsController extends Controller
         $entities = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $this->getUser()->getId()));
 
         if (!$entities) {
-            $f_obj = new DefaultFields();
-            $view_settings = $f_obj->getDefaultOrder();
+            $fObj = new DefaultFields();
+            $viewSettings = $fObj->getDefaultOrder();
         } else {
-            $view_settings = $entities->getViewSetting();
+            $viewSettings = $entities->getViewSetting();
         }
-        $user_view_settings = json_decode($view_settings, true);
+        $userViewSettings = json_decode($viewSettings, true);
 
         return array(
-            'entities' => $user_view_settings,
+            'entities' => $userViewSettings,
         );
     }
 
     /**
-     *
-     *
+     * Update user settings
+     * 
+     * @param Request $request 
+     * 
      * @Route("/update", name="field_settings_update")
      * @Method("POST")
      * @Template()
@@ -59,23 +61,23 @@ class UserSettingsController extends Controller
         $reload = FALSE;
         if ($request->getMethod() == 'POST') {
             $settings = $this->get('request')->request->get('settings');
-            $user_setting = json_encode($settings);
+            $userSetting = json_encode($settings);
             $em = $this->getDoctrine()->getManager();
-            $user_entity = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $this->getUser()->getId()));
-            if ($user_entity) {
-                $user_entity->setViewSetting($user_setting);
-                $user_entity->setUpdatedOnValue(date('Y-m-d h:i:s'));
-                $em->persist($user_entity);
+            $userEntity = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $this->getUser()->getId()));
+            if ($userEntity) {
+                $userEntity->setViewSetting($userSetting);
+                $userEntity->setUpdatedOnValue(date('Y-m-d h:i:s'));
+                $em->persist($userEntity);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success', 'Settings updated succesfully.');
                 $success = TRUE;
                 $reload = TRUE;
             } else {
-                $user_entity = new UserSettings();
-                $user_entity->setUser($this->getUser());
-                $user_entity->setViewSetting($user_setting);
-                $user_entity->setCreatedOnValue(date('Y-m-d h:i:s'));
-                $em->persist($user_entity);
+                $userEntity = new UserSettings();
+                $userEntity->setUser($this->getUser());
+                $userEntity->setViewSetting($userSetting);
+                $userEntity->setCreatedOnValue(date('Y-m-d h:i:s'));
+                $em->persist($userEntity);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success', 'Settings added succesfully.');
                 $success = TRUE;

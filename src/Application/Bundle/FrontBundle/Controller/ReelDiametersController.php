@@ -54,9 +54,9 @@ class ReelDiametersController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $posted_value = $this->get('request')->request->get('application_bundle_frontbundle_reeldiameters');
+            $postedValue = $this->get('request')->request->get('application_bundle_frontbundle_reeldiameters');
             $f = $form->getData();
-            foreach ($posted_value['formatVersionFormat'] as $key => $value) {
+            foreach ($postedValue['formatVersionFormat'] as $key => $value) {
                 $entity = new ReelDiameters();
                 $entity->setName($f->getName());
                 $format = $this->getDoctrine()->getRepository('ApplicationFrontBundle:Formats')->find($value);
@@ -272,8 +272,7 @@ class ReelDiametersController extends Controller
                         ->setAction($this->generateUrl('vocabularies_reeldiameters_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
-                        ->getForm()
-        ;
+                        ->getForm();
     }
 
 }

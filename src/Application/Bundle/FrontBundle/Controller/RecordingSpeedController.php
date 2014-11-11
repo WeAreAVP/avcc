@@ -54,12 +54,12 @@ class RecordingSpeedController extends Controller
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $posted_value = $this->get('request')->request->get('application_bundle_frontbundle_recordingspeed');
+            $postedValue = $this->get('request')->request->get('application_bundle_frontbundle_recordingspeed');
 
             $em = $this->getDoctrine()->getManager();
             $f = $form->getData();
-            if (isset($posted_value['recSpeedFormat'])) {
-                foreach ($posted_value['recSpeedFormat'] as $key => $value) {
+            if (isset($postedValue['recSpeedFormat'])) {
+                foreach ($postedValue['recSpeedFormat'] as $key => $value) {
                     $entity = new RecordingSpeed();
                     $entity->setName($f->getName());
                     $format = $this->getDoctrine()->getRepository('ApplicationFrontBundle:Formats')->find($value);
@@ -277,8 +277,7 @@ class RecordingSpeedController extends Controller
                         ->setAction($this->generateUrl('vocabularies_recordingspeed_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
-                        ->getForm()
-        ;
+                        ->getForm();
     }
 
 }

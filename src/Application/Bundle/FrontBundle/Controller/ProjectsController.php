@@ -280,7 +280,6 @@ class ProjectsController extends Controller
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
                         ->getForm();
-        ;
     }
 
     /**
@@ -291,6 +290,7 @@ class ProjectsController extends Controller
      * @Route("/add/{id}", name="project_record_add")
      * @Method("GET")
      * @Template()
+     * @return template
      */
     public function addRecordProjectAction($id)
     {
@@ -313,21 +313,23 @@ class ProjectsController extends Controller
      * @Route("/addRec", name="project_add_rec")
      * @Method("POST")
      * @Template()
+     * @return redirect
      */
     public function addRecordAction(Request $request)
     {
         $id = $request->request->get('project');
         $mediaTypeId = $request->request->get('mediaType');
 
-        if ($mediaTypeId == 1) { /// Audio
+        /// Audio
+        if ($mediaTypeId == 1) {
 
-            return $this->redirect($this->generateUrl('record_new_against_project',array('projectId'=>$id)));
-        } elseif ($mediaTypeId == 2) { /// Film
-
-            return $this->redirect($this->generateUrl('record_film_new_against_project',array('projectId'=>$id)));
-        } elseif ($mediaTypeId == 3) { /// Video
-
-            return $this->redirect($this->generateUrl('record_video_new_against_project',array('projectId'=>$id)));
+            return $this->redirect($this->generateUrl('record_new_against_project', array('projectId' => $id)));
+        } elseif ($mediaTypeId == 2) {
+            /// Film
+            return $this->redirect($this->generateUrl('record_film_new_against_project', array('projectId' => $id)));
+        } elseif ($mediaTypeId == 3) {
+            /// Video
+            return $this->redirect($this->generateUrl('record_video_new_against_project', array('projectId' => $id)));
         } else {
             throw new AccessDeniedException();
         }
