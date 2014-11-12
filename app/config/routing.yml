@@ -42,3 +42,6 @@ login_check:
 signup:
     path: /signup
     defaults: { _controller: ApplicationFrontBundle:Default:signup}
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

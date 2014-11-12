@@ -162,4 +162,8 @@ class DefaultFields
 
         return $data;
     }
+    
+    public function recordDatatableView(){
+        
+    }
 }

@@ -16,6 +16,9 @@
         <service id="application_user.profile.form.type" class="Application\Bundle\FrontBundle\Form\Type\ProfileFormType">
             <tag name="form.type" alias="application_user_profile" />
         </service>
+        <service id="sg_datatables.records" class="Application\Bundle\FrontBundle\Datatables\RecordsDatatable">
+            <tag name="sg.datatable.view" alias="records_datatable" />
+        </service>    
     </services>
 
 </container>
