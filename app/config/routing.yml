@@ -8,8 +8,8 @@ application_front:
 #    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
 _welcome:
-    pattern:  /
-    defaults: { _controller: ApplicationFrontBundle:Default:index}
+    pattern:  /record_list
+    defaults: { _controller: ApplicationFrontBundle:Records:index}
 
 fos_user_profile:
     resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
