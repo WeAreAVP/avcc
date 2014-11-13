@@ -1,6 +1,7 @@
 {% extends 'FOSUserBundle::layout.html.twig' %}
 
 {% block body -%}
+{#    {{ dump(app.session.get('columnOrder'))}}#}
     <h1><div class="place-left">Records list</div>
         <ul class="element-menu place-left recordDD" style="">
             <li><small class="on-right">
@@ -19,46 +20,60 @@
     <br />
     <table class="table striped hovered bordered" id="records">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Media Type</th>
-                <th>Format</th>
-                <th>Unique Id</th>
-                <th>Project</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+                {% for column, value in columns %}
+                    {% if column == 'checkbox_Col' %}
+                        <th id="{{value}}"><input type="checkbox" name="selectAll" /></th>  
+                        {% else %}    
+                        <th id="{{value}}">{{ column|replace({'_': ' '}) }}</th>
+                        {% endif %}
+                    {% endfor %}                        
+    </tr>
         </thead>
         <tbody>
-            {% for entity in entities %}
-                {% if entity.mediaType == 'Audio' %}
-                    {% set recId = entity.audioRecord.id %}
-                    {% set eidtPath = 'record_edit' %}
-                {% elseif entity.mediaType == 'Video' %}
-                    {% set recId = entity.videoRecord.id %}
-                    {% set eidtPath = 'record_video_edit' %}
-                {% else %}
-                    {% set recId = entity.filmRecord.id %}
-                    {% set eidtPath = 'record_film_edit' %}
-                {% endif %}
-                <tr>
-                    <td><a href="{{ path('record_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                    <td>{{ entity.mediaType }}</td>
-                    <td>{{ entity.format }}</td>
-                    <td>{{ entity.uniqueId }}</td>
-                    <td>{{ entity.project }}</td>
-                    <td class="text-center"><a class="icon-grid-view" href="#" title="View"></a>
-                        &nbsp;|&nbsp; <a class="icon-pencil" href="{{ path( eidtPath , { 'id': recId }) }}" title="Edit"></a>
-                        &nbsp;|&nbsp; <a class="icon-remove" href="#" title="Delete"></a>
-                    </td>
-                </tr>
-            {% endfor %}
+            {# {% for entity in entities %}
+                 {% if entity.mediaType == 'Audio' %}
+                     {% set recId = entity.audioRecord.id %}
+                     {% set eidtPath = 'record_edit' %}
+                 {% elseif entity.mediaType == 'Video' %}
+                     {% set recId = entity.videoRecord.id %}
+                     {% set eidtPath = 'record_video_edit' %}
+                 {% else %}
+                     {% set recId = entity.filmRecord.id %}
+                     {% set eidtPath = 'record_film_edit' %}
+                 {% endif %}
+                 <tr>
+                     <td><a href="{{ path('record_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                     <td>{{ entity.mediaType }}</td>
+                     <td>{{ entity.format }}</td>
+                     <td>{{ entity.uniqueId }}</td>
+                     <td>{{ entity.project }}</td>
+                     <td class="text-center"><a class="icon-grid-view" href="#" title="View"></a>
+                         &nbsp;|&nbsp; <a class="icon-pencil" href="{{ path( eidtPath , { 'id': recId }) }}" title="Edit"></a>
+                         &nbsp;|&nbsp; <a class="icon-remove" href="#" title="Delete"></a>
+                     </td>
+                 </tr>
+             {% endfor %}#}
         </tbody>
     </table>
-            <script type="text/javascript">
-                $(document).ready( function () {
-    $('#records').DataTable({
-        'bFilter': false,
-    });
-} );
-            </script>
+    {% if data.total > 0 %}
+    <script type="text/javascript" src="{{ asset('js/FixedColumns.js') }}"></script>    
+    <script type="text/javascript" src="{{ asset('js/jquery.tablesorter.js') }}"></script> 
+    <script type="text/javascript" src="{{ asset('js/records.js') }}"></script>   
+    <script type="text/javascript">
+        var page_total = '{{data.total}}';
+	var overall_total = '{{data.total}}';
+	var is_destroy = false;
+	var columnsOrder = new Array();
+	var orderString = '';
+	var frozen = '1';
+	var hiden_column = new Array();
+	var index_column = '{%if app.session.get('jscolumn')%}{{app.session.get('jscolumn')}}{% else %}{{'0'}}{% endif %}';
+	var order_column = '{%if app.session.get('columnOrder')%}{{app.session.get('columnOrder')}}{% else %}{{'asc'}}{% endif %}';
+        var tableSource = '{{ path('record_dataTable') }}';
+        $(document).ready(function () {
+            updateDataTable();
+        });
+    </script>
+    {% endif%}
 {% endblock %}

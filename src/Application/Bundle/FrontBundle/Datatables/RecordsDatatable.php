@@ -12,13 +12,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class RecordsDatatable extends AbstractDatatableView
 {
 
-    public function __construct()
-    {
-        $templating = new Template($values);
-        $defaultLayoutOptions = array("server_side" => true, "processing" => true, "page_length" => 10, "multiselect" => false, "individual_filtering" => true, "template" => "ApplicationFrontBundle:AudioRecords:index.html.twig");
-        parent::__construct($templating, '', '', $defaultLayoutOptions);
-    }
-
     /**
      * {@inheritdoc}
      */

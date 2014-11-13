@@ -20,8 +20,6 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-//            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
-//            new Sg\DatatablesBundle\SgDatatablesBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

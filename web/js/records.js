@@ -1,158 +1,151 @@
-// JavaScript Document
-function number_format(number, decimals, dec_point, thousands_sep) {
-	number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
-	var n = !isFinite(+number) ? 0 : +number,
-	prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-	sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-	dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-	s = '',
-	toFixedFix = function(n, prec) {
-		var k = Math.pow(10, prec);
-		return '' + Math.round(n * k) / k;
-	};
-	// Fix for IE parseFloat(0.55).toFixed(0) = 0;
-	s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-	if (s[0].length > 3) {
-		s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-	}
-	if ((s[1] || '').length < prec) {
-		s[1] = s[1] || '';
-		s[1] += new Array(prec - s[1].length + 1).join('0');
-	}
-	return s.join(dec);
-}
-function ReadCookieValue(cookieName) {
-	var theCookie = " " + document.cookie;
-	var ind = theCookie.indexOf(" " + cookieName + "=");
-	if (ind == -1)
-		ind = theCookie.indexOf(";" + cookieName + "=");
-	if (ind == -1 || cookieName == "")
-		return "";
-	var ind1 = theCookie.indexOf(";", ind + 1);
-	if (ind1 == -1)
-		ind1 = theCookie.length;
-	return unescape(theCookie.substring(ind + cookieName.length + 2, ind1));
-}
-function rand(min, max) {
-	var argc = arguments.length;
-	if (argc === 0) {
-		min = 0;
-		max = 2147483647;
-	} else if (argc === 1) {
-		throw new Error('Warning: rand() expects exactly 2 parameters, 1 given');
-	}
-	return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-function implode(glue, pieces) {
-	var i = '',
-	retVal = '',
-	tGlue = '';
-	if (arguments.length === 1) {
-		pieces = glue;
-		glue = '';
-	}
-	if (typeof (pieces) === 'object') {
-		if (Object.prototype.toString.call(pieces) === '[object Array]') {
-			return pieces.join(glue);
-		}
-		for (i in pieces) {
-			retVal += tGlue + pieces[i];
-			tGlue = glue;
-		}
-		return retVal;
-	}
-	return pieces;
-}
+oFC = null;
+function updateDataTable(){
+    height = $(window).height() - 185;
+    scrollHeight = height + 10;
+//    console.log(index_column);
+//    console.log(order_column);
+    if ($('#records').length > 0)
+	{
+		oTable =
+		$('#records').dataTable(
+		{
+			"sDom": 'RlfrtipS',
+			"aoColumnDefs": [{
+					"bVisible": false,
+					"aTargets": hiden_column
 
-function checkAll() {
-	var boxes = document.getElementsByTagName('input');
-	for (var index = 0; index < boxes.length; index++) {
-		box = boxes[index];
-		if (box.type == 'checkbox' && box.className == 'checkboxes' && box.disabled == false) {
+				}
+			],
+			"aaSorting": [[index_column, order_column]],
+			"oColReorder": {
+				"iFixedColumns": frozen
 
-			if (document.getElementById('check_all').checked) {
-				if (overall_total > page_total && overall_total>100)
-					makeSelectAllMsg(0);
-			}
-			else
-				$('#select_all_msg').hide();
-			box.checked = document.getElementById('check_all').checked;
-		}
+			},
+			'bPaginate': true,
+//                        "pageLength": 10,
+			'bInfo': false,
+			'bFilter': false,
+			"bSort": true,
+//			"sScrollY": height,
+//			"sScrollX": "200%",
+			"bDeferRender": true,
+			"bDestroy": is_destroy,
+			"bRetrieve": true,
+			"bAutoWidth": true,
+			"bProcessing": true,
+			"bServerSide": true,
+			"sAjaxSource": tableSource,
+			"fnServerData": function(sSource, aoData, fnCallback) {
 
-	}
-	saveCheckedValues();
-	return true;
-}
-function manageCheck(element) {
-	if ($('.checkboxes').length == $('.checkboxes:checked').length) {
-		$('#check_all').attr('checked', true);
-		makeSelectAllMsg(0);
-	}
-	else {
-		$('#check_all').attr('checked', false);
-		$('#select_all_msg').hide();
-		overall_checked = 0;
-	}
-	saveCheckedValues();
-}
-function saveCheckedValues() {
-	if (overall_checked == 1)
-		checked_val = 'all';
-	else {
-		checked_val = '';
-		$('.checkboxes:checked').each(function() {
-			checked_val += $(this).val() + ',';
+				columnArray = getColumnOrder();
+
+				reOrderDropDown(columnArray);
+//				updateDatabase(0);
+				jQuery.getJSON(sSource, aoData, function(json) {
+
+					/* Do whatever additional processing you want on the callback, then tell DataTables */
+					fnCallback(json);
+//					if ($('.dataTables_scrollBody')[0].scrollHeight > $('.dataTables_scrollBody').height())
+//						$('.dataTables_scrollBody').css('width', $('.dataTables_scrollBody').width() + 13);
+					$('#checkboxCol').removeAttr('class');
+
+//					$('.DTFC_LeftBodyWrapper').height(height);
+//					$('.dataTables_scrollBody').height(scrollHeight);
+				});
+			},
+//			"fnInitComplete": function() {
+//				oFC = new FixedColumns(oTable, {
+//					"iLeftColumns": frozen
+//				});
+//				oTable.fnSettings().aoColumns[0].bSortable = false;
+//				$('#checkbox_col').removeAttr('class');
+//			}
+
 		});
-		checked_val = checked_val.slice(0, -1);
-
-
-	}
+                $.extend($.fn.dataTableExt.oStdClasses, {
+			"sWrapper": "dataTables_wrapper form-inline"
+		});
+            }
 }
-function selectAllFromPages() {
-	overall_checked = 1;
-	checked_val = 'all';
-	makeSelectAllMsg(1);
-}
-function clearSelection() {
-	overall_checked = 0;
-	$('#select_all_msg').hide();
-	$('#check_all').attr('checked', false);
-	checkAll();
 
-}
-function str_replace(search, replace, subject, count) {
-
-	var i = 0,
-	j = 0,
-	temp = '',
-	repl = '',
-	sl = 0,
-	fl = 0,
-	f = [].concat(search),
-	r = [].concat(replace),
-	s = subject,
-	ra = Object.prototype.toString.call(r) === '[object Array]',
-	sa = Object.prototype.toString.call(s) === '[object Array]';
-	s = [].concat(s);
-	if (count) {
-		this.window[count] = 0;
-	}
-
-	for (i = 0, sl = s.length; i < sl; i++) {
-		if (s[i] === '') {
-			continue;
+function getColumnOrder()
+{
+	var orderString = new Array;
+	$('#records th').each(function(index)
+	{
+		if (index == 0)
+		{
+			orderString[index] = this.id;
 		}
-		for (j = 0, fl = f.length; j < fl; j++) {
-			temp = s[i] + '';
-			repl = ra ? (r[j] !== undefined ? r[j] : '') : r[0];
-			s[i] = (temp).split(f[j]).join(repl);
-			if (count && s[i] !== temp) {
-				this.window[count] += (temp.length - s[i].length) / f[j].length;
+		else
+		{
+			if (!in_array(this.id, orderString, true))
+			{
+				orderString[index] = this.id;
 			}
 		}
-	}
-	return sa ? s : s[0];
+	});
+        
+	return orderString;
 }
+
+function reOrderDropDown(columnArray)
+{
+
+	var columnNames = {
+		checkbox_col: {english: 'checkbox_col', dutch: 'checkbox_col'},
+		Organization: {english: 'Organization', dutch: 'Organisatie'},
+		PID: {english: 'PID', dutch: 'PID'},
+		Barcode: {english: 'Barcode', dutch: 'Barcode'},
+		Title: {english: 'Title', dutch: 'Titel'},
+		Creation_Date: {english: 'Creation Date', dutch: 'Datum'},
+		Created_On: {english: 'Created On', dutch: 'Aangemaakt op'},
+		Media_Duration: {english: 'Media Duration', dutch: 'Duur'},
+		Status: {english: 'Status', dutch: 'Status'},
+		Carrier_Type: {english: 'Carrier Type', dutch: 'Dragertype'},
+		Carrier_Format: {english: 'Carrier Format', dutch: 'Dragerformaat'},
+		Abraham_ID: {english: 'Abraham ID', dutch: 'Abraham ID'},
+		Edition: {english: 'Edition', dutch: 'Edition'},
+		Number: {english: 'Number', dutch: 'Number'},
+		Number_Of_Pages: {english: 'Number of Pages', dutch: 'Aantal Pagina\'s '},
+		Collection_Box_Barcode: {english: 'Collection Box Barcode', dutch: 'Barcode verzameldoos'},
+		Carrier_Original_ID: {english: 'Carrier Original ID', dutch: 'Oorspronkelijk dragernummer'},
+		Shipment: {english: 'Shipment', dutch: 'Verzending'},
+		Batch: {english: 'Batch', dutch: 'Batch'},
+		Imported: {english: 'Imported', dutch: 'Geïmporteerd'}
+
+	}
+
+//	var columnShowHide = new Array();
+//	$('#show_hide_li a').each(function(index, id)
+//	{
+//		if ($('#' + this.id + ' i').css('display') == "none")
+//		{
+//			columnShowHide[index] = str_replace(' ', '_', $(this).data().text);
+//		}
+//
+//	});
+//
+//	$('#show_hide_li').html('');
+//	for (cnt in columnArray)
+//	{
+//		display = '';
+//		if (in_array(columnArray[cnt], columnShowHide, true))
+//		{
+//			display = 'style="display:none;"';
+//		}
+//		hide = '';
+//		if (columnArray[cnt] == 'checkbox_col')
+//			hide = 'style="display:none;"'
+//		if (ReadCookieValue('app_language') == 'dutch')
+//			name = columnNames[columnArray[cnt]].dutch;
+//		else
+//			name = columnNames[columnArray[cnt]].english;
+//		$('#show_hide_li').append('<li ' + hide + ' ><a href="javascript://;" data-text="' + columnArray[cnt] + '" onclick="showHideColumns(' + cnt + ');" id="' + cnt + '_column"><i class="icon-ok" ' + display + '></i>' + name + '</a></li>');
+//
+//	}
+}
+
 function in_array(needle, haystack, argStrict) {
 	var key = '',
 	strict = !!argStrict;

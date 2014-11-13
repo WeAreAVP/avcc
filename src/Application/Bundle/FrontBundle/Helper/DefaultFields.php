@@ -1,6 +1,7 @@
 <?php
 
 namespace Application\Bundle\FrontBundle\Helper;
+
 use Doctrine\ORM\EntityManager;
 use Application\Bundle\FrontBundle\Entity\Users;
 
@@ -12,6 +13,7 @@ class DefaultFields
 
     public function __construct()
     {
+        
     }
 
     public function getDefaultOrder()
@@ -122,17 +124,17 @@ class DefaultFields
     /**
      *  Get Field settings
      */
-    public function getFieldSettings(Users $user,EntityManager $em)
+    public function getFieldSettings(Users $user, EntityManager $em)
     {
         $settings = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $user->getId()));
         if ($settings) {
-            $view_settings = $settings->getViewSetting();
+            $viewSettings = $settings->getViewSetting();
         } else {
-            $view_settings = $this->getDefaultOrder();
+            $viewSettings = $this->getDefaultOrder();
         }
-        $user_view_settings = json_decode($view_settings, true);
+        $userViewSettings = json_decode($viewSettings, true);
 
-        return $user_view_settings;
+        return $userViewSettings;
     }
 
     /**
@@ -162,8 +164,29 @@ class DefaultFields
 
         return $data;
     }
-    
-    public function recordDatatableView(){
-        
+
+    public function recordDatatableView($records, $columnOrder)
+    {
+        $tableView = array();
+
+        foreach ($records as $mainIndex => $value) {
+            foreach ($columnOrder as $key => $row) {
+                $type = $row['title'];
+                if ($type == 'checkbox_Col')
+                    $tableView[$mainIndex][] = '<span style="float:left;min-width:20px;max-width:20px;"><input type="checkbox" name="record_checkbox[]" class="checkboxes" onclick="" value="' . $value['record']['id'] . '" /></span>';
+                if ($type == 'Project_Name')
+                    $tableView[$mainIndex][] = '<span style="float:left;min-width:150px;max-width:150px;">' . $value['projectTitle'] . '</span>';
+                else if ($type == 'Unique_ID')
+                    $tableView[$mainIndex][] = '<span style="float:left;min-width:150px;max-width:150px;"><a href="#">' . $value['record']['uniqueId'] . '</span>';
+                else if ($type == 'Title')
+                    $tableView[$mainIndex][] = '<span style="float:left;min-width:150px;max-width:150px;"><a href="#">' . $value['record']['title'] . '</span>';
+                else if ($type == 'Collection_Name')
+                    $tableView[$mainIndex][] = '<span style="float:left;min-width:150px;max-width:150px;"><a href="#">' . $value['record']['collectionName'] . '</span>';
+                else if ($type == 'Location')
+                    $tableView[$mainIndex][] = '<span style="float:left;min-width:150px;max-width:150px;"><a href="#">' . $value['record']['location'] . '</span>';
+            }
+        }
+        return $tableView;
     }
+
 }
