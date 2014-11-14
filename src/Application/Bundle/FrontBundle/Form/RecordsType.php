@@ -175,7 +175,7 @@ class RecordsType extends AbstractType
          $fields = new DefaultFields();
          $recordArr = $fields->getRecordArray($this->em, $record->getId());
          $sphinx = new Sphinxrt($this->sphinxParam);
-         $var = $sphinx->insert('records', $recordArr, $record->getId);
+         $var = $sphinx->insert('records', $recordArr, $record->getId());
 //         $sphinx = new Sphinx($this->sphinxParam);
 //         $var = $sphinx->insert('records', $recordArr);
          
