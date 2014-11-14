@@ -15,7 +15,7 @@ class RecordsRepository extends EntityRepository
 
     public function findAllRecords($offSet = 0, $limit = 100, $col = 'r.id', $order = 'asc')
     {
-        if($col == 'checkboxCol'){
+        if ($col == 'checkboxCol') {
             
         }
         return $this->getEntityManager()->createQuery("SELECT r as record,m.name as mediaType,p.name as projectTitle"
@@ -26,6 +26,18 @@ class RecordsRepository extends EntityRepository
                         )
 //                        ->setMaxResults($limit)
 //                        ->setFirstResult($offSet)
+                        ->getArrayResult();
+    }
+
+    public function findAudioRecordById($id)
+    {
+        return $this->getEntityManager()->createQuery("SELECT r as record, ar as audio, m.name as mediaType, p.name as projectTitle"
+                                . " FROM ApplicationFrontBundle:Records r"
+                                . " JOIN ApplicationFrontBundle:MediaTypes m WITH r.mediaType = m.id"
+                                . " JOIN ApplicationFrontBundle:Projects p WITH r.project = p.id"
+                                . " JOIN ApplicationFrontBundle:AudioRecords ar WITH ar.record = r.id "
+                                . " Where r.id = $id"
+                        )
                         ->getArrayResult();
     }
 

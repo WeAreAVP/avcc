@@ -56,7 +56,6 @@ class RecordsController extends Controller
     public function indexAction(Request $request)
     {
         $offSet = 0;
-        
         $this->session->set('offset', $offSet);
         $this->offset = $this->session->get('offset');
         $em = $this->getDoctrine()->getManager();
@@ -138,5 +137,10 @@ class RecordsController extends Controller
         }
         
         return $data;
+    }
+    
+    protected function getSphinxInfo()
+    {
+        return $this->container->getParameter('sphinx_param');
     }
 }

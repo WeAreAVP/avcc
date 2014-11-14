@@ -8,6 +8,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Doctrine\ORM\EntityManager;
+use Application\Bundle\FrontBundle\Helper\DefaultFields;
+use Application\Bundle\FrontBundle\Helper\Sphinx;
 
 class RecordsType extends AbstractType
 {
@@ -17,12 +19,13 @@ class RecordsType extends AbstractType
     private $mediaTyp;
     private $proj;
     private $user;
+    private $sphinxParam;
 
-    public function __construct(EntityManager $em, $selectedOptions = null)
+    public function __construct(EntityManager $em, $selectedOptions = null, $sphinxParam = null)
     {
         $this->selectedOptions = $selectedOptions;
         $this->em = $em;
-//        print_r($this->selectedOptions['mediaTypeId']);exit;
+        $this->sphinxParam = $sphinxParam;
     }
 
     /**
@@ -139,7 +142,7 @@ class RecordsType extends AbstractType
 
     public function onPreSetData(FormEvent $event)
     {
-
+        
     }
 
     public function onPreSubmitData(FormEvent $event)
@@ -155,7 +158,6 @@ class RecordsType extends AbstractType
         }
         $this->user = $this->em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
         $record['mediaType'] = $this->mediaTyp;
-
     }
 
     public function onPostSubmitData(FormEvent $event)
@@ -167,7 +169,13 @@ class RecordsType extends AbstractType
         if ($this->proj) {
             $record->setProject($this->proj);
         }
-//        var_dump($record->getProject()->getName());exit;
+        if($record->getId()){
+         $fields = new DefaultFields();
+         $recordArr = $fields->getRecordArray($this->em, $record->getId());
+         $sphinx = new Sphinx($this->sphinxParam);
+         $var = $sphinx->insert('records', $recordArr);
+         print_r($var);exit;
+        }
     }
 
     /**

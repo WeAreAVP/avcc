@@ -189,4 +189,56 @@ class DefaultFields
         return $tableView;
     }
 
+    public function getRecordArray(EntityManager $em, $record_id)
+    {
+         $row = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('id' => $record_id));
+         
+         $data = array();
+         
+	 $data['id'] = $row->getId();
+         $data['s_title'] = ($row->getTitle()) ? $row->getTitle() : "";
+	 $data['title'] = ($row->getTitle()) ? $row->getTitle() : "";
+         $data['s_description'] = ($row->getDescription()) ? $row->getDescription() : "";
+         $data['description'] = ($row->getDescription()) ? $row->getDescription() : "";
+         $data['s_collection_name'] = ($row->getCollectionName()) ? $row->getCollectionName() : "";
+         $data['collection_name'] = ($row->getCollectionName()) ? $row->getCollectionName() : "";
+         $data['s_creation_date'] = ($row->getCreationDate()) ? $row->getCreationDate() : "";
+         $data['creation_date'] = ($row->getCreationDate()) ? $row->getCreationDate() : "";
+         $data['s_content_date'] = ($row->getContentDate()) ? $row->getContentDate() : "";
+         $data['content_date'] = ($row->getContentDate()) ? $row->getContentDate() : "";
+         $data['unique_id'] = ($row->getUniqueId()) ? $row->getUniqueId() : "";
+         $data['s_media_type'] = ($row->getMediaType()->getName()) ? $row->getMediaType()->getName() : "";
+         $data['media_type'] = ($row->getMediaType()->getName()) ? $row->getMediaType()->getName() : "";
+         $data['s_genre_terms'] = ($row->getGenreTerms()) ? $row->getGenreTerms() : "";
+         $data['genre_terms'] = ($row->getGenreTerms()) ? $row->getGenreTerms() : "";
+         $data['s_contributor'] = ($row->getContributor()) ? $row->getContributor() : "";
+         $data['contributor'] = ($row->getContributor()) ? $row->getContributor() : "";
+         $data['location'] = ($row->getLocation()) ? $row->getLocation() : "";
+         $data['s_format'] = ($row->getFormat()->getName()) ? $row->getFormat()->getName() : "";
+         $data['format'] = ($row->getFormat()->getName()) ? $row->getFormat()->getName() : "";
+         $data['is_review'] = ($row->getIsReview()) ? $row->getIsReview() : "";
+         $data['commercial'] = ($row->getCommercial()->getName()) ? $row->getCommercial()->getName() : "";
+         $data['reel_diameter'] = ($row->getReelDiameters()) ? $row->getReelDiameters()->getName() : "";
+         $data['s_reel_diameter'] = ($row->getReelDiameters()) ? $row->getReelDiameters()->getName() : "";
+         $data['content_duration'] = ($row->getContentDuration()) ? $row->getContentDuration() : "";
+         $data['part'] = ($row->getPart()) ? $row->getPart() : "";
+         $data['generation'] = ($row->getGeneration()) ? $row->getGeneration() : "";
+         
+         if($row->getMediaType()->getId() == 1){
+             $data['disk_diameter'] = ($row->getAudioRecord()->getDiskDiameters()) ? $row->getAudioRecord()->getDiskDiameters()->getName() : "";
+             $data['base'] = ($row->getAudioRecord()->getBases()) ? $row->getAudioRecord()->getBases()->getName() : "";
+             $data['s_base'] = ($row->getAudioRecord()->getBases()) ? $row->getAudioRecord()->getBases()->getName() : "";
+             $data['media_diameter'] = ($row->getAudioRecord()->getMediaDiameters()) ? $row->getAudioRecord()->getMediaDiameters()->getName() : "";
+             $data['media_duration'] = ($row->getAudioRecord()->getMediaDuration()) ? $row->getAudioRecord()->getMediaDuration() : "";
+             $data['recording_speed'] = ($row->getAudioRecord()->getRecordingSpeed()) ? $row->getAudioRecord()->getRecordingSpeed()->getName() : "";
+             $data['tape_thickness'] = ($row->getAudioRecord()->getTapeThickness()) ? $row->getAudioRecord()->getTapeThickness()->getName() : "";
+             $data['slides'] = ($row->getAudioRecord()->getSlides()) ? $row->getAudioRecord()->getSlides()->getName() : "";
+             $data['track_type'] = ($row->getAudioRecord()->getTrackTypes()) ? $row->getAudioRecord()->getTrackTypes()->getName() : "";
+             $data['mono_stereo'] = ($row->getAudioRecord()->getMonoStereo()) ? $row->getAudioRecord()->getMonoStereo()->getName() : "";
+             $data['noice_reduction'] = ($row->getAudioRecord()->getNoiceReduction()) ? $row->getAudioRecord()->getNoiceReduction()->getName() : "";
+         }
+         
+         return $data;
+    }
+
 }
