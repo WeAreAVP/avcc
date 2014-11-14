@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormEvents;
 use Doctrine\ORM\EntityManager;
 use Application\Bundle\FrontBundle\Helper\DefaultFields;
 use Application\Bundle\FrontBundle\Helper\Sphinx;
-use Application\Bundle\FrontBundle\Libraries\Sphinxrt;
+use Application\Bundle\FrontBundle\Libraries\sphinxrt;
 
 
 class RecordsType extends AbstractType
