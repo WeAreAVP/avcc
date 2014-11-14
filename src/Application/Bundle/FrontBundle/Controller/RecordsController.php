@@ -100,10 +100,11 @@ class RecordsController extends Controller
         foreach($column as $key => $value){
             $columnOrder[] = array("title" => $key, "field" => $value, "hidden" => 0);
         }
-        $this->session->set('column', $column[$columnOrder[$iSortCol_0]['title']]);   
-        $col = $this->session->get('column');
-        $order = $this->session->get('columnOrder');
-        
+//        $this->session->set('column', $column[$columnOrder[$iSortCol_0]['title']]);   
+//        $col = $this->session->get('column');
+//        $order = $this->session->get('columnOrder');
+          $col = '';
+          $order = 'asc';
 //        $records = $this->sphinx->carrier_list($offset, 100, TRUE);
         $entities = $em->getRepository('ApplicationFrontBundle:Records')->findAllRecords($offSet, $this->limit, $col, $order);
         $data = $this->getData($entities);
