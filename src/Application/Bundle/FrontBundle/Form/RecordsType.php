@@ -10,6 +10,8 @@ use Symfony\Component\Form\FormEvents;
 use Doctrine\ORM\EntityManager;
 use Application\Bundle\FrontBundle\Helper\DefaultFields;
 use Application\Bundle\FrontBundle\Helper\Sphinx;
+use Application\Bundle\FrontBundle\Libraries\Sphinxrt;
+
 
 class RecordsType extends AbstractType
 {
@@ -172,8 +174,11 @@ class RecordsType extends AbstractType
         if($record->getId()){
          $fields = new DefaultFields();
          $recordArr = $fields->getRecordArray($this->em, $record->getId());
-         $sphinx = new Sphinx($this->sphinxParam);
-         $var = $sphinx->insert('records', $recordArr);
+         $sphinx = new Sphinxrt($this->sphinxParam);
+         $var = $sphinx->insert('records', $recordArr, $record->getId);
+//         $sphinx = new Sphinx($this->sphinxParam);
+//         $var = $sphinx->insert('records', $recordArr);
+         
          print_r($var);exit;
         }
     }

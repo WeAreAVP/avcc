@@ -1,4 +1,5 @@
 <?php
+namespace Application\Bundle\FrontBundle\Libraries;
 
 // SphinxRT Search Interface for CodeIgniter
 class Sphinxrt
@@ -15,16 +16,10 @@ class Sphinxrt
 	private $CI;
 
 	// construct
-	public function __construct()
+	public function __construct($params)
 	{
-		// get CI
-		$this->CI = &get_instance();
-
-		// load the config
-		$this->CI->config->load('sphinxrt');
-
 		// attempt to connect to Sphinx
-		$this->sphinxql_link = new mysqli($this->CI->config->config['hostname'], 'sphinx', '', '', $this->CI->config->config['port']);
+		$this->sphinxql_link = new mysqli($params['host'], 'sphinx', '', '', $params['port']);
 
 		// did the link work?
 		if ( ! $this->sphinxql_link)
