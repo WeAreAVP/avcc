@@ -179,7 +179,7 @@ class RecordsType extends AbstractType
 //         $sphinx = new Sphinx($this->sphinxParam);
 //         $var = $sphinx->insert('records', $recordArr);
          
-         print_r($var);exit;
+//         print_r($var);exit;
         }
     }
 
