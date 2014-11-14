@@ -1,6 +1,6 @@
 <?php
 namespace Application\Bundle\FrontBundle\Libraries;
-
+use mysqli;
 // SphinxRT Search Interface for CodeIgniter
 class Sphinxrt
 {
