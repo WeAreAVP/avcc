@@ -91,11 +91,11 @@ class RecordsController extends Controller
         
         $em = $this->getDoctrine()->getManager();
         $column = $this->columns;
-        $this->session->remove('column');
-        $this->session->remove('jscolumn');
-        $this->session->remove('columnOrder');
-        $this->session->set('jscolumn', $iSortCol_0);
-        $this->session->set('columnOrder', $sSortDir_0);
+//        $this->session->remove('column');
+//        $this->session->remove('jscolumn');
+//        $this->session->remove('columnOrder');
+//        $this->session->set('jscolumn', $iSortCol_0);
+//        $this->session->set('columnOrder', $sSortDir_0);
         
         foreach($column as $key => $value){
             $columnOrder[] = array("title" => $key, "field" => $value, "hidden" => 0);
