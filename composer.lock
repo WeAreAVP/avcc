@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "5879190fece7191493935edee9c41897",
+    "hash": "b4db414d91c0f9afb4642a8aef9f8ed5",
     "packages": [
         {
             "name": "datatables/datatables",
@@ -869,6 +869,54 @@
             "time": "2014-10-06 13:22:50"
         },
         {
+            "name": "foolz/sphinxql-query-builder",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FoolCode/SphinxQL-Query-Builder.git",
+                "reference": "f938af48ccfa42baca9bfbde8febad0a03e00f24"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FoolCode/SphinxQL-Query-Builder/zipball/f938af48ccfa42baca9bfbde8febad0a03e00f24",
+                "reference": "f938af48ccfa42baca9bfbde8febad0a03e00f24",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "replace": {
+                "foolz/sphinxql": "self.version"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Foolz\\SphinxQL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "foolz",
+                    "email": "support@foolz.us"
+                }
+            ],
+            "description": "A PHP query builder for SphinxQL. Uses MySQLi to connect to the Sphinx server.",
+            "homepage": "http://www.foolz.us",
+            "keywords": [
+                "database",
+                "query builder",
+                "search",
+                "sphinx",
+                "sphinxql",
+                "sql"
+            ],
+            "time": "2014-11-12 01:57:11"
+        },
+        {
             "name": "friendsofsymfony/jsrouting-bundle",
             "version": "1.5.3",
             "target-dir": "FOS/JsRoutingBundle",
@@ -1640,64 +1688,6 @@
             "time": "2014-04-28 14:01:06"
         },
         {
-            "name": "sg/datatablesbundle",
-            "version": "dev-master",
-            "target-dir": "Sg/DatatablesBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/stwe/DatatablesBundle.git",
-                "reference": "1e7b096006a9509b2fca626b45a715053ad6f4ac"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/stwe/DatatablesBundle/zipball/1e7b096006a9509b2fca626b45a715053ad6f4ac",
-                "reference": "1e7b096006a9509b2fca626b45a715053ad6f4ac",
-                "shasum": ""
-            },
-            "require": {
-                "friendsofsymfony/jsrouting-bundle": "@stable",
-                "php": ">=5.3.2",
-                "symfony/framework-bundle": "~2.3"
-            },
-            "suggest": {
-                "components/jquery": "1.11.1",
-                "datatables/datatables": "1.10.4",
-                "moment/moment": "2.6.0",
-                "mopa/bootstrap-bundle": "v3.0.0-beta4",
-                "twbs/bootstrap": "v3.2.0"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "Sg\\DatatablesBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "stwe"
-                },
-                {
-                    "name": "SgDatatablesBundle contributors",
-                    "homepage": "https://github.com/stwe/DatatablesBundle/graphs/contributors"
-                }
-            ],
-            "description": "Symfony2 Datatable Bundle For Doctrine2 Entities",
-            "homepage": "https://github.com/stwe/DatatablesBundle",
-            "keywords": [
-                "Symfony2",
-                "datagrid",
-                "datatable",
-                "grid",
-                "pagination",
-                "table"
-            ],
-            "time": "2014-11-09 19:17:05"
-        },
-        {
             "name": "swiftmailer/swiftmailer",
             "version": "v5.3.0",
             "source": {
@@ -2190,7 +2180,7 @@
         "friendsofsymfony/user-bundle": 20,
         "doctrine/migrations": 20,
         "doctrine/doctrine-migrations-bundle": 20,
-        "sg/datatablesbundle": 20
+        "foolz/sphinxql-query-builder": 20
     },
     "platform": {
         "php": ">=5.3.3"

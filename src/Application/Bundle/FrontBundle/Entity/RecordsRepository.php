@@ -13,16 +13,19 @@ use Doctrine\ORM\EntityRepository;
 class RecordsRepository extends EntityRepository
 {
 
-    public function findAllRecords($offset, $limit)
+    public function findAllRecords($offSet = 0, $limit = 100, $col = 'r.id', $order = 'asc')
     {
+        if($col == 'checkboxCol'){
+            
+        }
         return $this->getEntityManager()->createQuery("SELECT r as record,m.name as mediaType,p.name as projectTitle"
                                 . " FROM ApplicationFrontBundle:Records r"
                                 . " JOIN ApplicationFrontBundle:MediaTypes m WITH r.mediaType = m.id"
                                 . " JOIN ApplicationFrontBundle:Projects p WITH r.project = p.id"
-                                . " order by r.id"
+                                . " order by r.id $order"
                         )
 //                        ->setMaxResults($limit)
-//                        ->setFirstResult($offset)
+//                        ->setFirstResult($offSet)
                         ->getArrayResult();
     }
 

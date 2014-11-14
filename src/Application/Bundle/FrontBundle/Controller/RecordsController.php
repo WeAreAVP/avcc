@@ -34,8 +34,8 @@ class RecordsController extends Controller
     {
         $this->columns = array(
             'checkbox_Col' => 'checkboxCol',
-            'Project_Name' => 'mediaType',
-            'Unique_ID' => 'format',
+            'Project_Name' => 'projectName',
+            'Unique_ID' => 'uniqueId',
             'Title' => 'title',
             'Collection_Name' => 'collectionName',
             'Location' => 'location'
@@ -96,18 +96,17 @@ class RecordsController extends Controller
         $this->session->remove('columnOrder');
         $this->session->set('jscolumn', $iSortCol_0);
         $this->session->set('columnOrder', $sSortDir_0);
-//        $records = $this->sphinx->carrier_list($offset, 100, TRUE);
-        $entities = $em->getRepository('ApplicationFrontBundle:Records')->findAllRecords($offSet, $this->limit);
-        $data = $this->getData($entities);
-//        $record_ids = array_map(array($this, 'map_array'), $records['records']);
-//        print_r($data);
-//        exit;
-//     echo    $this->session->get('jscolumn');
-//     echo '<br />';
-//     echo    $this->session->get('columnOrder');
+        
         foreach($column as $key => $value){
             $columnOrder[] = array("title" => $key, "field" => $value, "hidden" => 0);
         }
+        $this->session->set('column', $column[$columnOrder[$iSortCol_0]['title']]);   
+        $col = $this->session->get('column');
+        $order = $this->session->get('columnOrder');
+        
+//        $records = $this->sphinx->carrier_list($offset, 100, TRUE);
+        $entities = $em->getRepository('ApplicationFrontBundle:Records')->findAllRecords($offSet, $this->limit, $col, $order);
+        $data = $this->getData($entities);
         $tableView = $this->defaultFields->recordDatatableView($entities, $columnOrder);
 
         $dataTable = array(
