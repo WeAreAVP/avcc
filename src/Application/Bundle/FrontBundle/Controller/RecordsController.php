@@ -40,7 +40,7 @@ class RecordsController extends Controller
             'Collection_Name' => 'collectionName',
             'Location' => 'location'
         );
-        $this->session = new Session();
+        ;
         $this->defaultFields = new DefaultFields();
         $this->limit = 10;
     }
@@ -56,8 +56,9 @@ class RecordsController extends Controller
     public function indexAction(Request $request)
     {
         $offSet = 0;
-        $this->session->set('offset', $offSet);
-        $this->offset = $this->session->get('offset');
+//        $this->session = $this->get('session');
+//        $this->session->set('offset', $offSet);
+//        $this->offset = $this->session->get('offset');
         $em = $this->getDoctrine()->getManager();
         $column = $this->columns;
 //        $entities = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
