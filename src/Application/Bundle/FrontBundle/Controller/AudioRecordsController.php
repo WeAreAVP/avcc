@@ -115,7 +115,7 @@ class AudioRecordsController extends Controller
             $entity = new AudioRecords();
         }
         $sphinxParam = $this->container->getParameter('sphinx_param');
-		echo '<pre>';print_r($sphinxParam);exit;
+		
         $form = $this->createCreateForm($entity, $em, $data, $sphinxParam);
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
 
