@@ -21,7 +21,8 @@ class Sphinx
 	{
 
 		$sq = SphinxQL::create($this->conn)->insert()->into($indexName);
-		return $sq->set($data);
+		$sq->set($data);
+		return $sq->execute();
 	}
 
 }
