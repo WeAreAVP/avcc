@@ -174,10 +174,14 @@ class RecordsType extends AbstractType
         if($record->getId()){
          $fields = new DefaultFields();
          $recordArr = $fields->getRecordArray($this->em, $record->getId());
-         $sphinx = new Sphinxrt($this->sphinxParam);
+//         $sphinx = new Sphinxrt($this->sphinxParam);
+//         
 //         $var = $sphinx->insert('records', $recordArr, $record->getId());
-//         $sphinx = new Sphinx($this->sphinxParam);
-//         $var = $sphinx->insert('records', $recordArr);
+		 error_reporting(E_ALL);
+			ini_set('display_errors', 1);
+         $sphinx = new Sphinx($this->sphinxParam);
+		 echo '<pre>';print_r($recordArr);
+         $var = $sphinx->insert('records', $recordArr);
          
 //         print_r($var);exit;
         }

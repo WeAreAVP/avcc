@@ -12,9 +12,11 @@ class Sphinx
     {
         $this->conn = new Connection();
         $this->conn->setParams(array('host' => $params['host'], 'port' => $params['port']));
+		$this->conn->silenceConnectionWarning(true);
     }
     
     public function insert($indexName, $data){
+		
         $sq = SphinxQL::create($this->conn)->insert()->into($indexName);
         return $sq->set($data);
     }
