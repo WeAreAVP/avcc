@@ -226,7 +226,7 @@ class DefaultFields
 		$data['is_review'] = ($row->getIsReview()) ? $row->getIsReview() : "";
 		$data['commercial'] = 1;
 		$data['reel_diameter'] = ($row->getReelDiameters()) ? $row->getReelDiameters()->getName() : "";
-		$data['s_reel_diameter'] = ($row->getReelDiameters()) ? $row->getReelDiameters()->getName() : "";
+//		$data['s_reel_diameter'] = ($row->getReelDiameters()) ? $row->getReelDiameters()->getName() : "";
 		$data['content_duration'] = ($row->getContentDuration()) ? $row->getContentDuration() : "";
 		$data['part'] = ($row->getPart()) ? $row->getPart() : "";
 		$data['generation'] = ($row->getGeneration()) ? $row->getGeneration() : "";
