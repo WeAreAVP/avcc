@@ -65,7 +65,7 @@ class AudioRecordsController extends Controller
 			ini_set('display_errors', 1);
 			$fields = new DefaultFields();
 			$recordArr = $fields->getRecordArray($em, $entity->getId());
-			$sphinx = new Sphinx($this->sphinxParam);
+			$sphinx = new Sphinx($container->sphinxParam);
 			$var = $sphinx->insert('records', $recordArr);
 			echo '<pre>';
 			print_r($var);
