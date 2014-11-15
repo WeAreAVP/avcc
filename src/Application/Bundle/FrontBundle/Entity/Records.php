@@ -14,6 +14,7 @@ use Application\Bundle\FrontBundle\Entity\VideoRecords as VideoRecords;
 use Application\Bundle\FrontBundle\Entity\FilmRecords as FilmRecords;
 use Application\Bundle\FrontBundle\Entity\ReelDiameters as ReelDiameters;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 
 /**
  * Records
@@ -941,16 +942,22 @@ class Records
 
 	/**
 	 * @ORM\PostPersist()
+	 * 
+	 */
+	public function insertSphinx()
+	{
+		$sphinxSearch = new SphinxSearch($this->getId());
+		$sphinxSearch->insert();
+	}
+
+	/**
+	 * 
 	 * @ORM\PostUpdate()
 	 */
-	public function upload()
+	public function updateSphinx()
 	{
-//		if (null === $this->file)
-//		{
-//			return;
-//		}
-//
-//		$this->file->move($this->getUploadRootDir() . date('Ymdhis') . '_' . $this->file->getClientOriginalName());
+		$sphinxSearch = new SphinxSearch($this->getId());
+		$sphinxSearch->update();
 	}
 
 }
