@@ -160,6 +160,7 @@ class RecordsType extends AbstractType
         }
         $this->user = $this->em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
         $record['mediaType'] = $this->mediaTyp;
+		echo '<pre>';print_r('nouman');exit;
     }
 
     public function onPostSubmitData(FormEvent $event)
