@@ -1,6 +1,22 @@
 {% extends 'FOSUserBundle::layout.html.twig' %}
 
 {% block body -%}
+	<nav class="sidebar light">
+		<ul>
+
+
+			<li class="title">Filters</li>
+			<li><a href="#">Keyword</a></li>
+			<li>
+				<a class="dropdown-toggle" href="#">Media Type</a>
+				<ul class="dropdown-menu" data-role="dropdown" style="display: none;">
+					<li><a href="">Audio</a></li>
+					<li><a href="">Video</a></li>
+					<li><a href="">Film</a></li>
+				</ul>
+			</li>
+		</ul>
+	</nav>
 	{#    {{ dump(app.session.get('columnOrder'))}}#}
     <h1><div class="place-left">Records list</div>
 		<div class="button-dropdown">
@@ -9,13 +25,13 @@
 				<li><a  href="{{ path('record_new') }}">Audio</a></li>
 				<li><a  href="{{ path('record_video_new') }}">Video</a></li>
 				<li> <a  href="{{ path('record_film_new') }}">Film</a></li>
-				
+
 			</ul>
 		</div>
 
 
 
-      
+
     </h1>
     <div class="clearfix"></div>
     <br />

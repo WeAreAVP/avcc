@@ -3,6 +3,7 @@
 namespace Application\Bundle\FrontBundle\SphinxSearch;
 
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxFields;
+
 use Foolz\SphinxQL\SphinxQL;
 use Foolz\SphinxQL\Connection;
 
