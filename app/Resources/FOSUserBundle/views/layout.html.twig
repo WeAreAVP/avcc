@@ -107,11 +107,11 @@
                                     <li>
                                         <a class="dropdown-toggle" href="#"><span class=""></span> Add</a>
                                         <ul class="dropdown-menu dark content" data-role="dropdown">
-                                           <li>
-                                               <a class="" href="{{ path('record_new') }}">Audio</a>
-                                               <a class="" href="{{ path('record_video_new') }}">Video</a>
-                                               <a class="" href="{{ path('record_film_new') }}">Film</a>
-                                           </li>
+											<li>
+												<a class="" href="{{ path('record_new') }}">Audio</a>
+												<a class="" href="{{ path('record_video_new') }}">Video</a>
+												<a class="" href="{{ path('record_film_new') }}">Film</a>
+											</li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -147,29 +147,29 @@
             <script src="{{ asset('js/chosen.jquery.js') }}"></script>
             <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
             <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
+			<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
             <script type="text/javascript">
-                setTimeout(function () {
-                    $('.text-success').hide();
-                }, 5000);
-                $(document).ready(function () {
-                    $('.formats_dd').chosen();
-                    var fixHelper = function (e, ui) {
-                        ui.children().each(function () {
-                            $(this).width($(this).width());
-                        });
-                        return ui;
-                    };
+				setTimeout(function () {
+					$('.text-success').hide();
+				}, 5000);
+				$(document).ready(function () {
+					$('.formats_dd').chosen();
+					var fixHelper = function (e, ui) {
+						ui.children().each(function () {
+							$(this).width($(this).width());
+						});
+						return ui;
+					};
 
-                    $(".sortable tbody").sortable({
-                        helper: fixHelper,
-                        //handle: ".icon-align-justify",
+					$(".sortable tbody").sortable({
+						helper: fixHelper,
+						//handle: ".icon-align-justify",
                 {#update: function (event, ui) {
                     var newOrder = $(this).sortable('toArray').toString();
                     $.post(base_url + 'settings/save_sort', {order: newOrder});
                 }#}
-                        }).disableSelection();
-                    });
+						}).disableSelection();
+					});
 
             </script>
 

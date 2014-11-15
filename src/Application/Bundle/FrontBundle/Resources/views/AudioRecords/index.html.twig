@@ -6,8 +6,6 @@
 			<div class="span3">
 				<nav class="sidebar light">
 					<ul>
-
-
 						<li class="title">Filters</li>
 						<li><a href="#">Keyword</a></li>
 						<li>
@@ -22,16 +20,15 @@
 				</nav>
 			</div>
 			<div class="span9">
-				<h1><div class="place-left">Records list</div>
-					<div class="button-dropdown">
-						<button class="dropdown-toggle link"><i class="icon-plus"></i> New</button>
-						<ul class="dropdown-menu" data-role="dropdown">
-							<li><a  href="{{ path('record_new') }}">Audio</a></li>
-							<li><a  href="{{ path('record_video_new') }}">Video</a></li>
-							<li> <a  href="{{ path('record_film_new') }}">Film</a></li>
+				<div class="button-dropdown">
+					<button class="dropdown-toggle link"><i class="icon-plus"></i> New</button>
+					<ul class="dropdown-menu" data-role="dropdown">
+						<li><a  href="{{ path('record_new') }}">Audio</a></li>
+						<li><a  href="{{ path('record_video_new') }}">Video</a></li>
+						<li> <a  href="{{ path('record_film_new') }}">Film</a></li>
 
-						</ul>
-					</div>
+					</ul>
+				</div>
 
 
 
@@ -60,19 +57,19 @@
 					<script type="text/javascript" src="{{ asset('js/jquery.tablesorter.js') }}"></script> 
 					<script type="text/javascript" src="{{ asset('js/records.js') }}"></script>   
 					<script type="text/javascript">
-			var page_total = '{{data.total}}';
-			var overall_total = '{{data.total}}';
-			var is_destroy = false;
-			var columnsOrder = new Array();
-			var orderString = '';
-			var frozen = '1';
-			var hiden_column = new Array();
-			var index_column = '{%if app.session.get('jscolumn')%}{{app.session.get('jscolumn')}}{% else %}{{'0'}}{% endif %}';
-			var order_column = '{%if app.session.get('columnOrder')%}{{app.session.get('columnOrder')}}{% else %}{{'asc'}}{% endif %}';
-			var tableSource = '{{ path('record_dataTable') }}';
-			$(document).ready(function () {
-				updateDataTable();
-			});
+						var page_total = '{{data.total}}';
+						var overall_total = '{{data.total}}';
+						var is_destroy = false;
+						var columnsOrder = new Array();
+						var orderString = '';
+						var frozen = '1';
+						var hiden_column = new Array();
+						var index_column = '{%if app.session.get('jscolumn')%}{{app.session.get('jscolumn')}}{% else %}{{'0'}}{% endif %}';
+						var order_column = '{%if app.session.get('columnOrder')%}{{app.session.get('columnOrder')}}{% else %}{{'asc'}}{% endif %}';
+						var tableSource = '{{ path('record_dataTable') }}';
+						$(document).ready(function () {
+							updateDataTable();
+						});
 					</script>
 				{% endif%}
 			</div>
