@@ -1,10 +1,10 @@
 oFC = null;
-function updateDataTable() {
-	height = $(window).height() - 185;
-	scrollHeight = height + 10;
+function updateDataTable(){
+    height = $(window).height() - 185;
+    scrollHeight = height + 10;
 //    console.log(index_column);
 //    console.log(order_column);
-	if ($('#records').length > 0)
+    if ($('#records').length > 0)
 	{
 		oTable =
 		$('#records').dataTable(
@@ -24,24 +24,24 @@ function updateDataTable() {
 			'bPaginate': true,
 //                        "pageLength": 10,
 			'bInfo': false,
-			"info": false,
 			'bFilter': false,
 			"bSort": true,
-			"scrollY": 200,
-			"scrollX": true,
+//			"sScrollY": height,
+//			"sScrollX": "200%",
 			"bDeferRender": true,
+			"bDestroy": is_destroy,
 			"bRetrieve": true,
 			"bAutoWidth": true,
 			"bProcessing": true,
 			"bServerSide": true,
 			"sAjaxSource": tableSource,
-			"fnServerData": function (sSource, aoData, fnCallback) {
+			"fnServerData": function(sSource, aoData, fnCallback) {
 
 				columnArray = getColumnOrder();
 
 				reOrderDropDown(columnArray);
 //				updateDatabase(0);
-				jQuery.getJSON(sSource, aoData, function (json) {
+				jQuery.getJSON(sSource, aoData, function(json) {
 
 					/* Do whatever additional processing you want on the callback, then tell DataTables */
 					fnCallback(json);
@@ -62,16 +62,16 @@ function updateDataTable() {
 //			}
 
 		});
-		$.extend($.fn.dataTableExt.oStdClasses, {
+                $.extend($.fn.dataTableExt.oStdClasses, {
 			"sWrapper": "dataTables_wrapper form-inline"
 		});
-	}
+            }
 }
 
 function getColumnOrder()
 {
 	var orderString = new Array;
-	$('#records th').each(function (index)
+	$('#records th').each(function(index)
 	{
 		if (index == 0)
 		{
@@ -85,7 +85,7 @@ function getColumnOrder()
 			}
 		}
 	});
-
+        
 	return orderString;
 }
 

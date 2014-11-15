@@ -67,7 +67,7 @@
 						var index_column = '{%if app.session.get('jscolumn')%}{{app.session.get('jscolumn')}}{% else %}{{'0'}}{% endif %}';
 						var order_column = '{%if app.session.get('columnOrder')%}{{app.session.get('columnOrder')}}{% else %}{{'asc'}}{% endif %}';
 						var tableSource = '{{ path('record_dataTable') }}';
-						$(document).ready(function () {
+						$(window).load(function () {
 							updateDataTable();
 						});
 					</script>
