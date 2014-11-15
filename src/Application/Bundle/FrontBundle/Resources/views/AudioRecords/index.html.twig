@@ -1,61 +1,65 @@
 {% extends 'FOSUserBundle::layout.html.twig' %}
 
 {% block body -%}
-	<nav class="sidebar light">
-		<ul>
+	<div class="grid">
+		<div class="row">
+			<div class="span3">
+				<nav class="sidebar light">
+					<ul>
 
 
-			<li class="title">Filters</li>
-			<li><a href="#">Keyword</a></li>
-			<li>
-				<a class="dropdown-toggle" href="#">Media Type</a>
-				<ul class="dropdown-menu" data-role="dropdown" style="display: none;">
-					<li><a href="">Audio</a></li>
-					<li><a href="">Video</a></li>
-					<li><a href="">Film</a></li>
-				</ul>
-			</li>
-		</ul>
-	</nav>
-	{#    {{ dump(app.session.get('columnOrder'))}}#}
-    <h1><div class="place-left">Records list</div>
-		<div class="button-dropdown">
-			<button class="dropdown-toggle link"><i class="icon-plus"></i> New</button>
-			<ul class="dropdown-menu" data-role="dropdown">
-				<li><a  href="{{ path('record_new') }}">Audio</a></li>
-				<li><a  href="{{ path('record_video_new') }}">Video</a></li>
-				<li> <a  href="{{ path('record_film_new') }}">Film</a></li>
+						<li class="title">Filters</li>
+						<li><a href="#">Keyword</a></li>
+						<li>
+							<a class="dropdown-toggle" href="#">Media Type</a>
+							<ul class="dropdown-menu" data-role="dropdown" style="display: none;">
+								<li><a href="">Audio</a></li>
+								<li><a href="">Video</a></li>
+								<li><a href="">Film</a></li>
+							</ul>
+						</li>
+					</ul>
+				</nav>
+			</div>
+			<div class="span9">
+				<h1><div class="place-left">Records list</div>
+					<div class="button-dropdown">
+						<button class="dropdown-toggle link"><i class="icon-plus"></i> New</button>
+						<ul class="dropdown-menu" data-role="dropdown">
+							<li><a  href="{{ path('record_new') }}">Audio</a></li>
+							<li><a  href="{{ path('record_video_new') }}">Video</a></li>
+							<li> <a  href="{{ path('record_film_new') }}">Film</a></li>
 
-			</ul>
-		</div>
+						</ul>
+					</div>
 
 
 
 
-    </h1>
-    <div class="clearfix"></div>
-    <br />
-    <table class="table striped hovered bordered" id="records">
-        <thead>
-			<tr>
-                {% for column, value in columns %}
-                    {% if column == 'checkbox_Col' %}
-                        <th id="{{value}}"><input type="checkbox" name="selectAll" /></th>  
-                        {% else %}    
-                        <th id="{{value}}">{{ column|replace({'_': ' '}) }}</th>
-                        {% endif %}
-                    {% endfor %}                        
-			</tr>
-        </thead>
-        <tbody>
+				</h1>
+				<div class="clearfix"></div>
+				<br />
+				<table class="table striped hovered bordered" id="records">
+					<thead>
+						<tr>
+							{% for column, value in columns %}
+								{% if column == 'checkbox_Col' %}
+									<th id="{{value}}"><input type="checkbox" name="selectAll" /></th>  
+									{% else %}    
+									<th id="{{value}}">{{ column|replace({'_': ' '}) }}</th>
+									{% endif %}
+								{% endfor %}                        
+						</tr>
+					</thead>
+					<tbody>
 
-        </tbody>
-    </table>
-    {% if data.total > 0 %}
-		<script type="text/javascript" src="{{ asset('js/FixedColumns.js') }}"></script>    
-		<script type="text/javascript" src="{{ asset('js/jquery.tablesorter.js') }}"></script> 
-		<script type="text/javascript" src="{{ asset('js/records.js') }}"></script>   
-		<script type="text/javascript">
+					</tbody>
+				</table>
+				{% if data.total > 0 %}
+					<script type="text/javascript" src="{{ asset('js/FixedColumns.js') }}"></script>    
+					<script type="text/javascript" src="{{ asset('js/jquery.tablesorter.js') }}"></script> 
+					<script type="text/javascript" src="{{ asset('js/records.js') }}"></script>   
+					<script type="text/javascript">
 			var page_total = '{{data.total}}';
 			var overall_total = '{{data.total}}';
 			var is_destroy = false;
@@ -69,6 +73,13 @@
 			$(document).ready(function () {
 				updateDataTable();
 			});
-		</script>
-    {% endif%}
+					</script>
+				{% endif%}
+			</div>
+		</div>
+	</div>
+
+
+	{#    {{ dump(app.session.get('columnOrder'))}}#}
+
 {% endblock %}
