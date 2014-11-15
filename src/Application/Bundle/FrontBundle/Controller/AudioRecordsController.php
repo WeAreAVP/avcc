@@ -52,6 +52,7 @@ class AudioRecordsController extends Controller
 	public function createAction(Request $request)
 	{
 		$em=$this->getDoctrine()->getManager();
+		$container = $this->container;
 		$entity = new AudioRecords();
 		$form = $this->createCreateForm($entity, $em, null, $container);
 		$form->handleRequest($request);
