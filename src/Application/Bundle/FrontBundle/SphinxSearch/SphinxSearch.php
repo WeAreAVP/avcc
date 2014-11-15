@@ -16,7 +16,7 @@ class SphinxSearch
 	public function __construct($recordId)
 	{
 		$this->recordId = $recordId;
-		$container = $this->container;
+		
 
 		$this->conn = new Connection();
 		$this->conn->setParams(array('host' => $params['host'], 'port' => $params['port']));
