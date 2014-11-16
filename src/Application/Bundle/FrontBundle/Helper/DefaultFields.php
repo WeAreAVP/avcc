@@ -180,17 +180,17 @@ class DefaultFields
 			{
 				$type = $row['title'];
 				if ($type == 'checkbox_Col')
-					$tableView[$mainIndex][] = '<span style="float:left;min-width:20px;max-width:20px;"><input type="checkbox" name="record_checkbox[]" class="checkboxes" onclick="" value="' . $value['record']['id'] . '" /></span>';
+					$tableView[$mainIndex][] = '<input type="checkbox" name="record_checkbox[]" class="checkboxes" onclick="" value="' . $value['record']['id'] . '" />';
 				if ($type == 'Project_Name')
-					$tableView[$mainIndex][] = '<span style="float:left;min-width:150px;max-width:150px;">' . $value['projectTitle'] . '</span>';
+					$tableView[$mainIndex][] =  $value['projectTitle'] ;
 				else if ($type == 'Unique_ID')
-					$tableView[$mainIndex][] = '<span style="float:left;min-width:150px;max-width:150px;"><a href="#">' . $value['record']['uniqueId'] . '</span>';
+					$tableView[$mainIndex][] =$value['record']['uniqueId'];
 				else if ($type == 'Title')
-					$tableView[$mainIndex][] = '<span style="float:left;min-width:150px;max-width:150px;"><a href="#">' . $value['record']['title'] . '</span>';
+					$tableView[$mainIndex][] = $value['record']['title'];
 				else if ($type == 'Collection_Name')
-					$tableView[$mainIndex][] = '<span style="float:left;min-width:150px;max-width:150px;"><a href="#">' . $value['record']['collectionName'] . '</span>';
+					$tableView[$mainIndex][] =  $value['record']['collectionName'];
 				else if ($type == 'Location')
-					$tableView[$mainIndex][] = '<span style="float:left;min-width:150px;max-width:150px;"><a href="#">' . $value['record']['location'] . '</span>';
+					$tableView[$mainIndex][] = $value['record']['location'] ;
 			}
 		}
 		return $tableView;
