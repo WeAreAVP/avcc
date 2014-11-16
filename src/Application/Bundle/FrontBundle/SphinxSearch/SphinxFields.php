@@ -16,7 +16,7 @@ class SphinxFields
 	 * @param int $recordId
 	 * @return type
 	 */
-	public function prepareFields(EntityManager $entityManager, int $recordId)
+	public function prepareFields(EntityManager $entityManager,  $recordId)
 	{
 		$this->record = $entityManager->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('id' => $recordId));
 
