@@ -45,6 +45,7 @@ function Records() {
 				"aoColumnDefs": [
 					{"bSortable": false, "aTargets": [0]}
 				],
+				"aaSorting": [],
 				"sAjaxSource": ajaxSource,
 				"bStateSave": true,
 //				"fnInitComplete": function () {
