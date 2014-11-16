@@ -12,6 +12,9 @@ function updateDataTable() {
 			"dom": 'tipr',
 			"bProcessing": true,
 			"bServerSide": true,
+			"language": {
+				"info": "Showing _START_ - _END_ of _MAX_"
+			},
 			"sAjaxSource": tableSource,
 			"fnServerData": function (sSource, aoData, fnCallback) {
 
