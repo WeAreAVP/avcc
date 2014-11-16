@@ -9,7 +9,7 @@ function updateDataTable() {
 		oTable =
 		$('#records').dataTable(
 		{
-			"dom": 'tipr',
+			"dom": '<"top"p>tir<"bottom"p>',
 			"bProcessing": true,
 			"bServerSide": true,
 			"language": {
