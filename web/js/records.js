@@ -47,16 +47,7 @@ function Records() {
 				],
 				"aaSorting": [],
 				"sAjaxSource": ajaxSource,
-				"bStateSave": true,
-//				"fnInitComplete": function () {
-//					this.oTable.fnAdjustColumnSizing();
-//				},
-//				"fnServerData": function (sSource, aoData, fnCallback) {
-//					jQuery.getJSON(sSource, aoData, function (json) {
-//						fnCallback(json);
-//
-//					});
-//				},
+				"bStateSave": true
 			});
 		}
 
