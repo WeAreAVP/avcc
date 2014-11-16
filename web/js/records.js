@@ -16,6 +16,10 @@ function updateDataTable() {
 				"info": "Showing _START_ - _END_ of _MAX_"
 			},
 			"sAjaxSource": tableSource,
+			"bStateSave": true,
+			"fnInitComplete": function () {
+				oTable.fnAdjustColumnSizing();
+			},
 			"fnServerData": function (sSource, aoData, fnCallback) {
 
 
