@@ -4,6 +4,7 @@
 	<div class="grid">
 		<div class="row">
 			<div class="span3">
+
 				<nav class="sidebar light">
 					<ul>
 						<li class="title">Filters</li>
@@ -21,14 +22,24 @@
 			</div>
 			<div class="span12">
 				<div class="button-dropdown">
-					<button class="dropdown-toggle link"><i class="icon-plus"></i> New</button>
+					<button class="dropdown-toggle">Operations</button>
 					<ul class="dropdown-menu" data-role="dropdown">
-						<li><a  href="{{ path('record_new') }}">Audio</a></li>
-						<li><a  href="{{ path('record_video_new') }}">Video</a></li>
-						<li> <a  href="{{ path('record_film_new') }}">Film</a></li>
+
+						<li>
+							<a class="dropdown-toggle" href="#">Add Record</a>
+							<ul class="dropdown-menu" data-role="dropdown">
+								<li><a  href="{{ path('record_new') }}">Audio</a></li>
+								<li> <a  href="{{ path('record_film_new') }}">Film</a></li>
+								<li><a  href="{{ path('record_video_new') }}">Video</a></li>
+							</ul>
+						</li>
+
 
 					</ul>
 				</div>
+
+
+				
 				<div>
 					<table class="table hovered bordered" id="records">
 						<thead>
