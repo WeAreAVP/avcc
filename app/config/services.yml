@@ -2,7 +2,7 @@ services:
     my.listener:
         class: Application\Bundle\FrontBundle\EventListener\SearchIndexer
         tags:
-            - { name: doctrine.event_listener, event: postPersist , connection: default }
+            - { name: doctrine.event_listener, event: postPersist, method: postPersist , connection: default }
     
         
     my.subscriber:
