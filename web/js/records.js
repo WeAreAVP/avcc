@@ -16,15 +16,15 @@ function Records() {
 	/**
 	 * Set the ajax URL of datatable.
 	 * @param {string} source
-	 * @returns {Records}
+	 * 
 	 */
 	this.setAjaxSource = function (source) {
 		ajaxSource = source;
-		return this;
+
 	}
 	/**
+	 * Initialize the datatable.
 	 * 
-	 * @returns {Records}
 	 */
 	this.initDataTable = function () {
 		// check the existence of table on which we are going to apply datatable.
@@ -44,9 +44,9 @@ function Records() {
 				},
 				"sAjaxSource": ajaxSource,
 				"bStateSave": true,
-//				"fnInitComplete": function () {
-//					this.oTable.fnAdjustColumnSizing();
-//				},
+				"fnInitComplete": function () {
+					this.oTable.fnAdjustColumnSizing();
+				},
 				"fnServerData": function (sSource, aoData, fnCallback) {
 					jQuery.getJSON(sSource, aoData, function (json) {
 						fnCallback(json);
