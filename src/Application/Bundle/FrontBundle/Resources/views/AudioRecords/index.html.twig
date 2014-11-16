@@ -52,9 +52,8 @@
 						<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
 						<script type="text/javascript" src="{{ asset('js/records.js') }}"></script>   
 						<script type="text/javascript">
-							var record = new Records();
-							record.setAjaxSource('{{ path('record_dataTable') }}');
-							record.initDataTable();
+							initDataTable('{{ path('record_dataTable') }}');
+
 
 						</script>
 					{% endblock %}
