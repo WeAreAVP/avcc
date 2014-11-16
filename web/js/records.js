@@ -9,29 +9,7 @@ function updateDataTable() {
 		oTable =
 		$('#records').dataTable(
 		{
-			"sDom": 'RlfrtipS',
-			"aoColumnDefs": [{
-					"bVisible": false,
-					"aTargets": hiden_column
-
-				}
-			],
-			"aaSorting": [[index_column, order_column]],
-			"oColReorder": {
-				"iFixedColumns": frozen
-
-			},
-			'bPaginate': true,
-//                        "pageLength": 10,
-			'bInfo': false,
-			'bFilter': false,
-			"bSort": true,
-//			"sScrollY": height,
-//			"sScrollX": "200%",
-			"bDeferRender": true,
-			"bDestroy": is_destroy,
-			"bRetrieve": true,
-			"bAutoWidth": true,
+			
 			"bProcessing": true,
 			"bServerSide": true,
 			"sAjaxSource": tableSource,
