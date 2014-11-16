@@ -3,9 +3,9 @@
 namespace Application\Bundle\FrontBundle\SphinxSearch;
 
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxFields;
-
 use Foolz\SphinxQL\SphinxQL;
 use Foolz\SphinxQL\Connection;
+use Doctrine\ORM\EntityManager;
 
 class SphinxSearch
 {
@@ -13,21 +13,23 @@ class SphinxSearch
 	private $conn;
 	private $indexName = 'records';
 	private $recordId;
+	private $entityManager = null;
 
-	public function __construct($recordId)
+	public function __construct(EntityManager $entityManager, $recordId)
 	{
+		$this->entityManager = $entityManager;
 		$this->recordId = $recordId;
-		
+
 
 		$this->conn = new Connection();
-//		$this->conn->setParams(array('host' => $params['host'], 'port' => $params['port']));
-//		$this->conn->silenceConnectionWarning(true);
+		$this->conn->setParams(array('host' => 'localhost', 'port' => '9306'));
+		$this->conn->silenceConnectionWarning(true);
 	}
 
 	public function insert()
 	{
 		$sphinxFields = new SphinxFields();
-		$data = $sphinxFields->prepareFields($this->getDoctrine()->getManager(), $this->recordId);
+		$data = $sphinxFields->prepareFields($this->entityManager, $this->recordId);
 		echo '<pre>';
 		print_r($data);
 		exit;

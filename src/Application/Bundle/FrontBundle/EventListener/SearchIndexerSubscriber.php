@@ -6,6 +6,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 //use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Application\Bundle\FrontBundle\Entity\Records;
+use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 
 class SearchIndexerSubscriber implements EventSubscriber
 {
@@ -20,24 +21,25 @@ class SearchIndexerSubscriber implements EventSubscriber
 
 	public function postUpdate(LifecycleEventArgs $args)
 	{
-		$this->index($args);
+		$this->index($args, 'update');
 	}
 
 	public function postPersist(LifecycleEventArgs $args)
 	{
-		$this->index($args);
+		$this->index($args, 'insert');
 	}
 
-	public function index(LifecycleEventArgs $args)
+	public function index(LifecycleEventArgs $args, $type)
 	{
 		$entity = $args->getEntity();
 		$entityManager = $args->getEntityManager();
 
-		// perhaps you only want to act on some "Product" entity
+
 		if ($entity instanceof Records)
 		{
-			echo 'here';exit;
-			// ... do something with the Product
+			$sphinxSearch = new SphinxSearch($entityManager, $entity->getId());
+			if ($type === 'insert')
+				$sphinxSearch->insert();
 		}
 	}
 
