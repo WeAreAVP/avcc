@@ -940,6 +940,24 @@ class Records
 		return '';
 	}
 
-	
+	/**
+	 * @ORM\PostPersist()
+	 * 
+	 */
+	public function insertSphinx()
+	{
+//		$sphinxSearch = new SphinxSearch($this->getId());
+//		$sphinxSearch->insert();
+	}
+
+	/**
+	 * 
+	 * @ORM\PostUpdate()
+	 */
+	public function updateSphinx()
+	{
+//		$sphinxSearch = new SphinxSearch($this->getId());
+//		$sphinxSearch->update();
+	}
 
 }
