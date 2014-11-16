@@ -44,6 +44,11 @@ function Records() {
 				},
 				columns: [
 					{orderable: false},
+					null,
+					null,
+					null,
+					null,
+					null
 					
 				],
 				"sAjaxSource": ajaxSource,
