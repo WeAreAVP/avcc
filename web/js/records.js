@@ -9,7 +9,7 @@ function updateDataTable() {
 		oTable =
 		$('#records').dataTable(
 		{
-			"dom": 'ltpr',
+			"dom": 'tipr',
 			"bProcessing": true,
 			"bServerSide": true,
 			"sAjaxSource": tableSource,
