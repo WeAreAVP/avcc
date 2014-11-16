@@ -29,7 +29,7 @@
 
 					</ul>
 				</div>
-<table class="table striped hovered bordered" id="records">
+				<table class="table striped hovered bordered" id="records">
 					<thead>
 						<tr>
 							{% for column, value in columns %}
@@ -46,8 +46,8 @@
 					</tbody>
 				</table>
 				{% if data.total > 0 %}
-{#					<script type="text/javascript" src="{{ asset('js/FixedColumns.js') }}"></script>    #}
-{#					<script type="text/javascript" src="{{ asset('js/jquery.tablesorter.js') }}"></script> #}
+					{#					<script type="text/javascript" src="{{ asset('js/FixedColumns.js') }}"></script>    #}
+					{#					<script type="text/javascript" src="{{ asset('js/jquery.tablesorter.js') }}"></script> #}
 					<script type="text/javascript" src="{{ asset('js/records.js') }}"></script>   
 					<script type="text/javascript">
 						var page_total = '{{data.total}}';
@@ -61,6 +61,7 @@
 						var order_column = '{%if app.session.get('columnOrder')%}{{app.session.get('columnOrder')}}{% else %}{{'asc'}}{% endif %}';
 						var tableSource = '{{ path('record_dataTable') }}';
 						$(window).load(function () {
+							$('#container').removeClass('container');
 							updateDataTable();
 						});
 					</script>
