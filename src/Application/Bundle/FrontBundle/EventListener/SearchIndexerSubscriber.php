@@ -32,11 +32,11 @@ class SearchIndexerSubscriber implements EventSubscriber
 	{
 		$entity = $args->getEntity();
 		$entityManager = $args->getEntityManager();
-echo 'here';exit;
+
 		// perhaps you only want to act on some "Product" entity
 		if ($entity instanceof Records)
 		{
-			
+			echo 'here';exit;
 			// ... do something with the Product
 		}
 	}

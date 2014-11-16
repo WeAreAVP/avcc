@@ -12,11 +12,11 @@ class SearchIndexer
 	{
 		$entity = $args->getEntity();
 		$entityManager = $args->getEntityManager();
-echo 'there';exit;
+
 		// perhaps you only want to act on some "Product" entity
 		if ($entity instanceof Records)
 		{
-			
+			echo 'there';exit;
 			// ... do something with the Product
 		}
 	}
