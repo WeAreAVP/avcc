@@ -51,7 +51,7 @@ class AudioRecordsController extends Controller
 	 */
 	public function createAction(Request $request)
 	{
-		$em=$this->getDoctrine()->getManager();
+		$em = $this->getDoctrine()->getManager();
 		$container = $this->container;
 		$entity = new AudioRecords();
 		$form = $this->createCreateForm($entity, $em, null, $container);
@@ -61,14 +61,7 @@ class AudioRecordsController extends Controller
 		{
 			$em->persist($entity);
 			$em->flush();
-			
-//			$fields = new DefaultFields();
-//			$recordArr = $fields->getRecordArray($em, $entity->getId());
-//			$sphinx = new Sphinx();
-//			$var = $sphinx->insert('records', $recordArr);
-//			echo '<pre>';
-//			print_r($var);
-//			exit;
+
 			$this->get('session')->getFlashBag()->add('success', 'Audio record added succesfully.');
 
 			return $this->redirect($this->generateUrl('record_list'));

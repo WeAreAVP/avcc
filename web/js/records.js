@@ -1,77 +1,37 @@
 oFC = null;
-function updateDataTable(){
-    height = $(window).height() - 185;
-    scrollHeight = height + 10;
+function updateDataTable() {
+	height = $(window).height() - 185;
+	scrollHeight = height + 10;
 //    console.log(index_column);
 //    console.log(order_column);
-    if ($('#records').length > 0)
+	if ($('#records').length > 0)
 	{
 		oTable =
 		$('#records').dataTable(
 		{
-			"sDom": 'RlfrtipS',
-			"aoColumnDefs": [{
-					"bVisible": false,
-					"aTargets": hiden_column
+			
+			"processing": true,
+			"serverSide": true,
+			"ajax": tableSource,
+			"fnServerData": function (sSource, aoData, fnCallback) {
 
-				}
-			],
-			"aaSorting": [[index_column, order_column]],
-			"oColReorder": {
-				"iFixedColumns": frozen
 
-			},
-			'bPaginate': true,
-//                        "pageLength": 10,
-			'bInfo': false,
-			'bFilter': false,
-			"bSort": true,
-//			"sScrollY": height,
-//			"sScrollX": "200%",
-			"bDeferRender": true,
-			"bDestroy": is_destroy,
-			"bRetrieve": true,
-			"bAutoWidth": true,
-			"bProcessing": true,
-			"bServerSide": true,
-			"sAjaxSource": tableSource,
-			"fnServerData": function(sSource, aoData, fnCallback) {
+				jQuery.getJSON(sSource, aoData, function (json) {
 
-				columnArray = getColumnOrder();
 
-				reOrderDropDown(columnArray);
-//				updateDatabase(0);
-				jQuery.getJSON(sSource, aoData, function(json) {
-
-					/* Do whatever additional processing you want on the callback, then tell DataTables */
 					fnCallback(json);
-//					if ($('.dataTables_scrollBody')[0].scrollHeight > $('.dataTables_scrollBody').height())
-//						$('.dataTables_scrollBody').css('width', $('.dataTables_scrollBody').width() + 13);
-					$('#checkboxCol').removeAttr('class');
 
-//					$('.DTFC_LeftBodyWrapper').height(height);
-//					$('.dataTables_scrollBody').height(scrollHeight);
 				});
 			},
-//			"fnInitComplete": function() {
-//				oFC = new FixedColumns(oTable, {
-//					"iLeftColumns": frozen
-//				});
-//				oTable.fnSettings().aoColumns[0].bSortable = false;
-//				$('#checkbox_col').removeAttr('class');
-//			}
+		});
 
-		});
-                $.extend($.fn.dataTableExt.oStdClasses, {
-			"sWrapper": "dataTables_wrapper form-inline"
-		});
-            }
+	}
 }
 
 function getColumnOrder()
 {
 	var orderString = new Array;
-	$('#records th').each(function(index)
+	$('#records th').each(function (index)
 	{
 		if (index == 0)
 		{
@@ -85,7 +45,7 @@ function getColumnOrder()
 			}
 		}
 	});
-        
+
 	return orderString;
 }
 

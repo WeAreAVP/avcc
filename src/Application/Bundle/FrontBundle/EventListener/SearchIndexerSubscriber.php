@@ -40,6 +40,8 @@ class SearchIndexerSubscriber implements EventSubscriber
 			$sphinxSearch = new SphinxSearch($entityManager, $entity->getId());
 			if ($type === 'insert')
 				$sphinxSearch->insert();
+			else
+				$sphinxSearch->update();
 		}
 	}
 
