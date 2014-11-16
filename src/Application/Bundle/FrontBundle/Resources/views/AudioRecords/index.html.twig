@@ -29,22 +29,24 @@
 
 					</ul>
 				</div>
-						<table class="table hovered bordered" id="records" style="width: 100%;">
-					<thead>
-						<tr>
-							{% for column, value in columns %}
-								{% if column == 'checkbox_Col' %}
-									<th id="{{value}}"><input type="checkbox" name="selectAll" /></th>  
-									{% else %}    
-									<th id="{{value}}">{{ column|replace({'_': ' '}) }}</th>
-									{% endif %}
-								{% endfor %}                        
-						</tr>
-					</thead>
-					<tbody>
+						<div style="width: 100%;">
+					<table class="table hovered bordered" id="records">
+						<thead>
+							<tr>
+								{% for column, value in columns %}
+									{% if column == 'checkbox_Col' %}
+										<th id="{{value}}"><input type="checkbox" name="selectAll" /></th>  
+										{% else %}    
+										<th id="{{value}}">{{ column|replace({'_': ' '}) }}</th>
+										{% endif %}
+									{% endfor %}                        
+							</tr>
+						</thead>
+						<tbody>
 
-					</tbody>
-				</table>
+						</tbody>
+					</table>
+				</div>
 				{% if data.total > 0 %}
 					{#					<script type="text/javascript" src="{{ asset('js/FixedColumns.js') }}"></script>    #}
 					{#					<script type="text/javascript" src="{{ asset('js/jquery.tablesorter.js') }}"></script> #}
@@ -63,9 +65,9 @@
 						$(window).load(function () {
 							$('#container').removeClass('container');
 							$('#container').css('margin', '20px');
-{#							$('#container').css('width', '80%');#}
-							updateDataTable();
-						});
+						{#							$('#container').css('width', '80%');#}
+								updateDataTable();
+							});
 					</script>
 				{% endif%}
 			</div>
