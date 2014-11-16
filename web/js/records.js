@@ -55,10 +55,10 @@ function Records() {
 				},
 			});
 		}
-		return this;
+
 	}
 }
-(this);
+
 
 
 
