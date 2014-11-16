@@ -42,6 +42,10 @@ function Records() {
 				"language": {
 					"info": "Showing _START_ - _END_ of _MAX_"
 				},
+				columns: [
+					{orderable: false},
+					
+				],
 				"sAjaxSource": ajaxSource,
 				"bStateSave": true,
 //				"fnInitComplete": function () {
