@@ -4,7 +4,7 @@ namespace Application\Bundle\FrontBundle\EventListener;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+//use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Application\Bundle\FrontBundle\Entity\Records;
 
 class SearchIndexerSubscriber implements EventSubscriber
