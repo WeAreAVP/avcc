@@ -44,15 +44,15 @@ function Records() {
 				},
 				"sAjaxSource": ajaxSource,
 				"bStateSave": true,
-				"fnInitComplete": function () {
-					this.oTable.fnAdjustColumnSizing();
-				},
-				"fnServerData": function (sSource, aoData, fnCallback) {
-					jQuery.getJSON(sSource, aoData, function (json) {
-						fnCallback(json);
-
-					});
-				},
+//				"fnInitComplete": function () {
+//					this.oTable.fnAdjustColumnSizing();
+//				},
+//				"fnServerData": function (sSource, aoData, fnCallback) {
+//					jQuery.getJSON(sSource, aoData, function (json) {
+//						fnCallback(json);
+//
+//					});
+//				},
 			});
 		}
 
