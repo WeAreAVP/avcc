@@ -1,11 +1,3 @@
-doctrine:
-    dbal:
-        default_connection: default
-        connections:
-            default:
-                driver: pdo_mysql
-                memory: true
-
 services:
     my.listener:
         class: Application\Bundle\FrontBundle\EventListener\SearchIndexer
