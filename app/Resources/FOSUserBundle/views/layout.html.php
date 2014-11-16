@@ -101,6 +101,13 @@
 
                             </li>
                         </ul>
+                        <a class="element1 pull-menu" href="#"></a>
+                        <ul class="element-menu place-right" style="">
+                            <li>
+                                <a class="" href="<?php echo $view['router']->generate('record_list') ?>">Records</a>
+
+                            </li>
+                        </ul>
                         <?php if ($view['security']->isGranted('ROLE_MANAGER')): ?>
                             <ul class="element-menu place-right" style="">
                                 <li>
