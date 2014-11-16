@@ -4,3 +4,13 @@ services:
         class: Application\Bundle\FrontBundle\Form\Type\RegistrationFormType
         tags:
             - { name: form.type, alias: application_user_registration }
+    my.listener:
+        class: Application\Bundle\FrontBundle\EventListener\SearchIndexer
+        tags:
+            - { name: doctrine.event_listener, event: postPersist, method: postPersist , connection: default }
+    
+        
+    my.subscriber:
+        class: Application\Bundle\FrontBundle\EventListener\SearchIndexerSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
