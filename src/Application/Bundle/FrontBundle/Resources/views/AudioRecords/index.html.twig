@@ -48,14 +48,15 @@
 					</table>
 				</div>
 				{% if data.total > 0 %}
+					{% block view_javascripts %}
+						<script type="text/javascript" src="{{ asset('js/records.js') }}"></script>   
+						<script type="text/javascript">
+							var record = new Records();
+							record.setAjaxSource('{{ path('record_dataTable') }}');
+							record.initDataTable();
 
-					<script type="text/javascript" src="{{ asset('js/records.js') }}"></script>   
-					<script type="text/javascript">
-						var record = new Records();
-						record.setAjaxSource('{{ path('record_dataTable') }}');
-						record.initDataTable();
-
-					</script>
+						</script>
+					{% endblock %}
 				{% endif%}
 			</div>
 		</div>
