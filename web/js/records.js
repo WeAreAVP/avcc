@@ -34,7 +34,7 @@ function Records() {
 			$('#container').removeClass('container');
 			$('#container').css('margin', '20px');
 			this.oTable =
-			$('#records').window.dataTable(
+			$('#records').dataTable(
 			{
 				"dom": '<"top"p><"clear">tir<"bottom"p>',
 				"bProcessing": true,
