@@ -98,25 +98,14 @@
                                 <a class="" href="{{ path('projects') }}">Projects</a>
                             </li>
                         </ul>
-                        <a class="element1 pull-menu" href="#"></a>
+						<a class="element1 pull-menu" href="#"></a>
                         <ul class="element-menu place-right" style="">
                             <li>
-                                <a class="dropdown-toggle" href="#"><span class=""></span> Records</a>
-                                <ul class="dropdown-menu dark content" data-role="dropdown">
-                                    <li><a class="" href="{{ path('record') }}">All</a></li>
-                                    <li>
-                                        <a class="dropdown-toggle" href="#"><span class=""></span> Add</a>
-                                        <ul class="dropdown-menu dark content" data-role="dropdown">
-											<li>
-												<a class="" href="{{ path('record_new') }}">Audio</a>
-												<a class="" href="{{ path('record_video_new') }}">Video</a>
-												<a class="" href="{{ path('record_film_new') }}">Film</a>
-											</li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                                <a class="" href="{{ path('record') }}">Records</a>
                             </li>
                         </ul>
+
+
 
                     {% endif %}
                 </div>
@@ -147,7 +136,7 @@
             <script src="{{ asset('js/chosen.jquery.js') }}"></script>
             <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
             <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-			
+
             <script type="text/javascript">
 				setTimeout(function () {
 					$('.text-success').hide();
