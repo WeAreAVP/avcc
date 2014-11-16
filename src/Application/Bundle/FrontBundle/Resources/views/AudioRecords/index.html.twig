@@ -29,7 +29,7 @@
 
 					</ul>
 				</div>
-				<table class="table striped hovered bordered" id="records">
+						<table class="table hovered bordered" id="records" style="width: 100%;">
 					<thead>
 						<tr>
 							{% for column, value in columns %}
@@ -63,6 +63,7 @@
 						$(window).load(function () {
 							$('#container').removeClass('container');
 							$('#container').css('margin', '20px');
+{#							$('#container').css('width', '80%');#}
 							updateDataTable();
 						});
 					</script>
