@@ -42,14 +42,8 @@ function Records() {
 				"language": {
 					"info": "Showing _START_ - _END_ of _MAX_"
 				},
-				columns: [
-					{orderable: false},
-					null,
-					null,
-					null,
-					null,
-					null
-					
+				"aoColumnDefs": [
+					{"bSortable": false, "aTargets": [0]}
 				],
 				"sAjaxSource": ajaxSource,
 				"bStateSave": true,
