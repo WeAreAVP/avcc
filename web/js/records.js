@@ -7,7 +7,7 @@ function Records() {
 	/**
 	 * Object of datatable.
 	 */
-	this.oTable = null;
+//	this.oTable = null;
 	/**
 	 * URL for managing calls of datatable
 	 * @type {string}
@@ -33,7 +33,7 @@ function Records() {
 			// Modify css for managing view.
 			$('#container').removeClass('container');
 			$('#container').css('margin', '20px');
-			this.oTable =
+			oTable =
 			$('#records').dataTable(
 			{
 				"dom": '<"top"p><"clear">tir<"bottom"p>',
@@ -48,15 +48,15 @@ function Records() {
 				"aaSorting": [],
 				"sAjaxSource": ajaxSource,
 				"bStateSave": true,
-//				"fnInitComplete": function () {
-//					this.oTable.fnAdjustColumnSizing();
-//				},
-//				"fnServerData": function (sSource, aoData, fnCallback) {
-//					jQuery.getJSON(sSource, aoData, function (json) {
-//						fnCallback(json);
-//
-//					});
-//				},
+				"fnInitComplete": function () {
+					this.oTable.fnAdjustColumnSizing();
+				},
+				"fnServerData": function (sSource, aoData, fnCallback) {
+					jQuery.getJSON(sSource, aoData, function (json) {
+						fnCallback(json);
+
+					});
+				},
 			});
 		}
 
