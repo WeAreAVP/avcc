@@ -39,6 +39,8 @@ function Records() {
 				"dom": '<"top"p><"clear">tir<"bottom"p>',
 				"bProcessing": true,
 				"bServerSide": true,
+				retrieve: true,
+				destroy: true,
 				"language": {
 					"info": "Showing _START_ - _END_ of _MAX_"
 				},
