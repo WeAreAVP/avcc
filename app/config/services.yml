@@ -1,0 +1,19 @@
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                driver: pdo_mysql
+                memory: true
+
+services:
+    my.listener:
+        class: Application\Bundle\FrontBundle\EventListener\SearchIndexer
+        tags:
+            - { name: doctrine.event_listener, event: postPersist , connection: default }
+    
+        
+    my.subscriber:
+        class: Application\Bundle\FrontBundle\EventListener\SearchIndexerSubscriber
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
