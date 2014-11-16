@@ -946,6 +946,7 @@ class Records
 	 */
 	public function insertSphinx()
 	{
+		
 //		$sphinxSearch = new SphinxSearch($this->getId());
 //		$sphinxSearch->insert();
 	}
