@@ -21,9 +21,9 @@ class SphinxFields
         $this->record = $entityManager->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('id' => $recordId));
 
 
-        if($isNew){
+//        if($isNew){
             $this->indexFields['id'] = $this->record->getId();
-        }
+//        }
         $this->indexFields['s_title'] = ($this->record->getTitle()) ? $this->record->getTitle() : "";
         $this->indexFields['title'] = ($this->record->getTitle()) ? $this->record->getTitle() : "";
         $this->indexFields['s_description'] = ($this->record->getDescription()) ? $this->record->getDescription() : "";
@@ -79,7 +79,6 @@ class SphinxFields
         $this->indexFields['track_type'] = ($this->record->getAudioRecord()->getTrackTypes()) ? $this->record->getAudioRecord()->getTrackTypes()->getName() : "";
         $this->indexFields['mono_stereo'] = ($this->record->getAudioRecord()->getMonoStereo()) ? $this->record->getAudioRecord()->getMonoStereo()->getName() : "";
         $this->indexFields['noice_reduction'] = ($this->record->getAudioRecord()->getNoiceReduction()) ? $this->record->getAudioRecord()->getNoiceReduction()->getName() : "";
-        $this->indexFields['subId'] = $this->record->getAudioRecord()->getId();
     }
     
     /**

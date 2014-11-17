@@ -45,12 +45,10 @@ class SphinxSearch
 //		echo '<pre>';
 //		print_r($data);
 //		exit;
-                $id = $data['subId'];
-                unset($data['subId']);
 //		$sq = SphinxQL::create($this->conn)->update($this->indexName);
                 $sq = SphinxQL::create($this->conn)->replace()->into($this->indexName);
 		$sq->set($data);
-                $sq->where('id', '=' , $this->recordId);
+//                $sq->where('id', '=' , $this->recordId);
 		return $sq->execute();
 	}
 
