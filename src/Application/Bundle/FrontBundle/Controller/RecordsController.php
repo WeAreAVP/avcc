@@ -54,15 +54,8 @@ class RecordsController extends Controller
 	 */
 	public function indexAction(Request $request)
 	{
-
-
-
-		$column = $this->columns;
-
-
-
 		return array(
-			'columns' => $column
+			'columns' => $this->columns
 		);
 	}
 
@@ -97,7 +90,7 @@ class RecordsController extends Controller
 
 		$sphinxSearch = new SphinxSearch($em);
 		$result = $sphinxSearch->select($offset, $limit, $sortIndex, $sortOrder);
-		
+
 		$records = $result[0];
 		$currentPageTotal = count($records);
 		$totalRecords = $result[1][0]['Value'];
