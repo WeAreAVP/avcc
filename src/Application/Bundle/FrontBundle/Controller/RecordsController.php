@@ -96,7 +96,7 @@ class RecordsController extends Controller
 		$result = $sphinxSearch->select($offset, $limit);
 		$records = $result[0];
 		$currentPageTotal = count($records);
-		$totalRecords = $records[1][0]['Value'];
+		$totalRecords = $result[1][0]['Value'];
 
 
 		$tableView = $this->defaultFields->recordDatatableView($records);
