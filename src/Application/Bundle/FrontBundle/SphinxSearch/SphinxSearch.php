@@ -40,6 +40,7 @@ class SphinxSearch
     {
         $sphinxFields = new SphinxFields();
         $data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
+        print_r($data);exit;
         $sq = SphinxQL::create($this->conn)->replace()->into($this->indexName);
         $sq->set($data);
         return $sq->execute();
