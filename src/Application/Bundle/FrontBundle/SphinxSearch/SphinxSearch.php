@@ -50,9 +50,9 @@ class SphinxSearch
 	{
 		$sq = SphinxQL::create($this->conn)
 		->select()
-		->from($this->indexName)
-		->orderBy($sortColumn, $sortOrder)
-		->limit($offset, $limit)
+		->from($this->indexName);
+		$sq->orderBy($sortColumn, $sortOrder);
+		$sq->limit($offset, $limit)
 		->enqueue(Helper::create($this->conn)->showMeta());
 		
 		return $sq->executeBatch();
