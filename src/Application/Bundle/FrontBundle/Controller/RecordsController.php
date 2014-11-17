@@ -54,21 +54,14 @@ class RecordsController extends Controller
 	 */
 	public function indexAction(Request $request)
 	{
-		$offSet = 0;
-//        $this->session = $this->get('session');
-//        $this->session->set('offset', $offSet);
-//        $this->offset = $this->session->get('offset');
-		$em = $this->getDoctrine()->getManager();
+
+
+
 		$column = $this->columns;
-//        $shpinxObj = new SphinxSearch();
-//        $recs = $shpinxObj->select();
-//        echo '<pre>'; print_r($data); exit;
-//        $entities = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
-		$entities = $em->getRepository('ApplicationFrontBundle:Records')->findAllRecords($offSet, $this->limit);
-		$data = $this->getData($entities);
+
+
 
 		return array(
-			'data' => $data,
 			'columns' => $column
 		);
 	}
@@ -116,6 +109,26 @@ class RecordsController extends Controller
 		);
 		echo json_encode($dataTable);
 		exit;
+	}
+
+	private function getData($entities)
+	{
+		$data = array();
+		$data['total'] = count($entities);
+		$data['records'] = $entities;
+		$data['count'] = count($entities);
+		if ($data['count'] > 0 && $this->offset === 0)
+		{
+			$data['start'] = 1;
+			$data['end'] = $data['count'];
+		}
+		else
+		{
+			$data['start'] = $this->offset;
+			$data['end'] = intval($this->offset) + intval($data['count']);
+		}
+
+		return $data;
 	}
 
 	protected function getSphinxInfo()
