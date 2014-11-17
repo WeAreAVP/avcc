@@ -53,8 +53,8 @@ class SphinxSearch
 		->from($this->indexName)
 		->orderBy($sortColumn, $sortOrder)
 		->limit($offset, $limit)
-		->enqueue(Helper::create($this->conn)->showMeta())
-		->enqueue();
+		->enqueue(Helper::create($this->conn)->showMeta());
+		
 		return $sq->executeBatch();
 	}
 
