@@ -99,7 +99,7 @@ class RecordsController extends Controller
 
 
 
-		$sphinxSearch = new SphinxSearch();
+		$sphinxSearch = new SphinxSearch($em);
 		$result = $sphinxSearch->select($offset, $limit);
 		echo '<pre>';
 		print_r($result);
