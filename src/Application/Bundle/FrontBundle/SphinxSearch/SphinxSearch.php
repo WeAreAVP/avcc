@@ -4,6 +4,7 @@ namespace Application\Bundle\FrontBundle\SphinxSearch;
 
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxFields;
 use Foolz\SphinxQL\SphinxQL;
+use Foolz\SphinxQL\Helper;
 use Foolz\SphinxQL\Connection;
 use Doctrine\ORM\EntityManager;
 
