@@ -34,7 +34,7 @@ class SearchIndexerSubscriber implements EventSubscriber
 		$entity = $args->getEntity();
 		$entityManager = $args->getEntityManager();
 
-
+                echo '<pre>';print_r($entity);exit;
 		if ($entity instanceof Records)
 		{
 			$sphinxSearch = new SphinxSearch($entityManager, $entity->getId());
