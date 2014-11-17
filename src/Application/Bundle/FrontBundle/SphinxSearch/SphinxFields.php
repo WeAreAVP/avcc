@@ -29,7 +29,7 @@ class SphinxFields
             $this->record = $entityManager->getRepository('ApplicationFrontBundle:VideoRecords')->findOneBy(array('id' => $recordId));
             $this->prepareVideoFields();
         }
-echo '<pre>';print_r($this->record);exit;
+echo '<pre>';print_r($this->record->getRecord());exit;
         $this->indexFields['id'] = $this->record->getRecord()->getId();
         $this->indexFields['s_title'] = ($this->record->getRecord()->getRecord()->getTitle()) ? $this->record->getRecord()->getTitle() : "";
         $this->indexFields['title'] = ($this->record->getRecord()->getTitle()) ? $this->record->getRecord()->getTitle() : "";
