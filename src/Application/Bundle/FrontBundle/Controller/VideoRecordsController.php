@@ -56,7 +56,7 @@ class VideoRecordsController extends Controller
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Video record added succesfully.');
 
-            return $this->redirect($this->generateUrl('record'));
+            return $this->redirect($this->generateUrl('record_list'));
         }
 
         return array(
