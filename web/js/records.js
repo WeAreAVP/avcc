@@ -64,10 +64,15 @@ function Records() {
 		}
 
 	}
+	/**
+	 * 
+	 * @returns {Boolean}
+	 */
 	this.bindEvents = function () {
 		$('input[name="mediaType[]"]').click(function () {
 			checkParentFacet('media_type', $(this).attr('checked'));
 		});
+		return true;
 	}
 	/**
 	 * 
@@ -77,8 +82,8 @@ function Records() {
 	 */
 	var checkParentFacet = function (type, isChecked) {
 		//todo need to update function
-		totalChecked = $('#total_checked').val();
-		total = $('.facet_sidebar input:checked').length;
+		var totalChecked = $('#total_checked').val();
+		var total = $('#facet_sidebar input:checked').length;
 		if (total == 0)
 			totalChecked = 0;
 		if (isChecked == 'checked')
