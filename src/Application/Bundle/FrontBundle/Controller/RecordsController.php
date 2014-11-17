@@ -61,12 +61,12 @@ class RecordsController extends Controller
 //        $this->offset = $this->session->get('offset');
         $em = $this->getDoctrine()->getManager();
         $column = $this->columns;
-        $shpinxObj = new SphinxSearch();
-        $data = $shpinxObj->select();
-        echo '<pre>'; print_r($data); exit;
+//        $shpinxObj = new SphinxSearch();
+//        $recs = $shpinxObj->select();
+//        echo '<pre>'; print_r($data); exit;
 //        $entities = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
-//        $entities = $em->getRepository('ApplicationFrontBundle:Records')->findAllRecords($offSet, $this->limit);
-//        $data = $this->getData($entities);
+        $entities = $em->getRepository('ApplicationFrontBundle:Records')->findAllRecords($offSet, $this->limit);
+        $data = $this->getData($entities);
         
         return array(
             'data' => $data,
