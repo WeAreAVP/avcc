@@ -19,7 +19,7 @@ class SearchIndexer
 		// perhaps you only want to act on some "Product" entity
 		if ($entity instanceof AudioRecords || $entity instanceof VideoRecords || $entity instanceof FilmRecords)
 		{
-			echo 'there';exit;
+//			echo 'there';exit;
 			// ... do something with the Product
 		}
 	}

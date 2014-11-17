@@ -16,7 +16,7 @@
 		<service id="application_user.profile.form.type" class="Application\Bundle\FrontBundle\Form\Type\ProfileFormType">
 			<tag name="form.type" alias="application_user_profile" />
 		</service>     
-		<service id="my.listener" class="Application\Bundle\FrontBundle\EventListener\SearchIndexer">
+		<service id="my.listener" class="Application\Bundle\FrontBundle\EventListener\SearchIndexerSubscriber">
 			<tag name="doctrine.event_listener" event="postPersist" />
 		</service>
 		
