@@ -53,13 +53,17 @@ class SphinxFields
 
         if ($this->record->getMediaType()->getId() == 1) {
             $this->prepareAudioFields();
+        }elseif($this->record->getMediaType()->getId() == 2){
+            $this->prepareFilmFields();
+        }else{
+            $this->prepareVideoFields();
         }
 
         return $this->indexFields;
     }
 
     /**
-     * 
+     * Audio fields
      */
     private function prepareAudioFields()
     {
@@ -74,6 +78,36 @@ class SphinxFields
         $this->indexFields['track_type'] = ($this->record->getAudioRecord()->getTrackTypes()) ? $this->record->getAudioRecord()->getTrackTypes()->getName() : "";
         $this->indexFields['mono_stereo'] = ($this->record->getAudioRecord()->getMonoStereo()) ? $this->record->getAudioRecord()->getMonoStereo()->getName() : "";
         $this->indexFields['noice_reduction'] = ($this->record->getAudioRecord()->getNoiceReduction()) ? $this->record->getAudioRecord()->getNoiceReduction()->getName() : "";
+    }
+    
+    /**
+     * Film fields
+     */
+    private function prepareFilmFields()
+    {
+        $this->indexFields['s_print_type'] = $this->indexFields['print_type'] = ($this->record->getFilmRecord()->getPrintType()) ? $this->record->getFilmRecord()->getPrintType()->getName() : "";
+        $this->indexFields['reel_core'] = ($this->record->getFilmRecord()->getgetReelCore()) ? $this->record->getFilmRecord()->getReelCore()->getName() : "";
+        $this->indexFields['footage'] = ($this->record->getFilmRecord()->getFootage()) ? $this->record->getFilmRecord()->getFootage() : "";
+        $this->indexFields['media_diameter'] = ($this->record->getFilmRecord()->getMediaDiameter()) ? $this->record->getFilmRecord()->getMediaDiameter()->getName() : "";
+        $this->indexFields['base'] = ($this->record->getFilmRecord()->getBases()) ? $this->record->getFilmRecord()->getBases()->getName() : "";
+        $this->indexFields['s_base'] = ($this->record->getFilmRecord()->getBases()) ? $this->record->getFilmRecord()->getBases()->getName() : "";
+        $this->indexFields['color'] = ($this->record->getFilmRecord()->getColors()) ? $this->record->getFilmRecord()->getColors()->getName() : "";
+        $this->indexFields['sound'] = ($this->record->getFilmRecord()->getSound()) ? $this->record->getFilmRecord()->getSound()->getName() : "";
+        $this->indexFields['frame_rate'] = ($this->record->getFilmRecord()->getFrameRate()) ? $this->record->getFilmRecord()->getFrameRate()->getName() : "";
+        $this->indexFields['acid_detection'] = ($this->record->getFilmRecord()->getAcidDetectionStrip()) ? $this->record->getFilmRecord()->getAcidDetectionStrip()->getName() : "";
+        $this->indexFields['shrinkage'] = ($this->record->getFilmRecord()->getShrinkage()) ? $this->record->getFilmRecord()->getShrinkage() : "";
+    }
+    
+    /**
+     * Film fields
+     */
+    private function prepareVideoFields()
+    {
+        $this->indexFields['cassette_size'] = ($this->record->getVideoRecord()->getCassetteSize()) ? $this->record->getVideoRecord()->getCassetteSize()->getName() : "";
+        $this->indexFields['media_duration'] = ($this->record->getVideoRecord()->getMediaDuration()) ? $this->record->getVideoRecord()->getMediaDuration() : "";
+        $this->indexFields['format_version'] = ($this->record->getVideoRecord()->getFormatVersion()) ? $this->record->getVideoRecord()->getFormatVersion()->getName() : "";
+        $this->indexFields['recording_speed'] = ($this->record->getVideoRecord()->getRecordingSpeed()) ? $this->record->getVideoRecord()->getRecordingSpeed()->getName() : "";
+        $this->indexFields['s_recording_standard'] = $this->indexFields['recording_standard'] = ($this->record->getVideoRecord()->getRecordingStandard()) ? $this->record->getVideoRecord()->getRecordingStandard()->getName() : "";        
     }
 
 }
