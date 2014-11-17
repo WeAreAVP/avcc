@@ -64,6 +64,48 @@ function Records() {
 		}
 
 	}
+	this.bindEvents = function () {
+		$('input[name="mediaType[]"]').click(function () {
+			this.checkParentFacet('media_type', $(this).attr('checked'));
+		});
+	}
+	/**
+	 * 
+	 * @param {type} type
+	 * @param {type} isChecked
+	 * @returns {undefined}
+	 */
+	this.checkParentFacet = function (type, isChecked) {
+		//todo need to update function
+		totalChecked = $('#total_checked').val();
+		total = $('input:checked').length;
+		if (total == 0)
+			totalChecked = 0;
+		if (isChecked == 'checked')
+			totalChecked++;
+		else
+			totalChecked--;
+
+		$('#total_checked').val(totalChecked);
+
+		if ($('#parent_facet').val() == '' && totalChecked == 1)
+			$('#parent_facet').val(type);
+		else if (totalChecked == 0)
+			$('#parent_facet').val('');
+		this.filterRecords();
+	}
+	/**
+	 * 
+	 * @returns {undefined}
+	 */
+	this.filterRecords = function () {
+
+		//send ajax call here.
+
+
+
+
+	}
 }
 
 

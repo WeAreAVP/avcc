@@ -5,7 +5,7 @@
 			{% if facets.mediaType|length > 0 %}
 			<li>
 				<a class="dropdown-toggle" href="#">Media Type</a>
-				<ul class="dropdown-menu" data-role="dropdown" style="display: none;">
+				<ul>
 					{% for mediaType in facets.mediaType %}
 						<li><a href="javascript://"><input type="checkbox" class="facet_checkbox" name="mediaType[]" value="{{mediaType.media_type}}" />{{mediaType.media_type}} ({{mediaType.total}})</a></li>
 							{% endfor %}
@@ -16,3 +16,9 @@
 		{% endif %}
 	</ul>
 </nav>
+<script type="text/javascript">
+	$(window).load(function () {
+		var facets = new Records();
+		facets.bindEvents();
+	});
+</script>
