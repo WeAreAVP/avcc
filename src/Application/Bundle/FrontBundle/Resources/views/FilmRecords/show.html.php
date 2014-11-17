@@ -6,7 +6,7 @@
         <a href="<?php echo $view['router']->generate('record_list') ?>"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a> Record Detail
         
     </h1>
-    <a href="<?php echo $view['router']->generate('record_edit', array('id'=>$entity->getId())) ?>" class="button primary">Edit</a>
+    <a href="<?php echo $view['router']->generate('record_film_edit', array('id'=>$entity->getId())) ?>" class="button primary">Edit</a>
     <div class="clearfix"></div>
     <table class="table">
         <tbody>
@@ -31,6 +31,12 @@
                 <th class="text-right">Format</th>
                 <td><?php echo $entity->getRecord()->getFormat()?></td>
             </tr>
+            <?php if($entity->getPrintType()):?>
+            <tr>
+                <th class="text-right">Print Type</th>
+                <td><?php echo $entity->getPrintType()?></td>
+            </tr>
+            <?php endif;?>
             <tr>
                 <th class="text-right">Title</th>
                 <td><?php echo $entity->getRecord()->getTitle()?></td>
@@ -49,10 +55,10 @@
                 <td><?php echo $entity->getRecord()->getCommercial()->getName()?></td>
             </tr>
             <?php endif;?>
-            <?php if($entity->getDiskDiameters()):?>
+            <?php if($entity->getReelCore()):?>
             <tr>
-                <th class="text-right">Disk Diameter</th>
-                <td><?php echo $entity->getDiskDiameters()->getName()?></td>
+                <th class="text-right">Reel or Core</th>
+                <td><?php echo $entity->getReelCore()->getName()?></td>
             </tr>
             <?php endif;?>
             <?php if($entity->getRecord()->getReelDiameters()):?>
@@ -61,10 +67,16 @@
                 <td><?php echo $entity->getRecord()->getReelDiameters()->getName()?></td>
             </tr>
             <?php endif;?>
-            <?php if($entity->getMediaDiameters()):?>
+            <?php if($entity->getFootage()):?>
+            <tr>
+                <th class="text-right">Footage</th>
+                <td><?php echo $entity->getFootage()?></td>
+            </tr>
+            <?php endif;?>
+            <?php if($entity->getMediaDiameter()):?>
             <tr>
                 <th class="text-right">Media Diameter</th>
-                <td><?php echo $entity->getMediaDiameters()->getName()?></td>
+                <td><?php echo $entity->getMediaDiameter()?></td>
             </tr>
             <?php endif;?>
             <?php if($entity->getBases()):?>
@@ -73,18 +85,24 @@
                 <td><?php echo $entity->getBases()->getName()?></td>
             </tr>
             <?php endif;?>
+            <?php if($entity->getColors()):?>
+            <tr>
+                <th class="text-right">Color</th>
+                <td><?php echo $entity->getColors()->getName()?></td>
+            </tr>
+            <?php endif;?>
+            <?php if($entity->getSound()):?>
+            <tr>
+                <th class="text-right">Sound</th>
+                <td><?php echo $entity->getSound()->getName()?></td>
+            </tr>
+            <?php endif;?>
             <?php if($entity->getRecord()->getContentDuration()):?>
             <tr>
                 <th class="text-right">Content Duration</th>
                 <td><?php echo $entity->getRecord()->getContentDuration()?></td>
             </tr>
             <?php endif;?>            
-            <?php if($entity->getMediaDuration()):?>
-            <tr>
-                <th class="text-right">Media Duration</th>
-                <td><?php echo $entity->getMediaDuration()?></td>
-            </tr>
-            <?php endif;?>
             <?php if($entity->getRecord()->getCreationDate()):?>
             <tr>
                 <th class="text-right">Creation Date</th>
@@ -103,42 +121,24 @@
                 <td><?php echo ($entity->getRecord()->getIsReview()) ? 'Yes' : 'No'?></td>
             </tr>
             <?php endif;?>
-            <?php if($entity->getRecordingSpeed()):?>
+            <?php if($entity->getFrameRate()):?>
             <tr>
-                <th class="text-right">Recording Speed</th>
-                <td><?php echo $entity->getRecordingSpeed() ?></td>
+                <th class="text-right">Frame Rate</th>
+                <td><?php echo $entity->getFrameRate() ?></td>
             </tr>
             <?php endif;?>
-            <?php if($entity->getTapeThickness()):?>
+            <?php if($entity->getAcidDetectionStrip()):?>
             <tr>
-                <th class="text-right">Tape Thickness</th>
-                <td><?php echo $entity->getTapeThickness() ?></td>
+                <th class="text-right">Acid Detection Strip</th>
+                <td><?php echo $entity->getAcidDetectionStrip() ?></td>
             </tr>
             <?php endif;?>
-            <?php if($entity->getSlides()):?>
+            <?php if($entity->getShrinkage()):?>
             <tr>
-                <th class="text-right">Slide</th>
-                <td><?php echo $entity->getSlides() ?></td>
+                <th class="text-right">Shrinkage</th>
+                <td><?php echo $entity->getShrinkage() ?></td>
             </tr>
-            <?php endif;?>
-            <?php if($entity->getTrackTypes()):?>
-            <tr>
-                <th class="text-right">Track Type</th>
-                <td><?php echo $entity->getTrackTypes() ?></td>
-            </tr>
-            <?php endif;?>
-            <?php if($entity->getMonoStereo()):?>
-            <tr>
-                <th class="text-right">Mono or Stereo</th>
-                <td><?php echo $entity->getMonoStereo() ?></td>
-            </tr>
-            <?php endif;?>
-            <?php if($entity->getNoiceReduction()):?>
-            <tr>
-                <th class="text-right">Noise Reduction </th>
-                <td><?php echo $entity->getNoiceReduction() ?></td>
-            </tr>
-            <?php endif;?>
+            <?php endif;?>            
             <?php if($entity->getRecord()->getGenreTerms()):?>
             <tr>
                 <th class="text-right">Genre Terms </th>

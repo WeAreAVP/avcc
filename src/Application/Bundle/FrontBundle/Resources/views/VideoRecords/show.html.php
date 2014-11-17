@@ -6,7 +6,7 @@
         <a href="<?php echo $view['router']->generate('record_list') ?>"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a> Record Detail
         
     </h1>
-    <a href="<?php echo $view['router']->generate('record_edit', array('id'=>$entity->getId())) ?>" class="button primary">Edit</a>
+    <a href="<?php echo $view['router']->generate('record_video_edit', array('id'=>$entity->getId())) ?>" class="button primary">Edit</a>
     <div class="clearfix"></div>
     <table class="table">
         <tbody>
@@ -49,10 +49,10 @@
                 <td><?php echo $entity->getRecord()->getCommercial()->getName()?></td>
             </tr>
             <?php endif;?>
-            <?php if($entity->getDiskDiameters()):?>
+            <?php if($entity->getCassetteSize()):?>
             <tr>
-                <th class="text-right">Disk Diameter</th>
-                <td><?php echo $entity->getDiskDiameters()->getName()?></td>
+                <th class="text-right">Cassette Size</th>
+                <td><?php echo $entity->getCassetteSize()->getName()?></td>
             </tr>
             <?php endif;?>
             <?php if($entity->getRecord()->getReelDiameters()):?>
@@ -61,24 +61,12 @@
                 <td><?php echo $entity->getRecord()->getReelDiameters()->getName()?></td>
             </tr>
             <?php endif;?>
-            <?php if($entity->getMediaDiameters()):?>
-            <tr>
-                <th class="text-right">Media Diameter</th>
-                <td><?php echo $entity->getMediaDiameters()->getName()?></td>
-            </tr>
-            <?php endif;?>
-            <?php if($entity->getBases()):?>
-            <tr>
-                <th class="text-right">Base</th>
-                <td><?php echo $entity->getBases()->getName()?></td>
-            </tr>
-            <?php endif;?>
             <?php if($entity->getRecord()->getContentDuration()):?>
             <tr>
                 <th class="text-right">Content Duration</th>
                 <td><?php echo $entity->getRecord()->getContentDuration()?></td>
             </tr>
-            <?php endif;?>            
+            <?php endif;?>
             <?php if($entity->getMediaDuration()):?>
             <tr>
                 <th class="text-right">Media Duration</th>
@@ -103,42 +91,24 @@
                 <td><?php echo ($entity->getRecord()->getIsReview()) ? 'Yes' : 'No'?></td>
             </tr>
             <?php endif;?>
+            <?php if($entity->getFormatVersion()):?>
+            <tr>
+                <th class="text-right">Format Version</th>
+                <td><?php echo $entity->getFormatVersion() ?></td>
+            </tr>
+            <?php endif;?>
             <?php if($entity->getRecordingSpeed()):?>
             <tr>
                 <th class="text-right">Recording Speed</th>
                 <td><?php echo $entity->getRecordingSpeed() ?></td>
             </tr>
             <?php endif;?>
-            <?php if($entity->getTapeThickness()):?>
+            <?php if($entity->getRecordingStandard()):?>
             <tr>
-                <th class="text-right">Tape Thickness</th>
-                <td><?php echo $entity->getTapeThickness() ?></td>
+                <th class="text-right">Recording Standard</th>
+                <td><?php echo $entity->getRecordingStandard() ?></td>
             </tr>
-            <?php endif;?>
-            <?php if($entity->getSlides()):?>
-            <tr>
-                <th class="text-right">Slide</th>
-                <td><?php echo $entity->getSlides() ?></td>
-            </tr>
-            <?php endif;?>
-            <?php if($entity->getTrackTypes()):?>
-            <tr>
-                <th class="text-right">Track Type</th>
-                <td><?php echo $entity->getTrackTypes() ?></td>
-            </tr>
-            <?php endif;?>
-            <?php if($entity->getMonoStereo()):?>
-            <tr>
-                <th class="text-right">Mono or Stereo</th>
-                <td><?php echo $entity->getMonoStereo() ?></td>
-            </tr>
-            <?php endif;?>
-            <?php if($entity->getNoiceReduction()):?>
-            <tr>
-                <th class="text-right">Noise Reduction </th>
-                <td><?php echo $entity->getNoiceReduction() ?></td>
-            </tr>
-            <?php endif;?>
+            <?php endif;?>            
             <?php if($entity->getRecord()->getGenreTerms()):?>
             <tr>
                 <th class="text-right">Genre Terms </th>

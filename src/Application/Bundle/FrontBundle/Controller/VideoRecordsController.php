@@ -127,7 +127,7 @@ class VideoRecordsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ApplicationFrontBundle:VideoRecords')->find($id);
+        $entity = $em->getRepository('ApplicationFrontBundle:VideoRecords')->findOneBy(array('record'=>$id));
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find VideoRecords entity.');
@@ -135,10 +135,10 @@ class VideoRecordsController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return $this->render('ApplicationFrontBundle:VideoRecords:show.html.php', array(
             'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
@@ -224,7 +224,7 @@ class VideoRecordsController extends Controller
             }
             $this->get('session')->getFlashBag()->add('success', 'Video record updated succesfully.');
 
-            return $this->redirect($this->generateUrl('record'));
+            return $this->redirect($this->generateUrl('record_list'));
         }
 
         return array(

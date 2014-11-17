@@ -108,6 +108,7 @@ class RecordsController extends Controller
 //        $records = $this->sphinx->carrier_list($offset, 100, TRUE);
         $entities = $em->getRepository('ApplicationFrontBundle:Records')->findAllRecords($offSet, $this->limit, $col, $order);
         $data = $this->getData($entities);
+//        print_r($entities);exit;
         $tableView = $this->defaultFields->recordDatatableView($entities, $columnOrder);
 
         $dataTable = array(

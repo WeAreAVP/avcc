@@ -134,7 +134,7 @@ class FilmRecordsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ApplicationFrontBundle:FilmRecords')->find($id);
+        $entity = $em->getRepository('ApplicationFrontBundle:FilmRecords')->findOneBy(array('record'=>$id));
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find FilmRecords entity.');
@@ -142,10 +142,10 @@ class FilmRecordsController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
+        return $this->render('ApplicationFrontBundle:FilmRecords:show.html.php',array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
-        );
+        ));
     }
 
     /**
@@ -235,7 +235,7 @@ class FilmRecordsController extends Controller
             }
             $this->get('session')->getFlashBag()->add('success', 'Film record updated succesfully.');
 
-            return $this->redirect($this->generateUrl('record'));
+            return $this->redirect($this->generateUrl('record_list'));
         }
 
         return array(
