@@ -57,4 +57,15 @@ class SphinxSearch
 		return $sq->executeBatch();
 	}
 
+	public function facetSelect($facetColumn)
+	{
+		$sq = SphinxQL::create($this->conn)
+		->select()
+		->from($this->indexName)
+		->groupBy($facetColumn);
+
+
+		return $sq->execute();
+	}
+
 }
