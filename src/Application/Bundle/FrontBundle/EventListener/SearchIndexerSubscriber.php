@@ -6,6 +6,9 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 //use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Application\Bundle\FrontBundle\Entity\Records;
+use Application\Bundle\FrontBundle\Entity\AudioRecords;
+use Application\Bundle\FrontBundle\Entity\FilmRecords;
+use Application\Bundle\FrontBundle\Entity\VideoRecords;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 
 class SearchIndexerSubscriber implements EventSubscriber
@@ -34,8 +37,7 @@ class SearchIndexerSubscriber implements EventSubscriber
 		$entity = $args->getEntity();
 		$entityManager = $args->getEntityManager();
 
-                echo '<pre>';print_r($entity);exit;
-		if ($entity instanceof Records)
+		if ($entity instanceof Records || $entity instanceof AudioRecords || $entity instanceof VideoRecords || $entity instanceof FilmRecords)
 		{
 			$sphinxSearch = new SphinxSearch($entityManager, $entity->getId());
 			if ($type === 'insert')
