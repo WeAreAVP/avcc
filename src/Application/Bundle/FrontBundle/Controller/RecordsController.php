@@ -49,7 +49,7 @@ class RecordsController extends Controller
 	 *
 	 * @Route("/", name="record_list")
 	 * @Method("GET")
-	 * @Template("ApplicationFrontBundle:AudioRecords:index.html.twig")
+	 * @Template()
 	 * @return array
 	 */
 	public function indexAction(Request $request)
