@@ -17,7 +17,7 @@ class SphinxSearch
 	private $entityManager = null;
 	private $recordTypeId;
 
-	public function __construct(EntityManager $entityManager, $recordId=null, $recordTypeId=null)
+	public function __construct(EntityManager $entityManager, $recordId = null, $recordTypeId = null)
 	{
 		$this->entityManager = $entityManager;
 		$this->recordId = $recordId;
@@ -46,12 +46,14 @@ class SphinxSearch
 		return $sq->execute();
 	}
 
-	public function select($offset = 0, $limit = 100)
+	public function select($offset = 0, $limit = 100, $sortColumn = null, $sortOrder = null)
 	{
 		$sq = SphinxQL::create($this->conn)
 		->select()
-		->from($this->indexName)
-		->limit($offset, $limit)
+		->from($this->indexName);
+		if ($sortColumn !== null && $sortOrder !== null)
+			$sq->orderBy($sortColumn, $sortOrder);
+		$sq->limit($offset, $limit)
 		->enqueue(Helper::create($this->conn)->showMeta())
 		->enqueue();
 		return $sq->executeBatch();

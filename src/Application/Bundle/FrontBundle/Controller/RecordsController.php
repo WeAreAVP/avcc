@@ -78,22 +78,25 @@ class RecordsController extends Controller
 	 */
 	public function dataTableAction(Request $request)
 	{
+		$columns = array(0 => '',
+			1 => 'title',
+			2 => 'unique_id',
+			3 => 'title',
+			4 => 'collection_name',
+			5 => 'location'
+		);
 		$em = $this->getDoctrine()->getManager();
 		$sEcho = $request->query->get('sEcho');
-		$sortOrder = $request->query->get('sSortDir_0');
-		$sortIndex = $request->query->get('iSortCol_0');
+		$sortOrder = $request->query->get('sSortDir_0') ? $request->query->get('sSortDir_0') : null;
+		$sortIndex = $request->query->get('iSortCol_0') ? $columns[$request->query->get('iSortCol_0')] : null;
+
 
 		$offset = $request->query->get('iDisplayStart') ? $request->query->get('iDisplayStart') : 0;
 		$limit = $request->query->get('iDisplayLength') ? $request->query->get('iDisplayLength') : 10;
 
 
-
-
-
-
-
 		$sphinxSearch = new SphinxSearch($em);
-		$result = $sphinxSearch->select($offset, $limit);
+		$result = $sphinxSearch->select($offset, $limit, $sortIndex, $sortOrder);
 		$records = $result[0];
 		$currentPageTotal = count($records);
 		$totalRecords = $result[1][0]['Value'];
@@ -109,26 +112,6 @@ class RecordsController extends Controller
 		);
 		echo json_encode($dataTable);
 		exit;
-	}
-
-	private function getData($entities)
-	{
-		$data = array();
-		$data['total'] = count($entities);
-		$data['records'] = $entities;
-		$data['count'] = count($entities);
-		if ($data['count'] > 0 && $this->offset === 0)
-		{
-			$data['start'] = 1;
-			$data['end'] = $data['count'];
-		}
-		else
-		{
-			$data['start'] = $this->offset;
-			$data['end'] = intval($this->offset) + intval($data['count']);
-		}
-
-		return $data;
 	}
 
 	protected function getSphinxInfo()
