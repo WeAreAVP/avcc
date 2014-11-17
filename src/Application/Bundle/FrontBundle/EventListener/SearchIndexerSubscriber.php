@@ -36,9 +36,9 @@ class SearchIndexerSubscriber implements EventSubscriber
 	{
 		$entity = $args->getEntity();
 		$entityManager = $args->getEntityManager();
-echo '<pre>';print_r($entity->getAudioRecord()->getId()); exit;
+
 		if ($entity instanceof AudioRecords || $entity instanceof VideoRecords || $entity instanceof FilmRecords)
-		{
+		{echo '<pre>';print_r($entity->getAudioRecord()->getId()); exit;
 			$sphinxSearch = new SphinxSearch($entityManager, $entity->getId());
 			if ($type === 'insert')
 				$sphinxSearch->insert();
