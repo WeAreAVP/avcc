@@ -36,7 +36,7 @@ class SearchIndexerSubscriber implements EventSubscriber
 	{
 		$entity = $args->getEntity();
 		$entityManager = $args->getEntityManager();
-
+echo '<pre>';print_r($entity->getDiskDiameters()); exit;
 		if ($entity instanceof Records || $entity instanceof AudioRecords || $entity instanceof VideoRecords || $entity instanceof FilmRecords)
 		{
 			$sphinxSearch = new SphinxSearch($entityManager, $entity->getId());
