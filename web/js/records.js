@@ -66,7 +66,7 @@ function Records() {
 	}
 	this.bindEvents = function () {
 		$('input[name="mediaType[]"]').click(function () {
-			this.checkParentFacet('media_type', $(this).attr('checked'));
+			checkParentFacet('media_type', $(this).attr('checked'));
 		});
 	}
 	/**
@@ -75,7 +75,7 @@ function Records() {
 	 * @param {type} isChecked
 	 * @returns {undefined}
 	 */
-	this.checkParentFacet = function (type, isChecked) {
+	var checkParentFacet = function (type, isChecked) {
 		//todo need to update function
 		totalChecked = $('#total_checked').val();
 		total = $('input:checked').length;
