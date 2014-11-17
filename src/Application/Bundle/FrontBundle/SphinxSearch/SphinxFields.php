@@ -66,7 +66,6 @@ class SphinxFields
      */
     private function prepareAudioFields()
     {
-        if ($this->record->getAudioRecord()) {
             $this->indexFields['disk_diameter'] = ($this->record->getAudioRecord()->getDiskDiameters()) ? $this->record->getAudioRecord()->getDiskDiameters()->getName() : "";
             $this->indexFields['base'] = ($this->record->getAudioRecord()->getBases()) ? $this->record->getAudioRecord()->getBases()->getName() : "";
             $this->indexFields['s_base'] = ($this->record->getAudioRecord()->getBases()) ? $this->record->getAudioRecord()->getBases()->getName() : "";
@@ -77,8 +76,7 @@ class SphinxFields
             $this->indexFields['slides'] = ($this->record->getAudioRecord()->getSlides()) ? $this->record->getAudioRecord()->getSlides()->getName() : "";
             $this->indexFields['track_type'] = ($this->record->getAudioRecord()->getTrackTypes()) ? $this->record->getAudioRecord()->getTrackTypes()->getName() : "";
             $this->indexFields['mono_stereo'] = ($this->record->getAudioRecord()->getMonoStereo()) ? $this->record->getAudioRecord()->getMonoStereo()->getName() : "";
-            $this->indexFields['noice_reduction'] = ($this->record->getAudioRecord()->getNoiceReduction()) ? $this->record->getAudioRecord()->getNoiceReduction()->getName() : "";
-        }
+            $this->indexFields['noice_reduction'] = ($this->record->getAudioRecord()->getNoiceReduction()) ? $this->record->getAudioRecord()->getNoiceReduction()->getName() : "";     
     }
 
     /**
