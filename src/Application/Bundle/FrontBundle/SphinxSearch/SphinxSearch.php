@@ -14,12 +14,13 @@ class SphinxSearch
 	private $indexName = 'records';
 	private $recordId;
 	private $entityManager = null;
+        private $recordTypeId;
 
-	public function __construct(EntityManager $entityManager, $recordId)
+	public function __construct(EntityManager $entityManager, $recordId, $recordTypeId)
 	{
 		$this->entityManager = $entityManager;
 		$this->recordId = $recordId;
-
+                $this->recordTypeId = $recordTypeId;
 
 		$this->conn = new Connection();
 		$this->conn->setParams(array('host' => 'localhost', 'port' => '9306'));
@@ -29,7 +30,7 @@ class SphinxSearch
 	public function insert()
 	{
 		$sphinxFields = new SphinxFields();
-		$data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, true);
+		$data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
                 echo '<pre>';print_r($data);exit;
 		$sq = SphinxQL::create($this->conn)->insert()->into($this->indexName);
 		$sq->set($data);
@@ -39,7 +40,7 @@ class SphinxSearch
 	public function update()
 	{
 		$sphinxFields = new SphinxFields();
-		$data = $sphinxFields->prepareFields($this->entityManager, $this->recordId);
+		$data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
                 echo '<pre>';print_r($data);exit;
                 $sq = SphinxQL::create($this->conn)->replace()->into($this->indexName);
 		$sq->set($data);

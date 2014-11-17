@@ -16,11 +16,20 @@ class SphinxFields
      * @param int $recordId
      * @return type
      */
-    public function prepareFields(EntityManager $entityManager, $recordId)
+    public function prepareFields(EntityManager $entityManager, $recordId, $recordTypeId)
     {
-        $this->record = $entityManager->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('id' => $recordId));
 
-
+        if ($recordTypeId == 1) {
+            $this->record = $entityManager->getRepository('ApplicationFrontBundle:AudioRecords')->findOneBy(array('id' => $recordId));
+            $this->prepareAudioFields();
+        } elseif ($recordTypeId == 2) {
+            $this->record = $entityManager->getRepository('ApplicationFrontBundle:FilmRecords')->findOneBy(array('id' => $recordId));
+            $this->prepareFilmFields();
+        } else {
+            $this->record = $entityManager->getRepository('ApplicationFrontBundle:VideoRecords')->findOneBy(array('id' => $recordId));
+            $this->prepareVideoFields();
+        }
+echo '<pre>';print_r($this->record);exit;
         $this->indexFields['id'] = $this->record->getRecord()->getId();
         $this->indexFields['s_title'] = ($this->record->getRecord()->getRecord()->getTitle()) ? $this->record->getRecord()->getTitle() : "";
         $this->indexFields['title'] = ($this->record->getRecord()->getTitle()) ? $this->record->getRecord()->getTitle() : "";
@@ -50,14 +59,7 @@ class SphinxFields
         $this->indexFields['part'] = ($this->record->getRecord()->getPart()) ? $this->record->getRecord()->getPart() : "";
         $this->indexFields['generation'] = ($this->record->getRecord()->getGeneration()) ? $this->record->getRecord()->getGeneration() : "";
 
-        if ($this->record->getMediaType()->getId() == 1) {
-            $this->prepareAudioFields();
-        } elseif ($this->record->getMediaType()->getId() == 2) {
-            $this->prepareFilmFields();
-        } else {
-            $this->prepareVideoFields();
-        }
-
+        
         return $this->indexFields;
     }
 
@@ -66,17 +68,17 @@ class SphinxFields
      */
     private function prepareAudioFields()
     {
-            $this->indexFields['disk_diameter'] = ($this->record->getDiskDiameters()) ? $this->record->getDiskDiameters()->getName() : "";
-            $this->indexFields['base'] = ($this->record->getBases()) ? $this->record->getBases()->getName() : "";
-            $this->indexFields['s_base'] = ($this->record->getBases()) ? $this->record->getBases()->getName() : "";
-            $this->indexFields['media_diameter'] = ($this->record->getMediaDiameters()) ? $this->record->getMediaDiameters()->getName() : "";
-            $this->indexFields['media_duration'] = ($this->record->getMediaDuration()) ? $this->record->getMediaDuration() : "";
-            $this->indexFields['recording_speed'] = ($this->record->getRecordingSpeed()) ? $this->record->getRecordingSpeed()->getName() : "";
-            $this->indexFields['tape_thickness'] = ($this->record->getTapeThickness()) ? $this->record->getTapeThickness()->getName() : "";
-            $this->indexFields['slides'] = ($this->record->getSlides()) ? $this->record->getSlides()->getName() : "";
-            $this->indexFields['track_type'] = ($this->record->getTrackTypes()) ? $this->record->getTrackTypes()->getName() : "";
-            $this->indexFields['mono_stereo'] = ($this->record->getMonoStereo()) ? $this->record->getMonoStereo()->getName() : "";
-            $this->indexFields['noice_reduction'] = ($this->record->getNoiceReduction()) ? $this->record->getNoiceReduction()->getName() : "";     
+        $this->indexFields['disk_diameter'] = ($this->record->getDiskDiameters()) ? $this->record->getDiskDiameters()->getName() : "";
+        $this->indexFields['base'] = ($this->record->getBases()) ? $this->record->getBases()->getName() : "";
+        $this->indexFields['s_base'] = ($this->record->getBases()) ? $this->record->getBases()->getName() : "";
+        $this->indexFields['media_diameter'] = ($this->record->getMediaDiameters()) ? $this->record->getMediaDiameters()->getName() : "";
+        $this->indexFields['media_duration'] = ($this->record->getMediaDuration()) ? $this->record->getMediaDuration() : "";
+        $this->indexFields['recording_speed'] = ($this->record->getRecordingSpeed()) ? $this->record->getRecordingSpeed()->getName() : "";
+        $this->indexFields['tape_thickness'] = ($this->record->getTapeThickness()) ? $this->record->getTapeThickness()->getName() : "";
+        $this->indexFields['slides'] = ($this->record->getSlides()) ? $this->record->getSlides()->getName() : "";
+        $this->indexFields['track_type'] = ($this->record->getTrackTypes()) ? $this->record->getTrackTypes()->getName() : "";
+        $this->indexFields['mono_stereo'] = ($this->record->getMonoStereo()) ? $this->record->getMonoStereo()->getName() : "";
+        $this->indexFields['noice_reduction'] = ($this->record->getNoiceReduction()) ? $this->record->getNoiceReduction()->getName() : "";
     }
 
     /**
