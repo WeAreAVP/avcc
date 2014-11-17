@@ -49,7 +49,7 @@ class SphinxSearch
                 unset($data['subId']);
 		$sq = SphinxQL::create($this->conn)->update($this->indexName);
 		$sq->set($data);
-                $sq->where('id', '=' , $id);
+                $sq->where('id', '=' , $this->recordId);
 		return $sq->execute();
 	}
 
