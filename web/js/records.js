@@ -42,7 +42,8 @@ function Records() {
 				retrieve: true,
 				destroy: true,
 				"language": {
-					"info": "Showing _START_ - _END_ of _MAX_"
+					"info": "Showing _START_ - _END_ of _MAX_",
+					"infoFiltered": ''
 				},
 				"aoColumnDefs": [
 					{"bSortable": false, "aTargets": [0]}
