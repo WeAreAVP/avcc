@@ -103,8 +103,8 @@ class RecordsController extends Controller
 
 		$dataTable = array(
 			'sEcho' => intval($sEcho),
-			'iTotalRecords' => intval($totalRecords),
-			'iTotalDisplayRecords' => intval($currentPageTotal),
+			'iTotalRecords' => intval($currentPageTotal),
+			'iTotalDisplayRecords' => intval($totalRecords),
 			'aaData' => $tableView
 		);
 		echo json_encode($dataTable);
