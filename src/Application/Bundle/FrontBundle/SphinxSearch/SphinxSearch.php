@@ -16,7 +16,7 @@ class SphinxSearch
     private $entityManager = null;
     private $recordTypeId;
 
-    public function __construct(EntityManager $entityManager = null, $recordId = null, $recordTypeId  = null)
+    public function __construct(EntityManager $entityManager, $recordId, $recordTypeId)
     {
         $this->entityManager = $entityManager;
         $this->recordId = $recordId;
