@@ -33,6 +33,7 @@ class SphinxSearch
         $data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
         $sq = SphinxQL::create($this->conn)->insert()->into($this->indexName);
         $sq->set($data);
+        print_r($data);exit;
         return $sq->execute();
     }
 
@@ -40,9 +41,9 @@ class SphinxSearch
     {
         $sphinxFields = new SphinxFields();
         $data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
-        print_r($data);exit;
+        
         $sq = SphinxQL::create($this->conn)->replace()->into($this->indexName);
-        $sq->set($data);
+        $sq->set($data);print_r($data);exit;
         return $sq->execute();
     }
 
