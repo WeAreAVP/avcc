@@ -29,7 +29,7 @@ class SphinxSearch
 	public function insert()
 	{
 		$sphinxFields = new SphinxFields();
-		$data = $sphinxFields->prepareFields($this->entityManager, $this->recordId);
+		$data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, true);
 		echo '<pre>';
 		print_r($data);
 		exit;
@@ -47,6 +47,7 @@ class SphinxSearch
 //		exit;
 		$sq = SphinxQL::create($this->conn)->update($this->indexName);
 		$sq->set($data);
+                $sq->where('id', '=' , $this->recordId);
 		return $sq->execute();
 	}
 

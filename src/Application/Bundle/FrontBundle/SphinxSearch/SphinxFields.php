@@ -16,13 +16,14 @@ class SphinxFields
      * @param int $recordId
      * @return type
      */
-    public function prepareFields(EntityManager $entityManager, $recordId)
+    public function prepareFields(EntityManager $entityManager, $recordId, $isNew = false)
     {
         $this->record = $entityManager->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('id' => $recordId));
 
 
-
-        $this->indexFields['id'] = $this->record->getId();
+        if($isNew){
+            $this->indexFields['id'] = $this->record->getId();
+        }
         $this->indexFields['s_title'] = ($this->record->getTitle()) ? $this->record->getTitle() : "";
         $this->indexFields['title'] = ($this->record->getTitle()) ? $this->record->getTitle() : "";
         $this->indexFields['s_description'] = ($this->record->getDescription()) ? $this->record->getDescription() : "";
