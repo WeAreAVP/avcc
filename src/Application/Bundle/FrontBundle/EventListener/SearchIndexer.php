@@ -14,7 +14,7 @@ class SearchIndexer
 		$entityManager = $args->getEntityManager();
 
 		// perhaps you only want to act on some "Product" entity
-		if ($entity instanceof Records)
+		if ($entity instanceof Records || $entity instanceof AudioRecords || $entity instanceof VideoRecords || $entity instanceof FilmRecords)
 		{
 			echo 'there';exit;
 			// ... do something with the Product
