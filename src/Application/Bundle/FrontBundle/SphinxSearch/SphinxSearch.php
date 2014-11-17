@@ -63,7 +63,7 @@ class SphinxSearch
 		->select($facetColumn, SphinxQL::expr('count(*) AS total'))
 		->from($this->indexName)
 		->groupBy($facetColumn)
-		->withinGroupOrderBy($facetColumn, 'asc');
+		->orderBy($facetColumn, 'asc');
 
 
 		return $sq->execute();
