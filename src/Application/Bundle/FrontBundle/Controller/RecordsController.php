@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Helper\DefaultFields;
 use Application\Bundle\FrontBundle\Entity\Records;
 use Symfony\Component\HttpFoundation\Session\Session;
-
+use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 
 /**
  * Records controller.
@@ -61,9 +61,12 @@ class RecordsController extends Controller
 //        $this->offset = $this->session->get('offset');
         $em = $this->getDoctrine()->getManager();
         $column = $this->columns;
+        $shpinxObj = new SphinxSearch();
+        $data = $shpinxObj->select();
+        echo '<pre>'; print_r($data); exit;
 //        $entities = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
-        $entities = $em->getRepository('ApplicationFrontBundle:Records')->findAllRecords($offSet, $this->limit);
-        $data = $this->getData($entities);
+//        $entities = $em->getRepository('ApplicationFrontBundle:Records')->findAllRecords($offSet, $this->limit);
+//        $data = $this->getData($entities);
         
         return array(
             'data' => $data,
