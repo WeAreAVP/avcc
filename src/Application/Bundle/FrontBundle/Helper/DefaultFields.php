@@ -177,30 +177,31 @@ class DefaultFields
 		foreach ($records as $mainIndex => $value)
 		{
 
-			$mediaTypeId = $value['mediaTypeId'];
+			$mediaTypeId = $value['media_type'];
 			if ($mediaTypeId == 2)
 			{
-				$url = 'record/film/' . $value['record']['id'];
+				$url = 'record/film/' . $value['id'];
 			}
 			elseif ($mediaTypeId == 3)
 			{
-				$url = 'record/video/' . $value['record']['id'];
+				$url = 'record/video/' . $value['id'];
 			}
 			else
 			{
-				$url = 'record/' . $value['record']['id'];
+				$url = 'record/' . $value['id'];
 			}
-			$tableView[$mainIndex][] = '<input type="checkbox" name="record_checkbox[]" class="checkboxes" onclick="" value="' . $value['record']['id'] . '" />';
+			$tableView[$mainIndex][] = '<input type="checkbox" name="record_checkbox[]" class="checkboxes" onclick="" value="' . $value['id'] . '" />';
 
-			$tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['projectTitle'] . '</a>';
+//			$tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['project'] . '</a>';
+			$tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['title'] . '</a>';
 
-			$tableView[$mainIndex][] = $value['record']['uniqueId'];
+			$tableView[$mainIndex][] = $value['unique_id'];
 
-			$tableView[$mainIndex][] = $value['record']['title'];
+			$tableView[$mainIndex][] = $value['title'];
 
-			$tableView[$mainIndex][] = $value['record']['collectionName'];
+			$tableView[$mainIndex][] = $value['collection_name'];
 
-			$tableView[$mainIndex][] = $value['record']['location'];
+			$tableView[$mainIndex][] = $value['location'];
 		}
 		return $tableView;
 	}

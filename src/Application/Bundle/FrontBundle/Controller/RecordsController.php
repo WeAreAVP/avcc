@@ -101,42 +101,21 @@ class RecordsController extends Controller
 
 		$sphinxSearch = new SphinxSearch($em);
 		$result = $sphinxSearch->select($offset, $limit);
-		echo '<pre>';
-		print_r($result);
-		exit;
-//		$entities = $em->getRepository('ApplicationFrontBundle:Records')->findAllRecords($offSet, $this->limit, $col, $order);
-		$data = $this->getData($entities);
-//        print_r($entities);exit;
-		$tableView = $this->defaultFields->recordDatatableView($entities);
+		$records = $result[0];
+		$currentPageTotal = count($records);
+		$totalRecords = $records[1][0]['Value'];
+
+
+		$tableView = $this->defaultFields->recordDatatableView($records);
 
 		$dataTable = array(
 			'sEcho' => intval($sEcho),
-			'iTotalRecords' => intval($data['count']),
-			'iTotalDisplayRecords' => intval($data['count']),
+			'iTotalRecords' => intval($totalRecords),
+			'iTotalDisplayRecords' => intval($currentPageTotal),
 			'aaData' => $tableView
 		);
 		echo json_encode($dataTable);
 		exit;
-	}
-
-	private function getData($entities)
-	{
-		$data = array();
-		$data['total'] = count($entities);
-		$data['records'] = $entities;
-		$data['count'] = count($entities);
-		if ($data['count'] > 0 && $this->offset === 0)
-		{
-			$data['start'] = 1;
-			$data['end'] = $data['count'];
-		}
-		else
-		{
-			$data['start'] = $this->offset;
-			$data['end'] = intval($this->offset) + intval($data['count']);
-		}
-
-		return $data;
 	}
 
 	protected function getSphinxInfo()
