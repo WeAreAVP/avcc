@@ -51,8 +51,8 @@ class SphinxSearch
 		$sq = SphinxQL::create($this->conn)
 		->select()
 		->from($this->indexName);
-		if ($sortColumn !== null && $sortOrder !== null)
-			$sq->orderBy($sortColumn, $sortOrder);
+//		if ($sortColumn !== null && $sortOrder !== null)
+//			$sq->orderBy($sortColumn, $sortOrder);
 		$sq->limit($offset, $limit)
 		->enqueue(Helper::create($this->conn)->showMeta())
 		->enqueue();
