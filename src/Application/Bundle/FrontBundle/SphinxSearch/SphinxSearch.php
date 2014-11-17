@@ -46,11 +46,12 @@ class SphinxSearch
 		return $sq->execute();
 	}
 
-	public function select($offset = 0, $limit = 100, $sortColumn = null, $sortOrder = null)
+	public function select($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc')
 	{
 		$sq = SphinxQL::create($this->conn)
 		->select()
 		->from($this->indexName)
+		->orderBy($sortColumn, $sortOrder)
 		->limit($offset, $limit)
 		->enqueue(Helper::create($this->conn)->showMeta())
 		->enqueue();

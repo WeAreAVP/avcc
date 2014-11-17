@@ -87,8 +87,8 @@ class RecordsController extends Controller
 		);
 		$em = $this->getDoctrine()->getManager();
 		$sEcho = $request->query->get('sEcho');
-		$sortOrder = $request->query->get('sSortDir_0') ? $request->query->get('sSortDir_0') : null;
-		$sortIndex = $request->query->get('iSortCol_0') ? $columns[$request->query->get('iSortCol_0')] : null;
+		$sortOrder = $request->query->get('sSortDir_0') ? $request->query->get('sSortDir_0') : 'asc';
+		$sortIndex = $request->query->get('iSortCol_0') ? $columns[$request->query->get('iSortCol_0')] : 'title';
 
 
 		$offset = $request->query->get('iDisplayStart') ? $request->query->get('iDisplayStart') : 0;
