@@ -47,8 +47,12 @@ class SphinxSearch
 
 	public function select($offset = 0, $limit = 100)
 	{
-		$sq = SphinxQL::create($this->conn)->select()->from($this->indexName)->limit($offset, $limit);
-		return $sq->execute();
+		$sq = SphinxQL::create($this->conn)
+		->select()
+		->enqueue(Helper::create($this->conn)->showMeta())
+		->from($this->indexName)
+		->limit($offset, $limit);
+		return $sq->executeBatch();
 	}
 
 }
