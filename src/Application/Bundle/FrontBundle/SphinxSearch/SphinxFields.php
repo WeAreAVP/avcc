@@ -52,9 +52,9 @@ class SphinxFields
 
         if ($this->record->getMediaType()->getId() == 1) {
             $this->prepareAudioFields();
-        }elseif($this->record->getMediaType()->getId() == 2){
+        } elseif ($this->record->getMediaType()->getId() == 2) {
             $this->prepareFilmFields();
-        }else{
+        } else {
             $this->prepareVideoFields();
         }
 
@@ -66,19 +66,21 @@ class SphinxFields
      */
     private function prepareAudioFields()
     {
-        $this->indexFields['disk_diameter'] = ($this->record->getAudioRecord()->getDiskDiameters()) ? $this->record->getAudioRecord()->getDiskDiameters()->getName() : "";
-        $this->indexFields['base'] = ($this->record->getAudioRecord()->getBases()) ? $this->record->getAudioRecord()->getBases()->getName() : "";
-        $this->indexFields['s_base'] = ($this->record->getAudioRecord()->getBases()) ? $this->record->getAudioRecord()->getBases()->getName() : "";
-        $this->indexFields['media_diameter'] = ($this->record->getAudioRecord()->getMediaDiameters()) ? $this->record->getAudioRecord()->getMediaDiameters()->getName() : "";
-        $this->indexFields['media_duration'] = ($this->record->getAudioRecord()->getMediaDuration()) ? $this->record->getAudioRecord()->getMediaDuration() : "";
-        $this->indexFields['recording_speed'] = ($this->record->getAudioRecord()->getRecordingSpeed()) ? $this->record->getAudioRecord()->getRecordingSpeed()->getName() : "";
-        $this->indexFields['tape_thickness'] = ($this->record->getAudioRecord()->getTapeThickness()) ? $this->record->getAudioRecord()->getTapeThickness()->getName() : "";
-        $this->indexFields['slides'] = ($this->record->getAudioRecord()->getSlides()) ? $this->record->getAudioRecord()->getSlides()->getName() : "";
-        $this->indexFields['track_type'] = ($this->record->getAudioRecord()->getTrackTypes()) ? $this->record->getAudioRecord()->getTrackTypes()->getName() : "";
-        $this->indexFields['mono_stereo'] = ($this->record->getAudioRecord()->getMonoStereo()) ? $this->record->getAudioRecord()->getMonoStereo()->getName() : "";
-        $this->indexFields['noice_reduction'] = ($this->record->getAudioRecord()->getNoiceReduction()) ? $this->record->getAudioRecord()->getNoiceReduction()->getName() : "";
+        if ($this->record->getAudioRecord()) {
+            $this->indexFields['disk_diameter'] = ($this->record->getAudioRecord()->getDiskDiameters()) ? $this->record->getAudioRecord()->getDiskDiameters()->getName() : "";
+            $this->indexFields['base'] = ($this->record->getAudioRecord()->getBases()) ? $this->record->getAudioRecord()->getBases()->getName() : "";
+            $this->indexFields['s_base'] = ($this->record->getAudioRecord()->getBases()) ? $this->record->getAudioRecord()->getBases()->getName() : "";
+            $this->indexFields['media_diameter'] = ($this->record->getAudioRecord()->getMediaDiameters()) ? $this->record->getAudioRecord()->getMediaDiameters()->getName() : "";
+            $this->indexFields['media_duration'] = ($this->record->getAudioRecord()->getMediaDuration()) ? $this->record->getAudioRecord()->getMediaDuration() : "";
+            $this->indexFields['recording_speed'] = ($this->record->getAudioRecord()->getRecordingSpeed()) ? $this->record->getAudioRecord()->getRecordingSpeed()->getName() : "";
+            $this->indexFields['tape_thickness'] = ($this->record->getAudioRecord()->getTapeThickness()) ? $this->record->getAudioRecord()->getTapeThickness()->getName() : "";
+            $this->indexFields['slides'] = ($this->record->getAudioRecord()->getSlides()) ? $this->record->getAudioRecord()->getSlides()->getName() : "";
+            $this->indexFields['track_type'] = ($this->record->getAudioRecord()->getTrackTypes()) ? $this->record->getAudioRecord()->getTrackTypes()->getName() : "";
+            $this->indexFields['mono_stereo'] = ($this->record->getAudioRecord()->getMonoStereo()) ? $this->record->getAudioRecord()->getMonoStereo()->getName() : "";
+            $this->indexFields['noice_reduction'] = ($this->record->getAudioRecord()->getNoiceReduction()) ? $this->record->getAudioRecord()->getNoiceReduction()->getName() : "";
+        }
     }
-    
+
     /**
      * Film fields
      */
@@ -96,7 +98,7 @@ class SphinxFields
         $this->indexFields['acid_detection'] = ($this->record->getFilmRecord()->getAcidDetectionStrip()) ? $this->record->getFilmRecord()->getAcidDetectionStrip()->getName() : "";
         $this->indexFields['shrinkage'] = ($this->record->getFilmRecord()->getShrinkage()) ? $this->record->getFilmRecord()->getShrinkage() : "";
     }
-    
+
     /**
      * Film fields
      */
@@ -106,7 +108,7 @@ class SphinxFields
         $this->indexFields['media_duration'] = ($this->record->getVideoRecord()->getMediaDuration()) ? $this->record->getVideoRecord()->getMediaDuration() : "";
         $this->indexFields['format_version'] = ($this->record->getVideoRecord()->getFormatVersion()) ? $this->record->getVideoRecord()->getFormatVersion()->getName() : "";
         $this->indexFields['recording_speed'] = ($this->record->getVideoRecord()->getRecordingSpeed()) ? $this->record->getVideoRecord()->getRecordingSpeed()->getName() : "";
-        $this->indexFields['s_recording_standard'] = $this->indexFields['recording_standard'] = ($this->record->getVideoRecord()->getRecordingStandard()) ? $this->record->getVideoRecord()->getRecordingStandard()->getName() : "";        
+        $this->indexFields['s_recording_standard'] = $this->indexFields['recording_standard'] = ($this->record->getVideoRecord()->getRecordingStandard()) ? $this->record->getVideoRecord()->getRecordingStandard()->getName() : "";
     }
 
 }
