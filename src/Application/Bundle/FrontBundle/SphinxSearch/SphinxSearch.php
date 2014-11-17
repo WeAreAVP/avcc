@@ -60,7 +60,7 @@ class SphinxSearch
 	public function facetSelect($facetColumn)
 	{
 		$sq = SphinxQL::create($this->conn)
-		->select($facetColumn, SphinxQL::expr('count(*)'))
+		->select($facetColumn, SphinxQL::expr('count(*) AS total'))
 		->from($this->indexName)
 		->groupBy($facetColumn);
 
