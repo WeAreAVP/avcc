@@ -78,7 +78,7 @@ function Records() {
 	var checkParentFacet = function (type, isChecked) {
 		//todo need to update function
 		totalChecked = $('#total_checked').val();
-		total = $('input:checked').length;
+		total = $('.facet_sidebar input:checked').length;
 		if (total == 0)
 			totalChecked = 0;
 		if (isChecked == 'checked')
@@ -92,13 +92,13 @@ function Records() {
 			$('#parent_facet').val(type);
 		else if (totalChecked == 0)
 			$('#parent_facet').val('');
-		this.filterRecords();
+		filterRecords();
 	}
 	/**
 	 * 
 	 * @returns {undefined}
 	 */
-	this.filterRecords = function () {
+	var filterRecords = function () {
 
 		//send ajax call here.
 
