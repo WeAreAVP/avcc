@@ -95,7 +95,7 @@ class RecordsController extends Controller
 
 		$sphinxSearch = new SphinxSearch($em);
 		$result = $sphinxSearch->select($offset, $limit, $sortIndex, $sortOrder);
-
+                echo '<pre>';print_r($result);exit;
 		$records = $result[0];
 		$currentPageTotal = count($records);
 		$totalRecords = $result[1][0]['Value'];
