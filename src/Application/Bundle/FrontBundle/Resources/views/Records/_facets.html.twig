@@ -12,13 +12,14 @@
                         {% endfor %}
                     </ul>
 {#                    {{dump(facets.commercialUnique)}}#}
-                    <div>
+                    <a class="dropdown-toggle" href="#">Commercial/Unique</a>                                
+                    <ul data-role="dropdown" {% if app.session.get('commercial')|length > 0%} style="display:block;" {% endif %}>
                         {% for cOrU in facets.commercialUnique %}
                           {% if cOrU.commercial != '' %}  
-                            <div><a href="javascript://"><label for="{{cOrU.commercial}}"><input id='{{cOrU.commercial}}' type="checkbox" class="facet_checkbox" name="commercial[]" value="{{cOrU.commercial}}" />{{cOrU.commercial}} ({{cOrU.total}})</label></a></div>
+                            <li><a href="javascript://"><label for="{{cOrU.commercial}}"><input id='{{cOrU.commercial}}' type="checkbox" class="facet_checkbox" name="commercial[]" value="{{cOrU.commercial}}" />{{cOrU.commercial}} ({{cOrU.total}})</label></a></li>
                           {% endif%}
                         {% endfor %}
-                    </div>
+                    </ul>
                 </form>
             </li>
         {% endif %}
