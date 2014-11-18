@@ -173,7 +173,6 @@ class DefaultFields
 	public function recordDatatableView($records)
 	{
 		$tableView = array();
-echo'<pre>';print_r($records);exit;
 		foreach ($records as $mainIndex => $value)
 		{
 
@@ -192,7 +191,7 @@ echo'<pre>';print_r($records);exit;
 			}
 			$tableView[$mainIndex][] = '<input type="checkbox" name="record_checkbox[]" class="checkboxes" onclick="" value="' . $value['id'] . '" />';
 
-			$tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['project'] . '</a>';
+			$tableView[$mainIndex][] = ($value['project']) ? '<a href="' . $url . '">' . $value['project'] . '</a>' : $value['project'];
 //			$tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['title'] . '</a>';
 
 			$tableView[$mainIndex][] = $value['unique_id'];
