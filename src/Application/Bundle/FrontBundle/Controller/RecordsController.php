@@ -131,12 +131,14 @@ class RecordsController extends Controller
     {
         $data = $request->request->all();
         $session = $this->getRequest()->getSession();
-        if ($data['mediaType']) {
-            if ($session->get('mediaType'))
-                $session->remove('mediaType');
-            $session->set('mediaType', $data['mediaType']);
+        if ($data) {
+            if ($data['mediaType']) {
+                if ($session->get('mediaType'))
+                    $session->remove('mediaType');
+                $session->set('mediaType', $data['mediaType']);
+            }
         }
-        echo json_encode(array('success'=>true));
+        echo json_encode(array('success' => true));
         exit;
     }
 
