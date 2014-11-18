@@ -116,7 +116,7 @@ class RecordsController extends Controller
     {
         return $this->container->getParameter('sphinx_param');
     }
-    
+
     /**
      * 
      * @param Request $request
@@ -126,8 +126,9 @@ class RecordsController extends Controller
      */
     public function facetsAction(Request $request)
     {
-       print_r($request->request->get());
-       exit;
+        $data = $request->request->all();
+        print_r($data);
+        exit;
     }
 
 }
