@@ -103,7 +103,7 @@ class SphinxSearch
     public function whereClause($criteria, $sq)
     {
         if ($criteria['mediaType']) {
-            $_value .= implode('|',$criteria['mediaType']);
+            $_value = implode('|',$criteria['mediaType']);
             $sq->match('s_media_type', $_value, true);
         }
     }
