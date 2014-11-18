@@ -123,6 +123,7 @@ function Records() {
             success: function (response)
             {
                 selfObj.initDataTable();
+                window.location.reload();
             }
 
         });
