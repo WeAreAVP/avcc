@@ -61,10 +61,10 @@ class SphinxSearch
         $sq = SphinxQL::create($this->conn)
                 ->select()
                 ->from($this->indexName);
-               if($criteria)  {
-                   $this->whereClause($criteria, $sq);
-               }
-                $sq->orderBy($sortColumn, $sortOrder)
+        if ($criteria) {
+            $this->whereClause($criteria, $sq);
+        }
+        $sq->orderBy($sortColumn, $sortOrder)
                 ->limit($offset, $limit)
                 ->enqueue(Helper::create($this->conn)->showMeta());
         return $sq->executeBatch();
@@ -85,7 +85,10 @@ class SphinxSearch
     public function whereClause($criteria, $sq)
     {
         if ($criteria['mediaType']) {
-            $sq->where('media_type', 'IN', $criteria['mediaType']);
+//            $sq->where('media_type', 'IN', $criteria['mediaType']);
+            foreach($criteria['mediaType'] as $key => $value) {
+                $sq->match('media_type', $value, true);
+            }
         }
     }
 
