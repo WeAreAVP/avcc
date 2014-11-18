@@ -65,13 +65,11 @@ class SphinxSearch
 //                ->orderBy($sortColumn, $sortOrder)
 //                ->limit($offset, $limit)
 //                ->enqueue(Helper::create($this->conn)->showMeta());
-        $sq = SphinxQL::create($this->conn);
-                $sq->select()
+        $sq = SphinxQL::create($this->conn)
+                ->select()
                 ->from($this->indexName);
-        if ($criteria && $criteria['mediaType']) {
-            foreach ($criteria['mediaType'] as $key => $value) {
-                $sq->match('s_media_type', $value, true);
-            }
+        if ($criteria) {
+            $this->whereClause($criteria, $sq);
         }
         $sq->orderBy($sortColumn, $sortOrder)
                 ->limit($offset, $limit)
