@@ -148,7 +148,7 @@ class AudioRecordsController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
                 
-		$entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->findOneBy(array('record'=>$id))->toArray();
+		$entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->findRecrd($id);
 		echo '<pre>';print_r($entity);exit;
 		if ( ! $entity)
 		{

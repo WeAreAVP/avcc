@@ -12,5 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class AudioRecordsRepository extends EntityRepository
 {
-	
+
+	function findRecrd($recordId)
+	{
+		$query = $this->getEntityManager()->createQuery('SELECT u FROM ApplicationFrontBundle:AudioRecords u WHERE u.id = ' . $recordId);
+		$users = $query->getArrayResult();
+	}
+
 }
