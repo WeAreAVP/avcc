@@ -94,14 +94,14 @@ class SphinxSearch
     }
 
     public function whereClause($criteria, $sq)
-    {
-        print_r($criteria['commercial']);exit;
+    {   
         if (isset($criteria['mediaType'])) {
             $_value = implode('|',$criteria['mediaType']);
             $sq->match('s_media_type', $_value, true);
         }
         if (isset($criteria['commercial'])) {
             $_value = implode('|',$criteria['commercial']);
+            print_r($_value);exit;
             $sq->match('s_commercial', $_value, true);
         }
     }
