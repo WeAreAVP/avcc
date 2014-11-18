@@ -60,11 +60,12 @@ class SphinxSearch
     {
         $sq = SphinxQL::create($this->conn)
                 ->select()
-                ->from($this->indexName);
-        if ($criteria) {
-            $this->whereClause($criteria, $sq);
-        }
-        $sq->orderBy($sortColumn, $sortOrder)
+                ->from($this->indexName)
+//        if ($criteria) {
+//            $this->whereClause($criteria, $sq);
+//        }
+       ->match('s_media_type', 'Audio', true)
+       ->orderBy($sortColumn, $sortOrder)
                 ->limit($offset, $limit)
                 ->enqueue(Helper::create($this->conn)->showMeta());
         return $sq->executeBatch();
