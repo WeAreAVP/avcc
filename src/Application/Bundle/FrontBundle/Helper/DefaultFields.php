@@ -177,12 +177,12 @@ class DefaultFields
 		foreach ($records as $mainIndex => $value)
 		{
 
-			$mediaTypeId = $value['media_type'];
-			if ($mediaTypeId == 2)
+			$mediaType = $value['media_type'];
+			if ($mediaType == 'Film' || $mediaType == 'Films')
 			{
 				$url = 'record/film/' . $value['id'];
 			}
-			elseif ($mediaTypeId == 3)
+			elseif ($mediaType == 'Video' || $mediaType == 'Videos')
 			{
 				$url = 'record/video/' . $value['id'];
 			}
@@ -192,8 +192,8 @@ class DefaultFields
 			}
 			$tableView[$mainIndex][] = '<input type="checkbox" name="record_checkbox[]" class="checkboxes" onclick="" value="' . $value['id'] . '" />';
 
-//			$tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['project'] . '</a>';
-			$tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['title'] . '</a>';
+			$tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['project'] . '</a>';
+//			$tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['title'] . '</a>';
 
 			$tableView[$mainIndex][] = $value['unique_id'];
 
