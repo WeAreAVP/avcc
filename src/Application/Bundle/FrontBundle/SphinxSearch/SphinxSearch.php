@@ -101,8 +101,7 @@ class SphinxSearch
         }
         if (isset($criteria['commercial'])) {
             $_value = implode('|',$criteria['commercial']);
-            print_r($_value);exit;
-            $sq->match('s_commercial', $_value, true);
+            $sq->match('s_commercial', $_value);
         }
     }
 
