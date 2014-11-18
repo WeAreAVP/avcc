@@ -72,11 +72,22 @@ class SphinxSearch
             $this->whereClause($criteria, $sq);
         }
         $sq->orderBy($sortColumn, $sortOrder)
-//                ->limit($offset, $limit)
+                ->limit($offset, $limit)
                 ->enqueue(Helper::create($this->conn)->showMeta());
         return $sq->executeBatch();
     }
 
+    public function selectCount($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc')
+    {
+        $sq = SphinxQL::create($this->conn)
+                ->select()
+                ->from($this->indexName)
+                ->orderBy($sortColumn, $sortOrder)
+                ->limit($offset, $limit)
+                ->enqueue(Helper::create($this->conn)->showMeta());
+        return $sq->executeBatch();
+    }
+    
     public function facetSelect($facetColumn)
     {
         $sq = SphinxQL::create($this->conn)
