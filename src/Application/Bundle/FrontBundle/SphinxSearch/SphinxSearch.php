@@ -61,7 +61,7 @@ class SphinxSearch
         $sq = SphinxQL::create($this->conn)
                 ->select()
                 ->from($this->indexName)
-                ->match('s_media_type', 'Audio || Video', true)
+                ->match('s_media_type', 'Audio | Video', true)
 //                ->where('media_type','IN', array('Audio'))
                 ->orderBy($sortColumn, $sortOrder)
 //                ->limit($offset, $limit);
