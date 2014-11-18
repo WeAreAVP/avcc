@@ -137,9 +137,16 @@ class RecordsController extends Controller
                     $session->remove('mediaType');
                 $session->set('mediaType', $data['mediaType']);
             }
+            if ($data['commercial']) {
+                if ($session->get('commercial'))
+                    $session->remove('commercial');
+                $session->set('commercial', $data['commercial']);
+            }
         }else{
             if ($session->get('mediaType'))
                 $session->remove('mediaType');
+            if ($session->get('commercial'))
+                $session->remove('commercial');
         }
         echo json_encode(array('success' => true));
         exit;
@@ -157,7 +164,9 @@ class RecordsController extends Controller
         if ($session->get('mediaType')) {
             $criteriaArr['mediaType'] = $session->get('mediaType');
         }
-
+        if ($session->get('commercial')) {
+            $criteriaArr['commercial'] = $session->get('commercial');
+        }
         return $criteriaArr;
     }
 

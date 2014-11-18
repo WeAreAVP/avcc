@@ -58,13 +58,6 @@ class SphinxSearch
 
     public function select($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null)
     {
-//        $sq = SphinxQL::create($this->conn)
-//                ->select()
-//                ->from($this->indexName)
-//                ->match('s_media_type', 'Audio | Video', true)
-//                ->orderBy($sortColumn, $sortOrder)
-//                ->limit($offset, $limit)
-//                ->enqueue(Helper::create($this->conn)->showMeta());
         $sq = SphinxQL::create($this->conn)
                 ->select()
                 ->from($this->indexName);
@@ -105,6 +98,10 @@ class SphinxSearch
         if ($criteria['mediaType']) {
             $_value = implode('|',$criteria['mediaType']);
             $sq->match('s_media_type', $_value, true);
+        }
+        if ($criteria['commercial']) {
+            $_value = implode('|',$criteria['commercial']);
+            $sq->match('s_commercial', $_value, true);
         }
     }
 
