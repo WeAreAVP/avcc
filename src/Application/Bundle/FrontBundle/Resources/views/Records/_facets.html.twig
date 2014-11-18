@@ -1,30 +1,34 @@
 <nav id="facet_sidebar" class="sidebar light">
-	<ul>
-		<li class="title">Filters</li>
-		<li><a href="#">Keyword</a></li>
-			{% if facets.mediaType|length > 0 %}
-			<li>
-				<form id='formSearch' name='formSearch' method='post'>
-                                    <a class="dropdown-toggle" href="#">Media Type</a>                                
-                                <ul data-role="dropdown" {% if app.session.get('mediaType')|length > 0%} style="display:block;" {% endif %}>
-					{% for mediaType in facets.mediaType %}
-                                            <li><a href="javascript://"><label for="{{mediaType.media_type}}"><input id='{{mediaType.media_type}}' type="checkbox" class="facet_checkbox" name="mediaType[]" value="{{mediaType.media_type}}" />{{mediaType.media_type}} ({{mediaType.total}})</label></a></li>
-							{% endfor %}
-
-
-				</ul>
-                                </form>
-			</li>
-		{% endif %}
-	</ul>
+    <ul>
+        <li class="title">Filters</li>
+        <li><a href="#">Keyword</a></li>
+            {% if facets.mediaType|length > 0 %}
+            <li>
+                <form id='formSearch' name='formSearch' method='post'>
+                    <a class="dropdown-toggle" href="#">Media Type</a>                                
+                    <ul data-role="dropdown" {% if app.session.get('mediaType')|length > 0%} style="display:block;" {% endif %}>
+                        {% for mediaType in facets.mediaType %}
+                            <li><a href="javascript://"><label for="{{mediaType.media_type}}"><input id='{{mediaType.media_type}}' type="checkbox" class="facet_checkbox" name="mediaType[]" value="{{mediaType.media_type}}" />{{mediaType.media_type}} ({{mediaType.total}})</label></a></li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <ul>
+                        {% for cOrU in facets.commercial %}
+                            <li><a href="javascript://"><label for="{{cOrU.commercial}}"><input id='{{cOrU.commercial}}' type="checkbox" class="facet_checkbox" name="commercial[]" value="{{cOrU.commercial}}" />{{cOrU.commercial}} ({{cOrU.total}})</label></a></li>
+                        {% endfor %}
+                    </ul>
+                </form>
+            </li>
+        {% endif %}
+    </ul>
 </nav>
 <input type="hidden" value="" name="parent_facet" id="parent_facet" />
 <input type="hidden" value="" name="total_checked" id="total_checked"/>
 <script type="text/javascript">
-	$(window).load(function () {
-		var facets = new Records();
-                facets.setAjaxSource('{{ path('record_dataTable') }}');
-                facets.setPageUrl('{{ path('record_facets') }}');
-		facets.bindEvents();
-	});
+    $(window).load(function () {
+        var facets = new Records();
+        facets.setAjaxSource('{{ path('record_dataTable') }}');
+        facets.setPageUrl('{{ path('record_facets') }}');
+        facets.bindEvents();
+    });
 </script>
