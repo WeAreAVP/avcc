@@ -95,11 +95,11 @@ class SphinxSearch
 
     public function whereClause($criteria, $sq)
     {
-        if ($criteria['mediaType']) {
+        if (isset($criteria['mediaType'])) {
             $_value = implode('|',$criteria['mediaType']);
             $sq->match('s_media_type', $_value, true);
         }
-        if ($criteria['commercial']) {
+        if (isset($criteria['commercial'])) {
             $_value = implode('|',$criteria['commercial']);
             $sq->match('s_commercial', $_value, true);
         }
