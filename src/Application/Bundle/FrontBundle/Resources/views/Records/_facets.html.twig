@@ -12,7 +12,7 @@
                         {% endfor %}
                     </ul>
 {#                    {{dump(facets.commercialUnique)}}#}
-                    <ul data-role="">
+                    <ul class='dropdown-menu open keep-open'>
                         {% for cOrU in facets.commercialUnique %}
                           {% if cOrU.commercial != '' %}  
                             <li><a href="javascript://"><label for="{{cOrU.commercial}}"><input id='{{cOrU.commercial}}' type="checkbox" class="facet_checkbox" name="commercial[]" value="{{cOrU.commercial}}" />{{cOrU.commercial}} ({{cOrU.total}})</label></a></li>
