@@ -14,6 +14,7 @@ function Records() {
      */
     var ajaxSource = null;
     var pageUrl = null;
+    var selfObj = this;
     /**
      * Set the ajax URL of datatable.
      * @param {string} source
@@ -121,7 +122,7 @@ function Records() {
             dataType: 'json',
             success: function (response)
             {
-                this.initDataTable();
+                selfObj.initDataTable();
             }
 
         });
