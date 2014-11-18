@@ -58,14 +58,20 @@ class SphinxSearch
 
     public function select($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null)
     {
+//        $sq = SphinxQL::create($this->conn)
+//                ->select()
+//                ->from($this->indexName)
+//                ->match('s_media_type', 'Audio', true)
+//                ->orderBy($sortColumn, $sortOrder)
+//                ->limit($offset, $limit)
+//                ->enqueue(Helper::create($this->conn)->showMeta());
         $sq = SphinxQL::create($this->conn)
                 ->select()
-                ->from($this->indexName)
-//        if ($criteria) {
-//            $this->whereClause($criteria, $sq);
-//        }
-       ->match('s_media_type', 'Audio', true)
-       ->orderBy($sortColumn, $sortOrder)
+                ->from($this->indexName);
+        if ($criteria) {
+            $this->whereClause($criteria, $sq);
+        }
+        $sq->orderBy($sortColumn, $sortOrder)
                 ->limit($offset, $limit)
                 ->enqueue(Helper::create($this->conn)->showMeta());
         return $sq->executeBatch();
@@ -87,7 +93,7 @@ class SphinxSearch
     {
         if ($criteria['mediaType']) {
 //            $sq->where('media_type', 'IN', $criteria['mediaType']);
-            foreach($criteria['mediaType'] as $key => $value) {
+            foreach ($criteria['mediaType'] as $key => $value) {
                 $sq->match('s_media_type', $value, true);
             }
         }
