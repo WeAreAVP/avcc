@@ -194,7 +194,7 @@ class DefaultFields
 			$tableView[$mainIndex][] = ($value['project']) ? '<a href="' . $url . '">' . $value['project'] . '</a>' : $value['project'];
 //			$tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['title'] . '</a>';
 
-			$tableView[$mainIndex][] = $value['unique_id'];
+			$tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['unique_id'] . '</a>';
 
 			$tableView[$mainIndex][] = $value['title'];
 
