@@ -83,6 +83,9 @@ function Records() {
         $('input[name="mediaType[]"]').click(function () {
             checkParentFacet('media_type', $(this).attr('checked'));
         });
+        $('input[name="commercial[]"]').click(function () {
+            checkParentFacet('commercial', $(this).attr('checked'));
+        });
         return true;
     }
     /**
