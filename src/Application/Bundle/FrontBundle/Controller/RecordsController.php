@@ -127,7 +127,15 @@ class RecordsController extends Controller
     public function facetsAction(Request $request)
     {
         $data = $request->request->all();
-        print_r($data);
+        $session = $this->getRequest()->getSession();
+        if($data['mediaType']){
+            if($session->get('mediaType')) 
+                $session->remove('mediaType');
+            $session->set('mediaType',$data['mediaType']);
+            
+            print_r($session->get('mediaType'));
+        }
+        
         exit;
     }
 
