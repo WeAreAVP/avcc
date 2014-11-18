@@ -57,7 +57,7 @@ class SphinxFields
         $this->indexFields['content_duration'] = ($this->record->getRecord()->getContentDuration()) ? $this->record->getRecord()->getContentDuration() : "";
         $this->indexFields['part'] = ($this->record->getRecord()->getPart()) ? $this->record->getRecord()->getPart() : "";
         $this->indexFields['generation'] = ($this->record->getRecord()->getGeneration()) ? $this->record->getRecord()->getGeneration() : "";
-
+        $this->indexFields['title'] = $this->indexFields['s_project'] = ($this->record->getRecord()->getProject()) ? $this->record->getRecord()->getProject()->getName() : "";
         
         return $this->indexFields;
     }
