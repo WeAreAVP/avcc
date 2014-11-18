@@ -148,8 +148,8 @@ class AudioRecordsController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
                 
-		$entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->findOneBy(array('record'=>$id));
-                
+		$entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->findOneBy(array('record'=>$id))->toArray();
+		echo '<pre>';print_r($entity);exit;
 		if ( ! $entity)
 		{
 			throw $this->createNotFoundException('Unable to find AudioRecords entity.');
