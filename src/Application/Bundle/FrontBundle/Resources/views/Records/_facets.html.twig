@@ -31,7 +31,7 @@
                     <a class="dropdown-toggle" href="#">Recording Standard</a>                                
                     <ul class="dropdown-menu" data-role="dropdown">
                         {% for recordingStandard in facets.recordingStandards %}
-                          {% if recordingStandard.recording_standard != '' %}  
+                          {% if recordingStandard.recording_standard %}  
                             <li><a href="javascript://"><label for="{{recordingStandard.recording_standard}}"><input id='{{recordingStandard.recording_standard}}' type="checkbox" class="facet_checkbox" name="recordingStandard[]" value="{{recordingStandard.recording_standard}}" />{{recordingStandard.recording_standard}} ({{recordingStandard.total}})</label></a></li>
                           {% endif%}
                         {% endfor %}
