@@ -12,13 +12,13 @@
                         {% endfor %}
                     </ul>
 {#                    {{dump(facets.commercialUnique)}}#}
-                    <ul class='dropdown-menu open keep-open'>
+                    <div class='container'>
                         {% for cOrU in facets.commercialUnique %}
                           {% if cOrU.commercial != '' %}  
-                            <li><a href="javascript://"><label for="{{cOrU.commercial}}"><input id='{{cOrU.commercial}}' type="checkbox" class="facet_checkbox" name="commercial[]" value="{{cOrU.commercial}}" />{{cOrU.commercial}} ({{cOrU.total}})</label></a></li>
+                            <div class='row'><a href="javascript://"><label for="{{cOrU.commercial}}"><input id='{{cOrU.commercial}}' type="checkbox" class="facet_checkbox" name="commercial[]" value="{{cOrU.commercial}}" />{{cOrU.commercial}} ({{cOrU.total}})</label></a></div>
                           {% endif%}
                         {% endfor %}
-                    </ul>
+                    </div>
                 </form>
             </li>
         {% endif %}
