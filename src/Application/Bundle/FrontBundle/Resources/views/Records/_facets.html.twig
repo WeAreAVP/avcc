@@ -4,8 +4,8 @@
 		<li><a href="#">Keyword</a></li>
 			{% if facets.mediaType|length > 0 %}
 			<li>
-				<a class="dropdown-toggle" href="#">Media Type</a>
-                                <form id='formSearch' name='formSearch' method='post'>
+				<form id='formSearch' name='formSearch' method='post'>
+                                    <a class="dropdown-toggle" href="#">Media Type</a>                                
                                 <ul data-role="dropdown" >
 					{% for mediaType in facets.mediaType %}
                                             <li><a href="javascript://"><label for="{{mediaType.media_type}}"><input id='{{mediaType.media_type}}' type="checkbox" class="facet_checkbox" name="mediaType[]" value="{{mediaType.media_type}}" />{{mediaType.media_type}} ({{mediaType.total}})</label></a></li>
