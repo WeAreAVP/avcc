@@ -68,8 +68,10 @@ class SphinxSearch
         $sq = SphinxQL::create($this->conn);
                 $sq->select()
                 ->from($this->indexName);
-        if ($criteria) {
-            $this->whereClause($criteria, $sq);
+        if ($criteria && $criteria['mediaType']) {
+            foreach ($criteria['mediaType'] as $key => $value) {
+                $sq->match('s_media_type', $value, true);
+            }
         }
         $sq->orderBy($sortColumn, $sortOrder)
                 ->limit($offset, $limit)
