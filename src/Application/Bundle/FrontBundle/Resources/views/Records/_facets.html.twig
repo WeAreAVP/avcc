@@ -9,53 +9,59 @@
                     <ul class="dropdown-menu" data-role="dropdown">
                         {% for mediaType in facets.mediaType %}
                             <li><a href="javascript://"><label for="{{mediaType.media_type}}"><input id='{{mediaType.media_type}}' type="checkbox" class="facet_checkbox" name="mediaType[]" value="{{mediaType.media_type}}" />{{mediaType.media_type}} ({{mediaType.total}})</label></a></li>
-                        {% endfor %}
+									{% endfor %}
                     </ul>
-{#                    {{dump(facets)}}#}
-                    <a class="dropdown-toggle" href="#">Commercial/Unique</a>                                
-                    <ul class="dropdown-menu" data-role="dropdown">
-                        {% for cOrU in facets.commercialUnique %}
-                          {% if cOrU.commercial != '' %}  
-                            <li><a href="javascript://"><label for="{{cOrU.commercial}}"><input id='{{cOrU.commercial}}' type="checkbox" class="facet_checkbox" name="commercial[]" value="{{cOrU.commercial}}" />{{cOrU.commercial}} ({{cOrU.total}})</label></a></li>
-                          {% endif%}
+			</li>
+		{% endif %}
+		<li>
+		<a class="dropdown-toggle" href="#">Commercial/Unique</a>                                
+		<ul class="dropdown-menu" data-role="dropdown">
+			{% for cOrU in facets.commercialUnique %}
+				{% if cOrU.commercial != '' %}  
+					<li><a href="javascript://"><label for="{{cOrU.commercial}}"><input id='{{cOrU.commercial}}' type="checkbox" class="facet_checkbox" name="commercial[]" value="{{cOrU.commercial}}" />{{cOrU.commercial}} ({{cOrU.total}})</label></a></li>
+							{% endif%}
                         {% endfor %}
-                    </ul>
-                    <a class="dropdown-toggle" href="#">Base</a>                                
-                    <ul class="dropdown-menu" data-role="dropdown">
-                        {% for base in facets.bases %}
-                          {% if base.base != '' %}  
-                            <li><a href="javascript://"><label for="{{base.base}}"><input id='{{base.base}}' type="checkbox" class="facet_checkbox" name="base[]" value="{{base.base}}" />{{base.base}} ({{base.total}})</label></a></li>
-                          {% endif%}
+		</ul>
+		</li>
+		<li>
+		<a class="dropdown-toggle" href="#">Base</a>                                
+		<ul class="dropdown-menu" data-role="dropdown">
+			{% for base in facets.bases %}
+				{% if base.base != '' %}  
+					<li><a href="javascript://"><label for="{{base.base}}"><input id='{{base.base}}' type="checkbox" class="facet_checkbox" name="base[]" value="{{base.base}}" />{{base.base}} ({{base.total}})</label></a></li>
+							{% endif%}
                         {% endfor %}
-                    </ul>
-                    <a class="dropdown-toggle" href="#">Recording Standard</a>                                
-                    <ul class="dropdown-menu" data-role="dropdown">
-                        {% for recordingStandard in facets.recordingStandards %}
-                          {% if recordingStandard.recording_standard %}  
-                            <li><a href="javascript://"><label for="{{recordingStandard.recording_standard}}"><input id='{{recordingStandard.recording_standard}}' type="checkbox" class="facet_checkbox" name="recordingStandard[]" value="{{recordingStandard.recording_standard}}" />{{recordingStandard.recording_standard}} ({{recordingStandard.total}})</label></a></li>
-                          {% endif%}
+		</ul>
+		</li>
+		<li>
+		<a class="dropdown-toggle" href="#">Recording Standard</a>                                
+		<ul class="dropdown-menu" data-role="dropdown">
+			{% for recordingStandard in facets.recordingStandards %}
+				{% if recordingStandard.recording_standard %}  
+					<li><a href="javascript://"><label for="{{recordingStandard.recording_standard}}"><input id='{{recordingStandard.recording_standard}}' type="checkbox" class="facet_checkbox" name="recordingStandard[]" value="{{recordingStandard.recording_standard}}" />{{recordingStandard.recording_standard}} ({{recordingStandard.total}})</label></a></li>
+							{% endif%}
                         {% endfor %}
-                    </ul>
-                    {#<a class="dropdown-toggle" href="#">Review</a>                                
-                    <ul class="dropdown-menu" data-role="dropdown">
-                        {% for review in facets.review %}
-                          {% if review.is_review != '' %}  
-                            <li><a href="javascript://"><label for="{{review.is_review}}"><input id='{{review.is_review}}' type="checkbox" class="facet_checkbox" name="review[]" value="{{review.is_review}}" />{{review.is_review}} ({{review.total}})</label></a></li>
-                          {% endif%}
-                        {% endfor %}
-                    </ul>#}
-                </form>
-            </li>
-        {% endif %}
+		</ul>
+		</li>
+		{#<a class="dropdown-toggle" href="#">Review</a>                                
+		<ul class="dropdown-menu" data-role="dropdown">
+			{% for review in facets.review %}
+			  {% if review.is_review != '' %}  
+				<li><a href="javascript://"><label for="{{review.is_review}}"><input id='{{review.is_review}}' type="checkbox" class="facet_checkbox" name="review[]" value="{{review.is_review}}" />{{review.is_review}} ({{review.total}})</label></a></li>
+			  {% endif%}
+			{% endfor %}
+		</ul>#}
+		</form>
+
     </ul>
 </nav>
 <input type="hidden" value="" name="parent_facet" id="parent_facet" />
 <input type="hidden" value="" name="total_checked" id="total_checked"/>
 <script type="text/javascript">
-    $(window).load(function () {
-        var facets = new Records();
-        facets.setAjaxSource('{{ path('record_dataTable') }}');
-        facets.setPageUrl('{{ path('record_facets') }}');
-        facets.bindEvents();
-    });
+	$(window).load(function () {
+		var facets = new Records();
+		facets.setAjaxSource('{{ path('record_dataTable') }}');
+		facets.setPageUrl('{{ path('record_facets') }}');
+		facets.bindEvents();
+	});
 </script>
