@@ -142,11 +142,11 @@ class RecordsController extends Controller
                 $session->set('commercial', $data['commercial']);
             }
         }else{
-            $session->clear();
-//            if ($session->get('mediaType'))
-//                $session->remove('mediaType');
-//            if ($session->get('commercial'))
-//                $session->remove('commercial');
+//            $session->clear();
+            if ($session->get('mediaType'))
+                $session->remove('mediaType');
+            if ($session->get('commercial'))
+                $session->remove('commercial');
         }
         echo json_encode(array('success' => true));
         exit;
