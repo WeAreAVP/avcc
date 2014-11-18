@@ -126,7 +126,7 @@ class RecordsController extends Controller
      */
     public function facetsAction(Request $request)
     {
-       print_r($request->request->get('formSearch'));
+       print_r($request->request->get());
        exit;
     }
 
