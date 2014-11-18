@@ -173,7 +173,7 @@ class DefaultFields
 	public function recordDatatableView($records)
 	{
 		$tableView = array();
-
+echo'<pre>';print_r($records);exit;
 		foreach ($records as $mainIndex => $value)
 		{
 
