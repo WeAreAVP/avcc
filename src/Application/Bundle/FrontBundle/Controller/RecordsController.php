@@ -137,6 +137,9 @@ class RecordsController extends Controller
                     $session->remove('mediaType');
                 $session->set('mediaType', $data['mediaType']);
             }
+        }else{
+            if ($session->get('mediaType'))
+                $session->remove('mediaType');
         }
         echo json_encode(array('success' => true));
         exit;
