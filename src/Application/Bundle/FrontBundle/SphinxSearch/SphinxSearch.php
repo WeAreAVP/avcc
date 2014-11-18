@@ -64,9 +64,9 @@ class SphinxSearch
         if ($criteria) {
             $this->whereClause($criteria, $sq);
         }
-        $sq->orderBy($sortColumn, $sortOrder)
-                ->limit($offset, $limit)
-                ->enqueue(Helper::create($this->conn)->showMeta());
+        $sq->orderBy($sortColumn, $sortOrder);
+//                ->limit($offset, $limit)
+//                ->enqueue(Helper::create($this->conn)->showMeta());
         return $sq->executeBatch();
     }
 
