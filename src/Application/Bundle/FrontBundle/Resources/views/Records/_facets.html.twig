@@ -20,6 +20,14 @@
                           {% endif%}
                         {% endfor %}
                     </ul>
+                    <a class="dropdown-toggle" href="#">Base</a>                                
+                    <ul data-role="dropdown" class='dropdown-menu'>
+                        {% for base in facets.bases %}
+                          {% if base.base != '' %}  
+                            <li><a href="javascript://"><label for="{{base.base}}"><input id='{{base.base}}' type="checkbox" class="facet_checkbox" name="base[]" value="{{base.base}}" />{{base.base}} ({{base.total}})</label></a></li>
+                          {% endif%}
+                        {% endfor %}
+                    </ul>
                 </form>
             </li>
         {% endif %}
