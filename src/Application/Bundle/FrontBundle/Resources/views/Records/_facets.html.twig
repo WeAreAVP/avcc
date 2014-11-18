@@ -6,14 +6,14 @@
             <li>
                 <form id='formSearch' name='formSearch' method='post'>
                     <a class="dropdown-toggle" href="#">Media Type</a>                                
-                    <ul  data-role="dropdown">
+                    <ul class="dropdown-menu" data-role="dropdown">
                         {% for mediaType in facets.mediaType %}
                             <li><a href="javascript://"><label for="{{mediaType.media_type}}"><input id='{{mediaType.media_type}}' type="checkbox" class="facet_checkbox" name="mediaType[]" value="{{mediaType.media_type}}" />{{mediaType.media_type}} ({{mediaType.total}})</label></a></li>
                         {% endfor %}
                     </ul>
 {#                    {{dump(facets)}}#}
                     <a class="dropdown-toggle" href="#">Commercial/Unique</a>                                
-                    <ul  data-role="dropdown">
+                    <ul class="dropdown-menu" data-role="dropdown">
                         {% for cOrU in facets.commercialUnique %}
                           {% if cOrU.commercial != '' %}  
                             <li><a href="javascript://"><label for="{{cOrU.commercial}}"><input id='{{cOrU.commercial}}' type="checkbox" class="facet_checkbox" name="commercial[]" value="{{cOrU.commercial}}" />{{cOrU.commercial}} ({{cOrU.total}})</label></a></li>
@@ -21,7 +21,7 @@
                         {% endfor %}
                     </ul>
                     <a class="dropdown-toggle" href="#">Base</a>                                
-                    <ul  data-role="dropdown">
+                    <ul class="dropdown-menu" data-role="dropdown">
                         {% for base in facets.bases %}
                           {% if base.base != '' %}  
                             <li><a href="javascript://"><label for="{{base.base}}"><input id='{{base.base}}' type="checkbox" class="facet_checkbox" name="base[]" value="{{base.base}}" />{{base.base}} ({{base.total}})</label></a></li>
@@ -29,7 +29,7 @@
                         {% endfor %}
                     </ul>
                     <a class="dropdown-toggle" href="#">Recording Standard</a>                                
-                    <ul  data-role="dropdown">
+                    <ul class="dropdown-menu" data-role="dropdown">
                         {% for recordingStandard in facets.recordingStandards %}
                           {% if recordingStandard.recording_standard %}  
                             <li><a href="javascript://"><label for="{{recordingStandard.recording_standard}}"><input id='{{recordingStandard.recording_standard}}' type="checkbox" class="facet_checkbox" name="recordingStandard[]" value="{{recordingStandard.recording_standard}}" />{{recordingStandard.recording_standard}} ({{recordingStandard.total}})</label></a></li>
