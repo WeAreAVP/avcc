@@ -132,12 +132,12 @@ class RecordsController extends Controller
         $data = $request->request->all();
         $session = $this->getRequest()->getSession();
         if ($data) {
-            if ($data['mediaType']) {
+            if (isset($data['mediaType'])) {
                 if ($session->get('mediaType'))
                     $session->remove('mediaType');
                 $session->set('mediaType', $data['mediaType']);
             }
-            if ($data['commercial']) {
+            if (isset($data['commercial'])) {
                 if ($session->get('commercial'))
                     $session->remove('commercial');
                 $session->set('commercial', $data['commercial']);
