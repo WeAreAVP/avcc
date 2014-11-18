@@ -86,6 +86,7 @@ class SphinxSearch
         $sq = SphinxQL::create($this->conn)
                 ->select($facetColumn, SphinxQL::expr('count(*) AS total'))
                 ->from($this->indexName)
+                ->where($facetColumn,'!=','')
                 ->groupBy($facetColumn)
                 ->orderBy($facetColumn, 'asc');
 

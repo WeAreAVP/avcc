@@ -61,7 +61,7 @@ class RecordsController extends Controller
         $facet['bases'] = $sphinxSearch->facetSelect('base');
         $facet['review'] = $sphinxSearch->facetSelect('is_review');
         $facet['recordingStandards'] = $sphinxSearch->facetSelect('recording_standard');
-        
+        print_r($facet);exit;
         return array(
             'facets' => $facet,
             'columns' => $this->columns
