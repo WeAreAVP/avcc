@@ -17,6 +17,7 @@ class AudioRecordsRepository extends EntityRepository
 	{
 		$query = $this->getEntityManager()->createQuery('SELECT u FROM ApplicationFrontBundle:AudioRecords u WHERE u.id = ' . $recordId);
 		$users = $query->getArrayResult();
+		return $users;
 	}
 
 }
