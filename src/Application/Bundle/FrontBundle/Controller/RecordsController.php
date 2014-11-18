@@ -89,13 +89,12 @@ class RecordsController extends Controller
 		$sortIndex = $request->query->get('iSortCol_0') ? $columns[$request->query->get('iSortCol_0')] : 'title';
 
 
-		$offset = $request->query->get('iDisplayStart') ? $request->query->get('iDisplayStart') : -1;
+		$offset = $request->query->get('iDisplayStart') ? $request->query->get('iDisplayStart') : 0;
 		$limit = $request->query->get('iDisplayLength') ? $request->query->get('iDisplayLength') : 10;
 
 
 		$sphinxSearch = new SphinxSearch($em);
 		$result = $sphinxSearch->select($offset, $limit, $sortIndex, $sortOrder);
-                echo '<pre>';print_r($result);exit;
 		$records = $result[0];
 		$currentPageTotal = count($records);
 		$totalRecords = $result[1][0]['Value'];
