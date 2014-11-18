@@ -100,9 +100,7 @@ class RecordsController extends Controller
         $currentPageTotal = count($records);
         $resultMeta = $sphinxSearch->selectCount($offset, $limit, $sortIndex, $sortOrder);
         $totalRecords = $resultMeta[1][0]['Value'];
-        print_r($resultMeta);exit;
-//        $totalRecords = 20;
-
+//        print_r($resultMeta);exit;
 
         $tableView = $this->defaultFields->recordDatatableView($records);
 
