@@ -14,7 +14,9 @@
                     
                     <ul>
                         {% for cOrU in facets.commercial %}
+                          {% if cOrU.commercial != '' %}  
                             <li><a href="javascript://"><label for="{{cOrU.commercial}}"><input id='{{cOrU.commercial}}' type="checkbox" class="facet_checkbox" name="commercial[]" value="{{cOrU.commercial}}" />{{cOrU.commercial}} ({{cOrU.total}})</label></a></li>
+                          {% endif%}
                         {% endfor %}
                     </ul>
                 </form>
