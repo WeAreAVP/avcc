@@ -99,8 +99,8 @@ class RecordsController extends Controller
 //        print_r($result);exit;
         $records = $result[0];
         $currentPageTotal = count($records);
-//        $totalRecords = $result[1][0]['Value'];
-        $totalRecords = 20;
+        $totalRecords = $result[1][0]['Value'];
+//        $totalRecords = 20;
 
 
         $tableView = $this->defaultFields->recordDatatableView($records);

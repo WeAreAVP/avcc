@@ -58,22 +58,23 @@ class SphinxSearch
 
     public function select($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null)
     {
-//        $sq = SphinxQL::create($this->conn)
-//                ->select()
-//                ->from($this->indexName)
-//                ->match('s_media_type', 'Audio', true)
-//                ->orderBy($sortColumn, $sortOrder)
-//                ->limit($offset, $limit)
-//                ->enqueue(Helper::create($this->conn)->showMeta());
         $sq = SphinxQL::create($this->conn)
                 ->select()
-                ->from($this->indexName);
-        if ($criteria) {
-            $this->whereClause($criteria, $sq);
-        }
-        $sq->orderBy($sortColumn, $sortOrder)
+                ->from($this->indexName)
+                ->match('s_media_type', 'Audio', true)
+                ->match('s_media_type', 'Video', true)
+                ->orderBy($sortColumn, $sortOrder)
                 ->limit($offset, $limit)
                 ->enqueue(Helper::create($this->conn)->showMeta());
+//        $sq = SphinxQL::create($this->conn)
+//                ->select()
+//                ->from($this->indexName);
+//        if ($criteria) {
+//            $this->whereClause($criteria, $sq);
+//        }
+//        $sq->orderBy($sortColumn, $sortOrder)
+//                ->limit($offset, $limit)
+//                ->enqueue(Helper::create($this->conn)->showMeta());
         return $sq->executeBatch();
     }
 
