@@ -59,6 +59,7 @@ class RecordsController extends Controller
         $facet['mediaType'] = $sphinxSearch->facetSelect('media_type');
         $facet['commercialUnique'] = $sphinxSearch->facetSelect('commercial');
         $facet['bases'] = $sphinxSearch->facetSelect('base');
+        $facet['review'] = $sphinxSearch->facetSelect('is_review');
         return array(
             'facets' => $facet,
             'columns' => $this->columns
