@@ -25,7 +25,6 @@
 		<?php $view['slots']->output('stylesheets') ?>
         <script src="<?php echo $view['assets']->getUrl('js/jquery.min.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/jquery.maskedinput.js') ?>"></script>
-        <script src="<?php echo $view['assets']->getUrl('js/jquery.blockUI.js') ?>"></script>
     </head>
 
     <body class="metro">
