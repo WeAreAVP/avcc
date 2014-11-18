@@ -94,7 +94,8 @@ class RecordsController extends Controller
 
 
         $sphinxSearch = new SphinxSearch($em);
-        $result = $sphinxSearch->select($offset, $limit, $sortIndex, $sortOrder);
+        $criteria = $this->criteria();
+            $result = $sphinxSearch->select($offset, $limit, $sortIndex, $sortOrder, $criteria);
         $records = $result[0];
         $currentPageTotal = count($records);
         $totalRecords = $result[1][0]['Value'];
@@ -128,15 +129,29 @@ class RecordsController extends Controller
     {
         $data = $request->request->all();
         $session = $this->getRequest()->getSession();
-        if($data['mediaType']){
-            if($session->get('mediaType')) 
+        if ($data['mediaType']) {
+            if ($session->get('mediaType'))
                 $session->remove('mediaType');
-            $session->set('mediaType',$data['mediaType']);
-            
-            print_r($session->get('mediaType'));
+            $session->set('mediaType', $data['mediaType']);
         }
-        
+        echo json_encode(array('success'=>true));
         exit;
+    }
+
+    /**
+     * Set criteria for facets
+     * 
+     * @return array
+     */
+    protected function criteria()
+    {
+        $criteriaArr = null;
+        $session = $this->getRequest()->getSession();
+        if ($session->get('mediaType')) {
+            $criteriaArr['mediaType'] = $session->get('mediaType');
+        }
+
+        return $criteriaArr;
     }
 
 }
