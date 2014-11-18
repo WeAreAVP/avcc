@@ -121,7 +121,7 @@ function Records() {
             dataType: 'json',
             success: function (response)
             {
-                initDataTable();
+                this.initDataTable();
             }
 
         });
