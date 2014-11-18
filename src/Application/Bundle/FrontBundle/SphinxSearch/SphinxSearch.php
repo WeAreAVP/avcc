@@ -87,7 +87,7 @@ class SphinxSearch
         if ($criteria['mediaType']) {
 //            $sq->where('media_type', 'IN', $criteria['mediaType']);
             foreach($criteria['mediaType'] as $key => $value) {
-                $sq->match('media_type', $value, true);
+                $sq->match('s_media_type', $value, true);
             }
         }
     }
