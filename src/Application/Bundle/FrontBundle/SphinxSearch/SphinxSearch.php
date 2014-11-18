@@ -41,11 +41,20 @@ class SphinxSearch
 	{
 		$sphinxFields = new SphinxFields();
 		$data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
-		$sq = SphinxQL::create($this->conn)->replace()->into($this->indexName);
+		$sq = SphinxQL::create($this->conn)->update($this->indexName);
 		$sq->set($data);
 		return $sq->execute();
 	}
 
+        public function replace()
+	{
+		$sphinxFields = new SphinxFields();
+		$data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
+		$sq = SphinxQL::create($this->conn)->replace()->into($this->indexName);
+		$sq->set($data);
+		return $sq->execute();
+	}
+        
 	public function select($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc')
 	{
 		$sq = SphinxQL::create($this->conn)

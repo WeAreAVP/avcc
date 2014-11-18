@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\FilmRecords;
 use Application\Bundle\FrontBundle\Form\FilmRecordsType;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
-
+use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 /**
  * FilmRecords controller.
  *
@@ -56,6 +56,8 @@ class FilmRecordsController extends Controller
         if ($form->isValid()) {
             $em->persist($entity);
             $em->flush();
+            $sphinxSearch = new SphinxSearch($em, $entity->getId(), 2);
+            $sphinxSearch->insert();
             $this->get('session')->getFlashBag()->add('success', 'Film record added succesfully.');
 
             return $this->redirect($this->generateUrl('record_list'));
@@ -229,6 +231,8 @@ class FilmRecordsController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
+            $sphinxSearch = new SphinxSearch($em, $entity->getId(), 2);
+            $sphinxSearch->replace();
             // the save_and_dupplicate button was clicked
             if ($editForm->get('save_and_duplicate')->isClicked()) {
                 return $this->redirect($this->generateUrl('record_film_duplicate',array('filmRecId'=>$id)));

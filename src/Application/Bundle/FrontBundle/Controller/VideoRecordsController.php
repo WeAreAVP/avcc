@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\VideoRecords;
 use Application\Bundle\FrontBundle\Form\VideoRecordsType;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
+use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 
 /**
  * VideoRecords controller.
@@ -54,6 +55,8 @@ class VideoRecordsController extends Controller
         if ($form->isValid()) {
             $em->persist($entity);
             $em->flush();
+            $sphinxSearch = new SphinxSearch($em, $entity->getId(), 3);
+            $sphinxSearch->insert();
             $this->get('session')->getFlashBag()->add('success', 'Video record added succesfully.');
 
             return $this->redirect($this->generateUrl('record_list'));
@@ -218,6 +221,8 @@ class VideoRecordsController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
+            $sphinxSearch = new SphinxSearch($em, $entity->getId(), 3);
+            $sphinxSearch->replace();
             // the save_and_dupplicate button was clicked
             if ($editForm->get('save_and_duplicate')->isClicked()) {
                 return $this->redirect($this->generateUrl('record_video_duplicate', array('videoRecId' => $id)));

@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\AudioRecords;
 use Application\Bundle\FrontBundle\Form\AudioRecordsType;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
-use Application\Bundle\FrontBundle\Helper\Sphinx;
+use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 
 /**
  * AudioRecords controller.
@@ -61,7 +61,8 @@ class AudioRecordsController extends Controller
 		{
 			$em->persist($entity);
 			$em->flush();
-
+                        $sphinxSearch = new SphinxSearch($em, $entity->getId(), 1);
+                        $sphinxSearch->insert();
 			$this->get('session')->getFlashBag()->add('success', 'Audio record added succesfully.');
 
 			return $this->redirect($this->generateUrl('record_list'));
@@ -255,6 +256,9 @@ class AudioRecordsController extends Controller
 		if ($editForm->isValid())
 		{
 			$em->flush();
+                        $sphinxSearch = new SphinxSearch($em, $entity->getId(), 1);
+                        $sphinxSearch->replace();
+                        
 			// the save_and_dupplicate button was clicked
 			if ($editForm->get('save_and_duplicate')->isClicked())
 			{
