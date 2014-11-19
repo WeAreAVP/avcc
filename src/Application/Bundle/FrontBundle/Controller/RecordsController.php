@@ -143,77 +143,10 @@ class RecordsController extends Controller
         $data = $request->request->all();
         $session = $this->getRequest()->getSession();
         if ($data) {
+            $session->remove('facetData');
             $session->set('facetData', $data);
-            print_r($session->get('facetData'));
-//            foreach($data as $key => $value){
-//                $session->remove($key);
-//                $session->set($key, $value);
-//            }
-//            if (isset($data['mediaType'])) {
-//                if ($session->get('mediaType'))
-//                    $session->remove('mediaType');
-//                $session->set('mediaType', $data['mediaType']);
-//            }
-//            if (isset($data['commercial'])) {
-//                if ($session->get('commercial'))
-//                    $session->remove('commercial');
-//                $session->set('commercial', $data['commercial']);
-//            }
-//            if (isset($data['format'])) {
-//                if ($session->get('format'))
-//                    $session->remove('format');
-//                $session->set('format', $data['format']);
-//            }
-//            if (isset($data['base'])) {
-//                if ($session->get('base'))
-//                    $session->remove('base');
-//                $session->set('base', $data['base']);
-//            }
-//            if (isset($data['recordingStandard'])) {
-//                if ($session->get('recordingStandard'))
-//                    $session->remove('recordingStandard');
-//                $session->set('recordingStandard', $data['recordingStandard']);
-//            }
-//            if (isset($data['printType'])) {
-//                if ($session->get('printType'))
-//                    $session->remove('printType');
-//                $session->set('printType', $data['printType']);
-//            }
-//            if (isset($data['reelDiameter'])) {
-//                if ($session->get('reelDiameter'))
-//                    $session->remove('reelDiameter');
-//                $session->set('reelDiameter', $data['reelDiameter']);
-//            }
-//            if (isset($data['discDiameter'])) {
-//                if ($session->get('discDiameter'))
-//                    $session->remove('discDiameter');
-//                $session->set('discDiameter', $data['discDiameter']);
-//            }
-//            if (isset($data['acidDetection'])) {
-//                if ($session->get('acidDetection'))
-//                    $session->remove('acidDetection');
-//                $session->set('acidDetection', $data['acidDetection']);
-//            }
         }else {
-//            $session->clear();
-            if ($session->get('mediaType'))
-                $session->remove('mediaType');
-            if ($session->get('commercial'))
-                $session->remove('commercial');
-            if ($session->get('format'))
-                $session->remove('format');
-            if ($session->get('base'))
-                $session->remove('base');
-            if ($session->get('recordingStandard'))
-                $session->remove('recordingStandard');
-            if ($session->get('printType'))
-                $session->remove('printType');
-            if ($session->get('reelDiameter'))
-                $session->remove('reelDiameter');
-            if ($session->get('discDiameter'))
-                $session->remove('discDiameter');
-            if ($session->get('acidDetection'))
-                $session->remove('acidDetection');
+            $session->remove('facetData');
         }
         echo json_encode(array('success' => true));
         exit;
@@ -228,32 +161,33 @@ class RecordsController extends Controller
     {
         $criteriaArr = null;
         $session = $this->getRequest()->getSession();
-        if ($session->get('mediaType')) {
-            $criteriaArr['s_media_type'] = $session->get('mediaType');
+        $facetData = $session->get('facetData');
+        if ($facetData['mediaType']) {
+            $criteriaArr['s_media_type'] = $facetData['mediaType'];
         }
-        if ($session->get('commercial')) {
-            $criteriaArr['s_commercial'] = $session->get('commercial');
+        if ($facetData['commercial']) {
+            $criteriaArr['s_commercial'] = $facetData['commercial'];
         }
-        if ($session->get('format')) {
-            $criteriaArr['s_format'] = $session->get('format');
+        if ($facetData['format']) {
+            $criteriaArr['s_format'] = $facetData['format'];
         }
-        if ($session->get('base')) {
-            $criteriaArr['s_base'] = $session->get('base');
+        if ($facetData['base']) {
+            $criteriaArr['s_base'] = $facetData['base'];
         }
-        if ($session->get('recordingStandard')) {
-            $criteriaArr['s_recording_standard'] = $session->get('recordingStandard');
+        if ($facetData['recordingStandard']) {
+            $criteriaArr['s_recording_standard'] = $facetData['recordingStandard'];
         }
-        if ($session->get('printType')) {
-            $criteriaArr['s_print_type'] = $session->get('printType');
+        if ($facetData['printType']) {
+            $criteriaArr['s_print_type'] = $facetData['printType'];
         }
-        if ($session->get('reelDiameter')) {
-            $criteriaArr['s_reel_diameter'] = $session->get('reelDiameter');
+        if ($facetData['reelDiameter']) {
+            $criteriaArr['s_reel_diameter'] = $facetData['reelDiameter'];
         }
-        if ($session->get('discDiameter')) {
-            $criteriaArr['s_disk_diameter'] = $session->get('discDiameter');
+        if ($facetData['discDiameter']) {
+            $criteriaArr['s_disk_diameter'] = $facetData['discDiameter'];
         }
-        if ($session->get('acidDetection')) {
-            $criteriaArr['s_acid_detection'] = $session->get('acidDetection');
+        if ($facetData['acidDetection']) {
+            $criteriaArr['s_acid_detection'] = $facetData['acidDetection'];
         }
         return $criteriaArr;
     }
