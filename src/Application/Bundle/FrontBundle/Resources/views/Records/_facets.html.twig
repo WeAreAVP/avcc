@@ -136,7 +136,7 @@
     $(window).load(function () {
         var facets = new Records();
         facets.setAjaxSource('{{ path('record_dataTable') }}');
-        facets.setPageUrl('{{ path('record_facets') }}');
+        facets.setPageUrl('{{ path('record_list') }}');
         facets.bindEvents();
     });
 </script>
