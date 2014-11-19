@@ -55,11 +55,7 @@ class RecordsController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        var_dump($request->isXmlHttpRequest());
-//        if ($request->isXmlHttpRequest()) {
-//            echo 'here';exit;
-//            $this->getFacetRequest($request);
-//        }
+
         $sphinxSearch = new SphinxSearch($em);
         $facet['mediaType'] = $sphinxSearch->facetSelect('media_type');
         $facet['formats'] = $sphinxSearch->facetSelect('format');
@@ -73,10 +69,23 @@ class RecordsController extends Controller
         $facet['discDiameters'] = $sphinxSearch->facetSelect('disk_diameter');
         $facet['acidDetection'] = $sphinxSearch->facetSelect('acid_detection');
         $facet['collectionNames'] = $sphinxSearch->facetSelect('collection_name');
+        $isAjax = FALSE;
+        if ($request->isXmlHttpRequest()) {
+            $isAjax = TRUE;
+            $this->getFacetRequest($request);
+            $html = $this->render('ApplicationFrontBundle:Records:index.html.twig', array(
+                'facets' => $facet,
+                'columns' => $this->columns,
+                'isAjax' => $isAjax
+            ));
+            echo json_encode(array('html' => $html));
+            exit;
+        }
 //        print_r($facet);exit;
         return array(
             'facets' => $facet,
-            'columns' => $this->columns
+            'columns' => $this->columns,
+            'isAjax' => $isAjax
         );
     }
 
@@ -201,7 +210,7 @@ class RecordsController extends Controller
         if (isset($facetData['project'])) {
             $criteriaArr['s_project'] = $facetData['project'];
         }
-        if(isset($facetData['is_review_check'])){
+        if (isset($facetData['is_review_check'])) {
             $criteriaArr['is_review'] = $facetData['is_review_check'];
         }
         return $criteriaArr;
@@ -212,9 +221,10 @@ class RecordsController extends Controller
         $data = $request->request->all();
 //        $data = $request->request->get('mediaType');
         $session = $this->getRequest()->getSession();
-        print_r($data);exit;
+        print_r($data);
+        exit;
         if ($data) {
-            
+
             $session->remove('facetData');
             $session->set('facetData', $data);
         } else {

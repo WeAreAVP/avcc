@@ -1,8 +1,10 @@
+{% if isAjax == false %}
 {% extends 'FOSUserBundle::layout.html.twig' %}
 
 {% block body -%}
 	<div class="grid">
-		<div class="row">
+{% endif %}            
+		<div class="row" id="recordsContainer">
 			<div class="span3">
 				{{ include('ApplicationFrontBundle::Records/_facets.html.twig', { 'facets': facets }) }}
 			</div>
@@ -62,9 +64,11 @@
 
 			</div>
 		</div>
+{% if isAjax == false %}                                
 	</div>
 
 
 	{#    {{ dump(app.session.get('columnOrder'))}}#}
 
 {% endblock %}
+{% endif %}  
