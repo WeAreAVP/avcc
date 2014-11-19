@@ -7,7 +7,7 @@
         <div class="span3">
             <?php echo $view->render('ApplicationFrontBundle::Records/_facets.html.php', array('facets' => $facets)) ?>
         </div>
-        <div class="span12">
+        <div class="span9">
             <div class="button-dropdown place-left">
                 <button class="dropdown-toggle">Operations</button>
                 <ul class="dropdown-menu" data-role="dropdown">
