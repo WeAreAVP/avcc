@@ -143,51 +143,55 @@ class RecordsController extends Controller
         $data = $request->request->all();
         $session = $this->getRequest()->getSession();
         if ($data) {
-            if (isset($data['mediaType'])) {
-                if ($session->get('mediaType'))
-                    $session->remove('mediaType');
-                $session->set('mediaType', $data['mediaType']);
+            foreach($data as $key => $value){
+                $session->remove($key);
+                $session->set($key, $value);
             }
-            if (isset($data['commercial'])) {
-                if ($session->get('commercial'))
-                    $session->remove('commercial');
-                $session->set('commercial', $data['commercial']);
-            }
-            if (isset($data['format'])) {
-                if ($session->get('format'))
-                    $session->remove('format');
-                $session->set('format', $data['format']);
-            }
-            if (isset($data['base'])) {
-                if ($session->get('base'))
-                    $session->remove('base');
-                $session->set('base', $data['base']);
-            }
-            if (isset($data['recordingStandard'])) {
-                if ($session->get('recordingStandard'))
-                    $session->remove('recordingStandard');
-                $session->set('recordingStandard', $data['recordingStandard']);
-            }
-            if (isset($data['printType'])) {
-                if ($session->get('printType'))
-                    $session->remove('printType');
-                $session->set('printType', $data['printType']);
-            }
-            if (isset($data['reelDiameter'])) {
-                if ($session->get('reelDiameter'))
-                    $session->remove('reelDiameter');
-                $session->set('reelDiameter', $data['reelDiameter']);
-            }
-            if (isset($data['discDiameter'])) {
-                if ($session->get('discDiameter'))
-                    $session->remove('discDiameter');
-                $session->set('discDiameter', $data['discDiameter']);
-            }
-            if (isset($data['acidDetection'])) {
-                if ($session->get('acidDetection'))
-                    $session->remove('acidDetection');
-                $session->set('acidDetection', $data['acidDetection']);
-            }
+//            if (isset($data['mediaType'])) {
+//                if ($session->get('mediaType'))
+//                    $session->remove('mediaType');
+//                $session->set('mediaType', $data['mediaType']);
+//            }
+//            if (isset($data['commercial'])) {
+//                if ($session->get('commercial'))
+//                    $session->remove('commercial');
+//                $session->set('commercial', $data['commercial']);
+//            }
+//            if (isset($data['format'])) {
+//                if ($session->get('format'))
+//                    $session->remove('format');
+//                $session->set('format', $data['format']);
+//            }
+//            if (isset($data['base'])) {
+//                if ($session->get('base'))
+//                    $session->remove('base');
+//                $session->set('base', $data['base']);
+//            }
+//            if (isset($data['recordingStandard'])) {
+//                if ($session->get('recordingStandard'))
+//                    $session->remove('recordingStandard');
+//                $session->set('recordingStandard', $data['recordingStandard']);
+//            }
+//            if (isset($data['printType'])) {
+//                if ($session->get('printType'))
+//                    $session->remove('printType');
+//                $session->set('printType', $data['printType']);
+//            }
+//            if (isset($data['reelDiameter'])) {
+//                if ($session->get('reelDiameter'))
+//                    $session->remove('reelDiameter');
+//                $session->set('reelDiameter', $data['reelDiameter']);
+//            }
+//            if (isset($data['discDiameter'])) {
+//                if ($session->get('discDiameter'))
+//                    $session->remove('discDiameter');
+//                $session->set('discDiameter', $data['discDiameter']);
+//            }
+//            if (isset($data['acidDetection'])) {
+//                if ($session->get('acidDetection'))
+//                    $session->remove('acidDetection');
+//                $session->set('acidDetection', $data['acidDetection']);
+//            }
         }else {
 //            $session->clear();
             if ($session->get('mediaType'))
