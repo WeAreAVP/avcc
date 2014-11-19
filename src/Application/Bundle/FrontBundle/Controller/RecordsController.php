@@ -143,10 +143,12 @@ class RecordsController extends Controller
         $data = $request->request->all();
         $session = $this->getRequest()->getSession();
         if ($data) {
-            foreach($data as $key => $value){
-                $session->remove($key);
-                $session->set($key, $value);
-            }
+            $session->set('facetData', $data);
+            print_r($session->get('facetData'));
+//            foreach($data as $key => $value){
+//                $session->remove($key);
+//                $session->set($key, $value);
+//            }
 //            if (isset($data['mediaType'])) {
 //                if ($session->get('mediaType'))
 //                    $session->remove('mediaType');
