@@ -64,10 +64,10 @@ class SphinxSearch
         if ($criteria) {
             $this->whereClause($criteria, $sq);
         }
-        $sq->orderBy($sortColumn, $sortOrder);
-//                ->limit($offset, $limit)
-//                ->enqueue(Helper::create($this->conn)->showMeta());
-        return $sq->executeBatch();
+        $sq->orderBy($sortColumn, $sortOrder)
+                ->limit($offset, $limit);
+//        return $sq->executeBatch();
+        return $sq->getCompiled();
     }
 
     public function selectCount($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc')
@@ -80,13 +80,13 @@ class SphinxSearch
                 ->enqueue(Helper::create($this->conn)->showMeta());
         return $sq->executeBatch();
     }
-    
+
     public function facetSelect($facetColumn)
     {
         $sq = SphinxQL::create($this->conn)
                 ->select($facetColumn, SphinxQL::expr('count(*) AS total'))
                 ->from($this->indexName)
-                ->where($facetColumn,'!=','')
+                ->where($facetColumn, '!=', '')
                 ->groupBy($facetColumn)
                 ->orderBy($facetColumn, 'asc');
 
@@ -95,15 +95,21 @@ class SphinxSearch
     }
 
     public function whereClause($criteria, $sq)
-    {   
-        if (isset($criteria['mediaType'])) {
-            $_value = implode('|',$criteria['mediaType']);
-            $sq->match('s_media_type', $_value, true);
+    {
+        foreach ($criteria as $key => $value) {
+//            if (isset($key)) {
+            $_value = implode('|', $value);
+            $sq->match($key, $_value, true);
+//            }
         }
-        if (isset($criteria['commercial'])) {
-            $_value = implode('|',$criteria['commercial']);
-            $sq->match('s_commercial', $_value, true);
-        }
+//        if (isset($criteria['mediaType'])) {
+//            $_value = implode('|',$criteria['mediaType']);
+//            $sq->match('s_media_type', $_value, true);
+//        }
+//        if (isset($criteria['commercial'])) {
+//            $_value = implode('|',$criteria['commercial']);
+//            $sq->match('s_commercial', $_value, true);
+//        }
     }
 
 }

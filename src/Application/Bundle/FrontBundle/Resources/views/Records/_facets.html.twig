@@ -1,68 +1,128 @@
 <nav id="facet_sidebar" class="sidebar light">
     <ul>
-		<form id='formSearch' name='formSearch' method='post'>
-			<li class="title">Filters</li>
-			<li><a href="#">Keyword</a></li>
-				{% if facets.mediaType|length > 0 %}
-				<li>
+        <form id='formSearch' name='formSearch' method='post'>
+            <li class="title">Filters</li>
+            <li><a href="#">Keyword</a></li>
+                {% if facets.mediaType|length > 0 %}
+                <li>
 
                     <a class="dropdown-toggle" href="#">Media Type</a>                                
-                    <ul data-role="dropdown">
+                    <ul data-role="dropdown" {% if app.session.mediaType|length > 0 %} style="display:block" {% endif%}>
                         {% for mediaType in facets.mediaType %}
                             <li><a href="javascript://"><label for="{{mediaType.media_type}}"><input id='{{mediaType.media_type}}' type="checkbox" class="facet_checkbox" name="mediaType[]" value="{{mediaType.media_type}}" />{{mediaType.media_type}} ({{mediaType.total}})</label></a></li>
-									{% endfor %}
+                                    {% endfor %}
                     </ul>
-				</li>
-			{% endif %}
-			<li>
-				<a class="dropdown-toggle" href="#">Commercial/Unique</a>                                
-				<ul  data-role="dropdown">
-					{% for cOrU in facets.commercialUnique %}
-						{% if cOrU.commercial != '' %}  
-							<li><a href="javascript://"><label for="{{cOrU.commercial}}"><input id='{{cOrU.commercial}}' type="checkbox" class="facet_checkbox" name="commercial[]" value="{{cOrU.commercial}}" />{{cOrU.commercial}} ({{cOrU.total}})</label></a></li>
-									{% endif%}
-								{% endfor %}
-				</ul>
-			</li>
-			<li>
-				<a class="dropdown-toggle" href="#">Base</a>                                
-				<ul  data-role="dropdown">
-					{% for base in facets.bases %}
-						{% if base.base != '' %}  
-							<li><a href="javascript://"><label for="{{base.base}}"><input id='{{base.base}}' type="checkbox" class="facet_checkbox" name="base[]" value="{{base.base}}" />{{base.base}} ({{base.total}})</label></a></li>
-									{% endif%}
-								{% endfor %}
-				</ul>
-			</li>
-			<li>
-				<a class="dropdown-toggle" href="#">Recording Standard</a>                                
-				<ul  data-role="dropdown">
-					{% for recordingStandard in facets.recordingStandards %}
-						{% if recordingStandard.recording_standard %}  
-							<li><a href="javascript://"><label for="{{recordingStandard.recording_standard}}"><input id='{{recordingStandard.recording_standard}}' type="checkbox" class="facet_checkbox" name="recordingStandard[]" value="{{recordingStandard.recording_standard}}" />{{recordingStandard.recording_standard}} ({{recordingStandard.total}})</label></a></li>
-									{% endif%}
-								{% endfor %}
-				</ul>
-			</li>
-			{#<a class="dropdown-toggle" href="#">Review</a>                                
-			<ul class="dropdown-menu" data-role="dropdown">
-				{% for review in facets.review %}
-				  {% if review.is_review != '' %}  
-					<li><a href="javascript://"><label for="{{review.is_review}}"><input id='{{review.is_review}}' type="checkbox" class="facet_checkbox" name="review[]" value="{{review.is_review}}" />{{review.is_review}} ({{review.total}})</label></a></li>
-				  {% endif%}
-				{% endfor %}
-			</ul>#}
-		</form>
+                </li>
+            {% endif %}
+            {% if facets.formats|length > 0 %}
+                <li>
+                    <a class="dropdown-toggle" href="#">Format</a>                                
+                    <ul data-role="dropdown" {% if app.session.format|length > 0 %} style="display:block" {% endif%}>
+                        {% for format in facets.formats %}
+                            <li><a href="javascript://"><label for="{{format.format}}"><input id='{{format.format}}' type="checkbox" class="facet_checkbox" name="format[]" value="{{format.format}}" />{{format.format}} ({{format.total}})</label></a></li>
+                                    {% endfor %}
+                    </ul>
+                </li>
+            {% endif %}
+            <li>
+                <a class="dropdown-toggle" href="#">Commercial/Unique</a>                                
+                <ul  data-role="dropdown" {% if app.session.commercial|length > 0 %} style="display:block" {% endif%}>
+                    {% for cOrU in facets.commercialUnique %}
+                        {% if cOrU.commercial != '' %}  
+                            <li><a href="javascript://"><label for="{{cOrU.commercial}}"><input id='{{cOrU.commercial}}' type="checkbox" class="facet_checkbox" name="commercial[]" value="{{cOrU.commercial}}" />{{cOrU.commercial}} ({{cOrU.total}})</label></a></li>
+                                    {% endif%}
+                                {% endfor %}
+                </ul>
+            </li>
+            <li>
+                <a class="dropdown-toggle" href="#">Base</a>                                
+                <ul  data-role="dropdown" {% if app.session.base|length > 0 %} style="display:block" {% endif%}>
+                    {% for base in facets.bases %}
+                        {% if base.base != '' %}  
+                            <li><a href="javascript://"><label for="{{base.base}}"><input id='{{base.base}}' type="checkbox" class="facet_checkbox" name="base[]" value="{{base.base}}" />{{base.base}} ({{base.total}})</label></a></li>
+                                    {% endif%}
+                                {% endfor %}
+                </ul>
+            </li>
+            <li>
+                <a class="dropdown-toggle" href="#">Recording Standard</a>                                
+                <ul  data-role="dropdown" {% if app.session.recordingStandard|length > 0 %} style="display:block" {% endif%}>
+                    {% for recordingStandard in facets.recordingStandards %}
+                        {% if recordingStandard.recording_standard %}  
+                            <li><a href="javascript://"><label for="{{recordingStandard.recording_standard}}"><input id='{{recordingStandard.recording_standard}}' type="checkbox" class="facet_checkbox" name="recordingStandard[]" value="{{recordingStandard.recording_standard}}" />{{recordingStandard.recording_standard}} ({{recordingStandard.total}})</label></a></li>
+                                    {% endif%}
+                                {% endfor %}
+                </ul>
+            </li>
+            <li>
+                <a class="dropdown-toggle" href="#">Print Type</a>                                
+                <ul  data-role="dropdown" {% if app.session.printType|length > 0 %} style="display:block" {% endif%}>
+                    {% for printType in facets.printTypes %}
+                        {% if printType.print_type %}  
+                            <li><a href="javascript://"><label for="{{printType.print_type}}"><input id='{{printType.print_type}}' type="checkbox" class="facet_checkbox" name="printType[]" value="{{printType.print_type}}" />{{printType.print_type}} ({{printType.total}})</label></a></li>
+                                    {% endif%}
+                                {% endfor %}
+                </ul>
+            </li>
+            <li>
+                <a class="dropdown-toggle" href="#">Project Name</a>                                
+                <ul  data-role="dropdown" {% if app.session.project|length > 0 %} style="display:block" {% endif%}>
+                    {% for projectName in facets.projectNames %}
+                        {% if projectName.project %}  
+                            <li><a href="javascript://"><label for="{{projectName.project}}"><input id='{{projectName.project}}' type="checkbox" class="facet_checkbox" name="project[]" value="{{projectName.project}}" />{{projectName.project}} ({{projectName.total}})</label></a></li>
+                                    {% endif%}
+                                {% endfor %}
+                </ul>
+            </li>
+            <li>
+                <a class="dropdown-toggle" href="#">Reel Diameter</a>                                
+                <ul  data-role="dropdown" {% if app.session.reelDiameter|length > 0 %} style="display:block" {% endif%}>
+                    {% for reelDiameter in facets.reelDiameters %}
+                        {% if reelDiameter.reel_diameter %}  
+                            <li><a href="javascript://"><label for="{{reelDiameter.reel_diameter}}"><input id='{{reelDiameter.reel_diameter}}' type="checkbox" class="facet_checkbox" name="reelDiameter[]" value="{{reelDiameter.reel_diameter}}" />{{reelDiameter.reel_diameter}} ({{reelDiameter.total}})</label></a></li>
+                                    {% endif%}
+                                {% endfor %}
+                </ul>
+            </li>
+            <li>
+                <a class="dropdown-toggle" href="#">Disc Diameter</a>                                
+                <ul  data-role="dropdown" {% if app.session.discDiameter|length > 0 %} style="display:block" {% endif%}>
+                    {% for discDiameter in facets.discDiameters %}
+                        {% if discDiameter.dics_diameter %}  
+                            <li><a href="javascript://"><label for="{{discDiameter.dics_diameter}}"><input id='{{discDiameter.dics_diameter}}' type="checkbox" class="facet_checkbox" name="discDiameter[]" value="{{discDiameter.dics_diameter}}" />{{discDiameter.dics_diameter}} ({{discDiameter.total}})</label></a></li>
+                                    {% endif%}
+                                {% endfor %}
+                </ul>
+            </li>
+            <li>
+                <a class="dropdown-toggle" href="#">Acid Detection Strip</a>                                
+                <ul  data-role="dropdown" {% if app.session.acidDetection|length > 0 %} style="display:block" {% endif%}>
+                    {% for strip in facets.acidDetection %}
+                        {% if strip.acid_detection %}  
+                            <li><a href="javascript://"><label for="{{strip.acid_detection}}"><input id='{{strip.acid_detection}}' type="checkbox" class="facet_checkbox" name="acidDetection[]" value="{{strip.acid_detection}}" />{{strip.acid_detection}} ({{strip.total}})</label></a></li>
+                                    {% endif%}
+                                {% endfor %}
+                </ul>
+            </li>
+            {#<a class="dropdown-toggle" href="#">Review</a>                                
+            <ul class="dropdown-menu" data-role="dropdown">
+                    {% for review in facets.review %}
+                      {% if review.is_review != '' %}  
+                            <li><a href="javascript://"><label for="{{review.is_review}}"><input id='{{review.is_review}}' type="checkbox" class="facet_checkbox" name="review[]" value="{{review.is_review}}" />{{review.is_review}} ({{review.total}})</label></a></li>
+                      {% endif%}
+                    {% endfor %}
+            </ul>#}
+        </form>
 
     </ul>
 </nav>
 <input type="hidden" value="" name="parent_facet" id="parent_facet" />
 <input type="hidden" value="" name="total_checked" id="total_checked"/>
 <script type="text/javascript">
-	$(window).load(function () {
-		var facets = new Records();
-		facets.setAjaxSource('{{ path('record_dataTable') }}');
-		facets.setPageUrl('{{ path('record_facets') }}');
-		facets.bindEvents();
-	});
+    $(window).load(function () {
+        var facets = new Records();
+        facets.setAjaxSource('{{ path('record_dataTable') }}');
+        facets.setPageUrl('{{ path('record_facets') }}');
+        facets.bindEvents();
+    });
 </script>

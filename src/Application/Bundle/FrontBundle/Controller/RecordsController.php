@@ -57,10 +57,16 @@ class RecordsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $sphinxSearch = new SphinxSearch($em);
         $facet['mediaType'] = $sphinxSearch->facetSelect('media_type');
+        $facet['formats'] = $sphinxSearch->facetSelect('format');
         $facet['commercialUnique'] = $sphinxSearch->facetSelect('commercial');
         $facet['bases'] = $sphinxSearch->facetSelect('base');
 //        $facet['review'] = $sphinxSearch->facetSelect('is_review');
         $facet['recordingStandards'] = $sphinxSearch->facetSelect('recording_standard');
+        $facet['printTypes'] = $sphinxSearch->facetSelect('print_type');
+        $facet['projectNames'] = $sphinxSearch->facetSelect('project');
+        $facet['reelDiameters'] = $sphinxSearch->facetSelect('reel_diameter');
+        $facet['discDiameters'] = $sphinxSearch->facetSelect('dics_diameter');
+        $facet['acidDetection'] = $sphinxSearch->facetSelect('acid_detection');
 //        print_r($facet);exit;
         return array(
             'facets' => $facet,
@@ -104,7 +110,7 @@ class RecordsController extends Controller
         $currentPageTotal = count($records);
         $resultMeta = $sphinxSearch->selectCount($offset, $limit, $sortIndex, $sortOrder);
         $totalRecords = $resultMeta[1][0]['Value'];
-//        print_r($result);exit;
+        print_r($result);exit;
 
         $tableView = $this->defaultFields->recordDatatableView($records);
 
@@ -145,12 +151,47 @@ class RecordsController extends Controller
                     $session->remove('commercial');
                 $session->set('commercial', $data['commercial']);
             }
+            if (isset($data['format'])) {
+                if ($session->get('format'))
+                    $session->remove('format');
+                $session->set('format', $data['format']);
+            }
+            if (isset($data['base'])) {
+                if ($session->get('base'))
+                    $session->remove('base');
+                $session->set('base', $data['base']);
+            }
+            if (isset($data['recordingStandard'])) {
+                if ($session->get('recordingStandard'))
+                    $session->remove('recordingStandard');
+                $session->set('recordingStandard', $data['recordingStandard']);
+            }
+            if (isset($data['printType'])) {
+                if ($session->get('printType'))
+                    $session->remove('printType');
+                $session->set('printType', $data['printType']);
+            }
+            if (isset($data['reelDiameter'])) {
+                if ($session->get('reelDiameter'))
+                    $session->remove('reelDiameter');
+                $session->set('reelDiameter', $data['reelDiameter']);
+            }
+            if (isset($data['discDiameter'])) {
+                if ($session->get('discDiameter'))
+                    $session->remove('discDiameter');
+                $session->set('discDiameter', $data['discDiameter']);
+            }
+            if (isset($data['acidDetection'])) {
+                if ($session->get('acidDetection'))
+                    $session->remove('acidDetection');
+                $session->set('acidDetection', $data['acidDetection']);
+            }
         }else{
-//            $session->clear();
-            if ($session->get('mediaType'))
-                $session->remove('mediaType');
-            if ($session->get('commercial'))
-                $session->remove('commercial');
+            $session->clear();
+//            if ($session->get('mediaType'))
+//                $session->remove('mediaType');
+//            if ($session->get('commercial'))
+//                $session->remove('commercial');
         }
         echo json_encode(array('success' => true));
         exit;
@@ -166,10 +207,31 @@ class RecordsController extends Controller
         $criteriaArr = null;
         $session = $this->getRequest()->getSession();
         if ($session->get('mediaType')) {
-            $criteriaArr['mediaType'] = $session->get('mediaType');
+            $criteriaArr['s_media_type'] = $session->get('mediaType');
         }
         if ($session->get('commercial')) {
-            $criteriaArr['commercial'] = $session->get('commercial');
+            $criteriaArr['s_commercial'] = $session->get('commercial');
+        }
+        if ($session->get('format')) {
+            $criteriaArr['s_format'] = $session->get('format');
+        }
+        if ($session->get('base')) {
+            $criteriaArr['s_base'] = $session->get('base');
+        }
+        if ($session->get('recordingStandard')) {
+            $criteriaArr['s_recording_standard'] = $session->get('recordingStandard');
+        }
+        if ($session->get('printType')) {
+            $criteriaArr['s_print_type'] = $session->get('printType');
+        }
+        if ($session->get('reelDiameter')) {
+            $criteriaArr['s_reel_diameter'] = $session->get('reelDiameter');
+        }
+        if ($session->get('discDiameter')) {
+            $criteriaArr['s_disc_diameter'] = $session->get('discDiameter');
+        }
+        if ($session->get('acidDetection')) {
+            $criteriaArr['s_acid_detection'] = $session->get('acidDetection');
         }
         return $criteriaArr;
     }

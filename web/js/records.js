@@ -86,6 +86,31 @@ function Records() {
         $('input[name="commercial[]"]').click(function () {
             checkParentFacet('commercial', $(this).attr('checked'));
         });
+        $('input[name="format[]"]').click(function () {
+            checkParentFacet('format', $(this).attr('checked'));
+        });
+        $('input[name="base[]"]').click(function () {
+            checkParentFacet('base', $(this).attr('checked'));
+        });
+        $('input[name="recordingStandard[]"]').click(function () {
+            checkParentFacet('recordingStandard', $(this).attr('checked'));
+        });
+        $('input[name="printType[]"]').click(function () {
+            checkParentFacet('printType', $(this).attr('checked'));
+        });
+        $('input[name="project[]"]').click(function () {
+            checkParentFacet('project', $(this).attr('checked'));
+        });
+        $('input[name="reelDiameter[]"]').click(function () {
+            checkParentFacet('reelDiameter', $(this).attr('checked'));
+        });
+        $('input[name="discDiameter[]"]').click(function () {
+            checkParentFacet('discDiameter', $(this).attr('checked'));
+        });
+        $('input[name="acidDetection[]"]').click(function () {
+            checkParentFacet('acidDetection', $(this).attr('checked'));
+        });
+        
         return true;
     }
     /**
