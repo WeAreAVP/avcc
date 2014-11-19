@@ -45,6 +45,16 @@
                 </ul>
             </li>
             <li>
+                <a class="dropdown-toggle" href="#">Collection Name</a>                                
+                <ul  data-role="dropdown" {% if facetData.collectionName is defined %} style="display:block" {% endif%}>
+                    {% for collectionName in facets.collectionNames %}
+                        {% if collectionName.collection_name != '' %}  
+                            <li><a href="javascript://"><label for="{{collectionName.collection_name}}"><input id='{{collectionName.collection_name}}' type="checkbox" class="facet_checkbox" name="collectionName[]" value="{{collectionName.collection_name}}" />{{collectionName.collection_name}} ({{collectionName.total}})</label></a></li>
+                                    {% endif%}
+                                {% endfor %}
+                </ul>
+            </li>
+            <li>
                 <a class="dropdown-toggle" href="#">Recording Standard</a>                                
                 <ul  data-role="dropdown" {% if facetData.recordingStandard is defined %} style="display:block" {% endif%}>
                     {% for recordingStandard in facets.recordingStandards %}

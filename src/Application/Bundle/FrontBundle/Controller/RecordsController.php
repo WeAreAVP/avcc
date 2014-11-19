@@ -71,6 +71,7 @@ class RecordsController extends Controller
         $facet['reelDiameters'] = $sphinxSearch->facetSelect('reel_diameter');
         $facet['discDiameters'] = $sphinxSearch->facetSelect('disk_diameter');
         $facet['acidDetection'] = $sphinxSearch->facetSelect('acid_detection');
+        $facet['collectionNames'] = $sphinxSearch->facetSelect('collection_name');
 //        print_r($facet);exit;
         return array(
             'facets' => $facet,
@@ -177,6 +178,9 @@ class RecordsController extends Controller
         }
         if (isset($facetData['base'])) {
             $criteriaArr['s_base'] = $facetData['base'];
+        }
+        if (isset($facetData['collectionName'])) {
+            $criteriaArr['s_collection_name'] = $facetData['collectionName'];
         }
         if (isset($facetData['recordingStandard'])) {
             $criteriaArr['s_recording_standard'] = $facetData['recordingStandard'];

@@ -110,8 +110,8 @@ function Records() {
         $('input[name="acidDetection[]"]').click(function () {
             checkParentFacet('acidDetection', $(this).attr('checked'));
         });
-        $('input[name="is_review_check"]').click(function () {
-            checkParentFacet('is_review_check', $(this).attr('checked'));
+        $('input[name="collectionName[]"]').click(function () {
+            checkParentFacet('collectionName', $(this).attr('checked'));
         });
         $('#is_review_check').click(function () {
             var totalChecked = $('#total_checked').val();
