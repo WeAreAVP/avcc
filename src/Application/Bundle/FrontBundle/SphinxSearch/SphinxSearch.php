@@ -66,7 +66,7 @@ class SphinxSearch
         }
         $sq->orderBy($sortColumn, $sortOrder)
                 ->limit($offset, $limit);
-//        return $sq->executeBatch();
+        $sq->executeBatch();
         return $sq->getCompiled();
     }
 
