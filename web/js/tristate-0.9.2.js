@@ -17,12 +17,12 @@ var CHECKED_NORM = 'CHECKED_NORM';
 var CHECKED_HILI = 'CHECKED_HILI';
 
 var DEFAULT_CONFIG = {
-	UNCHECKED_NORM: '/assets/images/unchecked.gif',
-	UNCHECKED_HILI: '/assets/images/unchecked_highlighted.gif',
-	INTERMEDIATE_NORM: '/assets/images/intermediate.gif',
-	INTERMEDIATE_HILI: '/assets/images/intermediate_highlighted.gif',
-	CHECKED_NORM: '/assets/images/checked.png',
-	CHECKED_HILI: '/assets/images/checked_highlighted.png'
+	UNCHECKED_NORM: '/images/unchecked.gif',
+	UNCHECKED_HILI: '/images/unchecked_highlighted.gif',
+	INTERMEDIATE_NORM: '/images/intermediate.gif',
+	INTERMEDIATE_HILI: '/images/intermediate_highlighted.gif',
+	CHECKED_NORM: '/images/checked.png',
+	CHECKED_HILI: '/images/checked_highlighted.png'
 };
 
 function getNextStateFromValue(theValue) {
