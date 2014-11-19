@@ -48,7 +48,7 @@ class RecordsController extends Controller
      * Lists all AudioRecords entities.
      *
      * @Route("/", name="record_list")
-     * @Method("GET")
+     * @Method("POST")
      * @Template("ApplicationFrontBundle:Records:index.html.php") 
      * @return array
      */
