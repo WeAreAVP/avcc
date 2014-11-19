@@ -118,7 +118,7 @@
             <li class="chekBoxFacet">
                 <span id="is_review_check" style="cursor: default;">
                     <?php $review_check = 0 ?>
-                    <?php if ($facetData['is_review']): ?>
+                    <?php if (isset($facetData['is_review'])): ?>
                         <?php $review_check = $facetData['is_review'] ?>
                     <?php endif; ?>    
                     <input type="hidden" id="is_review_check_state" name="is_review_check" value="<?php echo  $review_check ?>"/> 
