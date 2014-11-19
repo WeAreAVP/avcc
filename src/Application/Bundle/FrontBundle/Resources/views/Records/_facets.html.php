@@ -2,7 +2,9 @@
     <?php // print_r($facets);exit;?>
     <ul>
         <form id='formSearch' name='formSearch' method='post'>
-            <?php $facetData = $app->getSession()->get('facetData');?>
+            <?php $facetData = $app->getSession()->get('facetData');
+            print_r($facetData);exit;
+            ?>
             <li class="title">Filters</li>
             <li><a href="#">Keyword</a></li>
                 <?php if (count($facets['mediaType']) > 0): ?>
@@ -59,7 +61,7 @@
                 <a class="dropdown-toggle" href="#">Recording Standard</a>                                
                 <ul  data-role="dropdown" <?php if (isset($facetData['recordingStandard'])): ?> style="display:block" <?php endif?>>
                     <?php foreach ($facets['recordingStandards'] as $recordingStandard): ?>
-                        <?php if ($recordingStandard['recording_standard']): ?>  
+                        <?php if ($recordingStandard['recording_standard']!=''): ?>  
                             <li><a href="javascript://"><label for="<?php echo $recordingStandard['recording_standard']?>"><input id='<?php echo $recordingStandard['recording_standard']?>' type="checkbox" class="facet_checkbox" name="recordingStandard[]" value="<?php echo $recordingStandard['recording_standard']?>" /><?php echo $recordingStandard['recording_standard']?> (<?php echo $recordingStandard['total']?>)</label></a></li>
                                     <?php endif?>
                                 <?php endforeach; ?>
