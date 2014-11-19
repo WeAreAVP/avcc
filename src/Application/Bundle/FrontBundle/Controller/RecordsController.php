@@ -78,7 +78,7 @@ class RecordsController extends Controller
                 'columns' => $this->columns,
                 'isAjax' => $isAjax
             ));
-            print_r($html);exit;
+            print_r($html['content']);exit;
             echo json_encode(array('html' => $html));
             exit;
         }
