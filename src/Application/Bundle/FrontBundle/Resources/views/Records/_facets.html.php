@@ -100,7 +100,7 @@
                 <ul  data-role="dropdown" <?php if (isset($facetData['discDiameter'])): ?> style="display:block" <?php endif?>>
                     <?php foreach ($facets['discDiameters'] as $discDiameter): ?>
                         <?php if ($discDiameter['disk_diameter'] != ''): ?>  
-                            <li><a href="javascript://"><label for="<?php echo $discDiameter['disk_diameter']?>"><input id='<?php echo $discDiameter['disk_diameter']?>' type="checkbox" class="facet_checkbox" name="discDiameter[]" value="<?php echo $discDiameter['disk_diameter']?>" /><?php echo $discDiameter['disk_diameter']?> (<?php echo $discDiameter['disk_diameter']?>)</label></a></li>
+                            <li><a href="javascript://"><label for="<?php echo $discDiameter['disk_diameter']?>"><input id='<?php echo $discDiameter['disk_diameter']?>' type="checkbox" class="facet_checkbox" name="discDiameter[]" value="<?php echo $discDiameter['disk_diameter']?>" /><?php echo $discDiameter['disk_diameter']?> (<?php echo $discDiameter['total']?>)</label></a></li>
                                     <?php endif?>
                                 <?php endforeach; ?>
                 </ul>
