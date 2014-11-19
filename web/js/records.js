@@ -171,9 +171,8 @@ function Records() {
             success: function (response)
             {
                 $("#recordsContainer").html();
-                $("#recordsContainer").html(response.html);
-                console.log(response.html);
-//                selfObj.initDataTable();
+                $("#recordsContainer").html(response.html);                
+                selfObj.initDataTable();
 //                window.location.reload();
             }
 
