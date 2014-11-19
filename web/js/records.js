@@ -164,7 +164,7 @@ function Records() {
      */
     var filterRecords = function () {
         $.ajax({
-            type: 'POST',
+            type: 'GET',
             url: pageUrl,
             data: $('#formSearch').serialize(),
             dataType: 'json',
