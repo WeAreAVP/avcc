@@ -173,6 +173,7 @@ function Records() {
                 $("#recordsContainer").html();
                 $("#recordsContainer").html(response.html);                
                 selfObj.initDataTable();
+                selfObj.bindEvents();
 //                window.location.reload();
             }
 
