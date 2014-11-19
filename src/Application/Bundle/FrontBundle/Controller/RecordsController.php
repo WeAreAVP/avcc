@@ -106,7 +106,8 @@ class RecordsController extends Controller
         $sphinxSearch = new SphinxSearch($em);
         $criteria = $this->criteria();
         $result = $sphinxSearch->select($offset, $limit, $sortIndex, $sortOrder, $criteria);
-        print_r($result);exit;
+        print_r($result);
+        exit;
         $records = $result[0];
         $currentPageTotal = count($records);
         $resultMeta = $sphinxSearch->selectCount($offset, $limit, $sortIndex, $sortOrder);
@@ -187,12 +188,26 @@ class RecordsController extends Controller
                     $session->remove('acidDetection');
                 $session->set('acidDetection', $data['acidDetection']);
             }
-        }else{
-            $session->clear();
-//            if ($session->get('mediaType'))
-//                $session->remove('mediaType');
-//            if ($session->get('commercial'))
-//                $session->remove('commercial');
+        }else {
+//            $session->clear();
+            if ($session->get('mediaType'))
+                $session->remove('mediaType');
+            if ($session->get('commercial'))
+                $session->remove('commercial');
+            if ($session->get('format'))
+                $session->remove('format');
+            if ($session->get('base'))
+                $session->remove('base');
+            if ($session->get('recordingStandard'))
+                $session->remove('recordingStandard');
+            if ($session->get('printType'))
+                $session->remove('printType');
+            if ($session->get('reelDiameter'))
+                $session->remove('reelDiameter');
+            if ($session->get('discDiameter'))
+                $session->remove('discDiameter');
+            if ($session->get('acidDetection'))
+                $session->remove('acidDetection');
         }
         echo json_encode(array('success' => true));
         exit;
