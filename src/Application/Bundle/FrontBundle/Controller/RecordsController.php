@@ -189,6 +189,9 @@ class RecordsController extends Controller
         if (isset($facetData['acidDetection'])) {
             $criteriaArr['s_acid_detection'] = $facetData['acidDetection'];
         }
+        if (isset($facetData['project'])) {
+            $criteriaArr['s_project'] = $facetData['project'];
+        }
         return $criteriaArr;
     }
 
