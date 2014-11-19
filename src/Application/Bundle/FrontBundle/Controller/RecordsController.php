@@ -72,8 +72,6 @@ class RecordsController extends Controller
         $isAjax = FALSE;
         if ($request->isXmlHttpRequest()) {
             $isAjax = TRUE;
-            $data = $request->query->all();
-            print_r($data);exit;
             $this->getFacetRequest($request);
             $html = $this->render('ApplicationFrontBundle:Records:index.html.php', array(
                 'facets' => $facet,
@@ -220,11 +218,8 @@ class RecordsController extends Controller
 
     protected function getFacetRequest(Request $request)
     {
-        $data = $request->request->all();
-//        $data = $request->request->get('mediaType');
-        $session = $this->getRequest()->getSession();
-        print_r($data);
-        exit;
+        $data = $request->query->all();
+        $session = $this->getRequest()->getSession();        
         if ($data) {
 
             $session->remove('facetData');
@@ -232,7 +227,6 @@ class RecordsController extends Controller
         } else {
             $session->remove('facetData');
         }
-        print_r($session->get('facetData'));
     }
 
 }
