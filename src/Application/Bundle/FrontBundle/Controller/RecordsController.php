@@ -56,6 +56,7 @@ class RecordsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         if ($request->isXmlHttpRequest()) {
+            echo 'here';exit;
             $this->getFacetRequest($request);
         }
         $sphinxSearch = new SphinxSearch($em);
