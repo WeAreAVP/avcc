@@ -55,6 +55,9 @@ class RecordsController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        if ($request->isXmlHttpRequest()) {
+            $this->getFacetRequest($request);
+        }
         $sphinxSearch = new SphinxSearch($em);
         $facet['mediaType'] = $sphinxSearch->facetSelect('media_type');
         $facet['formats'] = $sphinxSearch->facetSelect('format');
@@ -140,14 +143,12 @@ class RecordsController extends Controller
      */
     public function facetsAction(Request $request)
     {
-//        $data = $request->request->all();
-        $data = $request->request->get('formSearch');
-        print_r($data);exit;
+        $data = $request->request->all();
         $session = $this->getRequest()->getSession();
         if ($data) {
             $session->remove('facetData');
             $session->set('facetData', $data);
-        }else {
+        } else {
             $session->remove('facetData');
         }
         echo json_encode(array('success' => true));
@@ -167,7 +168,7 @@ class RecordsController extends Controller
         if (isset($facetData['mediaType'])) {
             $criteriaArr['s_media_type'] = $facetData['mediaType'];
         }
-        if (isset($facetData['commercial'])){
+        if (isset($facetData['commercial'])) {
             $criteriaArr['s_commercial'] = $facetData['commercial'];
         }
         if (isset($facetData['format'])) {
@@ -197,14 +198,16 @@ class RecordsController extends Controller
         return $criteriaArr;
     }
 
-    protected function getFacetRequest($request){
+    protected function getFacetRequest($request)
+    {
         $data = $request->request->all();
         $session = $this->getRequest()->getSession();
         if ($data) {
             $session->remove('facetData');
             $session->set('facetData', $data);
-        }else {
+        } else {
             $session->remove('facetData');
         }
     }
+
 }
