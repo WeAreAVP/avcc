@@ -52,7 +52,7 @@ class SphinxFields
         $this->indexFields['format'] = ($this->record->getRecord()->getFormat()->getName()) ? $this->record->getRecord()->getFormat()->getName() : "";
         $this->indexFields['is_review'] = ($this->record->getRecord()->getIsReview()) ? $this->record->getRecord()->getIsReview() : "";
         $this->indexFields['s_commercial'] = $this->indexFields['commercial'] = ($this->record->getRecord()->getCommercial()) ? $this->record->getRecord()->getCommercial()->getName() : '';
-        $this->indexFields['reel_diameter'] = ($this->record->getRecord()->getReelDiameters()) ? $this->record->getRecord()->getReelDiameters()->getName() : "";
+        $this->indexFields['s_reel_diameter'] = $this->indexFields['reel_diameter'] = ($this->record->getRecord()->getReelDiameters()) ? $this->record->getRecord()->getReelDiameters()->getName() : "";
 //		$this->indexFields['s_reel_diameter'] = ($this->record->getRecord()->getReelDiameters()) ? $this->record->getRecord()->getReelDiameters()->getName() : "";
         $this->indexFields['content_duration'] = ($this->record->getRecord()->getContentDuration()) ? $this->record->getRecord()->getContentDuration() : "";
         $this->indexFields['part'] = ($this->record->getRecord()->getPart()) ? $this->record->getRecord()->getPart() : "";
