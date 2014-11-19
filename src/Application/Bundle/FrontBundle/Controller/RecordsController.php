@@ -55,6 +55,7 @@ class RecordsController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        var_dump($request->isXmlHttpRequest());
 //        if ($request->isXmlHttpRequest()) {
 //            echo 'here';exit;
 //            $this->getFacetRequest($request);
