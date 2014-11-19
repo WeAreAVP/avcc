@@ -145,5 +145,6 @@
         </script>
 		<?php $view['slots']->stop() ?>
 		<?php $view['slots']->output('javascripts') ?>
+        <?php $view['slots']->output('view_javascripts') ?>
     </body>
 </html>
