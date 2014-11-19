@@ -57,7 +57,7 @@ class RecordsController extends Controller
         $em = $this->getDoctrine()->getManager();
 //        if ($request->isXmlHttpRequest()) {
 //            echo 'here';exit;
-            $this->getFacetRequest($request);
+//            $this->getFacetRequest($request);
 //        }
         $sphinxSearch = new SphinxSearch($em);
         $facet['mediaType'] = $sphinxSearch->facetSelect('media_type');
@@ -204,8 +204,9 @@ class RecordsController extends Controller
         $data = $request->request->all();
 //        $data = $request->request->get('mediaType');
         $session = $this->getRequest()->getSession();
+        print_r($data);exit;
         if ($data) {
-            print_r($data);exit;
+            
             $session->remove('facetData');
             $session->set('facetData', $data);
         } else {
