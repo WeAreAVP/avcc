@@ -3,7 +3,7 @@
     <ul>
         <form id='formSearch' name='formSearch' method='post'>
             <?php $facetData = $app->getSession()->get('facetData');
-            print_r($facetData);exit;
+//            print_r($facetData);exit;
             ?>
             <li class="title">Filters</li>
             <li><a href="#">Keyword</a></li>
