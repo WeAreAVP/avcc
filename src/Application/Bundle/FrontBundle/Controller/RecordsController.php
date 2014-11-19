@@ -65,7 +65,7 @@ class RecordsController extends Controller
         $facet['printTypes'] = $sphinxSearch->facetSelect('print_type');
         $facet['projectNames'] = $sphinxSearch->facetSelect('project');
         $facet['reelDiameters'] = $sphinxSearch->facetSelect('reel_diameter');
-        $facet['discDiameters'] = $sphinxSearch->facetSelect('dics_diameter');
+        $facet['discDiameters'] = $sphinxSearch->facetSelect('disk_diameter');
         $facet['acidDetection'] = $sphinxSearch->facetSelect('acid_detection');
 //        print_r($facet);exit;
         return array(
@@ -228,7 +228,7 @@ class RecordsController extends Controller
             $criteriaArr['s_reel_diameter'] = $session->get('reelDiameter');
         }
         if ($session->get('discDiameter')) {
-            $criteriaArr['s_disc_diameter'] = $session->get('discDiameter');
+            $criteriaArr['s_disk_diameter'] = $session->get('discDiameter');
         }
         if ($session->get('acidDetection')) {
             $criteriaArr['s_acid_detection'] = $session->get('acidDetection');
