@@ -49,7 +49,7 @@ class RecordsController extends Controller
      *
      * @Route("/", name="record_list")
      * @Method("GET")
-     * @Template()
+     * @Template("ApplicationFrontBundle:AudioRecords:index.html.php") 
      * @return array
      */
     public function indexAction(Request $request)
@@ -73,7 +73,7 @@ class RecordsController extends Controller
         if ($request->isXmlHttpRequest()) {
             $isAjax = TRUE;
             $this->getFacetRequest($request);
-            $html = $this->render('ApplicationFrontBundle:Records:index.html.twig', array(
+            $html = $this->render('ApplicationFrontBundle:Records:index.html.php', array(
                 'facets' => $facet,
                 'columns' => $this->columns,
                 'isAjax' => $isAjax
@@ -216,7 +216,7 @@ class RecordsController extends Controller
         return $criteriaArr;
     }
 
-    protected function getFacetRequest($request)
+    protected function getFacetRequest(Request $request)
     {
         $data = $request->request->all();
 //        $data = $request->request->get('mediaType');
