@@ -110,7 +110,27 @@ function Records() {
         $('input[name="acidDetection[]"]').click(function () {
             checkParentFacet('acidDetection', $(this).attr('checked'));
         });
-        
+        $('input[name="is_review_check"]').click(function () {
+            checkParentFacet('is_review_check', $(this).attr('checked'));
+        });
+        $('#is_review_check').click(function () {
+            var totalChecked = $('#total_checked').val();
+            var containerId = $(this).attr('id');
+            var currentVal = $('#' + containerId + '_state').val();
+            if (currentVal > 0 && totalChecked == 0)
+            {
+                totalChecked++;
+                $('#parent_facet').val(containerId);
+                $('#total_checked').val(totalChecked);
+            }
+            if (currentVal == 0 && $('#parent_facet').val() == containerId) {
+                totalChecked--;
+                $('#parent_facet').val('');
+                $('#total_checked').val(totalChecked);
+            }
+            filterRecords();
+        });
+
         return true;
     }
     /**
@@ -142,7 +162,7 @@ function Records() {
      * 
      * @returns {undefined}
      */
-    var filterRecords = function () {       
+    var filterRecords = function () {
         $.ajax({
             type: 'POST',
             url: pageUrl,

@@ -196,6 +196,9 @@ class RecordsController extends Controller
         if (isset($facetData['project'])) {
             $criteriaArr['s_project'] = $facetData['project'];
         }
+        if(isset($facetData['is_review_check'])){
+            $criteriaArr['is_review'] = $facetData['is_review_check'];
+        }
         return $criteriaArr;
     }
 

@@ -104,14 +104,16 @@
                                 {% endfor %}
                 </ul>
             </li>
-            {#<a class="dropdown-toggle" href="#">Review</a>                                
-            <ul class="dropdown-menu" data-role="dropdown">
-                    {% for review in facets.review %}
-                      {% if review.is_review != '' %}  
-                            <li><a href="javascript://"><label for="{{review.is_review}}"><input id='{{review.is_review}}' type="checkbox" class="facet_checkbox" name="review[]" value="{{review.is_review}}" />{{review.is_review}} ({{review.total}})</label></a></li>
-                      {% endif%}
-                    {% endfor %}
-            </ul>#}
+            <li>
+                <span id="is_review_check" style="cursor: default;">
+                    {% set review_check = 0 %}
+                    {% if facetData.is_review is defined %}
+                        {% set review_check = acetData.is_review %}
+                    {% endif %}    
+                    <input type="hidden" id="is_review_check_state" name="is_review_check" value="{{ review_check }}"/> 
+                    Review
+                </span>
+            </li>            
         </form>
 
     </ul>

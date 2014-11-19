@@ -67,11 +67,11 @@ class SphinxSearch
         $sq->orderBy($sortColumn, $sortOrder)
                 ->limit($offset, $limit);
 
-        return $sq->executeBatch();
-//        return $sq->getCompiled();
-//        $result = $sq->executeBatch();
-//        $sql = $sq->getCompiled();
-//        echo json_encode(array('result' => $result, 'sql' => $sql));        
+//        return $sq->executeBatch();
+        return $sq->getCompiled();
+        $result = $sq->executeBatch();
+        $sql = $sq->getCompiled();
+        echo json_encode(array('result' => $result, 'sql' => $sql));        
     }
 
     public function selectCount($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc')
@@ -101,10 +101,12 @@ class SphinxSearch
     public function whereClause($criteria, $sq)
     {
         foreach ($criteria as $key => $value) {
-//            if (isset($key)) {
-            $_value = implode('|', $value);
-            $sq->match($key, $_value, true);
-//            }
+            if ($key == 'is_review') {
+                $sq->where($key, '=', $value); 
+            } else {
+                $_value = implode('|', $value);
+                $sq->match($key, $_value, true);
+            }
         }
 //        if (isset($criteria['mediaType'])) {
 //            $_value = implode('|',$criteria['mediaType']);
