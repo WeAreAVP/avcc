@@ -48,7 +48,7 @@ class RecordsController extends Controller
      * Lists all AudioRecords entities.
      *
      * @Route("/", name="record_list")
-     * @Method("POST")
+     * @Method("GET")
      * @Template("ApplicationFrontBundle:Records:index.html.php") 
      * @return array
      */
@@ -72,6 +72,8 @@ class RecordsController extends Controller
         $isAjax = FALSE;
         if ($request->isXmlHttpRequest()) {
             $isAjax = TRUE;
+            $data = $request->request->all();
+            print_r($data);exit;
             $this->getFacetRequest($request);
             $html = $this->render('ApplicationFrontBundle:Records:index.html.php', array(
                 'facets' => $facet,
