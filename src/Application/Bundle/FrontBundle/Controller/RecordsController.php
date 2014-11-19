@@ -55,10 +55,10 @@ class RecordsController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        if ($request->isXmlHttpRequest()) {
-            echo 'here';exit;
+//        if ($request->isXmlHttpRequest()) {
+//            echo 'here';exit;
             $this->getFacetRequest($request);
-        }
+//        }
         $sphinxSearch = new SphinxSearch($em);
         $facet['mediaType'] = $sphinxSearch->facetSelect('media_type');
         $facet['formats'] = $sphinxSearch->facetSelect('format');
