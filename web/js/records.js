@@ -144,7 +144,7 @@ function Records() {
      */
     var filterRecords = function () {       
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: pageUrl,
             data: $('#formSearch').serialize(),
             dataType: 'json',
