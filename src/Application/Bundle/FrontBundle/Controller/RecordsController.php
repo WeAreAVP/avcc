@@ -72,7 +72,7 @@ class RecordsController extends Controller
         $isAjax = FALSE;
         if ($request->isXmlHttpRequest()) {
             $isAjax = TRUE;
-            $data = $request->request->all();
+            $data = $request->query->all();
             print_r($data);exit;
             $this->getFacetRequest($request);
             $html = $this->render('ApplicationFrontBundle:Records:index.html.php', array(
