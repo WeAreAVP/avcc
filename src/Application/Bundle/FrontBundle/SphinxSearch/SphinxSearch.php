@@ -102,7 +102,11 @@ class SphinxSearch
     {
         foreach ($criteria as $key => $value) {
             if ($key == 'is_review') {
-                $sq->where($key, '=', (int)$value); 
+                if($value == 1){
+                    $sq->where($key, '=', 1);  
+                }elseif($value == 2){
+                    $sq->where($key, '=', 0); 
+                }
             } else {
                 $_value = implode('|', $value);
                 $sq->match($key, $_value, true);
