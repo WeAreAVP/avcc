@@ -162,31 +162,31 @@ class RecordsController extends Controller
         $criteriaArr = null;
         $session = $this->getRequest()->getSession();
         $facetData = $session->get('facetData');
-        if ($facetData['mediaType']) {
+        if (isset($facetData['mediaType'])) {
             $criteriaArr['s_media_type'] = $facetData['mediaType'];
         }
-        if ($facetData['commercial']) {
+        if (isset($facetData['commercial'])){
             $criteriaArr['s_commercial'] = $facetData['commercial'];
         }
-        if ($facetData['format']) {
+        if (isset($facetData['format'])) {
             $criteriaArr['s_format'] = $facetData['format'];
         }
-        if ($facetData['base']) {
+        if (isset($facetData['base'])) {
             $criteriaArr['s_base'] = $facetData['base'];
         }
-        if ($facetData['recordingStandard']) {
+        if (isset($facetData['recordingStandard'])) {
             $criteriaArr['s_recording_standard'] = $facetData['recordingStandard'];
         }
-        if ($facetData['printType']) {
+        if (isset($facetData['printType'])) {
             $criteriaArr['s_print_type'] = $facetData['printType'];
         }
-        if ($facetData['reelDiameter']) {
+        if (isset($facetData['reelDiameter'])) {
             $criteriaArr['s_reel_diameter'] = $facetData['reelDiameter'];
         }
-        if ($facetData['discDiameter']) {
+        if (isset($facetData['discDiameter'])) {
             $criteriaArr['s_disk_diameter'] = $facetData['discDiameter'];
         }
-        if ($facetData['acidDetection']) {
+        if (isset($facetData['acidDetection'])) {
             $criteriaArr['s_acid_detection'] = $facetData['acidDetection'];
         }
         return $criteriaArr;
