@@ -202,9 +202,9 @@ class RecordsController extends Controller
     protected function getFacetRequest($request)
     {
         $data = $request->request->all();
-        print_r($data);exit;
         $session = $this->getRequest()->getSession();
         if ($data) {
+            print_r($data);exit;
             $session->remove('facetData');
             $session->set('facetData', $data);
         } else {
