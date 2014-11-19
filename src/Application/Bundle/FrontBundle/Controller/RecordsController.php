@@ -49,7 +49,7 @@ class RecordsController extends Controller
      *
      * @Route("/", name="record_list")
      * @Method("GET")
-     * @Template("ApplicationFrontBundle:AudioRecords:index.html.php") 
+     * @Template("ApplicationFrontBundle:Records:index.html.php") 
      * @return array
      */
     public function indexAction(Request $request)
