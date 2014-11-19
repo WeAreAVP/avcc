@@ -209,6 +209,7 @@ class RecordsController extends Controller
         } else {
             $session->remove('facetData');
         }
+        print_r($session->get('facetData'));
     }
 
 }
