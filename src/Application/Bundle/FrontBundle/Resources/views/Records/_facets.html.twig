@@ -5,7 +5,7 @@
             <li class="title">Filters</li>
             <li><a href="#">Keyword</a></li>
                 {% if facets.mediaType|length > 0 %}
-                <li>
+                <li>{{ dump(facetData)}}
 
                     <a class="dropdown-toggle" href="#">Media Type</a>                                
                     <ul data-role="dropdown" {% if facetData.mediaType|length > 0 %} style="display:block" {% endif%}>
