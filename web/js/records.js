@@ -150,9 +150,9 @@ function Records() {
             dataType: 'json',
             success: function (response)
             {
-                selfObj.initDataTable();
-                window.location.reload();
-                
+//                selfObj.initDataTable();
+//                window.location.reload();
+console.log('success');
             }
 
         });
