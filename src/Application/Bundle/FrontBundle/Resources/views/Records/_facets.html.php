@@ -1,4 +1,5 @@
 <nav id="facet_sidebar" class="sidebar light">
+    <?php print_r($facets);exit;?>
     <ul>
         <form id='formSearch' name='formSearch' method='post'>
             <?php $facetData = $app->getSession()->get('facetData');?>
