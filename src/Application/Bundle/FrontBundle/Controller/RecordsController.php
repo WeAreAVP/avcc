@@ -140,7 +140,9 @@ class RecordsController extends Controller
      */
     public function facetsAction(Request $request)
     {
-        $data = $request->request->all();
+//        $data = $request->request->all();
+        $data = $request->request->get('formSearch');
+        print_r($data);exit;
         $session = $this->getRequest()->getSession();
         if ($data) {
             $session->remove('facetData');
@@ -195,4 +197,14 @@ class RecordsController extends Controller
         return $criteriaArr;
     }
 
+    protected function getFacetRequest($request){
+        $data = $request->request->all();
+        $session = $this->getRequest()->getSession();
+        if ($data) {
+            $session->remove('facetData');
+            $session->set('facetData', $data);
+        }else {
+            $session->remove('facetData');
+        }
+    }
 }
