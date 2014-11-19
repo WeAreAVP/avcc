@@ -51,7 +51,7 @@ class SphinxFields
         $this->indexFields['s_format'] = ($this->record->getRecord()->getFormat()->getName()) ? $this->record->getRecord()->getFormat()->getName() : "";
         $this->indexFields['format'] = ($this->record->getRecord()->getFormat()->getName()) ? $this->record->getRecord()->getFormat()->getName() : "";
         $this->indexFields['is_review'] = ($this->record->getRecord()->getIsReview()) ? $this->record->getRecord()->getIsReview() : "";
-        $this->indexFields['commercial'] = ($this->record->getRecord()->getCommercial()) ? $this->record->getRecord()->getCommercial()->getName() : '';
+        $this->indexFields['s_commercial'] = $this->indexFields['commercial'] = ($this->record->getRecord()->getCommercial()) ? $this->record->getRecord()->getCommercial()->getName() : '';
         $this->indexFields['reel_diameter'] = ($this->record->getRecord()->getReelDiameters()) ? $this->record->getRecord()->getReelDiameters()->getName() : "";
 //		$this->indexFields['s_reel_diameter'] = ($this->record->getRecord()->getReelDiameters()) ? $this->record->getRecord()->getReelDiameters()->getName() : "";
         $this->indexFields['content_duration'] = ($this->record->getRecord()->getContentDuration()) ? $this->record->getRecord()->getContentDuration() : "";
@@ -67,7 +67,7 @@ class SphinxFields
      */
     private function prepareAudioFields()
     {
-        $this->indexFields['disk_diameter'] = ($this->record->getDiskDiameters()) ? $this->record->getDiskDiameters()->getName() : "";
+        $this->indexFields['s_disk_diameter'] = $this->indexFields['disk_diameter'] = ($this->record->getDiskDiameters()) ? $this->record->getDiskDiameters()->getName() : "";
         $this->indexFields['base'] = ($this->record->getBases()) ? $this->record->getBases()->getName() : "";
         $this->indexFields['s_base'] = ($this->record->getBases()) ? $this->record->getBases()->getName() : "";
         $this->indexFields['media_diameter'] = ($this->record->getMediaDiameters()) ? $this->record->getMediaDiameters()->getName() : "";
@@ -94,7 +94,7 @@ class SphinxFields
         $this->indexFields['color'] = ($this->record->getColors()) ? $this->record->getColors()->getName() : "";
         $this->indexFields['sound'] = ($this->record->getSound()) ? $this->record->getSound()->getName() : "";
         $this->indexFields['frame_rate'] = ($this->record->getFrameRate()) ? $this->record->getFrameRate()->getName() : "";
-        $this->indexFields['acid_detection'] = ($this->record->getAcidDetectionStrip()) ? $this->record->getAcidDetectionStrip()->getName() : "";
+        $this->indexFields['s_acid_detection'] = $this->indexFields['acid_detection'] = ($this->record->getAcidDetectionStrip()) ? $this->record->getAcidDetectionStrip()->getName() : "";
         $this->indexFields['shrinkage'] = ($this->record->getShrinkage()) ? $this->record->getShrinkage() : "";
     }
 
