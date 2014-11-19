@@ -88,8 +88,8 @@
                 <a class="dropdown-toggle" href="#">Disc Diameter</a>                                
                 <ul  data-role="dropdown" {% if app.session.get('discDiameter')|length > 0 %} style="display:block" {% endif%}>
                     {% for discDiameter in facets.discDiameters %}
-                        {% if discDiameter.dics_diameter %}  
-                            <li><a href="javascript://"><label for="{{discDiameter.dics_diameter}}"><input id='{{discDiameter.dics_diameter}}' type="checkbox" class="facet_checkbox" name="discDiameter[]" value="{{discDiameter.dics_diameter}}" />{{discDiameter.dics_diameter}} ({{discDiameter.total}})</label></a></li>
+                        {% if discDiameter.disk_diameter %}  
+                            <li><a href="javascript://"><label for="{{discDiameter.disk_diameter}}"><input id='{{discDiameter.disk_diameter}}' type="checkbox" class="facet_checkbox" name="discDiameter[]" value="{{discDiameter.disk_diameter}}" />{{discDiameter.disk_diameter}} ({{discDiameter.total}})</label></a></li>
                                     {% endif%}
                                 {% endfor %}
                 </ul>
