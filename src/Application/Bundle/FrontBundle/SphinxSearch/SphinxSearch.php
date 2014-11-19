@@ -68,7 +68,7 @@ class SphinxSearch
                 ->limit($offset, $limit);
 
 //        return $sq->executeBatch();
-        return $sq->getCompiled();
+//        return $sq->getCompiled();
         $result = $sq->executeBatch();
         $sql = $sq->getCompiled();
         echo json_encode(array('result' => $result, 'sql' => $sql));        
