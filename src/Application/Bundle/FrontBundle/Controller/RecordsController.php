@@ -201,6 +201,7 @@ class RecordsController extends Controller
 
     protected function getFacetRequest($request)
     {
+        print_r($request);exit;
 //        $data = $request->request->all();
         $data = $request->request->get('mediaType');
         $session = $this->getRequest()->getSession();
