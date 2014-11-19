@@ -47,7 +47,8 @@
 
 				{% block view_javascripts %}
 					<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
-					<script type="text/javascript" src="{{ asset('js/records.js') }}"></script>   
+					<script type="text/javascript" src="{{ asset('js/records.js') }}"></script> 
+                                        <script type="text/javascript" src="{{ asset('js/tristate-0.9.2.js') }}"></script>   
 					<script type="text/javascript">
 						$(window).load(function () {
 							var record = new Records();
