@@ -170,8 +170,8 @@ function Records() {
             dataType: 'json',
             success: function (response)
             {
-                ("#recordsContainer").html();
-                ("#recordsContainer").html(response.html);
+                $("#recordsContainer").html();
+                $("#recordsContainer").html(response.html);
 //                selfObj.initDataTable();
 //                window.location.reload();
             }
