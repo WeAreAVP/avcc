@@ -16,7 +16,7 @@
                         <button class="dropdown-toggle">
                            <span id="limit_field_text">Search</span>
                         </button>
-                        <ul class="dropdown-menu" data-role="dropdown">
+                        <ul class="dropdown-menu keywordDropdown" data-role="dropdown">
                            <li><a href="javascript://;" class="customToken" data-fieldName="Title"  data-columnName="title">Title</a></li>
                            <li><a href="javascript://;" class="customToken" data-fieldName="Description"  data-columnName="description">Description</a></li>
                            <li><a href="javascript://;" class="customToken" data-fieldName="Collection Name"  data-columnName="collection_name">Collection Name</a></li>
