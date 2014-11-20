@@ -1,7 +1,7 @@
-<nav id="facet_sidebar" class="sidebar light">
+<form id='formSearch' name='formSearch' method='post'>
+    <nav id="facet_sidebar" class="sidebar light">
     <?php // print_r($facets);exit;?>
-    <ul>
-        <form id='formSearch' name='formSearch' method='post'>
+    <ul>        
             <?php $facetData = $app->getSession()->get('facetData');
 //            print_r($facetData);exit;
             ?>
@@ -126,11 +126,10 @@
                     <input type="hidden" id="is_review_check_state" name="is_review_check" value="<?php echo  $review_check ?>" <?php echo (isset($facetData['is_review']) && $facetData['is_review'] == $review_check) ? 'checked="checked"' :''?> /> 
                 </span>
                 Review
-            </li>            
-        </form>
-
+            </li>                    
     </ul>
 </nav>
+</form>    
 <input type="hidden" value="" name="parent_facet" id="parent_facet" />
 <input type="hidden" value="" name="total_checked" id="total_checked"/>
 <script type="text/javascript" src="<?php echo  $view['assets']->getUrl('js/tristate-0.9.2.js') ?>"></script> 
