@@ -145,7 +145,7 @@ class ReportController extends Controller
 	private function prepareRecords($activeSheet, $row)
 	{
 		$records = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
-		foreach ($entities as $record)
+		foreach ($records as $record)
 		{
 			
 		}
