@@ -8,8 +8,9 @@ use Foolz\SphinxQL\Helper;
 use Foolz\SphinxQL\Connection;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\DependencyInjection\ContainerAware;
 
-class SphinxSearch
+class SphinxSearch extends ContainerAware
 {
 
     private $conn;
@@ -31,6 +32,7 @@ class SphinxSearch
 
     public function insert()
     {
+        $sphinxInfo = $this->getSphinxInfo();        
         $sphinxFields = new SphinxFields();
         $data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
         $sq = SphinxQL::create($this->conn)->insert()->into($this->indexName);
@@ -58,6 +60,9 @@ class SphinxSearch
 
     public function select($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null)
     {
+        $sphinxInfo = $this->getSphinxInfo();
+        $this->indexName = $sphinxInfo['index_name'];
+        print_r($sphinxInfo);exit;
         $sq = SphinxQL::create($this->conn)
                 ->select()
                 ->from($this->indexName);
@@ -111,14 +116,10 @@ class SphinxSearch
                 $sq->match($key, $_value, true);
             }
         }
-//        if (isset($criteria['mediaType'])) {
-//            $_value = implode('|',$criteria['mediaType']);
-//            $sq->match('s_media_type', $_value, true);
-//        }
-//        if (isset($criteria['commercial'])) {
-//            $_value = implode('|',$criteria['commercial']);
-//            $sq->match('s_commercial', $_value, true);
-//        }
     }
 
+    protected function getSphinxInfo()
+    {
+        return $this->container->getParameter('sphinx_param');
+    }    
 }
