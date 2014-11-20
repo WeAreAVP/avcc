@@ -26,7 +26,7 @@
                            <li><a href="javascript://;" class="customToken" data-fieldName="Contributor"  data-columnName="contributor" style="font-size: 14px!important;">Contributor</a></li>
                         </ul>
                     </div> <br /><br />
-                    <button class="button primary" id="addKeyword">Add Keyword</button>
+                    <div class="button primary" id="addKeyword">Add Keyword</div>
                 </div>
             </li>
                 <?php if (count($facets['mediaType']) > 0): ?>
