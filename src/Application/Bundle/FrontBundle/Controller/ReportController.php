@@ -93,20 +93,18 @@ class ReportController extends Controller
 		->setSubject("Report for all formats")
 		->setDescription("Report for all formats");
 		$activeSheet = $phpExcelObject->setActiveSheetIndex(0);
-		foreach ($this->columns as $column => $columnName)
-		{
-			$activeSheet->setCellValueExplicitByColumnAndRow($column, 1, str_replace('_', ' ', $columnName));
-			$activeSheet->getColumnDimensionByColumn($column)->setWidth(20);
-			$activeSheet->getStyleByColumnAndRow($column)->getFont()->setBold(true);
-			
-		}
-//		$activeSheet->setCellValue('A1', 'Hello');
-//		$activeSheet->setCellValue('B2', 'world!');
-//		$activeSheet->setCellValueExplicitByColumnAndRow(0, 1);
 		$phpExcelObject->getActiveSheet()->setTitle('All Formats');
+		$row = 1;
+		// Prepare header row for report
+		$this->prepareHeader($activeSheet, $row);
+		$row ++;
+		$this->prepareRecords($activeSheet, $row);
+
+
+
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$phpExcelObject->setActiveSheetIndex(0);
-//		$this->downloadReport($phpExcelObject);
+
 		$writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
 		// create the response
 		$response = $this->get('phpexcel')->createStreamedResponse($writer);
@@ -119,9 +117,39 @@ class ReportController extends Controller
 		return array();
 	}
 
-	private function downloadReport($phpExcelObject)
+	/**
+	 * Create the Header for report.
+	 * 
+	 * @param PHPExcel_Worksheet $activeSheet
+	 * @param Integer $row
+	 * @return boolean
+	 */
+	private function prepareHeader($activeSheet, $row)
 	{
-		// create the writer
+
+		foreach ($this->columns as $column => $columnName)
+		{
+			$activeSheet->setCellValueExplicitByColumnAndRow($column, $row, str_replace('_', ' ', $columnName));
+			$activeSheet->getColumnDimensionByColumn($column)->setWidth(20);
+			$activeSheet->getStyleByColumnAndRow($column)->getFont()->setBold(true);
+		}
+		return TRUE;
+	}
+
+	/**
+	 * Prepare rows for records.
+	 * 
+	 * @param PHPExcel_Worksheet $activeSheet
+	 * @param Integer $row
+	 */
+	private function prepareRecords($activeSheet, $row)
+	{
+		$entityManager = $this->getDoctrine()->getManager();
+		$records = $entityManager->getRepository('ApplicationFrontBundle:Records')->findAll();
+		foreach ($records as $record)
+		{
+			
+		}
 	}
 
 }
