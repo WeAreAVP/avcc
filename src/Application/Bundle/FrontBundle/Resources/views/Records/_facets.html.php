@@ -8,7 +8,7 @@
             <li class="title">Filters</li>
             <li>
                 <a class="dropdown-toggle" href="#">Keyword</a>
-                <div data-role="dropdown">
+                <div data-role="dropdown" class="chekBoxFacet">
                     <div data-role="input-control" class="input-control text">
                         <input type="text" placeholder="" />
                     </div>
