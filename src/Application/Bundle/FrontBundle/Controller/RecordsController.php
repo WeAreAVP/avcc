@@ -39,9 +39,9 @@ class RecordsController extends Controller
             'Collection_Name' => 'collectionName',
             'Location' => 'location'
         );
-        
+
         $this->defaultFields = new DefaultFields();
-        $this->limit = 10;        
+        $this->limit = 10;
     }
 
     /**
@@ -141,7 +141,7 @@ class RecordsController extends Controller
         echo json_encode($dataTable);
         exit;
     }
-    
+
     /**
      * Get sphinx parameters
      * 
@@ -225,10 +225,10 @@ class RecordsController extends Controller
         if (isset($facetData['contentDate'])) {
             $criteriaArr['s_content_date'] = $facetData['contentDate'];
         }
-        if($facetData['facet_keyword_search']){
+        if ($facetData['facet_keyword_search']) {
             $keywords = json_decode($facetData);
-            foreach($keywords as $keyword){
-                $criteriaArr['s_'.$keyword['type']] = $keyword['value'];
+            foreach ($keywords as $keyword) {
+                $criteriaArr['s_' . $keyword['type']] = $keyword['value'];
             }
         }
 //        if (isset($facetData['title'])) {
@@ -249,22 +249,23 @@ class RecordsController extends Controller
     protected function getFacetRequest(Request $request)
     {
         $data = $request->query->all();
-        $session = $this->getRequest()->getSession();        
+        $session = $this->getRequest()->getSession();
         if ($data) {
             $session->remove('facetData');
             $session->set('facetData', $data);
+            $facetData = $session->get('facetData');
+            if ($facetData['facet_keyword_search']) {
+                $keywords = json_decode($facetData, true);
+                $criteriaArr = array();
+                foreach ($keywords as $keyword) {
+                    $criteriaArr['s_' . $keyword['type']] = $keyword['value'];
+                }
+            }
+            print_r($criteriaArr);
+            exit;
         } else {
             $session->remove('facetData');
         }
-        
-        $facetData = $session->get('facetData');
-        if($facetData['facet_keyword_search']){
-            $keywords = json_decode($facetData, true);
-            $criteriaArr = array();
-            foreach($keywords as $keyword){
-                $criteriaArr['s_'.$keyword['type']] = $keyword['value'];
-            }
-        }
-        print_r($criteriaArr);exit;
     }
+
 }
