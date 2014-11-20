@@ -1,6 +1,8 @@
 <?php if ( ! $isAjax): ?>
 	<?php $view->extend('FOSUserBundle::layout.html.php') ?>
-	<?php $view['slots']->start('body') ?>
+<?php endif; ?>
+<?php $view['slots']->start('body') ?>
+<?php if ( ! $isAjax): ?>
 	<div class="grid">
 		<div class="row" id="recordsContainer">
 		<?php endif; ?>
@@ -77,7 +79,6 @@
 		</div>
 	</div>
 	<?php
-	$view['slots']->stop();
-
 endif;
+$view['slots']->stop();
 ?>
