@@ -56,7 +56,8 @@ class RecordsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $sphinxSearch = new SphinxSearch($em);
+        $shpinxInfo = $this->getSphinxInfo();
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
         $facet['mediaType'] = $sphinxSearch->facetSelect('media_type');
         $facet['formats'] = $sphinxSearch->facetSelect('format');
         $facet['commercialUnique'] = $sphinxSearch->facetSelect('commercial');
