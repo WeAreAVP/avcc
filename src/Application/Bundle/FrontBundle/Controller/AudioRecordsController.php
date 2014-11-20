@@ -20,446 +20,441 @@ use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 class AudioRecordsController extends Controller
 {
 
-	/**
-	 * Lists all AudioRecords entities.
-	 *
-	 * @Route("/", name="record")
-	 * @Method("GET")
-	 * @Template()
-	 * @return array
-	 */
-	public function indexAction()
-	{
-		$em = $this->getDoctrine()->getManager();
+    /**
+     * Lists all AudioRecords entities.
+     *
+     * @Route("/", name="record")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
 
-		$entities = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
+        $entities = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
 
-		return array(
-			'entities' => $entities,
-		);
-	}
+        return array(
+            'entities' => $entities,
+        );
+    }
 
-	/**
-	 * Creates a new AudioRecords entity.
-	 *
-	 * @param Request $request
-	 *
-	 * @Route("/audio/", name="record_create")
-	 * @Method("POST")
-	 * @Template("ApplicationFrontBundle:AudioRecords:new.html.php")
-	 * @return array
-	 */
-	public function createAction(Request $request)
-	{
-		$em = $this->getDoctrine()->getManager();
-		$container = $this->container;
-		$entity = new AudioRecords();
-		$form = $this->createCreateForm($entity, $em, null, $container);
-		$form->handleRequest($request);
+    /**
+     * Creates a new AudioRecords entity.
+     *
+     * @param Request $request
+     *
+     * @Route("/audio/", name="record_create")
+     * @Method("POST")
+     * @Template("ApplicationFrontBundle:AudioRecords:new.html.php")
+     * @return array
+     */
+    public function createAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $container = $this->container;
+        $entity = new AudioRecords();
+        $form = $this->createCreateForm($entity, $em, null, $container);
+        $form->handleRequest($request);
 
-		if ($form->isValid())
-		{
-			$em->persist($entity);
-			$em->flush();
-                        $sphinxSearch = new SphinxSearch($em, $entity->getId(), 1);
-                        $sphinxSearch->insert();
-			$this->get('session')->getFlashBag()->add('success', 'Audio record added succesfully.');
+        if ($form->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+            $shpinxInfo = $this->getSphinxInfo();
+            $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getId(), 1);
+            $sphinxSearch->insert();
+            $this->get('session')->getFlashBag()->add('success', 'Audio record added succesfully.');
 
-			return $this->redirect($this->generateUrl('record_list'));
-		}
+            return $this->redirect($this->generateUrl('record_list'));
+        }
 
-		return array(
-			'entity' => $entity,
-			'form' => $form->createView(),
-		);
-	}
+        return array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        );
+    }
 
-	/**
-	 * Creates a form to create a AudioRecords entity.
-	 *
-	 * @param AudioRecords $entity The entity
-	 * @param EntityManager $em
-	 * @param form $data
-	 *
-	 * @return \Symfony\Component\Form\Form The form
-	 */
-	private function createCreateForm(AudioRecords $entity, $em, $data = null, $sphinxParam = null)
-	{
-		$form = $this->createForm(new AudioRecordsType($em, $data, $sphinxParam), $entity, array(
-			'action' => $this->generateUrl('record_create'),
-			'method' => 'POST',
-		));
+    /**
+     * Creates a form to create a AudioRecords entity.
+     *
+     * @param AudioRecords $entity The entity
+     * @param EntityManager $em
+     * @param form $data
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCreateForm(AudioRecords $entity, $em, $data = null, $sphinxParam = null)
+    {
+        $form = $this->createForm(new AudioRecordsType($em, $data, $sphinxParam), $entity, array(
+            'action' => $this->generateUrl('record_create'),
+            'method' => 'POST',
+        ));
 
-		$form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Create'));
 
-		return $form;
-	}
+        return $form;
+    }
 
-	/**
-	 * Displays a form to create a new AudioRecords entity.
-	 *
-	 * @param integer $projectId
-	 * @param integer $audioRecId
-	 * 
-	 * @Route("/audio/new", name="record_new")
-	 * @Route("/audio/new/{projectId}", name="record_new_against_project")
-	 * @Route("/audio/new/{audioRecId}/duplicate", name="record_audio_duplicate")
-	 * @Method("GET")
-	 * @Template()
-	 * @return array
-	 */
-	public function newAction($projectId = null, $audioRecId = null)
-	{
-		$fieldsObj = new DefaultFields();
-		$em = $this->getDoctrine()->getManager();
-		$data = $fieldsObj->getData(1, $em, $this->getUser(), $projectId);
-		if ($audioRecId)
-		{
-			$entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->find($audioRecId);
-		}
-		else
-		{
-			$entity = new AudioRecords();
-		}
-		$sphinxParam = $this->container->getParameter('sphinx_param');
+    /**
+     * Displays a form to create a new AudioRecords entity.
+     *
+     * @param integer $projectId
+     * @param integer $audioRecId
+     * 
+     * @Route("/audio/new", name="record_new")
+     * @Route("/audio/new/{projectId}", name="record_new_against_project")
+     * @Route("/audio/new/{audioRecId}/duplicate", name="record_audio_duplicate")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function newAction($projectId = null, $audioRecId = null)
+    {
+        $fieldsObj = new DefaultFields();
+        $em = $this->getDoctrine()->getManager();
+        $data = $fieldsObj->getData(1, $em, $this->getUser(), $projectId);
+        if ($audioRecId) {
+            $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->find($audioRecId);
+        } else {
+            $entity = new AudioRecords();
+        }
+        $sphinxParam = $this->container->getParameter('sphinx_param');
 
-		$form = $this->createCreateForm($entity, $em, $data, $sphinxParam);
-		$userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+        $form = $this->createCreateForm($entity, $em, $data, $sphinxParam);
+        $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
 
-		return $this->render('ApplicationFrontBundle:AudioRecords:new.html.php', array(
-			'entity' => $entity,
-			'form' => $form->createView(),
-			'fieldSettings' => $userViewSettings,
-			'type' => $data['mediaType']->getName(),
-		));
-	}
+        return $this->render('ApplicationFrontBundle:AudioRecords:new.html.php', array(
+                    'entity' => $entity,
+                    'form' => $form->createView(),
+                    'fieldSettings' => $userViewSettings,
+                    'type' => $data['mediaType']->getName(),
+        ));
+    }
 
-	/**
-	 * Finds and displays a AudioRecords entity.
-	 *
-	 * @param integer $id
-	 *
-	 * @Route("/{id}", name="record_show")
-	 * @Method("GET")
-	 * @Template()
-	 * @return array
-	 */
-	public function showAction($id)
-	{
-		$em = $this->getDoctrine()->getManager();
-                
-		$entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->findOneBy(array('record'=>$id));
-                
-		if ( ! $entity)
-		{
-			throw $this->createNotFoundException('Unable to find AudioRecords entity.');
-		}
+    /**
+     * Finds and displays a AudioRecords entity.
+     *
+     * @param integer $id
+     *
+     * @Route("/{id}", name="record_show")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
 
-		$deleteForm = $this->createDeleteForm($id);
-		$fieldsObj = new DefaultFields();
-		$userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+        $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->findOneBy(array('record' => $id));
 
-		return $this->render('ApplicationFrontBundle:AudioRecords:show.html.php', array(
-			'entity' => $entity,
-			'delete_form' => $deleteForm->createView(),
-			'fieldSettings' => $userViewSettings
-		));
-	}
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find AudioRecords entity.');
+        }
 
-	/**
-	 * Displays a form to edit an existing AudioRecords entity.
-	 *
-	 * @param integer $id
-	 *
-	 * @Route("/audio/{id}/edit", name="record_edit")
-	 * @Method("GET")
-	 * @Template()
-	 * @return array
-	 */
-	public function editAction($id)
-	{
-		$em = $this->getDoctrine()->getManager();
+        $deleteForm = $this->createDeleteForm($id);
+        $fieldsObj = new DefaultFields();
+        $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
 
-		$entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->find($id);
-		if ( ! $entity)
-		{
-			throw $this->createNotFoundException('Unable to find AudioRecords entity.');
-		}
-		$fieldsObj = new DefaultFields();
-		$data = $fieldsObj->getData(1, $em, $this->getUser());
-		$sphinxParam = $this->container->getParameter('sphinx_param');
-		$editForm = $this->createEditForm($entity, $em, $data, $sphinxParam);
-		$deleteForm = $this->createDeleteForm($id);
+        return $this->render('ApplicationFrontBundle:AudioRecords:show.html.php', array(
+                    'entity' => $entity,
+                    'delete_form' => $deleteForm->createView(),
+                    'fieldSettings' => $userViewSettings
+        ));
+    }
 
-		$userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+    /**
+     * Displays a form to edit an existing AudioRecords entity.
+     *
+     * @param integer $id
+     *
+     * @Route("/audio/{id}/edit", name="record_edit")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function editAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
 
-		return $this->render('ApplicationFrontBundle:AudioRecords:edit.html.php', array(
-			'entity' => $entity,
-			'edit_form' => $editForm->createView(),
-			'delete_form' => $deleteForm->createView(),
-			'fieldSettings' => $userViewSettings,
-			'type' => $data['mediaType']->getName(),
-		));
-	}
+        $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find AudioRecords entity.');
+        }
+        $fieldsObj = new DefaultFields();
+        $data = $fieldsObj->getData(1, $em, $this->getUser());
+        $sphinxParam = $this->container->getParameter('sphinx_param');
+        $editForm = $this->createEditForm($entity, $em, $data, $sphinxParam);
+        $deleteForm = $this->createDeleteForm($id);
 
-	/**
-	 * Creates a form to edit a AudioRecords entity.
-	 *
-	 * @param AudioRecords $entity The entity
-	 * @param EntityManager $em 
-	 * @param array $data 
-	 * 
-	 * @return \Symfony\Component\Form\Form The form
-	 */
-	private function createEditForm(AudioRecords $entity, $em, $data = null, $sphinxParam = null)
-	{
-		$form = $this->createForm(new AudioRecordsType($em, $data, $sphinxParam), $entity, array(
-			'action' => $this->generateUrl('record_update', array('id' => $entity->getId())),
-			'method' => 'PUT',
-		));
+        $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
 
-		$form->add('submit', 'submit', array('label' => 'Update'));
-		$form->add('save_and_duplicate', 'submit', array('label' => 'Duplicate'));
+        return $this->render('ApplicationFrontBundle:AudioRecords:edit.html.php', array(
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                    'fieldSettings' => $userViewSettings,
+                    'type' => $data['mediaType']->getName(),
+        ));
+    }
 
-		return $form;
-	}
+    /**
+     * Creates a form to edit a AudioRecords entity.
+     *
+     * @param AudioRecords $entity The entity
+     * @param EntityManager $em 
+     * @param array $data 
+     * 
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(AudioRecords $entity, $em, $data = null, $sphinxParam = null)
+    {
+        $form = $this->createForm(new AudioRecordsType($em, $data, $sphinxParam), $entity, array(
+            'action' => $this->generateUrl('record_update', array('id' => $entity->getId())),
+            'method' => 'PUT',
+        ));
 
-	/**
-	 * Edits an existing AudioRecords entity.
-	 *
-	 * @param Request $request
-	 * @param type    $id
-	 *
-	 * @Route("/audio/{id}", name="record_update")
-	 * @Method("PUT")
-	 * @Template("ApplicationFrontBundle:AudioRecords:edit.html.php")
-	 * @return array
-	 */
-	public function updateAction(Request $request, $id)
-	{
-		$em = $this->getDoctrine()->getManager();
+        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('save_and_duplicate', 'submit', array('label' => 'Duplicate'));
 
-		$entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->find($id);
+        return $form;
+    }
 
-		if ( ! $entity)
-		{
-			throw $this->createNotFoundException('Unable to find AudioRecords entity.');
-		}
-		$user = $this->getUser();
-		$fieldsObj = new DefaultFields();
-		$data = $fieldsObj->getData(1, $em, $user);
-		$deleteForm = $this->createDeleteForm($id);
-		$sphinxParam = $this->container->getParameter('sphinx_param');
-		$editForm = $this->createEditForm($entity, $em, $data, $sphinxParam);
-		$editForm->handleRequest($request);
+    /**
+     * Edits an existing AudioRecords entity.
+     *
+     * @param Request $request
+     * @param type    $id
+     *
+     * @Route("/audio/{id}", name="record_update")
+     * @Method("PUT")
+     * @Template("ApplicationFrontBundle:AudioRecords:edit.html.php")
+     * @return array
+     */
+    public function updateAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
 
-		if ($editForm->isValid())
-		{
-			$em->flush();
-                        $sphinxSearch = new SphinxSearch($em, $entity->getId(), 1);
-                        $sphinxSearch->replace();
-                        
-			// the save_and_dupplicate button was clicked
-			if ($editForm->get('save_and_duplicate')->isClicked())
-			{
-				return $this->redirect($this->generateUrl('record_audio_duplicate', array('audioRecId' => $id)));
-			}
-			$this->get('session')->getFlashBag()->add('success', 'Audio record updated succesfully.');
+        $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->find($id);
 
-			return $this->redirect($this->generateUrl('record_list'));
-		}
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find AudioRecords entity.');
+        }
+        $user = $this->getUser();
+        $fieldsObj = new DefaultFields();
+        $data = $fieldsObj->getData(1, $em, $user);
+        $deleteForm = $this->createDeleteForm($id);
+        $sphinxParam = $this->container->getParameter('sphinx_param');
+        $editForm = $this->createEditForm($entity, $em, $data, $sphinxParam);
+        $editForm->handleRequest($request);
 
-		return array(
-			'entity' => $entity,
-			'edit_form' => $editForm->createView(),
-			'delete_form' => $deleteForm->createView(),
-		);
-	}
+        if ($editForm->isValid()) {
+            $em->flush();
+            $shpinxInfo = $this->getSphinxInfo();
+            $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getId(), 1);
+            $sphinxSearch->replace();
 
-	/**
-	 * Deletes a AudioRecords entity.
-	 *
-	 * @param Request $request
-	 * @param integer $id
-	 *
-	 * @Route("/{id}", name="record_delete")
-	 * @Method("DELETE")
-	 * @return redirect
-	 */
-	public function deleteAction(Request $request, $id)
-	{
-		$form = $this->createDeleteForm($id);
-		$form->handleRequest($request);
+            // the save_and_dupplicate button was clicked
+            if ($editForm->get('save_and_duplicate')->isClicked()) {
+                return $this->redirect($this->generateUrl('record_audio_duplicate', array('audioRecId' => $id)));
+            }
+            $this->get('session')->getFlashBag()->add('success', 'Audio record updated succesfully.');
 
-		if ($form->isValid())
-		{
-			$em = $this->getDoctrine()->getManager();
-			$entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->find($id);
+            return $this->redirect($this->generateUrl('record_list'));
+        }
 
-			if ( ! $entity)
-			{
-				throw $this->createNotFoundException('Unable to find AudioRecords entity.');
-			}
+        return array(
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
 
-			$em->remove($entity);
-			$em->flush();
-		}
+    /**
+     * Deletes a AudioRecords entity.
+     *
+     * @param Request $request
+     * @param integer $id
+     *
+     * @Route("/{id}", name="record_delete")
+     * @Method("DELETE")
+     * @return redirect
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $form = $this->createDeleteForm($id);
+        $form->handleRequest($request);
 
-		return $this->redirect($this->generateUrl('record'));
-	}
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->find($id);
 
-	/**
-	 * Creates a form to delete a AudioRecords entity by id.
-	 *
-	 * @param mixed $id The entity id
-	 *
-	 * @return \Symfony\Component\Form\Form The form
-	 */
-	private function createDeleteForm($id)
-	{
-		return $this->createFormBuilder()
-		->setAction($this->generateUrl('record_delete', array('id' => $id)))
-		->setMethod('DELETE')
-		->add('submit', 'submit', array('label' => 'Delete'))
-		->getForm();
-	}
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find AudioRecords entity.');
+            }
 
-	/**
-	 * Displays a form to select media type abd projects.
-	 * @Route("/add-record", name="record_add")
-	 * @Method("GET")
-	 * @Template()
-	 * @return template
-	 */
-	public function addRecordAction()
-	{
-		$em = $this->getDoctrine()->getManager();
-		$projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
-		$mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
+            $em->remove($entity);
+            $em->flush();
+        }
 
-		return $this->render('ApplicationFrontBundle:AudioRecords:addRecord.html.twig', array(
-			'projects' => $projects,
-			'mediaTypes' => $mediaTypes
-		));
-	}
+        return $this->redirect($this->generateUrl('record'));
+    }
 
-	/**
-	 * Displays a form to select media type abd projects.
-	 *
-	 * @param integer $formatId Format id
-	 *
-	 * @Route("/getBase/{formatId}", name="record_get_base")
-	 * @Method("GET")
-	 * @Template()
-	 * @return template
-	 */
-	public function getBaseAction($formatId)
-	{
-		$em = $this->getDoctrine()->getManager();
-		$bases = $em->getRepository('ApplicationFrontBundle:Bases')->findBy(array('baseFormat' => $formatId));
+    /**
+     * Creates a form to delete a AudioRecords entity by id.
+     *
+     * @param mixed $id The entity id
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder()
+                        ->setAction($this->generateUrl('record_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm();
+    }
 
-		return $this->render('ApplicationFrontBundle:AudioRecords:getBase.html.php', array(
-			'bases' => $bases
-		));
-	}
+    /**
+     * Displays a form to select media type abd projects.
+     * @Route("/add-record", name="record_add")
+     * @Method("GET")
+     * @Template()
+     * @return template
+     */
+    public function addRecordAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
+        $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
 
-	/**
-	 * get recording speed values to show in dropdown.
-	 *
-	 * @param integer $formatId Format id
-	 * @param integer $mediaTypeId 
-	 * 
-	 * @Route("/getRecordingSpeed/{formatId}/{mediaTypeId}", name="record_get_speed")
-	 * @Method("GET")
-	 * @Template()
-	 * @return template
-	 */
-	public function getRecordingSpeedAction($formatId, $mediaTypeId)
-	{
-		$em = $this->getDoctrine()->getManager();
-		if ($mediaTypeId == 3)
-		{
-			$speeds = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findBy(array('recSpeedFormat' => NULL));
-		}
-		else
-		{
-			$speeds = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findBy(array('recSpeedFormat' => $formatId));
-		}
+        return $this->render('ApplicationFrontBundle:AudioRecords:addRecord.html.twig', array(
+                    'projects' => $projects,
+                    'mediaTypes' => $mediaTypes
+        ));
+    }
 
-		return $this->render('ApplicationFrontBundle:AudioRecords:getRecordingSpeed.html.php', array(
-			'speeds' => $speeds
-		));
-	}
+    /**
+     * Displays a form to select media type abd projects.
+     *
+     * @param integer $formatId Format id
+     *
+     * @Route("/getBase/{formatId}", name="record_get_base")
+     * @Method("GET")
+     * @Template()
+     * @return template
+     */
+    public function getBaseAction($formatId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $bases = $em->getRepository('ApplicationFrontBundle:Bases')->findBy(array('baseFormat' => $formatId));
 
-	/**
-	 * get format values to show in dropdown.
-	 *
-	 * @param integer $mediaTypeId Media type id
-	 * @param integer $formatId 
-	 * 
-	 * @Route("/getFormat/{mediaTypeId}", name="record_get_format")
-	 * @Route("/getFormat/{mediaTypeId}/{formatId}", name="record_get_format_selected")
-	 * @Method("GET")
-	 * @Template()
-	 * @return template 
-	 */
-	public function getFormatAction($mediaTypeId, $formatId = null)
-	{
-		$em = $this->getDoctrine()->getManager();
-		$formats = $em->getRepository('ApplicationFrontBundle:Formats')->findBy(array('mediaType' => $mediaTypeId));
+        return $this->render('ApplicationFrontBundle:AudioRecords:getBase.html.php', array(
+                    'bases' => $bases
+        ));
+    }
 
-		return $this->render('ApplicationFrontBundle:AudioRecords:getFormat.html.php', array(
-			'formats' => $formats,
-			'formatId' => $formatId
-		));
-	}
+    /**
+     * get recording speed values to show in dropdown.
+     *
+     * @param integer $formatId Format id
+     * @param integer $mediaTypeId 
+     * 
+     * @Route("/getRecordingSpeed/{formatId}/{mediaTypeId}", name="record_get_speed")
+     * @Method("GET")
+     * @Template()
+     * @return template
+     */
+    public function getRecordingSpeedAction($formatId, $mediaTypeId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if ($mediaTypeId == 3) {
+            $speeds = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findBy(array('recSpeedFormat' => NULL));
+        } else {
+            $speeds = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findBy(array('recSpeedFormat' => $formatId));
+        }
 
-	/**
-	 * get values to show in dropdown.
-	 *
-	 * @param integer $formatId Format id
-	 *
-	 * @Route("/getFormatVersion/{formatId}", name="record_get_formatversion")
-	 * @Method("GET")
-	 * @Template()
-	 * @return template
-	 */
-	public function getFormatVersionAction($formatId)
-	{
-		$em = $this->getDoctrine()->getManager();
-		$formatVersions = $em->getRepository('ApplicationFrontBundle:FormatVersions')->findBy(array('formatVersionFormat' => $formatId));
+        return $this->render('ApplicationFrontBundle:AudioRecords:getRecordingSpeed.html.php', array(
+                    'speeds' => $speeds
+        ));
+    }
 
-		return $this->render('ApplicationFrontBundle:AudioRecords:getFormatVersion.html.php', array(
-			'formatVersions' => $formatVersions
-		));
-	}
+    /**
+     * get format values to show in dropdown.
+     *
+     * @param integer $mediaTypeId Media type id
+     * @param integer $formatId 
+     * 
+     * @Route("/getFormat/{mediaTypeId}", name="record_get_format")
+     * @Route("/getFormat/{mediaTypeId}/{formatId}", name="record_get_format_selected")
+     * @Method("GET")
+     * @Template()
+     * @return template 
+     */
+    public function getFormatAction($mediaTypeId, $formatId = null)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $formats = $em->getRepository('ApplicationFrontBundle:Formats')->findBy(array('mediaType' => $mediaTypeId));
 
-	/**
-	 * get reel diameters values to show in dropdown.
-	 *
-	 * @param integer $formatId Format id
-	 * @param integer $mediaTypeId 
-	 * 
-	 * @Route("/getReelDiameter/{formatId}/{mediaTypeId}", name="record_get_reeldiameter")
-	 * @Method("GET")
-	 * @Template()
-	 * @return template
-	 */
-	public function getReelDiameterAction($formatId, $mediaTypeId)
-	{
-		$em = $this->getDoctrine()->getManager();
-		if ($mediaTypeId == 2)
-		{
-			$reeldiameters = $em->getRepository('ApplicationFrontBundle:ReelDiameters')->findBy(array('reelFormat' => NULL));
-		}
-		else
-		{
-			$reeldiameters = $em->getRepository('ApplicationFrontBundle:ReelDiameters')->findBy(array('reelFormat' => $formatId));
-		}
+        return $this->render('ApplicationFrontBundle:AudioRecords:getFormat.html.php', array(
+                    'formats' => $formats,
+                    'formatId' => $formatId
+        ));
+    }
 
-		return $this->render('ApplicationFrontBundle:AudioRecords:getReelDiameter.html.php', array(
-			'reeldiameters' => $reeldiameters
-		));
-	}
+    /**
+     * get values to show in dropdown.
+     *
+     * @param integer $formatId Format id
+     *
+     * @Route("/getFormatVersion/{formatId}", name="record_get_formatversion")
+     * @Method("GET")
+     * @Template()
+     * @return template
+     */
+    public function getFormatVersionAction($formatId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $formatVersions = $em->getRepository('ApplicationFrontBundle:FormatVersions')->findBy(array('formatVersionFormat' => $formatId));
+
+        return $this->render('ApplicationFrontBundle:AudioRecords:getFormatVersion.html.php', array(
+                    'formatVersions' => $formatVersions
+        ));
+    }
+
+    /**
+     * get reel diameters values to show in dropdown.
+     *
+     * @param integer $formatId Format id
+     * @param integer $mediaTypeId 
+     * 
+     * @Route("/getReelDiameter/{formatId}/{mediaTypeId}", name="record_get_reeldiameter")
+     * @Method("GET")
+     * @Template()
+     * @return template
+     */
+    public function getReelDiameterAction($formatId, $mediaTypeId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if ($mediaTypeId == 2) {
+            $reeldiameters = $em->getRepository('ApplicationFrontBundle:ReelDiameters')->findBy(array('reelFormat' => NULL));
+        } else {
+            $reeldiameters = $em->getRepository('ApplicationFrontBundle:ReelDiameters')->findBy(array('reelFormat' => $formatId));
+        }
+
+        return $this->render('ApplicationFrontBundle:AudioRecords:getReelDiameter.html.php', array(
+                    'reeldiameters' => $reeldiameters
+        ));
+    }
+
+    /**
+     * Get sphinx parameters
+     * 
+     * @return array
+     */
+    protected function getSphinxInfo()
+    {
+        return $this->container->getParameter('sphinx_param');
+    }
 
 }

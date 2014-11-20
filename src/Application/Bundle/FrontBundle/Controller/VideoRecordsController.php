@@ -55,7 +55,8 @@ class VideoRecordsController extends Controller
         if ($form->isValid()) {
             $em->persist($entity);
             $em->flush();
-            $sphinxSearch = new SphinxSearch($em, $entity->getId(), 3);
+            $sphinxInfo = $this->getSphinxInfo();
+            $sphinxSearch = new SphinxSearch($em, $sphinxInfo, $entity->getId(), 3);
             $sphinxSearch->insert();
             $this->get('session')->getFlashBag()->add('success', 'Video record added succesfully.');
 
@@ -221,7 +222,8 @@ class VideoRecordsController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-            $sphinxSearch = new SphinxSearch($em, $entity->getId(), 3);
+            $sphinxInfo = $this->getSphinxInfo();
+            $sphinxSearch = new SphinxSearch($em, $sphinxInfo, $entity->getId(), 3);
             $sphinxSearch->replace();
             // the save_and_dupplicate button was clicked
             if ($editForm->get('save_and_duplicate')->isClicked()) {
@@ -282,4 +284,13 @@ class VideoRecordsController extends Controller
                         ->getForm();
     }
 
+    /**
+     * Get sphinx parameters
+     * 
+     * @return array
+     */
+    protected function getSphinxInfo()
+    {
+        return $this->container->getParameter('sphinx_param');
+    }
 }

@@ -56,7 +56,8 @@ class FilmRecordsController extends Controller
         if ($form->isValid()) {
             $em->persist($entity);
             $em->flush();
-            $sphinxSearch = new SphinxSearch($em, $entity->getId(), 2);
+            $shpinxInfo = $this->getSphinxInfo();
+            $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getId(), 2);
             $sphinxSearch->insert();
             $this->get('session')->getFlashBag()->add('success', 'Film record added succesfully.');
 
@@ -231,7 +232,8 @@ class FilmRecordsController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-            $sphinxSearch = new SphinxSearch($em, $entity->getId(), 2);
+            $shpinxInfo = $this->getSphinxInfo();
+            $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getId(), 2);
             $sphinxSearch->replace();
             // the save_and_dupplicate button was clicked
             if ($editForm->get('save_and_duplicate')->isClicked()) {
@@ -292,5 +294,15 @@ class FilmRecordsController extends Controller
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm();
+    }
+    
+    /**
+     * Get sphinx parameters
+     * 
+     * @return array
+     */
+    protected function getSphinxInfo()
+    {
+        return $this->container->getParameter('sphinx_param');
     }
 }

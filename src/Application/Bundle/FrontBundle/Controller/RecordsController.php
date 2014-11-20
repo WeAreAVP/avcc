@@ -141,7 +141,12 @@ class RecordsController extends Controller
         echo json_encode($dataTable);
         exit;
     }
-
+    
+    /**
+     * Get sphinx parameters
+     * 
+     * @return array
+     */
     protected function getSphinxInfo()
     {
         return $this->container->getParameter('sphinx_param');
