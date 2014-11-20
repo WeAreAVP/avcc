@@ -157,7 +157,7 @@ class ReportController extends Controller
 		{
 			$em = $this->getDoctrine()->getEntityManager();
 			$connection = $em->getConnection();
-			$statement = $connection->prepare("SELECT r FROM ApplicationFrontBundle:Records r");
+			$statement = $connection->prepare("SELECT * FROM ApplicationFrontBundle:Records r");
 //			$statement->bindValue('id', 123);
 			$statement->execute();
 			$records = $statement->fetchAll();
