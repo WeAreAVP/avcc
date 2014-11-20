@@ -171,8 +171,8 @@ class ReportController extends Controller
 			$activeSheet->setCellValueExplicitByColumnAndRow(39, $row, $record->getDuplicatesDerivatives());
 			$activeSheet->setCellValueExplicitByColumnAndRow(40, $row, $record->getRelatedMaterial());
 			$activeSheet->setCellValueExplicitByColumnAndRow(41, $row, $record->getConditionNote());
-			$activeSheet->setCellValueExplicitByColumnAndRow(42, $row, $record->getCreatedOn());
-			$activeSheet->setCellValueExplicitByColumnAndRow(43, $row, $record->getUpdatedOn());
+//			$activeSheet->setCellValueExplicitByColumnAndRow(42, $row, $record->getCreatedOn());
+//			$activeSheet->setCellValueExplicitByColumnAndRow(43, $row, $record->getUpdatedOn());
 			$activeSheet->setCellValueExplicitByColumnAndRow(44, $row, $record->getUser()->getName());
 
 			if ($record->getAudioRecord())
