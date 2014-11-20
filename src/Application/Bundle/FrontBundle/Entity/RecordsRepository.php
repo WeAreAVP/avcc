@@ -16,23 +16,18 @@ class RecordsRepository extends EntityRepository
 
 	public function findOrganizationRecords($organizationID)
 	{
+		$qb = $this->getEntityManager()->createQueryBuilder();
+		return $qb->select('u')
+		->from('User', 'u')
+		->where('u.id = ?1')
+		->orderBy('u.name', 'ASC')->getResult();
+		;
 		$rsm = new ResultSetMapping();
 		$query = $this->getEntityManager()->createNativeQuery('SELECT * FROM records', $rsm);
 //		$query->setParameter(1, 'romanb');
 
 		$users = $query->getResult();
 		return $users;
-		$result = $this->getEntityManager()->createQuery("SELECT r"
-		. " FROM ApplicationFrontBundle:Records r"
-		. " JOIN ApplicationFrontBundle:MediaTypes m WITH r.mediaType = m.id"
-		. " JOIN ApplicationFrontBundle:Projects p WITH r.project = p.id"
-		. " order by r.id $order"
-		)
-//                        ->setMaxResults($limit)
-//                        ->setFirstResult($offSet)
-		->getArrayResult();
-
-		return $result;
 	}
 
 	public function findAudioRecordById($id)
