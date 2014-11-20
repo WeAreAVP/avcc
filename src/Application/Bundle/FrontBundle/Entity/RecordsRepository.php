@@ -3,7 +3,6 @@
 namespace Application\Bundle\FrontBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * RecordsRepository
@@ -14,27 +13,28 @@ use Doctrine\ORM\Query\ResultSetMapping;
 class RecordsRepository extends EntityRepository
 {
 
-	public function findOrganizationRecords($organizationID)
-	{
-		$query = $this->getEntityManager()
-		->createQuery("SELECT r from ApplicationFrontBundle:Records r "
-		. "JOIN r.user u "
-		. "JOIN u.organizations o "
-		. "WHERE o.id =  :organization");
-		$query->setParameter('organization', $organizationID);
-		return $query->getResult();
-	}
+    public function findOrganizationRecords($organizationID)
+    {
+        $query = $this->getEntityManager()
+        ->createQuery("SELECT r from ApplicationFrontBundle:Records r "
+        . "JOIN r.user u "
+        . "JOIN u.organizations o "
+        . "WHERE o.id =  :organization");
+        $query->setParameter('organization', $organizationID);
 
-	public function findAudioRecordById($id)
-	{
-		return $this->getEntityManager()->createQuery("SELECT r as record, ar as audio, m.name as mediaType, p.name as projectTitle"
-		. " FROM ApplicationFrontBundle:Records r"
-		. " JOIN ApplicationFrontBundle:MediaTypes m WITH r.mediaType = m.id"
-		. " JOIN ApplicationFrontBundle:Projects p WITH r.project = p.id"
-		. " JOIN ApplicationFrontBundle:AudioRecords ar WITH ar.record = r.id "
-		. " Where r.id = $id"
-		)
-		->getArrayResult();
-	}
+        return $query->getResult();
+    }
+
+    public function findAudioRecordById($id)
+    {
+        return $this->getEntityManager()->createQuery("SELECT r as record, ar as audio, m.name as mediaType, p.name as projectTitle"
+        . " FROM ApplicationFrontBundle:Records r"
+        . " JOIN ApplicationFrontBundle:MediaTypes m WITH r.mediaType = m.id"
+        . " JOIN ApplicationFrontBundle:Projects p WITH r.project = p.id"
+        . " JOIN ApplicationFrontBundle:AudioRecords ar WITH ar.record = r.id "
+        . " Where r.id = $id"
+        )
+        ->getArrayResult();
+    }
 
 }
