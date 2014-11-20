@@ -122,8 +122,8 @@ class RecordsController extends Controller
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
         $criteria = $this->criteria();
         $result = $sphinxSearch->select($offset, $limit, $sortIndex, $sortOrder, $criteria);
-//        print_r($result);
-//        exit;
+        print_r($result);
+        exit;
         $records = $result[0];
         $currentPageTotal = count($records);
         $resultMeta = $sphinxSearch->selectCount($offset, $limit, $sortIndex, $sortOrder);
@@ -250,5 +250,6 @@ class RecordsController extends Controller
         } else {
             $session->remove('facetData');
         }
+        print_r($session->get('facetData'));
     }
 }
