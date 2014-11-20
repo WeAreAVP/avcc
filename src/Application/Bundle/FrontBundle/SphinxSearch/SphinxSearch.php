@@ -101,7 +101,7 @@ class SphinxSearch extends ContainerAware
 
     public function whereClause($criteria, $sq)
     {
-        print_r($criteria);exit;
+        print_r($criteria);
         foreach ($criteria as $key => $value) {
             if ($key == 'is_review') {
                 if($value == 1){
@@ -110,6 +110,7 @@ class SphinxSearch extends ContainerAware
                     $sq->where($key, '=', 0); 
                 }
             } else {
+                print_r($value);exit;
                 $_value = implode('|', $value);
                 $sq->match($key, $_value, true);
             }
