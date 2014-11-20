@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * ReelDiameters controller.
@@ -87,26 +88,21 @@ class ReportController extends Controller
 	 */
 	public function allFormatsCsvAction()
 	{
-		$filename = 'allFormat_' . time() . '.csv';
-		// output headers so that the file is downloaded rather than displayed
-		header('Content-Type: text/csv; charset=utf-8');
-		header('Content-Disposition: attachment; filename=' . $filenameÏ);
-		
-		// create a file pointer connected to the output stream
-		$output = fopen('php://output', 'w');
+//		echo 'here';exit;
+		$container = $this->container;
+		$response = new StreamedResponse(function() use($container)
+		{
 
-		// output the column headings
-		fputcsv($output, $this->columns);
-		echo  $output;
-		return array();
-// fetch the data
-//		mysql_connect('localhost', 'username', 'password');
-//		mysql_select_db('database');
-//		$rows = mysql_query('SELECT field1,field2,field3 FROM table');
-//
-//// loop over the rows, outputting them
-//		while ($row = mysql_fetch_assoc($rows))
-//			fputcsv($output, $row);
+			$handle = fopen('php://output', 'r+');
+			fputcsv($handle, $this->columns);
+			fclose($handle);
+		});
+
+		$response->headers->set('Content-Type', 'application/octet-stream;  charset=utf-8');
+		$response->headers->set('Content-Transfer-Encoding', 'Binary');
+		$response->headers->set('Content-disposition', 'attachment; filename="export.csv"');
+
+		return $response;
 	}
 
 	/**
@@ -137,7 +133,7 @@ class ReportController extends Controller
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$phpExcelObject->setActiveSheetIndex(0);
 
-		$writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
+		$writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'CSV');
 		// create the response
 		$filename = 'allFormat_' . time() . '.xlsx';
 		$response = $this->get('phpexcel')->createStreamedResponse($writer);

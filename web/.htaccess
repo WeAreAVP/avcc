@@ -50,3 +50,4 @@ DirectoryIndex app.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
+AddType application/octet-stream csv
