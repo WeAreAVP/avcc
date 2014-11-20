@@ -276,7 +276,7 @@ class RecordsController extends Controller
         foreach ($array as $arr) {
             foreach ($arr as $facet) {
                 foreach ($facet as $key => $value) {                   
-                    if (trim($value) != '') {
+                    if ($value != '' && $value != null && !empty($value)) {
                         $result[][$key] = $value;
                     }
                 }
