@@ -28,6 +28,7 @@ class RecordsController extends Controller
     private $session;
     private $offset;
     private $limit;
+    private $sphinxInfo;
 
     public function __construct()
     {
@@ -39,9 +40,11 @@ class RecordsController extends Controller
             'Collection_Name' => 'collectionName',
             'Location' => 'location'
         );
-        ;
+        
         $this->defaultFields = new DefaultFields();
         $this->limit = 10;
+        $this->sphinxInfo = $this->getSphinxInfo();
+        print_r($this->sphinxInfo);exit;
     }
 
     /**
@@ -228,5 +231,4 @@ class RecordsController extends Controller
             $session->remove('facetData');
         }
     }
-
 }
