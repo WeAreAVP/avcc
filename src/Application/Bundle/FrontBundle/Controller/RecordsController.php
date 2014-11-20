@@ -225,18 +225,24 @@ class RecordsController extends Controller
         if (isset($facetData['contentDate'])) {
             $criteriaArr['s_content_date'] = $facetData['contentDate'];
         }
-        if (isset($facetData['title'])) {
-            $criteriaArr['s_title'] = $facetData['title'];
+        if($facetData['facet_keyword_search']){
+            $keywords = json_decode($facetData);
+            foreach($keywords as $keyword){
+                $criteriaArr['s_'.$keyword['type']] = $keyword['value'];
+            }
         }
-        if (isset($facetData['description'])) {
-            $criteriaArr['s_description'] = $facetData['title'];
-        }
-        if (isset($facetData['genreTerms'])) {
-            $criteriaArr['s_genre_terms'] = $facetData['genreTerms'];
-        }
-        if (isset($facetData['contributor'])) {
-            $criteriaArr['s_contributor'] = $facetData['contributor'];
-        }
+//        if (isset($facetData['title'])) {
+//            $criteriaArr['s_title'] = $facetData['title'];
+//        }
+//        if (isset($facetData['description'])) {
+//            $criteriaArr['s_description'] = $facetData['title'];
+//        }
+//        if (isset($facetData['genreTerms'])) {
+//            $criteriaArr['s_genre_terms'] = $facetData['genreTerms'];
+//        }
+//        if (isset($facetData['contributor'])) {
+//            $criteriaArr['s_contributor'] = $facetData['contributor'];
+//        }
         return $criteriaArr;
     }
 
@@ -250,6 +256,15 @@ class RecordsController extends Controller
         } else {
             $session->remove('facetData');
         }
-        print_r($session->get('facetData'));
+        
+        $facetData = $session->get('facetData');
+        if($facetData['facet_keyword_search']){
+            $keywords = json_decode($facetData);
+            $criteriaArr = array();
+            foreach($keywords as $keyword){
+                $criteriaArr['s_'.$keyword['type']] = $keyword['value'];
+            }
+            print_r($criteriaArr);
+        }
     }
 }
