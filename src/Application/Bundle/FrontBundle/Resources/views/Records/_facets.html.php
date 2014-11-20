@@ -10,7 +10,7 @@
                 <?php if (count($facets['mediaType']) > 0): ?>
                 <li>
                     <a class="dropdown-toggle" href="#">Media Type</a>                                
-                    <ul data-role="dropdown" <?php if (isset($facetData['mediaType'])): ?> style="display:block" <?php endif;?>>
+                    <ul data-role="dropdown" <?php echo isset($facetData['mediaType']) ? 'style="display:block"' : 'style="display:none"'; ?>>
                         <?php foreach ($facets['mediaType'] as $mediaType): ?>
                             <li><a href="javascript://"><label for="<?php echo $mediaType['media_type'] ?>"><input id='<?php echo $mediaType['media_type']?>' <?php echo (isset($facetData['mediaType']) && in_array($mediaType['media_type'], $facetData['mediaType'])) ? 'checked="checked"' :''?> type="checkbox" class="facet_checkbox" name="mediaType[]" value="<?php echo $mediaType['media_type']?>" /><?php echo $mediaType['media_type']?> (<?php echo $mediaType['total']?>)</label></a></li>
                                     <?php endforeach; ?>
