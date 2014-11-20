@@ -91,13 +91,13 @@ class ReportController extends Controller
 		// output headers so that the file is downloaded rather than displayed
 		header('Content-Type: text/csv; charset=utf-8');
 		header('Content-Disposition: attachment; filename=' . $filenameÏ);
-
+		
 		// create a file pointer connected to the output stream
 		$output = fopen('php://output', 'w');
 
 		// output the column headings
 		fputcsv($output, $this->columns);
-		return $output;
+		echo  $output;
 		return array();
 // fetch the data
 //		mysql_connect('localhost', 'username', 'password');
