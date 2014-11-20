@@ -110,8 +110,9 @@ class SphinxSearch extends ContainerAware
                     $sq->where($key, '=', 0); 
                 }
             } else {
-                print_r($value);exit;
+                
                 $_value = implode('|', $value);
+                print_r($_value);exit;
                 $sq->match($key, $_value, true);
             }
         }
