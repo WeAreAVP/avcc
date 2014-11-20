@@ -25,7 +25,7 @@
                            <li><a href="javascript://;" class="customToken" data-fieldName="Genre Terms"  data-columnName="genreTerms" style="font-size: 14px!important;">Genre Terms</a></li>
                            <li><a href="javascript://;" class="customToken" data-fieldName="Contributor"  data-columnName="contributor" style="font-size: 14px!important;">Contributor</a></li>
                         </ul>
-                    </div> 
+                    </div> <br /><br />
                     <button class="button primary" id="addKeyword">Add Keyword</button>
                 </div>
             </li>

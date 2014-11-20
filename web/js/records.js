@@ -187,7 +187,7 @@ function Records() {
         $('.customToken').click(function () {
             customFieldName = $(this).attr('data-fieldName');
             customColumnName = $(this).attr('data-fieldName');
-            $('#limit_field_text').html(fieldName);
+            $('#limit_field_text').html(customFieldName);
         });
     }
 
