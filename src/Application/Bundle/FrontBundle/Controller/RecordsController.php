@@ -39,7 +39,10 @@ class RecordsController extends Controller
             'Collection_Name' => 'collectionName',
             'Location' => 'location'
         );
-
+        $this->keywords = array('title',
+            'description', 'collection_name',
+            'creation_date', 'content_date', 'genre_terms', 'contributor',
+        );
         $this->defaultFields = new DefaultFields();
         $this->limit = 10;
     }
@@ -228,21 +231,15 @@ class RecordsController extends Controller
         if ($facetData['facet_keyword_search']) {
             $keywords = json_decode($facetData['facet_keyword_search'], true);
             foreach ($keywords as $keyword) {
-                $criteriaArr['s_' . $keyword['type']] = $keyword['value'];
+                if ($keyword['type'] == 'all') {
+                    foreach ($this->keywords as $key) {
+                        $criteriaArr['s_' . $key] = $keyword['value'];
+                    }
+                } else {
+                    $criteriaArr['s_' . $keyword['type']] = $keyword['value'];
+                }
             }
         }
-//        if (isset($facetData['title'])) {
-//            $criteriaArr['s_title'] = $facetData['title'];
-//        }
-//        if (isset($facetData['description'])) {
-//            $criteriaArr['s_description'] = $facetData['title'];
-//        }
-//        if (isset($facetData['genreTerms'])) {
-//            $criteriaArr['s_genre_terms'] = $facetData['genreTerms'];
-//        }
-//        if (isset($facetData['contributor'])) {
-//            $criteriaArr['s_contributor'] = $facetData['contributor'];
-//        }
         return $criteriaArr;
     }
 
@@ -252,7 +249,7 @@ class RecordsController extends Controller
         $session = $this->getRequest()->getSession();
         if ($data) {
             $session->remove('facetData');
-            $session->set('facetData', $data);            
+            $session->set('facetData', $data);
         } else {
             $session->remove('facetData');
         }
