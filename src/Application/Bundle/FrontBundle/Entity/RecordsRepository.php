@@ -20,7 +20,7 @@ class RecordsRepository extends EntityRepository
 		return $qb->select('u')
 		->from('User', 'u')
 		->where('u.id = ?1')
-		->orderBy('u.name', 'ASC')->getResult();
+		->orderBy('u.name', 'ASC');
 		;
 		$rsm = new ResultSetMapping();
 		$query = $this->getEntityManager()->createNativeQuery('SELECT * FROM records', $rsm);
