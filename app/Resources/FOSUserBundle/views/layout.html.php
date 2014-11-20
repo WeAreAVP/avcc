@@ -118,7 +118,9 @@
 			<?php foreach ($app->getSession()->getFlashBag()->all() as $type => $message): ?>
 				<?php //for message in messages ?>
 				<div class="flash-<?php echo $type; ?> text-success">
-					<?php echo $message; ?>
+					<?php 
+                                        echo'<pre>';print_r($message);
+                                        echo $message; ?>
 				</div>
 				<?php //endfor ?>
 			<?php endforeach; ?>
@@ -135,9 +137,9 @@
         <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
         <script type="text/javascript">
-			setTimeout(function () {
-				$('.text-success').hide();
-			}, 5000);
+//			setTimeout(function () {
+//				$('.text-success').hide();
+//			}, 5000);
 			$(document).ready(function () {
 				$('.formats_dd').chosen();
 			});
