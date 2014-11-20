@@ -133,7 +133,7 @@ class ReportController extends Controller
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$phpExcelObject->setActiveSheetIndex(0);
 
-		$writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
+		$writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'CSV');
 		// create the response
 		$filename = 'allFormat_' . time() . '.xlsx';
 		$response = $this->get('phpexcel')->createStreamedResponse($writer);
