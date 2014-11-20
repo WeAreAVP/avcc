@@ -18,7 +18,7 @@ class RecordsRepository extends EntityRepository
 	{
 		return $this->getEntityManager()->createQuery("select  r from ApplicationFrontBundle:Records r "
 		. "JOIN r.user u "
-		. "JOIN u.organizations o"
+		. "JOIN u.organizations o "
 		. "o.id =  " . $organizationID)->getResult();
 		$qb = $this->getEntityManager()->createQueryBuilder();
 		return $qb->select('u')
