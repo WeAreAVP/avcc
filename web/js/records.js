@@ -171,10 +171,9 @@ function Records() {
             dataType: 'json',
             success: function (response)
             {
-                $("#recordsContainer").html();
                 $("#recordsContainer").html(response.html);
-                selfObj.initDataTable();
-                selfObj.bindEvents();
+//                selfObj.initDataTable();
+//                selfObj.bindEvents();
             }
 
         });
