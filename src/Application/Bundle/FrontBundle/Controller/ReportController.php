@@ -95,8 +95,8 @@ class ReportController extends Controller
 		$activeSheet = $phpExcelObject->setActiveSheetIndex(0);
 		foreach ($this->columns as $column => $columnName)
 		{
-			$activeSheet->setCellValueExplicitByColumnAndRow($column, 1, str_replace('_', '', $columnName));
-			$activeSheet->getColumnDimensionByColumn($column)->setWidth(40);
+			$activeSheet->setCellValueExplicitByColumnAndRow($column, 1, str_replace('_', ' ', $columnName));
+			$activeSheet->getColumnDimensionByColumn($column)->setWidth(20);
 		}
 //		$activeSheet->setCellValue('A1', 'Hello');
 //		$activeSheet->setCellValue('B2', 'world!');
