@@ -275,6 +275,7 @@ class RecordsController extends Controller
         $result = array();
         foreach ($array as $arr) {
             foreach ($arr as $key => $value) {
+                print_r($key);exit;
                 if (trim($value) != '') {
                     $result[][$key] = $value;
                 }
