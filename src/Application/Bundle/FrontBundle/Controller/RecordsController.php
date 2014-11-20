@@ -219,6 +219,24 @@ class RecordsController extends Controller
         if (isset($facetData['is_review_check'])) {
             $criteriaArr['is_review'] = $facetData['is_review_check'];
         }
+        if (isset($facetData['creationDate'])) {
+            $criteriaArr['s_creation_date'] = $facetData['creationDate'];
+        }
+        if (isset($facetData['contentDate'])) {
+            $criteriaArr['s_content_date'] = $facetData['contentDate'];
+        }
+        if (isset($facetData['title'])) {
+            $criteriaArr['s_title'] = $facetData['title'];
+        }
+        if (isset($facetData['description'])) {
+            $criteriaArr['s_description'] = $facetData['title'];
+        }
+        if (isset($facetData['genreTerms'])) {
+            $criteriaArr['s_genre_terms'] = $facetData['genreTerms'];
+        }
+        if (isset($facetData['contributor'])) {
+            $criteriaArr['s_contributor'] = $facetData['contributor'];
+        }
         return $criteriaArr;
     }
 
@@ -227,7 +245,6 @@ class RecordsController extends Controller
         $data = $request->query->all();
         $session = $this->getRequest()->getSession();        
         if ($data) {
-
             $session->remove('facetData');
             $session->set('facetData', $data);
         } else {

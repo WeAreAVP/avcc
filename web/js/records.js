@@ -15,6 +15,7 @@ function Records() {
     var ajaxSource = null;
     var pageUrl = null;
     var selfObj = this;
+    var Filters = new Object();
     /**
      * Set the ajax URL of datatable.
      * @param {string} source
@@ -178,17 +179,43 @@ function Records() {
 
         });
     }
-    
     /**
      * 
-     * @param {string} fieldName
-     * @param {string} columnName
      * @returns {undefined}
      */
-    this.addCustomToken = function (fieldName, columnName) {
-        customFieldName = fieldName;
-        customColumnName = columnName;
-        $('#limit_field_text').html(fieldName);
+    this.addCustomToken = function () {
+        $('.customToken').click(function () {
+            customFieldName = $(this).attr('data-fieldName');
+            customColumnName = $(this).attr('data-fieldName');
+            $('#limit_field_text').html(fieldName);
+        });
+    }
+
+    this.addKeyword = function () {
+        $('#addKeyword').click(function () {
+            if ($('#keywordSearch').val() != '') {
+                if ($('#facet_keyword_search').val() != '' && $('#facet_keyword_search').val() != '""') {
+                    Filters = JSON.parse($('#facet_keyword_search').val());
+                }
+                else {
+                    Filters = new Array();
+                }
+                for (x in Filters) {
+                    if (Filters[x].value == $('#keywordSearch').val()) {
+                        alert($('#keywordSearch').val() + " filter is already applied.");
+                        return false;
+                    }
+                }
+                var temp = {};
+                temp.value = $('#keywordSearch').val();
+                temp.type = customColumnName;
+                Filters.push(temp);
+
+                $('#facet_keyword_search').val(JSON.stringify(Filters));
+
+                filterRecords();
+            }            
+        });
     }
 }
 

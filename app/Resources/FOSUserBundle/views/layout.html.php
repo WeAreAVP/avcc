@@ -130,6 +130,7 @@
         <script src="<?php echo $view['assets']->getUrl('js/jquery.widget.min.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/jquery.mousewheel.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/metro.min.js') ?>"></script>
+        <script src="<?php echo $view['assets']->getUrl('js/metro-dropdown.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/chosen.jquery.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/jquery.mCustomScrollbar.concat.min.js') ?>"></script>
         <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
