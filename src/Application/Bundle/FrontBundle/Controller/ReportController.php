@@ -172,7 +172,7 @@ class ReportController extends Controller
 			$activeSheet->setCellValueExplicitByColumnAndRow(40, $row, $record->getRelatedMaterial());
 			$activeSheet->setCellValueExplicitByColumnAndRow(41, $row, $record->getConditionNote());
 			$activeSheet->setCellValueExplicitByColumnAndRow(42, $row, $record->getCreatedOn()->format('Y-m-d H:i:s'));
-			$activeSheet->setCellValueExplicitByColumnAndRow(43, $row, $record->getUpdatedOn()->format('Y-m-d H:i:s'));
+			$activeSheet->setCellValueExplicitByColumnAndRow(43, $row, ($record->getUpdatedOn()) ? $record->getUpdatedOn()->format('Y-m-d H:i:s') : '');
 			$activeSheet->setCellValueExplicitByColumnAndRow(44, $row, $record->getUser()->getName());
 
 			if ($record->getAudioRecord())
