@@ -94,6 +94,7 @@ class SphinxSearch extends ContainerAware
         if ($criteria) {
             $this->whereClause($criteria, $sq);
         }
+        $sq->where($facetColumn, '!=','');
         $sq->groupBy($facetColumn)
                 ->orderBy($facetColumn, 'asc');
 
@@ -113,7 +114,6 @@ class SphinxSearch extends ContainerAware
             } else {
                 $_value = (is_array($value)) ? implode('|', $value) : $value;
                 $sq->match($key, $_value, true);
-                $sq->where($key, '!=', "");
             }
         }
     }
