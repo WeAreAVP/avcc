@@ -113,6 +113,7 @@ class SphinxSearch extends ContainerAware
             } else {
                 $_value = (is_array($value)) ? implode('|', $value) : $value;
                 $sq->match($key, $_value, true);
+                $sq->where($key, '!=', "");
             }
         }
     }
