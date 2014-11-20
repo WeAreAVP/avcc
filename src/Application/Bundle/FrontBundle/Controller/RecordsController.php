@@ -61,23 +61,25 @@ class RecordsController extends Controller
 
         $shpinxInfo = $this->getSphinxInfo();
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        $criteria = $this->criteria();
-        $facet['mediaType'] = $sphinxSearch->facetSelect('media_type', $criteria);
-        $facet['formats'] = $sphinxSearch->facetSelect('format', $criteria);
-        $facet['commercialUnique'] = $sphinxSearch->facetSelect('commercial', $criteria);
-        $facet['bases'] = $sphinxSearch->facetSelect('base', $criteria);
-//        $facet['review'] = $sphinxSearch->facetSelect('is_review');
-        $facet['recordingStandards'] = $sphinxSearch->facetSelect('recording_standard', $criteria);
-        $facet['printTypes'] = $sphinxSearch->facetSelect('print_type', $criteria);
-        $facet['projectNames'] = $sphinxSearch->facetSelect('project', $criteria);
-        $facet['reelDiameters'] = $sphinxSearch->facetSelect('reel_diameter', $criteria);
-        $facet['discDiameters'] = $sphinxSearch->facetSelect('disk_diameter', $criteria);
-        $facet['acidDetection'] = $sphinxSearch->facetSelect('acid_detection', $criteria);
-        $facet['collectionNames'] = $sphinxSearch->facetSelect('collection_name', $criteria);
+        
         $isAjax = FALSE;
         if ($request->isXmlHttpRequest()) {
             $isAjax = TRUE;
             $this->getFacetRequest($request);
+            $criteria = $this->criteria();
+            $facet['mediaType'] = $sphinxSearch->facetSelect('media_type', $criteria);
+            $facet['formats'] = $sphinxSearch->facetSelect('format', $criteria);
+            $facet['commercialUnique'] = $sphinxSearch->facetSelect('commercial', $criteria);
+            $facet['bases'] = $sphinxSearch->facetSelect('base', $criteria);
+            $facet['recordingStandards'] = $sphinxSearch->facetSelect('recording_standard', $criteria);
+            $facet['printTypes'] = $sphinxSearch->facetSelect('print_type', $criteria);
+            $facet['projectNames'] = $sphinxSearch->facetSelect('project', $criteria);
+            $facet['reelDiameters'] = $sphinxSearch->facetSelect('reel_diameter', $criteria);
+            $facet['discDiameters'] = $sphinxSearch->facetSelect('disk_diameter', $criteria);
+            $facet['acidDetection'] = $sphinxSearch->facetSelect('acid_detection', $criteria);
+            $facet['collectionNames'] = $sphinxSearch->facetSelect('collection_name', $criteria);
+            
+            print_r($facet);exit;
             $html = $this->render('ApplicationFrontBundle:Records:index.html.php', array(
                 'facets' => $facet,
                 'columns' => $this->columns,
@@ -86,6 +88,17 @@ class RecordsController extends Controller
             echo json_encode(array('html' => $html->getContent()));
             exit;
         }
+        $facet['mediaType'] = $sphinxSearch->facetSelect('media_type');
+        $facet['formats'] = $sphinxSearch->facetSelect('format');
+        $facet['commercialUnique'] = $sphinxSearch->facetSelect('commercial');
+        $facet['bases'] = $sphinxSearch->facetSelect('base');
+        $facet['recordingStandards'] = $sphinxSearch->facetSelect('recording_standard');
+        $facet['printTypes'] = $sphinxSearch->facetSelect('print_type');
+        $facet['projectNames'] = $sphinxSearch->facetSelect('project');
+        $facet['reelDiameters'] = $sphinxSearch->facetSelect('reel_diameter');
+        $facet['discDiameters'] = $sphinxSearch->facetSelect('disk_diameter');
+        $facet['acidDetection'] = $sphinxSearch->facetSelect('acid_detection');
+        $facet['collectionNames'] = $sphinxSearch->facetSelect('collection_name');
 //        print_r($facet);exit;
         return array(
             'facets' => $facet,
