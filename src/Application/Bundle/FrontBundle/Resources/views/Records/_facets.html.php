@@ -123,7 +123,7 @@
                     <?php if (isset($facetData['is_review'])): ?>
                         <?php $review_check = $facetData['is_review'] ?>
                     <?php endif; ?>    
-                    <input type="hidden" id="is_review_check_state" name="is_review_check" value="<?php echo  $review_check ?>" <?php echo (isset($facetData['acidDetection']) && $facetData['is_review'] == $review_check) ? 'checked="checked"' :''?> /> 
+                    <input type="hidden" id="is_review_check_state" name="is_review_check" value="<?php echo  $review_check ?>" <?php echo (isset($facetData['is_review']) && $facetData['is_review'] == $review_check) ? 'checked="checked"' :''?> /> 
                 </span>
                 Review
             </li>            
