@@ -17,7 +17,7 @@ class RecordsRepository extends EntityRepository
 	public function findOrganizationRecords($organizationID)
 	{
 		$rsm = new ResultSetMapping();
-		$query = $this->getEntityManager()->createNativeQuery('SELECT r.* FROM ApplicationFrontBundle:Records r', $rsm);
+		$query = $this->getEntityManager()->createNativeQuery('SELECT * FROM records', $rsm);
 //		$query->setParameter(1, 'romanb');
 
 		$users = $query->getResult();
