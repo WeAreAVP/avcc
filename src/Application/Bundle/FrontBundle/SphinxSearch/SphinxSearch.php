@@ -69,10 +69,10 @@ class SphinxSearch extends ContainerAware
         $sq->orderBy($sortColumn, $sortOrder)
                 ->limit($offset, $limit);
 
-//        return $sq->executeBatch();
-        $result = $sq->executeBatch();
-        $sql = $sq->getCompiled();
-        echo json_encode(array('result' => $result, 'sql' => $sql));        
+        return $sq->executeBatch();
+//        $result = $sq->executeBatch();
+//        $sql = $sq->getCompiled();
+//        echo json_encode(array('result' => $result, 'sql' => $sql));        
     }
 
     public function selectCount($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc')
