@@ -101,6 +101,7 @@ class SphinxSearch extends ContainerAware
 
     public function whereClause($criteria, $sq)
     {
+        print_r($criteria);exit;
         foreach ($criteria as $key => $value) {
             if ($key == 'is_review') {
                 if($value == 1){
