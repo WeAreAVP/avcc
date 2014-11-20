@@ -174,7 +174,7 @@ function Records() {
                 $("#recordsContainer").html(response.html);
                 selfObj.initDataTable();
                 selfObj.bindEvents();
-				$('.dropdown-toggle-custom').bind('click',function(){
+				$('.dropdown-toggle,.button-dropdown').bind('click',function(){
 					$(this).next().slideToggle();
 				});
             }
