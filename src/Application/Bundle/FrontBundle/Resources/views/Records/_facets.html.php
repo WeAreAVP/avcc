@@ -10,7 +10,7 @@
                 <a class="dropdown-toggle" href="#">Keyword</a>
                 <div data-role="dropdown" class="chekBoxFacet">
                     <div data-role="input-control" class="input-control text">
-                        <input type="text" placeholder="" />
+                        <input type="text" id="keywordSearch" value="" />
                     </div>
                     <div class="button-dropdown">
                         <button class="dropdown-toggle">
@@ -19,13 +19,14 @@
                         <ul class="dropdown-menu" data-role="dropdown">
                            <li><a href="javascript://;" class="customToken" data-fieldName="Title"  data-columnName="title" style="font-size: 14px!important;">Title</a></li>
                            <li><a href="javascript://;" class="customToken" data-fieldName="Description"  data-columnName="description" style="font-size: 14px!important;">Description</a></li>
-                           <li><a href="javascript://;" class="customToken" data-fieldName="Collection Name"  data-columnName="collection_name" style="font-size: 14px!important;">Collection Name</a></li>
-                           <li><a href="javascript://;" class="customToken" data-fieldName="Creation Date"  data-columnName="creation_date" style="font-size: 14px!important;">Creation Data</a></li>
-                           <li><a href="javascript://;" class="customToken" data-fieldName="Content Date"  data-columnName="content_date" style="font-size: 14px!important;">Content Date</a></li>
-                           <li><a href="javascript://;" class="customToken" data-fieldName="Genre Terms"  data-columnName="genre_terms" style="font-size: 14px!important;">Genre Terms</a></li>
+                           <li><a href="javascript://;" class="customToken" data-fieldName="Collection Name"  data-columnName="collectionName" style="font-size: 14px!important;">Collection Name</a></li>
+                           <li><a href="javascript://;" class="customToken" data-fieldName="Creation Date"  data-columnName="creationDate" style="font-size: 14px!important;">Creation Data</a></li>
+                           <li><a href="javascript://;" class="customToken" data-fieldName="Content Date"  data-columnName="contentDate" style="font-size: 14px!important;">Content Date</a></li>
+                           <li><a href="javascript://;" class="customToken" data-fieldName="Genre Terms"  data-columnName="genreTerms" style="font-size: 14px!important;">Genre Terms</a></li>
                            <li><a href="javascript://;" class="customToken" data-fieldName="Contributor"  data-columnName="contributor" style="font-size: 14px!important;">Contributor</a></li>
                         </ul>
-                    </div>                    
+                    </div> 
+                    <button class="button primary" id="addKeyword">Add Keyword</button>
                 </div>
             </li>
                 <?php if (count($facets['mediaType']) > 0): ?>
@@ -153,6 +154,7 @@
 </form>    
 <input type="hidden" value="" name="parent_facet" id="parent_facet" />
 <input type="hidden" value="" name="total_checked" id="total_checked"/>
+<input type="hidden" value="" name="facet_keyword_search" id="facet_keyword_search"/>
 <script type="text/javascript" src="<?php echo  $view['assets']->getUrl('js/tristate-0.9.2.js') ?>"></script> 
 <script type="text/javascript">
     initTriStateCheckBox('is_review_check', 'is_review_check_state', true);
@@ -161,8 +163,7 @@
         facets.setAjaxSource('<?php echo  $view['router']->generate('record_dataTable') ?>');
         facets.setPageUrl('<?php echo  $view['router']->generate('record_list') ?>');
         facets.bindEvents();
-        $('.customToken').click(function () {
-            facets.addCustomToken($(this).attr('data-fieldName'), $(this).attr('data-fieldName'))
-        });
+        facets.addCustomToken();
+        facets.addKeyword();
     });
 </script>
