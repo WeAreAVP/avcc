@@ -233,7 +233,7 @@ class RecordsController extends Controller
             foreach ($keywords as $keyword) {
                 if ($keyword['type'] == 'all') {
                     foreach ($this->keywords as $key) {
-                        $criteriaArr['s_' . $key] = $keyword['value'];
+                        $criteriaArr['*'] = $keyword['value'];
                     }
                 } else {
                     $criteriaArr['s_' . $keyword['type']] = $keyword['value'];
