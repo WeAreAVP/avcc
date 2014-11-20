@@ -104,7 +104,7 @@ class ReportController extends Controller
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$phpExcelObject->setActiveSheetIndex(0);
 		$this->downloadReport($phpExcelObject);
-		return array();
+		exit;
 	}
 
 	private function downloadReport($phpExcelObject)
