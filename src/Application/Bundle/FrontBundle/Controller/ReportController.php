@@ -97,6 +97,7 @@ class ReportController extends Controller
 
 		// output the column headings
 		fputcsv($output, $this->columns);
+		return $output;
 		return array();
 // fetch the data
 //		mysql_connect('localhost', 'username', 'password');
