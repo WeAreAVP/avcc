@@ -259,12 +259,12 @@ class RecordsController extends Controller
         
         $facetData = $session->get('facetData');
         if($facetData['facet_keyword_search']){
-            $keywords = json_decode($facetData);
+            $keywords = json_decode($facetData, true);
             $criteriaArr = array();
             foreach($keywords as $keyword){
                 $criteriaArr['s_'.$keyword['type']] = $keyword['value'];
             }
-            print_r($criteriaArr);exit;
         }
+        print_r($criteriaArr);exit;
     }
 }
