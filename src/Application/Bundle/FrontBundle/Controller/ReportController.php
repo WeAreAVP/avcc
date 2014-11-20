@@ -157,8 +157,8 @@ class ReportController extends Controller
 		{
 
 			$records = $entityManager->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords(1);
-			echo '<pre>';
-			print_r($records);exit;
+//			echo '<pre>';
+//			print_r($records);exit;
 		}
 //		$records = $entityManager->getRepository('ApplicationFrontBundle:Records')->findAll();
 
