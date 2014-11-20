@@ -87,26 +87,33 @@ class ReportController extends Controller
 	 */
 	public function allFormatsCsvAction()
 	{
-		$filename = 'allFormat_' . time() . '.csv';
-		// output headers so that the file is downloaded rather than displayed
-		header('Content-Type: text/csv; charset=utf-8');
-		header('Content-Disposition: attachment; filename=' . $filenameÏ);
-		
-		// create a file pointer connected to the output stream
-		$output = fopen('php://output', 'w');
+		$container = $this->container;
+		$response = new StreamedResponse(function() use($container)
+		{
+			$em = $container->get('doctrine')->getManager();
 
-		// output the column headings
-		fputcsv($output, $this->columns);
-		echo  $output;
-		return array();
-// fetch the data
-//		mysql_connect('localhost', 'username', 'password');
-//		mysql_select_db('database');
-//		$rows = mysql_query('SELECT field1,field2,field3 FROM table');
-//
-//// loop over the rows, outputting them
-//		while ($row = mysql_fetch_assoc($rows))
-//			fputcsv($output, $row);
+			// The getExportQuery method returns a query that is used to retrieve
+			// all the objects (lines of your csv file) you need. The iterate method
+			// is used to limit the memory consumption
+//			$results = $em->getRepository('ObtaoAcmeBundle:Jedi')->getExportQuery()->iterate();
+			$handle = fopen('php://output', 'r+');
+			fputcsv($handle, $this->columns);
+//			while (false !== ($row = $results->next()))
+//			{
+//				// add a line in the csv file. You need to implement a toArray() method
+//				// to transform your object into an array
+//				fputcsv($handle, $row[0]->toArray());
+//				// used to limit the memory consumption
+//				$em->detach($row[0]);
+//			}
+
+			fclose($handle);
+		});
+
+		$response->headers->set('Content-Type', 'application/force-download');
+		$response->headers->set('Content-Disposition', 'attachment; filename="export.csv"');
+
+		return $response;
 	}
 
 	/**
