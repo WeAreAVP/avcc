@@ -282,7 +282,7 @@ class RecordsController extends Controller
                 }
             }
         }
-        return $array;
+        return $result;
     }
 
 }
