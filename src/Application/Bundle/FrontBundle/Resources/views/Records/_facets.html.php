@@ -173,15 +173,5 @@
 	<input type="hidden" value="" name="total_checked" id="total_checked"/>
 	<input type="hidden" value="" name="facet_keyword_search" id="facet_keyword_search"/>
 </form>
-<script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/tristate-0.9.2.js') ?>"></script>
-<script type="text/javascript">
-	initTriStateCheckBox('is_review_check', 'is_review_check_state', true);
 
-	var facets = new Records();
-	facets.setAjaxSource('<?php echo $view['router']->generate('record_dataTable') ?>');
-	facets.setPageUrl('<?php echo $view['router']->generate('record_list') ?>');
-	facets.bindEvents();
-	facets.addCustomToken();
-	facets.addKeyword();
 
-</script>
