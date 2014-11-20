@@ -32,7 +32,7 @@ class SphinxSearch extends ContainerAware
     }
 
     public function insert()
-    {       
+    {
         $sphinxFields = new SphinxFields();
         $data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
         $sq = SphinxQL::create($this->conn)->insert()->into($this->indexName);
@@ -86,13 +86,15 @@ class SphinxSearch extends ContainerAware
         return $sq->executeBatch();
     }
 
-    public function facetSelect($facetColumn)
+    public function facetSelect($facetColumn, $criteria = null)
     {
         $sq = SphinxQL::create($this->conn)
                 ->select($facetColumn, SphinxQL::expr('count(*) AS total'))
-                ->from($this->indexName)
-                ->where($facetColumn, '!=', '')
-                ->groupBy($facetColumn)
+                ->from($this->indexName);
+        if ($criteria) {
+            $this->whereClause($criteria, $sq);
+        }
+        $sq->groupBy($facetColumn)
                 ->orderBy($facetColumn, 'asc');
 
 
@@ -103,15 +105,16 @@ class SphinxSearch extends ContainerAware
     {
         foreach ($criteria as $key => $value) {
             if ($key == 'is_review') {
-                if($value == 1){
-                    $sq->where($key, '=', 1);  
-                }elseif($value == 2){
-                    $sq->where($key, '=', 0); 
+                if ($value == 1) {
+                    $sq->where($key, '=', 1);
+                } elseif ($value == 2) {
+                    $sq->where($key, '=', 0);
                 }
-            } else {                
-                $_value = (is_array($value)) ? implode('|', $value) : $value;                
+            } else {
+                $_value = (is_array($value)) ? implode('|', $value) : $value;
                 $sq->match($key, $_value, true);
             }
         }
     }
+
 }

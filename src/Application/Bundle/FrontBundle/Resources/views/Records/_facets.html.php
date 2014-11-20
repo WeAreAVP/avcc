@@ -5,7 +5,7 @@
             <?php $facetData = $app->getSession()->get('facetData');
 //            print_r($facetData);exit;
             ?>
-            <li class="title">Filters</li>
+            <li class="title">Filters</li>           
             <li>
                 <a class="dropdown-toggle" href="#">Keyword</a>
                 <div data-role="dropdown" class="chekBoxFacet">
@@ -49,6 +49,7 @@
                     </ul>
                 </li>
             <?php endif; ?>
+            <?php if (count($facets['commercialUnique']) > 0):    ?>
             <li>
                 <a class="dropdown-toggle" href="#">Commercial/Unique</a>                                
                 <ul  data-role="dropdown" <?php if (isset($facetData['commercial'])): ?> style="display:block" <?php endif;?>>
@@ -59,6 +60,8 @@
                                 <?php endforeach; ?>
                 </ul>
             </li>
+            <?php endif; ?>
+            <?php if (count($facets['bases']) > 0):    ?>
             <li>
                 <a class="dropdown-toggle" href="#">Base</a>                                
                 <ul  data-role="dropdown" <?php if (isset($facetData['base'])): ?> style="display:block" <?php endif;?>>
@@ -69,6 +72,8 @@
                                 <?php endforeach ?>
                 </ul>
             </li>
+            <?php endif;?>
+            <?php if (count($facets['collectionNames']) > 0):    ?>
             <li>
                 <a class="dropdown-toggle" href="#">Collection Name</a>                                
                 <ul  data-role="dropdown" <?php if (isset($facetData['collectionName'])): ?> style="display:block" <?php endif?>>
@@ -79,6 +84,8 @@
                                 <?php endforeach ?>
                 </ul>
             </li>
+            <?php endif;?>
+            <?php if (count($facets['recordingStandards']) > 0):    ?>
             <li>
                 <a class="dropdown-toggle" href="#">Recording Standard</a>                                
                 <ul  data-role="dropdown" <?php if (isset($facetData['recordingStandard'])): ?> style="display:block" <?php endif?>>
@@ -89,6 +96,8 @@
                                 <?php endforeach; ?>
                 </ul>
             </li>
+            <?php endif;?>
+            <?php if (count($facets['printTypes']) > 0):    ?>
             <li>
                 <a class="dropdown-toggle" href="#">Print Type</a>                                
                 <ul  data-role="dropdown" <?php if (isset($facetData['printType'])): ?> style="display:block" <?php endif?>>
@@ -99,6 +108,8 @@
                                 <?php endforeach ?>
                 </ul>
             </li>
+            <?php endif;?>
+            <?php if (count($facets['projectNames']) > 0):    ?>
             <li>
                 <a class="dropdown-toggle" href="#">Project Name</a>                                
                 <ul  data-role="dropdown" <?php if (isset($facetData['project'])): ?> style="display:block" <?php endif?>>
@@ -109,6 +120,8 @@
                                 <?php endforeach; ?>
                 </ul>
             </li>
+            <?php endif;?>
+            <?php if (count($facets['reelDiameters']) > 0):    ?>
             <li>
                 <a class="dropdown-toggle" href="#">Reel Diameter</a>                                
                 <ul  data-role="dropdown" <?php if (isset($facetData['reelDiameter'])): ?> style="display:block" <?php endif?>>
@@ -119,6 +132,8 @@
                                 <?php endforeach ?>
                 </ul>
             </li>
+            <?php endif;?>
+            <?php if (count($facets['discDiameters']) > 0):    ?>
             <li>
                 <a class="dropdown-toggle" href="#">Disc Diameter</a>                                
                 <ul  data-role="dropdown" <?php if (isset($facetData['discDiameter'])): ?> style="display:block" <?php endif?>>
@@ -129,6 +144,8 @@
                                 <?php endforeach; ?>
                 </ul>
             </li>
+            <?php endif;?>
+            <?php if (count($facets['acidDetection']) > 0):    ?>
             <li>
                 <a class="dropdown-toggle" href="#">Acid Detection Strip</a>                                
                 <ul  data-role="dropdown" <?php if (isset($facetData['acidDetection'])): ?> style="display:block" <?php endif?>>
@@ -139,6 +156,7 @@
                                 <?php endforeach; ?>
                 </ul>
             </li>
+            <?php endif;?>
             <li class="chekBoxFacet">
                 <span id="is_review_check" style="cursor: default;">
                     <?php $review_check = 0 ?>
