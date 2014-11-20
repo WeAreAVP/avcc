@@ -19,20 +19,20 @@ class SphinxSearch extends ContainerAware
     private $entityManager = null;
     private $recordTypeId;
 
-    public function __construct(EntityManager $entityManager, $recordId = null, $recordTypeId = null)
+    public function __construct(EntityManager $entityManager, $sphinxInfo, $recordId = null, $recordTypeId = null)
     {
         $this->entityManager = $entityManager;
         $this->recordId = $recordId;
         $this->recordTypeId = $recordTypeId;
 
         $this->conn = new Connection();
-        $this->conn->setParams(array('host' => 'localhost', 'port' => '9306'));
+        $this->conn->setParams(array('host' => $sphinxInfo['host'], 'port' => $sphinxInfo['port']));
         $this->conn->silenceConnectionWarning(true);
+        $this->indexName = $sphinxInfo['indexName'];
     }
 
     public function insert()
-    {
-        $sphinxInfo = $this->getSphinxInfo();        
+    {       
         $sphinxFields = new SphinxFields();
         $data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
         $sq = SphinxQL::create($this->conn)->insert()->into($this->indexName);
@@ -60,9 +60,6 @@ class SphinxSearch extends ContainerAware
 
     public function select($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null)
     {
-        $sphinxInfo = $this->getSphinxInfo();
-        $this->indexName = $sphinxInfo['index_name'];
-        print_r($sphinxInfo);exit;
         $sq = SphinxQL::create($this->conn)
                 ->select()
                 ->from($this->indexName);
@@ -117,9 +114,4 @@ class SphinxSearch extends ContainerAware
             }
         }
     }
-
-    protected function getSphinxInfo()
-    {
-        return $this->container->getParameter('sphinx_param');
-    }    
 }

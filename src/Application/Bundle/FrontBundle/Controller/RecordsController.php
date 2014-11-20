@@ -117,7 +117,8 @@ class RecordsController extends Controller
         $offset = $request->query->get('iDisplayStart') ? $request->query->get('iDisplayStart') : 0;
         $limit = $request->query->get('iDisplayLength') ? $request->query->get('iDisplayLength') : 10;
 
-        $sphinxSearch = new SphinxSearch($em);
+        $shpinxInfo = $this->getSphinxInfo();
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
         $criteria = $this->criteria();
         $result = $sphinxSearch->select($offset, $limit, $sortIndex, $sortOrder, $criteria);
 //        print_r($result);
@@ -138,6 +139,11 @@ class RecordsController extends Controller
         );
         echo json_encode($dataTable);
         exit;
+    }
+
+    protected function getSphinxInfo()
+    {
+        return $this->container->getParameter('sphinx_param');
     }
 
     /**
