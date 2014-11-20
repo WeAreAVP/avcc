@@ -16,7 +16,10 @@ class RecordsRepository extends EntityRepository
 
 	public function findOrganizationRecords($organizationID)
 	{
-		return $this->getEntityManager()->createQuery("select  p from ApplicationFrontBundle:Records p ")->getResult();
+		return $this->getEntityManager()->createQuery("select  r from ApplicationFrontBundle:Records r "
+		. "JOIN r.user u "
+		. "JOIN u.organizations o"
+		. "o.id =  " . $organizationID)->getResult();
 		$qb = $this->getEntityManager()->createQueryBuilder();
 		return $qb->select('u')
 		->from('User', 'u')
