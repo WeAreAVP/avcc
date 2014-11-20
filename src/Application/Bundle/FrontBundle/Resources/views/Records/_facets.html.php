@@ -13,7 +13,7 @@
                         <input type="text" id="keywordSearch" value="" />
                     </div>
                     <div class="button-dropdown">
-                        <button type="button" class="button dropdown-toggle">
+                        <button type="button" class="dropdown-toggle">
                            <span id="limit_field_text">Search</span>
                         </button>
                         <ul class="dropdown-menu" data-role="dropdown">
