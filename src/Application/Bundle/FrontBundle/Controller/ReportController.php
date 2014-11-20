@@ -80,12 +80,12 @@ class ReportController extends Controller
 	/**
 	 * Show Reports view.
 	 *
-	 * @Route("/allformats", name="all_formats")
+	 * @Route("/allformats", name="all_formats_xlsx")
 	 * @Method("GET")
 	 * @Template()
 	 * @return array
 	 */
-	public function allFormatsAction()
+	public function allFormatsXlsxAction()
 	{
 		$phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 		$phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
@@ -107,9 +107,10 @@ class ReportController extends Controller
 
 		$writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
 		// create the response
+		$filename = 'allFormat_' . time() . '.xlsx';
 		$response = $this->get('phpexcel')->createStreamedResponse($writer);
 		$response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
-		$response->headers->set('Content-Disposition', 'attachment;filename=stream-file.xls');
+		$response->headers->set('Content-Disposition', "attachment;filename={$filename}");
 		$response->headers->set('Pragma', 'public');
 		$response->headers->set('Cache-Control', 'maxage=1');
 
