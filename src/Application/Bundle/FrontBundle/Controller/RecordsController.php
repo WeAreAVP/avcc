@@ -226,7 +226,7 @@ class RecordsController extends Controller
             $criteriaArr['s_content_date'] = $facetData['contentDate'];
         }
         if ($facetData['facet_keyword_search']) {
-            $keywords = json_decode($facetData);
+            $keywords = json_decode($facetData['facet_keyword_search'], true);
             foreach ($keywords as $keyword) {
                 $criteriaArr['s_' . $keyword['type']] = $keyword['value'];
             }
@@ -252,17 +252,7 @@ class RecordsController extends Controller
         $session = $this->getRequest()->getSession();
         if ($data) {
             $session->remove('facetData');
-            $session->set('facetData', $data);
-            $facetData = $session->get('facetData');
-            if ($facetData['facet_keyword_search']) {
-                $keywords = json_decode($facetData['facet_keyword_search'], true);
-                $criteriaArr = array();
-                foreach ($keywords as $keyword) {
-                    $criteriaArr['s_' . $keyword['type']] = $keyword['value'];
-                }
-            }
-            print_r($criteriaArr);
-            exit;
+            $session->set('facetData', $data);            
         } else {
             $session->remove('facetData');
         }
