@@ -5,7 +5,6 @@ namespace Application\Bundle\FrontBundle\EventListener;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 //use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use Application\Bundle\FrontBundle\Entity\Records;
 use Application\Bundle\FrontBundle\Entity\AudioRecords;
 use Application\Bundle\FrontBundle\Entity\FilmRecords;
 use Application\Bundle\FrontBundle\Entity\VideoRecords;

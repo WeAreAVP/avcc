@@ -20,7 +20,7 @@ class UserSettingsController extends Controller
 
     /**
      * User settings
-     * 
+     *
      * @Route("/", name="field_settings")
      * @Method("GET")
      * @Template()
@@ -47,9 +47,9 @@ class UserSettingsController extends Controller
 
     /**
      * Update user settings
-     * 
-     * @param Request $request 
-     * 
+     *
+     * @param Request $request
+     *
      * @Route("/update", name="field_settings_update")
      * @Method("POST")
      * @Template()

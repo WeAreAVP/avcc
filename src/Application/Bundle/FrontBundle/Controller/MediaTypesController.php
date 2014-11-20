@@ -38,9 +38,9 @@ class MediaTypesController extends Controller
     }
     /**
      * Creates a new MediaTypes entity.
-     * 
-     * @param  Request $request
-     * 
+     *
+     * @param Request $request
+     *
      * @Route("/", name="vocabularies_mediatypes_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:MediaTypes:new.html.twig")

@@ -137,9 +137,9 @@ class TrackTypesController extends Controller
 
     /**
      * Displays a form to edit an existing TrackTypes entity.
-     * 
-     * @param  integer $id
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}/edit", name="vocabularies_tracktypes_edit")
      * @Method("GET")
      * @Template()

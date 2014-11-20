@@ -108,9 +108,9 @@ class DiskDiametersController extends Controller
 
     /**
      * Finds and displays a DiskDiameters entity.
-     * 
-     * @param  integer $id
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}", name="vocabularies_diskdiameters_show")
      * @Method("GET")
      * @Template()

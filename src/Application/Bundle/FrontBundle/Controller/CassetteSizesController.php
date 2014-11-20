@@ -136,9 +136,9 @@ class CassetteSizesController extends Controller
 
     /**
      * Displays a form to edit an existing CassetteSizes entity.
-     * 
-     * @param  integer $id
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}/edit", name="vocabularies_cassettessizes_edit")
      * @Method("GET")
      * @Template()

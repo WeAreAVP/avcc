@@ -3,7 +3,7 @@
 
 {% block body -%}
 	<div class="grid">
-{% endif %}            
+{% endif %}
 		<div class="row" id="recordsContainer">
 			<div class="span3">
 				{{ include('ApplicationFrontBundle::Records/_facets.html.twig', { 'facets': facets }) }}
@@ -34,11 +34,11 @@
 							<tr>
 								{% for column, value in columns %}
 									{% if column == 'checkbox_Col' %}
-										<th id="{{value}}"><input type="checkbox" name="selectAll" /></th>  
-										{% else %}    
+										<th id="{{value}}"><input type="checkbox" name="selectAll" /></th>
+										{% else %}
 										<th id="{{value}}">{{ column|replace({'_': ' '}) }}</th>
 										{% endif %}
-									{% endfor %}                        
+									{% endfor %}
 							</tr>
 						</thead>
 						<tbody>
@@ -49,8 +49,8 @@
 
 				{% block view_javascripts %}
 					<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
-					<script type="text/javascript" src="{{ asset('js/records.js') }}"></script> 
-                                          
+					<script type="text/javascript" src="{{ asset('js/records.js') }}"></script>
+
 					<script type="text/javascript">
 						$(window).load(function () {
 							var record = new Records();
@@ -64,11 +64,11 @@
 
 			</div>
 		</div>
-{% if isAjax == false %}                                
+{% if isAjax == false %}
 	</div>
 
 
 	{#    {{ dump(app.session.get('columnOrder'))}}#}
 
 {% endblock %}
-{% endif %}  
+{% endif %}

@@ -4,13 +4,13 @@
 <div class="grid fluid">
     <h1>
         <a href="<?php echo $view['router']->generate('record_list') ?>"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a> Record Detail
-        
+
     </h1>
     <a href="<?php echo $view['router']->generate('record_video_edit', array('id'=>$entity->getId())) ?>" class="button primary">Edit</a>
     <div class="clearfix"></div>
     <table class="table">
         <tbody>
-   
+
             <tr>
                 <th class="text-right" width="20%">Media Type</th>
                 <td width="80%"><?php echo $entity->getRecord()->getMediaType()?></td>
@@ -108,7 +108,7 @@
                 <th class="text-right">Recording Standard</th>
                 <td><?php echo $entity->getRecordingStandard() ?></td>
             </tr>
-            <?php endif;?>            
+            <?php endif;?>
             <?php if($entity->getRecord()->getGenreTerms()):?>
             <tr>
                 <th class="text-right">Genre Terms </th>

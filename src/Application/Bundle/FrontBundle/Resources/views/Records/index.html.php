@@ -21,11 +21,8 @@
                         </ul>
                     </li>
 
-
                 </ul>
             </div>
-
-
 
             <div>
                 <table class="table hovered bordered" id="records">
@@ -33,11 +30,11 @@
                         <tr>
                             <?php foreach ($columns as $column => $value) { ?>
                                 <?php if ($column == 'checkbox_Col') { ?>
-                                    <th id="<?php echo $value ?>"><input type="checkbox" name="selectAll" /></th> 
-                                <?php } else { ?>      
+                                    <th id="<?php echo $value ?>"><input type="checkbox" name="selectAll" /></th>
+                                <?php } else { ?>
                                     <th id="<?php echo $value ?>"><?php echo str_replace('_', ' ', $column) ?></th>
-                                <?php } ?>      
-                            <?php } ?>                                               
+                                <?php } ?>
+                            <?php } ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,7 +44,7 @@
             </div>
             <?php $view['slots']->start('view_javascripts') ?>
             <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
-            <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/records.js') ?>"></script> 
+            <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/records.js') ?>"></script>
 
             <script type="text/javascript">
                 $(window).load(function () {
@@ -56,15 +53,14 @@
                     record.initDataTable();
                 });
 
-
             </script>
             <?php
             $view['slots']->stop();
             ?>
 
-        </div>    
-    <?php if (!$isAjax): ?>    
-        </div>      
+        </div>
+    <?php if (!$isAjax): ?>
+        </div>
     </div>
     <?php
     $view['slots']->stop();

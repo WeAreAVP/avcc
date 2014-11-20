@@ -295,10 +295,10 @@ class FilmRecordsController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm();
     }
-    
+
     /**
      * Get sphinx parameters
-     * 
+     *
      * @return array
      */
     protected function getSphinxInfo()

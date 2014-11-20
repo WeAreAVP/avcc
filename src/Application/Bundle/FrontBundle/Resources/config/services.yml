@@ -8,8 +8,8 @@ services:
         class: Application\Bundle\FrontBundle\EventListener\SearchIndexer
         tags:
             - { name: doctrine.event_listener, event: postPersist, method: postPersist , connection: default }
-    
-        
+
+
     my.subscriber:
         class: Application\Bundle\FrontBundle\EventListener\SearchIndexerSubscriber
         tags:

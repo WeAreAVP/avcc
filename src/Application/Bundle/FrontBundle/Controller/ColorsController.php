@@ -136,9 +136,9 @@ class ColorsController extends Controller
 
     /**
      * Displays a form to edit an existing Colors entity.
-     * 
-     * @param  integer $id
-     * 
+     *
+     * @param integer $id
+     *
      * @Route("/{id}/edit", name="vocabularies_colors_edit")
      * @Method("GET")
      * @Template()

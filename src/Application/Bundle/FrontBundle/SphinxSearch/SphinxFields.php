@@ -11,9 +11,9 @@ class SphinxFields
     private $record = null;
 
     /**
-     * 
-     * @param EntityManager $entityManager
-     * @param int $recordId
+     *
+     * @param  EntityManager $entityManager
+     * @param  int           $recordId
      * @return type
      */
     public function prepareFields(EntityManager $entityManager, $recordId, $recordTypeId)
@@ -58,7 +58,7 @@ class SphinxFields
         $this->indexFields['part'] = ($this->record->getRecord()->getPart()) ? $this->record->getRecord()->getPart() : "";
         $this->indexFields['generation'] = ($this->record->getRecord()->getGeneration()) ? $this->record->getRecord()->getGeneration() : "";
         $this->indexFields['project'] = $this->indexFields['s_project'] = ($this->record->getRecord()->getProject()) ? $this->record->getRecord()->getProject()->getName() : "";
-        
+
         return $this->indexFields;
     }
 

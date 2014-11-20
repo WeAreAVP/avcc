@@ -21,7 +21,7 @@ security:
             form_login:
                 provider: fos_userbundle
                 always_use_default_target_path: false
-                check_path: /login_check                
+                check_path: /login_check
             logout:       true
             anonymous:    true
 

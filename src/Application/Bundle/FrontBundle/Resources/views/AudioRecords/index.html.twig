@@ -39,18 +39,18 @@
 				</div>
 
 
-				
+
 				<div>
 					<table class="table hovered bordered" id="records">
 						<thead>
 							<tr>
 								{% for column, value in columns %}
 									{% if column == 'checkbox_Col' %}
-										<th id="{{value}}"><input type="checkbox" name="selectAll" /></th>  
-										{% else %}    
+										<th id="{{value}}"><input type="checkbox" name="selectAll" /></th>
+										{% else %}
 										<th id="{{value}}">{{ column|replace({'_': ' '}) }}</th>
 										{% endif %}
-									{% endfor %}                        
+									{% endfor %}
 							</tr>
 						</thead>
 						<tbody>
@@ -58,10 +58,10 @@
 						</tbody>
 					</table>
 				</div>
-				
+
 					{% block view_javascripts %}
 						<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
-						<script type="text/javascript" src="{{ asset('js/records.js') }}"></script>   
+						<script type="text/javascript" src="{{ asset('js/records.js') }}"></script>
 						<script type="text/javascript">
 							$(window).load(function () {
 								var record = new Records();
@@ -72,7 +72,7 @@
 
 						</script>
 					{% endblock %}
-				
+
 			</div>
 		</div>
 	</div>

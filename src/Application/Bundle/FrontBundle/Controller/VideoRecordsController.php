@@ -286,7 +286,7 @@ class VideoRecordsController extends Controller
 
     /**
      * Get sphinx parameters
-     * 
+     *
      * @return array
      */
     protected function getSphinxInfo()

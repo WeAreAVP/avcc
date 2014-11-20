@@ -2,12 +2,10 @@
 
 namespace Application\Bundle\FrontBundle\SphinxSearch;
 
-use Application\Bundle\FrontBundle\SphinxSearch\SphinxFields;
 use Foolz\SphinxQL\SphinxQL;
 use Foolz\SphinxQL\Helper;
 use Foolz\SphinxQL\Connection;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
 class SphinxSearch extends ContainerAware
@@ -37,6 +35,7 @@ class SphinxSearch extends ContainerAware
         $data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
         $sq = SphinxQL::create($this->conn)->insert()->into($this->indexName);
         $sq->set($data);
+
         return $sq->execute();
     }
 
@@ -46,6 +45,7 @@ class SphinxSearch extends ContainerAware
         $data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
         $sq = SphinxQL::create($this->conn)->update($this->indexName);
         $sq->set($data);
+
         return $sq->execute();
     }
 
@@ -55,6 +55,7 @@ class SphinxSearch extends ContainerAware
         $data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
         $sq = SphinxQL::create($this->conn)->replace()->into($this->indexName);
         $sq->set($data);
+
         return $sq->execute();
     }
 
@@ -72,7 +73,7 @@ class SphinxSearch extends ContainerAware
         return $sq->executeBatch();
 //        $result = $sq->executeBatch();
 //        $sql = $sq->getCompiled();
-//        echo json_encode(array('result' => $result, 'sql' => $sql));        
+//        echo json_encode(array('result' => $result, 'sql' => $sql));
     }
 
     public function selectCount($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc')
@@ -83,6 +84,7 @@ class SphinxSearch extends ContainerAware
                 ->orderBy($sortColumn, $sortOrder)
                 ->limit($offset, $limit)
                 ->enqueue(Helper::create($this->conn)->showMeta());
+
         return $sq->executeBatch();
     }
 
@@ -97,7 +99,6 @@ class SphinxSearch extends ContainerAware
         $sq->where($facetColumn, '!=','');
         $sq->groupBy($facetColumn)
                 ->orderBy($facetColumn, 'asc');
-
 
         return $sq->execute();
     }

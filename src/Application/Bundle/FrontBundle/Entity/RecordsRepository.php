@@ -24,8 +24,7 @@ class RecordsRepository extends EntityRepository
 //                        ->setMaxResults($limit)
 //                        ->setFirstResult($offSet)
                         ->getArrayResult();
-        
-        
+
         return $result;
     }
 

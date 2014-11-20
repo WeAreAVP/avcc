@@ -77,9 +77,9 @@ class AudioRecordsController extends Controller
     /**
      * Creates a form to create a AudioRecords entity.
      *
-     * @param AudioRecords $entity The entity
+     * @param AudioRecords  $entity The entity
      * @param EntityManager $em
-     * @param form $data
+     * @param form          $data
      *
      * @return \Symfony\Component\Form\Form The form
      */
@@ -100,7 +100,7 @@ class AudioRecordsController extends Controller
      *
      * @param integer $projectId
      * @param integer $audioRecId
-     * 
+     *
      * @Route("/audio/new", name="record_new")
      * @Route("/audio/new/{projectId}", name="record_new_against_project")
      * @Route("/audio/new/{audioRecId}/duplicate", name="record_audio_duplicate")
@@ -200,10 +200,10 @@ class AudioRecordsController extends Controller
     /**
      * Creates a form to edit a AudioRecords entity.
      *
-     * @param AudioRecords $entity The entity
-     * @param EntityManager $em 
-     * @param array $data 
-     * 
+     * @param AudioRecords  $entity The entity
+     * @param EntityManager $em
+     * @param array         $data
+     *
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(AudioRecords $entity, $em, $data = null, $sphinxParam = null)
@@ -357,9 +357,9 @@ class AudioRecordsController extends Controller
     /**
      * get recording speed values to show in dropdown.
      *
-     * @param integer $formatId Format id
-     * @param integer $mediaTypeId 
-     * 
+     * @param integer $formatId    Format id
+     * @param integer $mediaTypeId
+     *
      * @Route("/getRecordingSpeed/{formatId}/{mediaTypeId}", name="record_get_speed")
      * @Method("GET")
      * @Template()
@@ -383,13 +383,13 @@ class AudioRecordsController extends Controller
      * get format values to show in dropdown.
      *
      * @param integer $mediaTypeId Media type id
-     * @param integer $formatId 
-     * 
+     * @param integer $formatId
+     *
      * @Route("/getFormat/{mediaTypeId}", name="record_get_format")
      * @Route("/getFormat/{mediaTypeId}/{formatId}", name="record_get_format_selected")
      * @Method("GET")
      * @Template()
-     * @return template 
+     * @return template
      */
     public function getFormatAction($mediaTypeId, $formatId = null)
     {
@@ -425,9 +425,9 @@ class AudioRecordsController extends Controller
     /**
      * get reel diameters values to show in dropdown.
      *
-     * @param integer $formatId Format id
-     * @param integer $mediaTypeId 
-     * 
+     * @param integer $formatId    Format id
+     * @param integer $mediaTypeId
+     *
      * @Route("/getReelDiameter/{formatId}/{mediaTypeId}", name="record_get_reeldiameter")
      * @Method("GET")
      * @Template()
@@ -449,7 +449,7 @@ class AudioRecordsController extends Controller
 
     /**
      * Get sphinx parameters
-     * 
+     *
      * @return array
      */
     protected function getSphinxInfo()

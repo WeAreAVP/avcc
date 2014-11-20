@@ -14,7 +14,7 @@ use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 
 /**
  * Records controller.
- * 
+ *
  * @Route("/")
  *
  */
@@ -52,7 +52,7 @@ class RecordsController extends Controller
      *
      * @Route("/", name="record_list")
      * @Method("GET")
-     * @Template("ApplicationFrontBundle:Records:index.html.php") 
+     * @Template("ApplicationFrontBundle:Records:index.html.php")
      * @return array
      */
     public function indexAction(Request $request)
@@ -110,12 +110,12 @@ class RecordsController extends Controller
 
     /**
      * Make records to display for dataTables.
-     * 
-     * @param Request $request 
-     * 
+     *
+     * @param Request $request
+     *
      * @Route("/dataTable", name="record_dataTable")
      * @Method("GET")
-     * @Template("ApplicationFrontBundle:AudioRecords:dataTable.html.php") 
+     * @Template("ApplicationFrontBundle:AudioRecords:dataTable.html.php")
      * @return json
      */
     public function dataTableAction(Request $request)
@@ -131,7 +131,6 @@ class RecordsController extends Controller
         $sEcho = $request->query->get('sEcho');
         $sortOrder = $request->query->get('sSortDir_0') ? $request->query->get('sSortDir_0') : 'asc';
         $sortIndex = $request->query->get('iSortCol_0') ? $columns[$request->query->get('iSortCol_0')] : 'title';
-
 
         $offset = $request->query->get('iDisplayStart') ? $request->query->get('iDisplayStart') : 0;
         $limit = $request->query->get('iDisplayLength') ? $request->query->get('iDisplayLength') : 10;
@@ -162,7 +161,7 @@ class RecordsController extends Controller
 
     /**
      * Get sphinx parameters
-     * 
+     *
      * @return array
      */
     protected function getSphinxInfo()
@@ -171,9 +170,9 @@ class RecordsController extends Controller
     }
 
     /**
-     * 
+     *
      * @param Request $request
-     * 
+     *
      * @Route("/facets", name="record_facets")
      * @Method("POST")
      */
@@ -193,7 +192,7 @@ class RecordsController extends Controller
 
     /**
      * Set criteria for facets
-     * 
+     *
      * @return array
      */
     protected function criteria()
@@ -255,6 +254,7 @@ class RecordsController extends Controller
                 }
             }
         }
+
         return $criteriaArr;
     }
 

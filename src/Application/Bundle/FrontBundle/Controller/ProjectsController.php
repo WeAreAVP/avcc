@@ -322,7 +322,6 @@ class ProjectsController extends Controller
 
         /// Audio
         if ($mediaTypeId == 1) {
-
             return $this->redirect($this->generateUrl('record_new_against_project', array('projectId' => $id)));
         } elseif ($mediaTypeId == 2) {
             /// Film
