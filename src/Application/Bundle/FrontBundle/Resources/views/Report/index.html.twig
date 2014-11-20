@@ -5,8 +5,8 @@
 	</h1>
 	<div>
 		<ul class="unstyled">
-			<li><a href="{{ path('all_formats_xlsx') }}">All Formats as XLSX</a></li>
-			<li><a href="{{ path('all_formats_csv') }}">All Formats as CSV</a></li>
+			<li><a href="{{ path('all_formats', { 'type': 'xlsx' }) }}">All Formats as XLSX</a></li>
+			<li><a href="{{ path('all_formats', { 'type': 'csv' }) }}">All Formats as CSV</a></li>
 		</ul>
 
 	</div>

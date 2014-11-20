@@ -79,42 +79,19 @@ class ReportController extends Controller
 	}
 
 	/**
-	 * Show Reports view.
+	 * Generate report as xlsx or csv
 	 *
-	 * @Route("/allformatscsv", name="all_formats_csv")
+	 * @Route("/allformats/{type}", name="all_formats")
 	 * @Method("GET")
 	 * @Template()
 	 * @return array
 	 */
-	public function allFormatsCsvAction()
+	public function allFormatsAction($type)
 	{
-//		echo 'here';exit;
-		$container = $this->container;
-		$response = new StreamedResponse(function() use($container)
+		if ( ! in_array($type, array('csv', 'xlsx')))
 		{
-
-			$handle = fopen('php://output', 'r+');
-			fputcsv($handle, $this->columns);
-			fclose($handle);
-		});
-
-		$response->headers->set('Content-Type', 'application/octet-stream;  charset=utf-8');
-		$response->headers->set('Content-Transfer-Encoding', 'Binary');
-		$response->headers->set('Content-disposition', 'attachment; filename="export.csv"');
-
-		return $response;
-	}
-
-	/**
-	 * Show Reports view.
-	 *
-	 * @Route("/allformatsxlsx", name="all_formats_xlsx")
-	 * @Method("GET")
-	 * @Template()
-	 * @return array
-	 */
-	public function allFormatsXlsxAction()
-	{
+			throw $this->createNotFoundException('Invalid report type');
+		}
 		$phpExcelObject = $this->get('phpexcel')->createPHPExcelObject();
 		$phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
 		->setTitle("AVCC - Report")
@@ -132,10 +109,10 @@ class ReportController extends Controller
 
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$phpExcelObject->setActiveSheetIndex(0);
-
-		$writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'CSV');
+		$format = ($type == 'csv') ? 'CSV' : 'Excel2007';
+		$writer = $this->get('phpexcel')->createWriter($phpExcelObject, $format);
 		// create the response
-		$filename = 'allFormat_' . time() . '.xlsx';
+		$filename = 'allFormat_' . time() . '.' . $type;
 		$response = $this->get('phpexcel')->createStreamedResponse($writer);
 		$response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
 		$response->headers->set('Content-Disposition', "attachment;filename={$filename}");
