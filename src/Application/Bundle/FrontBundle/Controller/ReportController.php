@@ -96,7 +96,7 @@ class ReportController extends Controller
 		foreach ($this->columns as $column => $columnName)
 		{
 			$activeSheet->setCellValueExplicitByColumnAndRow($column, 1, str_replace('_', '', $columnName));
-			$ThisStyleSheet->getColumnDimensionByColumn($column)->setWidth(40);
+			$activeSheet->getColumnDimensionByColumn($column)->setWidth(40);
 		}
 //		$activeSheet->setCellValue('A1', 'Hello');
 //		$activeSheet->setCellValue('B2', 'world!');
