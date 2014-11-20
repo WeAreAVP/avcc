@@ -28,7 +28,6 @@ class RecordsController extends Controller
     private $session;
     private $offset;
     private $limit;
-    private $sphinxInfo;
 
     public function __construct()
     {
@@ -42,9 +41,7 @@ class RecordsController extends Controller
         );
         
         $this->defaultFields = new DefaultFields();
-        $this->limit = 10;
-        $this->sphinxInfo = $this->getSphinxInfo();
-        print_r($this->sphinxInfo);exit;
+        $this->limit = 10;        
     }
 
     /**
@@ -120,6 +117,7 @@ class RecordsController extends Controller
         $offset = $request->query->get('iDisplayStart') ? $request->query->get('iDisplayStart') : 0;
         $limit = $request->query->get('iDisplayLength') ? $request->query->get('iDisplayLength') : 10;
 
+        $sphinxInfo = $this->getSphinxInfo();
 
         $sphinxSearch = new SphinxSearch($em);
         $criteria = $this->criteria();
