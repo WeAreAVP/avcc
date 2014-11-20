@@ -155,13 +155,8 @@ class ReportController extends Controller
 		}
 		else
 		{
-			$em = $this->getDoctrine()->getEntityManager();
-			$connection = $em->getConnection();
-			$statement = $connection->prepare("SELECT * FROM ApplicationFrontBundle:Records r");
-//			$statement->bindValue('id', 123);
-			$statement->execute();
-			$records = $statement->fetchAll();
-//			$records = $entityManager->getRepository('ApplicationFrontBundle:Records')->findBy(array('user.organizations' => $this->getUser()->getOrganizations()));
+
+			$records = $entityManager->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords(1);
 		}
 //		$records = $entityManager->getRepository('ApplicationFrontBundle:Records')->findAll();
 
