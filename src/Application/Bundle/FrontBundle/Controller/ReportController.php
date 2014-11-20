@@ -103,13 +103,7 @@ class ReportController extends Controller
 		$phpExcelObject->getActiveSheet()->setTitle('All Formats');
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$phpExcelObject->setActiveSheetIndex(0);
-		$this->downloadReport($phpExcelObject);
-		return $response;
-	}
-
-	private function downloadReport($phpExcelObject)
-	{
-		// create the writer
+//		$this->downloadReport($phpExcelObject);
 		$writer = $this->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
 		// create the response
 		$response = $this->get('phpexcel')->createStreamedResponse($writer);
@@ -119,6 +113,12 @@ class ReportController extends Controller
 		$response->headers->set('Cache-Control', 'maxage=1');
 
 		return $response;
+		return array();
+	}
+
+	private function downloadReport($phpExcelObject)
+	{
+		// create the writer
 	}
 
 }
