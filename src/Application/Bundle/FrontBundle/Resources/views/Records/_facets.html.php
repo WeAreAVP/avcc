@@ -17,13 +17,13 @@
                            <span id="limit_field_text">Search</span>
                         </button>
                         <ul class="dropdown-menu keywordDropdown" data-role="dropdown">
-                           <li><a href="javascript://;" class="customToken" data-fieldName="Title"  data-columnName="title">Title</a></li>
-                           <li><a href="javascript://;" class="customToken" data-fieldName="Description"  data-columnName="description">Description</a></li>
-                           <li><a href="javascript://;" class="customToken" data-fieldName="Collection Name"  data-columnName="collection_name">Collection Name</a></li>
-                           <li><a href="javascript://;" class="customToken" data-fieldName="Creation Date"  data-columnName="creation_date">Creation Data</a></li>
-                           <li><a href="javascript://;" class="customToken" data-fieldName="Content Date"  data-columnName="content_date">Content Date</a></li>
-                           <li><a href="javascript://;" class="customToken" data-fieldName="Genre Terms"  data-columnName="genre_terms">Genre Terms</a></li>
-                           <li><a href="javascript://;" class="customToken" data-fieldName="Contributor"  data-columnName="contributor">Contributor</a></li>
+                           <li><a href="javascript://;" class="customToken" data-fieldName="Title"  data-columnName="title" style="font-size: 14px!important;">Title</a></li>
+                           <li><a href="javascript://;" class="customToken" data-fieldName="Description"  data-columnName="description" style="font-size: 14px!important;">Description</a></li>
+                           <li><a href="javascript://;" class="customToken" data-fieldName="Collection Name"  data-columnName="collection_name" style="font-size: 14px!important;">Collection Name</a></li>
+                           <li><a href="javascript://;" class="customToken" data-fieldName="Creation Date"  data-columnName="creation_date" style="font-size: 14px!important;">Creation Data</a></li>
+                           <li><a href="javascript://;" class="customToken" data-fieldName="Content Date"  data-columnName="content_date" style="font-size: 14px!important;">Content Date</a></li>
+                           <li><a href="javascript://;" class="customToken" data-fieldName="Genre Terms"  data-columnName="genre_terms" style="font-size: 14px!important;">Genre Terms</a></li>
+                           <li><a href="javascript://;" class="customToken" data-fieldName="Contributor"  data-columnName="contributor" style="font-size: 14px!important;">Contributor</a></li>
                         </ul>
                     </div>                    
                 </div>
