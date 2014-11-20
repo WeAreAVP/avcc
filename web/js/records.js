@@ -179,6 +179,8 @@ function Records() {
 
         });
     }
+    var customFieldName = 'All';
+    var customColumnName = 'all';
     /**
      * 
      * @returns {undefined}
