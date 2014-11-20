@@ -13,9 +13,9 @@
                         <input type="text" id="keywordSearch" value="" />
                     </div>
                     <div class="button-dropdown">
-                        <button class="dropdown-toggle">
+                        <a href="javascript://;" class="button dropdown-toggle">
                            <span id="limit_field_text">Search</span>
-                        </button>
+                        </a>
                         <ul class="dropdown-menu" data-role="dropdown">
                            <li><a href="javascript://;" class="customToken" data-fieldName="Title"  data-columnName="title" style="font-size: 14px!important;">Title</a></li>
                            <li><a href="javascript://;" class="customToken" data-fieldName="Description"  data-columnName="description" style="font-size: 14px!important;">Description</a></li>
