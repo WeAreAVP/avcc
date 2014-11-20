@@ -264,7 +264,7 @@ class RecordsController extends Controller
             foreach($keywords as $keyword){
                 $criteriaArr['s_'.$keyword['type']] = $keyword['value'];
             }
-            print_r($criteriaArr);
+            print_r($criteriaArr);exit;
         }
     }
 }
