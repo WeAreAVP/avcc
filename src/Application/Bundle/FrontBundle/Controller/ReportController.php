@@ -80,7 +80,38 @@ class ReportController extends Controller
 	/**
 	 * Show Reports view.
 	 *
-	 * @Route("/allformats", name="all_formats_xlsx")
+	 * @Route("/allformatscsv", name="all_formats_csv")
+	 * @Method("GET")
+	 * @Template()
+	 * @return array
+	 */
+	public function allFormatsCsvAction()
+	{
+		$filename = 'allFormat_' . time() . '.csv';
+		// output headers so that the file is downloaded rather than displayed
+		header('Content-Type: text/csv; charset=utf-8');
+		header('Content-Disposition: attachment; filename=' . $filenameÏ);
+
+		// create a file pointer connected to the output stream
+		$output = fopen('php://output', 'w');
+
+		// output the column headings
+		fputcsv($output, $this->columns);
+		return array();
+// fetch the data
+//		mysql_connect('localhost', 'username', 'password');
+//		mysql_select_db('database');
+//		$rows = mysql_query('SELECT field1,field2,field3 FROM table');
+//
+//// loop over the rows, outputting them
+//		while ($row = mysql_fetch_assoc($rows))
+//			fputcsv($output, $row);
+	}
+
+	/**
+	 * Show Reports view.
+	 *
+	 * @Route("/allformatsxlsx", name="all_formats_xlsx")
 	 * @Method("GET")
 	 * @Template()
 	 * @return array
