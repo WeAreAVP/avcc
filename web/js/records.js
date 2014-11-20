@@ -175,7 +175,7 @@ function Records() {
                 selfObj.initDataTable();
                 selfObj.bindEvents();
 				$('.dropdown-toggle').bind('click',function(){
-					$(this).next().toggle();
+					$(this).next().slideToggle();
 				});
             }
 
