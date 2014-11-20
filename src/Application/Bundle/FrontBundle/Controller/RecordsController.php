@@ -274,10 +274,13 @@ class RecordsController extends Controller
     {
         $result = array();
         foreach ($array as $arr) {
-            foreach ($arr as $key => $value) {
-                print_r($value);exit;
-                if (trim($value) != '') {
-                    $result[][$key] = $value;
+            foreach ($arr as $facet) {
+                foreach ($facet as $key => $value) {
+                    print_r($value);
+                    exit;
+                    if (trim($value) != '') {
+                        $result[][$key] = $value;
+                    }
                 }
             }
         }
