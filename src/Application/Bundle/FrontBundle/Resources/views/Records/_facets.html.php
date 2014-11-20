@@ -151,10 +151,11 @@
             </li>                    
     </ul>
 </nav>
-</form>    
+    
 <input type="hidden" value="" name="parent_facet" id="parent_facet" />
 <input type="hidden" value="" name="total_checked" id="total_checked"/>
 <input type="hidden" value="" name="facet_keyword_search" id="facet_keyword_search"/>
+</form>
 <script type="text/javascript" src="<?php echo  $view['assets']->getUrl('js/tristate-0.9.2.js') ?>"></script> 
 <script type="text/javascript">
     initTriStateCheckBox('is_review_check', 'is_review_check_state', true);
