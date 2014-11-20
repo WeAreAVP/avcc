@@ -53,7 +53,7 @@
                 </table>
             </div>
 			<?php $view['slots']->start('view_javascripts') ?>
-			<script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/metro-dropdown.js') ?>"></script>
+			<!--<script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/metro-dropdown.js') ?>"></script>-->
             <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
             <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/records.js') ?>"></script>
 			<script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/tristate-0.9.2.js') ?>"></script>
