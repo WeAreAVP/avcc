@@ -88,6 +88,7 @@ class ReportController extends Controller
 	 */
 	public function allFormatsCsvAction()
 	{
+		echo 'here';exit;
 		$container = $this->container;
 		$response = new StreamedResponse(function() use($container)
 		{
