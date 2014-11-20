@@ -97,6 +97,8 @@ class ReportController extends Controller
 		{
 			$activeSheet->setCellValueExplicitByColumnAndRow($column, 1, str_replace('_', ' ', $columnName));
 			$activeSheet->getColumnDimensionByColumn($column)->setWidth(20);
+			$activeSheet->getStyleByColumnAndRow($column)->getFont()->setBold(true);
+			
 		}
 //		$activeSheet->setCellValue('A1', 'Hello');
 //		$activeSheet->setCellValue('B2', 'world!');
