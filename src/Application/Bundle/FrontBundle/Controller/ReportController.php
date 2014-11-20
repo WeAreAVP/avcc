@@ -88,11 +88,11 @@ class ReportController extends Controller
 	 */
 	public function allFormatsCsvAction()
 	{
-		echo 'here';exit;
+//		echo 'here';exit;
 		$container = $this->container;
 		$response = new StreamedResponse(function() use($container)
 		{
-			$em = $container->get('doctrine')->getManager();
+//			$em = $container->get('doctrine')->getManager();
 
 			// The getExportQuery method returns a query that is used to retrieve
 			// all the objects (lines of your csv file) you need. The iterate method
