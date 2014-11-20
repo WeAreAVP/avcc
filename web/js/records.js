@@ -171,17 +171,24 @@ function Records() {
             success: function (response)
             {
                 $("#recordsContainer").html();
-                $("#recordsContainer").html(response.html);                
+                $("#recordsContainer").html(response.html);
                 selfObj.initDataTable();
                 selfObj.bindEvents();
-//                window.location.reload();
             }
 
         });
-
-
-
-
+    }
+    
+    /**
+     * 
+     * @param {string} fieldName
+     * @param {string} columnName
+     * @returns {undefined}
+     */
+    this.addCustomToken = function (fieldName, columnName) {
+        customFieldName = fieldName;
+        customColumnName = columnName;
+        $('#limit_field_text').html(fieldName);
     }
 }
 

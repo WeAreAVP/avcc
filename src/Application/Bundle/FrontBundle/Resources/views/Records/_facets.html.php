@@ -6,7 +6,28 @@
 //            print_r($facetData);exit;
             ?>
             <li class="title">Filters</li>
-            <li><a href="#">Keyword</a></li>
+            <li>
+                <a class="dropdown-toggle" href="#">Keyword</a>
+                <div data-role="dropdown">
+                    <div data-role="input-control" class="input-control text">
+                        <input type="text" placeholder="" />
+                    </div>
+                    <div class="button-dropdown">
+                        <button class="dropdown-toggle">
+                           <span id="limit_field_text">Search</span>
+                        </button>
+                        <ul class="dropdown-menu" data-role="dropdown">
+                           <li><a href="javascript://;" class="customToken" data-fieldName="Title"  data-columnName="title">Title</a></li>
+                           <li><a href="javascript://;" class="customToken" data-fieldName="Description"  data-columnName="description">Description</a></li>
+                           <li><a href="javascript://;" class="customToken" data-fieldName="Collection Name"  data-columnName="collection_name">Collection Name</a></li>
+                           <li><a href="javascript://;" class="customToken" data-fieldName="Creation Date"  data-columnName="creation_date">Creation Data</a></li>
+                           <li><a href="javascript://;" class="customToken" data-fieldName="Content Date"  data-columnName="content_date">Content Date</a></li>
+                           <li><a href="javascript://;" class="customToken" data-fieldName="Genre Terms"  data-columnName="genre_terms">Genre Terms</a></li>
+                           <li><a href="javascript://;" class="customToken" data-fieldName="Contributor"  data-columnName="contributor">Contributor</a></li>
+                        </ul>
+                    </div>                    
+                </div>
+            </li>
                 <?php if (count($facets['mediaType']) > 0): ?>
                 <li>
                     <a class="dropdown-toggle" href="#">Media Type</a>                                
@@ -140,5 +161,8 @@
         facets.setAjaxSource('<?php echo  $view['router']->generate('record_dataTable') ?>');
         facets.setPageUrl('<?php echo  $view['router']->generate('record_list') ?>');
         facets.bindEvents();
+        $('.customToken').click(function () {
+            facets.addCustomToken($(this).attr('data-fieldName'), $(this).attr('data-fieldName'))
+        });
     });
 </script>
