@@ -64,7 +64,6 @@ class SphinxSearch extends ContainerAware
         $sq = SphinxQL::create($this->conn);
         $sq->select()
                 ->from($this->indexName);
-print_r($criteria);exit;
         if ($criteria) {
             $this->whereClause($criteria, $sq);
         }
@@ -118,10 +117,10 @@ print_r($criteria);exit;
                     $sq->where($key, '=', 0);
                 }
             } else {
-                if ($parentFacet && $key != 's_' . $parentFacet) {
+//                if ($parentFacet && $key != 's_' . $parentFacet) {
                     $_value = (is_array($value)) ? implode('|', $value) : $value;
                     $sq->match($key, $_value, true);
-                }
+//                }
             }
         }
     }
