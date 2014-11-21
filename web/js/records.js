@@ -144,8 +144,6 @@ function Records() {
         //todo need to update function
         var totalChecked = $('#total_checked').val();
         var total = $('#facet_sidebar input:checked').length;
-        console.log(isChecked);
-        console.log(total);
         if (total == 0)
             totalChecked = 0;
         if (isChecked)

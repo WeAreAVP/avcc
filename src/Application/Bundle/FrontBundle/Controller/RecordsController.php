@@ -138,8 +138,10 @@ class RecordsController extends Controller
         $shpinxInfo = $this->getSphinxInfo();
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
         $criteria = $this->criteria();
-
-        $result = $sphinxSearch->select($this->getUser(), $offset, $limit, $sortIndex, $sortOrder, $criteria);
+        $session = $this->getRequest()->getSession();
+        $isParentFacet = ($session->get('facetData')['parent_facet']) ? true : false;
+        print_r($isParentFacet);exit;
+        $result = $sphinxSearch->select($this->getUser(), $offset, $limit, $sortIndex, $sortOrder, $criteria, $isParentFacet);
 //        print_r($result);
 //        exit;
         $records = $result[0];

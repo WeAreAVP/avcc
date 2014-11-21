@@ -59,12 +59,13 @@ class SphinxSearch extends ContainerAware
         return $sq->execute();
     }
 
-    public function select($user, $offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null)
+    public function select($user, $offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null, $isParentFacet = false)
     {
         $sq = SphinxQL::create($this->conn);
         $sq->select()
                 ->from($this->indexName);
-        if ($criteria) {
+        
+        if ($criteria && ! $isParentFacet) {
             $this->whereClause($criteria, $sq);
         }
         if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
