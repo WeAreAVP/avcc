@@ -67,11 +67,12 @@ class SphinxSearch extends ContainerAware
         if ($criteria) {
             $this->whereClause($criteria, $sq);
         }
-        $sq->orderBy($sortColumn, $sortOrder)
-                ->limit($offset, $limit);
-        $sq->enqueue($sq->query('SHOW META'));
+       $result =  $sq->orderBy($sortColumn, $sortOrder)
+                ->limit($offset, $limit)
+                ->enqueue(Helper::create($this->conn)->query('SHOW META'))
+                ->executeBatch();
 //        return $sq->executeBatch();
-        $result = $sq->executeBatch();
+//        $result = $sq->executeBatch();
         $sql = $sq->getCompiled();
         echo json_encode(array('result' => $result, 'sql' => $sql));
         exit;
