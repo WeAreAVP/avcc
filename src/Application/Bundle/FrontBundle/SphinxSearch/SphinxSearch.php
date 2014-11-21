@@ -69,7 +69,7 @@ class SphinxSearch extends ContainerAware
         }
         $sq->orderBy($sortColumn, $sortOrder)
                 ->limit($offset, $limit);
-        $sq->enqueue($sq->query('SHOW META'));
+        $sq->enqueue(SphinxQL::create($this->conn)->query('SHOW META'));
 //        return $sq->executeBatch();
         $result = $sq->executeBatch();
         $sql = $sq->getCompiled();
