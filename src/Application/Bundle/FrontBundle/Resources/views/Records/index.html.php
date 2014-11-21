@@ -67,6 +67,7 @@
 				record.bindEvents();
 				record.addCustomToken();
 				record.addKeyword();
+                                record.removeFilter();
 
             </script>
 			<?php
