@@ -173,8 +173,7 @@ function Records() {
             {
                 $("#recordsContainer").html(response.html);
                 selfObj.initDataTable();
-                selfObj.bindEvents();
-				
+                selfObj.bindEvents();		
             }
 
         });

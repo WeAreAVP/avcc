@@ -25,27 +25,6 @@
         <?php $view['slots']->output('stylesheets') ?>
         
         <script src="<?php echo $view['assets']->getUrl('js/jquery.maskedinput.js') ?>"></script>
-        <?php $view['slots']->start('javascripts') ?>
-        
-        <script src="<?php echo $view['assets']->getUrl('js/jquery.widget.min.js') ?>"></script>
-        <script src="<?php echo $view['assets']->getUrl('js/jquery.mousewheel.js') ?>"></script>
-        <script src="<?php echo $view['assets']->getUrl('js/metro.min.js') ?>"></script>
-        
-        <script src="<?php echo $view['assets']->getUrl('js/chosen.jquery.js') ?>"></script>
-        <script src="<?php echo $view['assets']->getUrl('js/jquery.mCustomScrollbar.concat.min.js') ?>"></script>
-        <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-
-        <script type="text/javascript">
-            setTimeout(function () {
-                $('.text-success').hide();
-            }, 5000);
-            $(document).ready(function () {
-                $('.formats_dd').chosen();
-            });
-
-        </script>
-        <?php $view['slots']->stop() ?>
-        <?php $view['slots']->output('javascripts') ?>
     </head>
 
     <body class="metro">
@@ -154,7 +133,27 @@
 
         </div> <!-- /container -->
 
+        <?php $view['slots']->start('javascripts') ?>
         
+        <script src="<?php echo $view['assets']->getUrl('js/jquery.widget.min.js') ?>"></script>
+        <script src="<?php echo $view['assets']->getUrl('js/jquery.mousewheel.js') ?>"></script>
+        <script src="<?php echo $view['assets']->getUrl('js/metro.min.js') ?>"></script>
+        
+        <script src="<?php echo $view['assets']->getUrl('js/chosen.jquery.js') ?>"></script>
+        <script src="<?php echo $view['assets']->getUrl('js/jquery.mCustomScrollbar.concat.min.js') ?>"></script>
+        <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+        <script type="text/javascript">
+            setTimeout(function () {
+                $('.text-success').hide();
+            }, 5000);
+            $(document).ready(function () {
+                $('.formats_dd').chosen();
+            });
+
+        </script>
+        <?php $view['slots']->stop() ?>
+        <?php $view['slots']->output('javascripts') ?>
         <?php $view['slots']->output('view_javascripts') ?>
     </body>
 </html>
