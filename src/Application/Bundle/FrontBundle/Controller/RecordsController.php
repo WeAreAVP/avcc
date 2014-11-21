@@ -139,7 +139,8 @@ class RecordsController extends Controller
 
         $shpinxInfo = $this->getSphinxInfo();
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        $criteria = $this->criteria();        
+        $searchOn = $this->criteria();
+        $criteria = $searchOn['criteriaArr'];        
         $result = $sphinxSearch->select($this->getUser(), $offset, $limit, $sortIndex, $sortOrder, $criteria);
 //        print_r($result);
 //        exit;
