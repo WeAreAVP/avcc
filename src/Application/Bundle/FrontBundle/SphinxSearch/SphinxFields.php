@@ -18,17 +18,19 @@ class SphinxFields
      */
     public function prepareFields(EntityManager $entityManager, $recordId, $recordTypeId)
     {
-
-        if ($recordTypeId == 1) {
-            $this->record = $entityManager->getRepository('ApplicationFrontBundle:AudioRecords')->findOneBy(array('id' => $recordId));
-            $this->prepareAudioFields();
-        } elseif ($recordTypeId == 2) {
-            $this->record = $entityManager->getRepository('ApplicationFrontBundle:FilmRecords')->findOneBy(array('id' => $recordId));
-            $this->prepareFilmFields();
-        } else {
-            $this->record = $entityManager->getRepository('ApplicationFrontBundle:VideoRecords')->findOneBy(array('id' => $recordId));
-            $this->prepareVideoFields();
-        }
+//        if ($recordTypeId == 1) {
+//            $this->record = $entityManager->getRepository('ApplicationFrontBundle:Records')->findRecordsByType(array('id' => $recordId, 'typeId'=>$recordTypeId));
+////            $this->record = $entityManager->getRepository('ApplicationFrontBundle:AudioRecords')->findOneBy(array('id' => $recordId));
+//            $this->prepareAudioFields();
+//        } elseif ($recordTypeId == 2) {
+//            $this->record = $entityManager->getRepository('ApplicationFrontBundle:FilmRecords')->findOneBy(array('id' => $recordId));
+//            $this->prepareFilmFields();
+//        } else {
+//            $this->record = $entityManager->getRepository('ApplicationFrontBundle:VideoRecords')->findOneBy(array('id' => $recordId));
+//            $this->prepareVideoFields();
+//        }
+        $this->record = $entityManager->getRepository('ApplicationFrontBundle:Records')->findRecordsByType(array('id' => $recordId, 'typeId'=>$recordTypeId));
+        print_r($this->record);exit;
         $this->indexFields['id'] = $this->record->getRecord()->getId();
         $this->indexFields['s_title'] = ($this->record->getRecord()->getTitle()) ? $this->record->getRecord()->getTitle() : "";
         $this->indexFields['title'] = ($this->record->getRecord()->getTitle()) ? $this->record->getRecord()->getTitle() : "";

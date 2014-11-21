@@ -62,12 +62,15 @@ class SphinxSearch extends ContainerAware
     public function select($user, $offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null)
     {
         $sq = SphinxQL::create($this->conn);
-                $sq->select()
+        $sq->select()
                 ->from($this->indexName);
         if ($criteria) {
             $this->whereClause($criteria, $sq);
         }
-       $result =  $sq->orderBy($sortColumn, $sortOrder)
+        if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
+            
+        }
+        $result = $sq->orderBy($sortColumn, $sortOrder)
                 ->limit($offset, $limit)
                 ->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
                 ->executeBatch();
@@ -98,7 +101,7 @@ class SphinxSearch extends ContainerAware
         if ($criteria) {
             $this->whereClause($criteria, $sq);
         }
-        $sq->where($facetColumn, '!=','');
+        $sq->where($facetColumn, '!=', '');
         $sq->groupBy($facetColumn)
                 ->orderBy($facetColumn, 'asc');
 
