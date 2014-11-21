@@ -87,5 +87,8 @@
 }
 .search_keys {
     float: left;
-    width: 170px;
+    width: 155px;
+}
+.delFilter{
+    margin-top: 10px;
 }
