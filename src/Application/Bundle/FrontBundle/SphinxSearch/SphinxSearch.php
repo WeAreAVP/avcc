@@ -61,20 +61,19 @@ class SphinxSearch extends ContainerAware
 
     public function select($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null)
     {
-        $sq = SphinxQL::create($this->conn);
-                $sq->select()
+        $sq = SphinxQL::create($this->conn)
+                ->select()
                 ->from($this->indexName);
         if ($criteria) {
             $this->whereClause($criteria, $sq);
         }
         $sq->orderBy($sortColumn, $sortOrder)
                 ->limit($offset, $limit);
-        $sq->enqueue($sq->query('SHOW META')); 
-        $sq->enqueue();
-//        return $sq->executeBatch();
-        $result = $sq->executeBatch();
-        $sql = $sq->getCompiled();
-        echo json_encode(array('result' => $result, 'sql' => $sql));
+
+        return $sq->executeBatch();
+//        $result = $sq->executeBatch();
+//        $sql = $sq->getCompiled();
+//        echo json_encode(array('result' => $result, 'sql' => $sql));
     }
 
     public function selectCount($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc')
