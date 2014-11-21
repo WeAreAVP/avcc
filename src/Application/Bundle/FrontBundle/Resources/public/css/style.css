@@ -80,7 +80,7 @@
     border-radius: 5px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
     float: left;
-    margin: 2px 5px;
+    margin: 2px 1px;
     padding: 5px 7px 3px 10px;
     transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
     width: 190px;
@@ -90,5 +90,5 @@
     width: 155px;
 }
 .delFilter{
-    margin-top: 10px;
+    margin-top: 3px;
 }
