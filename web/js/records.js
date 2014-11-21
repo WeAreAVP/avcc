@@ -85,34 +85,34 @@ function Records() {
             checkParentFacet('media_type', $(this).prop("checked"));
         });
         $('input[name="commercial[]"]').click(function () {
-            checkParentFacet('commercial', $(this).attr('checked'));
+            checkParentFacet('commercial', $(this).prop('checked'));
         });
         $('input[name="format[]"]').click(function () {
-            checkParentFacet('format', $(this).attr('checked'));
+            checkParentFacet('format', $(this).prop('checked'));
         });
         $('input[name="base[]"]').click(function () {
-            checkParentFacet('base', $(this).attr('checked'));
+            checkParentFacet('base', $(this).prop('checked'));
         });
         $('input[name="recordingStandard[]"]').click(function () {
-            checkParentFacet('recordingStandard', $(this).attr('checked'));
+            checkParentFacet('recordingStandard', $(this).prop('checked'));
         });
         $('input[name="printType[]"]').click(function () {
-            checkParentFacet('printType', $(this).attr('checked'));
+            checkParentFacet('printType', $(this).prop('checked'));
         });
         $('input[name="project[]"]').click(function () {
-            checkParentFacet('project', $(this).attr('checked'));
+            checkParentFacet('project', $(this).prop('checked'));
         });
         $('input[name="reelDiameter[]"]').click(function () {
-            checkParentFacet('reelDiameter', $(this).attr('checked'));
+            checkParentFacet('reelDiameter', $(this).prop('checked'));
         });
         $('input[name="discDiameter[]"]').click(function () {
-            checkParentFacet('discDiameter', $(this).attr('checked'));
+            checkParentFacet('discDiameter', $(this).prop('checked'));
         });
         $('input[name="acidDetection[]"]').click(function () {
-            checkParentFacet('acidDetection', $(this).attr('checked'));
+            checkParentFacet('acidDetection', $(this).prop('checked'));
         });
         $('input[name="collectionName[]"]').click(function () {
-            checkParentFacet('collectionName', $(this).attr('checked'));
+            checkParentFacet('collectionName', $(this).prop('checked'));
         });
         $('#is_review_check').click(function () {
             var totalChecked = $('#total_checked').val();
