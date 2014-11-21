@@ -35,6 +35,7 @@ class RecordsController extends Controller
 			'checkbox_Col' => 'checkboxCol',
 			'Project_Name' => 'projectName',
 			'Unique_ID' => 'uniqueId',
+                        'Format' => 'format', 
 			'Title' => 'title',
 			'Collection_Name' => 'collectionName',
 			'Location' => 'location'
