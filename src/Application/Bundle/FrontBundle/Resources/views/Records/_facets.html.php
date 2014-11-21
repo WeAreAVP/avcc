@@ -171,16 +171,21 @@
     <?php
     $parentFacet = '';
     $totalChecked = 0;
+    $keyword = "";
     if (isset($facetData['parent_facet']) && ! empty($facetData['parent_facet'])):
         $parentFacet = $facetData['parent_facet'];
     endif;
     if (isset($facetData['total_checked']) && ! empty($facetData['total_checked'])):
         $totalChecked = $facetData['total_checked'];
     endif;
+    if(isset($facetData['facet_keyword_search']) && ! empty($facetData['facet_keyword_search'])):
+        $keyword = $facetData['facet_keyword_search'];
+    endif;
+    
     ?>
     <input type="hidden" value="<?php echo $parentFacet;?>" name="parent_facet" id="parent_facet" />
     <input type="hidden" value="<?php echo $totalChecked;?>" name="total_checked" id="total_checked"/>
-    <input type="hidden" value="" name="facet_keyword_search" id="facet_keyword_search"/>
+    <input type="hidden" value="<?php echo $keyword;?>" name="facet_keyword_search" id="facet_keyword_search"/>
 </form>
 
 
