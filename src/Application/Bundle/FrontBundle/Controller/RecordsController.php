@@ -122,10 +122,11 @@ class RecordsController extends Controller
 	{
 		$columns = array(0 => '',
 			1 => 'title',
-			2 => 'unique_id',
-			3 => 'title',
-			4 => 'collection_name',
-			5 => 'location'
+                        2 => 'format',
+			3 => 'unique_id',
+			4 => 'title',
+			5 => 'collection_name',
+			6 => 'location'
 		);
 		$em = $this->getDoctrine()->getManager();
 		$sEcho = $request->query->get('sEcho');
