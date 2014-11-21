@@ -96,7 +96,7 @@
                     if (isset($facetData['printType']) && $facetData['printType'] != '') {
                         ?>
                         <div id="mediaType_main" class="chekBoxFacet">
-                            <div class="filter-fileds"><b>Media Type</b></div>
+                            <div class="filter-fileds"><b>Print Type</b></div>
                             <?php
                             foreach ($facetData['printType'] as $value) {
                                 $id = time() . rand(0, 1000);
@@ -110,7 +110,7 @@
                     if (isset($facetData['project']) && $facetData['project'] != '') {
                         ?>
                         <div id="mediaType_main" class="chekBoxFacet">
-                            <div class="filter-fileds"><b>Media Type</b></div>
+                            <div class="filter-fileds"><b>Project</b></div>
                             <?php
                             foreach ($facetData['project'] as $value) {
                                 $id = time() . rand(0, 1000);
@@ -124,7 +124,7 @@
                     if (isset($facetData['reelDiameter']) && $facetData['reelDiameter'] != '') {
                         ?>
                         <div id="mediaType_main" class="chekBoxFacet">
-                            <div class="filter-fileds"><b>Media Type</b></div>
+                            <div class="filter-fileds"><b>Reel Diameter</b></div>
                             <?php
                             foreach ($facetData['reelDiameter'] as $value) {
                                 $id = time() . rand(0, 1000);
@@ -138,12 +138,12 @@
                     if (isset($facetData['discDiameter']) && $facetData['discDiameter'] != '') {
                         ?>
                         <div id="mediaType_main" class="chekBoxFacet">
-                            <div class="filter-fileds"><b>Media Type</b></div>
+                            <div class="filter-fileds"><b>Disc Diameter</b></div>
                             <?php
                             foreach ($facetData['discDiameter'] as $value) {
                                 $id = time() . rand(0, 1000);
                                 ?>
-                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'discDiameter_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="discDiameter"></i></div>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'discDiameter_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="diskDiameter"></i></div>
                             <?php } ?>
                         </div>
                     <div class="clearfix"></div><br />
@@ -152,7 +152,7 @@
                     if (isset($facetData['acidDetection']) && $facetData['acidDetection'] != '') {
                         ?>
                         <div id="mediaType_main" class="chekBoxFacet">
-                            <div class="filter-fileds"><b>Media Type</b></div>
+                            <div class="filter-fileds"><b>Acid Detection</b></div>
                             <?php
                             foreach ($facetData['acidDetection'] as $value) {
                                 $id = time() . rand(0, 1000);
