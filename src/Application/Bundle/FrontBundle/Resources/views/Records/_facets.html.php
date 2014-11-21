@@ -143,7 +143,7 @@
                             foreach ($facetData['discDiameter'] as $value) {
                                 $id = time() . rand(0, 1000);
                                 ?>
-                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'discDiameter_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="diskDiameter"></i></div>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'discDiameter_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="discDiameter"></i></div>
                             <?php } ?>
                         </div>
                     <div class="clearfix"></div><br />
