@@ -59,7 +59,7 @@ class SphinxSearch extends ContainerAware
         return $sq->execute();
     }
 
-    public function select($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null)
+    public function select($user, $offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null)
     {
         $sq = SphinxQL::create($this->conn);
                 $sq->select()
