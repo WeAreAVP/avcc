@@ -20,6 +20,7 @@
                             <?php } ?>
                         </div>
                     <div class="clearfix"></div>
+                    <br />
                         <?php } ?>                      
                     <?php
                     if (isset($facetData['format']) && $facetData['format'] != '') {
@@ -33,7 +34,7 @@
                                 <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'format_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="format"></i></div>
                             <?php } ?>
                         </div>
-                    <div class="clearfix"></div>
+                    <div class="clearfix"></div><br />
                         <?php } ?>  
                     <?php
                     if (isset($facetData['commercial']) && $facetData['commercial'] != '') {
@@ -47,7 +48,7 @@
                                 <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'commercial_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="commercial"></i></div>
                             <?php } ?>
                         </div>
-                    <div class="clearfix"></div>
+                    <div class="clearfix"></div><br />
                         <?php } ?>  
                     <?php
                     if (isset($facetData['base']) && $facetData['base'] != '') {
@@ -61,7 +62,7 @@
                                 <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'base_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="base"></i></div>
                             <?php } ?>
                         </div>
-                    <div class="clearfix"></div>
+                    <div class="clearfix"></div><br />
                         <?php } ?>  
                     <?php
                     if (isset($facetData['collectionName']) && $facetData['collectionName'] != '') {
@@ -75,7 +76,7 @@
                                 <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'collectionName_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="collectionName"></i></div>
                             <?php } ?>
                         </div>
-                    <div class="clearfix"></div>
+                    <div class="clearfix"></div><br />
                         <?php } ?>
                     <?php
                     if (isset($facetData['recordingStandard']) && $facetData['recordingStandard'] != '') {
@@ -89,7 +90,7 @@
                                 <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'recordingStandard_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="recordingStandard"></i></div>
                             <?php } ?>
                         </div>
-                    <div class="clearfix"></div>
+                    <div class="clearfix"></div><br />
                         <?php } ?>
                     <?php
                     if (isset($facetData['printType']) && $facetData['printType'] != '') {
@@ -103,8 +104,64 @@
                                 <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'printType_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="printType"></i></div>
                             <?php } ?>
                         </div>
-                    <div class="clearfix"></div>
+                    <div class="clearfix"></div><br />
                         <?php } ?>  
+                    <?php
+                    if (isset($facetData['project']) && $facetData['project'] != '') {
+                        ?>
+                        <div id="mediaType_main" class="chekBoxFacet">
+                            <div class="filter-fileds"><b>Media Type</b></div>
+                            <?php
+                            foreach ($facetData['project'] as $value) {
+                                $id = time() . rand(0, 1000);
+                                ?>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'project_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="project"></i></div>
+                            <?php } ?>
+                        </div>
+                    <div class="clearfix"></div><br />
+                        <?php } ?>  
+                    <?php
+                    if (isset($facetData['reelDiameter']) && $facetData['reelDiameter'] != '') {
+                        ?>
+                        <div id="mediaType_main" class="chekBoxFacet">
+                            <div class="filter-fileds"><b>Media Type</b></div>
+                            <?php
+                            foreach ($facetData['reelDiameter'] as $value) {
+                                $id = time() . rand(0, 1000);
+                                ?>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'reelDiameter_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="reelDiameter"></i></div>
+                            <?php } ?>
+                        </div>
+                    <div class="clearfix"></div><br />
+                        <?php } ?>
+                    <?php
+                    if (isset($facetData['discDiameter']) && $facetData['discDiameter'] != '') {
+                        ?>
+                        <div id="mediaType_main" class="chekBoxFacet">
+                            <div class="filter-fileds"><b>Media Type</b></div>
+                            <?php
+                            foreach ($facetData['discDiameter'] as $value) {
+                                $id = time() . rand(0, 1000);
+                                ?>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'discDiameter_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="discDiameter"></i></div>
+                            <?php } ?>
+                        </div>
+                    <div class="clearfix"></div><br />
+                        <?php } ?>
+                    <?php
+                    if (isset($facetData['acidDetection']) && $facetData['acidDetection'] != '') {
+                        ?>
+                        <div id="mediaType_main" class="chekBoxFacet">
+                            <div class="filter-fileds"><b>Media Type</b></div>
+                            <?php
+                            foreach ($facetData['acidDetection'] as $value) {
+                                $id = time() . rand(0, 1000);
+                                ?>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'acidDetection_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="acidDetection"></i></div>
+                            <?php } ?>
+                        </div>
+                    <div class="clearfix"></div><br />
+                        <?php } ?>
                     <div class="clearfix"></div>
                 </li>
                 <?php endif; ?>
@@ -241,7 +298,7 @@
                     <ul  data-role="dropdown" <?php if (isset($facetData['discDiameter'])): ?> style="display:block" <?php endif ?>>
     <?php foreach ($facets['discDiameters'] as $discDiameter): ?>
                             <?php if ($discDiameter['disk_diameter'] != ''): ?>
-                                <li><a href="javascript://"><label for="<?php echo $discDiameter['disk_diameter'] ?>"><input id='<?php echo $discDiameter['disk_diameter'] ?>' <?php echo (isset($facetData['discDiameter']) && in_array($discDiameter['disk_diameter'], $facetData['discDiameter'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="discDiameter[]" value="<?php echo $discDiameter['disk_diameter'] ?>" /><?php echo $discDiameter['disk_diameter'] ?> (<?php echo $discDiameter['total'] ?>)</label></a></li>
+                                <li><a href="javascript://"><label for="<?php echo 'diskDiameter_'.str_replace(' ', '_', strtolower($discDiameter['disk_diameter'])) ?>"><input id='<?php echo 'diskDiameter_'.str_replace(' ', '_', strtolower($discDiameter['disk_diameter'])) ?>' <?php echo (isset($facetData['discDiameter']) && in_array($discDiameter['disk_diameter'], $facetData['discDiameter'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="discDiameter[]" value="<?php echo $discDiameter['disk_diameter'] ?>" /><?php echo $discDiameter['disk_diameter'] ?> (<?php echo $discDiameter['total'] ?>)</label></a></li>
                             <?php endif ?>
                         <?php endforeach; ?>
                     </ul>
@@ -253,7 +310,7 @@
                     <ul  data-role="dropdown" <?php if (isset($facetData['acidDetection'])): ?> style="display:block" <?php endif ?>>
     <?php foreach ($facets['acidDetection'] as $strip): ?>
                             <?php if ($strip['acid_detection']): ?>
-                                <li><a href="javascript://"><label for="<?php echo $strip['acid_detection'] ?>"><input id='<?php echo $strip['acid_detection'] ?>' <?php echo (isset($facetData['acidDetection']) && in_array($strip['acid_detection'], $facetData['acidDetection'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="acidDetection[]" value="<?php echo $strip['acid_detection'] ?>" /><?php echo $strip['acid_detection'] ?> (<?php echo $strip['total'] ?>)</label></a></li>
+                                <li><a href="javascript://"><label for="<?php echo 'acidDetection_'.str_replace(' ', '_', strtolower($strip['acid_detection'])) ?>"><input id='<?php echo 'acidDetection_'.str_replace(' ', '_', strtolower($strip['acid_detection'])) ?>' <?php echo (isset($facetData['acidDetection']) && in_array($strip['acid_detection'], $facetData['acidDetection'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="acidDetection[]" value="<?php echo $strip['acid_detection'] ?>" /><?php echo $strip['acid_detection'] ?> (<?php echo $strip['total'] ?>)</label></a></li>
                             <?php endif ?>
                         <?php endforeach; ?>
                     </ul>
