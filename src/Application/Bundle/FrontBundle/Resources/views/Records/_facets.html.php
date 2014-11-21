@@ -19,7 +19,10 @@
                                 <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'mediaType_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="mediaType"></i></div>
                             <?php } ?>
                         </div>
-                        <?php } ?>                
+                    <div class="clearfix"></div>
+                        <?php } ?>  
+                    <div class="clearfix"></div>
+                    <br />
                 </li>
                 <?php endif; ?>
             <li>
