@@ -60,7 +60,7 @@ class RecordsRepository extends EntityRepository
         . $where);
         $query->setParameter('typeRecordId', $typeRecordId);
 
-        return $query->getResult();
+        return $query->getSingleResult();
     }
 
 
