@@ -67,9 +67,9 @@ class SphinxSearch extends ContainerAware
         if ($criteria) {
             $this->whereClause($criteria, $sq);
         }
-        if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
-            
-        }
+//        if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
+//            
+//        }
         $result = $sq->orderBy($sortColumn, $sortOrder)
                 ->limit($offset, $limit)
                 ->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))

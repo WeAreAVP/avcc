@@ -137,8 +137,7 @@ class RecordsController extends Controller
 		$shpinxInfo = $this->getSphinxInfo();
 		$sphinxSearch = new SphinxSearch($em, $shpinxInfo);
 		$criteria = $this->criteria();
-                $role = $this->getUser()->getRoles();
-                print_r($role);exit;
+               
 		$result = $sphinxSearch->select($this->getUser(), $offset, $limit, $sortIndex, $sortOrder, $criteria);
 //        print_r($result);
 //        exit;
