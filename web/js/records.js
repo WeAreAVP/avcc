@@ -148,7 +148,7 @@ function Records() {
         console.log(total);
         if (total == 0)
             totalChecked = 0;
-        if (isChecked == true)
+        if (isChecked)
             totalChecked++;
         else
             totalChecked--;
