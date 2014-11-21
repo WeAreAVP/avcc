@@ -28,8 +28,6 @@ class SphinxFields
             $this->record = $entityManager->getRepository('ApplicationFrontBundle:VideoRecords')->findOneBy(array('id' => $recordId));
             $this->prepareVideoFields();
         }
-//        $this->record = $entityManager->getRepository('ApplicationFrontBundle:Records')->findRecordsByType($recordId, $recordTypeId);
-//        print_r($this->record->getUser()->getOrganizations()->getId());exit;
         $this->indexFields['id'] = $this->record->getRecord()->getId();
         $this->indexFields['s_title'] = ($this->record->getRecord()->getTitle()) ? $this->record->getRecord()->getTitle() : "";
         $this->indexFields['title'] = ($this->record->getRecord()->getTitle()) ? $this->record->getRecord()->getTitle() : "";
