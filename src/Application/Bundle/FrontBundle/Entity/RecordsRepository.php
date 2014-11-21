@@ -40,9 +40,10 @@ class RecordsRepository extends EntityRepository
     public function findRecordsByType($typeRecordId, $typeId)
     {
         $where = "";
+        $join = '';
         if($typeId == 1){
-//           $join =  "JOIN r.audioRecord a ";
-           $where = "WHERE r.audioRecord.id =  :typeRecordId"; 
+           $join =  "JOIN r.audioRecord a ";
+           $where = "WHERE a.id =  :typeRecordId"; 
         }elseif($typeId == 2){
 //           $join =  "JOIN r.audioRecord a ";
            $where = "WHERE r.filmRecord.id =  :typeRecordId"; 
