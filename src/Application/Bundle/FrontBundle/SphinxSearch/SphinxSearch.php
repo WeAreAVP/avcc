@@ -59,14 +59,14 @@ class SphinxSearch extends ContainerAware
         return $sq->execute();
     }
 
-    public function select($user, $offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null, $isParentFacet = false)
+    public function select($user, $offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null, $parentFacet = null)
     {
         $sq = SphinxQL::create($this->conn);
         $sq->select()
                 ->from($this->indexName);
-        
-        if ($criteria && ! $isParentFacet) {
-            $this->whereClause($criteria, $sq);
+
+        if ($criteria) {
+            $this->whereClause($criteria, $sq, $parentFacet);
         }
         if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
             $sq->where('organization_id', "=", $user->getOrganizations()->getId());
@@ -109,7 +109,7 @@ class SphinxSearch extends ContainerAware
         return $sq->execute();
     }
 
-    public function whereClause($criteria, $sq)
+    public function whereClause($criteria, $sq, $parentFacet = null)
     {
         foreach ($criteria as $key => $value) {
             if ($key == 'is_review') {
@@ -119,8 +119,10 @@ class SphinxSearch extends ContainerAware
                     $sq->where($key, '=', 0);
                 }
             } else {
-                $_value = (is_array($value)) ? implode('|', $value) : $value;
-                $sq->match($key, $_value, true);
+                if ($parentFacet && $key != 's_' . $parentFacet) {
+                    $_value = (is_array($value)) ? implode('|', $value) : $value;
+                    $sq->match($key, $_value, true);
+                }
             }
         }
     }
