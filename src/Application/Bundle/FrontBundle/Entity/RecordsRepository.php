@@ -54,6 +54,7 @@ class RecordsRepository extends EntityRepository
         ->createQuery("SELECT r from ApplicationFrontBundle:Records r "
         . "JOIN r.user u "
         . "JOIN u.organizations o "
+        . $join        
 //        . $join        
         . $where);
         $query->setParameter('typeRecordId', $typeRecordId);
