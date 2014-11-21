@@ -59,14 +59,14 @@ class SphinxSearch extends ContainerAware
         return $sq->execute();
     }
 
-    public function select($user, $offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null, $parentFacet = null)
+    public function select($user, $offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null)
     {
         $sq = SphinxQL::create($this->conn);
         $sq->select()
                 ->from($this->indexName);
 
         if ($criteria) {
-            $this->whereClause($criteria, $sq, $parentFacet);
+            $this->whereClause($criteria, $sq);
         }
         if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
             $sq->where('organization_id', "=", $user->getOrganizations()->getId());
@@ -94,13 +94,13 @@ class SphinxSearch extends ContainerAware
         return $sq->executeBatch();
     }
 
-    public function facetSelect($facetColumn, $criteria = null)
+    public function facetSelect($facetColumn, $criteria = null, $parentFacet = null)
     {
         $sq = SphinxQL::create($this->conn)
                 ->select($facetColumn, SphinxQL::expr('count(*) AS total'))
                 ->from($this->indexName);
         if ($criteria) {
-            $this->whereClause($criteria, $sq);
+            $this->whereClause($criteria, $sq, $parentFacet);
         }
         $sq->where($facetColumn, '!=', '');
         $sq->groupBy($facetColumn)

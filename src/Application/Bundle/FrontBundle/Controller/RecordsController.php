@@ -67,18 +67,20 @@ class RecordsController extends Controller
         if ($request->isXmlHttpRequest()) {
             $isAjax = TRUE;
             $this->getFacetRequest($request);
-            $criteria = $this->criteria();
-            $facet['mediaType'] = $sphinxSearch->facetSelect('media_type', $criteria);
-            $facet['formats'] = $sphinxSearch->facetSelect('format', $criteria);
-            $facet['commercialUnique'] = $sphinxSearch->facetSelect('commercial', $criteria);
-            $facet['bases'] = $sphinxSearch->facetSelect('base', $criteria);
-            $facet['recordingStandards'] = $sphinxSearch->facetSelect('recording_standard', $criteria);
-            $facet['printTypes'] = $sphinxSearch->facetSelect('print_type', $criteria);
-            $facet['projectNames'] = $sphinxSearch->facetSelect('project', $criteria);
-            $facet['reelDiameters'] = $sphinxSearch->facetSelect('reel_diameter', $criteria);
-            $facet['discDiameters'] = $sphinxSearch->facetSelect('disk_diameter', $criteria);
-            $facet['acidDetection'] = $sphinxSearch->facetSelect('acid_detection', $criteria);
-            $facet['collectionNames'] = $sphinxSearch->facetSelect('collection_name', $criteria);
+            $searchOn = $this->criteria();
+            $criteria = $searchOn['criteriaArr'];
+            $parentFacet = $searchOn['parent_facet'];
+            $facet['mediaType'] = $sphinxSearch->facetSelect('media_type', $criteria, $parentFacet);
+            $facet['formats'] = $sphinxSearch->facetSelect('format', $criteria, $parentFacet);
+            $facet['commercialUnique'] = $sphinxSearch->facetSelect('commercial', $criteria, $parentFacet);
+            $facet['bases'] = $sphinxSearch->facetSelect('base', $criteria, $parentFacet);
+            $facet['recordingStandards'] = $sphinxSearch->facetSelect('recording_standard', $criteria, $parentFacet);
+            $facet['printTypes'] = $sphinxSearch->facetSelect('print_type', $criteria, $parentFacet);
+            $facet['projectNames'] = $sphinxSearch->facetSelect('project', $criteria, $parentFacet);
+            $facet['reelDiameters'] = $sphinxSearch->facetSelect('reel_diameter', $criteria, $parentFacet);
+            $facet['discDiameters'] = $sphinxSearch->facetSelect('disk_diameter', $criteria, $parentFacet);
+            $facet['acidDetection'] = $sphinxSearch->facetSelect('acid_detection', $criteria, $parentFacet);
+            $facet['collectionNames'] = $sphinxSearch->facetSelect('collection_name', $criteria, $parentFacet);
 
             $html = $this->render('ApplicationFrontBundle:Records:index.html.php', array(
                 'facets' => $facet,
@@ -137,16 +139,12 @@ class RecordsController extends Controller
 
         $shpinxInfo = $this->getSphinxInfo();
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        $criteria = $this->criteria();
-        $session = $this->getRequest()->getSession();
-        $facetData = $session->get('facetData');
-        $parentFacet = $facetData['parent_facet'];
-        $result = $sphinxSearch->select($this->getUser(), $offset, $limit, $sortIndex, $sortOrder, $criteria, $parentFacet);
+        $criteria = $this->criteria();        
+        $result = $sphinxSearch->select($this->getUser(), $offset, $limit, $sortIndex, $sortOrder, $criteria);
 //        print_r($result);
 //        exit;
         $records = $result[0];
         $currentPageTotal = count($records);
-//		$resultMeta = $sphinxSearch->selectCount($offset, $limit, $sortIndex, $sortOrder);
         $totalRecords = $result[1][0]['Value'];
 //        print_r($result);exit;
 
@@ -200,9 +198,10 @@ class RecordsController extends Controller
      */
     protected function criteria()
     {
+        $criteria = null;
         $criteriaArr = null;
-        $session = $this->getRequest()->getSession();
-        $facetData = $session->get('facetData');
+        $facetData = $this->getFacetFromSession();
+        
         if (isset($facetData['mediaType'])) {
             $criteriaArr['s_media_type'] = $facetData['mediaType'];
         }
@@ -257,8 +256,13 @@ class RecordsController extends Controller
                 }
             }
         }
-
-        return $criteriaArr;
+        if($facetData['parent_facet']){
+            $criteria['parent_facet'] = $facetData['parent_facet'];
+        }
+        if($criteriaArr){
+            $criteria['criteriaArr'] = $criteriaArr;
+        }
+        return $criteria;
     }
 
     protected function getFacetRequest(Request $request)
@@ -287,6 +291,18 @@ class RecordsController extends Controller
         }
 
         return $result;
+    }
+    
+    /**
+     * Get facets from session
+     * 
+     * @return array
+     */
+    protected function getFacetFromSession(){
+        $session = $this->getRequest()->getSession();
+        $facetData = $session->get('facetData');
+        
+        return $facetData;
     }
 
 }
