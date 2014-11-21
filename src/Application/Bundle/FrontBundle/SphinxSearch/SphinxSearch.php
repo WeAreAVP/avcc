@@ -61,15 +61,15 @@ class SphinxSearch extends ContainerAware
 
     public function select($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null)
     {
-        $sq = SphinxQL::create($this->conn)
-                ->select()
+        $sq = SphinxQL::create($this->conn);
+                $sq->select()
                 ->from($this->indexName);
         if ($criteria) {
             $this->whereClause($criteria, $sq);
         }
         $sq->orderBy($sortColumn, $sortOrder)
                 ->limit($offset, $limit);
-        $sq->enqueue(SphinxQL::create($this->conn)->query('SHOW META'));
+        $sq->enqueue($sq->query('SHOW META'));
 //        return $sq->executeBatch();
         $result = $sq->executeBatch();
         $sql = $sq->getCompiled();
