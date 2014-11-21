@@ -263,7 +263,6 @@ class RecordsController extends Controller
         if($criteriaArr){
             $criteria['criteriaArr'] = $criteriaArr;
         }
-        print_r($criteria);exit;
         return $criteria;
     }
 

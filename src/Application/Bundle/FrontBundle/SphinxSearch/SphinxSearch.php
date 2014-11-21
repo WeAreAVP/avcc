@@ -64,7 +64,7 @@ class SphinxSearch extends ContainerAware
         $sq = SphinxQL::create($this->conn);
         $sq->select()
                 ->from($this->indexName);
-
+print_r($criteria);exit;
         if ($criteria) {
             $this->whereClause($criteria, $sq);
         }
