@@ -92,7 +92,7 @@ class SphinxSearch extends ContainerAware
         return $sq->executeBatch();
     }
 
-    public function facetSelect($facetColumn, $criteria = null, $parentFacet = null)
+    public function facetSelect($facetColumn, $criteria = null, $parentFacet = false)
     {
         $sq = SphinxQL::create($this->conn)
                 ->select($facetColumn, SphinxQL::expr('count(*) AS total'))
@@ -107,7 +107,7 @@ class SphinxSearch extends ContainerAware
         return $sq->execute();
     }
 
-    public function whereClause($criteria, $sq, $parentFacet = null)
+    public function whereClause($criteria, $sq, $parentFacet = false)
     {
         foreach ($criteria as $key => $value) {
             if ($key == 'is_review') {
@@ -117,10 +117,10 @@ class SphinxSearch extends ContainerAware
                     $sq->where($key, '=', 0);
                 }
             } else {
-//                if ($parentFacet && $key != 's_' . $parentFacet) {
+                if ($parentFacet && $key != 's_' . $parentFacet) {
                     $_value = (is_array($value)) ? implode('|', $value) : $value;
                     $sq->match($key, $_value, true);
-//                }
+                }
             }
         }
     }

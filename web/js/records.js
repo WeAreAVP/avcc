@@ -215,7 +215,16 @@ function Records() {
                 $('#facet_keyword_search').val(JSON.stringify(Filters));
 
                 filterRecords();
-            }            
+            }
+        });
+    }
+
+    this.removeFilter = function () {
+        $('.delFilter').click(function () {
+            elementID = $(this).attr('data-elementId');
+            type = $(this).attr('data-type');
+            $('#' + elementID).prop('checked', false);
+		checkParentFacet(type);
         });
     }
 }
