@@ -141,7 +141,6 @@ class RecordsController extends Controller
         $session = $this->getRequest()->getSession();
         $facetData = $session->get('facetData');
         $isParentFacet = ($facetData['parent_facet']) ? true : false;
-        print_r($isParentFacet);exit;
         $result = $sphinxSearch->select($this->getUser(), $offset, $limit, $sortIndex, $sortOrder, $criteria, $isParentFacet);
 //        print_r($result);
 //        exit;
@@ -272,7 +271,6 @@ class RecordsController extends Controller
         } else {
             $session->remove('facetData');
         }
-        print_r($session->get('facetData'));exit;
     }
 
     protected function removeEmpty($array)
