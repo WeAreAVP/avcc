@@ -82,7 +82,7 @@ function Records() {
      */
     this.bindEvents = function () {
         $('input[name="mediaType[]"]').click(function () {
-            checkParentFacet('media_type', $(this).attr('checked'));
+            checkParentFacet('media_type', $(this).prop("checked"));
         });
         $('input[name="commercial[]"]').click(function () {
             checkParentFacet('commercial', $(this).attr('checked'));
