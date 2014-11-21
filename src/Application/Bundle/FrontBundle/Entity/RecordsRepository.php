@@ -45,10 +45,11 @@ class RecordsRepository extends EntityRepository
            $join =  "JOIN r.audioRecord a ";
            $where = "WHERE a.id =  :typeRecordId"; 
         }elseif($typeId == 2){
-//           $join =  "JOIN r.audioRecord a ";
-           $where = "WHERE r.filmRecord.id =  :typeRecordId"; 
+           $join =  "JOIN r.filmRecord f ";
+           $where = "WHERE f.id =  :typeRecordId"; 
         }else{
-           $where = "WHERE a.videoRecord.id =  :typeRecordId";  
+           $join =  "JOIN r.videoRecord v "; 
+           $where = "WHERE v.id =  :typeRecordId";  
         }
         $query = $this->getEntityManager()
         ->createQuery("SELECT r from ApplicationFrontBundle:Records r "
