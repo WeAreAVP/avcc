@@ -178,8 +178,8 @@
         $totalChecked = $facetData['total_checked'];
     endif;
     ?>
-    <input type="hidden" value="" name="parent_facet" id="parent_facet" />
-    <input type="hidden" value="" name="total_checked" id="total_checked"/>
+    <input type="hidden" value="<?php echo $parentFacet;?>" name="parent_facet" id="parent_facet" />
+    <input type="hidden" value="<?php echo $totalChecked;?>" name="total_checked" id="total_checked"/>
     <input type="hidden" value="" name="facet_keyword_search" id="facet_keyword_search"/>
 </form>
 
