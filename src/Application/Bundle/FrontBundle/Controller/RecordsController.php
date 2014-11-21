@@ -34,8 +34,8 @@ class RecordsController extends Controller
 		$this->columns = array(
 			'checkbox_Col' => 'checkboxCol',
 			'Project_Name' => 'projectName',
-			'Unique_ID' => 'uniqueId',
-                        'Format' => 'format', 
+                        'Format' => 'format',
+			'Unique_ID' => 'uniqueId',                         
 			'Title' => 'title',
 			'Collection_Name' => 'collectionName',
 			'Location' => 'location'
