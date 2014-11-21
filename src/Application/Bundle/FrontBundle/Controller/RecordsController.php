@@ -69,7 +69,7 @@ class RecordsController extends Controller
             $this->getFacetRequest($request);
             $searchOn = $this->criteria();
             $criteria = $searchOn['criteriaArr'];
-            $parentFacet = $searchOn['parent_facet'];
+            $parentFacet = isset($searchOn['parent_facet'])? $searchOn['parent_facet'] : null;
             $facet['mediaType'] = $sphinxSearch->facetSelect('media_type', $criteria, $parentFacet);
             $facet['formats'] = $sphinxSearch->facetSelect('format', $criteria, $parentFacet);
             $facet['commercialUnique'] = $sphinxSearch->facetSelect('commercial', $criteria, $parentFacet);
