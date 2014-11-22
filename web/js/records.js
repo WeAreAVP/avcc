@@ -81,6 +81,7 @@ function Records() {
 	 * @returns {Boolean}
 	 */
 	this.bindEvents = function () {
+		selfObj.isAnySearch();
 		$('input[name="mediaType[]"]').click(function () {
 			checkParentFacet('media_type', $(this).prop("checked"));
 		});
