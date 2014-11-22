@@ -260,6 +260,7 @@ class RecordsController extends Controller
         if($facetData['parent_facet']){
             $criteria['parent_facet'] = $facetData['parent_facet'];
         }
+        
         if($criteriaArr){
             $criteria['criteriaArr'] = $criteriaArr;
         }
