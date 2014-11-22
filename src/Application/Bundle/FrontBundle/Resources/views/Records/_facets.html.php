@@ -34,7 +34,7 @@
                                 <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'format_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="format"></i></div>
                             <?php } ?>
                         </div>
-                    <div class="clearfix"></div><br />
+                    <div class="clearfix"></div>
                         <?php } ?>  
                     <?php
                     if (isset($facetData['commercial']) && $facetData['commercial'] != '') {
@@ -48,7 +48,7 @@
                                 <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'commercial_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="commercial"></i></div>
                             <?php } ?>
                         </div>
-                    <div class="clearfix"></div><br />
+                    <div class="clearfix"></div>
                         <?php } ?>  
                     <?php
                     if (isset($facetData['base']) && $facetData['base'] != '') {
@@ -62,7 +62,7 @@
                                 <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'base_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="base"></i></div>
                             <?php } ?>
                         </div>
-                    <div class="clearfix"></div><br />
+                    <div class="clearfix"></div>
                         <?php } ?>  
                     <?php
                     if (isset($facetData['collectionName']) && $facetData['collectionName'] != '') {
@@ -76,7 +76,7 @@
                                 <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'collectionName_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="collectionName"></i></div>
                             <?php } ?>
                         </div>
-                    <div class="clearfix"></div><br />
+                    <div class="clearfix"></div>
                         <?php } ?>
                     <?php
                     if (isset($facetData['recordingStandard']) && $facetData['recordingStandard'] != '') {
@@ -90,7 +90,7 @@
                                 <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'recordingStandard_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="recordingStandard"></i></div>
                             <?php } ?>
                         </div>
-                    <div class="clearfix"></div><br />
+                    <div class="clearfix"></div>
                         <?php } ?>
                     <?php
                     if (isset($facetData['printType']) && $facetData['printType'] != '') {
@@ -104,7 +104,7 @@
                                 <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'printType_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="printType"></i></div>
                             <?php } ?>
                         </div>
-                    <div class="clearfix"></div><br />
+                    <div class="clearfix"></div>
                         <?php } ?>  
                     <?php
                     if (isset($facetData['project']) && $facetData['project'] != '') {
@@ -118,7 +118,7 @@
                                 <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'project_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="project"></i></div>
                             <?php } ?>
                         </div>
-                    <div class="clearfix"></div><br />
+                    <div class="clearfix"></div>
                         <?php } ?>  
                     <?php
                     if (isset($facetData['reelDiameter']) && $facetData['reelDiameter'] != '') {
@@ -132,7 +132,7 @@
                                 <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'reelDiameter_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="reelDiameter"></i></div>
                             <?php } ?>
                         </div>
-                    <div class="clearfix"></div><br />
+                    <div class="clearfix"></div>
                         <?php } ?>
                     <?php
                     if (isset($facetData['discDiameter']) && $facetData['discDiameter'] != '') {
@@ -146,7 +146,7 @@
                                 <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'discDiameter_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="discDiameter"></i></div>
                             <?php } ?>
                         </div>
-                    <div class="clearfix"></div><br />
+                    <div class="clearfix"></div>
                         <?php } ?>
                     <?php
                     if (isset($facetData['acidDetection']) && $facetData['acidDetection'] != '') {
@@ -160,7 +160,7 @@
                                 <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'acidDetection_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="acidDetection"></i></div>
                             <?php } ?>
                         </div>
-                    <div class="clearfix"></div><br />
+                    <div class="clearfix"></div>
                         <?php } ?>
                     <div class="clearfix"></div>
                 </li>
@@ -172,9 +172,7 @@
                         <input type="text" id="keywordSearch" value="" />
                     </div>
                     <div class="button-dropdown">
-                        <button type="button" class="dropdown-toggle">
-                            <span id="limit_field_text">Search</span>
-                        </button>
+                        <button class="dropdown-toggle">Search</button>
                         <ul class="dropdown-menu" data-role="dropdown">
                             <li><a href="javascript://;" class="customToken" data-fieldName="Title"  data-columnName="title" style="font-size: 14px!important;">Title</a></li>
                             <li><a href="javascript://;" class="customToken" data-fieldName="Description"  data-columnName="description" style="font-size: 14px!important;">Description</a></li>
