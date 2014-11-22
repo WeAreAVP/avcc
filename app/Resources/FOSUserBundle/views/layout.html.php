@@ -121,7 +121,7 @@
             </div>
         </header>
 
-        <div class="container" style="margin-top:20px;margin-bottom:20px;">
+        <div class="container" id="container" style="margin-top:20px;margin-bottom:20px;">
             <?php foreach ($app->getSession()->getFlashBag()->all() as $type => $messages): ?>
                 <?php foreach ($messages as $message): ?>
                     <div class="flash-<?php echo $type; ?> text-success">
