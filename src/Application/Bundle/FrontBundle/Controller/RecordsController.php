@@ -212,7 +212,7 @@ class RecordsController extends Controller
 			'is_review_check' => 'is_review',
 			'creationDate' => 's_creation_date',
 			'contentDate' => 's_content_date',
-			'parent_facet' => 'parent_facet',
+			'contentDate' => 's_content_date',
 		);
 		foreach ($searchColumns as $key => $value)
 		{
@@ -239,6 +239,11 @@ class RecordsController extends Controller
 				}
 			}
 		}
+		if ($facetData['parent_facet'])
+		{
+			$criteria['parent_facet'] = $facetData['parent_facet'];
+		}
+
 		if ($criteriaArr)
 		{
 			$criteria['criteriaArr'] = $criteriaArr;
@@ -261,7 +266,7 @@ class RecordsController extends Controller
 		}
 	}
 
-	protected function cleanEmptyData($array)
+	protected function removeEmpty($array)
 	{
 		$result = array();
 		foreach ($array as $facet)
