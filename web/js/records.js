@@ -173,6 +173,7 @@ function Records() {
 	 */
 	var filterRecords = function () {
 		$.blockUI({
+			message: 'Please wait...',
 			css: {
 				border: 'none',
 				padding: '15px',
