@@ -227,6 +227,7 @@ class SphinxSearch extends ContainerAware
 			{
 
 				$_value = (is_array($value)) ? implode(' | ', $value) : $value;
+				echo $_value.'<br/>';
 				$sq->match($key, $_value, true);
 			}
 		}
