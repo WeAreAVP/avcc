@@ -43,8 +43,8 @@ function Records() {
 		if ($('#records').length > 0)
 		{
 			// Modify css for managing view.
-			$('#container').removeClass('container');
-			$('#container').css('margin', '20px');
+//			$('#container').removeClass('container');
+//			$('#container').css('margin', '20px');
 			oTable =
 			$('#records').dataTable(
 			{

@@ -24,7 +24,7 @@
                 </ul>
             </div>
 
-            <div>
+            <div class="table-responsive">
                 <table class="table hovered bordered" id="records">
                     <thead>
                         <tr>
