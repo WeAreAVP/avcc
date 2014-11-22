@@ -124,7 +124,7 @@ class SphinxSearch extends ContainerAware
 			}
 			else
 			{
-				if (!$parentFacet && $key != 's_' . $parentFacet)
+				if ($key != 's_' . $parentFacet)
 				{
 					$_value = (is_array($value)) ? implode('|', $value) : $value;
 					$sq->match($key, $_value, true);
