@@ -96,7 +96,7 @@ class SphinxSearch extends ContainerAware
 		$sq = SphinxQL::create($this->conn)
 		->select($facetColumn, SphinxQL::expr('count(*) AS total'))
 		->from($this->indexName);
-		if ($criteria)
+		if ($criteria && $facetColumn != $parentFacet)
 		{
 			$this->whereClause($criteria, $sq, $parentFacet);
 		}
@@ -124,11 +124,9 @@ class SphinxSearch extends ContainerAware
 			}
 			else
 			{
-				if ($key != 's_' . $parentFacet)
-				{
-					$_value = (is_array($value)) ? implode('|', $value) : $value;
-					$sq->match($key, $_value, true);
-				}
+
+				$_value = (is_array($value)) ? implode('|', $value) : $value;
+				$sq->match($key, $_value, true);
 			}
 		}
 	}
