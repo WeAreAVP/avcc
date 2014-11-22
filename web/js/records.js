@@ -153,7 +153,8 @@ function Records() {
 			totalChecked++;
 		else
 			totalChecked--;
-
+		if (totalChecked < 0)
+			totalChecked = 0;
 		$('#total_checked').val(totalChecked);
 
 		if ($('#parent_facet').val() == '' && totalChecked == 1)
