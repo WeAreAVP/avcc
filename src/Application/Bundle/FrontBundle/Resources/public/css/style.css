@@ -95,3 +95,9 @@
 #facet_sidebar ul li.title{
 	padding: 8px 10px 8px 10px;
 }
+.metro .sidebar>ul li a{
+	padding: 5px 10px !important;
+}
+.metro .sidebar>ul ul a{
+	padding: 1px 12px !important;
+}
