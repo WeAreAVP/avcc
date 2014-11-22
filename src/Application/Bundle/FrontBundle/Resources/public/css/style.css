@@ -67,7 +67,7 @@
 }
 .chekBoxFacet{
     display: block;
-    padding: 10px 20px;
+    padding: 2px 10px;
     position: relative;
 }
 .keywordDropdown li a{
@@ -75,7 +75,7 @@
 }
 
 .btn-img {
-    background-color: #ffffff !important;
+    background-color: #e3e3e3;
     border: 1px solid #cccccc;
     border-radius: 5px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
@@ -83,12 +83,15 @@
     margin: 2px 1px;
     padding: 5px 7px 3px 10px;
     transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
-    width: 190px;
+    width: 100%;
 }
 .search_keys {
     float: left;
-    width: 155px;
+    width: 90%;
 }
 .delFilter{
     margin-top: 3px;
+}
+#facet_sidebar ul li.title{
+	padding: 8px 10px 8px 10px;
 }
