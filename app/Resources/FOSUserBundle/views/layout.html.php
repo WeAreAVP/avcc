@@ -33,7 +33,7 @@
                 <div class="navigation-bar-content container">
                     <a href="<?php echo $view['router']->generate('_welcome') ?>" class="element"> AVCC </a>
                     <span class="element-divider"></span>
-                    <!--                    {#                                        {{ dump(app.user) }}#}-->
+                   
                     <?php if ($app->getUser()): ?>
                         <a class="element1 pull-menu" href="#"></a>
                         <ul class="element-menu place-right" style="">
@@ -135,13 +135,12 @@
 
         <?php $view['slots']->start('javascripts') ?>
         
-        <script src="<?php echo $view['assets']->getUrl('js/jquery.widget.min.js') ?>"></script>
-        <script src="<?php echo $view['assets']->getUrl('js/jquery.mousewheel.js') ?>"></script>
-        <script src="<?php echo $view['assets']->getUrl('js/metro.min.js') ?>"></script>
-        
-        <script src="<?php echo $view['assets']->getUrl('js/chosen.jquery.js') ?>"></script>
-        <script src="<?php echo $view['assets']->getUrl('js/jquery.mCustomScrollbar.concat.min.js') ?>"></script>
-        <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/jquery.widget.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/jquery.mousewheel.js') ?>"></script>
+        <script id="metro-js" type="text/javascript" src="<?php echo $view['assets']->getUrl('js/metro.min.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/chosen.jquery.js') ?>"></script>
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/jquery.mCustomScrollbar.concat.min.js') ?>"></script>
+        <script type="text/javascript" src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
         <script type="text/javascript">
             setTimeout(function () {
