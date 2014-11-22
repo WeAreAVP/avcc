@@ -16,7 +16,7 @@
                             foreach ($facetData['mediaType'] as $value) {
                                 $id = time() . rand(0, 1000);
                                 ?>
-                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'mediaType_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="mediaType"></i></div>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'mediaType_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="mediaType"></i></div>
                             <?php } ?>
                         </div>
                     <div class="clearfix"></div>
@@ -45,7 +45,7 @@
                             foreach ($facetData['commercial'] as $value) {
                                 $id = time() . rand(0, 1000);
                                 ?>
-                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'commercial_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="commercial"></i></div>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'commercial_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="commercial"></i></div>
                             <?php } ?>
                         </div>
                     <div class="clearfix"></div><br />
@@ -59,7 +59,7 @@
                             foreach ($facetData['base'] as $value) {
                                 $id = time() . rand(0, 1000);
                                 ?>
-                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'base_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="base"></i></div>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'base_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="base"></i></div>
                             <?php } ?>
                         </div>
                     <div class="clearfix"></div><br />
@@ -73,7 +73,7 @@
                             foreach ($facetData['collectionName'] as $value) {
                                 $id = time() . rand(0, 1000);
                                 ?>
-                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'collectionName_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="collectionName"></i></div>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'collectionName_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="collectionName"></i></div>
                             <?php } ?>
                         </div>
                     <div class="clearfix"></div><br />
@@ -87,7 +87,7 @@
                             foreach ($facetData['recordingStandard'] as $value) {
                                 $id = time() . rand(0, 1000);
                                 ?>
-                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'recordingStandard_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="recordingStandard"></i></div>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'recordingStandard_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="recordingStandard"></i></div>
                             <?php } ?>
                         </div>
                     <div class="clearfix"></div><br />
@@ -101,7 +101,7 @@
                             foreach ($facetData['printType'] as $value) {
                                 $id = time() . rand(0, 1000);
                                 ?>
-                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'printType_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="printType"></i></div>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'printType_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="printType"></i></div>
                             <?php } ?>
                         </div>
                     <div class="clearfix"></div><br />
@@ -115,7 +115,7 @@
                             foreach ($facetData['project'] as $value) {
                                 $id = time() . rand(0, 1000);
                                 ?>
-                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'project_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="project"></i></div>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'project_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="project"></i></div>
                             <?php } ?>
                         </div>
                     <div class="clearfix"></div><br />
@@ -129,7 +129,7 @@
                             foreach ($facetData['reelDiameter'] as $value) {
                                 $id = time() . rand(0, 1000);
                                 ?>
-                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'reelDiameter_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="reelDiameter"></i></div>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'reelDiameter_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="reelDiameter"></i></div>
                             <?php } ?>
                         </div>
                     <div class="clearfix"></div><br />
@@ -143,7 +143,7 @@
                             foreach ($facetData['discDiameter'] as $value) {
                                 $id = time() . rand(0, 1000);
                                 ?>
-                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'discDiameter_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="discDiameter"></i></div>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'discDiameter_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="discDiameter"></i></div>
                             <?php } ?>
                         </div>
                     <div class="clearfix"></div><br />
@@ -157,7 +157,7 @@
                             foreach ($facetData['acidDetection'] as $value) {
                                 $id = time() . rand(0, 1000);
                                 ?>
-                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-remove delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'acidDetection_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="acidDetection"></i></div>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'acidDetection_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="acidDetection"></i></div>
                             <?php } ?>
                         </div>
                     <div class="clearfix"></div><br />
