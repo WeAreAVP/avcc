@@ -53,7 +53,7 @@
                 </table>
             </div>
 			<?php $view['slots']->start('view_javascripts') ?>
-			
+
             <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
             <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/records.js') ?>"></script>
 			<script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/tristate-0.9.2.js') ?>"></script>
@@ -62,12 +62,10 @@
 				var record = new Records();
 				record.setAjaxSource('<?php echo $view['router']->generate('record_dataTable') ?>');
 				record.initDataTable();
-				initTriStateCheckBox('is_review_check', 'is_review_check_state', true);
+				
 				record.setPageUrl('<?php echo $view['router']->generate('record_list') ?>');
 				record.bindEvents();
-				record.addCustomToken();
-				record.addKeyword();
-                                record.removeFilter();
+				
 
             </script>
 			<?php

@@ -114,6 +114,7 @@ function Records() {
 		$('input[name="collectionName[]"]').click(function () {
 			checkParentFacet('collectionName', $(this).prop('checked'));
 		});
+		initTriStateCheckBox('is_review_check', 'is_review_check_state', true);
 		$('#is_review_check').click(function () {
 			var totalChecked = $('#total_checked').val();
 			var containerId = $(this).attr('id');
@@ -131,7 +132,9 @@ function Records() {
 			}
 			filterRecords();
 		});
-
+		selfObj.addCustomToken();
+		selfObj.addKeyword();
+		selfObj.removeFilter();
 		return true;
 	}
 	/**
@@ -179,8 +182,7 @@ function Records() {
 				script.id = "metro-js";
 				$("#recordsContainer").append(script);
 				selfObj.initDataTable();
-
-//                selfObj.bindEvents();		
+				selfObj.bindEvents();
 			}
 
 		});
