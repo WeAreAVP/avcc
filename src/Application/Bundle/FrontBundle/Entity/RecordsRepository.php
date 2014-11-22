@@ -36,32 +36,31 @@ class RecordsRepository extends EntityRepository
         )
         ->getArrayResult();
     }
-    
+
     public function findRecordsByType($typeRecordId, $typeId)
     {
         $where = "";
         $join = '';
-        if($typeId == 1){
+        if ($typeId == 1) {
            $join =  "JOIN r.audioRecord a ";
-           $where = "WHERE a.id =  :typeRecordId"; 
-        }elseif($typeId == 2){
+           $where = "WHERE a.id =  :typeRecordId";
+        } elseif ($typeId == 2) {
            $join =  "JOIN r.filmRecord f ";
-           $where = "WHERE f.id =  :typeRecordId"; 
-        }else{
-           $join =  "JOIN r.videoRecord v "; 
-           $where = "WHERE v.id =  :typeRecordId";  
+           $where = "WHERE f.id =  :typeRecordId";
+        } else {
+           $join =  "JOIN r.videoRecord v ";
+           $where = "WHERE v.id =  :typeRecordId";
         }
         $query = $this->getEntityManager()
         ->createQuery("SELECT r from ApplicationFrontBundle:Records r "
         . "JOIN r.user u "
         . "JOIN u.organizations o "
-        . $join        
-//        . $join        
+        . $join
+//        . $join
         . $where);
         $query->setParameter('typeRecordId', $typeRecordId);
 
         return $query->getSingleResult();
     }
-
 
 }

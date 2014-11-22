@@ -2,8 +2,8 @@
 
 /*
  * File SphinxSearch
- * 
- * 
+ *
+ *
  */
 
 namespace Application\Bundle\FrontBundle\SphinxSearch;
@@ -17,221 +17,211 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 /**
  * SphinxSearch is used to manage all operations for sphinxsearch service.
  * It uses SphinxQL.
- * 
+ *
  */
 class SphinxSearch extends ContainerAware
 {
 
-	/**
-	 * Connection for sphinxQL.
-	 * @var Connection 
-	 */
-	private $conn;
+    /**
+     * Connection for sphinxQL.
+     * @var Connection
+     */
+    private $conn;
 
-	/**
-	 * Name of the index.
-	 * @var string 
-	 */
-	private $indexName = 'records';
+    /**
+     * Name of the index.
+     * @var string
+     */
+    private $indexName = 'records';
 
-	/**
-	 * Record ID.
-	 * @var integer 
-	 */
-	private $recordId;
+    /**
+     * Record ID.
+     * @var integer
+     */
+    private $recordId;
 
-	/**
-	 * Entity manager.
-	 * 
-	 * @var EntityManager 
-	 */
-	private $entityManager = null;
+    /**
+     * Entity manager.
+     *
+     * @var EntityManager
+     */
+    private $entityManager = null;
 
-	/**
-	 * Record type
-	 * 
-	 * @var type 
-	 */
-	private $recordTypeId;
+    /**
+     * Record type
+     *
+     * @var type
+     */
+    private $recordTypeId;
 
-	/**
-	 * Constructor of SphinxSearch
-	 * 
-	 * @param EntityManager $entityManager
-	 * @param array $sphinxInfo
-	 * @param integer $recordId
-	 * @param integer $recordTypeId
-	 */
-	public function __construct(EntityManager $entityManager, array $sphinxInfo, $recordId = null, $recordTypeId = null)
-	{
-		$this->entityManager = $entityManager;
-		$this->recordId = $recordId;
-		$this->recordTypeId = $recordTypeId;
+    /**
+     * Constructor of SphinxSearch
+     *
+     * @param EntityManager $entityManager
+     * @param array         $sphinxInfo
+     * @param integer       $recordId
+     * @param integer       $recordTypeId
+     */
+    public function __construct(EntityManager $entityManager, array $sphinxInfo, $recordId = null, $recordTypeId = null)
+    {
+        $this->entityManager = $entityManager;
+        $this->recordId = $recordId;
+        $this->recordTypeId = $recordTypeId;
 
-		$this->conn = new Connection();
-		$this->conn->setParams(array('host' => $sphinxInfo['host'], 'port' => $sphinxInfo['port']));
-		$this->conn->silenceConnectionWarning(true);
-		$this->indexName = $sphinxInfo['indexName'];
-	}
+        $this->conn = new Connection();
+        $this->conn->setParams(array('host' => $sphinxInfo['host'], 'port' => $sphinxInfo['port']));
+        $this->conn->silenceConnectionWarning(true);
+        $this->indexName = $sphinxInfo['indexName'];
+    }
 
-	/**
-	 * Insert new record to sphinx index.
-	 * 
-	 * @return array on count of records.
-	 */
-	public function insert()
-	{
-		$sphinxFields = new SphinxFields();
-		$data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
-		$sq = SphinxQL::create($this->conn)->insert()->into($this->indexName);
-		$sq->set($data);
+    /**
+     * Insert new record to sphinx index.
+     *
+     * @return array on count of records.
+     */
+    public function insert()
+    {
+        $sphinxFields = new SphinxFields();
+        $data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
+        $sq = SphinxQL::create($this->conn)->insert()->into($this->indexName);
+        $sq->set($data);
 
-		return $sq->execute();
-	}
+        return $sq->execute();
+    }
 
-	/**
-	 * Update the existing record in sphinx index.
-	 * 
-	 * One work for attr_unit.
-	 * 
-	 * @return array on count of records.
-	 */
-	public function update()
-	{
-		$sphinxFields = new SphinxFields();
-		$data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
-		$sq = SphinxQL::create($this->conn)->update($this->indexName);
-		$sq->set($data);
+    /**
+     * Update the existing record in sphinx index.
+     *
+     * One work for attr_unit.
+     *
+     * @return array on count of records.
+     */
+    public function update()
+    {
+        $sphinxFields = new SphinxFields();
+        $data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
+        $sq = SphinxQL::create($this->conn)->update($this->indexName);
+        $sq->set($data);
 
-		return $sq->execute();
-	}
+        return $sq->execute();
+    }
 
-	/**
-	 * Replace the values for existing record.
-	 * 
-	 * @return array on count of records.
-	 */
-	public function replace()
-	{
-		$sphinxFields = new SphinxFields();
-		$data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
-		$sq = SphinxQL::create($this->conn)->replace()->into($this->indexName);
-		$sq->set($data);
+    /**
+     * Replace the values for existing record.
+     *
+     * @return array on count of records.
+     */
+    public function replace()
+    {
+        $sphinxFields = new SphinxFields();
+        $data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
+        $sq = SphinxQL::create($this->conn)->replace()->into($this->indexName);
+        $sq->set($data);
 
-		return $sq->execute();
-	}
+        return $sq->execute();
+    }
 
-	/**
-	 * Select record for listing from sphinx.
-	 * 
-	 * @param User    $user
-	 * @param integer $offset
-	 * @param integer $limit
-	 * @param string  $sortColumn
-	 * @param string  $sortOrder
-	 * @param string  $criteria
-	 * 
-	 * @return array
-	 */
-	public function select($user, $offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null)
-	{
-		$sq = SphinxQL::create($this->conn);
-		$sq->select()
-		->from($this->indexName);
-		if ($criteria)
-		{
-			$this->whereClause($criteria, $sq);
-		}
-		if ( ! in_array("ROLE_SUPER_ADMIN", $user->getRoles()))
-		{
-			$sq->where('organization_id', "=", $user->getOrganizations()->getId());
-		}
-		$result = $sq->orderBy($sortColumn, $sortOrder)
-		->limit($offset, $limit)
-		->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
-		->executeBatch();
-		echo $sq->getCompiled();exit;
-		return $result;
-	}
+    /**
+     * Select record for listing from sphinx.
+     *
+     * @param User    $user
+     * @param integer $offset
+     * @param integer $limit
+     * @param string  $sortColumn
+     * @param string  $sortOrder
+     * @param string  $criteria
+     *
+     * @return array
+     */
+    public function select($user, $offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null)
+    {
+        $sq = SphinxQL::create($this->conn);
+        $sq->select()
+        ->from($this->indexName);
+        if ($criteria) {
+            $this->whereClause($criteria, $sq);
+        }
+        if ( ! in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
+            $sq->where('organization_id', "=", $user->getOrganizations()->getId());
+        }
+        $result = $sq->orderBy($sortColumn, $sortOrder)
+        ->limit($offset, $limit)
+        ->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
+        ->executeBatch();
 
-	/**
-	 * Select total found record for listing from sphinx.
-	 * 
-	 * @param integer $offset
-	 * @param integer $limit
-	 * @param string  $sortColumn
-	 * @param string  $sortOrder
-	 * 
-	 * @return array
-	 */
-	public function selectCount($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc')
-	{
-		$sq = SphinxQL::create($this->conn)
-		->select()
-		->from($this->indexName)
-		->orderBy($sortColumn, $sortOrder)
-		->limit($offset, $limit)
-		->enqueue(Helper::create($this->conn)->showMeta());
+        return $result;
+    }
 
-		return $sq->executeBatch();
-	}
+    /**
+     * Select total found record for listing from sphinx.
+     *
+     * @param integer $offset
+     * @param integer $limit
+     * @param string  $sortColumn
+     * @param string  $sortOrder
+     *
+     * @return array
+     */
+    public function selectCount($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc')
+    {
+        $sq = SphinxQL::create($this->conn)
+        ->select()
+        ->from($this->indexName)
+        ->orderBy($sortColumn, $sortOrder)
+        ->limit($offset, $limit)
+        ->enqueue(Helper::create($this->conn)->showMeta());
 
-	/**
-	 * Prepare facet for sphinx attribute.
-	 * 
-	 * @param string $facetColumn
-	 * @param array  $criteria
-	 * @param string $parentFacet
-	 * 
-	 * @return array
-	 */
-	public function facetSelect($facetColumn, $criteria = null, $parentFacet = false)
-	{
-		$sq = SphinxQL::create($this->conn)
-		->select($facetColumn, SphinxQL::expr('count(*) AS total'))
-		->from($this->indexName);
-		if ($criteria && $facetColumn != $parentFacet)
-		{
-			$this->whereClause($criteria, $sq);
-		}
-		$sq->where($facetColumn, '!=', '');
-		$sq->groupBy($facetColumn)
-		->orderBy($facetColumn, 'asc');
+        return $sq->executeBatch();
+    }
 
-		return $sq->execute();
-	}
+    /**
+     * Prepare facet for sphinx attribute.
+     *
+     * @param string $facetColumn
+     * @param array  $criteria
+     * @param string $parentFacet
+     *
+     * @return array
+     */
+    public function facetSelect($facetColumn, $criteria = null, $parentFacet = false)
+    {
+        $sq = SphinxQL::create($this->conn)
+        ->select($facetColumn, SphinxQL::expr('count(*) AS total'))
+        ->from($this->indexName);
+        if ($criteria && $facetColumn != $parentFacet) {
+            $this->whereClause($criteria, $sq);
+        }
+        $sq->where($facetColumn, '!=', '');
+        $sq->groupBy($facetColumn)
+        ->orderBy($facetColumn, 'asc');
 
-	/**
-	 * Make where clause for searching.
-	 * 
-	 * @param array    $criteria
-	 * @param SphinxQL $sq
-	 * 
-	 * @return void
-	 */
-	public function whereClause($criteria, $sq)
-	{
-		foreach ($criteria as $key => $value)
-		{
-			if ($key == 'is_review')
-			{
-				if ($value == 1)
-				{
-					$sq->where($key, '=', 1);
-				}
-				elseif ($value == 2)
-				{
-					$sq->where($key, '=', 0);
-				}
-			}
-			else
-			{
+        return $sq->execute();
+    }
 
-				$_value = (is_array($value)) ? implode(' | ', $value) : $value;
-				
-				$sq->match($key, $_value, true);
-			}
-		}
-	}
+    /**
+     * Make where clause for searching.
+     *
+     * @param array    $criteria
+     * @param SphinxQL $sq
+     *
+     * @return void
+     */
+    public function whereClause($criteria, $sq)
+    {
+        foreach ($criteria as $key => $value) {
+            if ($key == 'is_review') {
+                if ($value == 1) {
+                    $sq->where($key, '=', 1);
+                } elseif ($value == 2) {
+                    $sq->where($key, '=', 0);
+                }
+            } else {
+
+                $_value = (is_array($value)) ? implode(' | ', $value) : $value;
+
+                $sq->match($key, $_value, true);
+            }
+        }
+    }
 
 }
