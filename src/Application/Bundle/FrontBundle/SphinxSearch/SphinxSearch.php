@@ -150,6 +150,7 @@ class SphinxSearch extends ContainerAware
 		->limit($offset, $limit)
 		->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
 		->executeBatch();
+		echo $sq->getCompiled();exit;
 		return $result;
 	}
 
@@ -227,7 +228,7 @@ class SphinxSearch extends ContainerAware
 			{
 
 				$_value = (is_array($value)) ? implode(' | ', $value) : $value;
-				echo $_value.'<br/>';
+				
 				$sq->match($key, $_value, true);
 			}
 		}
