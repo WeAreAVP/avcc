@@ -185,7 +185,7 @@
 						<div class="clearfix"></div>
 					<?php } ?>
 					<div class="clearfix"></div>
-					<div><input type="button" value="Reset" id="reset_all" name="reset_all"  class="button hidden" /></div>
+					<div><input type="button" value="Reset" id="reset_all" name="reset_all"  style="display: none;" class="button" /></div>
 				</li>
 			<?php endif; ?>
             <li>
