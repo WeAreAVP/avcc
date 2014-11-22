@@ -64,8 +64,9 @@ class RecordsController extends Controller
 		$sphinxSearch = new SphinxSearch($em, $shpinxInfo);
 
 		$isAjax = FALSE;
-		$parentFacet = null;
-		$criteria = null;
+		$searchOn = $this->criteria();
+		$parentFacet = isset($searchOn['parent_facet']) ? $searchOn['parent_facet'] : null;
+		$criteria = $searchOn['criteriaArr'];
 		if ($request->isXmlHttpRequest())
 		{
 			$isAjax = TRUE;
