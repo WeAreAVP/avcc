@@ -52,28 +52,29 @@
                     </tbody>
                 </table>
             </div>
+
+
+        </div>
+		<?php if ( ! $isAjax): ?>
 			<?php $view['slots']->start('view_javascripts') ?>
 
-            <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
-            <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/records.js') ?>"></script>
+			<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
+			<script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/records.js') ?>"></script>
 			<script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/tristate-0.9.2.js') ?>"></script>
-            <script type="text/javascript">
+			<script type="text/javascript">
 
 				var record = new Records();
 				record.setAjaxSource('<?php echo $view['router']->generate('record_dataTable') ?>');
 				record.initDataTable();
-				
+
 				record.setPageUrl('<?php echo $view['router']->generate('record_list') ?>');
 				record.bindEvents();
-				
 
-            </script>
+
+			</script>
 			<?php
 			$view['slots']->stop();
 			?>
-
-        </div>
-		<?php if ( ! $isAjax): ?>
 		</div>
 	</div>
 	<?php
