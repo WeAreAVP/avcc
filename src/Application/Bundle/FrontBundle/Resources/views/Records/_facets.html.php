@@ -9,9 +9,8 @@
 				<li>
 
 					<?php
-					if (isset($facetData['facet_keyword_search']) && $facetData['facet_keyword_search'] != '')
+					if (isset($facetData['facet_keyword_search']) && count(json_decode($facetData['facet_keyword_search'])) > 0)
 					{
-						echo '<pre>';print_r($facetData['facet_keyword_search']);exit;
 						?>
 						<div id="keyword_main" class="chekBoxFacet">
 							<?php
