@@ -390,7 +390,7 @@
 		$totalChecked = $facetData['total_checked'];
 	endif;
 	if (isset($facetData['facet_keyword_search']) && ! empty($facetData['facet_keyword_search'])):
-		$keyword = $facetData['facet_keyword_search'];
+		$keyword = htmlentities($facetData['facet_keyword_search']);
 	endif;
 	?>
     <input type="hidden" value="<?php echo $parentFacet; ?>" name="parent_facet" id="parent_facet" />
