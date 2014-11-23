@@ -10,7 +10,7 @@ security:
 
     providers:
         fos_userbundle:
-            id: fos_user.user_provider.email
+            id: fos_user.user_provider.username_email
 
     firewalls:
         dev:
@@ -44,5 +44,5 @@ security:
 
 
 
-    acl:
-        connection: default
+#    acl:
+#        connection: default
