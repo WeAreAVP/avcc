@@ -250,7 +250,7 @@ class RecordsController extends Controller
         foreach ($facet as $key => $value) {
             foreach ($value as $column => $row) {
                 if ($column == $index && ! empty($row))
-                    $result = $value;
+                    $result[] = $value;
             }
         }
         echo '<pre>';
