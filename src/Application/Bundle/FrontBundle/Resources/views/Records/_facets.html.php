@@ -11,6 +11,7 @@
 					<?php
 					if (isset($facetData['facet_keyword_search']) && $facetData['facet_keyword_search'] != '')
 					{
+						echo '<pre>';print_r($facetData['facet_keyword_search']);exit;
 						?>
 						<div id="keyword_main" class="chekBoxFacet">
 							<?php
