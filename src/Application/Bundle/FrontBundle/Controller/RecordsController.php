@@ -253,10 +253,6 @@ class RecordsController extends Controller
                     $result[] = $value;
             }
         }
-        echo '<pre>';
-        print_r($result);
-
-        exit;
 
         return $result;
     }
