@@ -27,7 +27,7 @@
 								}
 								$id = time() . rand(0, 1000);
 								?>
-								<div class="btn-img" id="facet_keyword_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value->value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'keyword_' . str_replace(' ', '_', strtolower($value->value)); ?>" data-type="keyword"></i></div>
+								<div class="btn-img" id="facet_keyword_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value->value); ?></span><i class="icon-cancel deleteKeyword" data-index="<?php echo $key; ?>" style="float: right;cursor: pointer;" data-elementId="<?php echo 'keyword_' . str_replace(' ', '_', strtolower($value->value)); ?>" data-type="keyword"></i></div>
 							<?php }
 							?>
 						</div>

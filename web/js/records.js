@@ -136,9 +136,11 @@ function Records() {
 		$('#reset_all').click(function () {
 			selfObj.resetAll();
 		});
+
 		selfObj.addCustomToken();
 		selfObj.addKeyword();
 		selfObj.removeFilter();
+		selfObj.removeKeywordFilter();
 		return true;
 	}
 	/**
@@ -255,6 +257,17 @@ function Records() {
 			$('#' + elementID).prop('checked', false);
 			checkParentFacet(type);
 		});
+	}
+	this.removeKeywordFilter = function () {
+		$('.deleteKeyword').click(function () {
+			var index = $(this).data().index;
+			Filters = JSON.parse($('#facet_keyword_search').val());
+			delete (Filters[index]);
+			Filters.splice(index, 1);
+			$('#facet_keyword_search').val(JSON.stringify(Filters));
+			filterRecords();
+		});
+
 	}
 	this.resetAll = function () {
 		$('#formSearch').find('input:hidden, input:text, select').val('');
