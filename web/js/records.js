@@ -261,12 +261,9 @@ function Records() {
 	this.removeKeywordFilter = function () {
 		$('.deleteKeyword').click(function () {
 			var index = $.trim($(this).data().index);
-
 			Filters = JSON.parse($('#facet_keyword_search').val());
-			console.log(Filters);
 			delete (Filters[index]);
 			Filters.splice(index, 1);
-			console.log(Filters);
 			$('#facet_keyword_search').val(JSON.stringify(Filters));
 			filterRecords();
 		});
