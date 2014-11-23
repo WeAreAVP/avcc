@@ -260,13 +260,13 @@ function Records() {
 	}
 	this.removeKeywordFilter = function () {
 		$('.deleteKeyword').click(function () {
-			var index = $(this).data().index;
-			console.log(index);
-//			Filters = JSON.parse($('#facet_keyword_search').val());
-//			delete (Filters[index]);
-//			Filters.splice(index, 1);
-//			$('#facet_keyword_search').val(JSON.stringify(Filters));
-//			filterRecords();
+			var index = $.trim($(this).data().index);
+
+			Filters = JSON.parse($('#facet_keyword_search').val());
+			delete (Filters[index]);
+			Filters.splice(index, 1);
+			$('#facet_keyword_search').val(JSON.stringify(Filters));
+			filterRecords();
 		});
 
 	}
