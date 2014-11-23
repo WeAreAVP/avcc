@@ -15,6 +15,7 @@
 						<div id="keyword_main" class="chekBoxFacet">
 							<?php
 							$session_keywords = $view['myViewHelper']->sortByOneKey(json_decode($facetData['facet_keyword_search']), 'type');
+							$types = array();
 							foreach ($session_keywords as $key => $value)
 							{
 								if ( ! in_array($value->type, $types))
