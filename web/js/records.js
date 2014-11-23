@@ -16,6 +16,8 @@ function Records() {
 	var pageUrl = null;
 	var selfObj = this;
 	var Filters = new Object();
+	var customFieldName = 'All';
+	var customColumnName = 'all';
 	/**
 	 * Set the ajax URL of datatable.
 	 * @param {string} source
@@ -209,8 +211,7 @@ function Records() {
 
 		});
 	}
-	var customFieldName = 'All';
-	var customColumnName = 'all';
+
 	/**
 	 * 
 	 * @returns {undefined}
@@ -244,7 +245,8 @@ function Records() {
 				Filters.push(temp);
 
 				$('#facet_keyword_search').val(JSON.stringify(Filters));
-
+				customFieldName = 'All';
+				customColumnName = 'all';
 				filterRecords();
 			}
 		});
