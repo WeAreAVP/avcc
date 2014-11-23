@@ -22,7 +22,7 @@
 								{
 									$types[] = $value->type;
 									?>
-									<div class="filter-fileds"><b>Keyword: <?php ucfirst($value->type); ?></b></div>
+									<div class="filter-fileds"><b>Keyword: <?php echo ucfirst($value->type); ?></b></div>
 									<?php
 								}
 								$id = time() . rand(0, 1000);
