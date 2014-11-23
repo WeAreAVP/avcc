@@ -7,6 +7,22 @@
             <li class="title">Filters</li>
             <?php if ($facetData): ?>
                 <li>
+					<?php
+                    if (isset($facetData['facet_keyword_search']) && $facetData['facet_keyword_search'] != '') {
+						echo '<pre>';print_r($facetData['facet_keyword_search']);exit;
+                        ?>
+                        <div id="mediaType_main" class="chekBoxFacet">
+                            <div class="filter-fileds"><b>Media Type</b></div>
+                            <?php
+                            foreach ($facetData['mediaType'] as $value) {
+                                $id = time() . rand(0, 1000);
+                                ?>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'mediaType_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="mediaType"></i></div>
+                            <?php } ?>
+                        </div>
+                        <div class="clearfix"></div>
+
+                    <?php } ?>
                     <?php
                     if (isset($facetData['mediaType']) && $facetData['mediaType'] != '') {
                         ?>
