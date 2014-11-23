@@ -369,11 +369,11 @@
 			<?php endif; ?>
             <li class="chekBoxFacet">
                 <span id="is_review_check" style="cursor: default;">
-					<?php $review_check = 0 ?>
-					<?php if (isset($facetData['is_review'])): ?>
-						<?php $review_check = $facetData['is_review'] ?>
-					<?php endif; ?>
-                    <input type="hidden" id="is_review_check_state" name="is_review_check" value="<?php echo $review_check ?>" <?php echo (isset($facetData['is_review']) && $facetData['is_review'] == $review_check) ? 'checked="checked"' : '' ?> />
+					<?php $review_check = 0;
+					 if (isset($facetData['is_review'])): 
+						 $review_check = $facetData['is_review'];
+					 endif; ?>
+                    <input type="hidden" id="is_review_check_state" name="is_review_check" value="<?php echo $review_check ?>"  />
                 </span>
                 Review
             </li>
