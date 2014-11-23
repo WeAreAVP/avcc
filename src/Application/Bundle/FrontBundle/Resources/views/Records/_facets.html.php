@@ -7,24 +7,31 @@
             <li class="title">Filters</li>
 			<?php if ($facetData): ?>
 				<li>
+
 					<?php
 					if (isset($facetData['facet_keyword_search']) && $facetData['facet_keyword_search'] != '')
 					{
-						$session_keywords = $view['myViewHelper']->sortByOneKey(json_decode($facetData['facet_keyword_search'], TRUE), 'type');
-						echo '<pre>';
-						print_r($session_keywords);
-						exit;
 						?>
-						<div id="mediaType_main" class="chekBoxFacet">
-							<div class="filter-fileds"><b>Media Type</b></div>
+						<div id="keyword_main" class="chekBoxFacet">
 							<?php
-							foreach ($facetData['mediaType'] as $value)
+							$session_keywords = $view['myViewHelper']->sortByOneKey(json_decode($facetData['facet_keyword_search']), 'type');
+							foreach ($session_keywords as $key => $value)
 							{
+								if ( ! in_array($value->type, $types))
+								{
+									$types[] = $value->type;
+									?>
+									<div class="filter-fileds"><b>Keyword: <?php ucfirst($value->type); ?></b></div>
+									<?php
+								}
 								$id = time() . rand(0, 1000);
 								?>
-								<div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'mediaType_' . str_replace(' ', '_', strtolower($value)); ?>" data-type="mediaType"></i></div>
-							<?php } ?>
+								<div class="btn-img" id="facet_keyword_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value->value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'keyword_' . str_replace(' ', '_', strtolower($value->value)); ?>" data-type="keyword"></i></div>
+							<?php }
+							?>
 						</div>
+
+
 						<div class="clearfix"></div>
 
 					<?php } ?>
