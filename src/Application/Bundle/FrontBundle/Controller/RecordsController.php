@@ -266,9 +266,18 @@ class RecordsController extends Controller
 
 	protected function removeEmpty($facet, $index)
 	{
+		$result = array();
+		foreach ($facet as $key => $value)
+		{
+			foreach ($value as $column => $row)
+			{
+				if ($column == $index && ! empty($row))
+					$result = $value;
+			}
+		}
 		echo '<pre>';
-		print_r($facet);
-		echo $index;
+		print_r($result);
+		
 		exit;
 
 		return $result;
