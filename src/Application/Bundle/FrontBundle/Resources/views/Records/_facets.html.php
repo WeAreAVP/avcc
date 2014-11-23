@@ -9,7 +9,7 @@
                 <li>
 					<?php
                     if (isset($facetData['facet_keyword_search']) && $facetData['facet_keyword_search'] != '') {
-						echo '<pre>';print_r($facetData['facet_keyword_search']);exit;
+						echo '<pre>';print_r(json_decode($facetData['facet_keyword_search']));exit;
                         ?>
                         <div id="mediaType_main" class="chekBoxFacet">
                             <div class="filter-fileds"><b>Media Type</b></div>
