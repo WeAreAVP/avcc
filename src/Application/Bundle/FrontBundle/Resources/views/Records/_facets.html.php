@@ -371,6 +371,7 @@
                 <span id="is_review_check" style="cursor: default;">
 					<?php $review_check = 0;
 					 if (isset($facetData['is_review'])): 
+						 echo '<pre>';print_r($facetData['is_review']);exit;
 						 $review_check = $facetData['is_review'];
 					 endif; ?>
                     <input type="hidden" id="is_review_check_state" name="is_review_check" value="<?php echo $review_check ?>"  />
