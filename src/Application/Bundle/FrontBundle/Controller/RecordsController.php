@@ -81,7 +81,7 @@ class RecordsController extends Controller
         $facet['discDiameters'] = $sphinxSearch->facetSelect('disk_diameter', $criteria, $parentFacet);
         $facet['acidDetection'] = $sphinxSearch->facetSelect('acid_detection', $criteria, $parentFacet);
         $facet['collectionNames'] = $sphinxSearch->facetSelect('collection_name', $criteria, $parentFacet);
-//		$facet=  $this->removeEmpty($facet);
+		$facet=  $this->removeEmpty($facet);
 		echo '<pre>';print_r($facet);exit;
         $view = array(
             'facets' => $facet,
@@ -245,11 +245,13 @@ class RecordsController extends Controller
         }
     }
 
-    protected function removeEmpty($array)
+    protected function removeEmpty($facets)
     {
         $result = array();
-        foreach ($array as $facet) {
+        foreach ($facets as $facet) {
             foreach ($facet as $key => $value) {
+				echo $key.'<br/>';
+				echo '<pre>';print_r($value);exit;
                 if ($key != "total") {
                     if ($value == '' && $value == null && empty($value)) {
                         $result[][$key] = $value;
