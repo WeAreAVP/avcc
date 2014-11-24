@@ -111,9 +111,9 @@ function Records() {
                 $(this).toggleClass('selected', function () {
                     var input = $("#" + id + " td:first").html();
                     if ($(this).hasClass('selected') === true) {                        
-                        $("#" + $(input).attr('id')).prop("checked");
+                        $("#" + $(input).attr('id')).attr("checked", "checked");
                     }else{
-                        $("#" + $(input).attr('id')).attr("checked", false);
+                        $("#" + $(input).attr('id')).removeAttr("checked");
                     }
                 });
 
