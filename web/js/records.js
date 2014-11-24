@@ -93,11 +93,11 @@ function Records() {
                         "rowCallback": function (row, data) {
                             if ($.inArray(row.id, selected) !== -1) {
                                 $(row).addClass('selected');
-                                $(selected).each(function(key, value){
+                                $(selected).each(function (key, value) {
                                     var input = $("#" + value + " td:first").html();
                                     $("#" + $(input).attr('id')).attr("checked", "checked");
                                     $("#" + $(input).attr('id')).prop("checked", true);
-                                });   
+                                });
                             }
                         }
                     });
@@ -117,6 +117,16 @@ function Records() {
                     } else {
                         $("#" + $(input).attr('id')).removeAttr("checked");
                     }
+                    $.ajax({
+                        type: 'GET',
+                        url: ajaxSaveStateUrl,
+                        data: selected,
+                        dataType: 'json',
+                        success: function (response)
+                        {
+                             
+                        }
+                    });
                 });
 
             });
