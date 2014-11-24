@@ -9,10 +9,15 @@ class ExportReport extends ContainerAware
 {
 
 	public $columns;
+	public $phpExcel;
+	function __construct()
+	{
+		
+	}
 
 	function generateReport($records)
 	{
-		$phpExcelObject = $this->getContainer()->get('phpexcel')->createPHPExcelObject();
+		$phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
 		$phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
 		->setTitle("AVCC - Report")
 		->setSubject("Report for all formats")
@@ -33,9 +38,9 @@ class ExportReport extends ContainerAware
 	function outputReport($type, $phpExcelObject)
 	{
 		$format = ($type == 'csv') ? 'CSV' : 'Excel2007';
-		$writer = $this->getContainer()->get('phpexcel')->createWriter($phpExcelObject, $format);
+		$writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, $format);
 		$filename = 'allFormat_' . time() . '.' . $type;
-		$response = $this->getContainer()->get('phpexcel')->createStreamedResponse($writer);
+		$response = $this->container->get('phpexcel')->createStreamedResponse($writer);
 		$response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
 		$response->headers->set('Content-Disposition', "attachment;filename={$filename}");
 		$response->headers->set('Pragma', 'public');
