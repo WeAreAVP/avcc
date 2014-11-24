@@ -137,6 +137,7 @@ class RecordsController extends Controller
         $tableView = $this->defaultFields->recordDatatableView($records);
 
         $dataTable = array(
+            'iDisplayLength' => 5,
             'sEcho' => intval($sEcho),
             'iTotalRecords' => intval($currentPageTotal),
             'iTotalDisplayRecords' => intval($totalRecords),
