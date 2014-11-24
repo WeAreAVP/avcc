@@ -229,11 +229,11 @@ function Records() {
         $('#addKeyword').click(function () {
             checkEvent = true;
         });
-        $('#keywordSearch').keypress(function (e) {
-            console.log(e.which);
-            if (e.which == 13) {
+        $('#keywordSearch').keypress(function (e) {            
+            if (e.which == 13) {console.log(e.which);
                 checkEvent = true;
-            }
+                console.log(e.checkEvent);
+            }            
         });
         console.log(checkEvent);
         if (checkEvent==true && $('#keywordSearch').val() != '') {
