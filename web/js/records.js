@@ -231,7 +231,7 @@ function Records() {
         });
         $('#keywordSearch').keypress(function (e) {
             console.log(e.which);
-            if (e.which == '13') {
+            if (e.which == 13) {
                 checkEvent = true;
             }
         });
