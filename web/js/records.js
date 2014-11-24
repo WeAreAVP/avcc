@@ -232,7 +232,7 @@ function Records() {
         $('#keywordSearch').keypress(function (e) {            
             if (e.which == 13) {console.log(e.which);
                 checkEvent = true;
-                console.log(e.checkEvent);
+                console.log(checkEvent);
             }            
         });
         console.log(checkEvent);
