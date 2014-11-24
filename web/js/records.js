@@ -108,7 +108,7 @@ function Records() {
                     selected.splice(index, 1);
                 }
                 $(this).toggleClass('selected');
-                var input = $(id).find("td:first").html();
+                var input = $(id +" td:first").html();
                 console.log(input);
                 $(input).attr('checked', 'checked');
             });
