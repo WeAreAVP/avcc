@@ -85,7 +85,7 @@ function Records() {
             $('#records tbody').on('click', '.checkboxes', function () {
                 var id = this.id;
                 var index = $.inArray(id, selected);
-
+console.log(id);
                 if (index === -1) {
                     selected.push(id);
                 } else {
