@@ -109,7 +109,8 @@ function Records() {
                 }
                 $(this).toggleClass('selected');
                 var input = $(id).find("td:first").html();
-                $(input).prop('checked', true);
+                console.log(input);
+                $(input).attr('checked', 'checked');
             });
         }
 
