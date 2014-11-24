@@ -111,7 +111,7 @@ function Records() {
                 $(this).toggleClass('selected', function () {
                     var input = $("#" + id + " td:first").html();
                     if ($(this).hasClass('selected') === true) {                        
-                        $("#" + $(input).attr('id')).attr("checked", "checked");
+                        $("#" + $(input).attr('id')).prop("checked");
                     }else{
                         $("#" + $(input).attr('id')).attr("checked", false);
                     }
