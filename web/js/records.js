@@ -93,10 +93,12 @@ function Records() {
                         "rowCallback": function (row, data) {
                             if ($.inArray(row.id, selected) !== -1) {
                                 $(row).addClass('selected');
-                                var ids = {};
-                                ids = row.id;    
+                                $(row.id).each(function(key, value){
+                                    console.log(key);
+                                    console.log(value);
+                                });   
                                 var input = $("#" + row.id + " td:first").html();
-                                    console.log(ids);
+                                    
                                     
                                     $("#" + $(input).attr('id')).attr("checked", "checked");
                                     $("#" + $(input).attr('id')).prop("checked", true);
