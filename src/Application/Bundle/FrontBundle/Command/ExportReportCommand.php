@@ -10,47 +10,39 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
-
-
-
 class ExportReportCommand extends ContainerAwareCommand
 {
 
-	protected function configure()
-	{
-		$this
-		->setName('avcc:export-report')
-		->setDescription('Export the Records that are in queue and email to user.')
-		->addArgument(
-		'name', InputArgument::OPTIONAL, 'Who do you want to greet?'
-		)
-		->addOption(
-		'yell', null, InputOption::VALUE_NONE, 'If set, the task will yell in uppercase letters'
-		)
-		;
-	}
+    protected function configure()
+    {
+        $this
+        ->setName('avcc:export-report')
+        ->setDescription('Export the Records that are in queue and email to user.')
+        ->addArgument(
+        'name', InputArgument::OPTIONAL, 'Who do you want to greet?'
+        )
+        ->addOption(
+        'yell', null, InputOption::VALUE_NONE, 'If set, the task will yell in uppercase letters'
+        )
+        ;
+    }
 
-	protected function execute(InputInterface $input, OutputInterface $output)
-	{
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
 
+         $em = $this->getContainer()->get('doctrine')->getEntityManager();
+        $name = $input->getArgument('name');
+        if ($name) {
+            $text = 'Hello ' . $name;
+        } else {
+            $text = 'Hello';
+        }
 
-		 $em = $this->getContainer()->get('doctrine')->getEntityManager();
-		$name = $input->getArgument('name');
-		if ($name)
-		{
-			$text = 'Hello ' . $name;
-		}
-		else
-		{
-			$text = 'Hello';
-		}
+        if ($input->getOption('yell')) {
+            $text = strtoupper($text);
+        }
 
-		if ($input->getOption('yell'))
-		{
-			$text = strtoupper($text);
-		}
-
-		$output->writeln($text);
-	}
+        $output->writeln($text);
+    }
 
 }
