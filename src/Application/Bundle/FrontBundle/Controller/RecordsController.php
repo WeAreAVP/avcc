@@ -276,13 +276,13 @@ class RecordsController extends Controller
      * @param Request $request
      *
      * @Route("/saveState", name="record_saveState")
-     * @Method("GET")
+     * @Method("POST")
      * @Template("ApplicationFrontBundle:Records:saveState.html.php")
      * @return json
      */
     public function saveStateAction(Request $request)
     {
-        $data = $request->query->all();
+        $data = $request->request->all();
         print_r($data);exit;
     }
 }
