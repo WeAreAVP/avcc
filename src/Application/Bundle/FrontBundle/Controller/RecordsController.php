@@ -283,6 +283,5 @@ class RecordsController extends Controller
     public function saveStateAction(Request $request)
     {
         $data = $request->request->all();
-        print_r($data);exit;
     }
 }
