@@ -77,6 +77,7 @@ function Records() {
                         "aaSorting": [],
                         "sAjaxSource": ajaxSource,
                         "bStateSave": true,
+                        "iDisplayLength":5,
 //				"fnInitComplete": function () {
 //					this.oTable.fnAdjustColumnSizing();
 //				},
