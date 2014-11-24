@@ -108,8 +108,7 @@ function Records() {
                     selected.splice(index, 1);
                 }
                 $(this).toggleClass('selected');
-                var input = $(id +" td:first").html();
-                console.log(id +" td:first");
+                var input = $("#" + id +" td:first").html();
                 $(input).prop("checked");
             });
         }
