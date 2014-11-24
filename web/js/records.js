@@ -344,7 +344,7 @@ function Records() {
         $('#selectAll').click(function () {
             selectAllRecords = true;
             $('#selectAll').attr('checked', 'checked');
-            $('input[name=record_checkbox]').attr('checked', 'checked');
+            $('input[name=record_checkbox[]]').attr('checked', 'checked');
             selfObj.saveState(0, 'all', 1);
         });
     }
