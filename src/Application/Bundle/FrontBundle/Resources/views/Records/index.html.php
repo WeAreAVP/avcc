@@ -77,6 +77,7 @@
                 record.initDataTable();
 
                 record.setPageUrl('<?php echo $view['router']->generate('record_list') ?>');
+                record.selectAllRecords();
                 record.bindEvents();
 
             </script>
