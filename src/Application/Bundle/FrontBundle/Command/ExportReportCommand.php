@@ -28,7 +28,8 @@ class ExportReportCommand extends Command
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
 
-//		$entityManager = $this->getContainer()->get('doctrine')->getEntityManager();
+
+		 $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
 		$name = $input->getArgument('name');
 		if ($name)
 		{
