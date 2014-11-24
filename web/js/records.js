@@ -85,16 +85,16 @@ function Records() {
 
                             });
                         },
-                        "createdRow" : function( row, data, index ) {                            
-                            var input = $(row).find("td:first").html(); 
+                        "createdRow": function (row, data, index) {
+                            var input = $(row).find("td:first").html();
                             row.id = "row-" + $(input).attr('value');
                         },
                         "ajax": ajaxSource,
                         "rowCallback": function (row, data) {
                             if ($.inArray(row.id, selected) !== -1) {
                                 $(row).addClass('selected');
-                                var input = $(row).find("td:first").html(); 
-                                $(input).prop('checked',true);
+                                var input = $(row).find("td:first").html();
+                                $(input).prop('checked', true);
 //                                $(input).attr('checked','checked');
                             }
                         }
@@ -108,7 +108,8 @@ function Records() {
                     selected.splice(index, 1);
                 }
                 $(this).toggleClass('selected');
-                
+                var input = $(id).find("td:first").html();
+                $(input).prop('checked', true);
             });
         }
 
@@ -175,15 +176,15 @@ function Records() {
         });
 
         selfObj.addCustomToken();
-         $('#addKeyword').click(function () {
-           selfObj.addKeyword();
+        $('#addKeyword').click(function () {
+            selfObj.addKeyword();
         });
         $('#keywordSearch').keypress(function (e) {
             if (e.which == 13) {
                 selfObj.addKeyword();
             }
         });
-        
+
         selfObj.removeFilter();
         selfObj.removeKeywordFilter();
         return true;
@@ -268,9 +269,9 @@ function Records() {
     }
 
     this.addKeyword = function () {
-       
-        
-        if ( $('#keywordSearch').val() != '') {
+
+
+        if ($('#keywordSearch').val() != '') {
             if ($('#facet_keyword_search').val() != '' && $('#facet_keyword_search').val() != '""') {
                 Filters = JSON.parse($('#facet_keyword_search').val());
             }
