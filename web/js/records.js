@@ -86,6 +86,9 @@ function Records() {
 
                             });
                         },
+                        "createdRow" : function( row, data, index ) {
+                            row.id = "row-" + data.id;
+                        },
                         "ajax": ajaxSource,
                         "rowCallback": function (row, data) {
                             if ($.inArray(data.DT_RowId, selected) !== -1) {
@@ -95,7 +98,7 @@ function Records() {
                             }
                         }
                     });
-            $('#records tbody').on('click', '.checkboxes', function () {
+            $('#records tbody').on('click', 'tr', function () {
                 var id = this.id;
                 var index = $.inArray(id, selected);
                 if (index === -1) {
