@@ -73,6 +73,7 @@
 
                 var record = new Records();
                 record.setAjaxSource('<?php echo $view['router']->generate('record_dataTable') ?>');
+                record.setAjaxSaveStateUrl('<?php echo $view['router']->generate('record_saveState') ?>');
                 record.initDataTable();
 
                 record.setPageUrl('<?php echo $view['router']->generate('record_list') ?>');

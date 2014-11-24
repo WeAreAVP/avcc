@@ -270,4 +270,19 @@ class RecordsController extends Controller
         return $facetData;
     }
 
+    /**
+     * Make records to display for dataTables.
+     *
+     * @param Request $request
+     *
+     * @Route("/saveState", name="record_saveState")
+     * @Method("GET")
+     * @Template("ApplicationFrontBundle:Records:saveState.html.php")
+     * @return json
+     */
+    public function saveStateAction(Request $request)
+    {
+        $data = $request->query->all();
+        print_r($data);exit;
+    }
 }

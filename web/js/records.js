@@ -19,6 +19,7 @@ function Records() {
     var customFieldName = 'All';
     var customColumnName = 'all';
     var checkEvent = false;
+    var ajaxSaveStateUrl = null;
     /**
      * Set the ajax URL of datatable.
      * @param {string} source
@@ -26,6 +27,15 @@ function Records() {
      */
     this.setAjaxSource = function (source) {
         ajaxSource = source;
+
+    }
+    /**
+     * Set the ajax URL for selected rows of datatable.
+     * @param {string} source
+     * 
+     */
+    this.setAjaxSaveStateUrl = function (source) {
+        ajaxSaveStateUrl = source;
 
     }
     /**
@@ -76,6 +86,7 @@ function Records() {
 
                             });
                         },
+                        "ajax": ajaxSaveStateUrl,
                         "rowCallback": function (row, data) {
                             if ($.inArray(data.DT_RowId, selected) !== -1) {
                                 $(row).addClass('selected');
@@ -85,7 +96,6 @@ function Records() {
             $('#records tbody').on('click', '.checkboxes', function () {
                 var id = this.id;
                 var index = $.inArray(id, selected);
-console.log(id);
                 if (index === -1) {
                     selected.push(id);
                 } else {
