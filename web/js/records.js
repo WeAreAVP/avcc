@@ -341,10 +341,12 @@ function Records() {
 
     }
     this.selectAllRecords = function () {
-        selectAllRecords = true;
-        $('#selectAll').attr('checked', 'checked');
-        $('input[name=check]').attr('checked', 'checked');
-        selfObj.saveState(0, 'all', 1);        
+        $('#selectAll').click(function () {
+            selectAllRecords = true;
+            $('#selectAll').attr('checked', 'checked');
+            $('input[name=record_checkbox]').attr('checked', 'checked');
+            selfObj.saveState(0, 'all', 1);
+        });
     }
 
     this.saveState = function (elementID, select, isChecked) {
@@ -372,7 +374,7 @@ function Records() {
         $.ajax({
             type: 'POST',
             url: ajaxSaveStateUrl,
-            data: {id: id, checked: checked, is_all: isAll,},
+            data: {id: id, checked: checked, is_all: isAll, },
             dataType: 'json',
             success: function (response)
             {
