@@ -94,8 +94,8 @@ function Records() {
                             if ($.inArray(row.id, selected) !== -1) {
                                 $(row).addClass('selected');
                                 var input = $(row).find("td:first").html();
-                                $(input).prop('checked', true);
-//                                $(input).attr('checked','checked');
+                                $("#" + $(input).attr('id')).attr("checked", "checked");
+                                $("#" + $(input).attr('id')).prop("checked", true);
                             }
                         }
                     });
@@ -107,13 +107,12 @@ function Records() {
                 } else {
                     selected.splice(index, 1);
                 }
-//                $(this).toggleClass('selected');
                 $(this).toggleClass('selected', function () {
                     var input = $("#" + id + " td:first").html();
-                    if ($(this).hasClass('selected') === true) {                        
+                    if ($(this).hasClass('selected') === true) {
                         $("#" + $(input).attr('id')).attr("checked", "checked");
-                        $("#" + $(input).attr('id')).prop("checked",true);
-                    }else{
+                        $("#" + $(input).attr('id')).prop("checked", true);
+                    } else {
                         $("#" + $(input).attr('id')).removeAttr("checked");
                     }
                 });
