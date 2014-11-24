@@ -108,6 +108,7 @@ function Records() {
                     selected.splice(index, 1);
                 }
                 $(this).toggleClass('selected');
+                
             });
         }
 
@@ -174,7 +175,15 @@ function Records() {
         });
 
         selfObj.addCustomToken();
-        selfObj.addKeyword();
+         $('#addKeyword').click(function () {
+           selfObj.addKeyword();
+        });
+        $('#keywordSearch').keypress(function (e) {
+            if (e.which == 13) {
+                selfObj.addKeyword();
+            }
+        });
+        
         selfObj.removeFilter();
         selfObj.removeKeywordFilter();
         return true;
@@ -259,16 +268,9 @@ function Records() {
     }
 
     this.addKeyword = function () {
-        $('#addKeyword').click(function () {
-            checkEvent = true;
-        });
-        $('#keywordSearch').keypress(function (e) {
-            if (e.which == 13) {
-                checkEvent = true;
-            }
-        });
-        console.log(checkEvent);
-        if (checkEvent == true && $('#keywordSearch').val() != '') {
+       
+        
+        if ( $('#keywordSearch').val() != '') {
             if ($('#facet_keyword_search').val() != '' && $('#facet_keyword_search').val() != '""') {
                 Filters = JSON.parse($('#facet_keyword_search').val());
             }
