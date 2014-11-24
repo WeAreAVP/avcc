@@ -18,7 +18,6 @@ function Records() {
     var Filters = new Object();
     var customFieldName = 'All';
     var customColumnName = 'all';
-    var checkEvent = false;
     var ajaxSaveStateUrl = null;
     /**
      * Set the ajax URL of datatable.
@@ -87,7 +86,7 @@ function Records() {
                             });
                         },
                         "createdRow" : function( row, data, index ) {
-                            console.log(data);
+                            console.log(row);
                             row.id = "row-" + data.id;
                         },
                         "ajax": ajaxSource,
