@@ -225,7 +225,7 @@ function Records() {
     }
 
     this.addKeyword = function () {
-        checkEvent = false;
+        var checkEvent = false;
         $('#addKeyword').click(function () {
             checkEvent = true;
         });
