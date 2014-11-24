@@ -90,7 +90,7 @@ function Records() {
                         "rowCallback": function (row, data) {
                             if ($.inArray(data.DT_RowId, selected) !== -1) {
                                 $(row).addClass('selected');
-                                $(row).prop('checked');
+                                $(row).attr('checked',true);
                             }
                         }
                     });
