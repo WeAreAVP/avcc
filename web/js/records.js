@@ -108,13 +108,12 @@ function Records() {
                     selected.splice(index, 1);
                 }
 //                $(this).toggleClass('selected');
-                $(this).toggleClass(function (addOrRemove) {
-                    if (addOrRemove === true) {
-                        $(this).addClass('selected');
-                        var input = $("#" + id + " td:first").html();
+                $(this).toggleClass('selected', function () {
+                    var input = $("#" + id + " td:first").html();
+                    if ($(this).hasClass('selected') === true) {                        
                         $("#" + $(input).attr('id')).attr("checked", "checked");
                     }else{
-                        $(this).removeClass('selected');
+                        $("#" + $(input).attr('id')).attr("checked", false);
                     }
                 });
 
