@@ -142,7 +142,9 @@ class RecordsController extends Controller
             'iTotalDisplayRecords' => intval($totalRecords),
             'aaData' => $tableView
         );
-        echo json_encode($dataTable);
+        $data = $request->query->all();
+//        print_r($data);exit;
+        echo json_encode($data);
         exit;
     }
 
