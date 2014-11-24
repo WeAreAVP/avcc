@@ -9,10 +9,10 @@ class ExportReport extends ContainerAware
 {
 
 	public $columns;
-	public $phpExcel;
-	function __construct()
+	public $container;
+	function __construct($container)
 	{
-		
+		$this->container=$container;
 	}
 
 	function generateReport($records)

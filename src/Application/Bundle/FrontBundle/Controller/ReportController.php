@@ -51,7 +51,7 @@ class ReportController extends Controller
 			$records = $entityManager->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($this->getUser()->getOrganizations()->getId());
 
 
-		$exportComponent = new ExportReport();
+		$exportComponent = new ExportReport($this->container);
 		$phpExcelObject = $exportComponent->generateReport($records);
 		$response = $exportComponent->outputReport($type, $phpExcelObject);
 
