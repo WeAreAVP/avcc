@@ -96,6 +96,7 @@ function Records() {
                                 var input = $(row).find("td:first").html();
                                 $("#" + $(input).attr('id')).attr("checked", "checked");
                                 $("#" + $(input).attr('id')).prop("checked", true);
+                                console.log("#" + $(input).attr('id'));
                             }
                         }
                     });
