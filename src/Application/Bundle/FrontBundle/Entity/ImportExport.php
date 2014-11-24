@@ -57,7 +57,7 @@ class ImportExport
 	private $type;
 
 	/**
-	 * @ORM\Column(name="format", type="string",length=50, nullable=true)
+	 * @ORM\Column(name="format", type="text", nullable=true)
 	 * @var string
 	 * 
 	 */
