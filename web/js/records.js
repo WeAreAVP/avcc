@@ -94,14 +94,10 @@ function Records() {
                             if ($.inArray(row.id, selected) !== -1) {
                                 $(row).addClass('selected');
                                 $(selected).each(function(key, value){
-                                    console.log(key);
-                                    console.log(value);
-                                });   
-                                var input = $("#" + row.id + " td:first").html();
-                                    
-                                    
+                                    var input = $("#" + value + " td:first").html();
                                     $("#" + $(input).attr('id')).attr("checked", "checked");
                                     $("#" + $(input).attr('id')).prop("checked", true);
+                                });   
                             }
                         }
                     });
