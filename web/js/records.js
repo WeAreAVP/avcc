@@ -107,9 +107,17 @@ function Records() {
                 } else {
                     selected.splice(index, 1);
                 }
-                $(this).toggleClass('selected');                
-                var input = $("#" + id +" td:first").html();
-                $("#" + $(input).attr('id')).attr("checked","checked");
+//                $(this).toggleClass('selected');
+                $(this).toggleClass(function (addOrRemove) {
+                    if (addOrRemove === true) {
+                        $(this).addClass('selected');
+                        var input = $("#" + id + " td:first").html();
+                        $("#" + $(input).attr('id')).attr("checked", "checked");
+                    }else{
+                        $(this).removeClass('selected');
+                    }
+                });
+
             });
         }
 
