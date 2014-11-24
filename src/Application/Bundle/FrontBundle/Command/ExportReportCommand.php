@@ -29,7 +29,7 @@ class ExportReportCommand extends Command
 	{
 
 
-		 $em = $this->getContainer()->get('doctrine')->getEntityManager('default');
+		 $em = $this->get('doctrine')->getEntityManager('default');
 		$name = $input->getArgument('name');
 		if ($name)
 		{
