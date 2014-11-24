@@ -118,9 +118,9 @@ function Records() {
                         $("#" + $(input).attr('id')).removeAttr("checked");
                     }
                     $.ajax({
-                        type: 'GET',
+                        type: 'POST',
                         url: ajaxSaveStateUrl,
-                        data: 'selected_ids='+selected,
+                        data: 'selectedId='+selected,
                         dataType: 'json',
                         success: function (response)
                         {
@@ -288,8 +288,6 @@ function Records() {
     }
 
     this.addKeyword = function () {
-
-
         if ($('#keywordSearch').val() != '') {
             if ($('#facet_keyword_search').val() != '' && $('#facet_keyword_search').val() != '""') {
                 Filters = JSON.parse($('#facet_keyword_search').val());
