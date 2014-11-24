@@ -48,6 +48,7 @@ function Records() {
             // Modify css for managing view.
 //			$('#container').removeClass('container');
 //			$('#container').css('margin', '20px');
+            var selected = [];
             oTable =
                     $('#records').dataTable(
                     {
@@ -75,7 +76,23 @@ function Records() {
 
                             });
                         },
+                        "rowCallback": function (row, data) {
+                            if ($.inArray(data.DT_RowId, selected) !== -1) {
+                                $(row).addClass('selected');
+                            }
+                        }
                     });
+            $('#records tbody').on('click', '.checkboxes', function () {
+                var id = this.id;
+                var index = $.inArray(id, selected);
+
+                if (index === -1) {
+                    selected.push(id);
+                } else {
+                    selected.splice(index, 1);
+                }
+                $(this).toggleClass('selected');
+            });
         }
 
     }
@@ -225,17 +242,17 @@ function Records() {
         });
     }
 
-    this.addKeyword = function () {        
+    this.addKeyword = function () {
         $('#addKeyword').click(function () {
             checkEvent = true;
         });
-        $('#keywordSearch').keypress(function (e) {            
+        $('#keywordSearch').keypress(function (e) {
             if (e.which == 13) {
                 checkEvent = true;
-            }            
+            }
         });
         console.log(checkEvent);
-        if (checkEvent==true && $('#keywordSearch').val() != '') {
+        if (checkEvent == true && $('#keywordSearch').val() != '') {
             if ($('#facet_keyword_search').val() != '' && $('#facet_keyword_search').val() != '""') {
                 Filters = JSON.parse($('#facet_keyword_search').val());
             }
