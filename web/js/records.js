@@ -89,7 +89,7 @@ function Records() {
                             var input = $(row).find("td:first").html();
                             row.id = "row-" + $(input).attr('value');
                         },
-                        "ajax": ajaxSource,
+                        "ajax": ajaxSaveStateUrl,
                         "rowCallback": function (row, data) {
                             if ($.inArray(row.id, selected) !== -1) {
                                 $(row).addClass('selected');
