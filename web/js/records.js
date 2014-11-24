@@ -228,7 +228,6 @@ function Records() {
     this.addKeyword = function () {        
         $('#addKeyword').click(function () {
             checkEvent = true;
-            console.log(checkEvent);
         });
         $('#keywordSearch').keypress(function (e) {            
             if (e.which == 13) {

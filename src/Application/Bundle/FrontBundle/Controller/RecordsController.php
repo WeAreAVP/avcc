@@ -122,7 +122,8 @@ class RecordsController extends Controller
         $sortIndex = $request->query->get('iSortCol_0') ? $columns[$request->query->get('iSortCol_0')] : 'title';
 
         $offset = $request->query->get('iDisplayStart') ? $request->query->get('iDisplayStart') : 0;
-        $limit = $request->query->get('iDisplayLength') ? $request->query->get('iDisplayLength') : $this->limit;
+//        $limit = $request->query->get('iDisplayLength') ? $request->query->get('iDisplayLength') : $this->limit;
+        $limit = $this->limit;
 
         $shpinxInfo = $this->getSphinxInfo();
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
