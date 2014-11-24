@@ -344,7 +344,7 @@ function Records() {
         $('#selectAll').click(function () {
             selectAllRecords = true;
             $('#selectAll').attr('checked', 'checked');
-            $('input[name=record_checkbox]').prop('checked', true);
+            $('input[name=record_checkbox[]]').attr('checked', 'checked');
             selfObj.saveState(0, 'all', 1);
         });
     }
@@ -360,7 +360,7 @@ function Records() {
             }
             else {
                 checked = isChecked;
-                $('input[name=record_checkbox]').each(function () {
+                $('input[name=record_checkbox[]]').each(function () {
                     id += $(this).val() + ',';
                 });
             }
