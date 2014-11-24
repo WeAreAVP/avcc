@@ -360,7 +360,7 @@ function Records() {
             }
             else {
                 checked = isChecked;
-                $('input[name=check]').each(function () {
+                $('input[name=record_checkbox]').each(function () {
                     id += $(this).val() + ',';
                 });
             }
