@@ -85,8 +85,9 @@ function Records() {
 
                             });
                         },
-                        "createdRow" : function( row, data, index ) {
-                            console.log(row);
+                        "createdRow" : function( row, data, index ) {                            
+                            var input = $(row).find("td:first").html(); 
+                            console.log(input);
                             row.id = "row-" + data.id;
                         },
                         "ajax": ajaxSource,
