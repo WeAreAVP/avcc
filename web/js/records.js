@@ -118,7 +118,7 @@ function Records() {
                         $("#" + $(input).attr('id')).removeAttr("checked");
                     }
                     $.ajax({
-                        type: 'post',
+                        type: 'GET',
                         url: ajaxSaveStateUrl,
                         data: 'selected_ids='+selected,
                         dataType: 'json',
