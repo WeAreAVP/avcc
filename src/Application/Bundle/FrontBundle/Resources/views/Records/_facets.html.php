@@ -1,4 +1,4 @@
-<form id='formSearch' name='formSearch' method='post'>
+<form id='formSearch' name='formSearch' method='post' onsubmit="return false;">
     <nav id="facet_sidebar" class="sidebar light">
 
         <ul>
