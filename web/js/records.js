@@ -234,7 +234,8 @@ function Records() {
                 checkEvent = true;
             }
         });
-        if (checkEvent && $('#keywordSearch').val() != '') {
+        console.log(checkEvent);
+        if (checkEvent==true && $('#keywordSearch').val() != '') {
             if ($('#facet_keyword_search').val() != '' && $('#facet_keyword_search').val() != '""') {
                 Filters = JSON.parse($('#facet_keyword_search').val());
             }
