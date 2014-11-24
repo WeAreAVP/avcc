@@ -112,6 +112,7 @@ function Records() {
                     var input = $("#" + id + " td:first").html();
                     if ($(this).hasClass('selected') === true) {                        
                         $("#" + $(input).attr('id')).attr("checked", "checked");
+                        $("#" + $(input).attr('id')).prop("checked");
                     }else{
                         $("#" + $(input).attr('id')).removeAttr("checked");
                     }
