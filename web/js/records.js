@@ -94,9 +94,8 @@ function Records() {
                             if ($.inArray(row.id, selected) !== -1) {
                                 $(row).addClass('selected');
                                 var input = $(row).find("td:first").html();
-                                $("#" + $(input).attr('id')).attr("checked", "checked");
+//                                $("#" + $(input).attr('id')).attr("checked", "checked");
                                 $("#" + $(input).attr('id')).prop("checked", true);
-                                console.log(input.id);
                             }
                         }
                     });
