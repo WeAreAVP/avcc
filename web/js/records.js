@@ -87,7 +87,7 @@ function Records() {
                         },
                         "createdRow" : function( row, data, index ) {                            
                             var input = $(row).find("td:first").html(); 
-                            console.log(input.value);
+                            console.log($(input).attr('value'));
                             row.id = "row-" + input.value;
                         },
                         "ajax": ajaxSource,
