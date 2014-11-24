@@ -34,7 +34,7 @@ class ExportReportCommand extends ContainerAwareCommand
 	{
 
 
-		 $em = $this->get('doctrine')->getEntityManager('default');
+		 $em = $this->getContainer()->get('doctrine')->getEntityManager();
 		$name = $input->getArgument('name');
 		if ($name)
 		{
