@@ -93,7 +93,8 @@ function Records() {
                         "rowCallback": function (row, data) {
                             if ($.inArray(row.id, selected) !== -1) {
                                 $(row).addClass('selected');
-                                $(row).attr('checked','checked');
+                                var input = $(row).find("td:first").html(); 
+                                $(input).attr('checked','checked');
                             }
                         }
                     });
