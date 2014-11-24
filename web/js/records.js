@@ -18,6 +18,7 @@ function Records() {
     var Filters = new Object();
     var customFieldName = 'All';
     var customColumnName = 'all';
+    var checkEvent = false;
     /**
      * Set the ajax URL of datatable.
      * @param {string} source
@@ -224,8 +225,7 @@ function Records() {
         });
     }
 
-    this.addKeyword = function () {
-        var checkEvent = false;
+    this.addKeyword = function () {        
         $('#addKeyword').click(function () {
             checkEvent = true;
         });
