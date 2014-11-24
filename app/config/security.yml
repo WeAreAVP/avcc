@@ -31,6 +31,7 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_SUPER_ADMIN }
         - { path: ^/users, role: ROLE_MANAGER }
+        - { path: ^/jobs, role: ROLE_SUPER_ADMIN }
         - { path: ^/organizations/new, role: ROLE_SUPER_ADMIN }
         - { path: ^/organizations, role: ROLE_MANAGER }
         - { path: ^/projects/$, role: ROLE_USER }
