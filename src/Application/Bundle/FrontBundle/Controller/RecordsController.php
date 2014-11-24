@@ -41,7 +41,7 @@ class RecordsController extends Controller
             'creation_date', 'content_date', 'genre_terms', 'contributor',
         );
         $this->defaultFields = new DefaultFields();
-        $this->limit = 100;
+        $this->limit = 5;
     }
 
     /**

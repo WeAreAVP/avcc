@@ -90,23 +90,6 @@ class SphinxSearch extends ContainerAware
     }
 
     /**
-     * Update the existing record in sphinx index.
-     *
-     * One work for attr_unit.
-     *
-     * @return array on count of records.
-     */
-    public function update()
-    {
-        $sphinxFields = new SphinxFields();
-        $data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
-        $sq = SphinxQL::create($this->conn)->update($this->indexName);
-        $sq->set($data);
-
-        return $sq->execute();
-    }
-
-    /**
      * Replace the values for existing record.
      *
      * @return array on count of records.
@@ -150,28 +133,6 @@ class SphinxSearch extends ContainerAware
         ->executeBatch();
 
         return $result;
-    }
-
-    /**
-     * Select total found record for listing from sphinx.
-     *
-     * @param integer $offset
-     * @param integer $limit
-     * @param string  $sortColumn
-     * @param string  $sortOrder
-     *
-     * @return array
-     */
-    public function selectCount($offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc')
-    {
-        $sq = SphinxQL::create($this->conn)
-        ->select()
-        ->from($this->indexName)
-        ->orderBy($sortColumn, $sortOrder)
-        ->limit($offset, $limit)
-        ->enqueue(Helper::create($this->conn)->showMeta());
-
-        return $sq->executeBatch();
     }
 
     /**
