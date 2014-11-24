@@ -17,13 +17,11 @@ class RecordsType extends AbstractType
     private $mediaTyp;
     private $proj;
     private $user;
-    private $sphinxParam;
 
-    public function __construct(EntityManager $em, $selectedOptions = null, $sphinxParam = null)
+    public function __construct(EntityManager $em, $selectedOptions = null)
     {
         $this->selectedOptions = $selectedOptions;
         $this->em = $em;
-        $this->sphinxParam = $sphinxParam;
     }
 
     /**

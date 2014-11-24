@@ -52,9 +52,8 @@ class AudioRecordsController extends Controller
     public function createAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $container = $this->container;
         $entity = new AudioRecords();
-        $form = $this->createCreateForm($entity, $em, null, $container);
+        $form = $this->createCreateForm($entity, $em, null);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -83,9 +82,9 @@ class AudioRecordsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(AudioRecords $entity, $em, $data = null, $sphinxParam = null)
+    private function createCreateForm(AudioRecords $entity, $em, $data = null)
     {
-        $form = $this->createForm(new AudioRecordsType($em, $data, $sphinxParam), $entity, array(
+        $form = $this->createForm(new AudioRecordsType($em, $data), $entity, array(
             'action' => $this->generateUrl('record_create'),
             'method' => 'POST',
         ));
@@ -118,9 +117,7 @@ class AudioRecordsController extends Controller
         } else {
             $entity = new AudioRecords();
         }
-        $sphinxParam = $this->container->getParameter('sphinx_param');
-
-        $form = $this->createCreateForm($entity, $em, $data, $sphinxParam);
+        $form = $this->createCreateForm($entity, $em, $data);
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
 
         return $this->render('ApplicationFrontBundle:AudioRecords:new.html.php', array(
@@ -182,8 +179,7 @@ class AudioRecordsController extends Controller
         }
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(1, $em, $this->getUser());
-        $sphinxParam = $this->container->getParameter('sphinx_param');
-        $editForm = $this->createEditForm($entity, $em, $data, $sphinxParam);
+        $editForm = $this->createEditForm($entity, $em, $data);
         $deleteForm = $this->createDeleteForm($id);
 
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
@@ -206,9 +202,9 @@ class AudioRecordsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(AudioRecords $entity, $em, $data = null, $sphinxParam = null)
+    private function createEditForm(AudioRecords $entity, $em, $data = null)
     {
-        $form = $this->createForm(new AudioRecordsType($em, $data, $sphinxParam), $entity, array(
+        $form = $this->createForm(new AudioRecordsType($em, $data), $entity, array(
             'action' => $this->generateUrl('record_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
@@ -243,8 +239,7 @@ class AudioRecordsController extends Controller
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(1, $em, $user);
         $deleteForm = $this->createDeleteForm($id);
-        $sphinxParam = $this->container->getParameter('sphinx_param');
-        $editForm = $this->createEditForm($entity, $em, $data, $sphinxParam);
+        $editForm = $this->createEditForm($entity, $em, $data);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {

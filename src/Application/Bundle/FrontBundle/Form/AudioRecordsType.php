@@ -14,11 +14,10 @@ class AudioRecordsType extends AbstractType
     private $em;
     private $sphinxParam;
 
-    public function __construct(EntityManager $em, $data = null, $sphinxParam = null)
+    public function __construct(EntityManager $em, $data = null)
     {
         $this->data = $data;
         $this->em = $em;
-        $this->sphinxParam = $sphinxParam;
     }
 
     /**
@@ -28,7 +27,7 @@ class AudioRecordsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-    ->add('record', new RecordsType($this->em, $this->data, $this->sphinxParam), array(
+    ->add('record', new RecordsType($this->em, $this->data), array(
             'data_class' => 'Application\Bundle\FrontBundle\Entity\Records'))
         ->add('mediaDuration', 'text', array('required' => false))
         ->add('diskDiameters')
