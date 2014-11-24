@@ -87,6 +87,7 @@ function Records() {
                             });
                         },
                         "createdRow" : function( row, data, index ) {
+                            console.log(data);
                             row.id = "row-" + data.id;
                         },
                         "ajax": ajaxSource,
