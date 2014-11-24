@@ -94,7 +94,7 @@ function Records() {
                             if ($.inArray(row.id, selected) !== -1) {
                                 $(row).addClass('selected');
                                     var input = $("#" + row.id + " td:first").html();
-                                    console.log(input);
+                                    console.log(row.id);
                                     $("#" + $(input).attr('id')).attr("checked", "checked");
                                     $("#" + $(input).attr('id')).prop("checked", true);
                             }
