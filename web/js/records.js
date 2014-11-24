@@ -230,9 +230,8 @@ function Records() {
             checkEvent = true;
         });
         $('#keywordSearch').keypress(function (e) {            
-            if (e.which == 13) {console.log(e.which);
+            if (e.which == 13) {
                 checkEvent = true;
-                console.log(checkEvent);
             }            
         });
         console.log(checkEvent);
