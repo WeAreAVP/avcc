@@ -93,10 +93,12 @@ function Records() {
                         "rowCallback": function (row, data) {
                             if ($.inArray(row.id, selected) !== -1) {
                                 $(row).addClass('selected');
-                                var input = $(row).find("td:first").html();
-                                console.log(row);
+                                $.each(row, function (key, value) {
+                                    var input = $(value).find("td:first").html();
+                                    $("#" + $(input).attr('id')).prop("checked", true);
+                                    console.log(value);
+                                });                                
 //                                $("#" + $(input).attr('id')).attr("checked", "checked");
-                                $("#" + $(input).attr('id')).prop("checked", true);
                             }
                         }
                     });
