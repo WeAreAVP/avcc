@@ -93,7 +93,7 @@ function Records() {
                         "rowCallback": function (row, data) {
                             if ($.inArray(row.id, selected) !== -1) {
                                 $(row).addClass('selected');
-                                $(row.id).each(function(key, value){
+                                $(selected).each(function(key, value){
                                     console.log(key);
                                     console.log(value);
                                 });   
