@@ -19,6 +19,7 @@ function Records() {
     var customFieldName = 'All';
     var customColumnName = 'all';
     var ajaxSaveStateUrl = null;
+    var selectAllRecords = false;
     /**
      * Set the ajax URL of datatable.
      * @param {string} source
@@ -117,16 +118,7 @@ function Records() {
                     } else {
                         $("#" + $(input).attr('id')).removeAttr("checked");
                     }
-                    $.ajax({
-                        type: 'POST',
-                        url: ajaxSaveStateUrl,
-                        data: 'selectedId='+selected,
-                        dataType: 'json',
-                        success: function (response)
-                        {
-                             
-                        }
-                    });
+                    selfObj.saveState($(input).attr('value'));
                 });
 
             });
@@ -348,8 +340,45 @@ function Records() {
         }
 
     }
+    this.selectAllRecords = function () {
+        selectAllRecords = true;
+        $('#selectAll').attr('checked', 'checked');
+        $('input[name=check]').attr('checked', 'checked');
+        selfObj.saveState(0, 'all', 1);        
+    }
+
+    this.saveState = function (elementID, select, isChecked) {
+        var id = '';
+        var checked = 0;
+        var isAll = 0;
+        if (select) {
+            if (select == 'all') {
+                checked = isChecked;
+                isAll = 1;
+            }
+            else {
+                checked = isChecked;
+                $('input[name=check]').each(function () {
+                    id += $(this).val() + ',';
+                });
+            }
+        }
+        else {
+            id = elementID;
+            if ($('#row_' + elementID).attr('checked'))
+                checked = 1;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: ajaxSaveStateUrl,
+            data: {id: id, checked: checked, is_all: isAll,},
+            dataType: 'json',
+            success: function (response)
+            {
+
+            }
+        });
+    }
 }
-
-
-
 
