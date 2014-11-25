@@ -97,7 +97,6 @@ function Records() {
                         "rowCallback": function (row, data) {                            
                             $.each(data, function (index, value) {
                                 if(index==0 && $(value).attr("checked")=="checked"){
-                                    console.log(input);
                                    $("#"+row.id).addClass("selected"); 
                                 }else{
                                     $("#"+row.id).removeClass("selected");
