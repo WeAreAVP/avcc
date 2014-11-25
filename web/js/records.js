@@ -486,14 +486,14 @@ function Records() {
             } else {
                 $.Dialog({
                     'title': 'Error',
-                    'content': 'Please select any record.',
+                    'content': '<span style="font-size:13px;">Please select any record.</span>',
                     'draggable': true,
                     'overlay': true,
                     'closeButton': false,
                     'buttonsAlign': 'right',
                     shadow: true,
                     flat: true,
-                    width: 200,
+                    width: 400,
                     height: 150,
                     padding: 10,
                     'position': {
