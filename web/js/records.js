@@ -346,52 +346,54 @@ function Records() {
         }
 
     }
-    
+
     this.selectCurrentPageRecords = function () {
         $('#selectAll').click(function () {
             if ($(this).prop('checked') == true) {
                 selectAllRecords = true;
                 $('input[name=record_checkbox]').attr('checked', 'checked');
                 $('input[name=record_checkbox]').prop('checked', true);
-                if (selfObj.totalRecords > 0 && selfObj.totalRecords > selfObj.totalCurrentPageRecords){
+                if (selfObj.totalRecords > 0 && selfObj.totalRecords > selfObj.totalCurrentPageRecords) {
                     var html = '';
-                        html += '<span id="div-records-on-page">All <span id="records-on-page">' + selfObj.totalCurrentPageRecords + '</span> records on this page selected.</span>';
-                        html += ' <a href="javascript:;" id="select-all-records" >Select all <span id="total-records">' + selfObj.totalRecords + '</span> records.</a><br /><a href="javascript:;" id="clear-selection">Clear selection</a>';
+                    html += '<span id="div-records-on-page">All <span id="records-on-page">' + selfObj.totalCurrentPageRecords + '</span> records on this page selected.</span>';
+                    html += ' <a href="javascript:;" id="select-all-records" >Select all <span id="total-records">' + selfObj.totalRecords + '</span> records.</a><br /><a href="javascript:;" id="clear-selection">Clear selection</a>';
                     $("#div-select-all-records").html(html);
                     $('#div-select-all-records').fadeIn('slow');
-                }    
-                    selfObj.saveState(0, 'check_current', 1);
+                }
+                selfObj.saveState(0, 'check_current', 1);
             } else if ($(this).prop('checked') == false) {
                 selectAllRecords = false;
                 $('input[name=record_checkbox]').removeAttr('checked');
                 $('input[name=record_checkbox]').prop('checked', false);
                 $("#div-select-all-records").html('');
                 selfObj.saveState(0, 'check_current', 0);
-            }            
+            }
         });
     }
 
     this.selectAllRecords = function () {
-        $('#select-all-records').live('click',function () {
-            select_all_records = true;
-            $(this).hide();
-            selfObj.saveState(0, 'all', 1);
-            $('#div-select-all-records').html('All <span id="records-on-page">' + selfObj.totalRecords + '</span> records selected.<br /><a href="javascript:;" id="clear-selection">Clear selection</a>');
-        });
+        if ($('#select-all-records').length > 0) {
+            $('#select-all-records').on("click", function () {
+                select_all_records = true;
+                $(this).hide();
+                selfObj.saveState(0, 'all', 1);
+                $('#div-select-all-records').html('All <span id="records-on-page">' + selfObj.totalRecords + '</span> records selected.<br /><a href="javascript:;" id="clear-selection">Clear selection</a>');
+            });
+        }
     }
-    
-    this.clearSelection = function(){
-        $('#clear-selection').live('click', function() {
+
+    this.clearSelection = function () {
+        $('#clear-selection').on('click', function () {
             select_all_records = false;
             $('#selectAll').removeAttr('checked');
             $('input[name=record_checkbox]').removeAttr('checked');
             $('input[name=record_checkbox]').prop('checked', false);
             $('#div-select-all-records').fadeOut('slow');
             $(this).hide();
-            selfObj.saveState(0, 'all', 0);            
+            selfObj.saveState(0, 'all', 0);
         });
     }
-    
+
     this.saveState = function (elementID, select, isChecked) {
         var id = '';
         var checked = 0;
