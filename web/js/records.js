@@ -93,34 +93,34 @@ function Records() {
                             var input = $(row).find("td:first").html();
                             row.id = "row-" + $(input).attr('value');
                         },
-                        "ajax": ajaxSaveStateUrl,
-                        "rowCallback": function (row, data) {
-                            if ($.inArray(row.id, selected) !== -1) {
-                                $(row).addClass('selected');
-                                $("div-select-all-records").hide();
-                            }
-                        }
+//                        "ajax": ajaxSaveStateUrl,
+//                        "rowCallback": function (row, data) {
+//                            if ($.inArray(row.id, selected) !== -1) {
+//                                $(row).addClass('selected');
+//                                $("div-select-all-records").hide();
+//                            }
+//                        }
                     });
-            $('#records tbody').on('click', 'tr', function () {
-                var id = this.id;
-                var index = $.inArray(id, selected);
-                if (index === -1) {
-                    selected.push(id);
-                } else {
-                    selected.splice(index, 1);
-                }
-                $(this).toggleClass('selected', function () {
-                    var input = $("#" + id + " td:first").html();
-                    if ($(this).hasClass('selected') === true) {
-                        $("#" + $(input).attr('id')).attr("checked", "checked");
-                        $("#" + $(input).attr('id')).prop("checked", true);
-                    } else {
-                        $("#" + $(input).attr('id')).removeAttr("checked");
-                    }
-                    selfObj.saveState($(input).attr('value'));
-                });
-
-            });
+//            $('#records tbody').on('click', 'tr', function () {
+//                var id = this.id;
+//                var index = $.inArray(id, selected);
+//                if (index === -1) {
+//                    selected.push(id);
+//                } else {
+//                    selected.splice(index, 1);
+//                }
+//                $(this).toggleClass('selected', function () {
+//                    var input = $("#" + id + " td:first").html();
+//                    if ($(this).hasClass('selected') === true) {
+//                        $("#" + $(input).attr('id')).attr("checked", "checked");
+//                        $("#" + $(input).attr('id')).prop("checked", true);
+//                    } else {
+//                        $("#" + $(input).attr('id')).removeAttr("checked");
+//                    }
+//                    selfObj.saveState($(input).attr('value'));
+//                });
+//
+//            });
         }
 
     }
