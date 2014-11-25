@@ -211,6 +211,7 @@ function Records() {
         selfObj.selectCurrentPageRecords();
         selfObj.selectAllRecords();
         selfObj.clearSelection();
+        selfObj.exportRecords();
         return true;
     }
     /**
