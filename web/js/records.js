@@ -95,9 +95,8 @@ function Records() {
                         },
 //                        "ajax": ajaxSaveStateUrl,
                         "rowCallback": function (row, data) {
-                            var input = [];
-                             input.push($(row).find("td:first").html());
-                            console.log(data);
+                            var input = data[0];
+                            console.log(input);
                             if($(input).attr("checked")=="checked"){
                                 $("#"+row.id).addClass("selected");
                             }else{
