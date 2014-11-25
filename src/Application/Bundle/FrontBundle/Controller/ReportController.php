@@ -74,8 +74,9 @@ class ReportController extends Controller
 		$shpinxInfo = $this->container->getParameter('sphinx_param');
 		$sphinxSearch = new SphinxSearch($em, $shpinxInfo);
 		$result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('format'), 'format');
-		echo '<pre>';print_r($result);exit;
-		return array();
+
+		
+		return array('formats' => json_encode($result,JSON_NUMERIC_CHECK));
 	}
 
 }
