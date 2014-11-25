@@ -289,7 +289,7 @@ class RecordsController extends Controller
             $session->set("allRecords", $data['checked']);
         } else {
 //            if ($session->has("saveRecords"))
-                $checked = $session->get("saveRecords");
+//                $checked = $session->get("saveRecords");
             $isChecked = $data['checked'];
             $recordIds = $data['id'];
             $recordsIdsArr = explode(',', rtrim($recordIds, ','));
