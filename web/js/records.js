@@ -370,13 +370,13 @@ function Records() {
     }
 
     this.selectAllRecords = function () {
-            $(document).on('click', '#select-all-records', function () {
-                selfObj.selectAllRecords = true;
-                $(this).hide();
-                $('#records tbody tr').addClass("selected");
-                selfObj.saveState(0, 'all', 1);
-                $('#div-select-all-records').html('All <span id="records-on-page">' + selfObj.totalRecords + '</span> records selected. <a href="javascript:;" id="clear-selection">Clear selection</a>');
-            });
+        $(document).on('click', '#select-all-records', function () {
+            selfObj.selectAllRecords = true;
+            $(this).hide();
+            $('#records tbody tr').addClass("selected");
+            selfObj.saveState(0, 'all', 1);
+            $('#div-select-all-records').html('All <span id="records-on-page">' + selfObj.totalRecords + '</span> records selected. <a href="javascript:;" id="clear-selection">Clear selection</a>');
+        });
     }
 
     this.clearSelection = function () {
@@ -403,9 +403,11 @@ function Records() {
             }
             else {
                 checked = isChecked;
-                $('input[name=record_checkbox]').each(function () {
-                    id += $(this).val() + ',';
-                });
+                if ($('input[name=record_checkbox]').attr("checked")==true){
+                    $('input[name=record_checkbox]').each(function () {
+                        id += $(this).val() + ',';
+                    });
+                }
             }
         }
         else {
