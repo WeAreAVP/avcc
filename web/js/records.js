@@ -98,7 +98,6 @@ function Records() {
                         "rowCallback": function (row, data) {                            
                             $.each(data, function (index, value) {
                                 if(index==0 && $(value).attr("checked")=="checked"){
-                                    console.log(selfObj.selected);
                                    $("#"+row.id).addClass("selected"); 
                                 }else{
                                     $("#"+row.id).removeClass("selected");
@@ -110,9 +109,9 @@ function Records() {
                 var id = this.id;
                 var index = $.inArray(id, selected);
                 if (index === -1) {
-                    selfObj.selected.push(id);
+                    selected.push(id);
                 } else {
-                    selfObj.selected.splice(index, 1);
+                    selected.splice(index, 1);
                 }
                 $(this).toggleClass('selected', function () {
                     var input = $("#" + id + " td:first").html();
@@ -363,7 +362,7 @@ function Records() {
                     $("#div-select-all-records").html(html);
                     $('#div-select-all-records').fadeIn('slow');
                 }
-                $('#records tbody tr').addClass("selected");                
+                $('#records tbody tr').addClass("selected");
                 selfObj.saveState(0, 'check_current', 1);
             } else if ($(this).prop('checked') == false) {
                 selfObj.selectAllRecords = false;
@@ -415,13 +414,6 @@ function Records() {
                 if ($('input[name=record_checkbox]').attr("checked")=="checked"){
                     $('input[name=record_checkbox]').each(function () {
                         id += $(this).val() + ',';
-                        var id = this.id;
-                        var index = $.inArray(id, selfObj.selected);
-                        if (index === -1) {
-                            selected.push(id);
-                        } else {
-                            selected.splice(index, 1);
-                        }
                     });
                 }
             }
