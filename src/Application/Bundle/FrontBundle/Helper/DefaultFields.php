@@ -165,7 +165,7 @@ class DefaultFields
         return $data;
     }
 
-    public function recordDatatableView($records, $session)
+    public function recordDatatableView($records, $session = null)
     {
         $tableView = array();
         $checked = '';
