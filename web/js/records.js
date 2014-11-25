@@ -97,11 +97,10 @@ function Records() {
                         "rowCallback": function (row, data) {
                             if ($.inArray(row.id, selected) !== -1) {
                                 $(row).addClass('selected');
-                                $(selected).each(function (key, value) {
-                                    var input = $("#" + value + " td:first").html();
-                                    $("#" + $(input).attr('id')).attr("checked", "checked");
-                                    $("#" + $(input).attr('id')).prop("checked", true);
-                                });
+                                $("#selectAll").prop('checked',true);
+                                $("div-select-all-records").hide();
+                            }else{
+                                $("#selectAll").prop('checked',false);
                             }
                         }
                     });
