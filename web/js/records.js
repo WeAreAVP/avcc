@@ -381,7 +381,7 @@ function Records() {
     }
 
     this.clearSelection = function () {
-        $('#clear-selection').on('click', function () {console.log('clicked');
+        $(document).on('click', '#clear-selection', function () {console.log('clicked');
             selfObj.selectAllRecords = false;
             $('#selectAll').removeAttr('checked');
             $('input[name=record_checkbox]').removeAttr('checked');
