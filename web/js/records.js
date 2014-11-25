@@ -491,6 +491,8 @@ function Records() {
                     'overlay': true,
                     'closeButton': false,
                     'buttonsAlign': 'right',
+                    shadow: true,
+                    flat: true,
                     'position': {
                         'zone': 'right'
                     },
