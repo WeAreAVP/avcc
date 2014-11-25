@@ -96,7 +96,7 @@ function Records() {
 //                        "ajax": ajaxSaveStateUrl,
                         "rowCallback": function (row, data) {
                             var input = $(row).find("td:first").html();
-                            console.log(input);
+                            console.log($(input).attr("checked"));
                             if($(input).attr("checked")=="checked"){
                                 $("#"+row.id).addClass("selected");
                             }else{
