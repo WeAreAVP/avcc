@@ -118,7 +118,7 @@ class ReportController extends Controller
 			
 			$activeSheet->getStyleByColumnAndRow($column)->getFont()->setBold(true);
 		}
-		$activeSheet->getRowDimension($row)->setRowHeight(20);
+		$activeSheet->getRowDimension($row)->setRowHeight(50);
 		
 
 		$writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
