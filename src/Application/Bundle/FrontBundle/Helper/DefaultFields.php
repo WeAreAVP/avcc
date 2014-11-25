@@ -13,7 +13,7 @@ class DefaultFields
 
     public function __construct()
     {
-
+        
     }
 
     public function getDefaultOrder()
@@ -168,18 +168,14 @@ class DefaultFields
     public function recordDatatableView($records, $session = null)
     {
         $tableView = array();
-        $checked = '';
-        $checkedIds = array();
-        if ($session->has("allRecords") && $session->get("allRecords") == 1){
-            $checked = 'checked = "checked"';
-        }
-        elseif ($session->has("saveRecords")){
-            $checkedIds = $session->get("saveRecords");
-        }
+        
         foreach ($records as $mainIndex => $value) {
-            if(in_array($value['id'], $checkedIds)){
+            $checked = '';
+            if ($session->has("allRecords") && $session->get("allRecords") == 1) {
                 $checked = 'checked = "checked"';
-            }
+            } elseif (in_array($value['id'], $session->has("saveRecords"))) {
+                $checked = 'checked = "checked"';
+            }            
             $mediaType = $value['media_type'];
             if ($mediaType == 'Film' || $mediaType == 'Films') {
                 $url = 'record/film/' . $value['id'];
@@ -188,7 +184,7 @@ class DefaultFields
             } else {
                 $url = 'record/' . $value['id'];
             }
-            $tableView[$mainIndex][] = '<input id="row_'. $value['id'] .'"' . $checked . '  type="checkbox" name="record_checkbox" class="checkboxes" onclick="" value="' . $value['id'] . '" />';
+            $tableView[$mainIndex][] = '<input id="row_' . $value['id'] . '"' . $checked . '  type="checkbox" name="record_checkbox" class="checkboxes" onclick="" value="' . $value['id'] . '" />';
 
             $tableView[$mainIndex][] = ($value['project']) ? '<a href="' . $url . '">' . $value['project'] . '</a>' : $value['project'];
 //			$tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['title'] . '</a>';
