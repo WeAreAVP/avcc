@@ -133,8 +133,8 @@ class RecordsController extends Controller
         $records = $result[0];
         $currentPageTotal = count($records);
         $totalRecords = $result[1][0]['Value'];
-//        $session = $this->getRequest()->getSession();
-        $tableView = $this->defaultFields->recordDatatableView($records);
+        $session = $this->getRequest()->getSession();
+        $tableView = $this->defaultFields->recordDatatableView($records, $session);
 
         $dataTable = array(
             'sEcho' => intval($sEcho),
@@ -287,9 +287,10 @@ class RecordsController extends Controller
         $checked = array();
         if ($data['is_all']) {
             $session->set("allRecords", $data['checked']);
-        } else {
-//            if (isset($session->get("saveRecords")) && !empty($session->get("saveRecords")))
-//                $checked = $session->get("saveRecords");
+        } elseif ($data['id']) {
+            if ($session->has("saveRecords")){
+                $checked = $session->get("saveRecords");
+            }
             $isChecked = $data['checked'];
             $recordIds = $data['id'];
             $recordsIdsArr = explode(',', rtrim($recordIds, ','));

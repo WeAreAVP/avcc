@@ -170,18 +170,18 @@ class DefaultFields
         $tableView = array();
         $checked = '';
         $checkedIds = array();
-        if (isset($session->get("allRecords")) && $session->get("allRecords") == 1){
-          //  $checked = 'checked = "checked"';
+        if ($session->has("allRecords") && $session->get("allRecords") == 1){
+            $checked = 'checked = "checked"';
         }
-        elseif (isset($session->get("saveRecords")) && !empty($session->get("saveRecords"))){
+        elseif ($session->has("saveRecords")){
             $checkedIds = $session->get("saveRecords");
         }
         foreach ($records as $mainIndex => $value) {
-//            if(in_array($value['id'], $checkedIds)){
-//                $checked = 'checked = "checked"';
-//            }else{
-//                $checked = '';
-//            }
+            if(in_array($value['id'], $checkedIds)){
+                $checked = 'checked = "checked"';
+            }else{
+                $checked = '';
+            }
             $mediaType = $value['media_type'];
             if ($mediaType == 'Film' || $mediaType == 'Films') {
                 $url = 'record/film/' . $value['id'];
