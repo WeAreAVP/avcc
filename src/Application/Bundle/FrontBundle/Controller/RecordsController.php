@@ -133,8 +133,8 @@ class RecordsController extends Controller
         $records = $result[0];
         $currentPageTotal = count($records);
         $totalRecords = $result[1][0]['Value'];
-//        $session = $this->getRequest()->getSession();
-        $tableView = $this->defaultFields->recordDatatableView($records);
+        $session = $this->getRequest()->getSession();
+        $tableView = $this->defaultFields->recordDatatableView($records, $session);
 
         $dataTable = array(
             'sEcho' => intval($sEcho),
