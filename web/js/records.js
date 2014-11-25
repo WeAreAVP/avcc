@@ -98,7 +98,7 @@ function Records() {
                         "rowCallback": function (row, data) {                            
                             $.each(data, function (index, value) {
                                 if(index==0 && $(value).attr("checked")=="checked"){
-                                    console.log(selected);
+                                    console.log(selfObj.selected);
                                    $("#"+row.id).addClass("selected"); 
                                 }else{
                                     $("#"+row.id).removeClass("selected");
@@ -418,9 +418,9 @@ function Records() {
                         var id = this.id;
                         var index = $.inArray(id, selfObj.selected);
                         if (index === -1) {
-                            selfObj.selected.push(id);
+                            selected.push(id);
                         } else {
-                            selfObj.selected.splice(index, 1);
+                            selected.splice(index, 1);
                         }
                     });
                 }
