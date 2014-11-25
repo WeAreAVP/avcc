@@ -54,11 +54,11 @@
 				}
 			},
 			tooltip: {
-				headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-				pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+				headerFormat: '<span style="font-size:11px">{series.name}: {point.name}</span><br>',
+				pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>Total {point.y:.2f}</b><br/>'
 			},
 			series: [{
-				name: 'Formats',
+				name: 'Format',
 				colorByPoint: true,
 				data:formats
 			}],
