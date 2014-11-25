@@ -173,8 +173,9 @@ class DefaultFields
             $checked = '';
             if ($session->has("allRecords") && $session->get("allRecords") == 1) {
                 $checked = 'checked = "checked"';
-            } elseif (in_array($value['id'], $session->get("saveRecords"))) {
-                $checked = 'checked = "checked"';
+            } elseif ($session->has("saveRecords")) {
+                if(in_array($value['id'], $session->get("saveRecords")))
+                    $checked = 'checked = "checked"';
             }            
             $mediaType = $value['media_type'];
             if ($mediaType == 'Film' || $mediaType == 'Films') {
