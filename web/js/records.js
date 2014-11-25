@@ -342,7 +342,7 @@ function Records() {
     this.selectAllRecords = function () {
         $('#selectAll').click(function () {
             
-            if($('#selectAll').prop('checked')){
+            if($('#selectAll').prop('checked',true)){
                 selectAllRecords = true;
                $('input[name=record_checkbox]').attr('checked', 'checked');                
             }else{
