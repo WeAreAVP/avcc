@@ -82,8 +82,7 @@ function Records() {
 //				},
                         "fnServerData": function (sSource, aoData, fnCallback) {
                             jQuery.getJSON(sSource, aoData, function (json) {
-                                fnCallback(json);
-
+                                fnCallback(json);    
                             });
                         },
                         "createdRow": function (row, data, index) {
@@ -341,15 +340,17 @@ function Records() {
 
     }
     this.selectAllRecords = function () {
-        $('#selectAll').click(function () {
-            selectAllRecords = true;
+//        $('#selectAll').click(function () {
+            
             if($('#selectAll').attr('checked')){
+                selectAllRecords = true;
                $('input[name=record_checkbox]').attr('checked', 'checked'); 
             }else{
+                selectAllRecords = false;
                $('input[name=record_checkbox]').removeAttr('checked'); 
             }
             selfObj.saveState(0, '', 1);
-        });
+//        });
     }
 
     this.saveState = function (elementID, select, isChecked) {
