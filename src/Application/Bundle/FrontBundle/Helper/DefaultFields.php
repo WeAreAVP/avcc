@@ -179,8 +179,6 @@ class DefaultFields
         foreach ($records as $mainIndex => $value) {
             if(in_array($value['id'], $checkedIds)){
                 $checked = 'checked = "checked"';
-            }else{
-                $checked = '';
             }
             $mediaType = $value['media_type'];
             if ($mediaType == 'Film' || $mediaType == 'Films') {
