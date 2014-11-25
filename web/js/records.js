@@ -201,6 +201,9 @@ function Records() {
 
         selfObj.removeFilter();
         selfObj.removeKeywordFilter();
+        selfObj.selectCurrentPageRecords();
+        selfObj.selectAllRecords();
+        selfObj.clearSelection();
         return true;
     }
     /**

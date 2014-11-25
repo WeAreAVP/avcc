@@ -82,7 +82,6 @@
                 record.initDataTable();
 
                 record.setPageUrl('<?php echo $view['router']->generate('record_list') ?>');
-                record.selectCurrentPageRecords();
                 record.bindEvents();
 
             </script>
