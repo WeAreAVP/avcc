@@ -115,8 +115,11 @@ class ReportController extends Controller
 		{
 			$activeSheet->setCellValueExplicitByColumnAndRow($column, $row, $columnName);
 			$activeSheet->getColumnDimensionByColumn($column)->setWidth(20);
+			
 			$activeSheet->getStyleByColumnAndRow($column)->getFont()->setBold(true);
 		}
+		$activeSheet->getRowDimension($row)->setRowHeight(20);
+		
 
 		$writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
 		$filename = 'manifest_report_' . time() . '.xlsx';
