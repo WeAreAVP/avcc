@@ -11,6 +11,7 @@ use Application\Bundle\FrontBundle\Helper\DefaultFields;
 use Application\Bundle\FrontBundle\Entity\Records;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
+use Application\Bundle\FrontBundle\Entity\ImportExport;
 
 /**
  * Records controller.
@@ -287,9 +288,10 @@ class RecordsController extends Controller
         $checked = array();
         if ($data['is_all']) {
             $session->set("allRecords", $data['checked']);
-            if(! $data['checked']) $session->remove("saveRecords");
+            if (!$data['checked'])
+                $session->remove("saveRecords");
         } else {
-            if ($session->has("saveRecords")){
+            if ($session->has("saveRecords")) {
                 $checked = $session->get("saveRecords");
             }
             $isChecked = $data['checked'];
@@ -305,10 +307,54 @@ class RecordsController extends Controller
                         unset($checked[$key]);
                 }
             }
-            $session->set("saveRecords", $checked);            
+            $session->set("saveRecords", $checked);
         }
         echo json_encode(array('success' => TRUE));
         exit;
+    }
+
+    /**
+     * Make records to display for dataTables.
+     *
+     * @param Request $request
+     *
+     * @Route("/export", name="record_export")
+     * @Method("POST")
+     * @Template("ApplicationFrontBundle:Records:default.html.php")
+     * @return json
+     */
+    public function exportAction(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $em = $this->getDoctrine()->getManager();
+            $data = $request->request->all();
+            $session = $this->getRequest()->getSession();
+            $facetData = '';
+            if ($session->has('facetData')) {
+                $facetData = json_encode($session->get('facetData'));
+            }
+            $type = $data['type'];
+            $records = $data['records'];
+            $export = new ImportExport();
+            $export->setUser($this->getUser());
+            $export->setType($type);
+            if($records =='all'){
+                $export->setQueryOrId('all');
+                if($facetData){
+                    $export->setQueryOrId($facetData);
+                }
+            }else{
+                $recordIds = explode(',', rtrim($records,','));
+                if($recordIds){
+                    $export->setQueryOrId(json_encode($recordIds));
+                }
+            }
+            $em->persist($export);
+            $em->flush();
+            
+            echo json_encode(array('success'=>true));
+            exit;
+        }
     }
 
 }

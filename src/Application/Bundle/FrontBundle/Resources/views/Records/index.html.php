@@ -62,7 +62,7 @@
                     </tbody>
                 </table>
             </div>
-
+            <input type="hidden" name="selectedrecords" id="selectedrecords" value="" />
         </div>
         <?php if (!$isAjax): ?>
             <?php $view['slots']->start('view_javascripts') ?>
@@ -77,7 +77,7 @@
                 record.setAjaxSource('<?php echo $view['router']->generate('record_dataTable') ?>');
                 record.setAjaxSaveStateUrl('<?php echo $view['router']->generate('record_saveState') ?>');
                 record.initDataTable();
-
+                record.setAjaxExportUrl('<?php echo $view['router']->generate('record_export') ?>');
                 record.setPageUrl('<?php echo $view['router']->generate('record_list') ?>');
                 record.bindEvents();
 

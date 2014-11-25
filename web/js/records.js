@@ -22,7 +22,7 @@ function Records() {
     var selectAllRecords = false;
     var totalRecords = 0;
     var totalCurrentPageRecords = 0;
-    var selected = [];
+    var ajaxExportUrl = null;
     /**
      * Set the ajax URL of datatable.
      * @param {string} source
@@ -39,6 +39,15 @@ function Records() {
      */
     this.setAjaxSaveStateUrl = function (source) {
         ajaxSaveStateUrl = source;
+
+    }
+    /**
+     * Set the ajax URL to save export request in db.
+     * @param {string} source
+     * 
+     */
+    this.setAjaxExportUrl = function (source) {
+        ajaxExportUrl = source;
 
     }
     /**
@@ -61,7 +70,7 @@ function Records() {
             // Modify css for managing view.
 //			$('#container').removeClass('container');
 //			$('#container').css('margin', '20px');
-            
+
             oTable =
                     $('#records').dataTable(
                     {
@@ -96,9 +105,9 @@ function Records() {
                         },
 //                        "ajax": ajaxSaveStateUrl,
                         "rowCallback": function (row, data) {
-                            if($(data[0]).attr("checked")=="checked"){
+                            if ($(data[0]).attr("checked") == "checked") {
                                 $(row).addClass("selected");
-                            }                                                    
+                            }
                         }
                     });
             $('#records tbody').on('click', 'tr', function () {
@@ -400,26 +409,31 @@ function Records() {
         var id = '';
         var checked = 0;
         var isAll = 0;
+        var selectedrecords = '';
         if (select) {
             if (select == 'all') {
                 checked = isChecked;
                 isAll = 1;
+                selectedrecords = 'all';
             }
             else {
                 checked = isChecked;
-                if ($('input[name=record_checkbox]').attr("checked")=="checked"){
+                if ($('input[name=record_checkbox]').attr("checked") == "checked") {
                     $('input[name=record_checkbox]').each(function () {
                         id += $(this).val() + ',';
                     });
+                    selectedrecords = id;
                 }
             }
         }
         else {
             id = elementID;
-            if ($('#row_' + elementID).attr('checked'))
+            if ($('#row_' + elementID).attr('checked')) {
                 checked = 1;
+                selectedrecords = id;
+            }
         }
-
+        $("#selectedrecords").val(selectedrecords);
         $.ajax({
             type: 'POST',
             url: ajaxSaveStateUrl,
@@ -431,9 +445,57 @@ function Records() {
             }
         });
     }
-    
-    this.exportRecords = function(){
-        
+
+    this.exportRecords = function () {
+        $('.export').click(function () {
+            if ($('input[name=record_checkbox]').attr("checked") == "checked") {
+                var exportType = $(this).attr('data-type');
+                var selectedrecords = $("#selectedrecords").val();
+                $.Dialog({
+                    overlay: true,
+                    shadow: true,
+                    flat: true,
+                    title: 'Export Records',
+                    content: '',
+                    closeButton: true,
+                    buttonsAlign: 'right',
+                    buttons: {
+                        'button1': {
+                            'action': function () {
+                                console.log('ok');
+                            }
+                        },
+                        'button2': {
+                            'action': function () {
+                                console.log('cancle');
+                            }
+                        }
+                    }
+                });
+//                $.ajax({
+//                    type: 'POST',
+//                    url: ajaxExportUrl,
+//                    data: {type: exportType, records: selectedrecords},
+//                    dataType: 'json',
+//                    success: function (response)
+//                    {
+//
+//                    }
+//                });
+            } else {
+                $.Dialog({
+                    'title': 'Error',
+                    'content': 'Please select any record.',
+                    'draggable': true,
+                    'overlay': true,
+                    'closeButton': false,
+                    'buttonsAlign': 'right',
+                    'position': {
+                        'zone': 'right'
+                    },
+                });
+            }
+        });
     }
 }
 
