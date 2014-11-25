@@ -76,7 +76,7 @@ class ReportController extends Controller
 		$result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('format'), 'format');
 
 		
-		return array('formats' => json_encode($result));
+		return array('formats' => json_encode($result,JSON_NUMERIC_CHECK));
 	}
 
 }
