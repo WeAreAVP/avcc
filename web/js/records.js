@@ -97,7 +97,7 @@ function Records() {
                         "rowCallback": function (row, data) {
                             var input = [];
                              input.push($(row).find("td:first").html());
-                            console.log($.isArray(input));
+                            console.log(input[0]);
                             if($(input).attr("checked")=="checked"){
                                 $("#"+row.id).addClass("selected");
                             }else{
