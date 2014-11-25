@@ -345,11 +345,13 @@ function Records() {
             if($('#selectAll').attr('checked')){
                 selectAllRecords = true;
                $('input[name=record_checkbox]').attr('checked', 'checked'); 
+               selfObj.saveState(0, '', 1);
             }else{
                 selectAllRecords = false;
                $('input[name=record_checkbox]').removeAttr('checked'); 
+               selfObj.saveState(0, '', 1);
             }
-            selfObj.saveState(0, '', 1);
+            
 //        });
     }
 
