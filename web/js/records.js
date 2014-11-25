@@ -357,7 +357,7 @@ function Records() {
                     $("#div-select-all-records").html(html);
                     $('#div-select-all-records').fadeIn('slow');
                 }    
-                    saveState(0, 'check_current', 1);
+                    selfObj.saveState(0, 'check_current', 1);
             } else if ($(this).prop('checked') == false) {
                 selectAllRecords = false;
                 $('input[name=record_checkbox]').removeAttr('checked');
