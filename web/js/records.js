@@ -70,7 +70,7 @@ function Records() {
             // Modify css for managing view.
 //			$('#container').removeClass('container');
 //			$('#container').css('margin', '20px');
-
+            var selected = [];
             oTable =
                     $('#records').dataTable(
                     {
