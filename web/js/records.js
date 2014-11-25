@@ -97,10 +97,10 @@ function Records() {
                         "rowCallback": function (row, data) {
                             if ($.inArray(row.id, selected) !== -1) {
                                 $(row).addClass('selected');
-                                $("#selectAll").prop('checked',true);
                                 $("div-select-all-records").hide();
                             }else{
                                 $("#selectAll").prop('checked',false);
+                                $("div-select-all-records").hide();
                             }
                         }
                     });
