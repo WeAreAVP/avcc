@@ -108,3 +108,7 @@
 #reset_all{
 	margin: 5px 10px;
 }
+#div-select-all-records{
+    font-size: 12px;
+    text-align:center;
+}

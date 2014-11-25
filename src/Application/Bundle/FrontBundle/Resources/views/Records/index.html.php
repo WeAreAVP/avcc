@@ -38,7 +38,7 @@
 
             <div class="table-responsive">
                 <div class="clearfix"></div>
-                <div id="div-select-all-records" style="display:none;font-size: 12px;text-align:center;">
+                <div id="div-select-all-records" style="display:none;">
                     
                 </div>
                 <div class="clearfix"></div>

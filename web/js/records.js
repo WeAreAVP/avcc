@@ -356,7 +356,7 @@ function Records() {
                 if (selfObj.totalRecords > 0 && selfObj.totalRecords > selfObj.totalCurrentPageRecords) {
                     var html = '';
                     html += '<span id="div-records-on-page">All <span id="records-on-page">' + selfObj.totalCurrentPageRecords + '</span> records on this page selected.</span>';
-                    html += ' <a href="javascript:;" id="select-all-records" >Select all <span id="total-records">' + selfObj.totalRecords + '</span> records.</a><br /><a href="javascript:;" id="clear-selection">Clear selection</a>';
+                    html += ' <a href="javascript:;" id="select-all-records" >Select all <span id="total-records">' + selfObj.totalRecords + '</span> records.</a> <a href="javascript:;" id="clear-selection">Clear selection</a>';
                     $("#div-select-all-records").html(html);
                     $('#div-select-all-records').fadeIn('slow');
                 }
@@ -376,7 +376,7 @@ function Records() {
                 selfObj.selectAllRecords = true;
                 $(this).hide();
                 selfObj.saveState(0, 'all', 1);
-                $('#div-select-all-records').html('All <span id="records-on-page">' + selfObj.totalRecords + '</span> records selected.<br /><a href="javascript:;" id="clear-selection">Clear selection</a>');
+                $('#div-select-all-records').html('All <span id="records-on-page">' + selfObj.totalRecords + '</span> records selected. <a href="javascript:;" id="clear-selection">Clear selection</a>');
             });
     }
 
