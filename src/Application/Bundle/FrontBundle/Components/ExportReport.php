@@ -114,7 +114,7 @@ class ExportReport extends ContainerAware
             $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, ($record->getCommercial()) ? $record->getCommercial()->getName() : '');
             $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $record->getContentDuration());
             $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $record->getCreationDate());
-            $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $record->getContentDuration());
+            $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $record->getContentDate());
             $activeSheet->setCellValueExplicitByColumnAndRow(16, $row, ($record->getReelDiameters()) ? $record->getReelDiameters()->getName() : '');
             $activeSheet->setCellValueExplicitByColumnAndRow(34, $row, ($record->getGenreTerms()));
             $activeSheet->setCellValueExplicitByColumnAndRow(35, $row, ($record->getContributor()));
