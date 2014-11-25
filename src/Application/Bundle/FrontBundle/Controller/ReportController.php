@@ -66,6 +66,7 @@ class ReportController extends Controller
      * @return array
      */
 	public function quantitativeAction(){
+		
 	return array();	
 	}
 
