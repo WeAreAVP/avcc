@@ -74,9 +74,14 @@ class ReportController extends Controller
 		$shpinxInfo = $this->container->getParameter('sphinx_param');
 		$sphinxSearch = new SphinxSearch($em, $shpinxInfo);
 		$result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('format'), 'format');
+		$highChart = array();
+		foreach ($result as $index => $format)
+		{
+			$highChart[] = array($format['format'], (int) $format['total']);
+		}
 
-		
-		return array('formats' => json_encode($result,JSON_NUMERIC_CHECK));
+
+		return array('formats' => json_encode($highChart));
 	}
 
 }
