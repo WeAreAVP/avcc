@@ -301,8 +301,7 @@ class RecordsController extends Controller
                 if ($isChecked) {
                     if (!in_array($recordId, $checked))
                         $checked[] = $recordId;
-                }
-                else {
+                } else {
                     if (($key = array_search($recordId, $checked)) !== false)
                         unset($checked[$key]);
                 }
@@ -338,20 +337,20 @@ class RecordsController extends Controller
             $export = new ImportExport();
             $export->setUser($this->getUser());
             $export->setType($type);
-            if($records =='all'){
+            if ($records =='all') {
                 $export->setQueryOrId('all');
-                if($facetData){
+                if ($facetData) {
                     $export->setQueryOrId($facetData);
                 }
-            }else{
+            } else {
                 $recordIds = explode(',', rtrim($records,','));
-                if($recordIds){
+                if ($recordIds) {
                     $export->setQueryOrId(json_encode($recordIds));
                 }
             }
             $em->persist($export);
             $em->flush();
-            
+
             echo json_encode(array('success'=>true));
             exit;
         }

@@ -13,7 +13,7 @@ class DefaultFields
 
     public function __construct()
     {
-        
+
     }
 
     public function getDefaultOrder()
@@ -177,7 +177,7 @@ class DefaultFields
                 if (in_array($value['id'], $session->get("saveRecords"))) {
                     $checked = 'checked = "checked"';
                 }
-            }            
+            }
             $mediaType = $value['media_type'];
             if ($mediaType == 'Film' || $mediaType == 'Films') {
                 $url = 'record/film/' . $value['id'];

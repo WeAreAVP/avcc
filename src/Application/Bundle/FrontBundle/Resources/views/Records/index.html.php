@@ -38,7 +38,7 @@
                 </ul>
             </div>
 
-            <div class="table-responsive">                
+            <div class="table-responsive">
                 <table class="table hovered bordered" id="records">
                     <thead>
                         <tr>
