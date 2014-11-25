@@ -457,7 +457,7 @@ function Records() {
                     shadow: true,
                     flat: true,
                     title: 'Export Records',
-                    content: 'Are you sure you want to export the record(s)?',
+                    content: '<span style="font-size:13px;">Are you sure you want to export the record(s)?</span>',
                     closeButton: true,
                     buttonsAlign: 'right',
                     width: 400,
