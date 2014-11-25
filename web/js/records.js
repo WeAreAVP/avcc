@@ -403,7 +403,7 @@ function Records() {
             }
             else {
                 checked = isChecked;
-                if ($('input[name=record_checkbox]').attr("checked")==true){
+                if ($('input[name=record_checkbox]').attr("checked")=="checked"){
                     $('input[name=record_checkbox]').each(function () {
                         id += $(this).val() + ',';
                     });
