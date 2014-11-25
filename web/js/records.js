@@ -341,10 +341,10 @@ function Records() {
     }
     this.selectAllRecords = function () {
         $('#selectAll').click(function () {            
-            if($(this).attr('checked')){
+            if($(this).prop('checked') == true){
                 selectAllRecords = true;
                $('input[name=record_checkbox]').attr('checked', 'checked');                
-            }else{
+            }else if($(this).prop('checked') == false){
                 selectAllRecords = false;
                $('input[name=record_checkbox]').removeAttr('checked'); 
             }
