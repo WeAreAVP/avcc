@@ -1,4 +1,4 @@
-<?php if ( ! $isAjax): ?>
+<?php if (!$isAjax): ?>
     <?php $view->extend('FOSUserBundle::layout.html.php') ?>
     <?php $view['slots']->start('body') ?>
     <div class="grid">
@@ -37,7 +37,9 @@
             </div>
 
             <div class="table-responsive">
-                <div></div>
+                <div id="div-select-all-records" class="hide" style="text-align:center;">
+                    
+                </div>
                 <table class="table hovered bordered" id="records">
                     <thead>
                         <tr>
@@ -48,9 +50,9 @@
                                 if ($column == 'checkbox_Col') {
                                     ?>
                                     <th id="<?php echo $value ?>"><input type="checkbox" name="selectAll" id="selectAll" /></th>
-                                    <?php
-                                } else {
-                                    ?>
+                                        <?php
+                                    } else {
+                                        ?>
                                     <th id="<?php echo $value ?>"><?php echo str_replace('_', ' ', $column) ?></th>
                                 <?php } ?>
                             <?php } ?>
@@ -63,7 +65,7 @@
             </div>
 
         </div>
-        <?php if ( ! $isAjax): ?>
+        <?php if (!$isAjax): ?>
             <?php $view['slots']->start('view_javascripts') ?>
 
             <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
@@ -78,7 +80,7 @@
                 record.initDataTable();
 
                 record.setPageUrl('<?php echo $view['router']->generate('record_list') ?>');
-                record.selectAllRecords();
+                record.selectCurrentPageRecords();
                 record.bindEvents();
 
             </script>

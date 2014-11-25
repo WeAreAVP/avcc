@@ -20,6 +20,8 @@ function Records() {
     var customColumnName = 'all';
     var ajaxSaveStateUrl = null;
     var selectAllRecords = false;
+    var totalRecords = 0;
+    var totalCurrentPageRecords = 0;
     /**
      * Set the ajax URL of datatable.
      * @param {string} source
@@ -82,8 +84,9 @@ function Records() {
 //				},
                         "fnServerData": function (sSource, aoData, fnCallback) {
                             jQuery.getJSON(sSource, aoData, function (json) {
-                                fnCallback(json);   
-                                console.log(json.iTotalDisplayRecords);
+                                fnCallback(json);
+                                selfObj.totalRecords = json.iTotalDisplayRecords;
+                                selfObj.totalCurrentPageRecords = json.iTotalRecords;
                             });
                         },
                         "createdRow": function (row, data, index) {
@@ -340,21 +343,52 @@ function Records() {
         }
 
     }
-    this.selectAllRecords = function () {
-        $('#selectAll').click(function () {            
-            if($(this).prop('checked') == true){
+    
+    this.selectCurrentPageRecords = function () {
+        $('#selectAll').click(function () {
+            if ($(this).prop('checked') == true) {
                 selectAllRecords = true;
-               $('input[name=record_checkbox]').attr('checked', 'checked');  
-               $('input[name=record_checkbox]').prop('checked',true); 
-            }else if($(this).prop('checked') == false){
+                $('input[name=record_checkbox]').attr('checked', 'checked');
+                $('input[name=record_checkbox]').prop('checked', true);
+                if (selfObj.totalRecords > 0 && selfObj.totalRecords > selfObj.totalCurrentPageRecords){
+                    var html = '';
+                        html += '<span id="div-records-on-page">All <span id="records-on-page">' + selfObj.totalCurrentPageRecords + '</span> records on this page selected.</span>';
+                        html += '<a href="javascript:;" id="select-all-records" >Select all <span id="total-records">' + selfObj.totalRecords + '</span> records.</a><br /><a href="javascript:;" id="clear-selection" class="hide">Clear selection</a>';
+                    $("#div-select-all-records").html(html);
+                    $('#div-select-all-records').fadeIn('slow');
+                }    
+                    saveState(0, 'check_current', 1);
+            } else if ($(this).prop('checked') == false) {
                 selectAllRecords = false;
-               $('input[name=record_checkbox]').removeAttr('checked'); 
-               $('input[name=record_checkbox]').prop('checked',false); 
-            }
-            selfObj.saveState(0, '', 1);
+                $('input[name=record_checkbox]').removeAttr('checked');
+                $('input[name=record_checkbox]').prop('checked', false);
+                $("#div-select-all-records").html('');
+                selfObj.saveState(0, 'check_current', 0);
+            }            
         });
     }
 
+    this.selectAllRecords = function () {
+        $('#select-all-records').on( "click", function () {
+            select_all_records = true;
+            $(this).hide();
+            selfObj.saveState(0, 'all', 1);
+            $('#div-records-on-page').html('All <span id="records-on-page">' + selfObj.totalRecords + '</span> records selected.<br /><a href="javascript:;" id="clear-selection" class="hide">Clear selection</a>');
+        });
+    }
+    
+    this.clearSelection = function(){
+        $('#clear-selection').click(function() {
+            select_all_records = false;
+            $('#selectAll').removeAttr('checked');
+            $('input[name=record_checkbox]').removeAttr('checked');
+            $('input[name=record_checkbox]').prop('checked', false);
+            $('#div-select-all-records').fadeOut('slow');
+            $(this).hide();
+            selfObj.saveState(0, 'all', 0);            
+        });
+    }
+    
     this.saveState = function (elementID, select, isChecked) {
         var id = '';
         var checked = 0;
