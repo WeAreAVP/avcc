@@ -115,8 +115,9 @@ class ReportController extends Controller
 		{
 			$activeSheet->setCellValueExplicitByColumnAndRow($column, $row, $columnName);
 			$activeSheet->getColumnDimensionByColumn($column)->setWidth(20);
+			$activeSheet->getStyleByColumnAndRow($column)->getAlignment()->setWrapText(true);
+			$activeSheet->getStyleByColumnAndRow($column,$row)->getFont()->setBold(true);
 			
-			$activeSheet->getStyleByColumnAndRow($column)->getFont()->setBold(true);
 		}
 		$activeSheet->getRowDimension($row)->setRowHeight(50);
 		
