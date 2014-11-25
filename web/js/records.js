@@ -92,19 +92,15 @@ function Records() {
                         "createdRow": function (row, data, index) {
                             var input = $(row).find("td:first").html();
                             row.id = "row-" + $(input).attr('value');
+                        },
+//                        "ajax": ajaxSaveStateUrl,
+                        "rowCallback": function (row, data) {
+                            var input = $("#"+row.id).find("td:first").html();
                             if($(input).attr("checked")=="checked"){
                                 $("#"+row.id).addClass("selected");
                             }else{
                                 $("#"+row.id).removeClass("selected");
-                            }
-                        },
-//                        "ajax": ajaxSaveStateUrl,
-                        "rowCallback": function (row, data) {
-                            console.log(row);
-                            if ($.inArray(row.id, selected) !== -1) {
-                                $(row).addClass('selected');
-                                $("div-select-all-records").hide();
-                            }
+                            }                            
                         }
                     });
             $('#records tbody').on('click', 'tr', function () {
