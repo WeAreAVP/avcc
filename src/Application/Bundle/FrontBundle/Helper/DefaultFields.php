@@ -170,10 +170,10 @@ class DefaultFields
         $tableView = array();
         $checked = '';
         $checkedIds = array();
-        if (isset($session->get("allRecords")) && $session->get("allRecords") == 1){
+        if ($session->has("allRecords") && $session->get("allRecords") == 1){
           //  $checked = 'checked = "checked"';
         }
-        elseif (isset($session->get("saveRecords")) && !empty($session->get("saveRecords"))){
+        elseif ($session->has("saveRecords")){
             $checkedIds = $session->get("saveRecords");
         }
         foreach ($records as $mainIndex => $value) {

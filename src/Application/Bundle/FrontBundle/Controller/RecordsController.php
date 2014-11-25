@@ -284,7 +284,6 @@ class RecordsController extends Controller
     {
         $data = $request->request->all();
         $session = $this->getRequest()->getSession();
-        print_r($data); exit;
         $checked = array();
         if ($data['is_all']) {
             $session->set("allRecords", $data['checked']);
@@ -307,7 +306,6 @@ class RecordsController extends Controller
             }
             $session->set("saveRecords", $checked);
         }
-        print_r($checked); exit;
         echo json_encode(array('success' => TRUE));
         exit;
     }
