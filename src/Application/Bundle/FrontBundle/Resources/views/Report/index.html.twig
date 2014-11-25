@@ -4,54 +4,62 @@
     <h1>Reports
 	</h1>
 	<br/>
-	<div class="listview small">
-		<a href="{{ path('all_formats', { 'type': 'xlsx' }) }}" class="list">
-			<div class="list-content">
-				<img src="/images/excel2013icon.png" class="icon">
-				<div class="data">
-					<span class="list-title">All Records</span>
-					<div class="rating small no-margin">
-						Downlad as XLSX
-					</div>
+	<div class="grid ">
+		<div class="row">
+			<div class="span5">
+				<div class="listview small">
+					<a href="{{ path('all_formats', { 'type': 'xlsx' }) }}" class="list">
+						<div class="list-content">
+							<img src="/images/excel2013icon.png" class="icon">
+							<div class="data">
+								<span class="list-title">All Records</span>
+								<div class="rating small no-margin">
+									Downlad as XLSX
+								</div>
+							</div>
+						</div>
+					</a>
+					<a href="{{ path('all_formats', { 'type': 'csv' }) }}" class="list">
+						<div class="list-content">
+							<img src="/images/excel2013icon.png" class="icon">
+							<div class="data">
+								<span class="list-title">All Records</span>
+								<div class="rating small no-margin">
+									Downlad as CSV
+								</div>
+							</div>
+						</div>
+					</a>
 				</div>
 			</div>
-		</a>
-		<a href="{{ path('all_formats', { 'type': 'csv' }) }}" class="list">
-			<div class="list-content">
-				<img src="/images/excel2013icon.png" class="icon">
-				<div class="data">
-					<span class="list-title">All Records</span>
-					<div class="rating small no-margin">
-						Downlad as CSV
-					</div>
-				</div>
-			</div>
-		</a>
-	</div>
-	<div class="listview small">
-		<a href="{{ path('quantitative') }}" class="list">
-			<div class="list-content">
-				<img src="/images/highchart.png" class="icon">
-				<div class="data">
-					<span class="list-title">Quantitative Reports</span>
-					<div class="rating small no-margin">
-						Click to view
-					</div>
-				</div>
-			</div>
-		</a>
-		<a href="{{ path('manifest') }}" class="list">
-			<div class="list-content">
-				<img src="/images/excel2013icon.png" class="icon">
-				<div class="data">
-					<span class="list-title">Manifest Reports</span>
-					<div class="rating small no-margin">
-						Download as XLSX
-					</div>
-				</div>
-			</div>
-		</a>
+			<div class="span5">
+				<div class="listview small">
+					<a href="{{ path('quantitative') }}" class="list">
+						<div class="list-content">
+							<img src="/images/highchart.png" class="icon">
+							<div class="data">
+								<span class="list-title">Quantitative Reports</span>
+								<div class="rating small no-margin">
+									Click to view
+								</div>
+							</div>
+						</div>
+					</a>
+					<a href="{{ path('manifest') }}" class="list">
+						<div class="list-content">
+							<img src="/images/excel2013icon.png" class="icon">
+							<div class="data">
+								<span class="list-title">Manifest Reports</span>
+								<div class="rating small no-margin">
+									Download as XLSX
+								</div>
+							</div>
+						</div>
+					</a>
 
+				</div>
+			</div>
+		</div>
 	</div>
 
 
