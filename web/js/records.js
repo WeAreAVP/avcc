@@ -101,26 +101,26 @@ function Records() {
 //                            }
 //                        }
                     });
-//            $('#records tbody').on('click', 'tr', function () {
-//                var id = this.id;
-//                var index = $.inArray(id, selected);
-//                if (index === -1) {
-//                    selected.push(id);
-//                } else {
-//                    selected.splice(index, 1);
-//                }
-//                $(this).toggleClass('selected', function () {
-//                    var input = $("#" + id + " td:first").html();
+            $('#records tbody').on('click', 'tr', function () {
+                var id = this.id;
+                var index = $.inArray(id, selected);
+                if (index === -1) {
+                    selected.push(id);
+                } else {
+                    selected.splice(index, 1);
+                }
+                $(this).toggleClass('selected', function () {
+                    var input = $("#" + id + " td:first").html();
 //                    if ($(this).hasClass('selected') === true) {
 //                        $("#" + $(input).attr('id')).attr("checked", "checked");
 //                        $("#" + $(input).attr('id')).prop("checked", true);
 //                    } else {
 //                        $("#" + $(input).attr('id')).removeAttr("checked");
 //                    }
-//                    selfObj.saveState($(input).attr('value'));
-//                });
-//
-//            });
+                    selfObj.saveState($(input).attr('value'));
+                });
+
+            });
         }
 
     }
