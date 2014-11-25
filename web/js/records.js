@@ -98,9 +98,6 @@ function Records() {
                             if ($.inArray(row.id, selected) !== -1) {
                                 $(row).addClass('selected');
                                 $("div-select-all-records").hide();
-                            }else{
-                                $("#selectAll").prop('checked',false);
-                                $("div-select-all-records").hide();
                             }
                         }
                     });
@@ -359,12 +356,14 @@ function Records() {
                     $("#div-select-all-records").html(html);
                     $('#div-select-all-records').fadeIn('slow');
                 }
+                $('#records tbody tr').addClass("selected");
                 selfObj.saveState(0, 'check_current', 1);
             } else if ($(this).prop('checked') == false) {
                 selfObj.selectAllRecords = false;
                 $('input[name=record_checkbox]').removeAttr('checked');
                 $('input[name=record_checkbox]').prop('checked', false);
                 $("#div-select-all-records").html('');
+                $('#records tbody tr').removeClass("selected");
                 selfObj.saveState(0, 'check_current', 0);
             }
         });
@@ -374,6 +373,7 @@ function Records() {
             $(document).on('click', '#select-all-records', function () {
                 selfObj.selectAllRecords = true;
                 $(this).hide();
+                $('#records tbody tr').addClass("selected");
                 selfObj.saveState(0, 'all', 1);
                 $('#div-select-all-records').html('All <span id="records-on-page">' + selfObj.totalRecords + '</span> records selected. <a href="javascript:;" id="clear-selection">Clear selection</a>');
             });
@@ -386,6 +386,7 @@ function Records() {
             $('input[name=record_checkbox]').removeAttr('checked');
             $('input[name=record_checkbox]').prop('checked', false);
             $('#div-select-all-records').fadeOut('slow');
+            $('#records tbody tr').removeClass("selected");
             $(this).hide();
             selfObj.saveState(0, 'all', 0);
         });
