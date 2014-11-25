@@ -37,9 +37,11 @@
             </div>
 
             <div class="table-responsive">
-                <div id="div-select-all-records" class="hide" style="text-align:center;">
+                <div class="clearfix"></div>
+                <div id="div-select-all-records" style="display:none;font-size: 12px;text-align:center;">
                     
                 </div>
+                <div class="clearfix"></div>
                 <table class="table hovered bordered" id="records">
                     <thead>
                         <tr>
