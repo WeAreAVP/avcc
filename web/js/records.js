@@ -493,6 +493,9 @@ function Records() {
                     'buttonsAlign': 'right',
                     shadow: true,
                     flat: true,
+                    width: 200,
+                    height: 150,
+                    padding: 10,
                     'position': {
                         'zone': 'right'
                     },
