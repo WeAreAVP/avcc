@@ -183,5 +183,17 @@ class SphinxSearch extends ContainerAware
             }
         }
     }
+	protected function removeEmpty($facet, $index)
+    {
+        $result = array();
+        foreach ($facet as $key => $value) {
+            foreach ($value as $column => $row) {
+                if ($column == $index && !empty($row))
+                    $result[] = $value;
+            }
+        }
+
+        return $result;
+    }
 
 }
