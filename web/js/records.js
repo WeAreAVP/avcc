@@ -448,7 +448,7 @@ function Records() {
     }
 
     this.exportRecords = function () {
-        $('.export').click(function () {
+        $('.export').click(function (e) {
             if ($('input[name=record_checkbox]').attr("checked") == "checked") {
                 var exportType = $(this).attr('data-type');
                 var selectedrecords = $("#selectedrecords").val();
@@ -463,15 +463,13 @@ function Records() {
                     width: 400,
                     height: 150,
                     padding: 10,
-                    buttons: {
+                    'buttons': {
                         'Ok': {
                             'action': function () {
-                                alert('ok');
                             }
                         },
                         'Cancel': {
                             'action': function () {
-                                $.Dialog.close();
                             }
                         }
                     }
