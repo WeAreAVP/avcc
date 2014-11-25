@@ -340,19 +340,17 @@ function Records() {
 
     }
     this.selectAllRecords = function () {
-//        $('#selectAll').click(function () {
+        $('#selectAll').click(function () {
             
-            if($('#selectAll').attr('checked')){
+            if($('#selectAll').prop('checked')){
                 selectAllRecords = true;
-               $('input[name=record_checkbox]').attr('checked', 'checked'); 
-               selfObj.saveState(0, '', 1);
+               $('input[name=record_checkbox]').attr('checked', 'checked');                
             }else{
                 selectAllRecords = false;
                $('input[name=record_checkbox]').removeAttr('checked'); 
-               selfObj.saveState(0, '', 1);
             }
-            
-//        });
+            selfObj.saveState(0, '', 1);
+        });
     }
 
     this.saveState = function (elementID, select, isChecked) {
