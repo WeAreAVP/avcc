@@ -377,7 +377,6 @@ function Records() {
                 $(this).hide();
                 selfObj.saveState(0, 'all', 1);
                 $('#div-select-all-records').html('All <span id="records-on-page">' + selfObj.totalRecords + '</span> records selected. <a href="javascript:;" id="clear-selection">Clear selection</a>');
-                selfObj.initDataTable();
             });
     }
 
