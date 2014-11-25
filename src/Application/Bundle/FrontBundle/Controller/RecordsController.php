@@ -287,6 +287,7 @@ class RecordsController extends Controller
         $checked = array();
         if ($data['is_all']) {
             $session->set("allRecords", $data['checked']);
+            if(! $data['checked']) $session->remove("saveRecords");
         } else {
             if ($session->has("saveRecords")){
                 $checked = $session->get("saveRecords");
