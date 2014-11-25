@@ -372,7 +372,7 @@ function Records() {
     }
 
     this.selectAllRecords = function () {
-            $('#select-all-records').click(function () {
+            $('#select-all-records').click(function () {console.log('clicked');
                 selfObj.selectAllRecords = true;
                 $(this).hide();
                 selfObj.saveState(0, 'all', 1);
@@ -381,7 +381,7 @@ function Records() {
     }
 
     this.clearSelection = function () {
-        $('#clear-selection').on('click', function () {
+        $('#clear-selection').on('click', function () {console.log('clicked');
             selfObj.selectAllRecords = false;
             $('#selectAll').removeAttr('checked');
             $('input[name=record_checkbox]').removeAttr('checked');
