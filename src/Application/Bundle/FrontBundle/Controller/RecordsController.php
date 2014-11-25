@@ -284,10 +284,11 @@ class RecordsController extends Controller
     {
         $data = $request->request->all();
         $session = $this->getRequest()->getSession();
+        print_r($data); exit;
         $checked = array();
         if ($data['is_all']) {
             $session->set("allRecords", $data['checked']);
-        } else {
+        } elseif ($data['id']) {
             if ($session->has("saveRecords")){
                 $checked = $session->get("saveRecords");
             }
