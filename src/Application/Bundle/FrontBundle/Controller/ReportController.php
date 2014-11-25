@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Components\ExportReport;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
+use Application\Bundle\FrontBundle\Helper\ExportFields;
 
 /**
  * ReelDiameters controller.
@@ -32,7 +33,7 @@ class ReportController extends Controller
 
 	/**
 	 * Generate report as xlsx or csv
-	 *
+	 * @param string $type
 	 * @Route("/allformats/{type}", name="all_formats")
 	 * @Method("GET")
 	 * @Template()
@@ -82,6 +83,51 @@ class ReportController extends Controller
 
 
 		return array('formats' => json_encode($highChart));
+	}
+
+	/**
+	 * Generate Manifest for shipping to vendor and Quote from Vendor report.
+	 *
+	 * @Route("/manifest", name="manifest")
+	 * @Method("GET")
+	 * @Template()
+	 * @return array
+	 */
+	public function manifestAction()
+	{
+		$entityManager = $this->getDoctrine()->getManager();
+
+		if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN'))
+			$records = $entityManager->getRepository('ApplicationFrontBundle:Records')->findAll();
+		else
+			$records = $entityManager->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($this->getUser()->getOrganizations()->getId());
+		$phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
+		$phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
+		->setTitle("AVCC - Report")
+		->setSubject("Report for all formats")
+		->setDescription("Report for all formats");
+		$activeSheet = $phpExcelObject->setActiveSheetIndex(0);
+		$phpExcelObject->getActiveSheet()->setTitle('All Formats');
+		$row = 1;
+		$columns = new ExportFields();
+		$this->columns = $columns->getManifestColumns();
+		foreach ($this->columns as $column => $columnName)
+		{
+			$activeSheet->setCellValueExplicitByColumnAndRow($column, $row, $columnName);
+			$activeSheet->getColumnDimensionByColumn($column)->setWidth(20);
+			$activeSheet->getStyleByColumnAndRow($column)->getFont()->setBold(true);
+		}
+
+		$writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, 'Excel2007');
+		$filename = 'manifest_report_' . time() . '.xlsx';
+		$response = $this->container->get('phpexcel')->createStreamedResponse($writer);
+		$response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
+		$response->headers->set('Content-Disposition', "attachment;filename={$filename}");
+		$response->headers->set('Pragma', 'public');
+		$response->headers->set('Cache-Control', 'maxage=1');
+
+		return $response;
+		return array();
 	}
 
 }
