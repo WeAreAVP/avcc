@@ -305,9 +305,7 @@ class RecordsController extends Controller
                         unset($checked[$key]);
                 }
             }
-            $session->set("saveRecords", $checked);
-            print_r($checked);
-            print_r($session->get("saveRecords"));exit;
+            $session->set("saveRecords", $checked);            
         }
         echo json_encode(array('success' => TRUE));
         exit;
