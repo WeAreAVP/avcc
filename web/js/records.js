@@ -350,7 +350,7 @@ function Records() {
     this.selectCurrentPageRecords = function () {
         $('#selectAll').click(function () {
             if ($(this).prop('checked') == true) {
-                selectAllRecords = true;
+                selfObj.selectAllRecords = true;
                 $('input[name=record_checkbox]').attr('checked', 'checked');
                 $('input[name=record_checkbox]').prop('checked', true);
                 if (selfObj.totalRecords > 0 && selfObj.totalRecords > selfObj.totalCurrentPageRecords) {
@@ -362,7 +362,7 @@ function Records() {
                 }
                 selfObj.saveState(0, 'check_current', 1);
             } else if ($(this).prop('checked') == false) {
-                selectAllRecords = false;
+                selfObj.selectAllRecords = false;
                 $('input[name=record_checkbox]').removeAttr('checked');
                 $('input[name=record_checkbox]').prop('checked', false);
                 $("#div-select-all-records").html('');
@@ -372,19 +372,17 @@ function Records() {
     }
 
     this.selectAllRecords = function () {
-        if ($('#select-all-records').length > 0) {
-            $('#select-all-records').on("click", function () {
-                select_all_records = true;
+            $('#select-all-records').click(function () {
+                selfObj.selectAllRecords = true;
                 $(this).hide();
                 selfObj.saveState(0, 'all', 1);
                 $('#div-select-all-records').html('All <span id="records-on-page">' + selfObj.totalRecords + '</span> records selected.<br /><a href="javascript:;" id="clear-selection">Clear selection</a>');
             });
-        }
     }
 
     this.clearSelection = function () {
         $('#clear-selection').on('click', function () {
-            select_all_records = false;
+            selfObj.selectAllRecords = false;
             $('#selectAll').removeAttr('checked');
             $('input[name=record_checkbox]').removeAttr('checked');
             $('input[name=record_checkbox]').prop('checked', false);
