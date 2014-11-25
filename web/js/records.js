@@ -375,6 +375,8 @@ function Records() {
         $(document).on('click', '#select-all-records', function () {
             selfObj.selectAllRecords = true;
             $(this).hide();
+            $('input[name=record_checkbox]').attr('checked', 'checked');
+            $('input[name=record_checkbox]').prop('checked', true);
             $('#records tbody tr').addClass("selected");
             selfObj.saveState(0, 'all', 1);
             $('#div-select-all-records').html('All <span id="records-on-page">' + selfObj.totalRecords + '</span> records selected. <a href="javascript:;" id="clear-selection">Clear selection</a>');
