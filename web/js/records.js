@@ -22,6 +22,7 @@ function Records() {
     var selectAllRecords = false;
     var totalRecords = 0;
     var totalCurrentPageRecords = 0;
+    var selected = [];
     /**
      * Set the ajax URL of datatable.
      * @param {string} source
@@ -60,7 +61,7 @@ function Records() {
             // Modify css for managing view.
 //			$('#container').removeClass('container');
 //			$('#container').css('margin', '20px');
-            var selected = [];
+            
             oTable =
                     $('#records').dataTable(
                     {
@@ -109,9 +110,9 @@ function Records() {
                 var id = this.id;
                 var index = $.inArray(id, selected);
                 if (index === -1) {
-                    selected.push(id);
+                    selfObj.selected.push(id);
                 } else {
-                    selected.splice(index, 1);
+                    selfObj.selected.splice(index, 1);
                 }
                 $(this).toggleClass('selected', function () {
                     var input = $("#" + id + " td:first").html();
@@ -362,7 +363,7 @@ function Records() {
                     $("#div-select-all-records").html(html);
                     $('#div-select-all-records').fadeIn('slow');
                 }
-                $('#records tbody tr').addClass("selected");
+                $('#records tbody tr').addClass("selected");                
                 selfObj.saveState(0, 'check_current', 1);
             } else if ($(this).prop('checked') == false) {
                 selfObj.selectAllRecords = false;
@@ -414,6 +415,13 @@ function Records() {
                 if ($('input[name=record_checkbox]').attr("checked")=="checked"){
                     $('input[name=record_checkbox]').each(function () {
                         id += $(this).val() + ',';
+                        var id = this.id;
+                        var index = $.inArray(id, selfObj.selected);
+                        if (index === -1) {
+                            selfObj.selected.push(id);
+                        } else {
+                            selfObj.selected.splice(index, 1);
+                        }
                     });
                 }
             }
