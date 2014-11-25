@@ -99,12 +99,13 @@ function Records() {
                             }
                         },
 //                        "ajax": ajaxSaveStateUrl,
-//                        "rowCallback": function (row, data) {
-//                            if ($.inArray(row.id, selected) !== -1) {
-//                                $(row).addClass('selected');
-//                                $("div-select-all-records").hide();
-//                            }
-//                        }
+                        "rowCallback": function (row, data) {
+                            console.log(row);
+                            if ($.inArray(row.id, selected) !== -1) {
+                                $(row).addClass('selected');
+                                $("div-select-all-records").hide();
+                            }
+                        }
                     });
             $('#records tbody').on('click', 'tr', function () {
                 var id = this.id;
