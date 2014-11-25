@@ -17,7 +17,7 @@
 	<script type="text/javascript" src="{{ asset('js/exporting.js') }}"></script>
 
 	<script type="text/javascript">
-		var data ={{ formats }};
+		var data ={{ formats | raw }};
 		console.log(data);
 		$(window).load(function () {
 
