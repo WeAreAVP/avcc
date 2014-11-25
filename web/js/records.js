@@ -457,21 +457,21 @@ function Records() {
                     shadow: true,
                     flat: true,
                     title: 'Export Records',
-                    content: '',
+                    content: 'Are you sure you want to export the record(s)?',
                     closeButton: true,
                     buttonsAlign: 'right',
                     width: 400,
                     height: 150,
                     padding: 10,
                     buttons: {
-                        'button1': {
+                        'Ok': {
                             'action': function () {
-                                console.log('ok');
+                                alert('ok');
                             }
                         },
-                        'button2': {
+                        'Cancel': {
                             'action': function () {
-                                console.log('cancle');
+                                $.Dialog.close();
                             }
                         }
                     }
