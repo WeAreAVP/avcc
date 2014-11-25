@@ -17,53 +17,55 @@
 	<script type="text/javascript" src="{{ asset('js/exporting.js') }}"></script>
 
 	<script type="text/javascript">
-		var formats ={{ formats | raw }};
-		
+		var formats ={{ formats | raw }} ;
 		$(window).load(function () {
 
 
-		// Create the chart
-		$('#quantitative_container').highcharts({
-			chart: {
-				type: 'column'
-			},
-			title: {
-				text: 'Quantitative Report'
-			},
-			subtitle: {
-				text: ''
-			},
-			xAxis: {
-				type: 'category'
-			},
-			yAxis: {
+			// Create the chart
+			$('#quantitative_container').highcharts({
+				chart: {
+					type: 'column'
+				},
 				title: {
-					text: 'Total count per format'
-				}
-			},
-			legend: {
-				enabled: false
-			},
-			plotOptions: {
-				series: {
-					borderWidth: 0,
-					dataLabels: {
-						enabled: true,
-						format: '{point.y}'
+					text: 'Quantitative Report'
+				},
+				subtitle: {
+					text: ''
+				},
+				credits: {
+					enabled: false
+				},
+				xAxis: {
+					type: 'category'
+				},
+				yAxis: {
+					title: {
+						text: 'Total count per format'
 					}
-				}
-			},
-			tooltip: {
-				headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-				pointFormat: '<span style="color:{point.color}">{point.name}</span><br/><b>Total {point.y}</b><br/>'
-			},
-			series: [{
-				name: 'Format',
-				colorByPoint: true,
-				data:formats
-			}],
-		});
-		
+				},
+				legend: {
+					enabled: false
+				},
+				plotOptions: {
+					series: {
+						borderWidth: 0,
+						dataLabels: {
+							enabled: true,
+							format: '{point.y}'
+						}
+					}
+				},
+				tooltip: {
+					headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+					pointFormat: '<span style="color:{point.color}">{point.name}</span><br/><b>Total {point.y}</b><br/>'
+				},
+				series: [{
+						name: 'Format',
+						colorByPoint: true,
+						data: formats
+					}]
+			});
+
 		});
 
 
