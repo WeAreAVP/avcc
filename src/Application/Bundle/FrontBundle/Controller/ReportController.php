@@ -57,5 +57,16 @@ class ReportController extends Controller
         return $response;
         return array();
     }
+	/**
+     * Generate quantitative report
+     *
+     * @Route("/quantitative", name="quantitative")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+	public function quantitativeAction(){
+	return array();	
+	}
 
 }
