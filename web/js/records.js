@@ -95,7 +95,9 @@ function Records() {
                             row.id = "row-" + $(input).attr('value');
                         },
 //                        "ajax": ajaxSaveStateUrl,
-                        "rowCallback": function (row, data) {                            
+                        "rowCallback": function (row, data) {
+                            console.log(row);
+                            console.log(data);
                             $.each(data, function (index, value) {
                                 if(index==0 && $(value).attr("checked")=="checked"){
                                    $("#"+row.id).addClass("selected"); 
@@ -434,6 +436,10 @@ function Records() {
 
             }
         });
+    }
+    
+    this.exportRecords = function(){
+        
     }
 }
 

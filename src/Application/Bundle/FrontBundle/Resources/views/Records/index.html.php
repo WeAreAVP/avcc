@@ -25,8 +25,8 @@
                     <li>
                         <a class="dropdown-toggle" href="#">Export</a>
                         <ul class="dropdown-menu" data-role="dropdown">
-                            <li><a href="#">CSV</a></li>
-                            <li><a href="#">XLSX</a></li>
+                            <li><a href="javascript://" class="export" data-type="csv">CSV</a></li>
+                            <li><a href="javascript://" class="export" data-type="xlsx">XLSX</a></li>
                         </ul>
                     </li>
                     <li>
