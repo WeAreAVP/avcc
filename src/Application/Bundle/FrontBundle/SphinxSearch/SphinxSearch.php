@@ -183,7 +183,7 @@ class SphinxSearch extends ContainerAware
             }
         }
     }
-	protected function removeEmpty($facet, $index)
+	public function removeEmpty($facet, $index)
     {
         $result = array();
         foreach ($facet as $key => $value) {
