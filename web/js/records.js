@@ -343,10 +343,12 @@ function Records() {
         $('#selectAll').click(function () {            
             if($(this).prop('checked') == true){
                 selectAllRecords = true;
-               $('input[name=record_checkbox]').attr('checked', 'checked');                
+               $('input[name=record_checkbox]').attr('checked', 'checked');  
+               $('input[name=record_checkbox]').prop('checked',true); 
             }else if($(this).prop('checked') == false){
                 selectAllRecords = false;
                $('input[name=record_checkbox]').removeAttr('checked'); 
+               $('input[name=record_checkbox]').prop('checked',false); 
             }
             selfObj.saveState(0, '', 1);
         });
