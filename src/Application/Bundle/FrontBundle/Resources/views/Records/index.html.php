@@ -8,6 +8,8 @@
             <?php echo $view->render('ApplicationFrontBundle::Records/_facets.html.php', array('facets' => $facets)) ?>
         </div>
         <div class="span11">
+            <div id="div-select-all-records" style="display:none;"></div>
+            <div class="clearfix"></div>
             <div class="button-dropdown place-left">
                 <button class="dropdown-toggle">Operations</button>
                 <ul class="dropdown-menu" data-role="dropdown">
@@ -36,12 +38,7 @@
                 </ul>
             </div>
 
-            <div class="table-responsive">
-                <div class="clearfix"></div>
-                <div id="div-select-all-records" style="display:none;">
-                    
-                </div>
-                <div class="clearfix"></div>
+            <div class="table-responsive">                
                 <table class="table hovered bordered" id="records">
                     <thead>
                         <tr>

@@ -92,6 +92,11 @@ function Records() {
                         "createdRow": function (row, data, index) {
                             var input = $(row).find("td:first").html();
                             row.id = "row-" + $(input).attr('value');
+                            if($(input).attr("checked")=="checked"){
+                                $("#"+row.id).addClass("selected");
+                            }else{
+                                $("#"+row.id).removeClass("selected");
+                            }
                         },
 //                        "ajax": ajaxSaveStateUrl,
 //                        "rowCallback": function (row, data) {
