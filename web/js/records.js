@@ -460,6 +460,9 @@ function Records() {
                     content: '',
                     closeButton: true,
                     buttonsAlign: 'right',
+                    width: 400,
+                    height: 150,
+                    padding: 10,
                     buttons: {
                         'button1': {
                             'action': function () {
