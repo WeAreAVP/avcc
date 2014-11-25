@@ -82,7 +82,8 @@ function Records() {
 //				},
                         "fnServerData": function (sSource, aoData, fnCallback) {
                             jQuery.getJSON(sSource, aoData, function (json) {
-                                fnCallback(json);    
+                                fnCallback(json);   
+                                console.log(json);
                             });
                         },
                         "createdRow": function (row, data, index) {
