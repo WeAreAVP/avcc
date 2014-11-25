@@ -94,14 +94,15 @@ function Records() {
                             row.id = "row-" + $(input).attr('value');
                         },
 //                        "ajax": ajaxSaveStateUrl,
-                        "rowCallback": function (row, data) {
-                            var input = data[0];
-                            console.log(input);
-                            if($(input).attr("checked")=="checked"){
-                                $("#"+row.id).addClass("selected");
-                            }else{
-                                $("#"+row.id).removeClass("selected");
-                            }                            
+                        "rowCallback": function (row, data) {                            
+                            $.each(data, function (index, value) {
+                                if(index==0 && $(value).attr("checked")=="checked"){
+                                    console.log(input);
+                                   $("#"+row.id).addClass("selected"); 
+                                }else{
+                                    $("#"+row.id).removeClass("selected");
+                                }
+                            });                                                      
                         }
                     });
             $('#records tbody').on('click', 'tr', function () {
