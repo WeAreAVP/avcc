@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Components\ExportReport;
+use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 
 /**
  * ReelDiameters controller.
@@ -66,7 +67,10 @@ class ReportController extends Controller
      * @return array
      */
 	public function quantitativeAction(){
-		
+		$em = $this->getDoctrine()->getManager();
+		$shpinxInfo = $this->container->getParameter('sphinx_param');
+		$sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+		$sphinxSearch->removeEmpty($sphinxSearch->facetSelect('format', $criteria, $parentFacet), 'format');
 	return array();	
 	}
 
