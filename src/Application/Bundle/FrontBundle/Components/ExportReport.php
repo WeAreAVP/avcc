@@ -16,6 +16,53 @@ class ExportReport extends ContainerAware
         $this->container = $container;
     }
 
+    public function prepareManifestReport($activeSheet, $records)
+    {
+        $row = 1;
+        $columns = new ExportFields();
+        $this->columns = $columns->getManifestColumns();
+        foreach ($this->columns as $column => $columnName) {
+            $activeSheet->setCellValueExplicitByColumnAndRow($column, $row, $columnName);
+            $activeSheet->getColumnDimensionByColumn($column)->setWidth(20);
+            $activeSheet->getStyleByColumnAndRow($column)->getAlignment()->setWrapText(true);
+            $activeSheet->getStyleByColumnAndRow($column, $row)->getFont()->setBold(true);
+        }
+        $activeSheet->getRowDimension($row)->setRowHeight(50);
+        $row ++;
+
+        foreach ($records as $record) {
+
+            $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record->getUniqueId());
+            $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, ($record->getUser()->getOrganizations()) ? $record->getUser()->getOrganizations()->getName() : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $record->getCollectionName());
+            $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, ($record->getFormat()->getName()) ? $record->getFormat()->getName() : '');
+            $printType = '';
+            if ($record->getFilmRecord()) {
+                $printType = ($record->getFilmRecord()->getPrintType()) ? $record->getFilmRecord()->getPrintType()->getName() : '';
+            }
+            $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $printType);
+
+            $mediaType = ($record->getReelDiameters()) ? $record->getReelDiameters()->getName() . "\n" : '';
+            if ($record->getAudioRecord()) {
+                $mediaType .=($record->getAudioRecord()->getDiskDiameters()) ? $record->getAudioRecord()->getDiskDiameters()->getName() . "\n" : '';
+            }
+            if ($record->getVideoRecord()) {
+                $mediaType .=($record->getVideoRecord()->getCassetteSize()) ? $record->getVideoRecord()->getCassetteSize()->getName() . "\n" : '';
+            }
+            $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, $mediaType);
+            $activeSheet->getStyleByColumnAndRow(5, $row)->getAlignment()->setWrapText(true);
+            $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $record->getTitle());
+            $duration = $record->getContentDuration();
+            if (empty($duration) || $duration < 0) {
+                if ($record->getAudioRecord()) {
+                    $duration = ($record->getAudioRecord()->getMediaDuration()) ? $record->getAudioRecord()->getMediaDuration() : '';
+                }
+            }
+            $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $duration);
+            $row ++;
+        }
+    }
+
     public function generateReport($records)
     {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
@@ -37,11 +84,11 @@ class ExportReport extends ContainerAware
         return $phpExcelObject;
     }
 
-    public function outputReport($type, $phpExcelObject)
+    public function outputReport($type, $phpExcelObject, $fileStartName = 'allFormat')
     {
         $format = ($type == 'csv') ? 'CSV' : 'Excel2007';
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, $format);
-        $filename = 'allFormat_' . time() . '.' . $type;
+        $filename = $fileStartName . '_' . time() . '.' . $type;
         $response = $this->container->get('phpexcel')->createStreamedResponse($writer);
         $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
         $response->headers->set('Content-Disposition', "attachment;filename={$filename}");
