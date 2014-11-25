@@ -133,8 +133,8 @@ class RecordsController extends Controller
         $records = $result[0];
         $currentPageTotal = count($records);
         $totalRecords = $result[1][0]['Value'];
-
-        $tableView = $this->defaultFields->recordDatatableView($records);
+        $session = $this->getRequest()->getSession();
+        $tableView = $this->defaultFields->recordDatatableView($records, $session);
 
         $dataTable = array(
             'sEcho' => intval($sEcho),
@@ -249,7 +249,7 @@ class RecordsController extends Controller
         $result = array();
         foreach ($facet as $key => $value) {
             foreach ($value as $column => $row) {
-                if ($column == $index && ! empty($row))
+                if ($column == $index && !empty($row))
                     $result[] = $value;
             }
         }
@@ -283,5 +283,30 @@ class RecordsController extends Controller
     public function saveStateAction(Request $request)
     {
         $data = $request->request->all();
+        $session = $this->getRequest()->getSession();
+        $checked = array();
+        if ($data['is_all']) {
+            $session->set("allRecords", $data['checked']);
+        } else {
+            if (isset($session->get("saveRecords")) && !empty($session->get("saveRecords")))
+                $checked = $session->get("saveRecords");
+            $isChecked = $data['checked'];
+            $recordIds = $data['id'];
+            $recordsIdsArr = explode(',', rtrim($recordIds, ','));
+            foreach ($recordsIdsArr as $recordId) {
+                if ($isChecked) {
+                    if (!in_array($recordId, $checked))
+                        $checked[] = $recordId;
+                }
+                else {
+                    if (($key = array_search($recordId, $checked)) !== false)
+                        unset($checked[$key]);
+                }
+            }
+            $session->set("saveRecords", $checked);
+        }
+        echo json_encode(array('success' => TRUE));
+        exit;
     }
+
 }
