@@ -98,16 +98,7 @@ function Records() {
                         "rowCallback": function (row, data) {
                             if($(data[0]).attr("checked")=="checked"){
                                 $(row).addClass("selected");
-                            }
-                            console.log(row);
-                            console.log(data);
-//                            $.each(data, function (index, value) {
-//                                if(index==0 && $(value).attr("checked")=="checked"){
-//                                   $("#"+row.id).addClass("selected"); 
-//                                }else{
-//                                    $("#"+row.id).removeClass("selected");
-//                                }
-//                            });                                                      
+                            }                                                    
                         }
                     });
             $('#records tbody').on('click', 'tr', function () {
