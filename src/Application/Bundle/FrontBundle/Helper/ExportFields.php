@@ -53,9 +53,7 @@ class ExportFields
 		'Cataloger'
 	);
 	private $manifestColumns = array('Unique ID', 'Institution', 'Collection Name', 'Format', 'Print Type',
-		'"Reel Diameter
-	 Disc Diameter
-	 Cassette Size"', 'Title', 'Approximate Duration');
+		"Reel Diameter\nDisc Diameter\nCassette Size", 'Title', 'Approximate Duration');
 
 	/**
 	 * Return array of columns for csv or xlsx tempate.
