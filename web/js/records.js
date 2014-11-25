@@ -95,11 +95,8 @@ function Records() {
                         },
 //                        "ajax": ajaxSaveStateUrl,
                         "rowCallback": function (row, data) {
-                            var input = $("#"+row.id +" td:first").html();
-                            console.log($.isArray(row.id));
-                            $(row.id).each(function (key, value) {
-                                
-                            });
+                            var input = $(row).find("td:first").html();
+                            console.log(input);
                             if($(input).attr("checked")=="checked"){
                                 $("#"+row.id).addClass("selected");
                             }else{
