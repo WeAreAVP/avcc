@@ -212,9 +212,9 @@ class SphinxSearch extends ContainerAware
         $sq->select()
         ->from($this->indexName);
         $sq->where('id', 'IN', $criteria);
-        if ( ! in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
-            $sq->where('organization_id', "=", $user->getOrganizations()->getId());
-        }
+//        if ( ! in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
+//            $sq->where('organization_id', "=", $user->getOrganizations()->getId());
+//        }
         $result = $sq->orderBy($sortColumn, $sortOrder)
         ->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
         ->executeBatch();
