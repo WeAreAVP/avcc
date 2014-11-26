@@ -40,7 +40,7 @@ class ExportReportCommand extends ContainerAwareCommand
                 foreach($ids as $id){
                     $records[] = $em->getRepository('ApplicationFrontBundle:Records')->findBy(array('id' => $id));
                 }
-               $text = $records[0]->getId();
+               $text = $records;
 //                $shpinxInfo = $this->getContainer()->getParameter('sphinx_param');
 //                $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
 //                $records = $sphinxSearch->selectRecords('title', 'asc', $ids);
