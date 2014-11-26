@@ -20,7 +20,7 @@ class ExportReportCommand extends ContainerAwareCommand
                 ->setName('avcc:export-report')
                 ->setDescription('Export the Records that are in queue and email to user.')
                 ->addArgument(
-                        'name', InputArgument::OPTIONAL, 'Who do you want to greet?'
+                        'id', InputArgument::REQUIRED, ' export db id?'
                 )
                 ->addOption(
                         'yell', null, InputOption::VALUE_NONE, 'If set, the task will yell in uppercase letters'
