@@ -350,7 +350,7 @@ class RecordsController extends Controller
             } else {
                 $recordIds = explode(',', $records);
                 if ($recordIds) {
-                    $export->setQueryOrId(json_encode(array('id'=>$recordIds)));
+                    $export->setQueryOrId(json_encode($recordIds, JSON_NUMERIC_CHECK));
                 }
             }
             $em->persist($export);
