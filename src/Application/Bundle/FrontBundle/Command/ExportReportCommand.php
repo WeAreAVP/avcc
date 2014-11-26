@@ -35,6 +35,7 @@ class ExportReportCommand extends ContainerAwareCommand
         $id = $input->getArgument('id');
         if ($id) {
             $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id, 'status' => 0));
+            $text = $entity;
             if ($entity) {
                 $ids = json_decode($entity->getQueryOrId(),true);
                 $text = $ids;
