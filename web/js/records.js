@@ -451,7 +451,7 @@ function Records() {
         $('.export').click(function (e) {
             var checked = false;
             $('input[name=record_checkbox]').each(function () {
-                if($('input[name=record_checkbox]').attr("checked")=="checked"){
+                if($(this).attr("checked")=="checked"){
                    checked = true; 
                 }
             });
