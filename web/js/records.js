@@ -458,31 +458,32 @@ function Records() {
             if (checked) {
                 var exportType = $(this).attr('data-type');
                 var selectedrecords = $("#selectedrecords").val();
-                $.Dialog({
-                    overlay: true,
-                    shadow: true,
-                    flat: true,
-                    title: '<b>Export Records</b>',
-                    content: '<span style="font-size:13px;">Are you sure you want to export the record(s)?</span>',
-                    closeButton: true,
-                    width: 400,
-                    height: 150,
-                    padding: 10,
-                    modal: true,
-                    buttons: {
-                        "Ok": {
-                            action: function () {
-                                return true;
-                            }
-                        },
-                        "Cancel": {
-                            action: function () {
-                                return false;
-                            }
-                        }
-                        
-                    },
-                });
+                $(this).modal("<p><b>HTML</b> elements</p>");
+//                $.Dialog({
+//                    overlay: true,
+//                    shadow: true,
+//                    flat: true,
+//                    title: '<b>Export Records</b>',
+//                    content: '<span style="font-size:13px;">Are you sure you want to export the record(s)?</span>',
+//                    closeButton: true,
+//                    width: 400,
+//                    height: 150,
+//                    padding: 10,
+//                    modal: true,
+//                    buttons: {
+//                        "Ok": {
+//                            action: function () {
+//                                return true;
+//                            }
+//                        },
+//                        "Cancel": {
+//                            action: function () {
+//                                return false;
+//                            }
+//                        }
+//                        
+//                    },
+//                });
 //                $.ajax({
 //                    type: 'POST',
 //                    url: ajaxExportUrl,
