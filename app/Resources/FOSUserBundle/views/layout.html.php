@@ -22,7 +22,7 @@
         <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('css/jquery.mCustomScrollbar.css') ?>" />
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
         <link href="<?php echo $view['assets']->getUrl('css/basic.css') ?>" type="text/css" rel="stylesheet" />
-        <link href="<?php echo $view['assets']->getUrl('css/basic_ie.css') ?>" type="text/css" rel="stylesheet" />
+<!--        <link href="<?php echo $view['assets']->getUrl('css/basic_ie.css') ?>" type="text/css" rel="stylesheet" />-->
         <?php $view['slots']->stop() ?>
         <?php $view['slots']->output('stylesheets') ?>
 
