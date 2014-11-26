@@ -36,10 +36,10 @@ class ExportReportCommand extends ContainerAwareCommand
         if ($id) {
             $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id, 'status' => 0));
             if ($entity) {
-                $ids = json_decode($entity->getQueryOrId());
+                $ids = json_decode($entity->getQueryOrId(),true);
                 foreach($ids as $recordid){
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->find($recordid);
-                    $text = "recs----".$records;
+                    $text = "recs----".$recordid;
                     exit;
                 }
                
