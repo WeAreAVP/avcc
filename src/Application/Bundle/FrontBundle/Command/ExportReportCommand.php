@@ -42,7 +42,7 @@ class ExportReportCommand extends ContainerAwareCommand
                     $text = "recs----".$recordid;
                     exit;
                 }
-               
+               $text = $ids;
 //                $shpinxInfo = $this->getContainer()->getParameter('sphinx_param');
 //                $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
 //                $records = $sphinxSearch->selectRecords('title', 'asc', $ids);
