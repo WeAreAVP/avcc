@@ -63,7 +63,7 @@
                 </table>
             </div>
             <?php $recordsIds = "";
-              $recordsIds = $app->getSession()->get('saveRecords');
+              if($app->getSession()->has('saveRecords')) $recordsIds = implode (',', $app->getSession()->get('saveRecords'));
             ?>
             <input type="hidden" name="selectedrecords" id="selectedrecords" value="<?php echo $recordsIds;?>" />
             <input type="hidden" name="exportType" id="exportType" value="" />
