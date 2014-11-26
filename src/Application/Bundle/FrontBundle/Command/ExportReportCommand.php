@@ -35,20 +35,19 @@ class ExportReportCommand extends ContainerAwareCommand
         $id = $input->getArgument('id');
         if ($id) {
             $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id, 'status' => 0));
-            $text = $entity->getId();
             if ($entity) {
                 $ids = json_decode($entity->getQueryOrId(), true);
                 $criteria = implode(',', $ids);
                 $shpinxInfo = $this->getContainer()->getParameter('sphinx_param');
-                $text = implode(',', $shpinxInfo);
-//                $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-//                $records = $sphinxSearch->selectRecords('title', 'asc', $criteria);
-//                $export = new ExportReport($this->getContainer());
-//                $phpExcelObject = $export->generateReport($records);
-//                $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
-//                $text = $completePath;
+                $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+                $records = $sphinxSearch->selectRecords('title', 'asc', $criteria);
+                $export = new ExportReport($this->getContainer());
+                $phpExcelObject = $export->generateReport($records);
+                $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+                $text = $completePath;
+            } else {
+                $text = 'export id not found';
             }
-//            $text = 'export id not found';
         } else {
             $text = 'Hello';
         }
