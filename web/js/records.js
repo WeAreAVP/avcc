@@ -424,6 +424,7 @@ function Records() {
                     $('input[name=record_checkbox]').each(function () {
                         id += $(this).val() + ',';
                     });
+                    selectedrecords = id;
                 }
             }
         }
@@ -431,8 +432,14 @@ function Records() {
             id = elementID;
             if ($('#row_' + elementID).attr('checked')) {
                 checked = 1;
+                if(selectedrecords){
+                    selectedrecords = selectedrecords + ',' + id;
+                }else{
+                    selectedrecords = id;
+                }
             }
         }
+        $("#selectedrecords").val(selectedrecords);
         $.ajax({
             type: 'POST',
             url: ajaxSaveStateUrl,
