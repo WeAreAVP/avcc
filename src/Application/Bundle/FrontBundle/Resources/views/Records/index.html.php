@@ -63,6 +63,7 @@
                 </table>
             </div>
             <input type="hidden" name="selectedrecords" id="selectedrecords" value="" />
+            <input type="hidden" name="exportType" id="exportType" value="" />
         </div>
         <?php if (!$isAjax): ?>
             <?php $view['slots']->start('view_javascripts') ?>

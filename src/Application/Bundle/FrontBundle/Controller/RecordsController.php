@@ -346,7 +346,7 @@ class RecordsController extends Controller
                     $export->setQueryOrId($facetData);
                 }
             } else {
-                $recordIds = explode(',', rtrim($records,','));
+                $recordIds = explode(',', $records);
                 if ($recordIds) {
                     $export->setQueryOrId(json_encode($recordIds));
                 }

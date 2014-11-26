@@ -432,7 +432,7 @@ function Records() {
             if ($('#row_' + elementID).attr('checked')) {
                 checked = 1;
             }
-        }        
+        }
         $.ajax({
             type: 'POST',
             url: ajaxSaveStateUrl,
@@ -455,15 +455,15 @@ function Records() {
             });
             if (checked) {
                 var exportType = $(this).attr('data-type');
-                var selectedrecords = $("#selectedrecords").val();
                 $("#exportModal").modal({
                     containerCss: {
                         backgroundColor: "#fff",
-                        borderColor:"#fff",
+                        borderColor: "#fff",
                         width: 400,
                         height: 150,
                     },
                 });
+                $("#exportType").val(exportType);
                 $("#exportModal").show();
             } else {
                 $.Dialog({
@@ -471,7 +471,7 @@ function Records() {
                     'content': '<span style="font-size:13px;">Please select any record.</span>',
                     'draggable': true,
                     'overlay': true,
-                    'closeButton': false,
+                    'closeButton': true,
                     'buttonsAlign': 'right',
                     shadow: true,
                     flat: true,
@@ -485,20 +485,40 @@ function Records() {
             }
         });
     }
-    
+
     this.exportRecords = function () {
         $('#exportRequest').click(function () {
-            console.log("clicked");
-//            $.ajax({
-//                    type: 'POST',
-//                    url: ajaxExportUrl,
-//                    data: {type: exportType, records: selectedrecords},
-//                    dataType: 'json',
-//                    success: function (response)
-//                    {
-//
-//                    }
-//                });
+            var exportType = $("#exportType").val();
+            var selectedrecords = $("#selectedrecords").val();
+            if (exportType && selectedrecords) {
+                $.ajax({
+                    type: 'POST',
+                    url: ajaxExportUrl,
+                    data: {type: exportType, records: selectedrecords},
+                    dataType: 'json',
+                    success: function (response)
+                    {
+                        
+                    }
+                });
+            } else {
+                $.Dialog({
+                    'title': 'Error',
+                    'content': '<span style="font-size:13px;">Please try again.</span>',
+                    'draggable': true,
+                    'overlay': true,
+                    'closeButton': true,
+                    'buttonsAlign': 'right',
+                    shadow: true,
+                    flat: true,
+                    width: 400,
+                    height: 150,
+                    padding: 10,
+                    'position': {
+                        'zone': 'right'
+                    },
+                });
+            }
         });
     }
 }
