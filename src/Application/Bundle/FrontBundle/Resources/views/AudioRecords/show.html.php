@@ -117,7 +117,7 @@
             <?php endif;?>
             <?php if($entity->getSlides()):?>
             <tr>
-                <th class="text-right">Slide</th>
+                <th class="text-right">Sides</th>
                 <td><?php echo $entity->getSlides() ?></td>
             </tr>
             <?php endif;?>

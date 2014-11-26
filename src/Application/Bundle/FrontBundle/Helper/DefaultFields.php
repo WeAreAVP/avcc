@@ -39,17 +39,17 @@ class DefaultFields
             "Review" => array("title" => 'Review', 'field' => "record.isReview", "is_required" => 0, "hidden" => 0),
             "Recording_Speed" => array("title" => 'Recording Speed', 'field' => "recordingSpeed", "is_required" => 0, "hidden" => 0),
             "Tape_Thickness" => array("title" => 'Tape Thickness', 'field' => "tapeThickness", "is_required" => 0, "hidden" => 0),
-            "Slides" => array("title" => 'Slides', 'field' => "slides", "is_required" => 0, "hidden" => 0),
+            "Slides" => array("title" => 'Sides', 'field' => "slides", "is_required" => 0, "hidden" => 0),
             "Track_Type" => array("title" => 'Track Type', 'field' => "trackTypes", "is_required" => 0, "hidden" => 0),
             "Mono_Stereo" => array("title" => 'Mono or Stereo', 'field' => "monoStereo", "is_required" => 0, "hidden" => 0),
-            "Noice_Reduction" => array("title" => 'Noice Reduction', 'field' => "noiceReduction", "is_required" => 0, "hidden" => 0),
+            "Noice_Reduction" => array("title" => 'Noise Reduction', 'field' => "noiceReduction", "is_required" => 0, "hidden" => 0),
             "Gener_Terms" => array("title" => 'Description', 'field' => "record.genreTerms", "is_required" => 0, "hidden" => 0),
             "Contributor" => array("title" => 'Contributor', 'field' => "record.contributor", "is_required" => 0, "hidden" => 0),
-            "Gerneration" => array("title" => 'Gerneration', 'field' => "record.generation", "is_required" => 0, "hidden" => 0),
+            "Gerneration" => array("title" => 'Generation', 'field' => "record.generation", "is_required" => 0, "hidden" => 0),
             "Part" => array("title" => 'Part', 'field' => "record.part", "is_required" => 0, "hidden" => 0),
             "Copyrights" => array("title" => 'Copyrights', 'field' => "record.copyrightRestrictions", "is_required" => 0, "hidden" => 0),
             "Duplicates" => array("title" => 'Duplicates', 'field' => "record.duplicatesDerivatives", "is_required" => 0, "hidden" => 0),
-            "Related_Meterial" => array("title" => 'Related Meterial', 'field' => "record.relatedMaterial", "is_required" => 0, "hidden" => 0),
+            "Related_Meterial" => array("title" => 'Related Material', 'field' => "record.relatedMaterial", "is_required" => 0, "hidden" => 0),
             "Condition_Note" => array("title" => 'Condition Note', 'field' => "record.conditionNote", "is_required" => 0, "hidden" => 0)
         );
 
