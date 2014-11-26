@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Application\Bundle\FrontBundle\Components\ExportReport;
-use Application\Bundle\FrontBundle\SphinxSearch;
+use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 class ExportReportCommand extends ContainerAwareCommand
