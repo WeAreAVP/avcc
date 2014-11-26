@@ -20,7 +20,7 @@
                 
 				<?php 
 				$label=(count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]];
-				echo $label;exit;
+				 echo '<pre>';print_r($label);exit;
 				echo $view['form']->label($label) ?>
                 <div class="input-control" data-role="input-control">
                     <?php echo $view['form']->widget((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => array('class' => 'size4'))) ?>
