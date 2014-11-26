@@ -449,7 +449,9 @@ function Records() {
 
     this.exportRecords = function () {
         $('.export').click(function (e) {
-            if ($('input[name=record_checkbox]').attr("checked") == "checked") {
+            var checked = $('input[name=record_checkbox]').attr("checked");
+            console.log(checked);
+            if (checked == "checked") {
                 var exportType = $(this).attr('data-type');
                 var selectedrecords = $("#selectedrecords").val();
                 $.Dialog({
