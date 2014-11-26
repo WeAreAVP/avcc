@@ -1,3 +1,4 @@
+
 <?php $view->extend('FOSUserBundle::layout.html.php') ?>
 <?php $view['slots']->start('body') ?>
 
@@ -16,7 +17,11 @@
             $field = explode('.', $audioField['field']);
             ?>
             <div style="<?php echo ($audioField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1].'_lbl' : $field[0].'_lbl' ?>">
-                <?php echo $view['form']->label((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]]) ?>
+                
+				<?php 
+				$label=(count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]];
+				echo $label;exit;
+				echo $view['form']->label($label) ?>
                 <div class="input-control" data-role="input-control">
                     <?php echo $view['form']->widget((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => array('class' => 'size4'))) ?>
                     <span class="has-error text-danger"><?php echo $view['form']->errors((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]]) ?></span>
