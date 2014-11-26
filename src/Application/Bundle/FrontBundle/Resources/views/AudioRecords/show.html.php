@@ -8,6 +8,16 @@
     </h1>
     <a href="<?php echo $view['router']->generate('record_edit', array('id'=>$entity->getId())) ?>" class="button primary">Edit</a>
     <div class="clearfix"></div>
+	<div class="grid">
+		<div class="row">
+			<div class="span4">Created by: <?php echo $entity->getRecord()->getUser()->getName(); ?></div>
+			<div class="span4">Created at: <?php echo $entity->getRecord()->getCreatedOn()->format('Y-m-d H:i:s');?></div>
+			<div class="clearfix"></div>
+			<div class="span3"></div>
+			<div class="span3"></div>
+		</div>
+		
+	</div>
     <table class="table">
         <tbody>
 
