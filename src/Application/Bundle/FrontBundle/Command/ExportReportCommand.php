@@ -35,6 +35,7 @@ class ExportReportCommand extends ContainerAwareCommand
         $id = $input->getArgument('id');
         if ($id) {
             $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id, 'status' => 0));
+            $text = $entity->getId();
             if ($entity) {
                 $ids = json_decode($entity->getQueryOrId(), true);
                 $criteria = implode(',', $ids);
@@ -47,7 +48,7 @@ class ExportReportCommand extends ContainerAwareCommand
 //                $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
 //                $text = $completePath;
             }
-            $text = 'export id not found';
+//            $text = 'export id not found';
         } else {
             $text = 'Hello';
         }
