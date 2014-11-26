@@ -70,6 +70,6 @@ class RecordsRepository extends EntityRepository
         . "WHERE r.id IN  (:ids)");
         $query->setParameter('ids', $ids);
 
-        return $query->getQuery();
+        return $query->getResult();
     }
 }
