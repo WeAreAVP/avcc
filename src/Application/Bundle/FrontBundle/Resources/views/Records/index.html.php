@@ -62,7 +62,10 @@
                     </tbody>
                 </table>
             </div>
-            <input type="hidden" name="selectedrecords" id="selectedrecords" value="" />
+            <?php $recordsIds = "";
+              $recordsIds = $app->getSession()->get('saveRecords');
+            ?>
+            <input type="hidden" name="selectedrecords" id="selectedrecords" value="<?php echo $recordsIds;?>" />
             <input type="hidden" name="exportType" id="exportType" value="" />
         </div>
         <?php if (!$isAjax): ?>

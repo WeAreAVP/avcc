@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Application\Bundle\FrontBundle\Components\ExportReport;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
@@ -30,10 +31,16 @@ class ExportReportCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-         $em = $this->getContainer()->get('doctrine')->getEntityManager();
-        $name = $input->getArgument('name');
-        if ($name) {
-            $text = 'Hello ' . $name;
+        $em = $this->getContainer()->get('doctrine')->getEntityManager();
+        $id = $input->getArgument('id');
+        if ($id) {
+            $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id));
+            if($entity){
+                $ids = json_decode($entity->getQueryOrId(), true);
+                
+            }
+            $export = new ExportReport($this->getContainer());
+            $export->generateReport($records);
         } else {
             $text = 'Hello';
         }

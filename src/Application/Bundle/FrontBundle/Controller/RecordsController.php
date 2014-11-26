@@ -311,7 +311,7 @@ class RecordsController extends Controller
             $session->set("saveRecords", $checked);
             $recordsIds = implode(",", $checked);
         }
-        echo json_encode(array('success' => TRUE,'recordIds'=>$recordsIds));
+        echo json_encode(array('success' => TRUE, 'recordIds' => $recordsIds));
         exit;
     }
 
@@ -339,9 +339,10 @@ class RecordsController extends Controller
             $records = $data['records'];
             $export = new ImportExport();
             $export->setUser($this->getUser());
-            $export->setType($type);
+            $export->setFormat($type);
+            $export->setType("import");
             $export->setStatus(0);
-            if ($records =='all') {
+            if ($records == 'all') {
                 $export->setQueryOrId('all');
                 if ($facetData) {
                     $export->setQueryOrId($facetData);
@@ -355,7 +356,11 @@ class RecordsController extends Controller
             $em->persist($export);
             $em->flush();
 
-            echo json_encode(array('success'=>true));
+//            $job = new Job('avcc:export-report', array('id' => $export->getId()));
+//            $em->persist($job);
+//            $em->flush($job);
+
+            echo json_encode(array('success' => true));
             exit;
         }
     }
