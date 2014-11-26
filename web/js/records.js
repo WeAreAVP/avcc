@@ -467,17 +467,7 @@ function Records() {
                     closeButton: true,
                     width: 400,
                     height: 150,
-                    padding: 10,
-                    sysButtons: {
-                        btnOk: true,
-                        btnClose: true
-                    },
-                    sysBtnCloseClick: function (e) {
-                        alert('Close button click');
-                    },
-                    sysBtnOkClick: function (e) {
-                        alert('Ok button click');
-                    },
+                    padding: 10,                    
                     buttons: {
                         Ok: {
                             action: function () {
