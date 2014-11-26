@@ -451,8 +451,8 @@ function Records() {
         $('.export').click(function (e) {
             var checked = false;
             $('input[name=record_checkbox]').each(function () {
-                if($(this).prop("checked")==true){
-                   checked = true; 
+                if ($(this).prop("checked") == true) {
+                    checked = true;
                 }
             });
             if (checked) {
@@ -467,19 +467,29 @@ function Records() {
                     closeButton: true,
                     width: 400,
                     height: 150,
-                    padding: 10, 
-                    buttons:{
-                        Ok:{
-                            action:function(){
+                    padding: 10,
+                    sysButtons: {
+                        btnOk: true,
+                        btnClose: true
+                    },
+                    sysBtnCloseClick: function (e) {
+                        alert('Close button click');
+                    },
+                    sysBtnOkClick: function (e) {
+                        alert('Ok button click');
+                    },
+                    buttons: {
+                        Ok: {
+                            action: function () {
                                 return true;
                             }
                         },
-                        Cancel:{
-                            action:function(){
+                        Cancel: {
+                            action: function () {
                                 return false;
                             }
                         }
-                    },                    
+                    },
                 });
 //                $.ajax({
 //                    type: 'POST',
@@ -511,9 +521,9 @@ function Records() {
             }
         });
     }
-    
-    this.okExport = function(){
-        $("#okExport").live("click",function(){
+
+    this.okExport = function () {
+        $("#okExport").live("click", function () {
             console.log("clicked");
         });
     }
