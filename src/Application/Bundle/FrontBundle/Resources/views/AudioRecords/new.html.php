@@ -20,7 +20,7 @@
                 
 				<?php 
 				
-				echo $view['form']->label((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]],'');echo $audioField['title']; ?>
+				echo $view['form']->label((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]],' ');echo $audioField['title']; ?>
                 <div class="input-control" data-role="input-control">
                     <?php echo $view['form']->widget((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => array('class' => 'size4'))) ?>
                     <span class="has-error text-danger"><?php echo $view['form']->errors((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]]) ?></span>
