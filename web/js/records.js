@@ -451,11 +451,10 @@ function Records() {
         $('.export').click(function (e) {
             var checked = false;
             $('input[name=record_checkbox]').each(function () {
-                if($(this).attr("checked")=="checked"){
+                if($(this).prop("checked")==true){
                    checked = true; 
                 }
             });
-            console.log(checked);
             if (checked) {
                 var exportType = $(this).attr('data-type');
                 var selectedrecords = $("#selectedrecords").val();
