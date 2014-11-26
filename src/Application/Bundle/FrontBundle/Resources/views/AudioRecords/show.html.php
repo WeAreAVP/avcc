@@ -13,8 +13,13 @@
 			<div class="span4">Created by: <?php echo $entity->getRecord()->getUser()->getName(); ?></div>
 			<div class="span4">Created at: <?php echo $entity->getRecord()->getCreatedOn()->format('Y-m-d H:i:s');?></div>
 			<div class="clearfix"></div>
-			<div class="span3"></div>
-			<div class="span3"></div>
+			<div class="span4"></div>
+			<div class="span4"><?php 
+			if($entity->getRecord()->getUpdatedOn()):
+				echo 'Modified at: '.$entity->getRecord()->getUpdatedOn()->format('Y-m-d H:i:s');
+			endif;
+			
+			?></div>
 		</div>
 		
 	</div>
