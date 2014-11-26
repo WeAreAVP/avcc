@@ -462,6 +462,7 @@ function Records() {
                     minHeight: 150,
                     minWidth: 400
                 });
+                $("#exportModal").show();
 //                $.Dialog({
 //                    overlay: true,
 //                    shadow: true,
