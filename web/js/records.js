@@ -470,12 +470,12 @@ function Records() {
                     padding: 10,
                     modal: true,
                     buttons: {
-                        Ok: {
+                        "Ok": {
                             action: function () {
                                 return true;
                             }
                         },
-                        Cancel: {
+                        "Cancel": {
                             action: function () {
                                 return false;
                             }
@@ -512,12 +512,6 @@ function Records() {
                     },
                 });
             }
-        });
-    }
-
-    this.okExport = function () {
-        $("#okExport").live("click", function () {
-            console.log("clicked");
         });
     }
 }
