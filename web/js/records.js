@@ -459,35 +459,13 @@ function Records() {
                 var exportType = $(this).attr('data-type');
                 var selectedrecords = $("#selectedrecords").val();
                 $("#exportModal").modal({
-                    minHeight: 150,
-                    minWidth: 400
+                    maxHeight: 150,
+                    maxWidth: 400,
+                    containerCss: {
+                        backgroundColor: "#fff",                        
+                    },
                 });
                 $("#exportModal").show();
-//                $.Dialog({
-//                    overlay: true,
-//                    shadow: true,
-//                    flat: true,
-//                    title: '<b>Export Records</b>',
-//                    content: '<span style="font-size:13px;">Are you sure you want to export the record(s)?</span>',
-//                    closeButton: true,
-//                    width: 400,
-//                    height: 150,
-//                    padding: 10,
-//                    modal: true,
-//                    buttons: {
-//                        "Ok": {
-//                            action: function () {
-//                                return true;
-//                            }
-//                        },
-//                        "Cancel": {
-//                            action: function () {
-//                                return false;
-//                            }
-//                        }
-//                        
-//                    },
-//                });
 //                $.ajax({
 //                    type: 'POST',
 //                    url: ajaxExportUrl,
@@ -498,7 +476,6 @@ function Records() {
 //
 //                    }
 //                });
-                e.preventDefault();
             } else {
                 $.Dialog({
                     'title': 'Error',
