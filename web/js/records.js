@@ -460,6 +460,9 @@ function Records() {
                     checked = true;
                 }
             });
+            if($("#selectedrecords").val() == "" || $("#exportType").val() == "") {
+                checked = false;
+            }
             if (checked) {
                 var exportType = $(this).attr('data-type');
                 $("#exportModal").modal({

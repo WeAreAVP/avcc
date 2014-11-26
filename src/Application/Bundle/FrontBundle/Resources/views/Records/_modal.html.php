@@ -7,7 +7,7 @@
             <button type="button" name="yes" class="button primary" id="exportRequest">Yes</button>
         </div>
     </div>
-    <div id="afterExport" stype="display:none;">
+    <div id="afterExport" style="display:none;">
         You will receive an email shortly with download link of exported records.
         <br />
         <div class="pull-right">
