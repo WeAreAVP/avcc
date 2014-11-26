@@ -458,7 +458,7 @@ function Records() {
             if (checked) {
                 var exportType = $(this).attr('data-type');
                 var selectedrecords = $("#selectedrecords").val();
-                $(this).modal("<p><b>HTML</b> elements</p>");
+                $.modal("<p><b>HTML</b> elements</p>");
 //                $.Dialog({
 //                    overlay: true,
 //                    shadow: true,
