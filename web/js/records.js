@@ -212,6 +212,7 @@ function Records() {
         selfObj.selectAllRecords();
         selfObj.clearSelection();
         selfObj.exportRecords();
+        selfObj.exportRequest();
         return true;
     }
     /**
@@ -423,7 +424,6 @@ function Records() {
                     $('input[name=record_checkbox]').each(function () {
                         id += $(this).val() + ',';
                     });
-                    selectedrecords = id;
                 }
             }
         }
@@ -431,10 +431,8 @@ function Records() {
             id = elementID;
             if ($('#row_' + elementID).attr('checked')) {
                 checked = 1;
-                selectedrecords = id;
             }
-        }
-        $("#selectedrecords").val(selectedrecords);
+        }        
         $.ajax({
             type: 'POST',
             url: ajaxSaveStateUrl,
@@ -442,13 +440,13 @@ function Records() {
             dataType: 'json',
             success: function (response)
             {
-
+                $("#selectedrecords").val(response.recordIds);
             }
         });
     }
 
-    this.exportRecords = function () {
-        $('.export').click(function (e) {
+    this.exportRequest = function () {
+        $('.export').click(function () {
             var checked = false;
             $('input[name=record_checkbox]').each(function () {
                 if ($(this).prop("checked") == true) {
@@ -467,16 +465,6 @@ function Records() {
                     },
                 });
                 $("#exportModal").show();
-//                $.ajax({
-//                    type: 'POST',
-//                    url: ajaxExportUrl,
-//                    data: {type: exportType, records: selectedrecords},
-//                    dataType: 'json',
-//                    success: function (response)
-//                    {
-//
-//                    }
-//                });
             } else {
                 $.Dialog({
                     'title': 'Error',
@@ -498,9 +486,19 @@ function Records() {
         });
     }
     
-    this.exportRequest = function () {
+    this.exportRecords = function () {
         $('#exportRequest').click(function () {
             console.log("clicked");
+//            $.ajax({
+//                    type: 'POST',
+//                    url: ajaxExportUrl,
+//                    data: {type: exportType, records: selectedrecords},
+//                    dataType: 'json',
+//                    success: function (response)
+//                    {
+//
+//                    }
+//                });
         });
     }
 }
