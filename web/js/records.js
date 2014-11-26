@@ -505,7 +505,8 @@ function Records() {
                     dataType: 'json',
                     success: function (response)
                     {
-                        
+                        $("#beforeExport").hide();
+                        $("#afterExport").show();
                     }
                 });
             } else {

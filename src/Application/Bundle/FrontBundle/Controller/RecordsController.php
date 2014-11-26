@@ -340,6 +340,7 @@ class RecordsController extends Controller
             $export = new ImportExport();
             $export->setUser($this->getUser());
             $export->setType($type);
+            $export->setStatus(0);
             if ($records =='all') {
                 $export->setQueryOrId('all');
                 if ($facetData) {
