@@ -38,7 +38,7 @@ class ExportReportCommand extends ContainerAwareCommand
             if ($entity) {
                 $ids = json_decode($entity->getQueryOrId());
                 foreach($ids as $id){
-                    $records[] = $em->getRepository('ApplicationFrontBundle:Records')->findBy($id);
+                    $records[] = $em->getRepository('ApplicationFrontBundle:Records')->findBy(array('id' => $id));
                 }
 //                $shpinxInfo = $this->getContainer()->getParameter('sphinx_param');
 //                $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
