@@ -2,7 +2,7 @@
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Composer\Autoload\ClassLoader;
-
+@date_default_timezone_set('America/New_York');
 /**
  * @var ClassLoader $loader
  */

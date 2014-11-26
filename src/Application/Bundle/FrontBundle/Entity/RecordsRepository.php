@@ -66,12 +66,10 @@ class RecordsRepository extends EntityRepository
     public function findRecordsByIds($ids)
     {
         $query = $this->getEntityManager()
-        ->createQuery("SELECT r from ApplicationFrontBundle:Records r "
-        . "JOIN r.user u "
-        . "JOIN u.organizations o "
+        ->createQuery("SELECT r from ApplicationFrontBundle:Records r "                
         . "WHERE r.id IN  (:ids)");
         $query->setParameter('ids', $ids);
 
-        return $query->getResult();
+        return $query->getQuery();
     }
 }

@@ -109,8 +109,7 @@ class ExportReport extends ContainerAware
         $format = ($type == 'csv') ? 'CSV' : 'Excel2007';
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, $format);
         $filename = 'allFormat_' . time() . '.' . $type;
-        $folderPath = 'exports/' . date('Y') . '/' . date('m') . '/';
-//        $folderPath = 'exports/' . '2014' . '/' . '11' . '/';
+        $folderPath = 'web/exports/' . date('Y') . '/' . date('m') . '/';
         $completePath = $folderPath . $filename;
         if ( ! is_dir($folderPath))
             mkdir($folderPath, 0777, TRUE);

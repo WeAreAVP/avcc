@@ -39,8 +39,7 @@ class ExportReportCommand extends ContainerAwareCommand
             if ($entity) {
                 $ids = json_decode($entity->getQueryOrId());
                 $recIds = implode(',', $ids);
-                    $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($recIds);
-                    $text = "recs----" . $recIds;
+                $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($recIds);
                     
                 if ($records) {
                     $export = new ExportReport($this->getContainer());
