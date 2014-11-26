@@ -467,7 +467,8 @@ function Records() {
                     closeButton: true,
                     width: 400,
                     height: 150,
-                    padding: 10,                    
+                    padding: 10,
+                    modal: true,
                     buttons: {
                         Ok: {
                             action: function () {
@@ -479,6 +480,7 @@ function Records() {
                                 return false;
                             }
                         }
+                        
                     },
                 });
 //                $.ajax({
@@ -491,6 +493,7 @@ function Records() {
 //
 //                    }
 //                });
+                
             } else {
                 $.Dialog({
                     'title': 'Error',
