@@ -459,10 +459,11 @@ function Records() {
                 var exportType = $(this).attr('data-type');
                 var selectedrecords = $("#selectedrecords").val();
                 $("#exportModal").modal({
-                    maxHeight: 150,
-                    maxWidth: 400,
                     containerCss: {
-                        backgroundColor: "#fff",                        
+                        backgroundColor: "#fff",
+                        borderColor:"#fff",
+                        width: 400,
+                        height: 150,
                     },
                 });
                 $("#exportModal").show();
