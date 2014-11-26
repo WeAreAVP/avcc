@@ -75,11 +75,11 @@ class DefaultFields
             "Recording_Standard" => array("title" => 'Recording Standards', 'field' => "recordingStandard", "is_required" => 0, "hidden" => 0),
             "Gener_Terms" => array("title" => 'Description', 'field' => "record.genreTerms", "is_required" => 0, "hidden" => 0),
             "Contributor" => array("title" => 'Contributor', 'field' => "record.contributor", "is_required" => 0, "hidden" => 0),
-            "Gerneration" => array("title" => 'Gerneration', 'field' => "record.generation", "is_required" => 0, "hidden" => 0),
+            "Gerneration" => array("title" => 'Generation', 'field' => "record.generation", "is_required" => 0, "hidden" => 0),
             "Part" => array("title" => 'Part', 'field' => "record.part", "is_required" => 0, "hidden" => 0),
             "Copyrights" => array("title" => 'Copyrights', 'field' => "record.copyrightRestrictions", "is_required" => 0, "hidden" => 0),
             "Duplicates" => array("title" => 'Duplicates', 'field' => "record.duplicatesDerivatives", "is_required" => 0, "hidden" => 0),
-            "Related_Meterial" => array("title" => 'Related Meterial', 'field' => "record.relatedMaterial", "is_required" => 0, "hidden" => 0),
+            "Related_Meterial" => array("title" => 'Related Material', 'field' => "record.relatedMaterial", "is_required" => 0, "hidden" => 0),
             "Condition_Note" => array("title" => 'Condition Note', 'field' => "record.conditionNote", "is_required" => 0, "hidden" => 0)
         );
 
@@ -110,11 +110,11 @@ class DefaultFields
             "Shrinkage" => array("title" => 'Shrinkage', 'field' => "shrinkage", "is_required" => 0, "hidden" => 0),
             "Gener_Terms" => array("title" => 'Description', 'field' => "record.genreTerms", "is_required" => 0, "hidden" => 0),
             "Contributor" => array("title" => 'Contributor', 'field' => "record.contributor", "is_required" => 0, "hidden" => 0),
-            "Gerneration" => array("title" => 'Gerneration', 'field' => "record.generation", "is_required" => 0, "hidden" => 0),
+            "Gerneration" => array("title" => 'Generation', 'field' => "record.generation", "is_required" => 0, "hidden" => 0),
             "Part" => array("title" => 'Part', 'field' => "record.part", "is_required" => 0, "hidden" => 0),
             "Copyrights" => array("title" => 'Copyrights', 'field' => "record.copyrightRestrictions", "is_required" => 0, "hidden" => 0),
             "Duplicates" => array("title" => 'Duplicates', 'field' => "record.duplicatesDerivatives", "is_required" => 0, "hidden" => 0),
-            "Related_Meterial" => array("title" => 'Related Meterial', 'field' => "record.relatedMaterial", "is_required" => 0, "hidden" => 0),
+            "Related_Meterial" => array("title" => 'Related Material', 'field' => "record.relatedMaterial", "is_required" => 0, "hidden" => 0),
             "Condition_Note" => array("title" => 'Condition Note', 'field' => "record.conditionNote", "is_required" => 0, "hidden" => 0)
         );
 
