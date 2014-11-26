@@ -508,7 +508,7 @@ function Records() {
     }
     
     this.okExport = function(){
-        $("#okExport").click(function(){
+        $("#okExport").live("click",function(){
             console.log("clicked");
         });
     }
