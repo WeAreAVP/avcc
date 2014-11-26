@@ -216,7 +216,7 @@ class SphinxSearch extends ContainerAware
 //            $sq->where('organization_id', "=", $user->getOrganizations()->getId());
 //        }
         $result = $sq->orderBy($sortColumn, $sortOrder)
-        ->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
+//        ->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
         ->executeBatch();
 
         return $result;
