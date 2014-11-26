@@ -497,5 +497,11 @@ function Records() {
             }
         });
     }
+    
+    this.exportRequest = function () {
+        $('#exportRequest').click(function () {
+            console.log("clicked");
+        });
+    }
 }
 
