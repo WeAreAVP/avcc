@@ -493,7 +493,7 @@ function Records() {
 //
 //                    }
 //                });
-                
+                e.preventDefault();
             } else {
                 $.Dialog({
                     'title': 'Error',
