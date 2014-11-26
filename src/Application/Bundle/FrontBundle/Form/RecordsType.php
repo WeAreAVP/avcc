@@ -160,7 +160,10 @@ class RecordsType extends AbstractType
     {
 
         $record = $event->getData();
-        $record->setUser($this->user);
+		if($record->getId())
+			$record->setEditor($this->user);
+		else
+			$record->setUser($this->user);
         $record->setMediaType($this->mediaTyp);
         if ($this->proj) {
             $record->setProject($this->proj);

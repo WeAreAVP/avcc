@@ -69,6 +69,15 @@ class Records
      * })
      */
     private $user;
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Users
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="editor_user_id", referencedColumnName="id")
+     * })
+     */
+    private $editor;
 
     /**
      * @var \Application\Bundle\FrontBundle\Entity\MediaTypes
@@ -937,5 +946,15 @@ class Records
     {
         return '';
     }
+	function getEditor()
+	{
+		return $this->editor;
+	}
+
+	function setEditor(\Application\Bundle\FrontBundle\Entity\Users $editor)
+	{
+		$this->editor = $editor;
+	}
+
 
 }
