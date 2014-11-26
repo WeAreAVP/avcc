@@ -37,21 +37,19 @@ class ExportReportCommand extends ContainerAwareCommand
             $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id, 'status' => 0));
             $text = $entity;
             if ($entity) {
-                $ids = json_decode($entity->getQueryOrId(),true);
-                $text = $ids;
-                foreach($ids as $recordid){
-                    $records = $em->getRepository('ApplicationFrontBundle:Records')->find($recordid);
-                    $text = "recs----".$recordid;
-                    exit;
+                $ids = json_decode($entity->getQueryOrId());
+                $recIds = implode(',', $ids);
+                    $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($recIds);
+                    $text = "recs----" . $recIds;
+                    
+                if ($records) {
+                    $export = new ExportReport($this->getContainer());
+                    $phpExcelObject = $export->generateReport($records);
+                    $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+                    $text = $completePath;
+                }else{
+                    $text = 'records not found';
                 }
-               
-//                $shpinxInfo = $this->getContainer()->getParameter('sphinx_param');
-//                $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-//                $records = $sphinxSearch->selectRecords('title', 'asc', $ids);
-//                $export = new ExportReport($this->getContainer());
-//                $phpExcelObject = $export->generateReport($records);
-//                $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
-//                $text = $completePath;
             } else {
                 $text = 'export id not found';
             }
