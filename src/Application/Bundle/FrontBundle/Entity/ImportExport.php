@@ -71,7 +71,7 @@ class ImportExport
     /**
      * @var boolean
      *
-     * @ORM\Column(name="status", type="boolean", nullable=false, options={"default" = 0}) )
+     * @ORM\Column(name="status", type="boolean", nullable=true, options={"default" = 0}) )
      */
     private $status;
 
