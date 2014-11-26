@@ -449,9 +449,14 @@ function Records() {
 
     this.exportRecords = function () {
         $('.export').click(function (e) {
-            var checked = $('input[name=record_checkbox]').attr("checked");
+            var checked = false;
+            $('input[name=record_checkbox]').each(function () {
+                if($('input[name=record_checkbox]').attr("checked")=="checked"){
+                   checked = true; 
+                }
+            });
             console.log(checked);
-            if (checked == "checked") {
+            if (checked) {
                 var exportType = $(this).attr('data-type');
                 var selectedrecords = $("#selectedrecords").val();
                 $.Dialog({
