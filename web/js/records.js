@@ -472,11 +472,11 @@ function Records() {
                 });
                 $("#exportType").val(exportType);
                 $("#exportModal").show();
-            } else {
+            } else {                
                 $.Dialog({
                     'title': 'Error',
                     'content': '<span style="font-size:13px;">Please select any record.</span>',
-                    'draggable': true,
+                    'draggable': false,
                     'overlay': true,
                     'closeButton': true,
                     'buttonsAlign': 'right',
@@ -509,10 +509,11 @@ function Records() {
                     }
                 });
             } else {
+                $.modal.close();
                 $.Dialog({
                     'title': 'Error',
-                    'content': '<span style="font-size:13px;">Please try again.</span>',
-                    'draggable': true,
+                    'content': '<span style="font-size:13px;">Error occured. Please try again.</span>',
+                    'draggable': false,
                     'overlay': true,
                     'closeButton': true,
                     'buttonsAlign': 'right',
