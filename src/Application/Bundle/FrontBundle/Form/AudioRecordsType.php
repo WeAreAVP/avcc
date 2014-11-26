@@ -35,10 +35,10 @@ class AudioRecordsType extends AbstractType
         ->add('bases')
         ->add('recordingSpeed')
         ->add('tapeThickness')
-        ->add('slides')
+        ->add('slides','choice', array('label' => 'Sides'))
         ->add('trackTypes')
         ->add('monoStereo')
-        ->add('noiceReduction');
+        ->add('noiceReduction','choice', array('label' => 'Noise Reduction'));
     }
 
     /**
