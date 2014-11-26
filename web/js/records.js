@@ -463,18 +463,23 @@ function Records() {
                     shadow: true,
                     flat: true,
                     title: '<b>Export Records</b>',
-                    content: '',
+                    content: '<span style="font-size:13px;">Are you sure you want to export the record(s)?</span>',
                     closeButton: true,
                     width: 400,
                     height: 150,
-                    padding: 10,                    
-                    onShow: function(_dialog){
-                                    var content = '<span style="font-size:13px;">Are you sure you want to export the record(s)?</span>';
-                                    content += '<br /><br /><button class="button primary" id="okExport">Yes</button>&nbsp;'+
-                                            '<button class="button" type="button" onclick="$.Dialog.close()">Cancel</button> ';
-
-                                    $.Dialog.content(content);
-                                }
+                    padding: 10, 
+                    buttons:{
+                        Ok:{
+                            action:function(){
+                                return true;
+                            }
+                        },
+                        Cancel:{
+                            action:function(){
+                                return false;
+                            }
+                        }
+                    },                    
                 });
 //                $.ajax({
 //                    type: 'POST',
