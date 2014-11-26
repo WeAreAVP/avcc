@@ -37,7 +37,7 @@
                     </li>
                 </ul>
             </div>
-
+<?php echo $view->render('ApplicationFrontBundle::Records/_modal.html.php') ?>
             <div class="table-responsive">
                 <table class="table hovered bordered" id="records">
                     <thead>

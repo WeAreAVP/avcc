@@ -458,7 +458,10 @@ function Records() {
             if (checked) {
                 var exportType = $(this).attr('data-type');
                 var selectedrecords = $("#selectedrecords").val();
-                $.modal("<p><b>HTML</b> elements</p>");
+                $("#exportModal").modal({
+                    minHeight: 150,
+                    minWidth: 400
+                });
 //                $.Dialog({
 //                    overlay: true,
 //                    shadow: true,
