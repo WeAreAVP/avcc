@@ -15,7 +15,8 @@
 				<div class="span4">Modified By: <?php echo $entity->getRecord()->getEditor()->getName(); ?></div>
 			<?php endif;
 			?>
-			<div class="clearfix"></div>
+		</div>
+		<div class="row">
 			<div class="span4">Created at: <?php echo $entity->getRecord()->getCreatedOn()->format('Y-m-d H:i:s'); ?></div>
 			<?php if ($entity->getRecord()->getUpdatedOn()): ?>
 				<div class="span4">Modified at:  <?php $entity->getRecord()->getUpdatedOn()->format('Y-m-d H:i:s'); ?>
