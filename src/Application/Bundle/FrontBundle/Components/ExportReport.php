@@ -112,10 +112,10 @@ class ExportReport extends ContainerAware
 //        $folderPath = 'exports/' . date('Y') . '/' . date('m') . '/';
         $folderPath = 'exports/' . '2014' . '/' . '11' . '/';
         $completePath = $folderPath . $filename;
-        if ( ! is_dir($folder_path))
+        if ( ! is_dir($folderPath))
             mkdir($folderPath, 0777, TRUE);
 
-        $objWriter->save($completePath);
+        $writer->save($completePath);
 
         return $completePath;
     }
