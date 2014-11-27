@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Application\Bundle\FrontBundle\Entity\ImportExport;
 use Application\Bundle\FrontBundle\Helper\SphinxHelper;
+
 /**
  * Records controller.
  *
@@ -184,8 +185,8 @@ class RecordsController extends Controller
      * @return array
      */
     protected function criteria()
-    {       
-        $facetData = $this->getFacetFromSession();        
+    {
+        $facetData = $this->getFacetFromSession();
         $makeCriteria = new SphinxHelper();
         $criteria = $makeCriteria->makeSphinxCriteria($facetData);
         return $criteria;
@@ -290,9 +291,8 @@ class RecordsController extends Controller
             $data = $request->request->all();
             $session = $this->getRequest()->getSession();
             $facetData = '';
-            $totalChecked = 0;
             if ($session->has('facetData')) {
-                $facetData = json_encode(array('criteria' => $session->get('facetData')));                
+                $facetData = json_encode(array('criteria' => $session->get('facetData')));
             }
             $type = $data['type'];
             $records = $data['records'];
@@ -315,10 +315,12 @@ class RecordsController extends Controller
             $em->persist($export);
             $em->flush();
 
-//            $job = new Job('avcc:export-report', array('id' => $export->getId()));
-//            $em->persist($job);
-//            $em->flush($job);
-
+            $job = new Job('avcc:export-report', array('id' => $export->getId()));
+            $em->persist($job);
+            $em->flush($job);
+            if ($session->has("saveRecords")) {
+                $session->remove("saveRecords");
+            }
             echo json_encode(array('success' => true));
             exit;
         }

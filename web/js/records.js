@@ -530,5 +530,11 @@ function Records() {
             }
         });
     }
+    
+    this.closeClicked = function(){
+        $("#close").click(function(){
+           window.location.reload(); 
+        });
+    }
 }
 
