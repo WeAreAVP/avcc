@@ -14,6 +14,7 @@ use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Application\Bundle\FrontBundle\Entity\ImportExport;
 use Application\Bundle\FrontBundle\Helper\SphinxHelper;
 use JMS\JobQueueBundle\Entity\Job;
+
 /**
  * Records controller.
  *
@@ -316,6 +317,9 @@ class RecordsController extends Controller
 //            $em->flush();
 
             $job = new Job('avcc:export-report', array('id' => $export->getId()));
+            $date = new DateTime();
+            $date->add(new DateInterval('PT1M'));
+            $job->setExecuteAfter($date);
             $em->persist($job);
             $em->flush($job);
             if ($session->has("saveRecords")) {
