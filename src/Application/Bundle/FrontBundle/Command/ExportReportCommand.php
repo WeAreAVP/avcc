@@ -37,7 +37,6 @@ class ExportReportCommand extends ContainerAwareCommand
         $id = $input->getArgument('id');
         if ($id) {
             $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id, 'status' => 0));
-            $text = $entity;
             if ($entity) {
                 $user = $entity->getUser();
                 $criteria = json_decode($entity->getQueryOrId(), true);
@@ -67,7 +66,7 @@ class ExportReportCommand extends ContainerAwareCommand
                         $sphinxHelper = new SphinxHelper();
                         $allCriteria = $sphinxHelper->makeSphinxCriteria($search);
                         $sphinxCriteria = $allCriteria['criteriaArr'];
-                        $text = $allCriteria;
+                        $text = 'test--'.$allCriteria;
                     }
                     
 //                    $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');
