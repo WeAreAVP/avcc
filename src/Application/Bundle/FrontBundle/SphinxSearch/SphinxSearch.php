@@ -215,7 +215,9 @@ class SphinxSearch extends ContainerAware
         if ( ! in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
             $sq->where('organization_id', "=", $user->getOrganizations()->getId());
         }
-        $result = $sq->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
+        $result = $sq
+                ->limit(0)
+                ->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
         ->executeBatch();
 
         return $result;
