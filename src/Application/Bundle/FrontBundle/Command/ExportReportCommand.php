@@ -65,13 +65,13 @@ class ExportReportCommand extends ContainerAwareCommand
                     if($search['total_checked'] > 0 || count($search['facet_keyword_search']) > 0){                        
                         $sphinxHelper = new SphinxHelper();
                         $allCriteria = $sphinxHelper->makeSphinxCriteria($search);
-                       $text =  $sphinxCriteria = implode(',',$allCriteria['criteriaArr']);
+                        $sphinxCriteria = $allCriteria['criteriaArr'];
                     }
                     
-//                    $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');
+                    $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');
 //                    $sphinx = new SphinxSearch($em, $sphinxInfo);
 //                    $showMeta = $sphinx->getMeta($user, $sphinxCriteria);
-//                    $text = $showMeta;
+                    $text = $sphinxInfo;
 //                    $sphinx->select($user, $offset, $limit);
 //                    $records = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
                 }
