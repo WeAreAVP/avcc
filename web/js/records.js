@@ -534,6 +534,7 @@ function Records() {
     
     this.closeClicked = function(){
         $("#close").click(function(){
+           $.modal.close();
            window.location.reload(); 
         });
     }
