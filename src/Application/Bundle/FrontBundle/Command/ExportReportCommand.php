@@ -10,6 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Application\Bundle\FrontBundle\Components\ExportReport;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Application\Bundle\FrontBundle\Helper\EmailHelper;
 
 class ExportReportCommand extends ContainerAwareCommand
 {
@@ -39,13 +40,23 @@ class ExportReportCommand extends ContainerAwareCommand
             if ($entity) {
                 $ids = json_decode($entity->getQueryOrId());
                 $recIds = implode(',', $ids);
-                $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($ids);                    
+                $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($ids);
                 if ($records) {
                     $export = new ExportReport($this->getContainer());
                     $phpExcelObject = $export->generateReport($records);
                     $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
                     $text = $completePath;
-                }else{
+                    $rendered = $this->renderView('Application:Records:export.email.twig', array(
+                        'user' => $entity->getUser(),
+                        'fileUrl' => $completePath
+                    ));
+                    $email = new EmailHelper();
+                    $subject = 'Record Export';
+                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $entity->getUser()->getEmail());
+                    $entity->setStatus(1);
+                    $em->persist($entity);
+                    $em->flush();
+                } else {
                     $text = 'records not found';
                 }
             } else {
