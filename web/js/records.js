@@ -213,6 +213,7 @@ function Records() {
         selfObj.clearSelection();
         selfObj.exportRecords();
         selfObj.exportRequest();
+        selfObj.closeClicked();
         return true;
     }
     /**
