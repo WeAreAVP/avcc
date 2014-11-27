@@ -207,7 +207,7 @@ class SphinxSearch extends ContainerAware
     public function getMeta($user, $criteria = null)
     {
         $sq = SphinxQL::create($this->conn);
-        $sq->select()
+        $sq->select('*')
         ->from($this->indexName);
         if ($criteria) {
             $this->whereClause($criteria, $sq);
