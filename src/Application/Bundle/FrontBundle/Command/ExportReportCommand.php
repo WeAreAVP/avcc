@@ -46,10 +46,8 @@ class ExportReportCommand extends ContainerAwareCommand
                     $phpExcelObject = $export->generateReport($records);
                     $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
                     $text = $completePath;
-                    $rendered = $this->renderView('Application:Records:export.email.twig', array(
-                        'user' => $entity->getUser(),
-                        'fileUrl' => $completePath
-                    ));
+                    $templateParameters = array('user' => $entity->getUser(),'fileUrl' => $completePath);
+                    $rendered = $this->getContainer()->get('templating')->render('Application:Records:export.email.twig', $templateParameters);
                     $email = new EmailHelper();
                     $subject = 'Record Export';
                     $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $entity->getUser()->getEmail());
