@@ -71,7 +71,8 @@ class ExportReportCommand extends ContainerAwareCommand
                     $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');
                     $sphinx = new SphinxSearch($em, $sphinxInfo);
                     $showMeta = $sphinx->getMeta($user, $sphinxCriteria);
-                    $text = print_r($showMeta);
+                    $text = $totalFound = $showMeta[1][1]['Value'];
+                    
 //                    $sphinx->select($user, $offset, $limit);
 //                    $records = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
                 }
