@@ -8,6 +8,25 @@
     </h1>
     <a href="<?php echo $view['router']->generate('record_film_edit', array('id'=>$entity->getId())) ?>" class="button primary">Edit</a>
     <div class="clearfix"></div>
+	<div class="grid">
+		<div class="row">
+			<div class="span4">Created by: <?php echo $entity->getRecord()->getUser()->getName(); ?></div>
+			<?php if ($entity->getRecord()->getEditor()) : ?>
+				<div class="span4">Modified By: <?php echo $entity->getRecord()->getEditor()->getName(); ?></div>
+			<?php endif;
+			?>
+		</div>
+		<div class="row">
+			<div class="span4">Created at: <?php echo $entity->getRecord()->getCreatedOn()->format('Y-m-d H:i:s'); ?></div>
+			<?php if ($entity->getRecord()->getUpdatedOn()): ?>
+				<div class="span4">Modified at:  <?php echo $entity->getRecord()->getUpdatedOn()->format('Y-m-d H:i:s'); ?>
+				</div>
+				<?php
+			endif;
+			?>
+		</div>
+
+	</div>
     <table class="table">
         <tbody>
 
