@@ -111,12 +111,13 @@ class ExportReport extends ContainerAware
         $filename = 'allFormat_' . time() . '.' . $type;
         $folderPath = 'web/exports/' . date('Y') . '/' . date('m') . '/';
         $completePath = $folderPath . $filename;
+        $downloadPath = 'exports/' . date('Y') . '/' . date('m') . '/' . $filename;
         if ( ! is_dir($folderPath))
             mkdir($folderPath, 0777, TRUE);
 
         $writer->save($completePath);
 
-        return $completePath;
+        return $downloadPath;
     }
 
     /**
