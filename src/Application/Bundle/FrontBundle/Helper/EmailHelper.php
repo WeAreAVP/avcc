@@ -4,6 +4,12 @@ namespace Application\Bundle\FrontBundle\Helper;
 
 class EmailHelper
 {
+    private $container;
+    public function __construct($container)
+    {
+        $this->container = $container;
+    }
+
     public function sendEmail($renderedTemplate, $subject, $fromEmail, $toEmail)
     {        
         $body = $renderedTemplate;
@@ -14,6 +20,6 @@ class EmailHelper
                 ->setTo($toEmail)
                 ->setBody($body);
 
-        $this->get('mailer')->send($message);
+        $this->container->get('mailer')->send($message);
     }
 }
