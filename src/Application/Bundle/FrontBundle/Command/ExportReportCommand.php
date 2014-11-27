@@ -67,7 +67,7 @@ class ExportReportCommand extends ContainerAwareCommand
                         $sphinxHelper = new SphinxHelper();
                         $allCriteria = $sphinxHelper->makeSphinxCriteria($search);
                         $sphinxCriteria = $allCriteria['criteriaArr'];
-                        $text = $sphinxCriteria;
+                        $text = $allCriteria;
                     }
                     
 //                    $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');

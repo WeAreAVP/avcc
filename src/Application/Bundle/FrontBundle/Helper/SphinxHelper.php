@@ -38,8 +38,10 @@ class SphinxHelper
         );
         
         foreach ($searchColumns as $key => $value) {
-            if (isset($facetData[$key]))
+            if (isset($facetData[$key])){
+                return $facetData[$key];
                 $criteriaArr[$value] = $facetData[$key];
+            }
         }
 
         if ($facetData['facet_keyword_search']) {
@@ -61,7 +63,7 @@ class SphinxHelper
         if ($criteriaArr) {
             $criteria['criteriaArr'] = $criteriaArr;
         }
-        return $criteria;
+//        return $criteria;
     }
 
 }
