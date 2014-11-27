@@ -10,7 +10,7 @@
     <div id="afterExport" style="display:none;">
         <p><span style="font-size:13px;">You will receive an email shortly with download link of exported records.</span></p>        
         <div class="pull-right">
-            <button type="button" name="close" id="close" class="button">Close</button>
+            <button type="button" name="close" id="closeBtn" class="button simplemodal-close">Close</button>
         </div>    
     </div>
 </div>

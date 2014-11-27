@@ -533,7 +533,8 @@ function Records() {
     }
     
     this.closeClicked = function(){
-        $("#close").on("click", function(){
+        $("#closeBtn").on("click", function(){
+            console.log('here');
            $.modal.close();
            window.location.reload(); 
         });
