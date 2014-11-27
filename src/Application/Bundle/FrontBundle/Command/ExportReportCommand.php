@@ -63,11 +63,11 @@ class ExportReportCommand extends ContainerAwareCommand
                     $search = $criteria['criteria'];
                     $sphinxCriteria = null;
                     
-                    if($search['total_checked'] > 0 || count($search['facet_keyword_search']) > 0){
-                        $text = $search['total_checked'];
-//                        $sphinxHelper = new SphinxHelper();
-//                        $allCriteria = $sphinxHelper->makeSphinxCriteria($search);
-//                        $sphinxCriteria = $allCriteria['criteriaArr'];
+                    if($search['total_checked'] > 0 || count($search['facet_keyword_search']) > 0){                        
+                        $sphinxHelper = new SphinxHelper();
+                        $allCriteria = $sphinxHelper->makeSphinxCriteria($search);
+                        $sphinxCriteria = $allCriteria['criteriaArr'];
+                        $text = $sphinxCriteria;
                     }
                     
 //                    $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');
