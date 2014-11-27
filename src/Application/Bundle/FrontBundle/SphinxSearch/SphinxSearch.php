@@ -177,9 +177,9 @@ class SphinxSearch extends ContainerAware
                 }
             } else {
 
-                $_value = (is_array($value)) ? implode(' | ', $value) : $value;
-
-                $sq->match($key, $_value, true);
+//                $_value = (is_array($value)) ? implode(' | ', $value) : $value;
+//
+//                $sq->match($key, $_value, true);
             }
         }
     }
@@ -212,9 +212,9 @@ class SphinxSearch extends ContainerAware
         if ($criteria) {
             $this->whereClause($criteria, $sq);
         }
-        if ( ! in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
-            $sq->where('organization_id', "=", $user->getOrganizations()->getId());
-        }
+//        if ( ! in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
+//            $sq->where('organization_id', "=", $user->getOrganizations()->getId());
+//        }
         $result = $sq->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
         ->executeBatch();
 
