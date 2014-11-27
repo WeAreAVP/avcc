@@ -39,7 +39,6 @@ class SphinxHelper
         
         foreach ($searchColumns as $key => $value) {
             if (isset($facetData[$key])){
-                return $facetData[$key];
                 $criteriaArr[$value] = $facetData[$key];
             }
         }
@@ -63,7 +62,7 @@ class SphinxHelper
         if ($criteriaArr) {
             $criteria['criteriaArr'] = $criteriaArr;
         }
-//        return $criteria;
+        return $criteria;
     }
 
 }
