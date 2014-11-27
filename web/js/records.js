@@ -209,7 +209,7 @@ function Records() {
         selfObj.removeFilter();
         selfObj.removeKeywordFilter();
         selfObj.selectCurrentPageRecords();
-        selfObj.selectAllRecords();
+        selfObj.selectAllRecordsChk();
         selfObj.clearSelection();
         selfObj.exportRecords();
         selfObj.exportRequest();
@@ -382,7 +382,7 @@ function Records() {
         });
     }
 
-    this.selectAllRecords = function () {
+    this.selectAllRecordsChk = function () {
         $(document).on('click', '#select-all-records', function () {
             selfObj.selectAllRecords = true;
             $(this).hide();
