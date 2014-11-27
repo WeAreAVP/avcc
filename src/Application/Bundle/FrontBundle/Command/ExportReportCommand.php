@@ -38,15 +38,19 @@ class ExportReportCommand extends ContainerAwareCommand
             $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id, 'status' => 0));
             $text = $entity;
             if ($entity) {
-                $ids = json_decode($entity->getQueryOrId());
-                $recIds = implode(',', $ids);
-                $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($ids);
+                $criteria = json_decode($entity->getQueryOrId(), true);
+                if (array_key_exists('ids', $criteria)) {
+                    $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($criteria['ids']);                    
+                } else {
+                    $records = $em->getRepository('ApplicationFrontBundle:Records')->findAll();                    
+                }
+
                 if ($records) {
                     $export = new ExportReport($this->getContainer());
                     $phpExcelObject = $export->generateReport($records);
                     $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
                     $text = $completePath;
-                    $templateParameters = array('user' => $entity->getUser(),'fileUrl' => $completePath);
+                    $templateParameters = array('user' => $entity->getUser(), 'fileUrl' => $completePath);
                     $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.twig', $templateParameters);
                     $email = new EmailHelper($this->getContainer());
                     $subject = 'Record Export';

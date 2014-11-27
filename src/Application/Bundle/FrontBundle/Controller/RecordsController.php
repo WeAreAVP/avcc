@@ -332,8 +332,9 @@ class RecordsController extends Controller
             $data = $request->request->all();
             $session = $this->getRequest()->getSession();
             $facetData = '';
+            $totalChecked = 0;
             if ($session->has('facetData')) {
-                $facetData = json_encode($session->get('facetData'));
+                $facetData = json_encode(array('criteria' => $session->get('facetData')));                
             }
             $type = $data['type'];
             $records = $data['records'];
@@ -350,7 +351,7 @@ class RecordsController extends Controller
             } else {
                 $recordIds = explode(',', $records);
                 if ($recordIds) {
-                    $export->setQueryOrId(json_encode($recordIds, JSON_NUMERIC_CHECK));
+                    $export->setQueryOrId(json_encode(array('ids' => $recordIds), JSON_NUMERIC_CHECK));
                 }
             }
             $em->persist($export);
