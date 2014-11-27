@@ -60,11 +60,8 @@ class ExportReportCommand extends ContainerAwareCommand
                         $sphinxCriteria = $allCriteria['criteriaArr'];
                     }
 
-                    $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');
-                    $sphinx = new SphinxSearch($em, $sphinxInfo);
-                    $showMeta = $sphinx->getMeta($user, $sphinxCriteria);
-                    $totalFound = $showMeta[1][1]['Value'];
-                    $phpExcelObject = $export->fetchFromSphinx($totalFound, $user, $sphinxInfo, $sphinxCriteria, $em);
+                    $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');                   
+                    $phpExcelObject = $export->fetchFromSphinx($user, $sphinxInfo, $sphinxCriteria, $em);
                     $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
                     $text = $completePath;
                 }

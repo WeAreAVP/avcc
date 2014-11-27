@@ -225,7 +225,7 @@ class ExportReport extends ContainerAware
         return $phpExcelObject;
     }
 
-    public function fetchFromSphinx($totalFound, $user, $sphinxInfo, $sphinxCriteria, $em)
+    public function fetchFromSphinx($user, $sphinxInfo, $sphinxCriteria, $em)
     {
         $phpExcelObject = $this->initReport();
         $row = 2;
