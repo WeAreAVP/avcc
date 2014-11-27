@@ -195,28 +195,27 @@ class SphinxSearch extends ContainerAware
 
         return $result;
     }
-
+    
     /**
-     * Select record for export from sphinx.
+     * Get meta data from sphinx.
      *
      * @param User    $user
-     * @param string  $sortColumn
-     * @param string  $sortOrder
      * @param string  $criteria
      *
      * @return array
      */
-    public function selectRecords($sortColumn = 'title', $sortOrder = 'asc', $criteria = null)
+    public function getMeta($user, $criteria = null)
     {
         $sq = SphinxQL::create($this->conn);
         $sq->select()
         ->from($this->indexName);
-        $sq->where('id', 'IN', $criteria);
-//        if ( ! in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
-//            $sq->where('organization_id', "=", $user->getOrganizations()->getId());
-//        }
-        $result = $sq->orderBy($sortColumn, $sortOrder)
-//        ->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
+        if ($criteria) {
+            $this->whereClause($criteria, $sq);
+        }
+        if ( ! in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
+            $sq->where('organization_id', "=", $user->getOrganizations()->getId());
+        }
+        $result = $sq->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
         ->executeBatch();
 
         return $result;

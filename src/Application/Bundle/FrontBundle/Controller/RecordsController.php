@@ -12,7 +12,7 @@ use Application\Bundle\FrontBundle\Entity\Records;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Application\Bundle\FrontBundle\Entity\ImportExport;
-
+use Application\Bundle\FrontBundle\Helper\SphinxHelper;
 /**
  * Records controller.
  *
@@ -184,52 +184,10 @@ class RecordsController extends Controller
      * @return array
      */
     protected function criteria()
-    {
-        $criteria = null;
-        $criteriaArr = null;
-        $facetData = $this->getFacetFromSession();
-        $searchColumns = array(
-            'mediaType' => 's_media_type',
-            'commercial' => 's_commercial',
-            'format' => 's_format',
-            'base' => 's_base',
-            'collectionName' => 's_collection_name',
-            'recordingStandard' => 's_recording_standard',
-            'printType' => 's_print_type',
-            'reelDiameter' => 's_reel_diameter',
-            'discDiameter' => 's_disk_diameter',
-            'acidDetection' => 's_acid_detection',
-            'project' => 's_project',
-            'is_review_check' => 'is_review',
-            'creationDate' => 's_creation_date',
-            'contentDate' => 's_content_date',
-            'contentDate' => 's_content_date',
-        );
-        foreach ($searchColumns as $key => $value) {
-            if (isset($facetData[$key]))
-                $criteriaArr[$value] = $facetData[$key];
-        }
-
-        if ($facetData['facet_keyword_search']) {
-            $keywords = json_decode($facetData['facet_keyword_search'], true);
-            foreach ($keywords as $keyword) {
-                if ($keyword['type'] == 'all') {
-                    foreach ($this->keywords as $key) {
-                        $criteriaArr['*'] = $keyword['value'];
-                    }
-                } else {
-                    $criteriaArr['s_' . $keyword['type']] = $keyword['value'];
-                }
-            }
-        }
-        if ($facetData['parent_facet']) {
-            $criteria['parent_facet'] = $facetData['parent_facet'];
-        }
-
-        if ($criteriaArr) {
-            $criteria['criteriaArr'] = $criteriaArr;
-        }
-
+    {       
+        $facetData = $this->getFacetFromSession();        
+        $makeCriteria = new SphinxHelper();
+        $criteria = $makeCriteria->makeSphinxCriteria($facetData);
         return $criteria;
     }
 
