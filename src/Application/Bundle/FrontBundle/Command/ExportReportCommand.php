@@ -62,12 +62,13 @@ class ExportReportCommand extends ContainerAwareCommand
                 } else {
                     $search = $criteria['criteria'];
                     $sphinxCriteria = null;
-                    $text = $search;
-//                    if($search['total_checked'] > 0 || count($search['facet_keyword_search']) > 0){
+                    
+                    if($search['total_checked'] > 0 || count($search['facet_keyword_search']) > 0){
+                        $text = ['total_checked'];
 //                        $sphinxHelper = new SphinxHelper();
 //                        $allCriteria = $sphinxHelper->makeSphinxCriteria($search);
 //                        $sphinxCriteria = $allCriteria['criteriaArr'];
-//                    }
+                    }
                     
 //                    $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');
 //                    $sphinx = new SphinxSearch($em, $sphinxInfo);
