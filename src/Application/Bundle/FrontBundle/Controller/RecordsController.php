@@ -14,7 +14,7 @@ use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Application\Bundle\FrontBundle\Entity\ImportExport;
 use Application\Bundle\FrontBundle\Helper\SphinxHelper;
 use JMS\JobQueueBundle\Entity\Job;
-
+use DateInterval;
 /**
  * Records controller.
  *
