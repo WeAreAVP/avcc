@@ -60,18 +60,19 @@ class ExportReportCommand extends ContainerAwareCommand
                         $text = 'records not found';
                     }
                 } else {
-                    $criteria = $criteria['criteria'];
+                    $search = $criteria['criteria'];
                     $sphinxCriteria = null;
-                    if($criteria['total_checked'] > 0 || count($criteria['facet_keyword_search']) > 0){
-                        $sphinxHelper = new SphinxHelper();
-                        $allCriteria = $sphinxHelper->makeSphinxCriteria($criteria);
-                        $sphinxCriteria = $allCriteria['criteriaArr'];
-                    }
+                    $text = $search;
+//                    if($search['total_checked'] > 0 || count($search['facet_keyword_search']) > 0){
+//                        $sphinxHelper = new SphinxHelper();
+//                        $allCriteria = $sphinxHelper->makeSphinxCriteria($search);
+//                        $sphinxCriteria = $allCriteria['criteriaArr'];
+//                    }
                     
-                    $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');
-                    $sphinx = new SphinxSearch($em, $sphinxInfo);
-                    $showMeta = $sphinx->getMeta($user, $sphinxCriteria);
-                    $text = $showMeta;
+//                    $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');
+//                    $sphinx = new SphinxSearch($em, $sphinxInfo);
+//                    $showMeta = $sphinx->getMeta($user, $sphinxCriteria);
+//                    $text = $showMeta;
 //                    $sphinx->select($user, $offset, $limit);
 //                    $records = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
                 }
