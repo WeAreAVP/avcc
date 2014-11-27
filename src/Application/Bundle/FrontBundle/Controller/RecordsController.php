@@ -314,8 +314,8 @@ class RecordsController extends Controller
                     $export->setQueryOrId(json_encode(array('ids' => $recordIds), JSON_NUMERIC_CHECK));
                 }
             }
-//            $em->persist($export);
-//            $em->flush();
+            $em->persist($export);
+            $em->flush();
 
             $job = new Job('avcc:export-report', array('id' => $export->getId()));
             $date = new DateTime();
