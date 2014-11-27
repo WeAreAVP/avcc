@@ -40,41 +40,43 @@ class ExportReportCommand extends ContainerAwareCommand
             if ($entity) {
                 $user = $entity->getUser();
                 $criteria = json_decode($entity->getQueryOrId(), true);
+                $export = new ExportReport($this->getContainer());
                 if (array_key_exists('ids', $criteria)) {
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($criteria['ids']);
                     if ($records) {
-                        $export = new ExportReport($this->getContainer());
                         $phpExcelObject = $export->generateReport($records);
                         $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
                         $text = $completePath;
-                        $templateParameters = array('user' => $entity->getUser(), 'fileUrl' => $completePath);
-                        $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.twig', $templateParameters);
-                        $email = new EmailHelper($this->getContainer());
-                        $subject = 'Record Export';
-                        $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
-                        $entity->setStatus(1);
-                        $em->persist($entity);
-                        $em->flush();
                     } else {
                         $text = 'records not found';
                     }
                 } else {
                     $search = $criteria['criteria'];
                     $sphinxCriteria = null;
-                    
-                    if($search['total_checked'] > 0 || count($search['facet_keyword_search']) > 0){                        
+
+                    if ($search['total_checked'] > 0 || count($search['facet_keyword_search']) > 0) {
                         $sphinxHelper = new SphinxHelper();
                         $allCriteria = $sphinxHelper->makeSphinxCriteria($search);
                         $sphinxCriteria = $allCriteria['criteriaArr'];
                     }
-                    
+
                     $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');
                     $sphinx = new SphinxSearch($em, $sphinxInfo);
                     $showMeta = $sphinx->getMeta($user, $sphinxCriteria);
-                    $text = $totalFound = $showMeta[1][1]['Value'];
-                    
-//                    $sphinx->select($user, $offset, $limit);
-//                    $records = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
+                    $totalFound = $showMeta[1][1]['Value'];
+                    $phpExcelObject = $export->fetchFromSphinx($totalFound, $user, $sphinxInfo, $sphinxCriteria, $em);
+                    $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+                    $text = $completePath;
+                }
+                if($completePath) {
+                    $templateParameters = array('user' => $entity->getUser(), 'fileUrl' => $completePath);
+                    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.twig', $templateParameters);
+                    $email = new EmailHelper($this->getContainer());
+                    $subject = 'Record Export';
+                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
+                    $entity->setStatus(1);
+                    $em->persist($entity);
+                    $em->flush();
                 }
             } else {
                 $text = 'export id not found';

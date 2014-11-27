@@ -4,6 +4,7 @@ namespace Application\Bundle\FrontBundle\Components;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Application\Bundle\FrontBundle\Helper\ExportFields;
+use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 
 class ExportReport extends ContainerAware
 {
@@ -67,9 +68,9 @@ class ExportReport extends ContainerAware
     {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
-        ->setTitle("AVCC - Report")
-        ->setSubject("Report for all formats")
-        ->setDescription("Report for all formats");
+                ->setTitle("AVCC - Report")
+                ->setSubject("Report for all formats")
+                ->setDescription("Report for all formats");
         $activeSheet = $phpExcelObject->setActiveSheetIndex(0);
         $phpExcelObject->getActiveSheet()->setTitle('All Formats');
         $row = 1;
@@ -112,7 +113,7 @@ class ExportReport extends ContainerAware
         $folderPath = 'web/exports/' . date('Y') . '/' . date('m') . '/';
         $completePath = $folderPath . $filename;
         $downloadPath = 'exports/' . date('Y') . '/' . date('m') . '/' . $filename;
-        if ( ! is_dir($folderPath))
+        if (!is_dir($folderPath))
             mkdir($folderPath, 0777, TRUE);
 
         $writer->save($completePath);
@@ -207,6 +208,111 @@ class ExportReport extends ContainerAware
         }
 
         return true;
+    }
+
+    public function initReport()
+    {
+        $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
+        $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
+                ->setTitle("AVCC - Report")
+                ->setSubject("Report for all formats")
+                ->setDescription("Report for all formats");
+        $activeSheet = $phpExcelObject->setActiveSheetIndex(0);
+        $phpExcelObject->getActiveSheet()->setTitle('All Formats');
+        $row = 1;
+        // Prepare header row for report
+        $this->prepareHeader($activeSheet, $row);
+        return $phpExcelObject;
+    }
+
+    public function fetchFromSphinx($totalFound, $user, $sphinxInfo, $sphinxCriteria, $em)
+    {
+        $phpExcelObject = $this->initReport();
+        $row = 2;
+        $count = 0;
+        $offset = 0;
+        $sphinxObj = new SphinxSearch($em, $sphinxInfo);
+        $activeSheet = $phpExcelObject->setActiveSheetIndex(0);
+        while ($count == 0) {
+            $records = $sphinxObj->select($user, $offset, 1000, 'title', 'asc', $sphinxCriteria);
+            $rec = $records[0];
+            $totalFound = $records[1][1]['Value'];
+            $this->prepareRecordsFromSphinx($activeSheet, $row, $rec);
+            $offset = $offset + 1000;
+            $row++;
+            if ($totalFound < 1000) {
+                $count++;
+            }
+        }
+        $phpExcelObject->setActiveSheetIndex(0);
+        
+        return $phpExcelObject;
+    }
+
+    /**
+     * Prepare rows for records.
+     *
+     * @param  PHPExcel_Worksheet $activeSheet
+     * @param  Integer            $row
+     * @return boolean
+     */
+    private function prepareRecordsFromSphinx($activeSheet, $row, $records)
+    {
+        foreach ($records as $record) {
+            $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record['project']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record['collection_name']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $record['media_type']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $record['unique_id']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $record['location']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, $record['format']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $record['title']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $record['description']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, $record['commercial']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $record['content_duration']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $record['creation_date']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $record['content_date']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(16, $row, $record['reel_diameter']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(34, $row, $record['genre_terms']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(35, $row, $record['contributor']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(36, $row, $record['generation']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(37, $row, $record['part']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(38, $row, $record['copyright_restrictions']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(39, $row, $record['duplicates_derivatives']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(40, $row, $record['related_material']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(41, $row, $record['condition_note']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(42, $row, ($record['created_on']) ? $record['created_on'] : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(43, $row, ($record['updated_on']) ? $record['updated_on'] : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(44, $row, $record['user_name']);
+
+            if ($record['media_type'] == 'Audio') {
+                $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, $record['media_duration']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $record['base']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(15, $row, $record['disk_diameter']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(17, $row, $record['media_diameter']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(21, $row, $record['tape_thickness']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(22, $row, $record['slides']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(23, $row, $record['track_type']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(24, $row, $record['mono_stereo']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(25, $row, $record['noice_reduction']);
+            }
+            if ($record['media_type'] == 'Film') {
+                $activeSheet->setCellValueExplicitByColumnAndRow(14, $row, $record['print_type']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(18, $row, $record['footage']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(20, $row, $record['color']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(29, $row, $record['reel_core']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(30, $row, $record['sound']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(31, $row, $record['frame_rate']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(32, $row, $record['acid_detection']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(33, $row, $record['shrinkage']);
+            }
+            if ($record['media_type'] == 'Video') {
+                $activeSheet->setCellValueExplicitByColumnAndRow(19, $row, $record['recording_speed']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(26, $row, $record['cassette_size']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(27, $row, $record['format_version']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(28, $row, $record['media_duration']);
+            }
+            $row ++;
+        }
     }
 
 }

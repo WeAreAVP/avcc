@@ -58,6 +58,13 @@ class SphinxFields
         $this->indexFields['project'] = $this->indexFields['s_project'] = ($this->record->getRecord()->getProject()) ? $this->record->getRecord()->getProject()->getName() : "";
         $this->indexFields['organization_id'] = ($this->record->getRecord()->getUser()->getOrganizations()) ? $this->record->getRecord()->getUser()->getOrganizations()->getId() : "";
         $this->indexFields['user_id'] = ($this->record->getRecord()->getUser()) ? $this->record->getRecord()->getUser()->getId() : "";
+        $this->indexFields['user_name'] = ($this->record->getRecord()->getUser()) ? $this->record->getRecord()->getUser()->getName() : "";
+        $this->indexFields['copyright_restrictions'] = ($this->record->getRecord()->getCopyrightRestrictions()) ? $this->record->getRecord()->getCopyrightRestrictions() : "";
+        $this->indexFields['duplicates_derivatives'] = ($this->record->getRecord()->getDuplicatesDerivatives()) ? $this->record->getRecord()->getDuplicatesDerivatives() : "";
+        $this->indexFields['related_material'] = ($this->record->getRecord()->getRelatedMaterial()) ? $this->record->getRecord()->getRelatedMaterial() : "";
+        $this->indexFields['condition_note'] = ($this->record->getRecord()->getConditionNote()) ? $this->record->getRecord()->getConditionNote() : "";
+        $this->indexFields['created_on'] = ($this->record->getRecord()->getCreatedOn()) ? $this->record->getRecord()->getCreatedOn()->format('Y-m-d H:i:s') : "";
+        $this->indexFields['updated_on'] = ($this->record->getRecord()->getUpdatedOn()) ? $this->record->getRecord()->getUpdatedOn()->format('Y-m-d H:i:s') : "";
 
         return $this->indexFields;
     }
