@@ -66,7 +66,7 @@ class ExportReportCommand extends ContainerAwareCommand
                     $text = $completePath;
                 }
                 if($completePath) {
-                    $baseUrl = $this->getContainer()->get('router')->getContext()->getSchemeAndHttpHost();
+                    $baseUrl = $this->getContainer()->getParameter('baseUrl');
                     $templateParameters = array('user' => $entity->getUser(),'baseUrl'=>$baseUrl, 'fileUrl' => $completePath);
                     $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.twig', $templateParameters);
                     $email = new EmailHelper($this->getContainer());
