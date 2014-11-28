@@ -27,7 +27,7 @@
                 </div>
             </div>
         <?php endforeach; ?>
-    </fieldset>
+    </fieldset><br />
     <?php echo $view['form']->widget($form['record']['userId']) ?>
     <?php echo $view['form']->widget($form['record']['mediaTypeHidden']) ?>
     <?php echo $view['form']->widget($form['record']['projectHidden']) ?>
