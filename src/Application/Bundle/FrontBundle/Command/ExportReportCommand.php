@@ -66,11 +66,11 @@ class ExportReportCommand extends ContainerAwareCommand
                     $text = $completePath;
                 }
                 if($completePath) {
-                    $templateParameters = array('user' => $entity->getUser(), 'fileUrl' => $completePath);
-                    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.twig', $templateParameters);
-                    $email = new EmailHelper($this->getContainer());
-                    $subject = 'Record Export';
-                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
+//                    $templateParameters = array('user' => $entity->getUser(), 'fileUrl' => $completePath);
+//                    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.twig', $templateParameters);
+//                    $email = new EmailHelper($this->getContainer());
+//                    $subject = 'Record Export';
+//                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
                     $entity->setStatus(1);
                     $em->persist($entity);
                     $em->flush();
