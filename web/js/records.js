@@ -540,6 +540,7 @@ function Records() {
            $('input[name=record_checkbox]').each(function () {
                 $(this).prop("checked",false);
             });
+            $("#records tr").removeClass("selected");
            window.location.reload(); 
         });
     }
