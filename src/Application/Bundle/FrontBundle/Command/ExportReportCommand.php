@@ -74,6 +74,7 @@ class ExportReportCommand extends ContainerAwareCommand
                     $entity->setStatus(1);
                     $em->persist($entity);
                     $em->flush();
+                    $text = $rendered;
                 }
             } else {
                 $text = 'export id not found';
