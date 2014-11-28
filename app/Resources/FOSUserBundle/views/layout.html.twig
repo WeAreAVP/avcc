@@ -23,7 +23,7 @@
             <link rel="stylesheet" href="{{ asset('css/basic.css') }}" />
             <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />            
         {% endblock %}
-
+        <base href="{{ app.request.getSchemeAndHttpHost() }}"/>
     </head>
 
     <body class="metro">
@@ -105,7 +105,7 @@
                                 <a class="" href="{{ path('report') }}">Reports</a>
                             </li>
                         </ul>
-						<a class="element1 pull-menu" href="#"></a>
+                        <a class="element1 pull-menu" href="#"></a>
                         <ul class="element-menu place-right" style="">
                             <li>
                                 <a class="" href="{{ path('record_list') }}">Records</a>
@@ -145,33 +145,33 @@
             <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
             <script src="{{ asset('js/jquery.simplemodal.1.4.4.min.js') }}"></script>
             <script type="text/javascript">
-				setTimeout(function () {
-					$('.text-success').hide();
-				}, 5000);
-				$(document).ready(function () {
-					$('.formats_dd').chosen();
-					var fixHelper = function (e, ui) {
-						ui.children().each(function () {
-							$(this).width($(this).width());
-						});
-						return ui;
-					};
+                setTimeout(function () {
+                    $('.text-success').hide();
+                }, 5000);
+                $(document).ready(function () {
+                    $('.formats_dd').chosen();
+                    var fixHelper = function (e, ui) {
+                        ui.children().each(function () {
+                            $(this).width($(this).width());
+                        });
+                        return ui;
+                    };
 
-					$(".sortable tbody").sortable({
-						helper: fixHelper,
-						//handle: ".icon-align-justify",
+                    $(".sortable tbody").sortable({
+                        helper: fixHelper,
+                        //handle: ".icon-align-justify",
                 {#update: function (event, ui) {
                     var newOrder = $(this).sortable('toArray').toString();
                     $.post(base_url + 'settings/save_sort', {order: newOrder});
                 }#}
-						}).disableSelection();
-					});
+                        }).disableSelection();
+                    });
 
             </script>
 
         {% endblock %}
-		{% block view_javascripts %}
-		{% endblock %}
+        {% block view_javascripts %}
+        {% endblock %}
 
     </body>
 </html>
