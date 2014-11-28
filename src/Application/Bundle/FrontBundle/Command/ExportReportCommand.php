@@ -87,6 +87,7 @@ class ExportReportCommand extends ContainerAwareCommand
         }
 
         $output->writeln($text);
+        return true;
     }
 
 }
