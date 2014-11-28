@@ -22,6 +22,7 @@
                             <li><a  href="<?php echo $view['router']->generate('record_video_new') ?>">Video</a></li>
                         </ul>
                     </li>
+                    <?php if ($view['security']->isGranted('ROLE_MANAGER')): ?>
                     <li>
                         <a class="dropdown-toggle" href="#">Export</a>
                         <ul class="dropdown-menu" data-role="dropdown">
@@ -29,6 +30,7 @@
                             <li><a href="javascript://" class="export" data-type="xlsx">XLSX</a></li>
                         </ul>
                     </li>
+                    <?php endif;?>
                     <li>
                         <a href="#">Import</a>
                     </li>
