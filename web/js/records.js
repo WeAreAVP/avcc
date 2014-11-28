@@ -119,19 +119,18 @@ function Records() {
                 } else {
                     selected.splice(index, 1);
                 }
-//                $(this).toggleClass('selected', function () {
-//                    var input = $("#" + id + " td:first").html();
-//                    if ($(this).hasClass('selected') === true) {
-//                        $("#" + $(input).attr('id')).attr("checked", "checked");
-//                        $("#" + $(input).attr('id')).prop("checked", true);
-//                    } else {
-//                        $("#" + $(input).attr('id')).removeAttr("checked");
-//                        $("#" + $(input).attr('id')).prop("checked", false);
-//                        $(this).removeClass('selected');
-//                    }
-//                    
-//                });
-                selfObj.saveState($(input).attr('value'));
+                $(this).toggleClass('selected', function () {
+                    var input = $("#" + id + " td:first").html();
+                    if ($(this).hasClass('selected') === true) {
+                        $("#" + $(input).attr('id')).attr("checked", "checked");
+                        $("#" + $(input).attr('id')).prop("checked", true);
+                    } else {
+                        $("#" + $(input).attr('id')).removeAttr("checked");
+                        $("#" + $(input).attr('id')).prop("checked", false);
+                        $(this).removeClass('selected');
+                    }
+                    selfObj.saveState($(input).attr('value'));
+                });
 
             });
         }
