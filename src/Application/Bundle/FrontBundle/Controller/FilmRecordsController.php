@@ -59,6 +59,10 @@ class FilmRecordsController extends Controller
             $shpinxInfo = $this->getSphinxInfo();
             $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getId(), 2);
             $sphinxSearch->insert();
+            // the save_and_dupplicate button was clicked
+            if ($form->get('save_and_duplicate')->isClicked()) {
+                return $this->redirect($this->generateUrl('record_film_duplicate', array('filmRecId' => $entity->getId())));
+            }
             $this->get('session')->getFlashBag()->add('success', 'Film record added succesfully.');
 
             return $this->redirect($this->generateUrl('record_list'));
@@ -87,6 +91,7 @@ class FilmRecordsController extends Controller
         ));
 
         $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('save_and_duplicate', 'submit', array('label' => 'Duplicate'));
 
         return $form;
     }

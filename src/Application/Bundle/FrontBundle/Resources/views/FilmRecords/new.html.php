@@ -23,10 +23,12 @@
                 </div>
             </div>
         <?php endforeach; ?>
-    </fieldset>
+    </fieldset><br />
     <?php echo $view['form']->widget($form['record']['userId']) ?>
     <?php echo $view['form']->widget($form['record']['mediaTypeHidden']) ?>
     <?php echo $view['form']->widget($form['record']['projectHidden']) ?>
+    <?php echo $view['form']->widget($form['submit'], array('attr' => array('class' => 'button primary'))) ?>
+    <?php echo $view['form']->widget($form['save_and_duplicate']) ?>
     <?php echo $view['form']->end($form) ?>
 </div>
 <script src="<?php echo $view['assets']->getUrl('js/manage.records.js') ?>"></script>
