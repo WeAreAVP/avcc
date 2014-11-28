@@ -24,9 +24,9 @@ class ExportReportCommand extends ContainerAwareCommand
                 ->addArgument(
                         'id', InputArgument::REQUIRED, ' export db id?'
                 )
-//                ->addOption(
-//                        'yell', null, InputOption::VALUE_NONE, 'If set, the task will yell in uppercase letters'
-//                )
+                ->addOption(
+                        'yell', null, InputOption::VALUE_NONE, 'If set, the task will yell in uppercase letters'
+                )
         ;
     }
 
@@ -66,11 +66,11 @@ class ExportReportCommand extends ContainerAwareCommand
                     $text = $completePath;
                 }
                 if($completePath) {
-//                    $templateParameters = array('user' => $entity->getUser(), 'fileUrl' => $completePath);
-//                    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.twig', $templateParameters);
-//                    $email = new EmailHelper($this->getContainer());
-//                    $subject = 'Record Export';
-//                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
+                    $templateParameters = array('user' => $entity->getUser(), 'fileUrl' => $completePath);
+                    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.twig', $templateParameters);
+                    $email = new EmailHelper($this->getContainer());
+                    $subject = 'Record Export';
+                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
                     $entity->setStatus(1);
                     $em->persist($entity);
                     $em->flush();
@@ -82,9 +82,9 @@ class ExportReportCommand extends ContainerAwareCommand
             $text = 'Hello';
         }
 
-//        if ($input->getOption('yell')) {
-//            $text = strtoupper($text);
-//        }
+        if ($input->getOption('yell')) {
+            $text = strtoupper($text);
+        }
 
         $output->writeln($text);
         return true;

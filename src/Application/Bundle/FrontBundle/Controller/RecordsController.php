@@ -318,9 +318,9 @@ class RecordsController extends Controller
             $em->flush();
 
             $job = new Job('avcc:export-report', array('id' => $export->getId()));
-            $date = new DateTime();
-            $date->add(new DateInterval('PT1M'));
-            $job->setExecuteAfter($date);
+//            $date = new DateTime();
+//            $date->add(new DateInterval('PT1M'));
+//            $job->setExecuteAfter($date);
             $em->persist($job);
             $em->flush($job);
             if ($session->has("saveRecords")) {
