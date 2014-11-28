@@ -323,9 +323,9 @@ class RecordsController extends Controller
             $job->setExecuteAfter($date);
             $em->persist($job);
             $em->flush($job);
-            if ($session->has("saveRecords")) {
+//            if ($session->has("saveRecords")) {
                 $session->remove("saveRecords");
-            }
+//            }
             echo json_encode(array('success' => true));
             exit;
         }
