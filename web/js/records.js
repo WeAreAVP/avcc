@@ -535,8 +535,11 @@ function Records() {
     
     this.closeClicked = function(){
         $("#closeBtn").on("click", function(){
-            console.log('here');
            $.modal.close();
+           $('#selectAll').prop("checked",false);
+           $('input[name=record_checkbox]').each(function () {
+                $(this).prop("checked",false);
+            });
            window.location.reload(); 
         });
     }
