@@ -45,5 +45,5 @@ security:
 
 
 
-#    acl:
-#        connection: default
+    acl:
+        connection: default

@@ -4,7 +4,7 @@ function updateSettings() {
     var video = new Array();
     var film = new Array();
     var i = 0;
-    $('#sortableAudio tbody tr').each(function (index, id)
+    $('#sortableAudio tbody tr').each(function(index, id)
     {
         columnAnchorID = $(this).attr('data-sort');
         title = $(this).attr('data-title');
@@ -19,7 +19,7 @@ function updateSettings() {
         i++;
     });
     i = 0;
-    $('#sortableVideo tbody tr').each(function (index, id)
+    $('#sortableVideo tbody tr').each(function(index, id)
     {
         columnAnchorID = $(this).attr('data-sort');
         title = $(this).attr('data-title');
@@ -35,7 +35,7 @@ function updateSettings() {
 
     });
     i = 0;
-    $('#sortableFilm tbody tr').each(function (index, id)
+    $('#sortableFilm tbody tr').each(function(index, id)
     {
         columnAnchorID = $(this).attr('data-sort');
         title = $(this).attr('data-title');
@@ -60,11 +60,11 @@ function updateSettings() {
             settings: userSettings
         },
         dataType: 'json',
-        success: function (response) {
+        success: function(response) {
             console.log(response);
-            if(response.reload){
+            if (response.reload) {
                 window.location.reload();
-            }     
+            }
         }
     });
 //    console.log(userSettings);
@@ -72,9 +72,19 @@ function updateSettings() {
 
 function hideIt(obj) {
     if (obj.checked) {
-        $('#'+obj.id).parent().parent().attr('data-hide_it', 1);
+        $('#' + obj.id).parent().parent().attr('data-hide_it', 1);
     } else {
-        $('#'+obj.id).parent().parent().attr('data-hide_it', 0);
+        $('#' + obj.id).parent().parent().attr('data-hide_it', 0);
     }
 }
 
+function saveEnableBackup()
+{
+    if ($('#enable').is(':checked'))
+    {
+        console.log('yupee');
+    }
+    else {
+        console.log('done done done :) :P');
+    }
+}

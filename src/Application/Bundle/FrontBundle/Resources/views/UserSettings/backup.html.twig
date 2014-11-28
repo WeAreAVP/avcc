@@ -1,0 +1,18 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+
+<h1>Enable Backup
+</h1>
+
+<input type='checkbox' id='enable' name='enable_backup' {% if (is_enable) %} checked='checked' {% endif%}> Enable Backup
+<br /><br />
+<input type='button' value='Enable' class="button primary" onclick="saveEnableBackup();">
+<script type="text/javascript">
+    var site_url = "{{ app.request.baseUrl }}";
+    </script>
+    <script src="{{ asset('js/user-settings.js') }}">
+    </script>
+
+{% endblock %}
+

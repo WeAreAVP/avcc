@@ -60,6 +60,7 @@
                                         <li><a href="<?php echo $view['router']->generate('users') ?>">Users</a></li>
                                         <li><a href="<?php echo $view['router']->generate('organizations') ?>">Organization</a></li>
                                         <li><a href="<?php echo $view['router']->generate('field_settings') ?>">Field Settings</a></li>
+                                        <li><a href="<?php echo $view['router']->generate('field_settings_backup') ?>">Enable Backup</a></li>
                                     </ul>
                                 </li>
                             </ul>

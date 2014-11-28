@@ -15,8 +15,7 @@ use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
  *
  * @Route("/fieldsettings")
  */
-class UserSettingsController extends Controller
-{
+class UserSettingsController extends Controller {
 
     /**
      * User settings
@@ -26,8 +25,7 @@ class UserSettingsController extends Controller
      * @Template()
      * @return array
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $this->getUser()->getId()));
@@ -55,8 +53,7 @@ class UserSettingsController extends Controller
      * @Template()
      * @return array
      */
-    public function updateAction(Request $request)
-    {
+    public function updateAction(Request $request) {
         $success = FALSE;
         $reload = FALSE;
         if ($request->getMethod() == 'POST') {
@@ -86,6 +83,25 @@ class UserSettingsController extends Controller
         }
         echo json_encode(array('success' => $success, 'reload' => $reload));
         exit;
+    }
+
+    /**
+     * enable backup
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * 
+     * @Route("/backup", name="field_settings_backup")
+     * @Template()
+     * @return array
+     */
+    public function backupAction(Request $request) {
+        $userEntity = $this->getDoctrine()
+                ->getRepository('ApplicationFrontBundle:UserSettings')
+                ->findOneBy(array('user' => $this->getUser()->getId()));
+        $enable = $userEntity->getEnableBackup();
+        return array(
+            'is_enable' => $enable,
+        );
     }
 
 }

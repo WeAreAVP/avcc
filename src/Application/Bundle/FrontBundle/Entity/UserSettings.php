@@ -10,8 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user_settings")
  * @ORM\Entity
  */
-class UserSettings
-{
+class UserSettings {
 
     /**
      * @var integer
@@ -61,6 +60,13 @@ class UserSettings
     private $createdOn;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="enable_backup", type="boolean", options={"default" = 0})
+     */
+    private $enableBackup;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="updated_on", type="datetime", nullable=true)
@@ -72,8 +78,7 @@ class UserSettings
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -82,8 +87,7 @@ class UserSettings
      *
      * @return string
      */
-    public function getViewSetting()
-    {
+    public function getViewSetting() {
         return $this->viewSetting;
     }
 
@@ -94,8 +98,7 @@ class UserSettings
      *
      * @return \Application\Bundle\FrontBundle\Entity\UserSettings
      */
-    public function setViewSetting($viewSetting)
-    {
+    public function setViewSetting($viewSetting) {
         $this->viewSetting = $viewSetting;
 
         return $this;
@@ -108,8 +111,7 @@ class UserSettings
      *
      * @return \Application\Bundle\FrontBundle\Entity\UserSettings
      */
-    public function setUser(\Application\Bundle\FrontBundle\Entity\Users $user)
-    {
+    public function setUser(\Application\Bundle\FrontBundle\Entity\Users $user) {
         $this->user = $user;
 
         return $this;
@@ -120,8 +122,7 @@ class UserSettings
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -132,8 +133,7 @@ class UserSettings
      *
      * @return \Application\Bundle\FrontBundle\Entity\UserSettings
      */
-    public function setMediaType(\Application\Bundle\FrontBundle\Entity\MediaTypes $mediaType)
-    {
+    public function setMediaType(\Application\Bundle\FrontBundle\Entity\MediaTypes $mediaType) {
         $this->mediaType = $mediaType;
 
         return $this;
@@ -144,16 +144,14 @@ class UserSettings
      *
      * @return \Application\Bundle\FrontBundle\Entity\MediaTypes
      */
-    public function getMediaType()
-    {
+    public function getMediaType() {
         return $this->mediaType;
     }
 
     /**
      * @ORM\PrePersist
      */
-    public function setCreatedOnValue()
-    {
+    public function setCreatedOnValue() {
         if (!$this->getCreatedOn()) {
             $this->createdOn = new \DateTime();
         }
@@ -162,8 +160,7 @@ class UserSettings
     /**
      * @ORM\PreUpdate
      */
-    public function setUpdatedOnValue()
-    {
+    public function setUpdatedOnValue() {
         $this->updatedOn = new \DateTime();
     }
 
@@ -172,8 +169,7 @@ class UserSettings
      *
      * @return \Datetime
      */
-    public function getCreatedOn()
-    {
+    public function getCreatedOn() {
         return $this->createdOn;
     }
 
@@ -182,9 +178,26 @@ class UserSettings
      *
      * @return \Datetime
      */
-    public function getUpdatedOn()
-    {
+    public function getUpdatedOn() {
         return $this->updatedOn;
+    }
+
+    /**
+     * Get  Enable Backup
+     *
+     * @return int
+     */
+    public function getEnableBackup() {
+        return $this->enableBackup;
+    }
+
+    /**
+     * Set  Enable Backup
+     * 
+     * @param int $enableBackup
+     */
+    public function setEnableBackup($enableBackup) {
+        $this->enableBackup = $enableBackup;
     }
 
 }
