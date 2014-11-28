@@ -24,9 +24,9 @@ class ExportReportCommand extends ContainerAwareCommand
                 ->addArgument(
                         'id', InputArgument::REQUIRED, ' export db id?'
                 )
-                ->addOption(
-                        'yell', null, InputOption::VALUE_NONE, 'If set, the task will yell in uppercase letters'
-                )
+//                ->addOption(
+//                        'yell', null, InputOption::VALUE_NONE, 'If set, the task will yell in uppercase letters'
+//                )
         ;
     }
 
@@ -82,9 +82,9 @@ class ExportReportCommand extends ContainerAwareCommand
             $text = 'Hello';
         }
 
-        if ($input->getOption('yell')) {
-            $text = strtoupper($text);
-        }
+//        if ($input->getOption('yell')) {
+//            $text = strtoupper($text);
+//        }
 
         $output->writeln($text);
         return true;
