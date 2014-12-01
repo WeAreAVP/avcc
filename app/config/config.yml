@@ -58,9 +58,9 @@ doctrine:
         auto_mapping: true
 
 # Swiftmailer Configuration
-#swiftmailer:
-#    transport:  sendmail
-#    encryption: ssl
+swiftmailer:
+    transport:  sendmail
+    encryption: ssl
 #    #transport: "%mailer_transport%"
 #    #host:      "%mailer_host%"
 #    #username:  "%mailer_user%"
