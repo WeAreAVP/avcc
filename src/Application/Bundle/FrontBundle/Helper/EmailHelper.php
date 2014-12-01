@@ -19,8 +19,8 @@ class EmailHelper
                 ->setSubject($subject)
                 ->setFrom($fromEmail)
                 ->setTo($toEmail)
-                ->setBody($body);
+                ->setBody($body, 'text/html');
 
-        $this->container->get('mailer')->send($message, 'text/html');
+        $this->container->get('mailer')->send($message);
     }
 }
