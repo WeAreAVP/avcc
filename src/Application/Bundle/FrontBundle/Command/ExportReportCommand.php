@@ -55,7 +55,7 @@ class ExportReportCommand extends ContainerAwareCommand
                         $text = 'records not found';
                     }
                 } else {
-                    $search = isset($criteria['criteria']) ? $criteria['criteria'] : $criteria;
+                    $search = isset($criteria['criteria']) ? $criteria['criteria'] : 'all';
                     $sphinxCriteria = null;
                     
                     if ($search != 'all') {
