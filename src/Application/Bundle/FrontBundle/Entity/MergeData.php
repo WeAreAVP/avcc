@@ -21,7 +21,7 @@ class MergeData
     /**
      * @var string
      *
-     * @ORM\Column(name="exported_file", type="sting", length=64, nullable=false)
+     * @ORM\Column(name="exported_file", type="string", length=64, nullable=false)
      * @Assert\NotBlank(message="Exported file field is required")
      */
     private $exportedFile;
