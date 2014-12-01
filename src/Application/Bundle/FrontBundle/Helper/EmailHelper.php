@@ -15,11 +15,12 @@ class EmailHelper
         $body = $renderedTemplate;
 
         $message = \Swift_Message::newInstance()
+                ->setContentType("text/html")
                 ->setSubject($subject)
                 ->setFrom($fromEmail)
                 ->setTo($toEmail)
                 ->setBody($body);
 
-        $this->container->get('mailer')->send($message);
+        $this->container->get('mailer')->send($message, 'text/html');
     }
 }
