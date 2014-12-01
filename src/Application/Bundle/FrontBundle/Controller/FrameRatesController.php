@@ -58,7 +58,6 @@ class FrameRatesController extends Controller
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Frame rate added succesfully.');
-
             return $this->redirect($this->generateUrl('vocabularies_framerates_show', array('id' => $entity->getId())));
         }
 
