@@ -77,7 +77,7 @@ class ExportReportCommand extends ContainerAwareCommand
                     $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
                     $email = new EmailHelper($this->getContainer());
                     $subject = 'Record Export';
-                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
+//                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
 //                    $entity->setStatus(1);
 //                    $em->persist($entity);
 //                    $em->flush();
