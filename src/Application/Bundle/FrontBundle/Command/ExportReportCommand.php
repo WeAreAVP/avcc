@@ -40,7 +40,7 @@ class ExportReportCommand extends ContainerAwareCommand
             if ($entity) {
                 $user = $entity->getUser();
                 $criteria = json_decode($entity->getQueryOrId(), true);
-                $text = print_r($criteria);
+//                $text = print_r($criteria);
                 $text = $criteria;
 //                $export = new ExportReport($this->getContainer());
 //                if (is_array($criteria) && array_key_exists('ids', $criteria)) {
