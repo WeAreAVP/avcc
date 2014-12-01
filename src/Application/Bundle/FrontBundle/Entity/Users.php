@@ -92,6 +92,18 @@ class Users extends BaseUser
     private $userSetting;
 
     /**
+     * @ORM\OneToMany(
+     *     targetEntity="MergeData",
+     *     mappedBy="user",
+     *     fetch="EAGER",
+     *     indexBy="user_id",
+     *     cascade={"all","merge","persist","refresh","remove"}
+     * )
+     * @ORM\OrderBy({"id"="ASC"})
+     */
+    private $userMergeData;
+    
+    /**
      * Users constructor
      */
     public function __construct()
@@ -294,5 +306,29 @@ class Users extends BaseUser
     public function removeUserSetting(UserSettings $us)
     {
          $this->userSetting->remove($us);
+    }
+    
+    /**
+     * Add userMergeData
+     * @param \Application\Bundle\FrontBundle\Entity\MergeData $md
+     *
+     */
+    public function addUserMergeData(MergeData $md)
+    {
+         if (!$this->userMergeData->contains($md)) {
+
+             $this->userMergeData[] = $md;
+             $md->setUser($this);
+         }
+    }
+
+    /**
+     * Remove merge data
+     * @param \Application\Bundle\FrontBundle\Entity\MergeData $md
+     *
+     */
+    public function removeUserMergeData(MergeData $md)
+    {
+         $this->userMergeData->remove($md);
     }
 }

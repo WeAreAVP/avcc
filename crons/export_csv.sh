@@ -17,7 +17,7 @@
 #HOST=`/bin/hostname`
 PID_FILE="PIDs/export_csv.pid"
 OUTPUT_FILE="cronlogs/export_csv.log"
-BASEDIR="avcc/avccqa/"
+BASEDIR="/home/avccqa/avcc/"
 DATE=`date`
 
 PHP_PATH=`which php`

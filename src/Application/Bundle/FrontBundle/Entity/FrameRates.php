@@ -27,7 +27,7 @@ class FrameRates
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=50)
-     * @Assert\NotBlank(message="Color name is required")
+     * @Assert\NotBlank(message="Frame rate name is required")
      */
     private $name;
 
