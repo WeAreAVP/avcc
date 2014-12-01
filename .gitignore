@@ -13,3 +13,5 @@ nbproject
 /nbproject/private/
 .DS_Store
 /app/DoctrineMigrations/*
+!cronlogs/.gitkeep
+!PIDs/.gitkeep
