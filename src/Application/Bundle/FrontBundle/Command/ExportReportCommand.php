@@ -44,44 +44,43 @@ class ExportReportCommand extends ContainerAwareCommand
                 }else{
                     $criteria = $entity->getQueryOrId();
                 }
-                $text = $criteria;
-//                $export = new ExportReport($this->getContainer());
-//                if (is_array($criteria) && array_key_exists('ids', $criteria)) {
-//                    $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($criteria['ids']);
-//                    if ($records) {
-//                        $phpExcelObject = $export->generateReport($records);
-//                        $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
-//                        $text = $completePath;
-//                    } else {
-//                        $text = 'records not found';
-//                    }
-//                } else {
-//                    $search = isset($criteria['criteria']) ? $criteria['criteria'] : $criteria;
-//                    $sphinxCriteria = null;
-//
-//                    if ($search != 'all' && $search['total_checked'] > 0 || count($search['facet_keyword_search']) > 0) {
-//                        $sphinxHelper = new SphinxHelper();
-//                        $allCriteria = $sphinxHelper->makeSphinxCriteria($search);
-//                        $sphinxCriteria = $allCriteria['criteriaArr'];
-//                    }
-//
-//                    $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');                   
-//                    $phpExcelObject = $export->fetchFromSphinx($user, $sphinxInfo, $sphinxCriteria, $em);
-//                    $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
-//                    $text = $completePath;
-//                }
-//                if($completePath) {
-//                    $baseUrl = $this->getContainer()->getParameter('baseUrl');
-//                    $templateParameters = array('user' => $entity->getUser(),'baseUrl'=>$baseUrl, 'fileUrl' => $completePath);
-//                    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
-//                    $email = new EmailHelper($this->getContainer());
-//                    $subject = 'Record Export';
-//                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
-////                    $entity->setStatus(1);
-////                    $em->persist($entity);
-////                    $em->flush();
-//                    $text = $rendered;
-//                }
+                $export = new ExportReport($this->getContainer());
+                if (is_array($criteria) && array_key_exists('ids', $criteria)) {
+                    $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($criteria['ids']);
+                    if ($records) {
+                        $phpExcelObject = $export->generateReport($records);
+                        $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+                        $text = $completePath;
+                    } else {
+                        $text = 'records not found';
+                    }
+                } else {
+                    $search = isset($criteria['criteria']) ? $criteria['criteria'] : $criteria;
+                    $sphinxCriteria = null;
+
+                    if ($search != 'all' && ($search['total_checked'] > 0 || count($search['facet_keyword_search']) > 0)) {
+                        $sphinxHelper = new SphinxHelper();
+                        $allCriteria = $sphinxHelper->makeSphinxCriteria($search);
+                        $sphinxCriteria = $allCriteria['criteriaArr'];
+                    }
+
+                    $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');                   
+                    $phpExcelObject = $export->fetchFromSphinx($user, $sphinxInfo, $sphinxCriteria, $em);
+                    $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+                    $text = $completePath;
+                }
+                if($completePath) {
+                    $baseUrl = $this->getContainer()->getParameter('baseUrl');
+                    $templateParameters = array('user' => $entity->getUser(),'baseUrl'=>$baseUrl, 'fileUrl' => $completePath);
+                    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
+                    $email = new EmailHelper($this->getContainer());
+                    $subject = 'Record Export';
+                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
+//                    $entity->setStatus(1);
+//                    $em->persist($entity);
+//                    $em->flush();
+                    $text = $rendered;
+                }
             } else {
                 $text = 'export id not found';
             }
