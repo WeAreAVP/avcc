@@ -41,7 +41,7 @@ class ExportReportCommand extends ContainerAwareCommand
                 $user = $entity->getUser();
                 $criteria = json_decode($entity->getQueryOrId(), true);
                 $export = new ExportReport($this->getContainer());
-                if (array_key_exists('ids', $criteria)) {
+                if (is_array($criteria) && array_key_exists('ids', $criteria)) {
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($criteria['ids']);
                     if ($records) {
                         $phpExcelObject = $export->generateReport($records);
@@ -51,7 +51,7 @@ class ExportReportCommand extends ContainerAwareCommand
                         $text = 'records not found';
                     }
                 } else {
-                    $search = $criteria['criteria'];
+                    $search = isset($criteria['criteria']) ? $criteria['criteria'] : 'all';
                     $sphinxCriteria = null;
 
                     if ($search['total_checked'] > 0 || count($search['facet_keyword_search']) > 0) {
