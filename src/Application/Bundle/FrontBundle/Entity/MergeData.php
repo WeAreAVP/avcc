@@ -1,4 +1,5 @@
 <?php
+
 namespace Application\Bundle\FrontBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -16,16 +17,15 @@ class MergeData
 {
 
     private $exportedTemp;
-    
+
     /**
      * @var string
      *
      * @ORM\Column(name="exported_file", type="sting", length=64, nullable=false)
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @Assert\NotBlank(message="Exported file field is required")
      */
     private $exportedFile;
-    
+
     /**
      * @var integer
      *
@@ -34,7 +34,7 @@ class MergeData
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Users", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="userMergeData")
      * @ORM\JoinColumn(
@@ -46,24 +46,25 @@ class MergeData
      * @var integer
      */
     private $user;
-    
+
     /**
-     * Sets file.
-     *
-     * @param UploadedFile $file
+     * 
+     * @param File $file
      */
-    public function setFile(UploadedFile $file = null)
+    public function setExportedFile(File $file = null)
     {
-        $this->file = $file;
-        // check if we have an old image path
-        if (is_file($this->getAbsolutePath())) {
-            // store the old name to delete after the update
-            $this->temp = $this->getAbsolutePath();
-        } else {
-            $this->path = 'initial';
-        }
+        $this->exportedFile = $file;
     }
-    
+
+    /**
+     * 
+     * @return type
+     */
+    public function getExportedFile()
+    {
+        return $this->exportedFile;
+    }
+
     /**
      * Set user.
      *
@@ -71,7 +72,8 @@ class MergeData
      *
      * @return \Application\Bundle\FrontBundle\Entity\MergeData
      */
-    public function setUser(\Application\Bundle\FrontBundle\Entity\Users $user) {
+    public function setUser(\Application\Bundle\FrontBundle\Entity\Users $user)
+    {
         $this->user = $user;
 
         return $this;
@@ -82,8 +84,9 @@ class MergeData
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function getUser() {
+    public function getUser()
+    {
         return $this->user;
     }
-}
 
+}
