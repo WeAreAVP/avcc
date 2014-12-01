@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * UserSettings
  * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\UserSettingsRepository")
  * @ORM\Table(name="user_settings")
- * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class UserSettings {
 
@@ -62,7 +62,7 @@ class UserSettings {
     /**
      * @var int
      *
-     * @ORM\Column(name="enable_backup", type="boolean", options={"default" = 0})
+     * @ORM\Column(name="enable_backup", type="boolean", options={"default" = 0}, nullable=true)
      */
     private $enableBackup;
 

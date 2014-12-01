@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\UserSettings;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
+use Application\Bundle\FrontBundle\Form\UserSettingsType;
 
 /**
  * UserSettings controller.
@@ -73,6 +74,7 @@ class UserSettingsController extends Controller {
                 $userEntity = new UserSettings();
                 $userEntity->setUser($this->getUser());
                 $userEntity->setViewSetting($userSetting);
+                $userEntity->setEnableBackup(0);
                 $userEntity->setCreatedOnValue(date('Y-m-d h:i:s'));
                 $em->persist($userEntity);
                 $em->flush();
@@ -95,13 +97,107 @@ class UserSettingsController extends Controller {
      * @return array
      */
     public function backupAction(Request $request) {
+
         $userEntity = $this->getDoctrine()
                 ->getRepository('ApplicationFrontBundle:UserSettings')
                 ->findOneBy(array('user' => $this->getUser()->getId()));
-        $enable = $userEntity->getEnableBackup();
-        return array(
-            'is_enable' => $enable,
-        );
+        if ($userEntity) {
+            $form = $this->createEditForm($userEntity);
+            return array(
+                'entity' => $userEntity,
+                'form' => $form->createView(),
+            );
+        } else {
+            $entity = new UserSettings();
+            $form = $this->createNewForm($entity);
+            return array(
+                'form' => $form->createView(),
+            );
+        }
+    }
+
+    /**
+     * create New Form
+     * 
+     * @param UserSettings $entity
+     * 
+     * @return type
+     */
+    public function createNewForm(UserSettings $entity) {
+        $form = $this->createForm(new UserSettingsType(), $entity, array(
+            'action' => $this->generateUrl('new_backup'),
+            'method' => 'POST',
+        ));
+        $form->add('submit', 'submit', array('label' => 'Save', 'attr' => array('class' => 'button primary')));
+        return $form;
+    }
+
+    /**
+     * create Edit Form
+     * 
+     * @param UserSettings $userEntity
+     * 
+     * @return type
+     */
+    public function createEditForm(UserSettings $userEntity) {
+        $form = $this->createForm(new UserSettingsType(), $userEntity, array(
+            'action' => $this->generateUrl('edit_backup', array('id' => $userEntity->getId())),
+            'method' => 'POST',
+        ));
+        $form->add('submit', 'submit', array('label' => 'Save', 'attr' => array('class' => 'button primary')));
+        return $form;
+    }
+
+    /**
+     * edit form
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * 
+     * @Route("/backup/{id}", name="edit_backup")
+     * @Template()
+     * @return array
+     */
+    public function updateFormAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ApplicationFrontBundle:UserSettings')->find($id);
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find UserSettings entity.');
+        }
+
+        $editForm = $this->createEditForm($entity);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+        }
+        return $this->redirect($this->generateUrl('field_settings_backup'));
+    }
+
+    /**
+     * edit form
+     * 
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * 
+     * @Route("/new", name="new_backup")
+     * @Template()
+     * @return array
+     */
+    public function newFormAction(Request $request) {
+        $entity = new UserSettings();
+        $form = $this->createNewForm($entity);
+        $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        $fObj = new DefaultFields();
+        $settings = $fObj->getFieldSettings($this->getUser(), $em);
+        if ($form->isValid()) {
+            $entity->setUser($this->getUser());
+            $entity->setViewSetting(json_encode($settings));
+            $em->persist($entity);
+            $em->flush();
+        }
+        return $this->redirect($this->generateUrl('field_settings_backup'));
     }
 
 }
