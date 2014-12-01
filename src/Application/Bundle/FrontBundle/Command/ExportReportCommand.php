@@ -72,9 +72,9 @@ class ExportReportCommand extends ContainerAwareCommand
                     $email = new EmailHelper($this->getContainer());
                     $subject = 'Record Export';
                     $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
-                    $entity->setStatus(1);
-                    $em->persist($entity);
-                    $em->flush();
+//                    $entity->setStatus(1);
+//                    $em->persist($entity);
+//                    $em->flush();
                     $text = $rendered;
                 }
             } else {
