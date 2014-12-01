@@ -21,7 +21,6 @@ class MergeData
      * @var string
      *
      * @ORM\Column(name="exported_file", type="sting", length=64, nullable=false)
-     * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      * @Assert\NotBlank(message="Exported file field is required")
      */
