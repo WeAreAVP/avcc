@@ -41,7 +41,7 @@ class ExportReportCommand extends ContainerAwareCommand
                 $user = $entity->getUser();
                 $criteria = json_decode($entity->getQueryOrId(), true);
 //                $text = print_r($criteria);
-                $text = $criteria;
+                $text = $entity->getQueryOrId();
 //                $export = new ExportReport($this->getContainer());
 //                if (is_array($criteria) && array_key_exists('ids', $criteria)) {
 //                    $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($criteria['ids']);
