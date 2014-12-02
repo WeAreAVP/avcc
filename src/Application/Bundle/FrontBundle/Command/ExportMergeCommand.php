@@ -19,7 +19,7 @@ class ExportMergeCommand extends ContainerAwareCommand
     {
         $this
                 ->setName('avcc:export-merge-report')
-                ->setDescription('Export and merge the records that are in queue and email to user.')
+                ->setDescription('Merge and export the records that are in queue and email to user.')
                 ->addArgument(
                         'id', InputArgument::REQUIRED, ' export db id?'
                 )
@@ -33,7 +33,23 @@ class ExportMergeCommand extends ContainerAwareCommand
         if ($id) {
             $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id,'type'=>'export_merge', 'status' => 0));
             if ($entity) {
-                
+                if ($entity->getQueryOrId() != 'all') {
+                    $criteria = json_decode($entity->getQueryOrId(), true);
+                } else {
+                    $criteria = $entity->getQueryOrId();
+                }
+                $export = new ExportReport($this->getContainer());
+                if ($criteria !='all' && array_key_exists('ids', $criteria)) {
+                    $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($criteria['ids']);
+                    if ($records) {
+                        $mergeToFile = $entity->getMergeToFile();
+                        $phpExcelObject = $export->megerRecords($records, $mergeToFile);
+//                        $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+                        $text = $completePath;
+                    } else {
+                        $text = 'records not found';
+                    }
+                }
             }
         }
     }

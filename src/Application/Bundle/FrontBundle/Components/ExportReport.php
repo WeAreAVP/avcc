@@ -110,7 +110,7 @@ class ExportReport extends ContainerAware
         $format = ($type == 'csv') ? 'CSV' : 'Excel2007';
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, $format);
         $filename = 'allFormat_' . time() . '.' . $type;
-        $folderPath = $this->container->getParameter('webUrl').'exports/' . date('Y') . '/' . date('m') . '/';
+        $folderPath = $this->container->getParameter('webUrl') . 'exports/' . date('Y') . '/' . date('m') . '/';
         $completePath = $folderPath . $filename;
         $downloadPath = 'exports/' . date('Y') . '/' . date('m') . '/' . $filename;
         if (!is_dir($folderPath))
@@ -245,7 +245,7 @@ class ExportReport extends ContainerAware
             }
         }
         $phpExcelObject->setActiveSheetIndex(0);
-        
+
         return $phpExcelObject;
     }
 
@@ -312,6 +312,36 @@ class ExportReport extends ContainerAware
                 $activeSheet->setCellValueExplicitByColumnAndRow(28, $row, $record['media_duration']);
             }
             $row ++;
+        }
+    }
+
+    public function megerRecords($records, $mergeToFile)
+    {
+        $mergeFileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $mergeToFile;
+        if (file_exists($mergeFileCompletePath)) {
+            $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($mergeFileCompletePath);
+            foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
+                $worksheetTitle = $worksheet->getTitle();
+                $highestRow = $worksheet->getHighestRow(); // e.g. 10
+                $highestColumn = $worksheet->getHighestColumn(); // e.g 'F'
+//                $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
+                $nrColumns = ord($highestColumn) - 64;
+                echo "<br>The worksheet " . $worksheetTitle . " has ";
+                echo $nrColumns . ' columns (A-' . $highestColumn . ') ';
+                echo ' and ' . $highestRow . ' row.';
+//                for ($row = 1; $row <= $highestRow; ++$row) {
+//                    for ($col = 0; $col < $highestColumnIndex; ++$col) {
+//                        $cell = $worksheet->getCellByColumnAndRow($col, $row);
+//                        $val = $cell->getValue();
+//                        $dataType = PHPExcel_Cell_DataType::dataTypeForValue($val);
+//                        echo '<td>' . $val . '<br>(Typ ' . $dataType . ')</td>';
+//                    }
+//                    
+//                }
+                
+            }
+        } else {
+            echo "The file $mergeToFile does not exist";
         }
     }
 
