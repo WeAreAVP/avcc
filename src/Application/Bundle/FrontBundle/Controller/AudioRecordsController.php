@@ -58,14 +58,14 @@ class AudioRecordsController extends Controller
 
 		if ($form->isValid())
 		{
+			$em->persist($entity);
 			try
 			{
-				$em->persist($entity);
 				$em->flush();
 			}
-			catch (\PDOException $e)
+			catch (\Doctrine\DBAL\DBALException $e)
 			{
-				echo $e->getCode();exit;
+				echo $e->getMessage();exit;
 				if ($e->getCode() == '23000')
 				{
 					echo 'here';exit;
