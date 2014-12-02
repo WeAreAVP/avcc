@@ -603,7 +603,7 @@ function Records() {
         });
     }
     this.showMsg = function () {
-        if (mergeMsg != null || mergeMsg != '') {
+        if (mergeMsg) {
             $("#beforeExportMerge").hide();
             $("#modal-footer").hide();
             $("#afterExportMerge").show();
