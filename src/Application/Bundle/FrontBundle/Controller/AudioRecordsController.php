@@ -65,7 +65,7 @@ class AudioRecordsController extends Controller
 			}
 			catch (\Doctrine\DBAL\DBALException $e)
 			{
-				echo $e->getCode();exit;
+				echo $e->getMessage();exit;
 				if ($e->getCode() == '23000')
 				{
 					echo 'here';exit;
