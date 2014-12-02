@@ -16,6 +16,7 @@ use Application\Bundle\FrontBundle\Helper\SphinxHelper;
 use JMS\JobQueueBundle\Entity\Job;
 use DateInterval;
 use DateTime;
+
 /**
  * Records controller.
  *
@@ -324,12 +325,40 @@ class RecordsController extends Controller
             $em->persist($job);
             $em->flush($job);
 //            if ($session->has("saveRecords")) {
-                $session->remove("saveRecords");
-                $session->remove("allRecords");
+            $session->remove("saveRecords");
+            $session->remove("allRecords");
 //            }
             echo json_encode(array('success' => true));
             exit;
         }
+    }
+
+    /**
+     * Insert all records in sphinx
+     * 
+     * @Route("/sphinx", name="record_sphinx")
+     * @Template("ApplicationFrontBundle:Records:default.html.php")
+     */
+    public function allInSphinx()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $records = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
+        $shpinxInfo = $this->getSphinxInfo();
+        foreach ($records as $record) {
+            if ($record->getMediaType()->getId() == 1) {
+                $recordId = $record->getAudioRecords()->getId();
+            } elseif ($record->getMediaType()->getId() == 2) {
+                $recordId = $record->getFilmRecords()->getId();
+            } else {
+                $recordId = $record->getVideoRecords()->getId();
+            }
+            $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId, $record->getMediaType()->getId());
+            $row = $sphinxSearch->insert();
+            
+            echo $row;
+            echo '<br />';
+        }
+        exit;
     }
 
 }
