@@ -61,8 +61,9 @@ class AudioRecordsController extends Controller
 			try
 			{
 				$em->persist($entity);
+				$em->flush();
 			}
-			catch (PDOException $e)
+			catch (\PDOException $e)
 			{
 				echo $e->getCode();exit;
 				if ($e->getCode() == '23000')
@@ -70,7 +71,7 @@ class AudioRecordsController extends Controller
 					echo 'here';exit;
 				}
 			}
-			$em->flush();
+			
 			$shpinxInfo = $this->getSphinxInfo();
 			$sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getId(), 1);
 			$sphinxSearch->insert();
