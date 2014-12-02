@@ -61,7 +61,7 @@ class AudioRecordsController extends Controller
 			$em->persist($entity);
 			try
 			{
-				$em->flush();
+//				$em->flush();
 			}
 			catch (\PDOException $e)
 			{
