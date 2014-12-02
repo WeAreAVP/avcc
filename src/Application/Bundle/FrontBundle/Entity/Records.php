@@ -19,10 +19,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Records
  *
  * @ORM\Table(name="records")
- * @UniqueEntity(fields="unique_id" ,groups="records")
  * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\RecordsRepository")
  * @ORM\HasLifecycleCallbacks
- * 
+ * @UniqueEntity(fields="unique_id" ,groups="records")
+ * @UniqueEntity(
+ *     fields={"uniqueId"},
+ *     groups={"records"},
+ *     errorPath="uniqueId",
+ *     message="Must be uniqye"
+ * )
  */
 class Records
 {
