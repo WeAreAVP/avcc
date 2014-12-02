@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="icon" type="image/x-icon" href="<?php echo $view['assets']->getUrl('favicon.ico') ?>" />
+        <link rel="icon" type="image/x-icon" href="<?php echo $view['assets']->getUrl('favicon.png') ?>" />
 
         <title><?php $view['slots']->output('title', 'AVCC - AVPreserve') ?></title>
         <script src="<?php echo $view['assets']->getUrl('js/jquery.min.js') ?>"></script>
