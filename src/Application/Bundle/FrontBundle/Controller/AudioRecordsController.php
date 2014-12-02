@@ -66,13 +66,13 @@ class AudioRecordsController extends Controller
 				$shpinxInfo = $this->getSphinxInfo();
 				$sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getId(), 1);
 				$sphinxSearch->insert();
-
+				$this->get('session')->getFlashBag()->add('success', 'Audio record added succesfully.');
 				// the save_and_dupplicate button was clicked
 				if ($form->get('save_and_duplicate')->isClicked())
 				{
 					return $this->redirect($this->generateUrl('record_audio_duplicate', array('audioRecId' => $entity->getId())));
 				}
-				$this->get('session')->getFlashBag()->add('success', 'Audio record added succesfully.');
+
 
 				return $this->redirect($this->generateUrl('record_list'));
 			}
@@ -81,8 +81,8 @@ class AudioRecordsController extends Controller
 				if (is_int(strpos($e->getPrevious()->getMessage(), 'Duplicate entry')))
 				{
 					$error = new FormError("The unique ID must be unique.");
-					$recordForm=$form->get('record');
-					$recordForm->get('uniqueId')->addError($error);
+					$form->get('mediaDiameters')->addError($error);
+					
 				}
 			}
 		}
