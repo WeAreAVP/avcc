@@ -92,7 +92,7 @@
                 record.initDataTable();
                 record.setAjaxExportUrl('<?php echo $view['router']->generate('record_export') ?>');
                 record.setPageUrl('<?php echo $view['router']->generate('record_list') ?>');
-                record.setMergeMsg('<?php echo $exportMergeMsg; ?>');
+                record.setMergeMsg('<?php // echo $exportMergeMsg; ?>');
                 record.bindEvents();
 
             </script>
