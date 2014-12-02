@@ -9,6 +9,7 @@
             {{ form_errors(form) }}
             <br />
             <div class="input-control" data-role="input-control">
+                <label>Email ids {{ form_widget(form.backupEmail, {attr: {class:''} }) }}</label>
                 <label>{{ form_widget(form.enableBackup, {attr: {class:''} }) }} Enable Backup</label>
             </div>
         </fieldset>

@@ -41,6 +41,13 @@ class UserSettings {
     private $viewSetting;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="backup_email", type="text")
+     */
+    private $backupEmail;
+
+    /**
      * @ORM\ManyToOne(targetEntity="MediaTypes", fetch="EAGER", inversedBy="mediaSetting")
      * @ORM\JoinColumn(
      *     name="media_type_id",
@@ -198,6 +205,24 @@ class UserSettings {
      */
     public function setEnableBackup($enableBackup) {
         $this->enableBackup = $enableBackup;
+    }
+
+    /**
+     * get email ids to mail backup
+     *  
+     * @return string
+     */
+    public function getBackupEmail() {
+        return $this->backupEmail;
+    }
+
+    /**
+     * set email ids to mail backup
+     * 
+     * @param string $backupEmail
+     */
+    public function setBackupEmail($backupEmail) {
+        $this->backupEmail = $backupEmail;
     }
 
 }
