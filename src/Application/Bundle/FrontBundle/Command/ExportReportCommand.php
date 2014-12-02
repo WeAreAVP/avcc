@@ -44,9 +44,8 @@ class ExportReportCommand extends ContainerAwareCommand
                 } else {
                     $criteria = $entity->getQueryOrId();
                 }
-                $text = $criteria;
                 $export = new ExportReport($this->getContainer());
-                if (is_array($criteria) && array_key_exists('ids', $criteria)) {$text .= "in";
+                if ($criteria !='all' && array_key_exists('ids', $criteria)) {
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($criteria['ids']);
                     if ($records) {
                         $phpExcelObject = $export->generateReport($records);
@@ -58,15 +57,13 @@ class ExportReportCommand extends ContainerAwareCommand
                 } else {
                     $search = isset($criteria['criteria']) ? $criteria['criteria'] : 'all';
                     $sphinxCriteria = null;
-                    $text = $search;
-                    if ($search != 'all') {$text .= "in";
+                    if ($search != 'all' && is_array($search)) {
                         if ($search['total_checked'] > 0 || count($search['facet_keyword_search']) > 0) {
                             $sphinxHelper = new SphinxHelper();
                             $allCriteria = $sphinxHelper->makeSphinxCriteria($search);
                             $sphinxCriteria = $allCriteria['criteriaArr'];
                         }
                     }
-$text .= "out";
                     $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');
                     $phpExcelObject = $export->fetchFromSphinx($user, $sphinxInfo, $sphinxCriteria, $em);
                     $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
