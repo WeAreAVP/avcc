@@ -20,7 +20,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="records")
  * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\RecordsRepository")
- * @UniqueEntity("uniqueId")
+ * @UniqueEntity(
+ *     fields="unique_id",
+ *     errorPath="uniqueId",
+ *     message="This port is already in use on that host."
+ * )
  * @ORM\HasLifecycleCallbacks
  * 
  */
