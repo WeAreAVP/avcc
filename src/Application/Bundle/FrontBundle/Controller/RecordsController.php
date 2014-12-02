@@ -430,7 +430,7 @@ class RecordsController extends Controller
 //            $session->remove("allRecords");
 ////            }
 //            echo json_encode(array('success' => true));
-        $this->get('session')->getFlashBag()->add('export_merge', 'Merge and export request successfully sent. You will receive an email shortly with download link.');
+        $this->get('session')->setFlash()->add('export_merge', 'Merge and export request successfully sent. You will receive an email shortly with download link.');
         return $this->redirect($this->generateUrl('record_list'));
     }
 
