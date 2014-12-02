@@ -21,7 +21,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="records")
  * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\RecordsRepository")
  * @ORM\HasLifecycleCallbacks
- * @UniqueEntity(fields={"uniqueId"},groups={"records"}, message="Must be unique")
+ * @UniqueEntity(fields={"uniqueId"},groups={"application_bundle_frontbundle_records"}, message="Must be unique")
  */
 class Records
 {
@@ -945,7 +945,7 @@ class Records
      */
     public function __toString()
     {
-        return 'records';
+        return '';
     }
 	function getEditor()
 	{
