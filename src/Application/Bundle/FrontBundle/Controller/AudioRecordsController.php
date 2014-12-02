@@ -81,7 +81,7 @@ class AudioRecordsController extends Controller
 				if (is_int(strpos($e->getPrevious()->getMessage(), 'Duplicate entry')))
 				{
 					$error = new FormError("The unique ID must be unique.");
-					$form->get('uniqueId')->addError($error);
+					$form->get('record')->get('uniqueId')->addError($error);
 				}
 			}
 		}
