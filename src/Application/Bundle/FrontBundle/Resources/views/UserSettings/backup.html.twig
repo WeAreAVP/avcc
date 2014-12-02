@@ -9,7 +9,8 @@
             {{ form_errors(form) }}
             <br />
             <div class="input-control" data-role="input-control">
-                <label>Please enter multiple email addresses with ,<br><br><b>Email Addresses</b> {{ form_widget(form.backupEmail, {attr: {class:'size4'} }) }}<font color="red"><i>{{  error  }}</i></font></label>
+                <label><b>Email Addresses</b> {{ form_widget(form.backupEmail, {attr: {rows:'3', cols:'45'} }) }}<font color="red"><i>{{  error  }}</i></font></label>
+                <font>Please enter multiple email addresses with comma (,) as separator</font>
                 
                 <label>{{ form_widget(form.enableBackup, {attr: {class:''} }) }}  Enable Backup</label>
             </div>
