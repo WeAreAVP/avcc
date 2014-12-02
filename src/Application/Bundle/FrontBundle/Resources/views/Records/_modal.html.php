@@ -14,6 +14,10 @@
         </div>    
     </div>
 </div>
+<?php $exportMergeMsg = null; ?>
+<?php foreach ($view['session']->getFlashBag()->get('export_merge') as $message): ?>
+    <?php $exportMergeMsg = $message ?>
+<?php endforeach; ?>
 <div id="exportMergeModal" class="" tabindex="-1" role="dialog" style="display:none;">
     <h4>Export and Merge Records</h4>
     <div class="modal-body">
@@ -28,13 +32,15 @@
             </div>
         </form>     
         <div id="afterExportMerge" style="display:none;">
-            <p><span style="font-size:13px;">You will receive an email shortly with download link of exported records.</span></p> 
+            <p><span style="font-size:13px;">
+
+                </span></p> 
             <div class="pull-right">
                 <button type="button" name="close" id="closeBtn" class="button simplemodal-close">Close</button>
             </div>
         </div>            
     </div>
-    <div class="modal-form">
+    <div class="modal-footer" id="modal-footer">
         <button type="button" name="close" id="close" class="button closeModal simplemodal-close">No</button> &nbsp; 
         <button type="button" name="submit" id="submit" class="button primary" onclick="$('#exportMergeModal form').submit();">Submit</button>
     </div>

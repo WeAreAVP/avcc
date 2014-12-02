@@ -383,40 +383,41 @@ class RecordsController extends Controller
 //           $request->files->get('file')->getClientOriginalName();
         $originalFileName = $request->files->get('mergetofile')->getClientOriginalName();
         $uploadedFileSize = $request->files->get('mergetofile')->getClientSize();
+        $newFileName = null;
         if ($originalFileName && $uploadedFileSize > 0) {
-            $folderPath = $this->container->getParameter('webUrl').'merge/' . date('Y') . '/' . date('m') . '/';
+            $folderPath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/';
             if (!is_dir($folderPath))
                 mkdir($folderPath, 0777, TRUE);
             $extension = $request->files->get('mergetofile')->getClientOriginalExtension();
-            $newFileName = $this->getUser()->getId()."_exportmerge".time().".".$extension;
-            
+            $newFileName = $this->getUser()->getId() . "_exportmerge" . time() . "." . $extension;
+
             $request->files->get('mergetofile')->move($folderPath, $newFileName);
-            if(!$request->files->get('mergetofile')->isValid()){
+            if (!$request->files->get('mergetofile')->isValid()) {
                 echo 'file uploaded';
             }
         }
-        die;
         $type = $data['emfiletype'];
         $records = $data['emrecordIds'];
 
-//            $export = new ImportExport();
-//            $export->setUser($this->getUser());
-//            $export->setFormat($type);
-//            $export->setType("export");
-//            $export->setStatus(0);
-//            if ($records == 'all') {
-//                $export->setQueryOrId('all');
-//                if ($facetData) {
-//                    $export->setQueryOrId($facetData);
-//                }
-//            } else {
-//                $recordIds = explode(',', $records);
-//                if ($recordIds) {
-//                    $export->setQueryOrId(json_encode(array('ids' => $recordIds), JSON_NUMERIC_CHECK));
-//                }
-//            }
-//            $em->persist($export);
-//            $em->flush();
+        $export = new ImportExport();
+        $export->setUser($this->getUser());
+        $export->setFormat($type);
+        $export->setType("export merge");
+        $export->setMergeToFile($newFileName);
+        $export->setStatus(0);
+        if ($records == 'all') {
+            $export->setQueryOrId('all');
+            if ($facetData) {
+                $export->setQueryOrId($facetData);
+            }
+        } else {
+            $recordIds = explode(',', $records);
+            if ($recordIds) {
+                $export->setQueryOrId(json_encode(array('ids' => $recordIds), JSON_NUMERIC_CHECK));
+            }
+        }
+        $em->persist($export);
+        $em->flush();
 //
 //            $job = new Job('avcc:export-report', array('id' => $export->getId()));
 //            $date = new DateTime();
@@ -429,7 +430,8 @@ class RecordsController extends Controller
 //            $session->remove("allRecords");
 ////            }
 //            echo json_encode(array('success' => true));
-        exit;
+        $this->get('session')->getFlashBag()->add('export_merge', 'Merge and export request successfully sent. You will receive an email shortly with download link.');
+        return $this->redirect($this->generateUrl('record_list'));
     }
 
 }

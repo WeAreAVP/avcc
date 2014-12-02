@@ -23,6 +23,7 @@ function Records() {
     var totalRecords = 0;
     var totalCurrentPageRecords = 0;
     var ajaxExportUrl = null;
+    var mergeMsg = null;
     /**
      * Set the ajax URL of datatable.
      * @param {string} source
@@ -57,6 +58,15 @@ function Records() {
      */
     this.setPageUrl = function (url) {
         pageUrl = url;
+
+    }
+    /**
+     * Set the merge file message.
+     * @param {string} merge_msg
+     * 
+     */
+    this.setMergeMsg = function (merge_msg) {
+        mergeMsg = merge_msg;
 
     }
     /**
@@ -215,6 +225,7 @@ function Records() {
         selfObj.exportRequest();
         selfObj.closeClicked();
         selfObj.exportMergeRequest();
+        selfObj.showMsg();
         return true;
     }
     /**
@@ -588,43 +599,21 @@ function Records() {
             }
         });
     }
-
-//    this.exportMergeRecords = function () {
-//        $('#exportMergeRequest').click(function () {
-//            var exportType = $("#exportType").val();
-//            var selectedrecords = $("#selectedrecords").val();
-//            if (exportType && selectedrecords) {
-//                $.ajax({
-//                    type: 'POST',
-//                    url: ajaxExportUrl,
-//                    data: {type: exportType, records: selectedrecords, merge: true},
-//                    dataType: 'json',
-//                    success: function (response)
-//                    {
-//                        $("#beforeExport").hide();
-//                        $("#afterExport").show();
-//                    }
-//                });
-//            } else {
-//                $.modal.close();
-//                $.Dialog({
-//                    'title': 'Error',
-//                    'content': '<span style="font-size:13px;">Error occured. Please try again.</span>',
-//                    'draggable': false,
-//                    'overlay': true,
-//                    'closeButton': true,
-//                    'buttonsAlign': 'right',
-//                    shadow: true,
-//                    flat: true,
-//                    width: 400,
-//                    height: 150,
-//                    padding: 10,
-//                    'position': {
-//                        'zone': 'right'
-//                    },
-//                });
-//            }
-//        });
-//    }
+    this.showMsg = function(){
+        if(mergeMsg != null || mergeMsg != ''){
+            $("#beforeExportMerge").hide();
+            $("#modal-footer").hide();            
+            $("#afterExportMerge").show();
+            $("#exportMergeModal").modal({
+                containerCss: {
+                        backgroundColor: "#fff",
+                        borderColor: "#fff",
+                        width: 400,
+                        height: 250,
+                    },
+            });
+            $("#exportMergeModal").show();
+        }
+    }
 }
 
