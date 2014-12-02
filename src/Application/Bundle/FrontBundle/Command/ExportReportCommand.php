@@ -57,15 +57,15 @@ class ExportReportCommand extends ContainerAwareCommand
                 } else {
                     $search = isset($criteria['criteria']) ? $criteria['criteria'] : 'all';
                     $sphinxCriteria = null;
-                    
-                    if ($search != 'all') {
+                    $text = $search;
+                    if ($search != 'all') {$text .= "in";
                         if ($search['total_checked'] > 0 || count($search['facet_keyword_search']) > 0) {
                             $sphinxHelper = new SphinxHelper();
                             $allCriteria = $sphinxHelper->makeSphinxCriteria($search);
                             $sphinxCriteria = $allCriteria['criteriaArr'];
                         }
                     }
-
+$text .= "out";
                     $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');
                     $phpExcelObject = $export->fetchFromSphinx($user, $sphinxInfo, $sphinxCriteria, $em);
                     $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
@@ -77,10 +77,10 @@ class ExportReportCommand extends ContainerAwareCommand
                     $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
                     $email = new EmailHelper($this->getContainer());
                     $subject = 'Record Export';
-                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
-                    $entity->setStatus(1);
-                    $em->persist($entity);
-                    $em->flush();
+//                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
+//                    $entity->setStatus(1);
+//                    $em->persist($entity);
+//                    $em->flush();
                     $text = $rendered;
                 }
             } else {
