@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\UserSettings;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\Form\UserSettingsType;
+use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
 
 /**
  * UserSettings controller.
@@ -97,7 +98,13 @@ class UserSettingsController extends Controller {
      * @return array
      */
     public function backupAction(Request $request) {
-
+        $session = $request->getSession();
+        if ($session->get('error')) {
+            $error = $session->get('error');
+        } else {
+            $error = '';
+        }
+        $session->remove('error');
         $userEntity = $this->getDoctrine()
                 ->getRepository('ApplicationFrontBundle:UserSettings')
                 ->findOneBy(array('user' => $this->getUser()->getId()));
@@ -106,12 +113,14 @@ class UserSettingsController extends Controller {
             return array(
                 'entity' => $userEntity,
                 'form' => $form->createView(),
+                'error' => $error,
             );
         } else {
             $entity = new UserSettings();
             $form = $this->createNewForm($entity);
             return array(
                 'form' => $form->createView(),
+                'error' => $error,
             );
         }
     }
@@ -163,14 +172,26 @@ class UserSettingsController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find UserSettings entity.');
         }
-		
+        
         $editForm = $this->createEditForm($entity);
-        $new = $editForm->handleRequest($request);
-
+        $editForm->handleRequest($request);
+        if ($editForm->get('backupEmail')->getData()) {
+            $email_ids = explode(',', $editForm->get('backupEmail')->getData());
+        }
+        $emailConstraint = new EmailConstraint();
+        $emailConstraint->message = 'Invalid email id';
+        foreach ($email_ids as $email) {
+            $errors = $this->get('validator')->validateValue(
+                    $email, $emailConstraint
+            );            
+            if ($errors === 'Invalid email id') {
+                $session = $request->getSession();
+                $session->set('error', 'Invalid email id');
+                return $this->redirect($this->generateUrl('field_settings_backup'));
+            }
+        }
         if ($editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $new =  $editForm->getData();
-            echo $new['enableBackup'];exit;
             $em->persist($entity);
             $em->flush();
         }
