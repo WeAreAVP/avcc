@@ -28,8 +28,7 @@ class AudioRecordsType extends AbstractType
     {
         $builder
     ->add('record', new RecordsType($this->em, $this->data), array(
-            'data_class' => 'Application\Bundle\FrontBundle\Entity\Records',
-		'validation_groups' => array('uniqueRecords')))
+            'data_class' => 'Application\Bundle\FrontBundle\Entity\Records'))
         ->add('mediaDuration', 'text', array('required' => false))
         ->add('diskDiameters')
         ->add('mediaDiameters')
