@@ -51,7 +51,8 @@ class BackupCommand extends ContainerAwareCommand {
                     $email = new EmailHelper($this->getContainer());
                     $subject = 'Record Backup';
                     $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $email_to);
-                    $text = $rendered;
+                //    $text = $rendered;
+                // $text = 
 //                } else {
 //                    $text = 'record not found';
 //                }

@@ -172,6 +172,7 @@ class UserSettingsController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find UserSettings entity.');
         }
+        
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
         if ($editForm->get('backupEmail')->getData()) {
@@ -182,9 +183,7 @@ class UserSettingsController extends Controller {
         foreach ($email_ids as $email) {
             $errors = $this->get('validator')->validateValue(
                     $email, $emailConstraint
-            );
-            echo $errors;
-            
+            );            
             if ($errors === 'Invalid email id') {
                 $session = $request->getSession();
                 $session->set('error', 'Invalid email id');

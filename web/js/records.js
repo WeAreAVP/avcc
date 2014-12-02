@@ -214,6 +214,7 @@ function Records() {
         selfObj.exportRecords();
         selfObj.exportRequest();
         selfObj.closeClicked();
+        selfObj.exportMergeRequest();
         return true;
     }
     /**
@@ -564,7 +565,8 @@ function Records() {
                         height: 250,
                     },
                 });
-                $("#exportType").val(exportType);
+                $("#emfiletype").val(exportType);
+                $("#emrecordIds").val($("#selectedrecords").val());
                 $("#exportMergeModal").show();
             } else {                
                 $.Dialog({
@@ -587,42 +589,42 @@ function Records() {
         });
     }
 
-    this.exportMergeRecords = function () {
-        $('#exportMergeRequest').click(function () {
-            var exportType = $("#exportType").val();
-            var selectedrecords = $("#selectedrecords").val();
-            if (exportType && selectedrecords) {
-                $.ajax({
-                    type: 'POST',
-                    url: ajaxExportUrl,
-                    data: {type: exportType, records: selectedrecords, merge: true},
-                    dataType: 'json',
-                    success: function (response)
-                    {
-                        $("#beforeExport").hide();
-                        $("#afterExport").show();
-                    }
-                });
-            } else {
-                $.modal.close();
-                $.Dialog({
-                    'title': 'Error',
-                    'content': '<span style="font-size:13px;">Error occured. Please try again.</span>',
-                    'draggable': false,
-                    'overlay': true,
-                    'closeButton': true,
-                    'buttonsAlign': 'right',
-                    shadow: true,
-                    flat: true,
-                    width: 400,
-                    height: 150,
-                    padding: 10,
-                    'position': {
-                        'zone': 'right'
-                    },
-                });
-            }
-        });
-    }
+//    this.exportMergeRecords = function () {
+//        $('#exportMergeRequest').click(function () {
+//            var exportType = $("#exportType").val();
+//            var selectedrecords = $("#selectedrecords").val();
+//            if (exportType && selectedrecords) {
+//                $.ajax({
+//                    type: 'POST',
+//                    url: ajaxExportUrl,
+//                    data: {type: exportType, records: selectedrecords, merge: true},
+//                    dataType: 'json',
+//                    success: function (response)
+//                    {
+//                        $("#beforeExport").hide();
+//                        $("#afterExport").show();
+//                    }
+//                });
+//            } else {
+//                $.modal.close();
+//                $.Dialog({
+//                    'title': 'Error',
+//                    'content': '<span style="font-size:13px;">Error occured. Please try again.</span>',
+//                    'draggable': false,
+//                    'overlay': true,
+//                    'closeButton': true,
+//                    'buttonsAlign': 'right',
+//                    shadow: true,
+//                    flat: true,
+//                    width: 400,
+//                    height: 150,
+//                    padding: 10,
+//                    'position': {
+//                        'zone': 'right'
+//                    },
+//                });
+//            }
+//        });
+//    }
 }
 
