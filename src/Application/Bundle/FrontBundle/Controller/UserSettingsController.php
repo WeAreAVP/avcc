@@ -172,7 +172,7 @@ class UserSettingsController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find UserSettings entity.');
         }
-        
+
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
         if ($editForm->get('backupEmail')->getData()) {
@@ -181,10 +181,8 @@ class UserSettingsController extends Controller {
         $emailConstraint = new EmailConstraint();
         $emailConstraint->message = 'Invalid email id';
         foreach ($email_ids as $email) {
-            $errors = $this->get('validator')->validateValue(
-                    $email, $emailConstraint
-            );            
-            if ($errors === 'Invalid email id') {
+            $errors = $this->get('validator')->validateValue($email, $emailConstraint);
+            if (strpos($errors, 'Invalid email id')) {
                 $session = $request->getSession();
                 $session->set('error', 'Please enter valid email id');
                 return $this->redirect($this->generateUrl('field_settings_backup'));
@@ -211,6 +209,19 @@ class UserSettingsController extends Controller {
         $entity = new UserSettings();
         $form = $this->createNewForm($entity);
         $form->handleRequest($request);
+        if ($form->get('backupEmail')->getData()) {
+            $email_ids = explode(',', $form->get('backupEmail')->getData());
+        }
+        $emailConstraint = new EmailConstraint();
+        $emailConstraint->message = 'Invalid email id';
+        foreach ($email_ids as $email) {
+            $errors = $this->get('validator')->validateValue($email, $emailConstraint);
+            if (strpos($errors, 'Invalid email id')) {
+                $session = $request->getSession();
+                $session->set('error', 'Please enter valid email id');
+                return $this->redirect($this->generateUrl('field_settings_backup'));
+            }
+        }
         $em = $this->getDoctrine()->getManager();
         $fObj = new DefaultFields();
         $settings = $fObj->getFieldSettings($this->getUser(), $em);
