@@ -445,9 +445,9 @@ function Records() {
             id = elementID;
             if ($('#row_' + elementID).attr('checked')) {
                 checked = 1;
-                if(selectedrecords){
+                if (selectedrecords) {
                     selectedrecords = selectedrecords + ',' + id;
-                }else{
+                } else {
                     selectedrecords = id;
                 }
             }
@@ -485,7 +485,7 @@ function Records() {
                 });
                 $("#exportType").val(exportType);
                 $("#exportModal").show();
-            } else {                
+            } else {
                 $.Dialog({
                     'title': 'Error',
                     'content': '<span style="font-size:13px;">Please select any record.</span>',
@@ -543,21 +543,21 @@ function Records() {
             }
         });
     }
-    
-    this.closeClicked = function(){
-        $("#closeBtn").on("click", function(){
-           $.modal.close();
-           $('#selectAll').prop("checked",false);
-           $('input[name=record_checkbox]').each(function () {
-                $(this).prop("checked",false);
+
+    this.closeClicked = function () {
+        $("#closeBtn").on("click", function () {
+            $.modal.close();
+            $('#selectAll').prop("checked", false);
+            $('input[name=record_checkbox]').each(function () {
+                $(this).prop("checked", false);
             });
-           $('#records tr').each(function () {
+            $('#records tr').each(function () {
                 $(this).removeClass("selected");
-            }); 
-           window.location.reload(); 
+            });
+            window.location.reload();
         });
     }
-    
+
     this.exportMergeRequest = function () {
         $('.exportMerge').click(function () {
             var checked = false;
@@ -576,10 +576,13 @@ function Records() {
                         height: 250,
                     },
                 });
+                $("#beforeExportMerge").show();
+                $("#modal-footer").show();
+                $("#afterExportMerge").hide();
                 $("#emfiletype").val(exportType);
                 $("#emrecordIds").val($("#selectedrecords").val());
                 $("#exportMergeModal").show();
-            } else {                
+            } else {
                 $.Dialog({
                     'title': 'Error',
                     'content': '<span style="font-size:13px;">Please select any record.</span>',
@@ -599,18 +602,18 @@ function Records() {
             }
         });
     }
-    this.showMsg = function(){
-        if(mergeMsg != null || mergeMsg != ''){
+    this.showMsg = function () {
+        if (mergeMsg != null || mergeMsg != '') {
             $("#beforeExportMerge").hide();
-            $("#modal-footer").hide();            
+            $("#modal-footer").hide();
             $("#afterExportMerge").show();
             $("#exportMergeModal").modal({
                 containerCss: {
-                        backgroundColor: "#fff",
-                        borderColor: "#fff",
-                        width: 400,
-                        height: 250,
-                    },
+                    backgroundColor: "#fff",
+                    borderColor: "#fff",
+                    width: 400,
+                    height: 250,
+                },
             });
             $("#exportMergeModal").show();
         }
