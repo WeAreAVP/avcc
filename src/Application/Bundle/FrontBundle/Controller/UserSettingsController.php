@@ -163,9 +163,7 @@ class UserSettingsController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find UserSettings entity.');
         }
-		echo '<pre>';
-		print_r($this->get('request')->request->get('settings'))
-		;exit;
+		
         $editForm = $this->createEditForm($entity);
         $new = $editForm->handleRequest($request);
 
