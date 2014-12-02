@@ -80,7 +80,7 @@
             <input type="hidden" name="exportType" id="exportType" value="" />
         </div>
         <?php $exportMergeMsg = null; ?>
-        <?php foreach ($view['session']->getFlash()->get('export_merge') as $message): ?>
+        <?php foreach ($view['session']->getFlashes()->get('export_merge') as $message): ?>
             <?php $exportMergeMsg = $message ?>
         <?php endforeach; ?>     
         <?php if (!$isAjax): ?>
