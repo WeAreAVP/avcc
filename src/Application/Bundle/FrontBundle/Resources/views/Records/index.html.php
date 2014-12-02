@@ -80,8 +80,8 @@
             <input type="hidden" name="exportType" id="exportType" value="" />
         </div>
         <?php $exportMergeMsg = null; ?>
-        <?php foreach ($view['session']->getFlashes() as $message): ?>
-            <?php $exportMergeMsg = $message[0] ;
+        <?php foreach ($view['session']-> getFlash("export_merge") as $message): ?>
+            <?php $exportMergeMsg = $message ;
             ?>
         <?php endforeach; ?> 
         <?php ?>    

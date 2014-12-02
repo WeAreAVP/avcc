@@ -380,7 +380,9 @@ class RecordsController extends Controller
         if ($session->has('facetData')) {
             $facetData = json_encode(array('criteria' => $session->get('facetData')));
         }
-//           $request->files->get('file')->getClientOriginalName();
+        $type = $data['emfiletype'];
+        $records = $data['emrecordIds'];
+
         $originalFileName = $request->files->get('mergetofile')->getClientOriginalName();
         $uploadedFileSize = $request->files->get('mergetofile')->getClientSize();
         $newFileName = null;
@@ -390,34 +392,30 @@ class RecordsController extends Controller
                 mkdir($folderPath, 0777, TRUE);
             $extension = $request->files->get('mergetofile')->getClientOriginalExtension();
             $newFileName = $this->getUser()->getId() . "_exportmerge" . time() . "." . $extension;
-
-            $request->files->get('mergetofile')->move($folderPath, $newFileName);
-            if (!$request->files->get('mergetofile')->isValid()) {
-                echo 'file uploaded';
-            }
-        }
-        $type = $data['emfiletype'];
-        $records = $data['emrecordIds'];
-
-        $export = new ImportExport();
-        $export->setUser($this->getUser());
-        $export->setFormat($type);
-        $export->setType("export_merge");
-        $export->setMergeToFile($newFileName);
-        $export->setStatus(0);
-        if ($records == 'all') {
-            $export->setQueryOrId('all');
-            if ($facetData) {
-                $export->setQueryOrId($facetData);
-            }
-        } else {
-            $recordIds = explode(',', $records);
-            if ($recordIds) {
-                $export->setQueryOrId(json_encode(array('ids' => $recordIds), JSON_NUMERIC_CHECK));
-            }
-        }
-        $em->persist($export);
-        $em->flush();
+            if ($type == $extension) {
+                $request->files->get('mergetofile')->move($folderPath, $newFileName);
+                if (!$request->files->get('mergetofile')->isValid()) {
+                    echo 'file uploaded';
+                }
+                $export = new ImportExport();
+                $export->setUser($this->getUser());
+                $export->setFormat($type);
+                $export->setType("export_merge");
+                $export->setMergeToFile($newFileName);
+                $export->setStatus(0);
+                if ($records == 'all') {
+                    $export->setQueryOrId('all');
+                    if ($facetData) {
+                        $export->setQueryOrId($facetData);
+                    }
+                } else {
+                    $recordIds = explode(',', $records);
+                    if ($recordIds) {
+                        $export->setQueryOrId(json_encode(array('ids' => $recordIds), JSON_NUMERIC_CHECK));
+                    }
+                }
+                $em->persist($export);
+                $em->flush();
 //
 //            $job = new Job('avcc:export-report', array('id' => $export->getId()));
 //            $date = new DateTime();
@@ -426,11 +424,17 @@ class RecordsController extends Controller
 //            $em->persist($job);
 //            $em->flush($job);
 ////            if ($session->has("saveRecords")) {
-            $session->remove("saveRecords");
-            $session->remove("allRecords");
+                $session->remove("saveRecords");
+                $session->remove("allRecords");
 ////            }
 //            echo json_encode(array('success' => true));
-        $this->get('session')->getFlashBag()->add('export_merge', 'Merge and export request successfully sent. You will receive an email shortly with download link.');
+                $this->get('session')->getFlashBag()->add('export_merge', 'Merge and export request successfully sent. You will receive an email shortly with download link.');
+            } else {
+                $this->get('session')->getFlashBag()->add('export_merge', 'File formate is not correct. Please try again.');
+            }
+        }
+
+
         return $this->redirect($this->generateUrl('record_list'));
     }
 
