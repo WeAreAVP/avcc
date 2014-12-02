@@ -21,7 +21,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="records")
  * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\RecordsRepository")
  * @ORM\HasLifecycleCallbacks
- * @UniqueEntity("unique_id", message="Unique ID must be unique.")
+ * @UniqueEntityCaseInsensitive("unique_id", message="Unique ID must be unique.")
  */
 class Records
 {
