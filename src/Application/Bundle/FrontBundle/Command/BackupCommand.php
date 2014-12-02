@@ -7,11 +7,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Application\Bundle\FrontBundle\Components\ExportReport;
-use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Application\Bundle\FrontBundle\Helper\EmailHelper;
-use Application\Bundle\FrontBundle\Helper\SphinxHelper;
 use Application\Bundle\FrontBundle\Entity\UserSettings;
 
 class BackupCommand extends ContainerAwareCommand {
@@ -30,40 +27,44 @@ class BackupCommand extends ContainerAwareCommand {
         $entity = $em->getRepository('ApplicationFrontBundle:UserSettings')->findBy(array('enableBackup' => 1));
         if ($entity) {
             foreach ($entity as $record) {
-                $email_to = array();
-                $var = $record->getBackupEmail();
-                if (empty($var)) {
-                    $email_to[] = $record->getUser()->getEmail();
-                } else {
-                    $email_to = explode(',', $record->getBackupEmail());
-                }
+                $email_to = $this->get_email_to($record->getBackupEmail());
                 $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($record->getUser()->getOrganizations()->getId());
                 if ($records) {
                     $phpExcelObject = $export->generateReport($records);
                     $completePath = $export->saveReport('csv', $phpExcelObject);
                     $text = $completePath;
                 }
-            //    if ($completePath) {
-
-//                    $baseUrl = $this->getContainer()->getParameter('baseUrl');
-//                    $templateParameters = array('user' => $record->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
-//                    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
-                    $email = new EmailHelper($this->getContainer());
-//                    $subject = 'Record Backup';
-                    foreach ($email_to as $email_id) {
-                        $email->sendEmail('yahoo', 'just mail', $this->getContainer()->getParameter('from_email'), $email_id);
-                    }
-                    //   $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $email_to);
-                    //      $text = $rendered;
-                    $text = 'wow';
+                //   if ($completePath) {
+               // $baseUrl = $this->getContainer()->getParameter('baseUrl');
+               // $templateParameters = array('user' => $record->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
+               // $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
+                $email = new EmailHelper($this->getContainer());
+             //   $subject = 'Record Backup';
+                foreach ($email_to as $email_id) {
+                    //  $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $email_id);
+                    $email->sendEmail('yahoo', 'just mail', $this->getContainer()->getParameter('from_email'), $email_id);
+                }
+                $text = 'wowow';
+                //      $text = $rendered;
 //                } else {
 //                    $text = 'record not found';
 //                }
-                }
-            } else {
-                $text = 'Hello';
             }
-            $output->writeln($text);
+        } else {
+            $text = 'Hello';
         }
+        $output->writeln($text);
     }
-    
+
+    public function get_email_to($array) {
+        // $var = $record->getBackupEmail();
+        $return = array();
+        if (empty($array)) {
+            $return = $record->getUser()->getEmail();
+        } else {
+            $return = explode(',', $array);
+        }
+        return $return;
+    }
+
+}
