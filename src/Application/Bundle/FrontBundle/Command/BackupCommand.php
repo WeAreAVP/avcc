@@ -31,17 +31,17 @@ class BackupCommand extends ContainerAwareCommand {
         if ($entity) {
             foreach ($entity as $record) {
                 $email_to = array();
-                $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($record->getUser()->getOrganizations()->getId());
-                if ($records) {
-                    $phpExcelObject = $export->generateReport($records);
-                    $completePath = $export->saveReport('csv', $phpExcelObject);
-                    $text = $completePath;
-                } 
+               // $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($record->getUser()->getOrganizations()->getId());
+//                if ($records) {
+//                    $phpExcelObject = $export->generateReport($records);
+//                    $completePath = $export->saveReport('csv', $phpExcelObject);
+//                    $text = $completePath;
+//                } 
                // if ($completePath) {
-                        $var = $record->getBackupEmail();  
+                    $var = $record->getBackupEmail();  
                     if(empty($var))
                     {
-                        $email_to = $record->getUser()->getEmail();
+                        $email_to[] = $record->getUser()->getEmail();
                     }     
                     else{
                         $email_to = explode(',', $record->getBackupEmail());
