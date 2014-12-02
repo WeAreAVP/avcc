@@ -37,7 +37,7 @@ class ExportReportCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $id = $input->getArgument('id');
         if ($id) {
-            $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id, 'status' => 0));
+            $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id,'type'=>'export', 'status' => 0));
             if ($entity) {
                 $user = $entity->getUser();
                 if ($entity->getQueryOrId() != 'all') {
