@@ -83,7 +83,8 @@
         <?php foreach ($view['session']->getFlashes() as $message): ?>
             <?php $exportMergeMsg = $message[0] ;
             ?>
-        <?php endforeach; ?>     
+        <?php endforeach; ?> 
+        <?php $view['session']->getFlashBag()->add('export_merge','')?>    
         <?php if (!$isAjax): ?>
             <?php $view['slots']->start('view_javascripts') ?>
 
