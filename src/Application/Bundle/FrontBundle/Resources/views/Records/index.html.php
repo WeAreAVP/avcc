@@ -81,8 +81,7 @@
         </div>
         <?php $exportMergeMsg = null; ?>
         <?php foreach ($view['session']->getFlashes() as $message): ?>
-            <?php $exportMergeMsg = $message ;
-            echo '<pre>';print_r($exportMergeMsg);
+            <?php $exportMergeMsg = $message[0] ;
             ?>
         <?php endforeach; ?>     
         <?php if (!$isAjax): ?>
