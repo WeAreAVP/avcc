@@ -607,6 +607,7 @@ function Records() {
             $("#beforeExportMerge").hide();
             $("#modal-footer").hide();
             $("#afterExportMerge").show();
+            $("#afterExportMerge span").html(mergeMsg);
             $("#exportMergeModal").modal({
                 containerCss: {
                     backgroundColor: "#fff",
