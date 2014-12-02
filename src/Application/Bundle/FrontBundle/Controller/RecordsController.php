@@ -355,7 +355,7 @@ class RecordsController extends Controller
             $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId, $record->getMediaType()->getId());
             $row = $sphinxSearch->insert();
             
-            echo $row;
+            echo "affected row --".$row;
             echo '<br />';
         }
         exit;
