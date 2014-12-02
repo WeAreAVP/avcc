@@ -36,6 +36,6 @@
     </div>
     <div class="modal-form">
         <button type="button" name="close" id="close" class="button closeModal simplemodal-close">No</button> &nbsp; 
-        <button type="button" name="submit" id="submit" class="button primary">Submit</button>
+        <button type="button" name="submit" id="submit" class="button primary" onclick="$('#exportMergeModal form').submit();">Submit</button>
     </div>
 </div>
