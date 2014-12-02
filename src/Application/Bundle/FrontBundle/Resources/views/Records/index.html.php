@@ -84,7 +84,7 @@
             <?php $exportMergeMsg = $message[0] ;
             ?>
         <?php endforeach; ?> 
-        <?php $view['session']->getFlashBag()->add('export_merge','')?>    
+        <?php ?>    
         <?php if (!$isAjax): ?>
             <?php $view['slots']->start('view_javascripts') ?>
 
