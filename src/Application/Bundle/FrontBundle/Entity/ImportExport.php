@@ -3,6 +3,9 @@
 namespace Application\Bundle\FrontBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * ImportExport
@@ -73,7 +76,7 @@ class ImportExport
      * @var string
      */
     private $mergeToFile;
-    
+
     /**
      * @var boolean
      *
@@ -86,7 +89,7 @@ class ImportExport
      */
     public function setCreatedOnValue()
     {
-        if ( ! $this->getCreatedOn()) {
+        if (!$this->getCreatedOn()) {
             $this->createdOn = new \DateTime();
         }
     }
@@ -194,7 +197,7 @@ class ImportExport
      * 
      * @param string $file
      */
-    public function setMergeToFile($file)
+    public function setMergeToFile(File $file = null)
     {
         $this->mergeToFile = $file;
     }
@@ -208,4 +211,63 @@ class ImportExport
     {
         return $this->mergeToFile;
     }
+
+    public function upload()
+    {
+        // the file property can be empty if the field is not required
+        if (null === $this->getMergeToFile()) {
+            return;
+        }
+
+        // use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+        // move takes the target directory and then the
+        // target filename to move to
+        $this->getMergeToFile()->move(
+                $this->getUploadRootDir(), $this->getMergeToFile()->getClientOriginalName()
+        );
+
+        // set the path property to the filename where you've saved the file
+        $this->mergeToFile = $this->getMergeToFile()->getClientOriginalName();
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getAbsolutePath()
+    {
+        if ($this->mergeToFile) {
+
+            return $this->getUploadRootDir() . '/' . $this->mergeToFile;
+        }
+
+        return null;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getWebPath()
+    {
+        if ($this->mergeToFile) {
+            return '/web/' . $this->getUploadDir() . '/' . $this->mergeToFile;
+        }
+
+        return null;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'merge';
+    }
+
 }
