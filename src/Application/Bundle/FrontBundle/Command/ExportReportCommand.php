@@ -44,8 +44,9 @@ class ExportReportCommand extends ContainerAwareCommand
                 } else {
                     $criteria = $entity->getQueryOrId();
                 }
+                $text = $criteria;
                 $export = new ExportReport($this->getContainer());
-                if (is_array($criteria) && array_key_exists('ids', $criteria)) {
+                if (is_array($criteria) && array_key_exists('ids', $criteria)) {$text .= "in";
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($criteria['ids']);
                     if ($records) {
                         $phpExcelObject = $export->generateReport($records);
