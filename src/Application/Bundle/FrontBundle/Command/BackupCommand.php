@@ -45,7 +45,7 @@ class BackupCommand extends ContainerAwareCommand {
 //                    $baseUrl = $this->getContainer()->getParameter('baseUrl');
 //                    $templateParameters = array('user' => $record->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
 //                    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
-//                    $email = new EmailHelper($this->getContainer());
+                  $email = new EmailHelper($this->getContainer());
 //                    $subject = 'Record Backup';
                     $email->sendEmail('yahoo', 'just mail', $this->getContainer()->getParameter('from_email'), $email_to);
                  //   $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $email_to);
