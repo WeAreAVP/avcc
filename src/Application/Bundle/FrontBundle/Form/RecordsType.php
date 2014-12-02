@@ -185,7 +185,7 @@ class RecordsType extends AbstractType
 	{
 		$resolver->setDefaults(array(
 			'data_class' => 'Application\Bundle\FrontBundle\Entity\Records',
-			'intention'  => 'application_bundle_frontbundle_records'
+			'intention'  => 'records'
 		));
 	}
 
