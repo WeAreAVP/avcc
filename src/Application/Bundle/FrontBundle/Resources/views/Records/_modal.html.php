@@ -17,7 +17,7 @@
 <div id="exportMergeModal" class="" tabindex="-1" role="dialog" style="display:none;">
     <h4>Export and Merge Records</h4>
     <div class="modal-body">
-        <form action="<?php echo $view['router']->generate('record_export') ?>" method="post" enctype="multipart/form-data" name="frmExportMerge"> 
+        <form action="<?php echo $view['router']->generate('record_export_merge') ?>" method="post" enctype="multipart/form-data" name="frmExportMerge"> 
             <div id="beforeExportMerge">
                 <p><span style="font-size:13px;">Are you sure you want to export and merge the record(s)?</span></p>
                 <div class="pull-right">
