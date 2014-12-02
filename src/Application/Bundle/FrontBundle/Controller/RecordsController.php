@@ -381,8 +381,8 @@ class RecordsController extends Controller
                 $facetData = json_encode(array('criteria' => $session->get('facetData')));
             }
             print_r($data);
-            $type = $data['type'];
-            $records = $data['records'];
+            $type = $data['emfiletype'];
+            $records = $data['emrecordIds'];
             
 //            $export = new ImportExport();
 //            $export->setUser($this->getUser());
