@@ -354,8 +354,8 @@ class RecordsController extends Controller
             }
             $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId, $record->getMediaType()->getId());
             $row = $sphinxSearch->insert();
-            
-            echo "affected row --".$row;
+
+            echo "affected row --" . $row;
             echo '<br />';
         }
         exit;
@@ -373,19 +373,32 @@ class RecordsController extends Controller
      */
     public function exportMergeAction(Request $request)
     {
-            $em = $this->getDoctrine()->getManager();
-            $data = $request->request->all();
-            $session = $this->getRequest()->getSession();
-            $facetData = '';
-            if ($session->has('facetData')) {
-                $facetData = json_encode(array('criteria' => $session->get('facetData')));
-            }
+        $em = $this->getDoctrine()->getManager();
+        $data = $request->request->all();
+        $session = $this->getRequest()->getSession();
+        $facetData = '';
+        if ($session->has('facetData')) {
+            $facetData = json_encode(array('criteria' => $session->get('facetData')));
+        }
 //           $request->files->get('file')->getClientOriginalName();
-            print_r($request->files->get('mergetofile')->getClientOriginalName());
-            die;
-            $type = $data['emfiletype'];
-            $records = $data['emrecordIds'];
+        $originalFileName = $request->files->get('mergetofile')->getClientOriginalName();
+        $uploadedFileSize = $request->files->get('mergetofile')->getClientSize();
+        if ($originalFileName && $uploadedFileSize > 0) {
+            $folderPath = $this->container->getParameter('webUrl').'merge/' . date('Y') . '/' . date('m') . '/';
+            if (!is_dir($folderPath))
+                mkdir($folderPath, 0777, TRUE);
+            $extension = $request->files->get('mergetofile')->getClientOriginalExtension();
+            $newFileName = $this->getUser()->getId()."_exportmerge".time().".".$extension;
             
+            $request->files->get('mergetofile')->move($folderPath, $newFileName);
+            if(!$request->files->get('mergetofile')->isValid()){
+                echo 'file uploaded';
+            }
+        }
+        die;
+        $type = $data['emfiletype'];
+        $records = $data['emrecordIds'];
+
 //            $export = new ImportExport();
 //            $export->setUser($this->getUser());
 //            $export->setFormat($type);
@@ -416,6 +429,7 @@ class RecordsController extends Controller
 //            $session->remove("allRecords");
 ////            }
 //            echo json_encode(array('success' => true));
-            exit;
+        exit;
     }
+
 }
