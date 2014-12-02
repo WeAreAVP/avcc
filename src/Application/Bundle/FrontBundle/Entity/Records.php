@@ -19,6 +19,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Records
  *
  * @ORM\Table(name="records")
+ * @UniqueEntity("unique_id")
  * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\RecordsRepository")
  * @ORM\HasLifecycleCallbacks
  * 
@@ -93,7 +94,7 @@ class Records
      * @ORM\Column(name="unique_id", unique=true, type="string")
      * @var string
      * @Assert\NotBlank(message="Unique id is required")
-	 * @UniqueEntity("unique_id")
+	 * 
      */
     private $uniqueId;
 
