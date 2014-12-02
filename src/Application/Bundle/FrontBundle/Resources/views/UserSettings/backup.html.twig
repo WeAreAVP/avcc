@@ -9,8 +9,9 @@
             {{ form_errors(form) }}
             <br />
             <div class="input-control" data-role="input-control">
-                <label>Email ids {{ form_widget(form.backupEmail, {attr: {class:''} }) }}<font color="red"><i>{{error}}</i></font></label>
-                <label>{{ form_widget(form.enableBackup, {attr: {class:''} }) }} Enable Backup</label>
+                <label>Please enter multiple email addresses with ,<br><br><b>Email Addresses</b> {{ form_widget(form.backupEmail, {attr: {class:'size4'} }) }}<font color="red"><i>{{  error  }}</i></font></label>
+                
+                <label>{{ form_widget(form.enableBackup, {attr: {class:''} }) }}  Enable Backup</label>
             </div>
         </fieldset>
         {{ form_end(form) }}

@@ -28,17 +28,12 @@ class BackupCommand extends ContainerAwareCommand {
         $entity = $em->getRepository('ApplicationFrontBundle:UserSettings')->findBy(array('enableBackup' => 1));
         if ($entity) {
             foreach ($entity as $record) {
-                echo 'user id ';
-                echo $record->getUser()->getId();
                 $var = $record->getBackupEmail();
                 $email_to = $this->get_email_to($var);
-                $completePath =null;
+                $completePath = null;
                 if ($record->getUser()->getOrganizations()) {
-                     echo 'org id ';
-                    echo $record->getUser()->getOrganizations()->getId();
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($record->getUser()->getOrganizations()->getId());
                     $export = new ExportReport($this->getContainer());
-                    $text = print_r($records);
                     if ($records) {
                         $phpExcelObject = $export->generateReport($records);
                         $completePath = $export->saveReport('csv', $phpExcelObject);
