@@ -430,7 +430,7 @@ class RecordsController extends Controller
 //            echo json_encode(array('success' => true));
                 $this->get('session')->getFlashBag()->add('export_merge', 'Merge and export request successfully sent. You will receive an email shortly with download link.');
             } else {
-                $this->get('session')->getFlashBag()->add('export_merge', 'File formate is not correct. Please try again.');
+                $this->get('session')->getFlashBag()->add('export_merge_error', 'File formate is not correct. Please try again.');
             }
         }
 

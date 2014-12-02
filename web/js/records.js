@@ -24,6 +24,7 @@ function Records() {
     var totalCurrentPageRecords = 0;
     var ajaxExportUrl = null;
     var mergeMsg = null;
+    var mergeMsgErr = null;
     /**
      * Set the ajax URL of datatable.
      * @param {string} source
@@ -67,6 +68,15 @@ function Records() {
      */
     this.setMergeMsg = function (merge_msg) {
         mergeMsg = merge_msg;
+
+    }
+    /**
+     * Set the error merge file message.
+     * @param {string} merge_msg
+     * 
+     */
+    this.setErrMergeMsg = function (merge_msg) {
+        mergeMsgErr = merge_msg;
 
     }
     /**
@@ -602,12 +612,18 @@ function Records() {
             }
         });
     }
-    this.showMsg = function () {
-        if (mergeMsg) {
+    this.showMsg = function () {  
+       var  msg = '';
+        if(mergeMsg){
+            msg = mergeMsg;
+        }else if(mergeMsgErr){
+            msg = '<span class="error">' + mergeMsgErr + '</span>';
+        }
+        if (msg) {
             $("#beforeExportMerge").hide();
             $("#modal-footer").hide();
             $("#afterExportMerge").show();
-            $("#afterExportMerge span").html(mergeMsg);
+            $("#afterExportMerge span").html(msg);
             $("#exportMergeModal").modal({
                 containerCss: {
                     backgroundColor: "#fff",

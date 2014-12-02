@@ -81,10 +81,14 @@
         </div>
         <?php $exportMergeMsg = null; ?>
         <?php foreach ($view['session']-> getFlash("export_merge") as $message): ?>
-            <?php $exportMergeMsg = $message ;
-            ?>
+            <?php $exportMergeMsg = $message ;?>
         <?php endforeach; ?> 
-        <?php ?>    
+        <?php ?>  
+        <?php $exportMergeErrorMsg = null; ?>
+        <?php foreach ($view['session']-> getFlash("export_merge_error") as $message): ?>
+            <?php $exportMergeErrorMsg = $message ;?>
+        <?php endforeach; ?> 
+        <?php ?>      
         <?php if (!$isAjax): ?>
             <?php $view['slots']->start('view_javascripts') ?>
 
@@ -101,6 +105,7 @@
                 record.setAjaxExportUrl('<?php echo $view['router']->generate('record_export') ?>');
                 record.setPageUrl('<?php echo $view['router']->generate('record_list') ?>');
                 record.setMergeMsg('<?php echo $exportMergeMsg; ?>');
+                record.setErrMergeMsg('<?php echo $exportMergeMsg; ?>');
                 record.bindEvents();
 
             </script>
