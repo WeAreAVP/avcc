@@ -23,21 +23,21 @@
                         </ul>
                     </li>
                     <?php if ($view['security']->isGranted('ROLE_MANAGER')): ?>
-                    <li>
-                        <a class="dropdown-toggle" href="#">Export</a>
-                        <ul class="dropdown-menu" data-role="dropdown">
-                            <li><a href="javascript://" class="export" data-type="csv">CSV</a></li>
-                            <li><a href="javascript://" class="export" data-type="xlsx">XLSX</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="dropdown-toggle" href="#">Export and Merge</a>
-                        <ul class="dropdown-menu" data-role="dropdown">
-                            <li><a href="javascript://" class="exportMerge" data-type="csv">CSV</a></li>
-                            <li><a href="javascript://" class="exportMerge" data-type="xlsx">XLSX</a></li>
-                        </ul>
-                    </li>
-                    <?php endif;?>
+                        <li>
+                            <a class="dropdown-toggle" href="#">Export</a>
+                            <ul class="dropdown-menu" data-role="dropdown">
+                                <li><a href="javascript://" class="export" data-type="csv">CSV</a></li>
+                                <li><a href="javascript://" class="export" data-type="xlsx">XLSX</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="dropdown-toggle" href="#">Export and Merge</a>
+                            <ul class="dropdown-menu" data-role="dropdown">
+                                <li><a href="javascript://" class="exportMerge" data-type="csv">CSV</a></li>
+                                <li><a href="javascript://" class="exportMerge" data-type="xlsx">XLSX</a></li>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
                     <li>
                         <a href="#">Import</a>
                     </li>
@@ -46,7 +46,7 @@
                     </li>
                 </ul>
             </div>
-<?php echo $view->render('ApplicationFrontBundle::Records/_modal.html.php') ?>
+            <?php echo $view->render('ApplicationFrontBundle::Records/_modal.html.php') ?>
             <div class="table-responsive">
                 <table class="table hovered bordered" id="records">
                     <thead>
@@ -58,9 +58,9 @@
                                 if ($column == 'checkbox_Col') {
                                     ?>
                                     <th id="<?php echo $value ?>"><input type="checkbox" name="selectAll" id="selectAll" /></th>
-                                        <?php
-                                    } else {
-                                        ?>
+                                    <?php
+                                } else {
+                                    ?>
                                     <th id="<?php echo $value ?>"><?php echo str_replace('_', ' ', $column) ?></th>
                                 <?php } ?>
                             <?php } ?>
@@ -71,12 +71,18 @@
                     </tbody>
                 </table>
             </div>
-            <?php $recordsIds = "";
-              if($app->getSession()->has('saveRecords')) $recordsIds = implode (',', $app->getSession()->get('saveRecords'));
+            <?php
+            $recordsIds = "";
+            if ($app->getSession()->has('saveRecords'))
+                $recordsIds = implode(',', $app->getSession()->get('saveRecords'));
             ?>
-            <input type="hidden" name="selectedrecords" id="selectedrecords" value="<?php echo $recordsIds;?>" />
+            <input type="hidden" name="selectedrecords" id="selectedrecords" value="<?php echo $recordsIds; ?>" />
             <input type="hidden" name="exportType" id="exportType" value="" />
         </div>
+        <?php $exportMergeMsg = null; ?>
+        <?php foreach ($view['session']->getFlash()->get('export_merge') as $message): ?>
+            <?php $exportMergeMsg = $message ?>
+        <?php endforeach; ?>     
         <?php if (!$isAjax): ?>
             <?php $view['slots']->start('view_javascripts') ?>
 
@@ -92,7 +98,7 @@
                 record.initDataTable();
                 record.setAjaxExportUrl('<?php echo $view['router']->generate('record_export') ?>');
                 record.setPageUrl('<?php echo $view['router']->generate('record_list') ?>');
-                record.setMergeMsg('<?php // echo $exportMergeMsg; ?>');
+                record.setMergeMsg('<?php echo $exportMergeMsg; ?>');
                 record.bindEvents();
 
             </script>
