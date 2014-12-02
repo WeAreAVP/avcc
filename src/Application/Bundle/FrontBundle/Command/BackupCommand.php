@@ -38,11 +38,14 @@ class BackupCommand extends ContainerAwareCommand {
                     $text = $completePath;
                 } 
                // if ($completePath) {
-                    $email_to = $record->getBackupEmail();                  
-                    if(empty($email_to))
+                          
+                    if(empty($record->getBackupEmail()))
                     {
                         $email_to = $record->getUser()->getEmail();
-                    }           
+                    }     
+                    else{
+                        $email_to = explode(',', $record->getBackupEmail());
+                    }
 //                    $baseUrl = $this->getContainer()->getParameter('baseUrl');
 //                    $templateParameters = array('user' => $record->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
 //                    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
