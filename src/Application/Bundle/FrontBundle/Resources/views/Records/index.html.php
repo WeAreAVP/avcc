@@ -81,7 +81,9 @@
         </div>
         <?php $exportMergeMsg = null; ?>
         <?php foreach ($view['session']->getFlashes() as $message): ?>
-            <?php $exportMergeMsg = $message ?>
+            <?php $exportMergeMsg = $message ;
+            print_r($exportMergeMsg);
+            ?>
         <?php endforeach; ?>     
         <?php if (!$isAjax): ?>
             <?php $view['slots']->start('view_javascripts') ?>
