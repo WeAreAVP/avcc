@@ -423,17 +423,14 @@ class RecordsController extends Controller
 //            $job->setExecuteAfter($date);
 //            $em->persist($job);
 //            $em->flush($job);
-////            if ($session->has("saveRecords")) {
-                $session->remove("saveRecords");
-                $session->remove("allRecords");
-////            }
-//            echo json_encode(array('success' => true));
+
                 $this->get('session')->getFlashBag()->add('export_merge', 'Merge and export request successfully sent. You will receive an email shortly with download link.');
             } else {
                 $this->get('session')->getFlashBag()->add('export_merge_error', 'File formate is not correct. Please try again.');
             }
         }
-
+        $session->remove("saveRecords");
+        $session->remove("allRecords");
 
         return $this->redirect($this->generateUrl('record_list'));
     }
