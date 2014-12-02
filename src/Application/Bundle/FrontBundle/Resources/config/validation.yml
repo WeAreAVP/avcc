@@ -2,5 +2,5 @@ Application\Bundle\FrontBundle\Entity\Records:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: unique_id
     properties:
-        unique_id:
+        uniqueId:
             
