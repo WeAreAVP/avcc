@@ -20,8 +20,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="records")
  * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\RecordsRepository")
+ * @UniqueEntity("uniqueId")
  * @ORM\HasLifecycleCallbacks
- * @UniqueEntity(fields="unique_id", message="Username already in use.")
+ * 
  */
 class Records
 {
