@@ -30,29 +30,26 @@ class BackupCommand extends ContainerAwareCommand {
         $entity = $em->getRepository('ApplicationFrontBundle:UserSettings')->findBy(array('enableBackup' => 1));
         if ($entity) {
             foreach ($entity as $record) {
-                $email_to = array();
                 $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($record->getUser()->getOrganizations()->getId());
                 if ($records) {
                     $phpExcelObject = $export->generateReport($records);
                     $completePath = $export->saveReport('csv', $phpExcelObject);
                     $text = $completePath;
                 } 
-            //    if ($completePath) {
-                    $email_to = $record->getBackupEmail();
+               // if ($completePath) {
+                    $email_to = $record->getBackupEmail();                  
                     if(empty($email_to))
                     {
                         $email_to = $record->getUser()->getEmail();
-                    }
-                    
-                  //  $baseUrl = $this->getContainer()->getParameter('baseUrl');
-               //     $templateParameters = array('user' => $record->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
-                //    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
-                    $rendered = 'hreiu';
-                    $email = new EmailHelper($this->getContainer());
-                    $subject = 'Record Backup';
-                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $email_to);
-                //    $text = $rendered;
-                // $text = 
+                    }           
+//                    $baseUrl = $this->getContainer()->getParameter('baseUrl');
+//                    $templateParameters = array('user' => $record->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
+//                    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
+//                    $email = new EmailHelper($this->getContainer());
+//                    $subject = 'Record Backup';
+                    $email->sendEmail('yahoo', 'just mail', $this->getContainer()->getParameter('from_email'), $email_to);
+                 //   $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $email_to);
+                    $text = $rendered;
 //                } else {
 //                    $text = 'record not found';
 //                }
