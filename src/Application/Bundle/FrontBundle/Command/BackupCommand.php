@@ -27,7 +27,8 @@ class BackupCommand extends ContainerAwareCommand {
         $entity = $em->getRepository('ApplicationFrontBundle:UserSettings')->findBy(array('enableBackup' => 1));
         if ($entity) {
             foreach ($entity as $record) {
-                $email_to = $this->get_email_to($record->getBackupEmail());
+                $var = $record->getBackupEmail();
+                $email_to = $this->get_email_to($var);
                 $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($record->getUser()->getOrganizations()->getId());
                 if ($records) {
                     $phpExcelObject = $export->generateReport($records);
