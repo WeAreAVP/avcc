@@ -338,6 +338,7 @@ class ExportReport extends ContainerAware
 //                    }
 //                    
 //                }
+                return $highestRow;
                 
             }
         } else {
