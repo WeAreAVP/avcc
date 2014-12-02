@@ -299,7 +299,6 @@ class RecordsController extends Controller
             }
             $type = $data['type'];
             $records = $data['records'];
-            $merge = $data['merge'];
             $export = new ImportExport();
             $export->setUser($this->getUser());
             $export->setFormat($type);
