@@ -61,9 +61,9 @@ class AudioRecordsController extends Controller
 			$em->persist($entity);
 			try
 			{
-//				$em->flush();
+				$em->flush();
 			}
-			catch (\PDOException $e)
+			catch (PDOException $e)
 			{
 				echo $e->getCode();exit;
 				if ($e->getCode() == '23000')
