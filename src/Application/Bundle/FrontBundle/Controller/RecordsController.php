@@ -383,36 +383,37 @@ class RecordsController extends Controller
             $type = $data['type'];
             $records = $data['records'];
             $merge = $data['merge'];
-            $export = new ImportExport();
-            $export->setUser($this->getUser());
-            $export->setFormat($type);
-            $export->setType("export");
-            $export->setStatus(0);
-            if ($records == 'all') {
-                $export->setQueryOrId('all');
-                if ($facetData) {
-                    $export->setQueryOrId($facetData);
-                }
-            } else {
-                $recordIds = explode(',', $records);
-                if ($recordIds) {
-                    $export->setQueryOrId(json_encode(array('ids' => $recordIds), JSON_NUMERIC_CHECK));
-                }
-            }
-            $em->persist($export);
-            $em->flush();
-
-            $job = new Job('avcc:export-report', array('id' => $export->getId()));
-            $date = new DateTime();
-            $date->add(new DateInterval('PT1M'));
-            $job->setExecuteAfter($date);
-            $em->persist($job);
-            $em->flush($job);
-//            if ($session->has("saveRecords")) {
-            $session->remove("saveRecords");
-            $session->remove("allRecords");
+            
+//            $export = new ImportExport();
+//            $export->setUser($this->getUser());
+//            $export->setFormat($type);
+//            $export->setType("export");
+//            $export->setStatus(0);
+//            if ($records == 'all') {
+//                $export->setQueryOrId('all');
+//                if ($facetData) {
+//                    $export->setQueryOrId($facetData);
+//                }
+//            } else {
+//                $recordIds = explode(',', $records);
+//                if ($recordIds) {
+//                    $export->setQueryOrId(json_encode(array('ids' => $recordIds), JSON_NUMERIC_CHECK));
+//                }
 //            }
-            echo json_encode(array('success' => true));
+//            $em->persist($export);
+//            $em->flush();
+//
+//            $job = new Job('avcc:export-report', array('id' => $export->getId()));
+//            $date = new DateTime();
+//            $date->add(new DateInterval('PT1M'));
+//            $job->setExecuteAfter($date);
+//            $em->persist($job);
+//            $em->flush($job);
+////            if ($session->has("saveRecords")) {
+//            $session->remove("saveRecords");
+//            $session->remove("allRecords");
+////            }
+//            echo json_encode(array('success' => true));
             exit;
     }
 }
