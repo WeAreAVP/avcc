@@ -380,7 +380,7 @@ class RecordsController extends Controller
             if ($session->has('facetData')) {
                 $facetData = json_encode(array('criteria' => $session->get('facetData')));
             }
-            print_r($data);
+            print_r($_FILES);
             $type = $data['emfiletype'];
             $records = $data['emrecordIds'];
             
