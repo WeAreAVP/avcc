@@ -15,9 +15,9 @@
     </div>
 </div>
 <?php $exportMergeMsg = null; ?>
-<?php foreach ($view['session']->getFlashBag()->get('export_merge') as $message): ?>
-    <?php $exportMergeMsg = $message ?>
-<?php endforeach; ?>
+<?php // foreach ($view['session']->getFlashBag()->get('export_merge') as $message): ?>
+    <?php // $exportMergeMsg = $message ?>
+<?php // endforeach; ?>
 <div id="exportMergeModal" class="" tabindex="-1" role="dialog" style="display:none;">
     <h4>Export and Merge Records</h4>
     <div class="modal-body">
