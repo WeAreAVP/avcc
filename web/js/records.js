@@ -214,6 +214,7 @@ function Records() {
         selfObj.exportRecords();
         selfObj.exportRequest();
         selfObj.closeClicked();
+        selfObj.exportMergeRequest();
         return true;
     }
     /**
