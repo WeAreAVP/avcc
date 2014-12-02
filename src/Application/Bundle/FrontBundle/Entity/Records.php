@@ -23,7 +23,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity(
  *     fields="unique_id",
  *     errorPath="uniqueId",
- *     message="This port is already in use on that host."
+ *     message="Unique ID must be unique."
  * )
  * @ORM\HasLifecycleCallbacks
  * 
