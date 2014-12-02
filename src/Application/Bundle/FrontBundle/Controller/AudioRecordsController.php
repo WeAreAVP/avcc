@@ -58,9 +58,9 @@ class AudioRecordsController extends Controller
 
 		if ($form->isValid())
 		{
+			$em->persist($entity);
 			try
 			{
-				$em->persist($entity);
 				$em->flush();
 			}
 			catch (\PDOException $e)
