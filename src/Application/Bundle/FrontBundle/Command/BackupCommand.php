@@ -2,14 +2,14 @@
 
 namespace Application\Bundle\FrontBundle\Command;
 
-///use Symfony\Component\Console\Command\Command;
-//use Symfony\Component\Console\Input\InputArgument;
-//use Symfony\Component\Console\Input\InputInterface;
-//use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Application\Bundle\FrontBundle\Helper\EmailHelper;
-//use Application\Bundle\FrontBundle\Entity\UserSettings;
+use Application\Bundle\FrontBundle\Entity\UserSettings;
 
 class BackupCommand extends ContainerAwareCommand {
 
