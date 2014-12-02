@@ -53,8 +53,10 @@ class AudioRecordsController extends Controller
 	public function createAction(Request $request)
 	{
 		$em = $this->getDoctrine()->getManager();
+		$fieldsObj = new DefaultFields();
+		$data = $fieldsObj->getData(1, $em, $this->getUser(), $projectId);
 		$entity = new AudioRecords();
-		$form = $this->createCreateForm($entity, $em, null);
+		$form = $this->createCreateForm($entity, $em, $data);
 		$form->handleRequest($request);
 		$error = '';
 		if ($form->isValid())
@@ -81,15 +83,18 @@ class AudioRecordsController extends Controller
 				if (is_int(strpos($e->getPrevious()->getMessage(), 'Duplicate entry')))
 				{
 					$error = new FormError("The unique ID must be unique.");
-					$form->get('mediaDiameters')->addError($error);
+					$recordForm=$form->get('record');
+					$recordForm->get('uniqueId')->addError($error);
 					
 				}
 			}
 		}
-
+		$userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
 		return array(
 			'entity' => $entity,
-			'form' => $form->createView()
+			'form' => $form->createView(),
+			'type' => $data['mediaType']->getName(),
+			'fieldSettings' => $userViewSettings
 		);
 	}
 
