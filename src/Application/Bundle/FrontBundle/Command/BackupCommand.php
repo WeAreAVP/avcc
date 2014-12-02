@@ -39,14 +39,14 @@ class BackupCommand extends ContainerAwareCommand {
                         $completePath = $export->saveReport('csv', $phpExcelObject);
                         $text = $completePath;
                     }
-                    if ($completePath) {
+                    if ($completePath != null) {
                         $baseUrl = $this->getContainer()->getParameter('baseUrl');
                         $templateParameters = array('user' => $record->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
                         $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
                         $email = new EmailHelper($this->getContainer());
-//   $subject = 'Record Backup';
+                        $subject = 'Record Backup';
                         foreach ($email_to as $email_id) {
-//                           $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $email_id);
+                            $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $email_id);
                             //  $email->sendEmail('yahoo', 'just mail', $this->getContainer()->getParameter('from_email'), $email_id);
                         }
                         $text = $rendered;
