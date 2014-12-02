@@ -28,8 +28,6 @@ class BackupCommand extends ContainerAwareCommand {
     protected function execute(InputInterface $input, OutputInterface $output) {
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $entity = $em->getRepository('ApplicationFrontBundle:UserSettings')->findBy(array('enableBackup' => 1));
-//        print_r($entity);
-//        exit;
         if ($entity) {
             foreach ($entity as $record) {
                 $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($record->getUser()->getOrganizations()->getId());
@@ -37,21 +35,18 @@ class BackupCommand extends ContainerAwareCommand {
                     $phpExcelObject = $export->generateReport($records);
                     $completePath = $export->saveReport('csv', $phpExcelObject);
                     $text = $completePath;
-                } else {
-                    $text = 'records not found';
-                }
-              //  if ($completePath) {
-              //      $baseUrl = $this->getContainer()->getParameter('baseUrl');
-                 //   $templateParameters = array('user' => $record->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
-                    //$rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
-                   $rendered = 'hello';
+                } 
+                if ($completePath) {
+                    $baseUrl = $this->getContainer()->getParameter('baseUrl');
+                    $templateParameters = array('user' => $record->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
+                    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
                     $email = new EmailHelper($this->getContainer());
                     $subject = 'Record Backup';
-                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), 'rimsha@geekschicago.com');//$record->getUser()->getEmail()
+                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $record->getUser()->getEmail());
                     $text = $rendered;
-//                } else {
-//                    $text = 'record not found';
-//                }
+                } else {
+                    $text = 'record not found';
+                }
             }
         } else {
             $text = 'Hello';

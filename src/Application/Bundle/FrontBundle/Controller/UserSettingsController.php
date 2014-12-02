@@ -152,7 +152,7 @@ class UserSettingsController extends Controller {
      * edit form
      * 
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * 
+     * @Method ("POST")
      * @Route("/backup/{id}", name="edit_backup")
      * @Template()
      * @return array
@@ -165,10 +165,12 @@ class UserSettingsController extends Controller {
         }
 
         $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
+        $new = $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $new =  $editForm->getData();
+            echo $new['enableBackup'];exit;
             $em->persist($entity);
             $em->flush();
         }

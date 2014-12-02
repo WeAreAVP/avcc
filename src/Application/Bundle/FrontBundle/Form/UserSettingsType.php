@@ -17,6 +17,7 @@ class UserSettingsType extends AbstractType
         $builder
 //            ->add('viewSetting')
 //            ->add('createdOn')
+            ->add('backupEmail')
             ->add('enableBackup')
 //            ->add('updatedOn')
 //            ->add('user')
