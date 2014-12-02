@@ -42,7 +42,7 @@ class BackupCommand extends ContainerAwareCommand {
                    $rendered = 'hello';
                     $email = new EmailHelper($this->getContainer());
                     $subject = 'Record Backup';
-                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), 'rimsha@geekschicago.com,rubab@geekschicago.com');//$record->getUser()->getEmail()
+                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), 'rimsha@geekschicago.com');//$record->getUser()->getEmail()
                     $text = $rendered;
 //                } else {
 //                    $text = 'record not found';
