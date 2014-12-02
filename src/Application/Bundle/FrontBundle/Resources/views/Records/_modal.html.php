@@ -22,8 +22,8 @@
                 <p><span style="font-size:13px;">Are you sure you want to export and merge the record(s)?</span></p>
                 <div class="pull-right">
                     <input type="file" name="mergetofile" class="required" required="required" /><br /><br />
-                    <button type="button" name="close" id="close" class="button closeModal simplemodal-close">No</button> &nbsp; 
-                    <button type="button" name="yes" class="button primary" id="exportRequest">Yes</button>
+                    <input type="hidden" name="emrecordIds" id="emrecordIds" value="" />
+                    <input type="hidden" name="emfiletype"  id="emfiletype" value="" />
                 </div>
             </div>
         </form>     
@@ -35,6 +35,7 @@
         </div>            
     </div>
     <div class="modal-form">
+        <button type="button" name="close" id="close" class="button closeModal simplemodal-close">No</button> &nbsp; 
         <button type="button" name="submit" id="submit" class="button primary">Submit</button>
     </div>
 </div>

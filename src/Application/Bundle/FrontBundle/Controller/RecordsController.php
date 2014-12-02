@@ -380,9 +380,9 @@ class RecordsController extends Controller
             if ($session->has('facetData')) {
                 $facetData = json_encode(array('criteria' => $session->get('facetData')));
             }
+            print_r($data);
             $type = $data['type'];
             $records = $data['records'];
-            $merge = $data['merge'];
             
 //            $export = new ImportExport();
 //            $export->setUser($this->getUser());
