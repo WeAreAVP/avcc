@@ -945,7 +945,7 @@ class Records
      */
     public function __toString()
     {
-        return '';
+        return 'records';
     }
 	function getEditor()
 	{
