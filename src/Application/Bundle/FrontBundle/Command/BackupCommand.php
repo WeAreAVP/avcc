@@ -31,36 +31,39 @@ class BackupCommand extends ContainerAwareCommand {
         if ($entity) {
             foreach ($entity as $record) {
                 $email_to = array();
+                $var = $record->getBackupEmail();
+                if (empty($var)) {
+                    $email_to[] = $record->getUser()->getEmail();
+                } else {
+                    $email_to = explode(',', $record->getBackupEmail());
+                }
                 $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($record->getUser()->getOrganizations()->getId());
                 if ($records) {
                     $phpExcelObject = $export->generateReport($records);
                     $completePath = $export->saveReport('csv', $phpExcelObject);
                     $text = $completePath;
-                } 
+                }
             //    if ($completePath) {
-                    $email_to = $record->getBackupEmail();
-                    if(empty($email_to))
-                    {
-                        $email_to = $record->getUser()->getEmail();
-                    }
-                    
-                  //  $baseUrl = $this->getContainer()->getParameter('baseUrl');
-               //     $templateParameters = array('user' => $record->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
-                //    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
-                    $rendered = 'hreiu';
+
+//                    $baseUrl = $this->getContainer()->getParameter('baseUrl');
+//                    $templateParameters = array('user' => $record->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
+//                    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
                     $email = new EmailHelper($this->getContainer());
-                    $subject = 'Record Backup';
-                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $email_to);
-                //    $text = $rendered;
-                // $text = 
+//                    $subject = 'Record Backup';
+                    foreach ($email_to as $email_id) {
+                        $email->sendEmail('yahoo', 'just mail', $this->getContainer()->getParameter('from_email'), $email_id);
+                    }
+                    //   $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $email_to);
+                    //      $text = $rendered;
+                    $text = 'wow';
 //                } else {
 //                    $text = 'record not found';
 //                }
+                }
+            } else {
+                $text = 'Hello';
             }
-        } else {
-            $text = 'Hello';
+            $output->writeln($text);
         }
-        $output->writeln($text);
     }
-
-}
+    
