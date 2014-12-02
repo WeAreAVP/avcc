@@ -11,6 +11,7 @@ use Application\Bundle\FrontBundle\Entity\AudioRecords;
 use Application\Bundle\FrontBundle\Form\AudioRecordsType;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
+use Symfony\Component\Form\FormError;
 
 /**
  * AudioRecords controller.
@@ -55,40 +56,39 @@ class AudioRecordsController extends Controller
 		$entity = new AudioRecords();
 		$form = $this->createCreateForm($entity, $em, null);
 		$form->handleRequest($request);
-
+		$error = '';
 		if ($form->isValid())
 		{
 			$em->persist($entity);
 			try
 			{
 				$em->flush();
+				$shpinxInfo = $this->getSphinxInfo();
+				$sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getId(), 1);
+				$sphinxSearch->insert();
+
+				// the save_and_dupplicate button was clicked
+				if ($form->get('save_and_duplicate')->isClicked())
+				{
+					return $this->redirect($this->generateUrl('record_audio_duplicate', array('audioRecId' => $entity->getId())));
+				}
+				$this->get('session')->getFlashBag()->add('success', 'Audio record added succesfully.');
+
+				return $this->redirect($this->generateUrl('record_list'));
 			}
 			catch (\Doctrine\DBAL\DBALException $e)
 			{
-				echo $e->getMessage();exit;
-				if ($e->getCode() == '23000')
+				if (is_int(strpos($e->getPrevious()->getMessage(), 'Duplicate entry')))
 				{
-					echo 'here';exit;
+					$error = new FormError("The unique ID must be unique.");
+					$form->get('uniqueId')->addError($error);
 				}
 			}
-			
-			$shpinxInfo = $this->getSphinxInfo();
-			$sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getId(), 1);
-			$sphinxSearch->insert();
-
-			// the save_and_dupplicate button was clicked
-			if ($form->get('save_and_duplicate')->isClicked())
-			{
-				return $this->redirect($this->generateUrl('record_audio_duplicate', array('audioRecId' => $entity->getId())));
-			}
-			$this->get('session')->getFlashBag()->add('success', 'Audio record added succesfully.');
-
-			return $this->redirect($this->generateUrl('record_list'));
 		}
 
 		return array(
 			'entity' => $entity,
-			'form' => $form->createView(),
+			'form' => $form->createView()
 		);
 	}
 
