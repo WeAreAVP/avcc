@@ -30,6 +30,7 @@ class BackupCommand extends ContainerAwareCommand {
         $entity = $em->getRepository('ApplicationFrontBundle:UserSettings')->findBy(array('enableBackup' => 1));
         if ($entity) {
             foreach ($entity as $record) {
+                $email_to = array();
                 $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($record->getUser()->getOrganizations()->getId());
                 if ($records) {
                     $phpExcelObject = $export->generateReport($records);
@@ -47,7 +48,10 @@ class BackupCommand extends ContainerAwareCommand {
 //                    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
                   $email = new EmailHelper($this->getContainer());
 //                    $subject = 'Record Backup';
-                    $email->sendEmail('yahoo', 'just mail', $this->getContainer()->getParameter('from_email'), $email_to);
+                  foreach($email_to as $email_id)
+                  {
+                    $email->sendEmail('yahoo', 'just mail', $this->getContainer()->getParameter('from_email'), $email_id);
+                  }
                  //   $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $email_to);
                     $text = $rendered;
 //                } else {
