@@ -39,7 +39,7 @@ class BackupCommand extends ContainerAwareCommand {
                 } 
             //    if ($completePath) {
                     $email_to = $record->getBackupEmail();
-                    if(empty($record->getBackupEmail()))
+                    if(empty($email_to))
                     {
                         $email_to = $record->getUser()->getEmail();
                     }
