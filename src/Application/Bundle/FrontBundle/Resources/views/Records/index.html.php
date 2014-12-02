@@ -30,6 +30,13 @@
                             <li><a href="javascript://" class="export" data-type="xlsx">XLSX</a></li>
                         </ul>
                     </li>
+                    <li>
+                        <a class="dropdown-toggle" href="#">Export and Merge</a>
+                        <ul class="dropdown-menu" data-role="dropdown">
+                            <li><a href="javascript://" class="exportAndMerge" data-type="csv">CSV</a></li>
+                            <li><a href="javascript://" class="exportAndMerge" data-type="xlsx">XLSX</a></li>
+                        </ul>
+                    </li>
                     <?php endif;?>
                     <li>
                         <a href="#">Import</a>
