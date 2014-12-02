@@ -69,6 +69,12 @@ class ImportExport
     private $queryOrId;
 
     /**
+     * @ORM\Column(name="merge_to_file", type="string", nullable=true)
+     * @var string
+     */
+    private $mergeToFile;
+    
+    /**
      * @var boolean
      *
      * @ORM\Column(name="status", type="boolean", nullable=true, options={"default" = 0}) )
@@ -183,4 +189,23 @@ class ImportExport
         $this->status = $status;
     }
 
+    /**
+     * Set merge to file field
+     * 
+     * @param string $file
+     */
+    public function setMergeToFile($file)
+    {
+        $this->mergeToFile = $file;
+    }
+
+    /**
+     * Return merge to file name
+     * 
+     * @return string
+     */
+    public function getMergeToFile()
+    {
+        return $this->mergeToFile;
+    }
 }
