@@ -64,7 +64,8 @@ class AudioRecordsController extends Controller
 			}
 			catch (PDOException $e)
 			{
-				if ($e->getCode() === '23000')
+				echo $e->getCode();exit;
+				if ($e->getCode() == '23000')
 				{
 					echo 'here';exit;
 				}
