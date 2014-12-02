@@ -299,6 +299,7 @@ class RecordsController extends Controller
             }
             $type = $data['type'];
             $records = $data['records'];
+            $merge = $data['merge'];
             $export = new ImportExport();
             $export->setUser($this->getUser());
             $export->setFormat($type);
@@ -361,4 +362,58 @@ class RecordsController extends Controller
         exit;
     }
 
+    /**
+     * Make records to display for dataTables.
+     *
+     * @param Request $request
+     *
+     * @Route("/exportMerge", name="record_export_merge")
+     * @Method("POST")
+     * @Template("ApplicationFrontBundle:Records:default.html.php")
+     * @return json
+     */
+    public function exportMergeAction(Request $request)
+    {
+            $em = $this->getDoctrine()->getManager();
+            $data = $request->request->all();
+            $session = $this->getRequest()->getSession();
+            $facetData = '';
+            if ($session->has('facetData')) {
+                $facetData = json_encode(array('criteria' => $session->get('facetData')));
+            }
+            $type = $data['type'];
+            $records = $data['records'];
+            $merge = $data['merge'];
+            $export = new ImportExport();
+            $export->setUser($this->getUser());
+            $export->setFormat($type);
+            $export->setType("export");
+            $export->setStatus(0);
+            if ($records == 'all') {
+                $export->setQueryOrId('all');
+                if ($facetData) {
+                    $export->setQueryOrId($facetData);
+                }
+            } else {
+                $recordIds = explode(',', $records);
+                if ($recordIds) {
+                    $export->setQueryOrId(json_encode(array('ids' => $recordIds), JSON_NUMERIC_CHECK));
+                }
+            }
+            $em->persist($export);
+            $em->flush();
+
+            $job = new Job('avcc:export-report', array('id' => $export->getId()));
+            $date = new DateTime();
+            $date->add(new DateInterval('PT1M'));
+            $job->setExecuteAfter($date);
+            $em->persist($job);
+            $em->flush($job);
+//            if ($session->has("saveRecords")) {
+            $session->remove("saveRecords");
+            $session->remove("allRecords");
+//            }
+            echo json_encode(array('success' => true));
+            exit;
+    }
 }

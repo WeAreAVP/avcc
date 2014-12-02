@@ -502,7 +502,7 @@ function Records() {
                 $.ajax({
                     type: 'POST',
                     url: ajaxExportUrl,
-                    data: {type: exportType, records: selectedrecords},
+                    data: {type: exportType, records: selectedrecords, merge: false},
                     dataType: 'json',
                     success: function (response)
                     {
@@ -543,6 +543,85 @@ function Records() {
                 $(this).removeClass("selected");
             }); 
            window.location.reload(); 
+        });
+    }
+    
+    this.exportMergeRequest = function () {
+        $('.exportMerge').click(function () {
+            var checked = false;
+            $('input[name=record_checkbox]').each(function () {
+                if ($(this).prop("checked") == true) {
+                    checked = true;
+                }
+            });
+            if (checked) {
+                var exportType = $(this).attr('data-type');
+                $("#exportMergeModal").modal({
+                    containerCss: {
+                        backgroundColor: "#fff",
+                        borderColor: "#fff",
+                        width: 400,
+                        height: 250,
+                    },
+                });
+                $("#exportType").val(exportType);
+                $("#exportMergeModal").show();
+            } else {                
+                $.Dialog({
+                    'title': 'Error',
+                    'content': '<span style="font-size:13px;">Please select any record.</span>',
+                    'draggable': false,
+                    'overlay': true,
+                    'closeButton': true,
+                    'buttonsAlign': 'right',
+                    shadow: true,
+                    flat: true,
+                    width: 400,
+                    height: 150,
+                    padding: 10,
+                    'position': {
+                        'zone': 'right'
+                    },
+                });
+            }
+        });
+    }
+
+    this.exportMergeRecords = function () {
+        $('#exportMergeRequest').click(function () {
+            var exportType = $("#exportType").val();
+            var selectedrecords = $("#selectedrecords").val();
+            if (exportType && selectedrecords) {
+                $.ajax({
+                    type: 'POST',
+                    url: ajaxExportUrl,
+                    data: {type: exportType, records: selectedrecords, merge: true},
+                    dataType: 'json',
+                    success: function (response)
+                    {
+                        $("#beforeExport").hide();
+                        $("#afterExport").show();
+                    }
+                });
+            } else {
+                $.modal.close();
+                $.Dialog({
+                    'title': 'Error',
+                    'content': '<span style="font-size:13px;">Error occured. Please try again.</span>',
+                    'draggable': false,
+                    'overlay': true,
+                    'closeButton': true,
+                    'buttonsAlign': 'right',
+                    shadow: true,
+                    flat: true,
+                    width: 400,
+                    height: 150,
+                    padding: 10,
+                    'position': {
+                        'zone': 'right'
+                    },
+                });
+            }
         });
     }
 }
