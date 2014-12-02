@@ -19,7 +19,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Records
  *
  * @ORM\Table(name="records")
- * @UniqueEntity("unique_id")
+ * @UniqueEntity(fields="unique_id" ,groups="records")
  * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\RecordsRepository")
  * @ORM\HasLifecycleCallbacks
  * 
