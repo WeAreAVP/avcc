@@ -186,7 +186,7 @@ class UserSettingsController extends Controller {
             );            
             if ($errors === 'Invalid email id') {
                 $session = $request->getSession();
-                $session->set('error', 'Invalid email id');
+                $session->set('error', 'Please enter valid email id');
                 return $this->redirect($this->generateUrl('field_settings_backup'));
             }
         }
