@@ -318,13 +318,14 @@ class ExportReport extends ContainerAware
 
     public function megerRecords($records, $mergeToFile)
     {
-   echo     $mergeFileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $mergeToFile;
-   exit;
+    $mergeFileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $mergeToFile;
+   
 //        $mergeFileCompletePath = '/Applications/XAMPP/xamppfiles/htdocs/avcc/web/' . $mergeToFile;
         if (file_exists($mergeFileCompletePath)) {
             $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($mergeFileCompletePath);
             $newphpExcelObject = $this->initReport();
             $activeSheet = $newphpExcelObject->setActiveSheetIndex(0);
+            
             foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
                 $worksheetTitle = $worksheet->getTitle();
                 $highestRow = $worksheet->getHighestRow();
@@ -341,7 +342,6 @@ class ExportReport extends ContainerAware
                                 $matched = false;
                                 if ($record->getUniqueId() == $worksheet->getCellByColumnAndRow(3, $row)) {
                                     $matched = true;
-                                    return $record->getUniqueId();
                                 }
                                 if ($matched) {
                                     $cell = $worksheet->getCellByColumnAndRow($col, $row);
@@ -356,7 +356,6 @@ class ExportReport extends ContainerAware
                             }
                         }
                     }
-
                     if ($records) {
                         return $newphpExcelObject;
                     }
