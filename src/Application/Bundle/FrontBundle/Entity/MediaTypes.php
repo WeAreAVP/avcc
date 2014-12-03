@@ -13,8 +13,7 @@ use Application\Bundle\FrontBundle\Entity\Formats as Formats;
  * @ORM\Table(name="media_types")
  * @ORM\Entity
  */
-class MediaTypes
-{
+class MediaTypes {
 
     /**
      * @var integer
@@ -32,6 +31,14 @@ class MediaTypes
      * @Assert\NotBlank(message="Media type name is required")
      */
     private $name;
+
+    /**
+     * @var real
+     *
+     * @ORM\Column(name="score", type="real", options={"default" = 0})
+     * @Assert\NotBlank(message="Score is required")
+     */
+    private $score;
 
     /**
      * @ORM\OneToMany(
@@ -58,8 +65,7 @@ class MediaTypes
     /**
      * Media types construct
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->formats = new ArrayCollection();
         $this->mediaSetting = new ArrayCollection();
     }
@@ -69,8 +75,7 @@ class MediaTypes
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->getName();
     }
 
@@ -79,8 +84,7 @@ class MediaTypes
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -89,8 +93,7 @@ class MediaTypes
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -101,8 +104,7 @@ class MediaTypes
      *
      * @return \Application\Bundle\FrontBundle\Entity\MediaTypes
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -113,8 +115,7 @@ class MediaTypes
      *
      * @param \Application\Bundle\FrontBundle\Entity\Formats $f *
      */
-    public function addFormat(Formats $f)
-    {
+    public function addFormat(Formats $f) {
         if (!$this->formats->contains($f)) {
 
             $this->formats[] = $f;
@@ -127,8 +128,7 @@ class MediaTypes
      *
      * @param \Application\Bundle\FrontBundle\Entity\Formats $f *
      */
-    public function removeFormat(Formats $f)
-    {
+    public function removeFormat(Formats $f) {
         $this->formats->remove($f);
     }
 
@@ -137,8 +137,7 @@ class MediaTypes
      *
      * @param \Application\Bundle\FrontBundle\Entity\MediaTypes $mt
      */
-    public function addMediaSetting(MediaTypes $mt)
-    {
+    public function addMediaSetting(MediaTypes $mt) {
         if (!$this->mediaSetting->contains($mt)) {
 
             $this->mediaSetting[] = $mt;
@@ -151,9 +150,28 @@ class MediaTypes
      *
      * @param \Application\Bundle\FrontBundle\Entity\MediaTypes $mt
      */
-    public function removeMediaSetting(Formats $mt)
-    {
+    public function removeMediaSetting(Formats $mt) {
         $this->mediaSetting->remove($mt);
+    }
+
+    /**
+     * Get score
+     *
+     * @return real number
+     */
+    public function getScore() {
+        return $this->score;
+    }
+
+    /**
+     * Set score
+     *
+     * @param float $score
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Colors
+     */
+    public function setScore($score) {
+        $this->score = $score;
     }
 
 }

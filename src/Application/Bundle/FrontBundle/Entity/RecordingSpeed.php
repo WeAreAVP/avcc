@@ -11,8 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="recording_speed")
  * @ORM\Entity
  */
-class RecordingSpeed
-{
+class RecordingSpeed {
 
     /**
      * @var integer
@@ -30,6 +29,14 @@ class RecordingSpeed
      * @Assert\NotBlank(message="Recording speed name is required")
      */
     private $name;
+
+    /**
+     * @var real
+     *
+     * @ORM\Column(name="score", type="real", options={"default" = 0})
+     * @Assert\NotBlank(message="Score is required")
+     */
+    private $score;
 
     /**
      * @ORM\ManyToOne(targetEntity="Formats", fetch="EAGER", inversedBy="recordingSpeed")
@@ -61,8 +68,7 @@ class RecordingSpeed
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->getName();
     }
 
@@ -71,8 +77,7 @@ class RecordingSpeed
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -81,8 +86,7 @@ class RecordingSpeed
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -93,8 +97,7 @@ class RecordingSpeed
      *
      * @return \Application\Bundle\FrontBundle\Entity\RecordingSpeed
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -107,8 +110,7 @@ class RecordingSpeed
      *
      * @return \Application\Bundle\FrontBundle\Entity\RecordingSpeed
      */
-    public function setRecSpeedFormat(\Application\Bundle\FrontBundle\Entity\Formats $recSpeedFormat)
-    {
+    public function setRecSpeedFormat(\Application\Bundle\FrontBundle\Entity\Formats $recSpeedFormat) {
         $this->recSpeedFormat = $recSpeedFormat;
 
         return $this;
@@ -119,8 +121,7 @@ class RecordingSpeed
      *
      * @return \Application\Bundle\FrontBundle\Entity\Formats
      */
-    public function getRecSpeedFormat()
-    {
+    public function getRecSpeedFormat() {
         return $this->recSpeedFormat;
     }
 
@@ -131,8 +132,7 @@ class RecordingSpeed
      *
      * @return \Application\Bundle\FrontBundle\Entity\RecordingSpeed
      */
-    public function setOrganization(\Application\Bundle\FrontBundle\Entity\Organizations $organization)
-    {
+    public function setOrganization(\Application\Bundle\FrontBundle\Entity\Organizations $organization) {
         $this->organization = $organization;
 
         return $this;
@@ -143,8 +143,28 @@ class RecordingSpeed
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function getOrganization()
-    {
+    public function getOrganization() {
         return $this->organization;
     }
+
+    /**
+     * Get score
+     *
+     * @return real number
+     */
+    public function getScore() {
+        return $this->score;
+    }
+
+    /**
+     * Set score
+     *
+     * @param float $score
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Colors
+     */
+    public function setScore($score) {
+        $this->score = $score;
+    }
+
 }

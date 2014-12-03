@@ -139,8 +139,6 @@ class Colors
     public function setScore($score)
     {
         $this->score = $score;
-
-        return $this;
     }
 
 }

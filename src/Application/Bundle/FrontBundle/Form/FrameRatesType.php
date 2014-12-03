@@ -16,6 +16,7 @@ class FrameRatesType extends AbstractType
     {
         $builder
             ->add('name')
+                ->add('score')
 //            ->add('organization')
         ;
     }

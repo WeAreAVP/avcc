@@ -5,7 +5,7 @@ namespace Application\Bundle\FrontBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
-use Application\Bundle\FrontBundle\Entity\Bases as Bases ;
+use Application\Bundle\FrontBundle\Entity\Bases as Bases;
 use Application\Bundle\FrontBundle\Entity\RecordingSpeed as RecordingSpeed;
 use Application\Bundle\FrontBundle\Entity\FormatVersions as FormatVersions;
 
@@ -15,8 +15,7 @@ use Application\Bundle\FrontBundle\Entity\FormatVersions as FormatVersions;
  * @ORM\Table(name="formats")
  * @ORM\Entity
  */
-class Formats
-{
+class Formats {
 
     /**
      * @var integer
@@ -34,6 +33,14 @@ class Formats
      * @Assert\NotBlank(message="Format name is required")
      */
     private $name;
+
+    /**
+     * @var real
+     *
+     * @ORM\Column(name="score", type="real", options={"default" = 0})
+     * @Assert\NotBlank(message="Score is required")
+     */
+    private $score;
 
     /**
      * @ORM\ManyToOne(targetEntity="MediaTypes", fetch="EAGER", inversedBy="formats")
@@ -99,8 +106,7 @@ class Formats
     /**
      * Formats constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->base = new ArrayCollection();
         $this->recordingSpeed = new ArrayCollection();
         $this->formatVersion = new ArrayCollection();
@@ -112,8 +118,7 @@ class Formats
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->getName();
     }
 
@@ -122,8 +127,7 @@ class Formats
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -132,8 +136,7 @@ class Formats
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -144,8 +147,7 @@ class Formats
      *
      * @return \Application\Bundle\FrontBundle\Entity\Formats
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -158,8 +160,7 @@ class Formats
      *
      * @return \Application\Bundle\FrontBundle\Entity\Formats
      */
-    public function setMediaType(\Application\Bundle\FrontBundle\Entity\MediaTypes $mediaType)
-    {
+    public function setMediaType(\Application\Bundle\FrontBundle\Entity\MediaTypes $mediaType) {
         $this->mediaType = $mediaType;
 
         return $this;
@@ -170,8 +171,7 @@ class Formats
      *
      * @return \Application\Bundle\FrontBundle\Entity\MediaTypes
      */
-    public function getMediaType()
-    {
+    public function getMediaType() {
         return $this->mediaType;
     }
 
@@ -180,13 +180,12 @@ class Formats
      * @param \Application\Bundle\FrontBundle\Entity\Bases $b
      *
      */
-    public function addBase(Bases $b)
-    {
-         if (!$this->base->contains($b)) {
+    public function addBase(Bases $b) {
+        if (!$this->base->contains($b)) {
 
-             $this->base[] = $b;
-             $b->setBaseFormat($this);
-         }
+            $this->base[] = $b;
+            $b->setBaseFormat($this);
+        }
     }
 
     /**
@@ -194,9 +193,8 @@ class Formats
      * @param \Application\Bundle\FrontBundle\Entity\Bases $b
      *
      */
-    public function removeBase(Bases $b)
-    {
-         $this->base->remove($b);
+    public function removeBase(Bases $b) {
+        $this->base->remove($b);
     }
 
     /**
@@ -204,13 +202,12 @@ class Formats
      * @param \Application\Bundle\FrontBundle\Entity\RecordingSpeed $rs
      *
      */
-    public function addRecordingSpeed(RecordingSpeed $rs)
-    {
-         if (!$this->recordingSpeed->contains($rs)) {
+    public function addRecordingSpeed(RecordingSpeed $rs) {
+        if (!$this->recordingSpeed->contains($rs)) {
 
-             $this->recordingSpeed[] = $rs;
-             $rs->setRecSpeedFormat($this);
-         }
+            $this->recordingSpeed[] = $rs;
+            $rs->setRecSpeedFormat($this);
+        }
     }
 
     /**
@@ -218,23 +215,21 @@ class Formats
      * @param \Application\Bundle\FrontBundle\Entity\RecordingSpeed $rs
      *
      */
-    public function removeRecordingSpeed(RecordingSpeed $rs)
-    {
-         $this->recordingSpeed->remove($rs);
+    public function removeRecordingSpeed(RecordingSpeed $rs) {
+        $this->recordingSpeed->remove($rs);
     }
 
-     /**
+    /**
      * Add format versions
      * @param \Application\Bundle\FrontBundle\Entity\FormatVersions $fv
      *
      */
-    public function addFormatVersion(FormatVersions $fv)
-    {
-         if (!$this->formatVersion->contains($fv)) {
+    public function addFormatVersion(FormatVersions $fv) {
+        if (!$this->formatVersion->contains($fv)) {
 
-             $this->formatVersion[] = $fv;
-             $fv->setFormatVersionFormat($this);
-         }
+            $this->formatVersion[] = $fv;
+            $fv->setFormatVersionFormat($this);
+        }
     }
 
     /**
@@ -242,9 +237,8 @@ class Formats
      * @param \Application\Bundle\FrontBundle\Entity\FormatVersions $fv
      *
      */
-    public function removeFormatVersion(FormatVersions $fv)
-    {
-         $this->formatVersion->remove($fv);
+    public function removeFormatVersion(FormatVersions $fv) {
+        $this->formatVersion->remove($fv);
     }
 
     /**
@@ -252,13 +246,12 @@ class Formats
      * @param \Application\Bundle\FrontBundle\Entity\ReelDiameters $rm
      *
      */
-    public function addReelDiameter(ReelDiameters $rm)
-    {
-         if (!$this->reelDiameter->contains($rm)) {
+    public function addReelDiameter(ReelDiameters $rm) {
+        if (!$this->reelDiameter->contains($rm)) {
 
-             $this->reelDiameter[] = $rm;
-             $rm->setReelFormat($this);
-         }
+            $this->reelDiameter[] = $rm;
+            $rm->setReelFormat($this);
+        }
     }
 
     /**
@@ -266,9 +259,28 @@ class Formats
      * @param \Application\Bundle\FrontBundle\Entity\ReelDiameters $rm
      *
      */
-    public function removeReelDiameter(ReelDiameters $fv)
-    {
-         $this->reelDiameter->remove($fv);
+    public function removeReelDiameter(ReelDiameters $fv) {
+        $this->reelDiameter->remove($fv);
+    }
+
+    /**
+     * Get score
+     *
+     * @return real number
+     */
+    public function getScore() {
+        return $this->score;
+    }
+
+    /**
+     * Set score
+     *
+     * @param float $score
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Colors
+     */
+    public function setScore($score) {
+        $this->score = $score;
     }
 
 }

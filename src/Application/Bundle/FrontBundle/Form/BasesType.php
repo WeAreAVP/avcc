@@ -28,6 +28,7 @@ class BasesType extends AbstractType
         if ($isNew) {
             $builder
                     ->add('name')
+                    ->add('score')
                     ->add('baseFormat', 'entity', array(
                         'class' => 'ApplicationFrontBundle:Formats',
                         'query_builder' => function (EntityRepository $er) {
@@ -41,6 +42,7 @@ class BasesType extends AbstractType
         } else {
             $builder
                     ->add('name')
+                    ->add('score')
                     ->add('baseFormat')
             ;
         }

@@ -16,6 +16,7 @@ class SlidesType extends AbstractType
     {
         $builder
             ->add('name')
+                ->add('score')
 //            ->add('organization')
         ;
     }

@@ -16,6 +16,7 @@ class SoundsType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('score')
 //            ->add('organization')
         ;
     }

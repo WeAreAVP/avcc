@@ -16,6 +16,7 @@ class FormatsType extends AbstractType
     {
         $builder
             ->add('name')
+                ->add('score')
             ->add('mediaType')
 //            ->add('organization')
         ;
