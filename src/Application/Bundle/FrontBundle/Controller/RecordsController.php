@@ -418,12 +418,12 @@ class RecordsController extends Controller
                 $em->persist($export);
                 $em->flush();
 //
-//            $job = new Job('avcc:export-report', array('id' => $export->getId()));
-//            $date = new DateTime();
-//            $date->add(new DateInterval('PT1M'));
-//            $job->setExecuteAfter($date);
-//            $em->persist($job);
-//            $em->flush($job);
+            $job = new Job('avcc:export-merge-report', array('id' => $export->getId()));
+            $date = new DateTime();
+            $date->add(new DateInterval('PT1M'));
+            $job->setExecuteAfter($date);
+            $em->persist($job);
+            $em->flush($job);
 
                 $this->get('session')->getFlashBag()->add('export_merge', 'Merge and export request successfully sent. You will receive an email shortly with download link.');
             } else {
@@ -464,8 +464,8 @@ class RecordsController extends Controller
                     if ($records) {
                         $mergeToFile = $entity->getMergeToFile();
                         $phpExcelObject = $export->megerRecords($records, $mergeToFile);
-//                        $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
-                        $completePath = $export->outputReport($entity->getFormat(), $phpExcelObject);
+                        $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+//                        $completePath = $export->outputReport($entity->getFormat(), $phpExcelObject);
 //                        $text = $completePath;
                         $text = $completePath;
                    
