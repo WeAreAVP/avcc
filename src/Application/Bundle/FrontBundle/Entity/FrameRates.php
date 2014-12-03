@@ -11,8 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="frame_rates")
  * @ORM\Entity
  */
-class FrameRates
-{
+class FrameRates {
 
     /**
      * @var integer
@@ -32,6 +31,14 @@ class FrameRates
     private $name;
 
     /**
+     * @var real
+     *
+     * @ORM\Column(name="score", type="real", options={"default" = 0})
+     * @Assert\NotBlank(message="Score is required")
+     */
+    private $score;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="frameRateOrg")
      * @ORM\JoinColumn(
      *     name="organization_id",
@@ -48,8 +55,7 @@ class FrameRates
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->getName();
     }
 
@@ -58,8 +64,7 @@ class FrameRates
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -68,8 +73,7 @@ class FrameRates
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -80,8 +84,7 @@ class FrameRates
      *
      * @return \Application\Bundle\FrontBundle\Entity\FrameRates
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -94,8 +97,7 @@ class FrameRates
      *
      * @return \Application\Bundle\FrontBundle\Entity\FrameRates
      */
-    public function setOrganization(\Application\Bundle\FrontBundle\Entity\Organizations $organization)
-    {
+    public function setOrganization(\Application\Bundle\FrontBundle\Entity\Organizations $organization) {
         $this->organization = $organization;
 
         return $this;
@@ -106,8 +108,28 @@ class FrameRates
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function getOrganization()
-    {
+    public function getOrganization() {
         return $this->organization;
     }
+
+    /**
+     * Get score
+     *
+     * @return real number
+     */
+    public function getScore() {
+        return $this->score;
+    }
+
+    /**
+     * Set score
+     *
+     * @param float $score
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Colors
+     */
+    public function setScore($score) {
+        $this->score = $score;
+    }
+
 }

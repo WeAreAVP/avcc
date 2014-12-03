@@ -22,6 +22,7 @@ class RecordingSpeedType extends AbstractType
         if ($isNew) {
             $builder
                     ->add('name')
+                    ->add('score')
                     ->add('recSpeedFormat', 'entity', array(
                         'class' => 'ApplicationFrontBundle:Formats',
                         'query_builder' => function (EntityRepository $er) {
@@ -36,6 +37,7 @@ class RecordingSpeedType extends AbstractType
         } else {
             $builder
                     ->add('name')
+                    ->add('score')
                     ->add('recSpeedFormat')
 //            ->add('organization')
             ;

@@ -16,6 +16,7 @@ class MediaTypesType extends AbstractType
     {
         $builder
             ->add('name')
+                ->add('score')
         ;
     }
 

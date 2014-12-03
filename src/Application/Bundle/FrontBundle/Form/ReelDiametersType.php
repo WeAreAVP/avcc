@@ -22,6 +22,7 @@ class ReelDiametersType extends AbstractType
         if ($isNew) {
             $builder
                     ->add('name')
+                    ->add('score')
                     ->add('reelFormat', 'entity', array(
                         'class' => 'ApplicationFrontBundle:Formats',
                         'query_builder' => function (EntityRepository $er) {
@@ -35,6 +36,7 @@ class ReelDiametersType extends AbstractType
         } else {
             $builder
                     ->add('name')
+                    ->add('score')
                     ->add('reelFormat')
 //            ->add('organization')
             ;
