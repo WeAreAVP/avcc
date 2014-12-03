@@ -465,9 +465,9 @@ class RecordsController extends Controller
                         $mergeToFile = $entity->getMergeToFile();
                         $phpExcelObject = $export->megerRecords($records, $mergeToFile);
 //                        $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
-//                        $completePath = $export->outputReport($entity->getFormat(), $phpExcelObject);
+                        $completePath = $export->outputReport($entity->getFormat(), $phpExcelObject);
 //                        $text = $completePath;
-                        $text = $phpExcelObject;
+                        $text = $completePath;
                    
                     } else {
                         $text = 'records not found';
