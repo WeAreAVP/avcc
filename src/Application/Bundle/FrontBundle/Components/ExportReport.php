@@ -332,7 +332,7 @@ class ExportReport extends ContainerAware
                 $highestColumnIndex = $excelCell->columnIndexFromString($highestColumn);
                 if ($highestRow > 0) {
                     $rows = array();
-                    $newrow = 1;
+                    $newrow = 2;
                     foreach ($records as $record) {
                         for ($row = 2; $row <= $highestRow; ++$row) {
                             for ($col = 0; $col < $highestColumnIndex; ++$col) {
