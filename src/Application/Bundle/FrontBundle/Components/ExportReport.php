@@ -325,13 +325,14 @@ class ExportReport extends ContainerAware
             $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($mergeFileCompletePath);
             $newphpExcelObject = $this->initReport();
             $activeSheet = $newphpExcelObject->setActiveSheetIndex(0);
-            echo 'here';exit;
+            
             foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
                 $worksheetTitle = $worksheet->getTitle();
                 $highestRow = $worksheet->getHighestRow();
                 $highestColumn = $worksheet->getHighestColumn();
                 $excelCell = new PHPExcel_Cell(null, null, $worksheet);
                 $highestColumnIndex = $excelCell->columnIndexFromString($highestColumn);
+                echo $highestRow;exit;
                 if ($highestRow > 0) {
                     $rows = array();
                     $newRows = array();
