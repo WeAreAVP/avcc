@@ -318,13 +318,14 @@ class ExportReport extends ContainerAware
 
     public function megerRecords($records, $mergeToFile)
     {
-   echo     $mergeFileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $mergeToFile;
-   exit;
+    $mergeFileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $mergeToFile;
+   
 //        $mergeFileCompletePath = '/Applications/XAMPP/xamppfiles/htdocs/avcc/web/' . $mergeToFile;
         if (file_exists($mergeFileCompletePath)) {
             $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($mergeFileCompletePath);
             $newphpExcelObject = $this->initReport();
             $activeSheet = $newphpExcelObject->setActiveSheetIndex(0);
+            echo 'here';exit;
             foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
                 $worksheetTitle = $worksheet->getTitle();
                 $highestRow = $worksheet->getHighestRow();
