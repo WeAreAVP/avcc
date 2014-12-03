@@ -254,7 +254,7 @@ class UserSettingsController extends Controller {
      /**
      * add Backup Record command In Job
      * 
-     * @Route("/add_backup", name="backup_record")
+     * @Route("/addBackup", name="backup_record")
      * @Template("ApplicationFrontBundle:UserSettings:default.html.php")
      */
     public function addBackupRecordInJob() {
@@ -265,6 +265,8 @@ class UserSettingsController extends Controller {
         $job->setExecuteAfter($date);
         $em->persist($job);
         $em->flush($job);
+        
+        exit;
     }
 
 }
