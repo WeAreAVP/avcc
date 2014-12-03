@@ -340,6 +340,7 @@ class ExportReport extends ContainerAware
                                 $matched = false;
                                 if ($record->getUniqueId() == $worksheet->getCellByColumnAndRow(3, $row)) {
                                     $matched = true;
+                                    return $record->getUniqueId();
                                 }
                                 if ($matched) {
                                     $cell = $worksheet->getCellByColumnAndRow($col, $row);
