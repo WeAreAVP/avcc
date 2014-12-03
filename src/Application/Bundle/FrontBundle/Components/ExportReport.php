@@ -357,11 +357,11 @@ class ExportReport extends ContainerAware
                         return $newphpExcelObject;
                     }
                 } else {
-                    echo "The file $mergeToFile is empty";
+                    return "The file $mergeToFile is empty";
                 }
             }
         } else {
-            echo "The file $mergeToFile does not exist";
+            return "The file $mergeToFile does not exist";
         }
     }
 
