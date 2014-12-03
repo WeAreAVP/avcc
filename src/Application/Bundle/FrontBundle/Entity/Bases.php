@@ -32,6 +32,13 @@ class Bases
     private $name;
 
     /**
+     * @var real
+     *
+     * @ORM\Column(name="score", type="real", options={"default" = 0})
+     * @Assert\NotBlank(message="Score is required")
+     */
+    private $score;
+    /**
      * @ORM\ManyToOne(targetEntity="Formats",  fetch="EAGER", inversedBy="base")
      * @ORM\JoinColumn(
      *     name="format_id",
@@ -146,5 +153,29 @@ class Bases
     public function getOrganization()
     {
         return $this->organization;
+    }
+    
+    /**
+     * Get score
+     *
+     * @return real number
+     */
+    public function getScore()
+    {
+        return $this->score;
+    }
+
+    /**
+     * Set score
+     *
+     * @param float $score
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Colors
+     */
+    public function setScore($score)
+    {
+        $this->score = $score;
+
+        return $this;
     }
 }

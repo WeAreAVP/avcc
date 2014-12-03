@@ -2,21 +2,20 @@
 
 {% block body %}
 
-<h1>Enable Backup
-</h1>
-{{ form_start(form) }}
-        <fieldset>
-            {{ form_errors(form) }}
-            <br />
-            <div class="input-control" data-role="input-control">
-                <label><b>Email Addresses</b> {{ form_widget(form.backupEmail, {attr: {rows:'3', cols:'45'} }) }}<font color="red"><i>{{  error  }}</i></font></label>
-                <font>Please enter multiple email addresses with comma (,) as separator</font>
-                
-                <label>{{ form_widget(form.enableBackup, {attr: {class:''} }) }}  Enable Backup</label>
-            </div>
-        </fieldset>
-        {{ form_end(form) }}
-
-
+	<h1>Enable Backup
+	</h1>
+	{{ form_start(form) }}
+	<fieldset>
+		{{ form_errors(form) }}
+		<br />
+		<div class="input-control" data-role="input-control">
+			<label><b>Email Addresses</b> {{ form_widget(form.backupEmail, {attr: {rows:'3', cols:'45'} }) }}<font color="red"><i>{{  error  }}</i></font></label>
+			<font>Please enter multiple email addresses with comma (,) as separator.</font>
+			<br/>
+			<label>{{ form_widget(form.enableBackup, {attr: {class:''} }) }}  Enable Backup</label>
+		</div>
+	</fieldset>
+	{{ form_end(form) }}
+	<p class="text-info"><b>Note:</b>Backups will be performed daily at midnight.</p>
 {% endblock %}
 
