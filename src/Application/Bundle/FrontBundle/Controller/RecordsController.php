@@ -473,7 +473,8 @@ class RecordsController extends Controller
                 }
             }
         }
-        echo '<pre>';print_r($text);
+        return $text;
+        
         exit;
     }
 
