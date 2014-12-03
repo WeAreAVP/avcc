@@ -13,6 +13,7 @@
                     <th>Id</th>
                     <th>Name</th>
                     <th>Media Type</th>
+                    <th>Score</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -22,6 +23,7 @@
                         <td><a href="{{ path('vocabularies_formats_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                         <td>{{ entity.name }}</td>
                         <td>{{ entity.mediatype }}</td>
+                        <td>{{ entity.score }}</td>
                         <td class="text-center">
                             <a class="icon-pencil" title="Edit" href="{{ path('vocabularies_formats_edit', { 'id': entity.id }) }}"></a> |
                             <a class="icon-remove" title="Delete" href="{{ path('vocabularies_formats_delete', { 'id': entity.id }) }}"></a>
