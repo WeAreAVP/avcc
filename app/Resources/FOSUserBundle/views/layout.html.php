@@ -72,7 +72,7 @@
                                     <a class="dropdown-toggle" href="#"><span class=""></span> Vocabularies
                                     </a>
                                     <ul class="dropdown-menu dark content mCustomScrollbar" data-role="dropdown" style="height: 480px;">
-                                        <li><a href="<?php echo $view['router']->generate('field_settings') ?>">Colors</a></li>
+                                        <li><a href="<?php echo $view['router']->generate('vocabularies_colors') ?>">Colors</a></li>
                                         <li><a href="<?php echo $view['router']->generate('vocabularies_aciddetectionstrips') ?>">Acid Detection Strips</a></li>
                                         <li><a href="<?php echo $view['router']->generate('vocabularies_bases') ?>">Bases</a></li>
                                         <li><a href="<?php echo $view['router']->generate('vocabularies_mediatypes') ?>">Media Types</a></li>
