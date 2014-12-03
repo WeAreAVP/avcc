@@ -331,31 +331,32 @@ class ExportReport extends ContainerAware
                 $excelCell = new PHPExcel_Cell(null, null, $worksheet);
                 $highestColumnIndex = $excelCell->columnIndexFromString($highestColumn);
                 if ($highestRow > 0) {
-                    $rows = array();
-                    $newrow = 1;
-                    foreach ($records as $record) {
-                        for ($row = 2; $row <= $highestRow; ++$row) {
-                            for ($col = 0; $col < $highestColumnIndex; ++$col) {
-                                $matched = false;
-                                if ($record->getUniqueId() == $worksheet->getCellByColumnAndRow(3, $row)) {
-                                    $matched = true;
-                                }
-                                if ($matched) {
-                                    $cell = $worksheet->getCellByColumnAndRow($col, $row);
-                                    $columnName = strtolower(str_replace(' ', '_', $worksheet->getCellByColumnAndRow($col, 1)));
-                                    $rows[$row - 1][$columnName] = $cell->getValue();
-                                }
-                            }
-                        }
-                        if ($matched) {
-                            $this->prepareRecordsFromSphinx($activeSheet, $newrow, $rows);
-                        } else {
-                            $this->makeExcelRows($activeSheet, $record, $newrow);
-                        }
-                    }
-                    if($records){
-                        return $newphpExcelObject;
-                    }
+//                    $rows = array();
+//                    $newrow = 1;
+//                    foreach ($records as $record) {
+//                        for ($row = 2; $row <= $highestRow; ++$row) {
+//                            for ($col = 0; $col < $highestColumnIndex; ++$col) {
+//                                $matched = false;
+//                                if ($record->getUniqueId() == $worksheet->getCellByColumnAndRow(3, $row)) {
+//                                    $matched = true;
+//                                }
+//                                if ($matched) {
+//                                    $cell = $worksheet->getCellByColumnAndRow($col, $row);
+//                                    $columnName = strtolower(str_replace(' ', '_', $worksheet->getCellByColumnAndRow($col, 1)));
+//                                    $rows[$row - 1][$columnName] = $cell->getValue();
+//                                }
+//                            }
+//                        }
+//                        if ($matched) {
+//                            $this->prepareRecordsFromSphinx($activeSheet, $newrow, $rows);
+//                        } else {
+//                            $this->makeExcelRows($activeSheet, $record, $newrow);
+//                        }
+//                    }
+//                    if($records){
+//                        return $newphpExcelObject;
+//                    }
+                    return $highestRow;
                 } else {
                     return "The file $mergeToFile is empty";
                 }
