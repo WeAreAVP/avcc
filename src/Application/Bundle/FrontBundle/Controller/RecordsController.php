@@ -467,7 +467,8 @@ class RecordsController extends Controller
 //                        $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
 //                        $completePath = $export->outputReport($entity->getFormat(), $phpExcelObject);
 //                        $text = $completePath;
-                   echo     $text = $phpExcelObject;
+                        $text = $phpExcelObject;
+                   print_r($text);
                     } else {
                         $text = 'records not found';
                     }
