@@ -19,9 +19,9 @@
             </div>
              <label>Score</label>
             <div class="input-control text" data-role="input-control">
-                {{ form_widget(edit_form.score, {attr: {class:'size4'} }) }}
-                {% for errorItem in edit_form.score.vars.errors %}
-                    <span class="has-error text-danger" for="{{ edit_form.score.vars.id }}">{{ errorItem.message }}</span>
+                {{ form_widget(form.score, {attr: {class:'size4'} }) }}
+                {% for errorItem in form.score.vars.errors %}
+                    <span class="has-error text-danger" for="{{ form.score.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
             </div>
             {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
