@@ -257,7 +257,7 @@ class UserSettingsController extends Controller {
      * @Route("/addBackup", name="backup_record")
      * @Template("ApplicationFrontBundle:UserSettings:default.html.php")
      */
-    public function addBackupRecordInJob() {
+    public function addBackupRecordInJobAction() {
         $em = $this->getDoctrine()->getManager();
         $job = new Job('avcc:backup-report');
         $date = new DateTime();
