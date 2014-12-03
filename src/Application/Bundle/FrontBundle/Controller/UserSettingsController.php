@@ -12,6 +12,7 @@ use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\Form\UserSettingsType;
 use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
 use JMS\JobQueueBundle\Entity\Job;
+
 /**
  * UserSettings controller.
  *
@@ -19,6 +20,22 @@ use JMS\JobQueueBundle\Entity\Job;
  */
 class UserSettingsController extends Controller {
 
+	 /**
+     * User settings
+     *
+     * @Route("/cron", name="cron_setup")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+	public function setupCronAction() {
+		$job = new Job('avcc:backup-report');
+            $date = new DateTime();
+            $date->add(new DateInterval('PT1M'));
+            $job->setExecuteAfter($date);
+            $em->persist($job);
+            $em->flush($job);
+	}
     /**
      * User settings
      *

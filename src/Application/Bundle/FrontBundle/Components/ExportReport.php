@@ -5,6 +5,7 @@ namespace Application\Bundle\FrontBundle\Components;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Application\Bundle\FrontBundle\Helper\ExportFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
+use PHPExcel_Cell;
 
 class ExportReport extends ContainerAware
 {
@@ -110,7 +111,7 @@ class ExportReport extends ContainerAware
         $format = ($type == 'csv') ? 'CSV' : 'Excel2007';
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, $format);
         $filename = 'allFormat_' . time() . '.' . $type;
-        $folderPath = $this->container->getParameter('webUrl').'exports/' . date('Y') . '/' . date('m') . '/';
+        $folderPath = $this->container->getParameter('webUrl') . 'exports/' . date('Y') . '/' . date('m') . '/';
         $completePath = $folderPath . $filename;
         $downloadPath = 'exports/' . date('Y') . '/' . date('m') . '/' . $filename;
         if (!is_dir($folderPath))
@@ -245,7 +246,7 @@ class ExportReport extends ContainerAware
             }
         }
         $phpExcelObject->setActiveSheetIndex(0);
-        
+
         return $phpExcelObject;
     }
 
@@ -313,6 +314,112 @@ class ExportReport extends ContainerAware
             }
             $row ++;
         }
+    }
+
+    public function megerRecords($records, $mergeToFile)
+    {
+        $mergeFileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $mergeToFile;
+//        $mergeFileCompletePath = '/Applications/XAMPP/xamppfiles/htdocs/avcc/web/' . $mergeToFile;
+        if (file_exists($mergeFileCompletePath)) {
+            $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($mergeFileCompletePath);
+            $newphpExcelObject = $this->initReport();
+            $activeSheet = $newphpExcelObject->setActiveSheetIndex(0);
+            foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
+                $worksheetTitle = $worksheet->getTitle();
+                $highestRow = $worksheet->getHighestRow();
+                $highestColumn = $worksheet->getHighestColumn();
+                $excelCell = new PHPExcel_Cell(null, null, $worksheet);
+                $highestColumnIndex = $excelCell->columnIndexFromString($highestColumn);
+                if ($highestRow > 0) {
+                    $rows = array();
+                    $newrow = 1;
+                    foreach ($records as $record) {
+                        for ($row = 2; $row <= $highestRow; ++$row) {
+                            for ($col = 0; $col < $highestColumnIndex; ++$col) {
+                                $matched = false;
+                                if ($record->getUniqueId() == $worksheet->getCellByColumnAndRow(3, $row)) {
+                                    $matched = true;
+                                }
+                                if ($matched) {
+                                    $cell = $worksheet->getCellByColumnAndRow($col, $row);
+                                    $columnName = strtolower(str_replace(' ', '_', $worksheet->getCellByColumnAndRow($col, 1)));
+                                    $rows[$row - 1][$columnName] = $cell->getValue();
+                                }
+                            }
+                        }
+                        if ($matched) {
+                            $this->prepareRecordsFromSphinx($activeSheet, $newrow, $rows);
+                        } else {
+                            $this->makeExcelRows($activeSheet, $record, $newrow);
+                        }
+                    }
+                    if ($records) {
+                        return $newphpExcelObject;
+                    }
+                } else {
+                    return "The file $mergeToFile is empty";
+                }
+            }
+        } else {
+            return "The file $mergeToFile does not exist";
+        }
+    }
+
+    public function makeExcelRows($activeSheet, $record, $row)
+    {
+        $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record->getProject());
+        $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record->getCollectionName());
+        $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $record->getMediaType());
+        $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $record->getUniqueId());
+        $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $record->getLocation());
+        $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, ($record->getFormat()->getName()) ? $record->getFormat()->getName() : '');
+        $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $record->getTitle());
+        $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $record->getDescription());
+        $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, ($record->getCommercial()) ? $record->getCommercial()->getName() : '');
+        $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $record->getContentDuration());
+        $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $record->getCreationDate());
+        $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $record->getContentDate());
+        $activeSheet->setCellValueExplicitByColumnAndRow(16, $row, ($record->getReelDiameters()) ? $record->getReelDiameters()->getName() : '');
+        $activeSheet->setCellValueExplicitByColumnAndRow(34, $row, ($record->getGenreTerms()));
+        $activeSheet->setCellValueExplicitByColumnAndRow(35, $row, ($record->getContributor()));
+        $activeSheet->setCellValueExplicitByColumnAndRow(36, $row, $record->getGeneration());
+        $activeSheet->setCellValueExplicitByColumnAndRow(37, $row, $record->getPart());
+        $activeSheet->setCellValueExplicitByColumnAndRow(38, $row, $record->getCopyrightRestrictions());
+        $activeSheet->setCellValueExplicitByColumnAndRow(39, $row, $record->getDuplicatesDerivatives());
+        $activeSheet->setCellValueExplicitByColumnAndRow(40, $row, $record->getRelatedMaterial());
+        $activeSheet->setCellValueExplicitByColumnAndRow(41, $row, $record->getConditionNote());
+        $activeSheet->setCellValueExplicitByColumnAndRow(42, $row, $record->getCreatedOn()->format('Y-m-d H:i:s'));
+        $activeSheet->setCellValueExplicitByColumnAndRow(43, $row, ($record->getUpdatedOn()) ? $record->getUpdatedOn()->format('Y-m-d H:i:s') : '');
+        $activeSheet->setCellValueExplicitByColumnAndRow(44, $row, $record->getUser()->getName());
+
+        if ($record->getAudioRecord()) {
+            $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, ($record->getAudioRecord()->getMediaDuration()) ? $record->getAudioRecord()->getMediaDuration() : "");
+            $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, ($record->getAudioRecord()->getBases()) ? $record->getAudioRecord()->getBases()->getName() : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(15, $row, ($record->getAudioRecord()->getDiskDiameters()) ? $record->getAudioRecord()->getDiskDiameters()->getName() : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(17, $row, ($record->getAudioRecord()->getMediaDiameters()) ? $record->getAudioRecord()->getMediaDiameters()->getName() : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(21, $row, ($record->getAudioRecord()->getTapeThickness()) ? $record->getAudioRecord()->getTapeThickness()->getName() : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(22, $row, ($record->getAudioRecord()->getSlides()) ? $record->getAudioRecord()->getSlides()->getName() : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(23, $row, ($record->getAudioRecord()->getTrackTypes()) ? $record->getAudioRecord()->getTrackTypes()->getName() : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(24, $row, ($record->getAudioRecord()->getMonoStereo()) ? $record->getAudioRecord()->getMonoStereo()->getName() : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(25, $row, ($record->getAudioRecord()->getNoiceReduction()) ? $record->getAudioRecord()->getNoiceReduction()->getName() : '');
+        }
+        if ($record->getFilmRecord()) {
+            $activeSheet->setCellValueExplicitByColumnAndRow(14, $row, ($record->getFilmRecord()->getPrintType()) ? $record->getFilmRecord()->getPrintType()->getName() : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(18, $row, ($record->getFilmRecord()->getFootage()) ? $record->getFilmRecord()->getFootage() : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(20, $row, ($record->getFilmRecord()->getColors()) ? $record->getFilmRecord()->getColors()->getName() : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(29, $row, ($record->getFilmRecord()->getReelCore()) ? $record->getFilmRecord()->getReelCore()->getName() : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(30, $row, ($record->getFilmRecord()->getSound()) ? $record->getFilmRecord()->getSound()->getName() : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(31, $row, ($record->getFilmRecord()->getFrameRate()) ? $record->getFilmRecord()->getFrameRate()->getName() : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(32, $row, ($record->getFilmRecord()->getAcidDetectionStrip()) ? $record->getFilmRecord()->getAcidDetectionStrip()->getName() : "");
+            $activeSheet->setCellValueExplicitByColumnAndRow(33, $row, ($record->getFilmRecord()->getShrinkage()) ? $record->getFilmRecord()->getShrinkage() : '');
+        }
+        if ($record->getVideoRecord()) {
+            $activeSheet->setCellValueExplicitByColumnAndRow(19, $row, ($record->getVideoRecord()->getRecordingSpeed()) ? $record->getVideoRecord()->getRecordingSpeed()->getName() : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(26, $row, ($record->getVideoRecord()->getCassetteSize()) ? $record->getVideoRecord()->getCassetteSize()->getName() : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(27, $row, ($record->getVideoRecord()->getFormatVersion()) ? $record->getVideoRecord()->getFormatVersion()->getName() : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(28, $row, ($record->getVideoRecord()->getRecordingStandard()) ? $record->getVideoRecord()->getRecordingStandard()->getName() : '');
+        }
+        $row ++;
     }
 
 }

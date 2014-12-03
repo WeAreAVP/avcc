@@ -16,6 +16,7 @@ use Application\Bundle\FrontBundle\Helper\SphinxHelper;
 use JMS\JobQueueBundle\Entity\Job;
 use DateInterval;
 use DateTime;
+use Application\Bundle\FrontBundle\Components\ExportReport;
 
 /**
  * Records controller.
@@ -433,6 +434,47 @@ class RecordsController extends Controller
         $session->remove("allRecords");
 
         return $this->redirect($this->generateUrl('record_list'));
+    }
+
+    /**
+     * Make records to display for dataTables.
+     *
+     * @param Request $request
+     *
+     * @Route("/mergeFiles", name="record_merge_files")
+     * @Method("GET")
+     * @Template("ApplicationFrontBundle:Records:default.html.php")
+     * @return json
+     */
+    public function mergeFiles()
+    {
+        $id = 1;
+        $em = $this->getDoctrine()->getManager();
+        if ($id) {
+            $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id, 'type' => 'export_merge', 'status' => 0));
+            if ($entity) {
+                if ($entity->getQueryOrId() != 'all') {
+                    $criteria = json_decode($entity->getQueryOrId(), true);
+                } else {
+                    $criteria = $entity->getQueryOrId();
+                }
+                $export = new ExportReport($this->container);
+                if ($criteria != 'all' && array_key_exists('ids', $criteria)) {
+                    $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($criteria['ids']);
+                    if ($records) {
+                        $mergeToFile = $entity->getMergeToFile();
+                        $phpExcelObject = $export->megerRecords($records, $mergeToFile);
+                        $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+//                        $completePath = $export->outputReport($entity->getFormat(), $phpExcelObject);
+                        $text = $completePath;
+                    } else {
+                        $text = 'records not found';
+                    }
+                }
+            }
+        }
+        echo '<pre>';print_r($text);
+        exit;
     }
 
 }
