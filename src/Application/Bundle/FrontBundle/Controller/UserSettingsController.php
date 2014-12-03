@@ -12,8 +12,6 @@ use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\Form\UserSettingsType;
 use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
 use JMS\JobQueueBundle\Entity\Job;
-use DateInterval;
-use DateTime;
 
 /**
  * UserSettings controller.
@@ -251,6 +249,22 @@ class UserSettingsController extends Controller {
             $em->flush();
         }
         return $this->redirect($this->generateUrl('field_settings_backup'));
+    }
+
+     /**
+     * add Backup Record command In Job
+     * 
+     * @Route("/add_backup", name="backup_record")
+     * @Template("ApplicationFrontBundle:UserSettings:default.html.php")
+     */
+    public function addBackupRecordInJob() {
+        $em = $this->getDoctrine()->getManager();
+        $job = new Job('avcc:backup-report');
+        $date = new DateTime();
+        $date->add(new DateInterval('PT1M'));
+        $job->setExecuteAfter($date);
+        $em->persist($job);
+        $em->flush($job);
     }
 
 }
