@@ -12,7 +12,8 @@ use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\Form\UserSettingsType;
 use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
 use JMS\JobQueueBundle\Entity\Job;
-
+use DateInterval;
+use DateTime;
 /**
  * UserSettings controller.
  *
@@ -265,7 +266,6 @@ class UserSettingsController extends Controller {
         $job->setExecuteAfter($date);
         $em->persist($job);
         $em->flush($job);
-        
         exit;
     }
 
