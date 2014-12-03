@@ -262,7 +262,8 @@ class UserSettingsController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $job = new Job('avcc:backup-report');
         $date = new DateTime();
-        $date->add(new DateInterval('PT1M'));
+        $date->setTime(0, 0);
+     //   $date->add(new DateInterval('PT1M'));
         $job->setExecuteAfter($date);
         $em->persist($job);
         $em->flush($job);
