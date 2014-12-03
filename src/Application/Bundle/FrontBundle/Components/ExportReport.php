@@ -332,7 +332,6 @@ class ExportReport extends ContainerAware
                 $highestColumn = $worksheet->getHighestColumn();
                 $excelCell = new PHPExcel_Cell(null, null, $worksheet);
                 $highestColumnIndex = $excelCell->columnIndexFromString($highestColumn);
-                echo $highestRow;exit;
                 if ($highestRow > 0) {
                     $rows = array();
                     $newRows = array();
@@ -358,7 +357,7 @@ class ExportReport extends ContainerAware
                             }
                         }
                     }
-
+print_r($newRows);
                     if ($records) {
                         return $newphpExcelObject;
                     }
