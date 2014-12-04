@@ -597,14 +597,16 @@ class ExportReport extends ContainerAware {
             $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $record->getTitle());
             echo $score;
             echo '<br>';
-            $score = $score + (float) (($record->getMediaType()) ? $record->getMediaType()->getScore(): 0);
+            $score = $score + (float) (($record->getMediaType()) ? $record->getMediaType()->getScore() : 0);
             $score = $score + (float) (($record->getFormat()) ? $record->getFormat()->getScore() : 0);
             $score = $score + (float) (($record->getCommercial()) ? $record->getCommercial()->getScore() : 0);
             $score = $score + (float) (($record->getReelDiameters()) ? $record->getReelDiameters()->getScore() : 0);
-             echo $score;
-             echo '<br>';
-             exit;
+            echo $score;
+            echo '<br>';
+
             if ($record->getAudioRecord()) {
+                echo 'getAudioRecord';
+                echo '<br>';
                 //    $score = $score + ($record->getAudioRecord()->getMediaDuration()) ? $record->getAudioRecord()->getMediaDuration()->getscore() : 0;
                 $score = $score + (float) (($record->getAudioRecord()->getBases()) ? $record->getAudioRecord()->getBases()->getScore() : 0);
                 $score = $score + (float) (($record->getAudioRecord()->getDiskDiameters()) ? $record->getAudioRecord()->getDiskDiameters()->getScore() : 0);
@@ -614,8 +616,13 @@ class ExportReport extends ContainerAware {
                 $score = $score + (float) (($record->getAudioRecord()->getTrackTypes()) ? $record->getAudioRecord()->getTrackTypes()->getScore() : 0);
                 $score = $score + (float) (($record->getAudioRecord()->getMonoStereo()) ? $record->getAudioRecord()->getMonoStereo()->getScore() : 0);
                 $score = $score + (float) (($record->getAudioRecord()->getNoiceReduction()) ? $record->getAudioRecord()->getNoiceReduction()->getScore() : 0);
+
+                echo $score;
+                echo '<br>';
             }
             if ($record->getFilmRecord()) {
+                echo 'getFilmRecord';
+                echo '<br>';
                 $score = $score + (float) (($record->getFilmRecord()->getPrintType()) ? $record->getFilmRecord()->getPrintType()->getScore() : 0);
                 //  $score = $score + ($record->getFilmRecord()->getFootage()) ? $record->getFilmRecord()->getscore() : 0;
                 $score = $score + (float) (($record->getFilmRecord()->getColors()) ? $record->getFilmRecord()->getColors()->getScore() : 0);
@@ -624,19 +631,26 @@ class ExportReport extends ContainerAware {
                 $score = $score + (float) (($record->getFilmRecord()->getFrameRate()) ? $record->getFilmRecord()->getFrameRate()->getScore() : 0);
                 $score = $score + (float) (($record->getFilmRecord()->getAcidDetectionStrip()) ? $record->getFilmRecord()->getAcidDetectionStrip()->getScore() : 0);
                 //  $score = $score + ($record->getFilmRecord()->getShrinkage()) ? $record->getFilmRecord()->getscore() : 0;
+
+                echo $score;
+                echo '<br>';
             }
             if ($record->getVideoRecord()) {
-
+                echo 'getVideoRecord';
+                echo '<br>';
                 $score = $score + (float) (($record->getVideoRecord()->getRecordingSpeed()) ? $record->getVideoRecord()->getRecordingSpeed()->getScore() : 0);
                 $score = $score + (float) (($record->getVideoRecord()->getCassetteSize()) ? $record->getVideoRecord()->getCassetteSize()->getScore() : 0);
                 $score = $score + (float) (($record->getVideoRecord()->getFormatVersion()) ? $record->getVideoRecord()->getFormatVersion()->getScore() : 0);
                 $score = $score + (float) (($record->getVideoRecord()->getRecordingStandard()) ? $record->getVideoRecord()->getRecordingStandard()->getScoregetScore() : 0);
+
+                echo $score;
+                echo '<br>';
             }
             $scale_score = ($score / 100) * 5;
             $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $scale_score);
             $row ++;
         }
-
+        exit;
         return true;
     }
 
