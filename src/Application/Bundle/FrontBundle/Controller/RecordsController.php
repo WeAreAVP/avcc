@@ -453,6 +453,7 @@ class RecordsController extends Controller
         if ($id) {
             $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id, 'type' => 'export_merge', 'status' => 0));
             if ($entity) {
+                $user = $entity->getUser();
                 if ($entity->getQueryOrId() != 'all') {
                     $criteria = json_decode($entity->getQueryOrId(), true);
                 } else {
