@@ -383,52 +383,57 @@ class RecordsController extends Controller
         }
         $type = $data['emfiletype'];
         $records = $data['emrecordIds'];
-
-        $originalFileName = $request->files->get('mergetofile')->getClientOriginalName();
-        $uploadedFileSize = $request->files->get('mergetofile')->getClientSize();
-        $newFileName = null;
-        if ($originalFileName && $uploadedFileSize > 0) {
-            $folderPath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/';
-            if (!is_dir($folderPath))
-                mkdir($folderPath, 0777, TRUE);
-            $extension = $request->files->get('mergetofile')->getClientOriginalExtension();
-            $newFileName = $this->getUser()->getId() . "_exportmerge" . time() . "." . $extension;
-            if ($type == $extension) {
-                $request->files->get('mergetofile')->move($folderPath, $newFileName);
-                if (!$request->files->get('mergetofile')->isValid()) {
-                    echo 'file uploaded';
-                }
-                $export = new ImportExport();
-                $export->setUser($this->getUser());
-                $export->setFormat($type);
-                $export->setType("export_merge");
-                $export->setMergeToFile($newFileName);
-                $export->setStatus(0);
-                if ($records == 'all') {
-                    $export->setQueryOrId('all');
-                    if ($facetData) {
-                        $export->setQueryOrId($facetData);
+        if ($request->files->get('mergetofile')) {
+            $originalFileName = $request->files->get('mergetofile')->getClientOriginalName();
+            $uploadedFileSize = $request->files->get('mergetofile')->getClientSize();
+            $newFileName = null;
+            if ($uploadedFileSize > 0) {
+                $folderPath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/';
+                if (!is_dir($folderPath))
+                    mkdir($folderPath, 0777, TRUE);
+                $extension = $request->files->get('mergetofile')->getClientOriginalExtension();
+                $newFileName = $this->getUser()->getId() . "_exportmerge" . time() . "." . $extension;
+                if ($type == $extension) {
+                    $request->files->get('mergetofile')->move($folderPath, $newFileName);
+                    if (!$request->files->get('mergetofile')->isValid()) {
+                        echo 'file uploaded';
                     }
-                } else {
-                    $recordIds = explode(',', $records);
-                    if ($recordIds) {
-                        $export->setQueryOrId(json_encode(array('ids' => $recordIds), JSON_NUMERIC_CHECK));
+                    $export = new ImportExport();
+                    $export->setUser($this->getUser());
+                    $export->setFormat($type);
+                    $export->setType("export_merge");
+                    $export->setMergeToFile($newFileName);
+                    $export->setStatus(0);
+                    if ($records == 'all') {
+                        $export->setQueryOrId('all');
+                        if ($facetData) {
+                            $export->setQueryOrId($facetData);
+                        }
+                    } else {
+                        $recordIds = explode(',', $records);
+                        if ($recordIds) {
+                            $export->setQueryOrId(json_encode(array('ids' => $recordIds), JSON_NUMERIC_CHECK));
+                        }
                     }
-                }
-                $em->persist($export);
-                $em->flush();
+                    $em->persist($export);
+                    $em->flush();
 //
-            $job = new Job('avcc:export-merge-report', array('id' => $export->getId()));
-            $date = new DateTime();
-            $date->add(new DateInterval('PT1M'));
-            $job->setExecuteAfter($date);
-            $em->persist($job);
-            $em->flush($job);
+                    $job = new Job('avcc:export-merge-report', array('id' => $export->getId()));
+                    $date = new DateTime();
+                    $date->add(new DateInterval('PT1M'));
+                    $job->setExecuteAfter($date);
+                    $em->persist($job);
+                    $em->flush($job);
 
-                $this->get('session')->getFlashBag()->add('export_merge', 'Merge and export request successfully sent. You will receive an email shortly with download link.');
+                    $this->get('session')->getFlashBag()->add('export_merge', 'Merge and export request successfully sent. You will receive an email shortly with download link.');
+                } else {
+                    $this->get('session')->getFlashBag()->add('export_merge_error', 'File formate is not correct. Please try again.');
+                }
             } else {
-                $this->get('session')->getFlashBag()->add('export_merge_error', 'File formate is not correct. Please try again.');
+                $this->get('session')->getFlashBag()->add('export_merge_error', 'File is empty. Please try again.');
             }
+        } else {
+            $this->get('session')->getFlashBag()->add('export_merge_error', 'Select file that require to merge. Please try again.');
         }
         $session->remove("saveRecords");
         $session->remove("allRecords");
@@ -491,7 +496,7 @@ class RecordsController extends Controller
             }
         }
         return $text;
-        
+
         exit;
     }
 
