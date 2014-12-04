@@ -2,8 +2,7 @@
 
 namespace Application\Bundle\FrontBundle\Helper;
 
-class ExportFields
-{
+class ExportFields {
 
     private $columns = array(
         'Project_Name',
@@ -54,14 +53,14 @@ class ExportFields
     );
     private $manifestColumns = array('Unique ID', 'Institution', 'Collection Name', 'Format', 'Print Type',
         "Reel Diameter\nDisc Diameter\nCassette Size", 'Title', 'Approximate Duration');
+    private $prioritizationCols = array('Project_Name', 'Collection_Name', 'Title', 'Total Score');
 
     /**
      * Return array of columns for csv or xlsx tempate.
      *
      * @return array
      */
-    public function getExportColumns()
-    {
+    public function getExportColumns() {
         return $this->columns;
     }
 
@@ -70,9 +69,17 @@ class ExportFields
      *
      * @return array
      */
-    public function getManifestColumns()
-    {
+    public function getManifestColumns() {
         return $this->manifestColumns;
+    }
+
+    /**
+     * Return array of Prioritization Columns for xlsx tempate.
+     *
+     * @return array
+     */
+    public function getPrioritizationColumns() {
+        return $this->prioritizationCols;
     }
 
 }
