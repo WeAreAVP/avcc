@@ -578,6 +578,9 @@ class ExportReport extends ContainerAware {
     private function preparePrioritizationRecords($activeSheet, $row, $records) {
 
         foreach ($records as $record) {
+            echo $record->getFormat()->getScore();
+            var_dump($record->getFormat()->getScore());
+            exit;
             $score = 0;
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record->getProject());
             $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record->getCollectionName());
