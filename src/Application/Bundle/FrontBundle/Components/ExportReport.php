@@ -352,7 +352,6 @@ class ExportReport extends ContainerAware
                         }
                         if ($matched) {
                             $newRows = $this->appendCellValues($record, $rows);
-//                            return $newRows;
                             $this->prepareRecordsFromSphinx($activeSheet, $newrow, $newRows);
                         } else {
                             $this->makeExcelRows($activeSheet, $record, $newrow);
