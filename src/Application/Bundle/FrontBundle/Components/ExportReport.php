@@ -242,8 +242,9 @@ class ExportReport extends ContainerAware
                     $rows = array();
                     $newRows = array();
                     $newrow = 2;
+                    return print_r($records);
                     foreach ($records as $record) {
-                        return print_r($record);
+                        
 //                        for ($row = 2; $row <= $highestRow; ++$row) {
 //                            for ($col = 0; $col < $highestColumnIndex; ++$col) {
 //                                $matched = false;
