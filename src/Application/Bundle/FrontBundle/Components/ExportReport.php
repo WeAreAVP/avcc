@@ -243,40 +243,41 @@ class ExportReport extends ContainerAware
                     $newRows = array();
                     $newrow = 2;
                     foreach ($records as $record) {
-                        for ($row = 2; $row <= $highestRow; ++$row) {
-                            for ($col = 0; $col < $highestColumnIndex; ++$col) {
-                                $matched = false;
-                                if (is_object($record)) {
-                                    if ($record->getUniqueId() == $worksheet->getCellByColumnAndRow(3, $row)) {
-                                        $matched = true;
-                                    }
-                                } else {
-                                    if ($record['unique_id'] == $worksheet->getCellByColumnAndRow(3, $row)) {
-                                        $matched = true;
-                                    }
-                                }
-                                if ($matched) {
-                                    $cell = $worksheet->getCellByColumnAndRow($col, $row);
-                                    $columnName = strtolower(str_replace(' ', '_', $worksheet->getCellByColumnAndRow($col, 1)));
-                                    $rows[$row - 1][$columnName] = $cell->getValue();
-                                }
-                            }
-                        }
-                        if ($matched) {
-                            if (is_object($record)) {
-                                $newRows = $this->appendCellValuesByObject($record, $rows);
-                            } else {
-                                $newRows = $this->appendCellValuesByArray($record, $rows);
-                            }
-                            $this->prepareRecordsFromSphinx($activeSheet, $newrow, $newRows);
-                        } else {
-                            if (is_object($record)) {
-                                $this->makeExcelRows($activeSheet, $record, $newrow);
-                            } else {
-                                $this->makeExcelRowsByArray($activeSheet, $record, $newrow);
-                            }
-                        }
-                        $newrow ++;
+                        return print_r($record);
+//                        for ($row = 2; $row <= $highestRow; ++$row) {
+//                            for ($col = 0; $col < $highestColumnIndex; ++$col) {
+//                                $matched = false;
+//                                if (is_object($record)) {
+//                                    if ($record->getUniqueId() == $worksheet->getCellByColumnAndRow(3, $row)) {
+//                                        $matched = true;
+//                                    }
+//                                } else {
+//                                    if ($record['unique_id'] == $worksheet->getCellByColumnAndRow(3, $row)) {
+//                                        $matched = true;
+//                                    }
+//                                }
+//                                if ($matched) {
+//                                    $cell = $worksheet->getCellByColumnAndRow($col, $row);
+//                                    $columnName = strtolower(str_replace(' ', '_', $worksheet->getCellByColumnAndRow($col, 1)));
+//                                    $rows[$row - 1][$columnName] = $cell->getValue();
+//                                }
+//                            }
+//                        }
+//                        if ($matched) {
+//                            if (is_object($record)) {
+//                                $newRows = $this->appendCellValuesByObject($record, $rows);
+//                            } else {
+//                                $newRows = $this->appendCellValuesByArray($record, $rows);
+//                            }
+//                            $this->prepareRecordsFromSphinx($activeSheet, $newrow, $newRows);
+//                        } else {
+//                            if (is_object($record)) {
+//                                $this->makeExcelRows($activeSheet, $record, $newrow);
+//                            } else {
+//                                $this->makeExcelRowsByArray($activeSheet, $record, $newrow);
+//                            }
+//                        }
+//                        $newrow ++;
                     }
                     if ($records) {
                         return $newphpExcelObject;
