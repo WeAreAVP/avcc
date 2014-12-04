@@ -261,8 +261,7 @@ class ExportReport extends ContainerAware
                                     $rows[$row - 1][$columnName] = $cell->getValue();
                                 }
                             }
-                        }
-                        print_r($rows);
+                        }                        
                         if ($matched) {
                             if (is_object($record)) {
                                 $newRows = $this->appendCellValuesByObject($record, $rows);
@@ -279,6 +278,7 @@ class ExportReport extends ContainerAware
                         }
                         $newrow ++;
                     }
+                    print_r($rows);
                     if ($records) {
                         return $newphpExcelObject;
                     }
@@ -359,8 +359,8 @@ class ExportReport extends ContainerAware
                 $newRow[$i]['unique_id'] = $record->getUniqueId();
                 $newRow[$i]['location'] = $row['location'] ? $record->getLocation() . ' ' . $row['location'] : $record->getLocation();
                 $newRow[$i]['format'] = $row['format'] ? ($record->getFormat()->getName() ? $record->getFormat()->getName() . ' ' . $row['format'] : $row['format']) : ($record->getFormat()->getName()) ? $record->getFormat()->getName() : '';
-                $newRow[$i]['title'] = $row['title'] ? $record->getTitle() . '' . $row['title'] : $record->getTitle();
-                $newRow[$i]['description'] = $row['description'] ? $record->getDescription() . '' . $row['description'] : $record->getDescription();
+                $newRow[$i]['title'] = $row['title'] ? $record->getTitle() . ' ' . $row['title'] : $record->getTitle();
+                $newRow[$i]['description'] = $row['description'] ? $record->getDescription() . ' ' . $row['description'] : $record->getDescription();
                 $newRow[$i]['commercial'] = $row['commercial_or_unique'] ? ($record->getCommercial() ? $record->getCommercial()->getName() . ' ' . $row['commercial_or_unique'] : '') : ($record->getCommercial() ? $record->getCommercial()->getName() : '');
                 $newRow[$i]['content_duration'] = $row['content_duration'] ? $record->getContentDuration() . ' ' . $row['content_duration'] : $record->getContentDuration();
                 $newRow[$i]['creation_date'] = $row['creation_date'] ? $record->getCreationDate() . ' ' . $row['creation_date'] : $record->getCreationDate();
