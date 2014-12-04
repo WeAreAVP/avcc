@@ -265,7 +265,7 @@ class ExportReport extends ContainerAware
                         }
                     }
                     foreach ($records as $rec) {
-                        $recUniq = strtolower(str_replace(' ', '_', $rec['unique_id']));
+                        $recUniq = strtolower(str_replace(' ', '_', $rec->getUniqueId()));
                         if (array_key_exists($recUniq, $rows)) {
                             $newRows = $this->appendCellValuesByObject($rec, $rows[$recUniq]);
                             $this->makeExcelRowsByArray($activeSheet, $newRows, $newrow);
