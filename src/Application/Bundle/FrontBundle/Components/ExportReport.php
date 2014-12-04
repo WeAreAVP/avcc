@@ -503,7 +503,7 @@ class ExportReport extends ContainerAware
         $i = 0;
         foreach ($rows as $row) {
             $newRow[$i]['project'] = $row['project_name'] ? $record['project'] . ' ' . $row['project_name'] : $record['project'];
-            $newRow[$i]['collection_name'] = $row['collection_name'] ? $record->getCollectionName() . ' ' . $row['collection_name'] : $record->getCollectionName();
+            $newRow[$i]['collection_name'] = $row['collection_name'] ? $record['collection_name'] . ' ' . $row['collection_name'] : $record->getCollectionName();
             $newRow[$i]['media_type'] = $row['media_type'] ? $record['media_type'] . ' ' . $row['media_type'] : $record['media_type'];
             $newRow[$i]['unique_id'] = $row['unique_id'] ? $record['unique_id'] . ' ' . $row['unique_id'] : $record['unique_id'];
             $newRow[$i]['location'] = $row['location'] ? $record['location'] . ' ' . $row['location'] : $record['location'];
@@ -690,7 +690,6 @@ class ExportReport extends ContainerAware
                     $newRows = array();
                     $newrow = 2;
                     foreach ($records as $record) {
-                        print_r($record);
                         for ($row = 2; $row <= $highestRow; ++$row) {
                             for ($col = 0; $col < $highestColumnIndex; ++$col) {
                                 $matched = false;

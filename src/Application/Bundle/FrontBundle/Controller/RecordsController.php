@@ -484,6 +484,7 @@ class RecordsController extends Controller
                     $sphinxInfo = $this->container->getParameter('sphinx_param');
                     $phpExcelObject = $export->fetchFromSphinxToMerge($user, $sphinxInfo, $sphinxCriteria, $em, $mergeToFile);
 //                    $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+                    $completePath = $export->outputReport($entity->getFormat(), $phpExcelObject);
 //                    $text = $completePath;
                     $text = $phpExcelObject;
                 }
