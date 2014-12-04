@@ -129,7 +129,7 @@ class ReportController extends Controller {
   
         $exportComponent = new ExportReport($this->container);
         $phpExcelObject = $exportComponent->generatePrioritizationReport($records);
-        $response = $exportComponent->outputReport($type, $phpExcelObject);
+        $response = $exportComponent->outputReport($type, $phpExcelObject, 'prioritization_report');
 
         // create the response
         return $response;
