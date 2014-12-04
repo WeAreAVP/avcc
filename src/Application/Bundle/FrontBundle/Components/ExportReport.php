@@ -444,7 +444,7 @@ class ExportReport extends ContainerAware
             $newRow['user_name'] =  $record->getUser()->getName()  ;
 
             if ($row['media_type'] == 'Audio') {
-                $newRow['media_duration'] =  $record->getAudioRecord()->getMediaDuration() ? $record->getAudioRecord()->getMediaDuration() : "";
+                $newRow['media_duration'] =  ($record->getAudioRecord()->getMediaDuration()) ? $record->getAudioRecord()->getMediaDuration() : "";
                 $newRow['base'] = $record->getAudioRecord()->getBases() ? $record->getAudioRecord()->getBases()->getName()  : "";
                 $newRow['disk_diameter'] =  $record->getAudioRecord()->getDiskDiameters() ? $record->getAudioRecord()->getDiskDiameters()->getName()  : "";
                 $newRow['media_diameter'] =  $record->getAudioRecord()->getMediaDiameters() ? $record->getAudioRecord()->getMediaDiameters()->getName(): "";
