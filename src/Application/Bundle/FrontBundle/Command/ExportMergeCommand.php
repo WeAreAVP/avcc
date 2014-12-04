@@ -46,9 +46,9 @@ class ExportMergeCommand extends ContainerAwareCommand
                     if ($records) {
                         $mergeToFile = $entity->getMergeToFile();
                         $phpExcelObject = $export->megerRecords($records, $mergeToFile);
-//                        $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
-                        $text = print_r($phpExcelObject);
-//                        $text = $completePath;
+                        $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+//                        $text = print_r($phpExcelObject);
+                        $text = $completePath;
 //                        if ($completePath) {
 //                            $baseUrl = $this->getContainer()->getParameter('baseUrl');
 //                            $templateParameters = array('user' => $entity->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);

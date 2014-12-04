@@ -350,7 +350,7 @@ class ExportReport extends ContainerAware
                                 }
                             }
                         }
-                        return $rows;
+//                        return $rows;
                         if ($matched) {
                             $newRows[] = $this->appendCellValues($record, $rows);
                             $this->prepareRecordsFromSphinx($activeSheet, $newrow, $newRows);
@@ -359,9 +359,9 @@ class ExportReport extends ContainerAware
                         }
                         $newrow ++;
                     }
-//                    if ($records) {
-//                        return $newphpExcelObject;
-//                    }
+                    if ($records) {
+                        return $newphpExcelObject;
+                    }
                 } else {
                     return "The file $mergeToFile is empty";
                 }
@@ -432,7 +432,7 @@ class ExportReport extends ContainerAware
         $newRow = null;
         $i = 0;
         foreach($rows as $row) {
-            $newRow[$i]['project'] = $row['project'] ? $record->getProject() . ' ' . $row['project'] : $record->getProject();
+            $newRow[$i]['project'] = $row['project_name'] ? $record->getProject() . ' ' . $row['project_name'] : $record->getProject();
             $newRow[$i]['collection_name'] = $row['collection_name'] ? $record->getCollectionName() . ' ' . $row['collection_name'] : $record->getCollectionName();
             $newRow[$i]['media_type'] = $row['media_type'] ? $record->getMediaType() . ' ' . $row['media_type'] : $record->getMediaType();
             $newRow[$i]['unique_id'] = $row['unique_id'] ? $record->getUniqueId() . ' ' . $row['unique_id'] : $record->getUniqueId();
@@ -440,7 +440,7 @@ class ExportReport extends ContainerAware
             $newRow[$i]['format'] = $row['format'] ? ($record->getFormat()->getName() ? $record->getFormat()->getName() . ' ' . $row['format'] : $row['format']) : ($record->getFormat()->getName()) ? $record->getFormat()->getName() : '';
             $newRow[$i]['title'] = $row['title'] ? $record->getTitle() . '' . $row['title'] : $record->getTitle();
             $newRow[$i]['description'] = $row['description'] ? $record->getDescription() . '' . $row['description'] : $record->getDescription();
-            $newRow[$i]['commercial'] = $row['commercial'] ? ($record->getCommercial() ? $record->getCommercial()->getName() . ' ' . $row['commercial'] : '') : ($record->getCommercial() ? $record->getCommercial()->getName() : '');
+            $newRow[$i]['commercial'] = $row['commercial_or_unique'] ? ($record->getCommercial() ? $record->getCommercial()->getName() . ' ' . $row['commercial_or_unique'] : '') : ($record->getCommercial() ? $record->getCommercial()->getName() : '');
             $newRow[$i]['content_duration'] = $row['content_duration'] ? $record->getContentDuration() . ' ' . $row['content_duration'] : $record->getContentDuration();
             $newRow[$i]['creation_date'] = $row['creation_date'] ? $record->getCreationDate() . ' ' . $row['creation_date'] : $record->getCreationDate();
             $newRow[$i]['content_date'] = $row['content_date'] ? $record->getContentDate() . ' ' . $row['content_date'] : $record->getContentDate();
@@ -449,24 +449,24 @@ class ExportReport extends ContainerAware
             $newRow[$i]['contributor'] = $row['contributor'] ? $record->getContributor() . ' ' . $row['genre_terms'] : $record->getContributor();
             $newRow[$i]['generation'] = $row['generation'] ? $record->getGeneration() . ' ' . $row['genre_terms'] : $record->getGeneration();
             $newRow[$i]['part'] = $row['part'] ? $record->getPart() . ' ' . $row['genre_terms'] : $record->getPart();
-            $newRow[$i]['copyright_restrictions'] = $row['copyright_restrictions'] ? $record->getCopyrightRestrictions() . ' ' . $row['genre_terms'] : $record->getCopyrightRestrictions();
-            $newRow[$i]['duplicates_derivatives'] = $row['duplicates_derivatives'] ? $record->getDuplicatesDerivatives() . ' ' . $row['genre_terms'] : $record->getDuplicatesDerivatives();
-            $newRow[$i]['related_material'] = $row['related_material'] ? $record->getRelatedMaterial() . ' ' . $row['genre_terms'] : $record->getRelatedMaterial();
-            $newRow[$i]['condition_note'] = $row['condition_note'] ? $record->getConditionNote() . ' ' . $row['genre_terms'] : $record->getConditionNote();
-            $newRow[$i]['created_on'] = ($row['created_on']) ? $record->getCreatedOn()->format('Y-m-d H:i:s') . ' ' . $row['created_on'] : $record->getCreatedOn()->format('Y-m-d H:i:s');
-            $newRow[$i]['updated_on'] = $row['updated_on'] ? ($record->getUpdatedOn() ? $record->getUpdatedOn()->format('Y-m-d H:i:s') . ' ' . $row['updated_on'] : '') : ($record->getUpdatedOn() ? $record->getUpdatedOn()->format('Y-m-d H:i:s') : '');
-            $newRow[$i]['user_name'] = $row['user_name'] ? $record->getUser()->getName() . ' ' . $row['user_name'] : $record->getUser()->getName();
+            $newRow[$i]['copyright_restrictions'] = $row['copyright_/_restrictions'] ? $record->getCopyrightRestrictions() . ' ' . $row['copyright_/_restrictions'] : $record->getCopyrightRestrictions();
+            $newRow[$i]['duplicates_derivatives'] = $row['duplicates_/_derivatives'] ? $record->getDuplicatesDerivatives() . ' ' . $row['genre_terms'] : $record->getDuplicatesDerivatives();
+            $newRow[$i]['related_material'] = $row['related_material'] ? $record->getRelatedMaterial() . ' ' . $row['duplicates_/_derivatives'] : $record->getRelatedMaterial();
+            $newRow[$i]['condition_note'] = $row['condition_note'] ? $record->getConditionNote() . ' ' . $row['condition_note'] : $record->getConditionNote();
+            $newRow[$i]['created_on'] = ($row['time_stamp']) ? $record->getCreatedOn()->format('Y-m-d H:i:s') . ' ' . $row['time_stamp'] : $record->getCreatedOn()->format('Y-m-d H:i:s');
+            $newRow[$i]['updated_on'] = $row['timestamp_-_last_change'] ? ($record->getUpdatedOn() ? $record->getUpdatedOn()->format('Y-m-d H:i:s') . ' ' . $row['timestamp_-_last_change'] : '') : ($record->getUpdatedOn() ? $record->getUpdatedOn()->format('Y-m-d H:i:s') : '');
+            $newRow[$i]['user_name'] = $row['cataloger'] ? $record->getUser()->getName() . ' ' . $row['cataloger'] : $record->getUser()->getName();
 
             if ($row['media_type'] == 'Audio') {
                 $newRow[$i]['media_duration'] = $row['media_duration'] ? ($record->getAudioRecord()->getMediaDuration() ? $record->getAudioRecord()->getMediaDuration() . ' ' . $row['media_duration'] : "") : ($record->getAudioRecord()->getMediaDuration() ? $record->getAudioRecord()->getMediaDuration() : "");
                 $newRow[$i]['base'] = $row['base'] ? ($record->getAudioRecord()->getBases() ? $record->getAudioRecord()->getBases()->getName() . ' ' . $row['base'] : "") : ($record->getAudioRecord()->getBases() ? $record->getAudioRecord()->getBases()->getName() : "");
-                $newRow[$i]['disk_diameter'] = $row['disk_diameter'] ? ($record->getAudioRecord()->getDiskDiameters() ? $record->getAudioRecord()->getDiskDiameters()->getName() . ' ' . $row['disk_diameter'] : "") : ($record->getAudioRecord()->getBases() ? $record->getAudioRecord()->getBases()->getName() : "");
-                $newRow[$i]['media_diameter'] = $row['media_diameter'] ? ($record->getAudioRecord()->getMediaDiameters() ? $record->getAudioRecord()->getMediaDiameters()->getName() . ' ' . $row['media_diameter'] : "") : ($record->getAudioRecord()->getBases() ? $record->getAudioRecord()->getBases()->getName() : "");
-                $newRow[$i]['tape_thickness'] = $row['tape_thickness'] ? ($record->getAudioRecord()->getTapeThickness() ? $record->getAudioRecord()->getTapeThickness()->getName() . ' ' . $row['tape_thickness'] : "") : ($record->getAudioRecord()->getBases() ? $record->getAudioRecord()->getBases()->getName() : "");
-                $newRow[$i]['slides'] = $row['slides'] ? ($record->getAudioRecord()->getSlides() ? $record->getAudioRecord()->getSlides()->getName() . ' ' . $row['slides'] : "") : ($record->getAudioRecord()->getBases() ? $record->getAudioRecord()->getBases()->getName() : "");
-                $newRow[$i]['track_type'] = $row['track_type'] ? ($record->getAudioRecord()->getTrackTypes() ? $record->getAudioRecord()->getTrackTypes()->getName() . ' ' . $row['track_type'] : "") : ($record->getAudioRecord()->getBases() ? $record->getAudioRecord()->getBases()->getName() : "");
-                $newRow[$i]['mono_stereo'] = $row['mono_stereo'] ? ($record->getAudioRecord()->getMonoStereo() ? $record->getAudioRecord()->getMonoStereo()->getName() . ' ' . $row['mono_stereo'] : "") : ($record->getAudioRecord()->getBases() ? $record->getAudioRecord()->getBases()->getName() : "");
-                $newRow[$i]['noice_reduction'] = $row['noice_reduction'] ? ($record->getAudioRecord()->getNoiceReduction() ? $record->getAudioRecord()->getNoiceReduction()->getName() . ' ' . $row['noice_reduction'] : "") : ($record->getAudioRecord()->getBases() ? $record->getAudioRecord()->getBases()->getName() : "");
+                $newRow[$i]['disk_diameter'] = $row['disk_diameter'] ? ($record->getAudioRecord()->getDiskDiameters() ? $record->getAudioRecord()->getDiskDiameters()->getName() . ' ' . $row['disk_diameter'] : "") : ($record->getAudioRecord()->getDiskDiameters() ? $record->getAudioRecord()->getDiskDiameters()->getName() : "");
+                $newRow[$i]['media_diameter'] = $row['media_diameter'] ? ($record->getAudioRecord()->getMediaDiameters() ? $record->getAudioRecord()->getMediaDiameters()->getName() . ' ' . $row['media_diameter'] : "") : ($record->getAudioRecord()->getMediaDiameters() ? $record->getAudioRecord()->getMediaDiameters()->getName() : "");
+                $newRow[$i]['tape_thickness'] = $row['tape_thickness'] ? ($record->getAudioRecord()->getTapeThickness() ? $record->getAudioRecord()->getTapeThickness()->getName() . ' ' . $row['tape_thickness'] : "") : ($record->getAudioRecord()->getTapeThickness() ? $record->getAudioRecord()->getTapeThickness()->getName() : "");
+                $newRow[$i]['slides'] = $row['sides'] ? ($record->getAudioRecord()->getSlides() ? $record->getAudioRecord()->getSlides()->getName() . ' ' . $row['sides'] : "") : ($record->getAudioRecord()->getSlides() ? $record->getAudioRecord()->getSlides()->getName() : "");
+                $newRow[$i]['track_type'] = $row['track_type'] ? ($record->getAudioRecord()->getTrackTypes() ? $record->getAudioRecord()->getTrackTypes()->getName() . ' ' . $row['track_type'] : "") : ($record->getAudioRecord()->getTrackTypes() ? $record->getAudioRecord()->getTrackTypes()->getName() : "");
+                $newRow[$i]['mono_stereo'] = $row['mono_or_stereo'] ? ($record->getAudioRecord()->getMonoStereo() ? $record->getAudioRecord()->getMonoStereo()->getName() . ' ' . $row['mono_or_stereo'] : "") : ($record->getAudioRecord()->getMonoStereo() ? $record->getAudioRecord()->getMonoStereo()->getName() : "");
+                $newRow[$i]['noice_reduction'] = $row['noise_reduction'] ? ($record->getAudioRecord()->getNoiceReduction() ? $record->getAudioRecord()->getNoiceReduction()->getName() . ' ' . $row['noise_reduction'] : "") : ($record->getAudioRecord()->getNoiceReduction() ? $record->getAudioRecord()->getNoiceReduction()->getName() : "");
             }
             if ($row['media_type'] == 'Film') {
                 $newRow[$i]['print_type'] = $row['print_type'] ? ($record->getFilmRecord()->getPrintType() ? $record->getFilmRecord()->getPrintType()->getName() . ' ' . $row['print_type'] : "") : ($record->getFilmRecord()->getPrintType() ? $record->getFilmRecord()->getPrintType()->getName() : "");
