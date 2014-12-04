@@ -248,14 +248,15 @@ class ExportReport extends ContainerAware
                                 if (is_object($record)) {
                                     if ($record->getUniqueId() == $worksheet->getCellByColumnAndRow(3, $row)) {
                                         $matched = true;
+                                        $uniq = strtolower(str_replace(' ', '_', $record->getUniqueId()));
                                     }
                                 } else {
                                     if ($record['unique_id'] == $worksheet->getCellByColumnAndRow(3, $row)) {
                                         $matched = true;
+                                        $uniq = strtolower(str_replace(' ', '_', $record['unique_id']));
                                     }
                                 }
-                                if ($matched) {
-                                    $uniq = strtolower(str_replace(' ', '_', $record['unique_id']));
+                                if ($matched) {                                    
                                     $cell = $worksheet->getCellByColumnAndRow($col, $row);
                                     $columnName = strtolower(str_replace(' ', '_', $worksheet->getCellByColumnAndRow($col, 1)));
                                     $rows[$uniq][$columnName] = $cell->getValue();
