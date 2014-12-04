@@ -261,24 +261,25 @@ class ExportReport extends ContainerAware
                                     $rows[$row - 1][$columnName] = $cell->getValue();
                                 }
                             }
-                        }                        
+                        }
+                    }
+                    foreach($records as $rec){
                         if ($matched) {
-                            if (is_object($record)) {
-                                $newRows = $this->appendCellValuesByObject($record, $rows);
+                            if (is_object($rec)) {
+                                $newRows = $this->appendCellValuesByObject($rec, $rows);
                             } else {
-                                $newRows = $this->appendCellValuesByArray($record, $rows);
+                                $newRows = $this->appendCellValuesByArray($rec, $rows);
                             }
                             if($newRows) $this->prepareRecordsFromSphinx($activeSheet, $newrow, $newRows);
                         } else {
-                            if (is_object($record)) {
-                                $this->makeExcelRows($activeSheet, $record, $newrow);
+                            if (is_object($rec)) {
+                                $this->makeExcelRows($activeSheet, $rec, $newrow);
                             } else {
-                                $this->makeExcelRowsByArray($activeSheet, $record, $newrow);
+                                $this->makeExcelRowsByArray($activeSheet, $rec, $newrow);
                             }
                         }
                         $newrow ++;
                     }
-                    print_r($rows);
                     if ($records) {
                         return $newphpExcelObject;
                     }
