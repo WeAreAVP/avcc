@@ -153,59 +153,8 @@ class ExportReport extends ContainerAware
     {
 
         foreach ($records as $record) {
-            $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record->getProject());
-            $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record->getCollectionName());
-            $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $record->getMediaType());
-            $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $record->getUniqueId());
-            $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $record->getLocation());
-            $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, ($record->getFormat()->getName()) ? $record->getFormat()->getName() : '');
-            $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $record->getTitle());
-            $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $record->getDescription());
-            $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, ($record->getCommercial()) ? $record->getCommercial()->getName() : '');
-            $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $record->getContentDuration());
-            $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $record->getCreationDate());
-            $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $record->getContentDate());
-            $activeSheet->setCellValueExplicitByColumnAndRow(16, $row, ($record->getReelDiameters()) ? $record->getReelDiameters()->getName() : '');
-            $activeSheet->setCellValueExplicitByColumnAndRow(34, $row, ($record->getGenreTerms()));
-            $activeSheet->setCellValueExplicitByColumnAndRow(35, $row, ($record->getContributor()));
-            $activeSheet->setCellValueExplicitByColumnAndRow(36, $row, $record->getGeneration());
-            $activeSheet->setCellValueExplicitByColumnAndRow(37, $row, $record->getPart());
-            $activeSheet->setCellValueExplicitByColumnAndRow(38, $row, $record->getCopyrightRestrictions());
-            $activeSheet->setCellValueExplicitByColumnAndRow(39, $row, $record->getDuplicatesDerivatives());
-            $activeSheet->setCellValueExplicitByColumnAndRow(40, $row, $record->getRelatedMaterial());
-            $activeSheet->setCellValueExplicitByColumnAndRow(41, $row, $record->getConditionNote());
-            $activeSheet->setCellValueExplicitByColumnAndRow(42, $row, $record->getCreatedOn()->format('Y-m-d H:i:s'));
-            $activeSheet->setCellValueExplicitByColumnAndRow(43, $row, ($record->getUpdatedOn()) ? $record->getUpdatedOn()->format('Y-m-d H:i:s') : '');
-            $activeSheet->setCellValueExplicitByColumnAndRow(44, $row, $record->getUser()->getName());
-
-            if ($record->getAudioRecord()) {
-                $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, ($record->getAudioRecord()->getMediaDuration()) ? $record->getAudioRecord()->getMediaDuration() : "");
-                $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, ($record->getAudioRecord()->getBases()) ? $record->getAudioRecord()->getBases()->getName() : '');
-                $activeSheet->setCellValueExplicitByColumnAndRow(15, $row, ($record->getAudioRecord()->getDiskDiameters()) ? $record->getAudioRecord()->getDiskDiameters()->getName() : '');
-                $activeSheet->setCellValueExplicitByColumnAndRow(17, $row, ($record->getAudioRecord()->getMediaDiameters()) ? $record->getAudioRecord()->getMediaDiameters()->getName() : '');
-                $activeSheet->setCellValueExplicitByColumnAndRow(21, $row, ($record->getAudioRecord()->getTapeThickness()) ? $record->getAudioRecord()->getTapeThickness()->getName() : '');
-                $activeSheet->setCellValueExplicitByColumnAndRow(22, $row, ($record->getAudioRecord()->getSlides()) ? $record->getAudioRecord()->getSlides()->getName() : '');
-                $activeSheet->setCellValueExplicitByColumnAndRow(23, $row, ($record->getAudioRecord()->getTrackTypes()) ? $record->getAudioRecord()->getTrackTypes()->getName() : '');
-                $activeSheet->setCellValueExplicitByColumnAndRow(24, $row, ($record->getAudioRecord()->getMonoStereo()) ? $record->getAudioRecord()->getMonoStereo()->getName() : '');
-                $activeSheet->setCellValueExplicitByColumnAndRow(25, $row, ($record->getAudioRecord()->getNoiceReduction()) ? $record->getAudioRecord()->getNoiceReduction()->getName() : '');
-            }
-            if ($record->getFilmRecord()) {
-                $activeSheet->setCellValueExplicitByColumnAndRow(14, $row, ($record->getFilmRecord()->getPrintType()) ? $record->getFilmRecord()->getPrintType()->getName() : '');
-                $activeSheet->setCellValueExplicitByColumnAndRow(18, $row, ($record->getFilmRecord()->getFootage()) ? $record->getFilmRecord()->getFootage() : '');
-                $activeSheet->setCellValueExplicitByColumnAndRow(20, $row, ($record->getFilmRecord()->getColors()) ? $record->getFilmRecord()->getColors()->getName() : '');
-                $activeSheet->setCellValueExplicitByColumnAndRow(29, $row, ($record->getFilmRecord()->getReelCore()) ? $record->getFilmRecord()->getReelCore()->getName() : '');
-                $activeSheet->setCellValueExplicitByColumnAndRow(30, $row, ($record->getFilmRecord()->getSound()) ? $record->getFilmRecord()->getSound()->getName() : '');
-                $activeSheet->setCellValueExplicitByColumnAndRow(31, $row, ($record->getFilmRecord()->getFrameRate()) ? $record->getFilmRecord()->getFrameRate()->getName() : '');
-                $activeSheet->setCellValueExplicitByColumnAndRow(32, $row, ($record->getFilmRecord()->getAcidDetectionStrip()) ? $record->getFilmRecord()->getAcidDetectionStrip()->getName() : "");
-                $activeSheet->setCellValueExplicitByColumnAndRow(33, $row, ($record->getFilmRecord()->getShrinkage()) ? $record->getFilmRecord()->getShrinkage() : '');
-            }
-            if ($record->getVideoRecord()) {
-
-                $activeSheet->setCellValueExplicitByColumnAndRow(19, $row, ($record->getVideoRecord()->getRecordingSpeed()) ? $record->getVideoRecord()->getRecordingSpeed()->getName() : '');
-                $activeSheet->setCellValueExplicitByColumnAndRow(26, $row, ($record->getVideoRecord()->getCassetteSize()) ? $record->getVideoRecord()->getCassetteSize()->getName() : '');
-                $activeSheet->setCellValueExplicitByColumnAndRow(27, $row, ($record->getVideoRecord()->getFormatVersion()) ? $record->getVideoRecord()->getFormatVersion()->getName() : '');
-                $activeSheet->setCellValueExplicitByColumnAndRow(28, $row, ($record->getVideoRecord()->getRecordingStandard()) ? $record->getVideoRecord()->getRecordingStandard()->getName() : '');
-            }$row ++;
+            $this->makeExcelRows($activeSheet, $record, $row);
+            $row ++;
         }
 
         return true;
@@ -270,58 +219,7 @@ class ExportReport extends ContainerAware
     private function prepareRecordsFromSphinx($activeSheet, $row, $records)
     {
         foreach ($records as $record) {
-            $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record['project']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record['collection_name']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $record['media_type']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $record['unique_id']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $record['location']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, $record['format']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $record['title']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $record['description']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, $record['commercial']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $record['content_duration']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $record['creation_date']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $record['content_date']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(16, $row, $record['reel_diameter']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(34, $row, $record['genre_terms']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(35, $row, $record['contributor']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(36, $row, $record['generation']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(37, $row, $record['part']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(38, $row, $record['copyright_restrictions']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(39, $row, $record['duplicates_derivatives']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(40, $row, $record['related_material']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(41, $row, $record['condition_note']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(42, $row, ($record['created_on']) ? $record['created_on'] : '');
-            $activeSheet->setCellValueExplicitByColumnAndRow(43, $row, ($record['updated_on']) ? $record['updated_on'] : '');
-            $activeSheet->setCellValueExplicitByColumnAndRow(44, $row, $record['user_name']);
-
-            if ($record['media_type'] == 'Audio') {
-                $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, $record['media_duration']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $record['base']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(15, $row, $record['disk_diameter']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(17, $row, $record['media_diameter']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(21, $row, $record['tape_thickness']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(22, $row, $record['slides']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(23, $row, $record['track_type']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(24, $row, $record['mono_stereo']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(25, $row, $record['noice_reduction']);
-            }
-            if ($record['media_type'] == 'Film') {
-                $activeSheet->setCellValueExplicitByColumnAndRow(14, $row, $record['print_type']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(18, $row, $record['footage']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(20, $row, $record['color']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(29, $row, $record['reel_core']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(30, $row, $record['sound']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(31, $row, $record['frame_rate']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(32, $row, $record['acid_detection']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(33, $row, $record['shrinkage']);
-            }
-            if ($record['media_type'] == 'Video') {
-                $activeSheet->setCellValueExplicitByColumnAndRow(19, $row, $record['recording_speed']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(26, $row, $record['cassette_size']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(27, $row, $record['format_version']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(28, $row, $record['media_duration']);
-            }
+            $this->makeExcelRowsByArray($activeSheet, $record, $row);
             $row ++;
         }
     }
@@ -537,9 +435,9 @@ class ExportReport extends ContainerAware
             }
         }
         
-        $phpExcelObject = $this->megerRecords($rec, $mergeToFile);
+//        $phpExcelObject = $this->megerRecords($rec, $mergeToFile);
 
-        return $phpExcelObject;
+        return $rec;
     }
 
     public function makeExcelRowsByArray($activeSheet, $record, $row)
