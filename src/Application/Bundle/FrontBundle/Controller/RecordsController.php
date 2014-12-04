@@ -480,7 +480,7 @@ class RecordsController extends Controller
                             $sphinxCriteria = $allCriteria['criteriaArr'];
                         }
                     }
-                    $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');
+                    $sphinxInfo = $this->container->getParameter('sphinx_param');
                     $phpExcelObject = $export->fetchFromSphinxToMerge($user, $sphinxInfo, $sphinxCriteria, $em, $mergeToFile);
 //                    $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
 //                    $text = $completePath;
