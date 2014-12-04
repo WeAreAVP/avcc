@@ -639,7 +639,7 @@ class ExportReport extends ContainerAware {
                 echo 'getVideoRecord';
                 echo '<br>';
                 $score = $score + (float) (($record->getVideoRecord()->getRecordingSpeed()) ? $record->getVideoRecord()->getRecordingSpeed()->getScore() : 0);
-                $score = $score + (float) (($record->getVideoRecord()->getCassetteSize()) ? $record->getVideoRecord()->getCassetteSize()->getScore() : 0);
+                $score = $score + (float) (($record->getVideoRecord()->getCassetteSizes()) ? $record->getVideoRecord()->getCassetteSizes()->getScore() : 0);
                 $score = $score + (float) (($record->getVideoRecord()->getFormatVersion()) ? $record->getVideoRecord()->getFormatVersion()->getScore() : 0);
                 $score = $score + (float) (($record->getVideoRecord()->getRecordingStandard()) ? $record->getVideoRecord()->getRecordingStandard()->getScoregetScore() : 0);
 
@@ -650,6 +650,7 @@ class ExportReport extends ContainerAware {
             $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $scale_score);
             $row ++;
         }
+        echo 'here';
         exit;
         return true;
     }
