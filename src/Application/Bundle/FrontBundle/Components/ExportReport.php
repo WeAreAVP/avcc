@@ -242,10 +242,10 @@ class ExportReport extends ContainerAware
                     $rows = array();
                     $newRows = array();
                     $newrow = 2;
+                    $matched = false;
                     foreach ($records as $record) {
-                        for ($row = 2; $row <= $highestRow; ++$row) {
-                            for ($col = 0; $col < $highestColumnIndex; ++$col) {
-                                $matched = false;
+                        for ($row = 2; $row <= $highestRow; ++$row) {                            
+                            for ($col = 0; $col < $highestColumnIndex; ++$col) {                                
                                 if (is_object($record)) {
                                     if ($record->getUniqueId() == $worksheet->getCellByColumnAndRow(3, $row)) {
                                         $matched = true;
