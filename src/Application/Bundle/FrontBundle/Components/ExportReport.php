@@ -273,7 +273,6 @@ class ExportReport extends ContainerAware
                             }
                             $newrow++;
                       }
-                         $newrow++;
                       }
 //                        if ($matched) {
 //                            if (is_object($rec)) {
