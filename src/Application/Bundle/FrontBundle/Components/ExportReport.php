@@ -262,6 +262,7 @@ class ExportReport extends ContainerAware
                                 }
                             }
                         }
+                        print_r($rows);
                         if ($matched) {
                             if (is_object($record)) {
                                 $newRows = $this->appendCellValuesByObject($record, $rows);
