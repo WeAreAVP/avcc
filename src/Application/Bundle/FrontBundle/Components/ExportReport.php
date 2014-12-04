@@ -649,8 +649,6 @@ class ExportReport extends ContainerAware
             $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $scale_score);
             $row ++;
         }
-        echo 'here';
-        exit;
         return true;
     }
 
