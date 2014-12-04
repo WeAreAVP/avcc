@@ -350,6 +350,7 @@ class ExportReport extends ContainerAware
                                 }
                             }
                         }
+                        return $rows;
                         if ($matched) {
                             $newRows[] = $this->appendCellValues($record, $rows);
                             $this->prepareRecordsFromSphinx($activeSheet, $newrow, $newRows);
@@ -358,9 +359,9 @@ class ExportReport extends ContainerAware
                         }
                         $newrow ++;
                     }
-                    if ($records) {
-                        return $newphpExcelObject;
-                    }
+//                    if ($records) {
+//                        return $newphpExcelObject;
+//                    }
                 } else {
                     return "The file $mergeToFile is empty";
                 }

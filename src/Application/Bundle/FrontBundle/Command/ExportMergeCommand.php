@@ -46,20 +46,21 @@ class ExportMergeCommand extends ContainerAwareCommand
                     if ($records) {
                         $mergeToFile = $entity->getMergeToFile();
                         $phpExcelObject = $export->megerRecords($records, $mergeToFile);
-                        $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
-                        $text = $completePath;
-                        if ($completePath) {
-                            $baseUrl = $this->getContainer()->getParameter('baseUrl');
-                            $templateParameters = array('user' => $entity->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
-                            $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
-                            $email = new EmailHelper($this->getContainer());
-                            $subject = 'Record Export';
-                            $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
-                            $entity->setStatus(1);
-                            $em->persist($entity);
-                            $em->flush();
-                            $text = $rendered;
-                        }
+//                        $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+                        $text = print_r($phpExcelObject);
+//                        $text = $completePath;
+//                        if ($completePath) {
+//                            $baseUrl = $this->getContainer()->getParameter('baseUrl');
+//                            $templateParameters = array('user' => $entity->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
+//                            $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
+//                            $email = new EmailHelper($this->getContainer());
+//                            $subject = 'Record Export';
+//                            $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
+//                            $entity->setStatus(1);
+//                            $em->persist($entity);
+//                            $em->flush();
+//                            $text = $rendered;
+//                        }
                     } else {
                         $text = 'records not found';
                     }
