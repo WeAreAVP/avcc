@@ -448,7 +448,7 @@ class RecordsController extends Controller
      */
     public function mergeFiles()
     {
-        $id = 16;
+        $id = 19;
         $em = $this->getDoctrine()->getManager();
         if ($id) {
             $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id, 'type' => 'export_merge', 'status' => 0));
