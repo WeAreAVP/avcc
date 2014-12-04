@@ -589,7 +589,7 @@ class ExportReport extends ContainerAware {
      * @return boolean
      */
     private function preparePrioritizationRecords($activeSheet, $row, $records) {
-        echo ($record->getFilmRecord()->getColors()) ? $record->getFilmRecord()->getColors()->getScore() : 0;
+        echo (($record->getFilmRecord()->getColors()) ? $record->getFilmRecord()->getColors()->getScore() : 0);
         exit;
         foreach ($records as $record) {
             $score = 0;
