@@ -354,7 +354,6 @@ class ExportReport extends ContainerAware
             $newRow[$i]['project'] = $row['project_name'] ? $record->getProject() . ' ' . $row['project_name'] : $record->getProject();
             $newRow[$i]['collection_name'] = $row['collection_name'] ? $record->getCollectionName() . ' ' . $row['collection_name'] : $record->getCollectionName();
             $newRow[$i]['media_type'] = $row['media_type'] ? $record->getMediaType() . ' ' . $row['media_type'] : $record->getMediaType();
-            $newRow[$i]['unique_id'] = $row['unique_id'] ? $record->getUniqueId() . ' ' . $row['unique_id'] : $record->getUniqueId();
             $newRow[$i]['location'] = $row['location'] ? $record->getLocation() . ' ' . $row['location'] : $record->getLocation();
             $newRow[$i]['format'] = $row['format'] ? ($record->getFormat()->getName() ? $record->getFormat()->getName() . ' ' . $row['format'] : $row['format']) : ($record->getFormat()->getName()) ? $record->getFormat()->getName() : '';
             $newRow[$i]['title'] = $row['title'] ? $record->getTitle() . '' . $row['title'] : $record->getTitle();
@@ -505,7 +504,6 @@ class ExportReport extends ContainerAware
             $newRow[$i]['project'] = $row['project_name'] ? $record['project'] . ' ' . $row['project_name'] : $record['project'];
             $newRow[$i]['collection_name'] = $row['collection_name'] ? $record['collection_name'] . ' ' . $row['collection_name'] : $record->getCollectionName();
             $newRow[$i]['media_type'] = $row['media_type'] ? $record['media_type'] . ' ' . $row['media_type'] : $record['media_type'];
-            $newRow[$i]['unique_id'] = $row['unique_id'] ? $record['unique_id'] . ' ' . $row['unique_id'] : $record['unique_id'];
             $newRow[$i]['location'] = $row['location'] ? $record['location'] . ' ' . $row['location'] : $record['location'];
             $newRow[$i]['format'] = $row['format'] ? $record['format'] . ' ' . $row['format'] : $record['format'];
             $newRow[$i]['title'] = $row['title'] ? $record['title'] . '' . $row['title'] : $record['title'];
