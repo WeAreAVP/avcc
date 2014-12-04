@@ -227,7 +227,6 @@ class ExportReport extends ContainerAware
     public function megerRecords($records, $mergeToFile)
     {
         $mergeFileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $mergeToFile;
-//        $mergeFileCompletePath = '/Applications/XAMPP/xamppfiles/htdocs/avcc/web/' . $mergeToFile;
         if (file_exists($mergeFileCompletePath)) {
             $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($mergeFileCompletePath);
             $newphpExcelObject = $this->initReport();
@@ -267,7 +266,7 @@ class ExportReport extends ContainerAware
                       foreach($rows as $r){
                           if (is_object($rec)) {
                                 $newRows = $this->appendCellValuesByObject($rec, $r);
-                                $this->makeExcelRows($activeSheet, $newRows, $newrow);
+                                $this->makeExcelRowsByArray($activeSheet, $newRows, $newrow);
                             } else {
                                 $newRows = $this->appendCellValuesByArray($rec, $r);
                                 $this->makeExcelRowsByArray($activeSheet, $newRows, $newrow);
