@@ -267,13 +267,15 @@ class ExportReport extends ContainerAware
                           if (is_object($rec)) {
                                 $newRows = $this->appendCellValuesByObject($rec, $r);
                                 $this->makeExcelRowsByArray($activeSheet, $newRows, $newrow);
+                                $newrow ++; 
                             } else {
                                 $newRows = $this->appendCellValuesByArray($rec, $r);
                                 $this->makeExcelRowsByArray($activeSheet, $newRows, $newrow);
+                                $newrow ++; 
                             }
                             
                       }
-                         $newrow ++; 
+                         
                       }
 //                        if ($matched) {
 //                            if (is_object($rec)) {
