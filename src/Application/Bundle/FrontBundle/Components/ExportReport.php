@@ -595,7 +595,7 @@ class ExportReport extends ContainerAware {
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record->getProject());
             $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record->getCollectionName());
             $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $record->getTitle());
-            $score = $score + (float) (($record->getFormat()) ? $record->getMediaType()->getScore(): 0);
+            $score = $score + (float) (($record->getMediaType()) ? $record->getMediaType()->getScore(): 0);
             $score = $score + (float) (($record->getFormat()) ? $record->getFormat()->getScore() : 0);
             $score = $score + (float) (($record->getCommercial()) ? $record->getCommercial()->getScore() : 0);
             $score = $score + (float) (($record->getReelDiameters()) ? $record->getReelDiameters()->getScore() : 0);
