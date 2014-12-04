@@ -623,31 +623,31 @@ class ExportReport extends ContainerAware
 
             if ($record->getAudioRecord()) {
             //    $score = $score + ($record->getAudioRecord()->getMediaDuration()) ? $record->getAudioRecord()->getMediaDuration()->getscore() : 0;
-                $score = $score + ($record->getAudioRecord()->getBases()) ? $record->getAudioRecord()->getBases()->getscore() : 0;
-                $score = $score + ($record->getAudioRecord()->getDiskDiameters()) ? $record->getAudioRecord()->getDiskDiameters()->getscore() : 0;
-                $score = $score + ($record->getAudioRecord()->getMediaDiameters()) ? $record->getAudioRecord()->getMediaDiameters()->getscore() : 0;
-                $score = $score + ($record->getAudioRecord()->getTapeThickness()) ? $record->getAudioRecord()->getTapeThickness()->getscore() : 0;
-                $score = $score + ($record->getAudioRecord()->getSlides()) ? $record->getAudioRecord()->getSlides()->getscore() : 0;
-                $score = $score + ($record->getAudioRecord()->getTrackTypes()) ? $record->getAudioRecord()->getTrackTypes()->getscore() : 0;
-                $score = $score + ($record->getAudioRecord()->getMonoStereo()) ? $record->getAudioRecord()->getMonoStereo()->getscore() : 0;
-                $score = $score + ($record->getAudioRecord()->getNoiceReduction()) ? $record->getAudioRecord()->getNoiceReduction()->getscore() : 0;
+                $score = $score + ($record->getAudioRecord()->getBases()) ? $record->getAudioRecord()->getBases()->getScore() : 0;
+                $score = $score + ($record->getAudioRecord()->getDiskDiameters()) ? $record->getAudioRecord()->getDiskDiameters()->getScore() : 0;
+                $score = $score + ($record->getAudioRecord()->getMediaDiameters()) ? $record->getAudioRecord()->getMediaDiameters()->getScore() : 0;
+                $score = $score + ($record->getAudioRecord()->getTapeThickness()) ? $record->getAudioRecord()->getTapeThickness()->getScore() : 0;
+                $score = $score + ($record->getAudioRecord()->getSlides()) ? $record->getAudioRecord()->getSlides()->getScore() : 0;
+                $score = $score + ($record->getAudioRecord()->getTrackTypes()) ? $record->getAudioRecord()->getTrackTypes()->getScore() : 0;
+                $score = $score + ($record->getAudioRecord()->getMonoStereo()) ? $record->getAudioRecord()->getMonoStereo()->getScore() : 0;
+                $score = $score + ($record->getAudioRecord()->getNoiceReduction()) ? $record->getAudioRecord()->getNoiceReduction()->getScore() : 0;
             }
             if ($record->getFilmRecord()) {
-                $score = $score + ($record->getFilmRecord()->getPrintType()) ? $record->getFilmRecord()->getPrintType()->getscore() : 0;
+                $score = $score + ($record->getFilmRecord()->getPrintType()) ? $record->getFilmRecord()->getPrintType()->getScore() : 0;
               //  $score = $score + ($record->getFilmRecord()->getFootage()) ? $record->getFilmRecord()->getscore() : 0;
-                $score = $score + ($record->getFilmRecord()->getColors()) ? $record->getFilmRecord()->getColors()->getscore() : 0;
-                $score = $score + ($record->getFilmRecord()->getReelCore()) ? $record->getFilmRecord()->getReelCore()->getscore() : 0;
-                $score = $score + ($record->getFilmRecord()->getSound()) ? $record->getFilmRecord()->getSound()->getscore() : 0;
-                $score = $score + ($record->getFilmRecord()->getFrameRate()) ? $record->getFilmRecord()->getFrameRate()->getscore() : 0;
-                $score = $score + ($record->getFilmRecord()->getAcidDetectionStrip()) ? $record->getFilmRecord()->getAcidDetectionStrip()->getscore() : 0;
+                $score = $score + ($record->getFilmRecord()->getColors()) ? $record->getFilmRecord()->getColors()->getScore() : 0;
+                $score = $score + ($record->getFilmRecord()->getReelCore()) ? $record->getFilmRecord()->getReelCore()->getScore() : 0;
+                $score = $score + ($record->getFilmRecord()->getSound()) ? $record->getFilmRecord()->getSound()->getScore() : 0;
+                $score = $score + ($record->getFilmRecord()->getFrameRate()) ? $record->getFilmRecord()->getFrameRate()->getScore() : 0;
+                $score = $score + ($record->getFilmRecord()->getAcidDetectionStrip()) ? $record->getFilmRecord()->getAcidDetectionStrip()->getScore() : 0;
               //  $score = $score + ($record->getFilmRecord()->getShrinkage()) ? $record->getFilmRecord()->getscore() : 0;
             }
             if ($record->getVideoRecord()) {
 
-                $score = $score + ($record->getVideoRecord()->getRecordingSpeed()) ? $record->getVideoRecord()->getRecordingSpeed()->getscore() : 0;
-                $score = $score + ($record->getVideoRecord()->getCassetteSize()) ? $record->getVideoRecord()->getCassetteSize()->getscore() : 0;
-                $score = $score + ($record->getVideoRecord()->getFormatVersion()) ? $record->getVideoRecord()->getFormatVersion()->getscore() : 0;
-                $score = $score + ($record->getVideoRecord()->getRecordingStandard()) ? $record->getVideoRecord()->getRecordingStandard()->getscore() : 0;
+                $score = $score + ($record->getVideoRecord()->getRecordingSpeed()) ? $record->getVideoRecord()->getRecordingSpeed()->getScore() : 0;
+                $score = $score + ($record->getVideoRecord()->getCassetteSize()) ? $record->getVideoRecord()->getCassetteSize()->getScore() : 0;
+                $score = $score + ($record->getVideoRecord()->getFormatVersion()) ? $record->getVideoRecord()->getFormatVersion()->getScore() : 0;
+                $score = $score + ($record->getVideoRecord()->getRecordingStandard()) ? $record->getVideoRecord()->getRecordingStandard()->getScoregetScore() : 0;
 
             }
             $scale_score = ($score/100) * 5;
