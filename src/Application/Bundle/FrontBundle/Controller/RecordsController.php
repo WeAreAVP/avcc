@@ -429,6 +429,8 @@ class RecordsController extends Controller
             } else {
                 $this->get('session')->getFlashBag()->add('export_merge_error', 'File formate is not correct. Please try again.');
             }
+        }else{
+            $this->get('session')->getFlashBag()->add('export_merge_error', 'Select file that require to merge. Please try again.');
         }
         $session->remove("saveRecords");
         $session->remove("allRecords");
