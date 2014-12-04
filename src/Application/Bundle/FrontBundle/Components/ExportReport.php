@@ -619,6 +619,7 @@ class ExportReport extends ContainerAware
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record->getProject());
             $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record->getCollectionName());
             $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $record->getTitle());
+			$activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $record->getUniqueId());
             $score = $score + (float) (($record->getMediaType()) ? $record->getMediaType()->getScore() : 0);
             $score = $score + (float) (($record->getFormat()) ? $record->getFormat()->getScore() : 0);
             $score = $score + (float) (($record->getCommercial()) ? $record->getCommercial()->getScore() : 0);
@@ -652,7 +653,7 @@ class ExportReport extends ContainerAware
                 $score = $score + (float) (($record->getVideoRecord()->getRecordingStandard()) ? $record->getVideoRecord()->getRecordingStandard()->getScore() : 0);
             }
             $scale_score = ($score / 100) * 5;
-            $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $scale_score);
+            $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $scale_score);
             $row ++;
         }
         return true;
