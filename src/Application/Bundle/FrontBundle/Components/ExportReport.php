@@ -7,16 +7,19 @@ use Application\Bundle\FrontBundle\Helper\ExportFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use PHPExcel_Cell;
 
-class ExportReport extends ContainerAware {
+class ExportReport extends ContainerAware
+{
 
     public $columns;
     public $container;
 
-    public function __construct($container) {
+    public function __construct($container)
+    {
         $this->container = $container;
     }
 
-    public function prepareManifestReport($activeSheet, $records) {
+    public function prepareManifestReport($activeSheet, $records)
+    {
         $row = 1;
         $columns = new ExportFields();
         $this->columns = $columns->getManifestColumns();
@@ -62,7 +65,8 @@ class ExportReport extends ContainerAware {
         }
     }
 
-    public function generateReport($records) {
+    public function generateReport($records)
+    {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
                 ->setTitle("AVCC - Report")
@@ -82,7 +86,8 @@ class ExportReport extends ContainerAware {
         return $phpExcelObject;
     }
 
-    public function outputReport($type, $phpExcelObject, $fileStartName = 'allFormat') {
+    public function outputReport($type, $phpExcelObject, $fileStartName = 'allFormat')
+    {
         $format = ($type == 'csv') ? 'CSV' : 'Excel2007';
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, $format);
         $filename = $fileStartName . '_' . time() . '.' . $type;
@@ -101,7 +106,8 @@ class ExportReport extends ContainerAware {
      * @param  type   $phpExcelObject
      * @return string
      */
-    public function saveReport($type, $phpExcelObject) {
+    public function saveReport($type, $phpExcelObject)
+    {
         $format = ($type == 'csv') ? 'CSV' : 'Excel2007';
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, $format);
         $filename = 'allFormat_' . time() . '.' . $type;
@@ -123,7 +129,8 @@ class ExportReport extends ContainerAware {
      * @param  Integer            $row
      * @return boolean
      */
-    private function prepareHeader($activeSheet, $row) {
+    private function prepareHeader($activeSheet, $row)
+    {
         $columns = new ExportFields();
         $this->columns = $columns->getExportColumns();
         foreach ($this->columns as $column => $columnName) {
@@ -142,7 +149,8 @@ class ExportReport extends ContainerAware {
      * @param  Integer            $row
      * @return boolean
      */
-    private function prepareRecords($activeSheet, $row, $records) {
+    private function prepareRecords($activeSheet, $row, $records)
+    {
 
         foreach ($records as $record) {
             $this->makeExcelRows($activeSheet, $record, $row);
@@ -152,7 +160,8 @@ class ExportReport extends ContainerAware {
         return true;
     }
 
-    public function initReport() {
+    public function initReport()
+    {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
                 ->setTitle("AVCC - Report")
@@ -176,7 +185,8 @@ class ExportReport extends ContainerAware {
      * 
      * @return type
      */
-    public function fetchFromSphinx($user, $sphinxInfo, $sphinxCriteria, $em) {
+    public function fetchFromSphinx($user, $sphinxInfo, $sphinxCriteria, $em)
+    {
         $phpExcelObject = $this->initReport();
         $row = 2;
         $count = 0;
@@ -206,14 +216,16 @@ class ExportReport extends ContainerAware {
      * @param  Integer            $row
      * @return boolean
      */
-    private function prepareRecordsFromSphinx($activeSheet, $row, $records) {
+    private function prepareRecordsFromSphinx($activeSheet, $row, $records)
+    {
         foreach ($records as $record) {
             $this->makeExcelRowsByArray($activeSheet, $record, $row);
             $row ++;
         }
     }
 
-    public function megerRecords($records, $mergeToFile) {
+    public function megerRecords($records, $mergeToFile)
+    {
         $mergeFileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $mergeToFile;
 //        $mergeFileCompletePath = '/Applications/XAMPP/xamppfiles/htdocs/avcc/web/' . $mergeToFile;
         if (file_exists($mergeFileCompletePath)) {
@@ -230,43 +242,41 @@ class ExportReport extends ContainerAware {
                     $rows = array();
                     $newRows = array();
                     $newrow = 2;
-                    return print_r($records);
                     foreach ($records as $record) {
-                        
-//                        for ($row = 2; $row <= $highestRow; ++$row) {
-//                            for ($col = 0; $col < $highestColumnIndex; ++$col) {
-//                                $matched = false;
-//                                if (is_object($record)) {
-//                                    if ($record->getUniqueId() == $worksheet->getCellByColumnAndRow(3, $row)) {
-//                                        $matched = true;
-//                                    }
-//                                } else {
-//                                    if ($record['unique_id'] == $worksheet->getCellByColumnAndRow(3, $row)) {
-//                                        $matched = true;
-//                                    }
-//                                }
-//                                if ($matched) {
-//                                    $cell = $worksheet->getCellByColumnAndRow($col, $row);
-//                                    $columnName = strtolower(str_replace(' ', '_', $worksheet->getCellByColumnAndRow($col, 1)));
-//                                    $rows[$row - 1][$columnName] = $cell->getValue();
-//                                }
-//                            }
-//                        }
-//                        if ($matched) {
-//                            if (is_object($record)) {
-//                                $newRows = $this->appendCellValuesByObject($record, $rows);
-//                            } else {
-//                                $newRows = $this->appendCellValuesByArray($record, $rows);
-//                            }
-//                            $this->prepareRecordsFromSphinx($activeSheet, $newrow, $newRows);
-//                        } else {
-//                            if (is_object($record)) {
-//                                $this->makeExcelRows($activeSheet, $record, $newrow);
-//                            } else {
-//                                $this->makeExcelRowsByArray($activeSheet, $record, $newrow);
-//                            }
-//                        }
-//                        $newrow ++;
+                        for ($row = 2; $row <= $highestRow; ++$row) {
+                            for ($col = 0; $col < $highestColumnIndex; ++$col) {
+                                $matched = false;
+                                if (is_object($record)) {
+                                    if ($record->getUniqueId() == $worksheet->getCellByColumnAndRow(3, $row)) {
+                                        $matched = true;
+                                    }
+                                } else {
+                                    if ($record['unique_id'] == $worksheet->getCellByColumnAndRow(3, $row)) {
+                                        $matched = true;
+                                    }
+                                }
+                                if ($matched) {
+                                    $cell = $worksheet->getCellByColumnAndRow($col, $row);
+                                    $columnName = strtolower(str_replace(' ', '_', $worksheet->getCellByColumnAndRow($col, 1)));
+                                    $rows[$row - 1][$columnName] = $cell->getValue();
+                                }
+                            }
+                        }
+                        if ($matched) {
+                            if (is_object($record)) {
+                                $newRows = $this->appendCellValuesByObject($record, $rows);
+                            } else {
+                                $newRows = $this->appendCellValuesByArray($record, $rows);
+                            }
+                            $this->prepareRecordsFromSphinx($activeSheet, $newrow, $newRows);
+                        } else {
+                            if (is_object($record)) {
+                                $this->makeExcelRows($activeSheet, $record, $newrow);
+                            } else {
+                                $this->makeExcelRowsByArray($activeSheet, $record, $newrow);
+                            }
+                        }
+                        $newrow ++;
                     }
                     if ($records) {
                         return $newphpExcelObject;
@@ -280,7 +290,8 @@ class ExportReport extends ContainerAware {
         }
     }
 
-    public function makeExcelRows($activeSheet, $record, $row) {
+    public function makeExcelRows($activeSheet, $record, $row)
+    {
         $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record->getProject());
         $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record->getCollectionName());
         $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $record->getMediaType());
@@ -335,7 +346,8 @@ class ExportReport extends ContainerAware {
         }
     }
 
-    public function appendCellValuesByObject($record, $rows) {
+    public function appendCellValuesByObject($record, $rows)
+    {
         $newRow = null;
         $i = 0;
         foreach ($rows as $row) {
@@ -406,28 +418,31 @@ class ExportReport extends ContainerAware {
      * 
      * @return type
      */
-    public function fetchFromSphinxToMerge($user, $sphinxInfo, $sphinxCriteria, $em, $mergeToFile) {
+    public function fetchFromSphinxToMerge($user, $sphinxInfo, $sphinxCriteria, $em, $mergeToFile)
+    {
+        $phpExcelObject = $this->initReport();
         $row = 2;
         $count = 0;
         $offset = 0;
-        $sphinxObj = new SphinxSearch($em, $sphinxInfo);
+        $sphinxObj = new SphinxSearch($em, $sphinxInfo);        
         while ($count == 0) {
             $records = $sphinxObj->select($user, $offset, 1000, 'title', 'asc', $sphinxCriteria);
-            $rec[] = $records[0];
+            $rec = $records[0];
             $totalFound = $records[1][1]['Value'];
+            $phpExcelObject = $this->megerArrayRecords($rec, $mergeToFile, $phpExcelObject);
             $offset = $offset + 1000;
             $row++;
             if ($totalFound < 1000) {
                 $count++;
             }
         }
-
-        $phpExcelObject = $this->megerRecords($rec, $mergeToFile);
+        $phpExcelObject->setActiveSheetIndex(0);
 
         return $phpExcelObject;
     }
 
-    public function makeExcelRowsByArray($activeSheet, $record, $row) {
+    public function makeExcelRowsByArray($activeSheet, $record, $row)
+    {
         $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record['project']);
         $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record['collection_name']);
         $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $record['media_type']);
@@ -482,7 +497,8 @@ class ExportReport extends ContainerAware {
         }
     }
 
-    public function appendCellValuesByArray($record, $rows) {
+    public function appendCellValuesByArray($record, $rows)
+    {
         $newRow = null;
         $i = 0;
         foreach ($rows as $row) {
@@ -543,7 +559,8 @@ class ExportReport extends ContainerAware {
         return $newRow;
     }
 
-    public function generatePrioritizationReport($records) {
+    public function generatePrioritizationReport($records)
+    {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
                 ->setTitle("AVCC - Report")
@@ -570,7 +587,8 @@ class ExportReport extends ContainerAware {
      * @param  Integer            $row
      * @return boolean
      */
-    private function preparePrioritizationHeader($activeSheet, $row) {
+    private function preparePrioritizationHeader($activeSheet, $row)
+    {
         $columns = new ExportFields();
         $this->columns = $columns->getPrioritizationColumns();
         foreach ($this->columns as $column => $columnName) {
@@ -589,7 +607,8 @@ class ExportReport extends ContainerAware {
      * @param  Integer            $row
      * @return boolean
      */
-    private function preparePrioritizationRecords($activeSheet, $row, $records) {
+    private function preparePrioritizationRecords($activeSheet, $row, $records)
+    {
         echo ($record->getFilmRecord()->getColors()) ? $record->getFilmRecord()->getColors()->getScore() : 0;
         exit;
         foreach ($records as $record) {
@@ -636,6 +655,58 @@ class ExportReport extends ContainerAware {
         }
 
         return true;
+    }
+
+    public function megerArrayRecords($records, $mergeToFile, $newphpExcelObject)
+    {
+        $mergeFileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $mergeToFile;
+//        $mergeFileCompletePath = '/Applications/XAMPP/xamppfiles/htdocs/avcc/web/' . $mergeToFile;
+        
+        if (file_exists($mergeFileCompletePath)) {
+            $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($mergeFileCompletePath);
+            $activeSheet = $newphpExcelObject->setActiveSheetIndex(0);
+            foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
+                $highestRow = $worksheet->getHighestRow();
+                $highestColumn = $worksheet->getHighestColumn();
+                $excelCell = new PHPExcel_Cell(null, null, $worksheet);
+                $highestColumnIndex = $excelCell->columnIndexFromString($highestColumn);
+                if ($highestRow > 0) {
+                    $rows = array();
+                    $newRows = array();
+                    $newrow = 2;
+                    foreach ($records as $record) {
+                        print_r($record);
+                        for ($row = 2; $row <= $highestRow; ++$row) {
+                            for ($col = 0; $col < $highestColumnIndex; ++$col) {
+                                $matched = false;
+                                if ($record['unique_id'] == $worksheet->getCellByColumnAndRow(3, $row)) {
+                                    $matched = true;
+                                }
+                                if ($matched) {
+                                    $cell = $worksheet->getCellByColumnAndRow($col, $row);
+                                    $columnName = strtolower(str_replace(' ', '_', $worksheet->getCellByColumnAndRow($col, 1)));
+                                    $rows[$row - 1][$columnName] = $cell->getValue();
+                                }
+                            }
+                        }
+                        if ($matched) {
+                                $newRows = $this->appendCellValuesByArray($record, $rows);
+                            $this->prepareRecordsFromSphinx($activeSheet, $newrow, $newRows);
+                        } else {
+                                $this->makeExcelRowsByArray($activeSheet, $record, $newrow);
+                        }
+                        $newrow ++;
+                    }
+                    if ($records) {
+                        return $newphpExcelObject;
+                    }
+                } else {
+                    return "The file $mergeToFile is empty";
+                }
+            }
+        } else {
+            return "The file $mergeToFile does not exist";
+        }
     }
 
 }
