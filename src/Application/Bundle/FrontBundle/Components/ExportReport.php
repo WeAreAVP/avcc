@@ -7,19 +7,16 @@ use Application\Bundle\FrontBundle\Helper\ExportFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use PHPExcel_Cell;
 
-class ExportReport extends ContainerAware
-{
+class ExportReport extends ContainerAware {
 
     public $columns;
     public $container;
 
-    public function __construct($container)
-    {
+    public function __construct($container) {
         $this->container = $container;
     }
 
-    public function prepareManifestReport($activeSheet, $records)
-    {
+    public function prepareManifestReport($activeSheet, $records) {
         $row = 1;
         $columns = new ExportFields();
         $this->columns = $columns->getManifestColumns();
@@ -65,8 +62,7 @@ class ExportReport extends ContainerAware
         }
     }
 
-    public function generateReport($records)
-    {
+    public function generateReport($records) {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
                 ->setTitle("AVCC - Report")
@@ -86,8 +82,7 @@ class ExportReport extends ContainerAware
         return $phpExcelObject;
     }
 
-    public function outputReport($type, $phpExcelObject, $fileStartName = 'allFormat')
-    {
+    public function outputReport($type, $phpExcelObject, $fileStartName = 'allFormat') {
         $format = ($type == 'csv') ? 'CSV' : 'Excel2007';
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, $format);
         $filename = $fileStartName . '_' . time() . '.' . $type;
@@ -106,8 +101,7 @@ class ExportReport extends ContainerAware
      * @param  type   $phpExcelObject
      * @return string
      */
-    public function saveReport($type, $phpExcelObject)
-    {
+    public function saveReport($type, $phpExcelObject) {
         $format = ($type == 'csv') ? 'CSV' : 'Excel2007';
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, $format);
         $filename = 'allFormat_' . time() . '.' . $type;
@@ -129,8 +123,7 @@ class ExportReport extends ContainerAware
      * @param  Integer            $row
      * @return boolean
      */
-    private function prepareHeader($activeSheet, $row)
-    {
+    private function prepareHeader($activeSheet, $row) {
         $columns = new ExportFields();
         $this->columns = $columns->getExportColumns();
         foreach ($this->columns as $column => $columnName) {
@@ -149,8 +142,7 @@ class ExportReport extends ContainerAware
      * @param  Integer            $row
      * @return boolean
      */
-    private function prepareRecords($activeSheet, $row, $records)
-    {
+    private function prepareRecords($activeSheet, $row, $records) {
 
         foreach ($records as $record) {
             $this->makeExcelRows($activeSheet, $record, $row);
@@ -160,8 +152,7 @@ class ExportReport extends ContainerAware
         return true;
     }
 
-    public function initReport()
-    {
+    public function initReport() {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
                 ->setTitle("AVCC - Report")
@@ -185,8 +176,7 @@ class ExportReport extends ContainerAware
      * 
      * @return type
      */
-    public function fetchFromSphinx($user, $sphinxInfo, $sphinxCriteria, $em)
-    {
+    public function fetchFromSphinx($user, $sphinxInfo, $sphinxCriteria, $em) {
         $phpExcelObject = $this->initReport();
         $row = 2;
         $count = 0;
@@ -216,16 +206,14 @@ class ExportReport extends ContainerAware
      * @param  Integer            $row
      * @return boolean
      */
-    private function prepareRecordsFromSphinx($activeSheet, $row, $records)
-    {
+    private function prepareRecordsFromSphinx($activeSheet, $row, $records) {
         foreach ($records as $record) {
             $this->makeExcelRowsByArray($activeSheet, $record, $row);
             $row ++;
         }
     }
 
-    public function megerRecords($records, $mergeToFile)
-    {
+    public function megerRecords($records, $mergeToFile) {
         $mergeFileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $mergeToFile;
 //        $mergeFileCompletePath = '/Applications/XAMPP/xamppfiles/htdocs/avcc/web/' . $mergeToFile;
         if (file_exists($mergeFileCompletePath)) {
@@ -291,8 +279,7 @@ class ExportReport extends ContainerAware
         }
     }
 
-    public function makeExcelRows($activeSheet, $record, $row)
-    {
+    public function makeExcelRows($activeSheet, $record, $row) {
         $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record->getProject());
         $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record->getCollectionName());
         $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $record->getMediaType());
@@ -347,8 +334,7 @@ class ExportReport extends ContainerAware
         }
     }
 
-    public function appendCellValuesByObject($record, $rows)
-    {
+    public function appendCellValuesByObject($record, $rows) {
         $newRow = null;
         $i = 0;
         foreach ($rows as $row) {
@@ -419,8 +405,7 @@ class ExportReport extends ContainerAware
      * 
      * @return type
      */
-    public function fetchFromSphinxToMerge($user, $sphinxInfo, $sphinxCriteria, $em, $mergeToFile)
-    {
+    public function fetchFromSphinxToMerge($user, $sphinxInfo, $sphinxCriteria, $em, $mergeToFile) {
         $row = 2;
         $count = 0;
         $offset = 0;
@@ -435,14 +420,13 @@ class ExportReport extends ContainerAware
                 $count++;
             }
         }
-        
+
         $phpExcelObject = $this->megerRecords($rec, $mergeToFile);
 
         return $phpExcelObject;
     }
 
-    public function makeExcelRowsByArray($activeSheet, $record, $row)
-    {
+    public function makeExcelRowsByArray($activeSheet, $record, $row) {
         $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record['project']);
         $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record['collection_name']);
         $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $record['media_type']);
@@ -495,11 +479,9 @@ class ExportReport extends ContainerAware
             $activeSheet->setCellValueExplicitByColumnAndRow(27, $row, $record['format_version']);
             $activeSheet->setCellValueExplicitByColumnAndRow(28, $row, $record['media_duration']);
         }
-
     }
 
-    public function appendCellValuesByArray($record, $rows)
-    {
+    public function appendCellValuesByArray($record, $rows) {
         $newRow = null;
         $i = 0;
         foreach ($rows as $row) {
@@ -560,8 +542,7 @@ class ExportReport extends ContainerAware
         return $newRow;
     }
 
-    public function generatePrioritizationReport($records)
-    {
+    public function generatePrioritizationReport($records) {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
                 ->setTitle("AVCC - Report")
@@ -588,8 +569,7 @@ class ExportReport extends ContainerAware
      * @param  Integer            $row
      * @return boolean
      */
-    private function preparePrioritizationHeader($activeSheet, $row)
-    {
+    private function preparePrioritizationHeader($activeSheet, $row) {
         $columns = new ExportFields();
         $this->columns = $columns->getPrioritizationColumns();
         foreach ($this->columns as $column => $columnName) {
@@ -608,21 +588,21 @@ class ExportReport extends ContainerAware
      * @param  Integer            $row
      * @return boolean
      */
-    private function preparePrioritizationRecords($activeSheet, $row, $records)
-    {
-
+    private function preparePrioritizationRecords($activeSheet, $row, $records) {
+        echo $record->getFilmRecord()->getColors()->getScore();
+        exit;
         foreach ($records as $record) {
             $score = 0;
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record->getProject());
             $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record->getCollectionName());
             $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $record->getTitle());
             $score = $score + $record->getMediaType()->getScore();
-            $score = $score + ($record->getFormat()->getScore()) ? $record->getFormat()->getScore() : 0;         
+            $score = $score + ($record->getFormat()->getScore()) ? $record->getFormat()->getScore() : 0;
             $score = $score + ($record->getCommercial()) ? $record->getCommercial()->getScore() : 0;
             $score = $score + ($record->getReelDiameters()) ? $record->getReelDiameters()->getScore() : 0;
 
             if ($record->getAudioRecord()) {
-            //    $score = $score + ($record->getAudioRecord()->getMediaDuration()) ? $record->getAudioRecord()->getMediaDuration()->getscore() : 0;
+                //    $score = $score + ($record->getAudioRecord()->getMediaDuration()) ? $record->getAudioRecord()->getMediaDuration()->getscore() : 0;
                 $score = $score + ($record->getAudioRecord()->getBases()) ? $record->getAudioRecord()->getBases()->getScore() : 0;
                 $score = $score + ($record->getAudioRecord()->getDiskDiameters()) ? $record->getAudioRecord()->getDiskDiameters()->getScore() : 0;
                 $score = $score + ($record->getAudioRecord()->getMediaDiameters()) ? $record->getAudioRecord()->getMediaDiameters()->getScore() : 0;
@@ -634,13 +614,13 @@ class ExportReport extends ContainerAware
             }
             if ($record->getFilmRecord()) {
                 $score = $score + ($record->getFilmRecord()->getPrintType()) ? $record->getFilmRecord()->getPrintType()->getScore() : 0;
-              //  $score = $score + ($record->getFilmRecord()->getFootage()) ? $record->getFilmRecord()->getscore() : 0;
+                //  $score = $score + ($record->getFilmRecord()->getFootage()) ? $record->getFilmRecord()->getscore() : 0;
                 $score = $score + ($record->getFilmRecord()->getColors()) ? $record->getFilmRecord()->getColors()->getScore() : 0;
                 $score = $score + ($record->getFilmRecord()->getReelCore()) ? $record->getFilmRecord()->getReelCore()->getScore() : 0;
                 $score = $score + ($record->getFilmRecord()->getSound()) ? $record->getFilmRecord()->getSound()->getScore() : 0;
                 $score = $score + ($record->getFilmRecord()->getFrameRate()) ? $record->getFilmRecord()->getFrameRate()->getScore() : 0;
                 $score = $score + ($record->getFilmRecord()->getAcidDetectionStrip()) ? $record->getFilmRecord()->getAcidDetectionStrip()->getScore() : 0;
-              //  $score = $score + ($record->getFilmRecord()->getShrinkage()) ? $record->getFilmRecord()->getscore() : 0;
+                //  $score = $score + ($record->getFilmRecord()->getShrinkage()) ? $record->getFilmRecord()->getscore() : 0;
             }
             if ($record->getVideoRecord()) {
 
@@ -648,9 +628,8 @@ class ExportReport extends ContainerAware
                 $score = $score + ($record->getVideoRecord()->getCassetteSize()) ? $record->getVideoRecord()->getCassetteSize()->getScore() : 0;
                 $score = $score + ($record->getVideoRecord()->getFormatVersion()) ? $record->getVideoRecord()->getFormatVersion()->getScore() : 0;
                 $score = $score + ($record->getVideoRecord()->getRecordingStandard()) ? $record->getVideoRecord()->getRecordingStandard()->getScoregetScore() : 0;
-
             }
-            $scale_score = ($score/100) * 5;
+            $scale_score = ($score / 100) * 5;
             $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $score);
             $row ++;
         }
