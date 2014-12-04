@@ -271,8 +271,9 @@ class ExportReport extends ContainerAware
                                 $newRows = $this->appendCellValuesByArray($rec, $r);
                                 $this->makeExcelRowsByArray($activeSheet, $newRows, $newrow);
                             }
-                            $newrow++;
+                            
                       }
+                      $newrow++;
                       }
 //                        if ($matched) {
 //                            if (is_object($rec)) {
@@ -416,60 +417,60 @@ class ExportReport extends ContainerAware
                 $newRow['media_duration'] = $row['media_duration'] ? ($record->getVideoRecord()->getRecordingStandard() ? $record->getVideoRecord()->getRecordingStandard()->getName() . ' ' . $row['media_duration'] : "") : ($record->getVideoRecord()->getRecordingStandard() ? $record->getVideoRecord()->getRecordingStandard()->getName() : "");
             }            
         }
-//        else{
-//            $newRow['project'] = $record->getProject();
-//            $newRow['collection_name'] = $record->getCollectionName();
-//            $newRow['media_type'] = $record->getMediaType();
-//            $newRow['unique_id'] = $record->getUniqueId();
-//            $newRow['location'] = $record->getLocation();
-//            $newRow['format'] =$record->getFormat()->getName() ? $record->getFormat()->getName() :  '';
-//            $newRow['title'] = $record->getTitle();
-//            $newRow['description'] = $record->getDescription();
-//            $newRow['commercial'] =  $record->getCommercial() ? $record->getCommercial()->getName() : '';
-//            $newRow['content_duration'] = $record->getContentDuration();
-//            $newRow['creation_date'] =$record->getCreationDate();
-//            $newRow['content_date'] = $record->getContentDate();
-//            $newRow['reel_diameter'] =$record->getReelDiameters() ? $record->getReelDiameters()->getName() : '';
-//            $newRow['genre_terms'] = $record->getGenreTerms() ;
-//            $newRow['contributor'] =  $record->getContributor() ;
-//            $newRow['generation'] =   $record->getGeneration() ;
-//            $newRow['part'] =  $record->getPart() ;
-//            $newRow['copyright_restrictions'] =  $record->getCopyrightRestrictions() ;
-//            $newRow['duplicates_derivatives'] =  $record->getDuplicatesDerivatives() ;
-//            $newRow['related_material'] =  $record->getRelatedMaterial() ;
-//            $newRow['condition_note'] =  $record->getConditionNote() ;
-//            $newRow['created_on'] = $record->getCreatedOn()->format('Y-m-d H:i:s') ;
-//            $newRow['updated_on'] =  $record->getUpdatedOn() ? $record->getUpdatedOn()->format('Y-m-d H:i:s')  : '' ;
-//            $newRow['user_name'] =  $record->getUser()->getName()  ;
-//
-//            if ($record->getAudioRecord()) {
-//                $newRow['media_duration'] =  ($record->getAudioRecord()->getMediaDuration()) ? $record->getAudioRecord()->getMediaDuration() : "";
-//                $newRow['base'] = $record->getAudioRecord()->getBases() ? $record->getAudioRecord()->getBases()->getName()  : "";
-//                $newRow['disk_diameter'] =  $record->getAudioRecord()->getDiskDiameters() ? $record->getAudioRecord()->getDiskDiameters()->getName()  : "";
-//                $newRow['media_diameter'] =  $record->getAudioRecord()->getMediaDiameters() ? $record->getAudioRecord()->getMediaDiameters()->getName(): "";
-//                $newRow['tape_thickness'] = $record->getAudioRecord()->getTapeThickness() ? $record->getAudioRecord()->getTapeThickness()->getName() : "";
-//                $newRow['slides'] = $record->getAudioRecord()->getSlides() ? $record->getAudioRecord()->getSlides()->getName()  : "";
-//                $newRow['track_type'] = $record->getAudioRecord()->getTrackTypes() ? $record->getAudioRecord()->getTrackTypes()->getName() : "";
-//                $newRow['mono_stereo'] = $record->getAudioRecord()->getMonoStereo() ? $record->getAudioRecord()->getMonoStereo()->getName()  : "";
-//                $newRow['noice_reduction'] = $record->getAudioRecord()->getNoiceReduction() ? $record->getAudioRecord()->getNoiceReduction()->getName() : "";
-//            }
-//            if ($record->getFilmRecord()) {
-//                $newRow['print_type'] = $record->getFilmRecord()->getPrintType() ? $record->getFilmRecord()->getPrintType()->getName() : "";
-//                $newRow['footage'] = $record->getFilmRecord()->getFootage() ? $record->getFilmRecord()->getFootage() : "";
-//                $newRow['color'] =  $record->getFilmRecord()->getColors() ? $record->getFilmRecord()->getColors()->getName() : "";
-//                $newRow['reel_core'] =  $record->getFilmRecord()->getReelCore() ? $record->getFilmRecord()->getReelCore()->getName() : "";
-//                $newRow['sound'] = $record->getFilmRecord()->getSound() ? $record->getFilmRecord()->getSound()->getName() : "";
-//                $newRow['frame_rate'] = $record->getFilmRecord()->getFrameRate() ? $record->getFilmRecord()->getFrameRate()->getName() : "";
-//                $newRow['acid_detection'] = $record->getFilmRecord()->getAcidDetectionStrip() ? $record->getFilmRecord()->getAcidDetectionStrip()->getName() : "";
-//                $newRow['shrinkage'] = $record->getFilmRecord()->getShrinkage() ? $record->getFilmRecord()->getShrinkage() : "";
-//            }
-//            if ($record->getVideoRecord()) {
-//                $newRow['recording_speed'] =  $record->getVideoRecord()->getRecordingSpeed() ? $record->getVideoRecord()->getRecordingSpeed()->getName()   : "";
-//                $newRow['cassette_size'] =  $record->getVideoRecord()->getCassetteSize() ? $record->getVideoRecord()->getCassetteSize()->getName()   : "";
-//                $newRow['format_version'] =  $record->getVideoRecord()->getFormatVersion() ? $record->getVideoRecord()->getFormatVersion()->getName()  : "";
-//                $newRow['media_duration'] =  $record->getVideoRecord()->getRecordingStandard() ? $record->getVideoRecord()->getRecordingStandard()->getName() : "";
-//            }
-//        }
+        else{
+            $newRow['project'] = $record->getProject();
+            $newRow['collection_name'] = $record->getCollectionName();
+            $newRow['media_type'] = $record->getMediaType();
+            $newRow['unique_id'] = $record->getUniqueId();
+            $newRow['location'] = $record->getLocation();
+            $newRow['format'] =$record->getFormat()->getName() ? $record->getFormat()->getName() :  '';
+            $newRow['title'] = $record->getTitle();
+            $newRow['description'] = $record->getDescription();
+            $newRow['commercial'] =  $record->getCommercial() ? $record->getCommercial()->getName() : '';
+            $newRow['content_duration'] = $record->getContentDuration();
+            $newRow['creation_date'] =$record->getCreationDate();
+            $newRow['content_date'] = $record->getContentDate();
+            $newRow['reel_diameter'] =$record->getReelDiameters() ? $record->getReelDiameters()->getName() : '';
+            $newRow['genre_terms'] = $record->getGenreTerms() ;
+            $newRow['contributor'] =  $record->getContributor() ;
+            $newRow['generation'] =   $record->getGeneration() ;
+            $newRow['part'] =  $record->getPart() ;
+            $newRow['copyright_restrictions'] =  $record->getCopyrightRestrictions() ;
+            $newRow['duplicates_derivatives'] =  $record->getDuplicatesDerivatives() ;
+            $newRow['related_material'] =  $record->getRelatedMaterial() ;
+            $newRow['condition_note'] =  $record->getConditionNote() ;
+            $newRow['created_on'] = $record->getCreatedOn()->format('Y-m-d H:i:s') ;
+            $newRow['updated_on'] =  $record->getUpdatedOn() ? $record->getUpdatedOn()->format('Y-m-d H:i:s')  : '' ;
+            $newRow['user_name'] =  $record->getUser()->getName()  ;
+
+            if ($record->getAudioRecord()) {
+                $newRow['media_duration'] =  ($record->getAudioRecord()->getMediaDuration()) ? $record->getAudioRecord()->getMediaDuration() : "";
+                $newRow['base'] = $record->getAudioRecord()->getBases() ? $record->getAudioRecord()->getBases()->getName()  : "";
+                $newRow['disk_diameter'] =  $record->getAudioRecord()->getDiskDiameters() ? $record->getAudioRecord()->getDiskDiameters()->getName()  : "";
+                $newRow['media_diameter'] =  $record->getAudioRecord()->getMediaDiameters() ? $record->getAudioRecord()->getMediaDiameters()->getName(): "";
+                $newRow['tape_thickness'] = $record->getAudioRecord()->getTapeThickness() ? $record->getAudioRecord()->getTapeThickness()->getName() : "";
+                $newRow['slides'] = $record->getAudioRecord()->getSlides() ? $record->getAudioRecord()->getSlides()->getName()  : "";
+                $newRow['track_type'] = $record->getAudioRecord()->getTrackTypes() ? $record->getAudioRecord()->getTrackTypes()->getName() : "";
+                $newRow['mono_stereo'] = $record->getAudioRecord()->getMonoStereo() ? $record->getAudioRecord()->getMonoStereo()->getName()  : "";
+                $newRow['noice_reduction'] = $record->getAudioRecord()->getNoiceReduction() ? $record->getAudioRecord()->getNoiceReduction()->getName() : "";
+            }
+            if ($record->getFilmRecord()) {
+                $newRow['print_type'] = $record->getFilmRecord()->getPrintType() ? $record->getFilmRecord()->getPrintType()->getName() : "";
+                $newRow['footage'] = $record->getFilmRecord()->getFootage() ? $record->getFilmRecord()->getFootage() : "";
+                $newRow['color'] =  $record->getFilmRecord()->getColors() ? $record->getFilmRecord()->getColors()->getName() : "";
+                $newRow['reel_core'] =  $record->getFilmRecord()->getReelCore() ? $record->getFilmRecord()->getReelCore()->getName() : "";
+                $newRow['sound'] = $record->getFilmRecord()->getSound() ? $record->getFilmRecord()->getSound()->getName() : "";
+                $newRow['frame_rate'] = $record->getFilmRecord()->getFrameRate() ? $record->getFilmRecord()->getFrameRate()->getName() : "";
+                $newRow['acid_detection'] = $record->getFilmRecord()->getAcidDetectionStrip() ? $record->getFilmRecord()->getAcidDetectionStrip()->getName() : "";
+                $newRow['shrinkage'] = $record->getFilmRecord()->getShrinkage() ? $record->getFilmRecord()->getShrinkage() : "";
+            }
+            if ($record->getVideoRecord()) {
+                $newRow['recording_speed'] =  $record->getVideoRecord()->getRecordingSpeed() ? $record->getVideoRecord()->getRecordingSpeed()->getName()   : "";
+                $newRow['cassette_size'] =  $record->getVideoRecord()->getCassetteSize() ? $record->getVideoRecord()->getCassetteSize()->getName()   : "";
+                $newRow['format_version'] =  $record->getVideoRecord()->getFormatVersion() ? $record->getVideoRecord()->getFormatVersion()->getName()  : "";
+                $newRow['media_duration'] =  $record->getVideoRecord()->getRecordingStandard() ? $record->getVideoRecord()->getRecordingStandard()->getName() : "";
+            }
+        }
         return $newRow;
     }
 
