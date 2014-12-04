@@ -41,11 +41,10 @@ class ExportMergeCommand extends ContainerAwareCommand
                     $criteria = $entity->getQueryOrId();
                 }
                 $export = new ExportReport($this->getContainer());
-
+                $mergeToFile = $entity->getMergeToFile();
                 if ($criteria != 'all' && array_key_exists('ids', $criteria)) {
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($criteria['ids']);
                     if ($records) {
-                        $mergeToFile = $entity->getMergeToFile();
                         $phpExcelObject = $export->megerRecords($records, $mergeToFile);
                         $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
 //                        $text = print_r($phpExcelObject);
@@ -65,21 +64,22 @@ class ExportMergeCommand extends ContainerAwareCommand
                     }
                     $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');
                     $phpExcelObject = $export->fetchFromSphinxToMerge($user, $sphinxInfo, $sphinxCriteria, $em, $mergeToFile);
-                    $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
-                    $text = $completePath;
+//                    $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+//                    $text = $completePath;
+                    $text = $phpExcelObject;
                 }
-                if ($completePath) {
-                    $baseUrl = $this->getContainer()->getParameter('baseUrl');
-                    $templateParameters = array('user' => $entity->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
-                    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
-                    $email = new EmailHelper($this->getContainer());
-                    $subject = 'Export and Merge Report';
-                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
-                    $entity->setStatus(1);
-                    $em->persist($entity);
-                    $em->flush();
-                    $text = $rendered;
-                }
+//                if ($completePath) {
+//                    $baseUrl = $this->getContainer()->getParameter('baseUrl');
+//                    $templateParameters = array('user' => $entity->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
+//                    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
+//                    $email = new EmailHelper($this->getContainer());
+//                    $subject = 'Export and Merge Report';
+//                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
+//                    $entity->setStatus(1);
+//                    $em->persist($entity);
+//                    $em->flush();
+//                    $text = $rendered;
+//                }
             }
         }
         $output->writeln($text);
