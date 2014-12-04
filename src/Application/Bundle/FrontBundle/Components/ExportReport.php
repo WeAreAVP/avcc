@@ -435,9 +435,9 @@ class ExportReport extends ContainerAware
             }
         }
         
-//        $phpExcelObject = $this->megerRecords($rec, $mergeToFile);
+        $phpExcelObject = $this->megerRecords($rec, $mergeToFile);
 
-        return print_r($rec);
+        return $phpExcelObject;
     }
 
     public function makeExcelRowsByArray($activeSheet, $record, $row)
