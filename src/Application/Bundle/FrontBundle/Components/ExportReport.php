@@ -267,11 +267,9 @@ class ExportReport extends ContainerAware
                           if (is_object($rec)) {
                                 $newRows = $this->appendCellValuesByObject($rec, $r);
                                 $this->makeExcelRowsByArray($activeSheet, $newRows, $newrow);
-                                $newrow ++; 
                             } else {
                                 $newRows = $this->appendCellValuesByArray($rec, $r);
                                 $this->makeExcelRowsByArray($activeSheet, $newRows, $newrow);
-                                $newrow ++; 
                             }
                             
                       }
@@ -562,6 +560,7 @@ class ExportReport extends ContainerAware
             $activeSheet->setCellValueExplicitByColumnAndRow(27, $row, $record['format_version']);
             $activeSheet->setCellValueExplicitByColumnAndRow(28, $row, $record['media_duration']);
         }
+        $row++;
     }
 
     public function appendCellValuesByArray($record, $row)
