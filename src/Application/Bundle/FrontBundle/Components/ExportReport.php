@@ -270,7 +270,7 @@ class ExportReport extends ContainerAware
                             $newRows = $this->appendCellValuesByObject($rec, $rows[$recUniq]);
                             $this->makeExcelRowsByArray($activeSheet, $newRows, $newrow);
                         } else {
-                            $this->makeExcelRows($activeSheet, $newRows, $newrow);
+                            $this->makeExcelRows($activeSheet, $rec, $newrow);
                         }
                         $newrow++;
                     }
