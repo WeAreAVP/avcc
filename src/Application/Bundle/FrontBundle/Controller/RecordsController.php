@@ -459,19 +459,32 @@ class RecordsController extends Controller
                     $criteria = $entity->getQueryOrId();
                 }
                 $export = new ExportReport($this->container);
+                $mergeToFile = $entity->getMergeToFile();
                 if ($criteria != 'all' && array_key_exists('ids', $criteria)) {
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($criteria['ids']);
                     if ($records) {
-                        $mergeToFile = $entity->getMergeToFile();
                         $phpExcelObject = $export->megerRecords($records, $mergeToFile);
                         $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
-//                        $completePath = $export->outputReport($entity->getFormat(), $phpExcelObject);
-//                        $text = $completePath;
+//                        $text = print_r($phpExcelObject);
                         $text = $completePath;
-                   
                     } else {
                         $text = 'records not found';
                     }
+                } else {
+                    $search = isset($criteria['criteria']) ? $criteria['criteria'] : 'all';
+                    $sphinxCriteria = null;
+                    if ($search != 'all' && is_array($search)) {
+                        if ($search['total_checked'] > 0 || count($search['facet_keyword_search']) > 0) {
+                            $sphinxHelper = new SphinxHelper();
+                            $allCriteria = $sphinxHelper->makeSphinxCriteria($search);
+                            $sphinxCriteria = $allCriteria['criteriaArr'];
+                        }
+                    }
+                    $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');
+                    $phpExcelObject = $export->fetchFromSphinxToMerge($user, $sphinxInfo, $sphinxCriteria, $em, $mergeToFile);
+//                    $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+//                    $text = $completePath;
+                    $text = $phpExcelObject;
                 }
             }
         }
