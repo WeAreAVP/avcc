@@ -50,21 +50,35 @@ class ExportMergeCommand extends ContainerAwareCommand
                         $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
 //                        $text = print_r($phpExcelObject);
                         $text = $completePath;
-                        if ($completePath) {
-                            $baseUrl = $this->getContainer()->getParameter('baseUrl');
-                            $templateParameters = array('user' => $entity->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
-                            $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
-                            $email = new EmailHelper($this->getContainer());
-                            $subject = 'Export and Merge Report';
-                            $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
-                            $entity->setStatus(1);
-                            $em->persist($entity);
-                            $em->flush();
-                            $text = $rendered;
-                        }
                     } else {
                         $text = 'records not found';
                     }
+                } else {
+                    $search = isset($criteria['criteria']) ? $criteria['criteria'] : 'all';
+                    $sphinxCriteria = null;
+                    if ($search != 'all' && is_array($search)) {
+                        if ($search['total_checked'] > 0 || count($search['facet_keyword_search']) > 0) {
+                            $sphinxHelper = new SphinxHelper();
+                            $allCriteria = $sphinxHelper->makeSphinxCriteria($search);
+                            $sphinxCriteria = $allCriteria['criteriaArr'];
+                        }
+                    }
+                    $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');
+                    $phpExcelObject = $export->fetchFromSphinxToMerge($user, $sphinxInfo, $sphinxCriteria, $em, $mergeToFile);
+                    $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+                    $text = $completePath;
+                }
+                if ($completePath) {
+                    $baseUrl = $this->getContainer()->getParameter('baseUrl');
+                    $templateParameters = array('user' => $entity->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
+                    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
+                    $email = new EmailHelper($this->getContainer());
+                    $subject = 'Export and Merge Report';
+                    $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
+                    $entity->setStatus(1);
+                    $em->persist($entity);
+                    $em->flush();
+                    $text = $rendered;
                 }
             }
         }

@@ -7,16 +7,19 @@ use Application\Bundle\FrontBundle\Helper\ExportFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use PHPExcel_Cell;
 
-class ExportReport extends ContainerAware {
+class ExportReport extends ContainerAware
+{
 
     public $columns;
     public $container;
 
-    public function __construct($container) {
+    public function __construct($container)
+    {
         $this->container = $container;
     }
 
-    public function prepareManifestReport($activeSheet, $records) {
+    public function prepareManifestReport($activeSheet, $records)
+    {
         $row = 1;
         $columns = new ExportFields();
         $this->columns = $columns->getManifestColumns();
@@ -62,7 +65,8 @@ class ExportReport extends ContainerAware {
         }
     }
 
-    public function generateReport($records) {
+    public function generateReport($records)
+    {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
                 ->setTitle("AVCC - Report")
@@ -71,18 +75,19 @@ class ExportReport extends ContainerAware {
         $activeSheet = $phpExcelObject->setActiveSheetIndex(0);
         $phpExcelObject->getActiveSheet()->setTitle('All Formats');
         $row = 1;
-        // Prepare header row for report
+// Prepare header row for report
         $this->prepareHeader($activeSheet, $row);
         $row ++;
         $this->prepareRecords($activeSheet, $row, $records);
 
-        // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+// Set active sheet index to the first sheet, so Excel opens this as the first sheet
         $phpExcelObject->setActiveSheetIndex(0);
 
         return $phpExcelObject;
     }
 
-    public function outputReport($type, $phpExcelObject, $fileStartName = 'allFormat') {
+    public function outputReport($type, $phpExcelObject, $fileStartName = 'allFormat')
+    {
         $format = ($type == 'csv') ? 'CSV' : 'Excel2007';
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, $format);
         $filename = $fileStartName . '_' . time() . '.' . $type;
@@ -101,7 +106,8 @@ class ExportReport extends ContainerAware {
      * @param  type   $phpExcelObject
      * @return string
      */
-    public function saveReport($type, $phpExcelObject) {
+    public function saveReport($type, $phpExcelObject)
+    {
         $format = ($type == 'csv') ? 'CSV' : 'Excel2007';
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, $format);
         $filename = 'allFormat_' . time() . '.' . $type;
@@ -123,7 +129,8 @@ class ExportReport extends ContainerAware {
      * @param  Integer            $row
      * @return boolean
      */
-    private function prepareHeader($activeSheet, $row) {
+    private function prepareHeader($activeSheet, $row)
+    {
         $columns = new ExportFields();
         $this->columns = $columns->getExportColumns();
         foreach ($this->columns as $column => $columnName) {
@@ -142,7 +149,8 @@ class ExportReport extends ContainerAware {
      * @param  Integer            $row
      * @return boolean
      */
-    private function prepareRecords($activeSheet, $row, $records) {
+    private function prepareRecords($activeSheet, $row, $records)
+    {
 
         foreach ($records as $record) {
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record->getProject());
@@ -203,7 +211,8 @@ class ExportReport extends ContainerAware {
         return true;
     }
 
-    public function initReport() {
+    public function initReport()
+    {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
                 ->setTitle("AVCC - Report")
@@ -212,12 +221,23 @@ class ExportReport extends ContainerAware {
         $activeSheet = $phpExcelObject->setActiveSheetIndex(0);
         $phpExcelObject->getActiveSheet()->setTitle('All Formats');
         $row = 1;
-        // Prepare header row for report
+// Prepare header row for report
         $this->prepareHeader($activeSheet, $row);
         return $phpExcelObject;
     }
 
-    public function fetchFromSphinx($user, $sphinxInfo, $sphinxCriteria, $em) {
+    /**
+     * Get records from sphinx
+     * 
+     * @param type $user
+     * @param type $sphinxInfo
+     * @param type $sphinxCriteria
+     * @param type $em
+     * 
+     * @return type
+     */
+    public function fetchFromSphinx($user, $sphinxInfo, $sphinxCriteria, $em)
+    {
         $phpExcelObject = $this->initReport();
         $row = 2;
         $count = 0;
@@ -247,7 +267,8 @@ class ExportReport extends ContainerAware {
      * @param  Integer            $row
      * @return boolean
      */
-    private function prepareRecordsFromSphinx($activeSheet, $row, $records) {
+    private function prepareRecordsFromSphinx($activeSheet, $row, $records)
+    {
         foreach ($records as $record) {
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record['project']);
             $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record['collection_name']);
@@ -305,9 +326,9 @@ class ExportReport extends ContainerAware {
         }
     }
 
-    public function megerRecords($records, $mergeToFile) {
+    public function megerRecords($records, $mergeToFile)
+    {
         $mergeFileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $mergeToFile;
-
 //        $mergeFileCompletePath = '/Applications/XAMPP/xamppfiles/htdocs/avcc/web/' . $mergeToFile;
         if (file_exists($mergeFileCompletePath)) {
             $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($mergeFileCompletePath);
@@ -315,7 +336,6 @@ class ExportReport extends ContainerAware {
             $activeSheet = $newphpExcelObject->setActiveSheetIndex(0);
 
             foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
-                $worksheetTitle = $worksheet->getTitle();
                 $highestRow = $worksheet->getHighestRow();
                 $highestColumn = $worksheet->getHighestColumn();
                 $excelCell = new PHPExcel_Cell(null, null, $worksheet);
@@ -328,8 +348,14 @@ class ExportReport extends ContainerAware {
                         for ($row = 2; $row <= $highestRow; ++$row) {
                             for ($col = 0; $col < $highestColumnIndex; ++$col) {
                                 $matched = false;
-                                if ($record->getUniqueId() == $worksheet->getCellByColumnAndRow(3, $row)) {
-                                    $matched = true;
+                                if (is_object($record)) {
+                                    if ($record->getUniqueId() == $worksheet->getCellByColumnAndRow(3, $row)) {
+                                        $matched = true;
+                                    }
+                                } else {
+                                    if ($record['unique_id'] == $worksheet->getCellByColumnAndRow(3, $row)) {
+                                        $matched = true;
+                                    }
                                 }
                                 if ($matched) {
                                     $cell = $worksheet->getCellByColumnAndRow($col, $row);
@@ -339,10 +365,18 @@ class ExportReport extends ContainerAware {
                             }
                         }
                         if ($matched) {
-                            $newRows = $this->appendCellValues($record, $rows);
+                            if (is_object($record)) {
+                                $newRows = $this->appendCellValuesByObject($record, $rows);
+                            } else {
+                                $newRows = $this->appendCellValuesByArray($record, $rows);
+                            }
                             $this->prepareRecordsFromSphinx($activeSheet, $newrow, $newRows);
                         } else {
-                            $this->makeExcelRows($activeSheet, $record, $newrow);
+                            if (is_object($record)) {
+                                $this->makeExcelRows($activeSheet, $record, $newrow);
+                            } else {
+                                $this->makeExcelRowsByArray($activeSheet, $record, $newrow);
+                            }
                         }
                         $newrow ++;
                     }
@@ -358,7 +392,8 @@ class ExportReport extends ContainerAware {
         }
     }
 
-    public function makeExcelRows($activeSheet, $record, $row) {
+    public function makeExcelRows($activeSheet, $record, $row)
+    {
         $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record->getProject());
         $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record->getCollectionName());
         $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $record->getMediaType());
@@ -413,7 +448,8 @@ class ExportReport extends ContainerAware {
         }
     }
 
-    public function appendCellValues($record, $rows) {
+    public function appendCellValuesByObject($record, $rows)
+    {
         $newRow = null;
         $i = 0;
         foreach ($rows as $row) {
@@ -435,8 +471,8 @@ class ExportReport extends ContainerAware {
             $newRow[$i]['generation'] = $row['generation'] ? $record->getGeneration() . ' ' . $row['genre_terms'] : $record->getGeneration();
             $newRow[$i]['part'] = $row['part'] ? $record->getPart() . ' ' . $row['genre_terms'] : $record->getPart();
             $newRow[$i]['copyright_restrictions'] = $row['copyright_/_restrictions'] ? $record->getCopyrightRestrictions() . ' ' . $row['copyright_/_restrictions'] : $record->getCopyrightRestrictions();
-            $newRow[$i]['duplicates_derivatives'] = $row['duplicates_/_derivatives'] ? $record->getDuplicatesDerivatives() . ' ' . $row['genre_terms'] : $record->getDuplicatesDerivatives();
-            $newRow[$i]['related_material'] = $row['related_material'] ? $record->getRelatedMaterial() . ' ' . $row['duplicates_/_derivatives'] : $record->getRelatedMaterial();
+            $newRow[$i]['duplicates_derivatives'] = $row['duplicates_/_derivatives'] ? $record->getDuplicatesDerivatives() . ' ' . $row['duplicates_/_derivatives'] : $record->getDuplicatesDerivatives();
+            $newRow[$i]['related_material'] = $row['related_material'] ? $record->getRelatedMaterial() . ' ' . $row['related_material'] : $record->getRelatedMaterial();
             $newRow[$i]['condition_note'] = $row['condition_note'] ? $record->getConditionNote() . ' ' . $row['condition_note'] : $record->getConditionNote();
             $newRow[$i]['created_on'] = ($row['time_stamp']) ? $record->getCreatedOn()->format('Y-m-d H:i:s') . ' ' . $row['time_stamp'] : $record->getCreatedOn()->format('Y-m-d H:i:s');
             $newRow[$i]['updated_on'] = $row['timestamp_-_last_change'] ? ($record->getUpdatedOn() ? $record->getUpdatedOn()->format('Y-m-d H:i:s') . ' ' . $row['timestamp_-_last_change'] : '') : ($record->getUpdatedOn() ? $record->getUpdatedOn()->format('Y-m-d H:i:s') : '');
@@ -464,17 +500,50 @@ class ExportReport extends ContainerAware {
                 $newRow[$i]['shrinkage'] = $row['shrinkage'] ? ($record->getFilmRecord()->getShrinkage() ? $record->getFilmRecord()->getShrinkage()->getName() . ' ' . $row['shrinkage'] : "") : ($record->getFilmRecord()->getShrinkage() ? $record->getFilmRecord()->getShrinkage()->getName() : "");
             }
             if ($row['media_type'] == 'Video') {
-                $newRow[$i]['recording_speed'] = $row['recording_speed'] ? ($record->getVideoRecord()->getRecordingSpeed() ? $record->getVideoRecord()->getRecordingSpeed()->getName() . ' ' . $row['print_type'] : "") : ($record->getVideoRecord()->getRecordingSpeed() ? $record->getVideoRecord()->getRecordingSpeed()->getName() : "");
-                $newRow[$i]['cassette_size'] = $row['cassette_size'] ? ($record->getVideoRecord()->getCassetteSize() ? $record->getVideoRecord()->getCassetteSize()->getName() . ' ' . $row['print_type'] : "") : ($record->getVideoRecord()->getCassetteSize() ? $record->getVideoRecord()->getCassetteSize()->getName() : "");
-                $newRow[$i]['format_version'] = $row['format_version'] ? ($record->getVideoRecord()->getFormatVersion() ? $record->getVideoRecord()->getFormatVersion()->getName() . ' ' . $row['print_type'] : "") : ($record->getVideoRecord()->getFormatVersion() ? $record->getVideoRecord()->getFormatVersion()->getName() : "");
-                $newRow[$i]['media_duration'] = $row['media_duration'] ? ($record->getVideoRecord()->getRecordingStandard() ? $record->getVideoRecord()->getRecordingStandard()->getName() . ' ' . $row['print_type'] : "") : ($record->getVideoRecord()->getRecordingStandard() ? $record->getVideoRecord()->getRecordingStandard()->getName() : "");
+                $newRow[$i]['recording_speed'] = $row['recording_speed'] ? ($record->getVideoRecord()->getRecordingSpeed() ? $record->getVideoRecord()->getRecordingSpeed()->getName() . ' ' . $row['recording_speed'] : "") : ($record->getVideoRecord()->getRecordingSpeed() ? $record->getVideoRecord()->getRecordingSpeed()->getName() : "");
+                $newRow[$i]['cassette_size'] = $row['cassette_size'] ? ($record->getVideoRecord()->getCassetteSize() ? $record->getVideoRecord()->getCassetteSize()->getName() . ' ' . $row['cassette_size'] : "") : ($record->getVideoRecord()->getCassetteSize() ? $record->getVideoRecord()->getCassetteSize()->getName() : "");
+                $newRow[$i]['format_version'] = $row['format_version'] ? ($record->getVideoRecord()->getFormatVersion() ? $record->getVideoRecord()->getFormatVersion()->getName() . ' ' . $row['format_version'] : "") : ($record->getVideoRecord()->getFormatVersion() ? $record->getVideoRecord()->getFormatVersion()->getName() : "");
+                $newRow[$i]['media_duration'] = $row['media_duration'] ? ($record->getVideoRecord()->getRecordingStandard() ? $record->getVideoRecord()->getRecordingStandard()->getName() . ' ' . $row['media_duration'] : "") : ($record->getVideoRecord()->getRecordingStandard() ? $record->getVideoRecord()->getRecordingStandard()->getName() : "");
             }
             $i++;
         }
         return $newRow;
     }
 
-    public function makeExcelRowsByArray($activeSheet, $record, $row) {
+    /**
+     * Get records from sphinx for merge export file
+     * 
+     * @param type $user
+     * @param type $sphinxInfo
+     * @param type $sphinxCriteria
+     * @param type $em
+     * 
+     * @return type
+     */
+    public function fetchFromSphinxToMerge($user, $sphinxInfo, $sphinxCriteria, $em, $mergeToFile)
+    {
+        $row = 2;
+        $count = 0;
+        $offset = 0;
+        $sphinxObj = new SphinxSearch($em, $sphinxInfo);
+        while ($count == 0) {
+            $records = $sphinxObj->select($user, $offset, 1000, 'title', 'asc', $sphinxCriteria);
+            $rec[] = $records[0];
+            $totalFound = $records[1][1]['Value'];
+            $offset = $offset + 1000;
+            $row++;
+            if ($totalFound < 1000) {
+                $count++;
+            }
+        }
+        
+        $phpExcelObject = $this->megerRecords($rec, $mergeToFile);
+
+        return $phpExcelObject;
+    }
+
+    public function makeExcelRowsByArray($activeSheet, $record, $row)
+    {
         $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record['project']);
         $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record['collection_name']);
         $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $record['media_type']);
@@ -527,9 +596,73 @@ class ExportReport extends ContainerAware {
             $activeSheet->setCellValueExplicitByColumnAndRow(27, $row, $record['format_version']);
             $activeSheet->setCellValueExplicitByColumnAndRow(28, $row, $record['media_duration']);
         }
+
     }
 
-    public function generatePrioritizationReport($records) {
+    public function appendCellValuesByArray($record, $rows)
+    {
+        $newRow = null;
+        $i = 0;
+        foreach ($rows as $row) {
+            $newRow[$i]['project'] = $row['project_name'] ? $record['project'] . ' ' . $row['project_name'] : $record['project'];
+            $newRow[$i]['collection_name'] = $row['collection_name'] ? $record->getCollectionName() . ' ' . $row['collection_name'] : $record->getCollectionName();
+            $newRow[$i]['media_type'] = $row['media_type'] ? $record['media_type'] . ' ' . $row['media_type'] : $record['media_type'];
+            $newRow[$i]['unique_id'] = $row['unique_id'] ? $record['unique_id'] . ' ' . $row['unique_id'] : $record['unique_id'];
+            $newRow[$i]['location'] = $row['location'] ? $record['location'] . ' ' . $row['location'] : $record['location'];
+            $newRow[$i]['format'] = $row['format'] ? $record['format'] . ' ' . $row['format'] : $record['format'];
+            $newRow[$i]['title'] = $row['title'] ? $record['title'] . '' . $row['title'] : $record['title'];
+            $newRow[$i]['description'] = $row['description'] ? $record['description'] . '' . $row['description'] : $record['description'];
+            $newRow[$i]['commercial'] = $row['commercial_or_unique'] ? $record['commercial'] . ' ' . $row['commercial_or_unique'] : $record['commercial'];
+            $newRow[$i]['content_duration'] = $row['content_duration'] ? $record['content_duration'] . ' ' . $row['content_duration'] : $record['content_duration'];
+            $newRow[$i]['creation_date'] = $row['creation_date'] ? $record['creation_date'] . ' ' . $row['creation_date'] : $record['creation_date'];
+            $newRow[$i]['content_date'] = $row['content_date'] ? $record['content_date'] . ' ' . $row['content_date'] : $record['content_date'];
+            $newRow[$i]['reel_diameter'] = $row['reel_diameter'] ? $record['reel_diameter'] . ' ' . $row['reel_diameter'] : $record['reel_diameter'];
+            $newRow[$i]['genre_terms'] = $row['genre_terms'] ? $record['genre_terms'] . ' ' . $row['genre_terms'] : $record['genre_terms'];
+            $newRow[$i]['contributor'] = $row['contributor'] ? $record['contributor'] . ' ' . $row['contributor'] : $record['contributor'];
+            $newRow[$i]['generation'] = $row['generation'] ? $record['generation'] . ' ' . $row['generation'] : $record['generation'];
+            $newRow[$i]['part'] = $row['part'] ? $record['part'] . ' ' . $row['part'] : $record['part'];
+            $newRow[$i]['copyright_restrictions'] = $row['copyright_/_restrictions'] ? $record['copyright_restrictions'] . ' ' . $row['copyright_/_restrictions'] : $record['copyright_restrictions'];
+            $newRow[$i]['duplicates_derivatives'] = $row['duplicates_/_derivatives'] ? $record['duplicates_derivatives'] . ' ' . $row['genre_terms'] : $record['duplicates_derivatives'];
+            $newRow[$i]['related_material'] = $row['related_material'] ? $record['related_material'] . ' ' . $row['duplicates_/_derivatives'] : $record['related_material'];
+            $newRow[$i]['condition_note'] = $row['condition_note'] ? $record['condition_note'] . ' ' . $row['condition_note'] : $record['condition_note'];
+            $newRow[$i]['created_on'] = ($row['time_stamp']) ? $record['created_on'] . ' ' . $row['time_stamp'] : $record['created_on'];
+            $newRow[$i]['updated_on'] = $row['timestamp_-_last_change'] ? $record['updated_on'] . ' ' . $row['timestamp_-_last_change'] : $record['updated_on'];
+            $newRow[$i]['user_name'] = $row['cataloger'] ? $record['user_name'] . ' ' . $row['cataloger'] : $record['user_name'];
+
+            if ($row['media_type'] == 'Audio') {
+                $newRow[$i]['media_duration'] = $row['media_duration'] ? $record['media_duration'] . ' ' . $row['media_duration'] : $record['media_duration'];
+                $newRow[$i]['base'] = $row['base'] ? $record['base'] . ' ' . $row['base'] : $record['base'];
+                $newRow[$i]['disk_diameter'] = $row['disk_diameter'] ? $record['disk_diameter'] . ' ' . $row['disk_diameter'] : $record['disk_diameter'];
+                $newRow[$i]['media_diameter'] = $row['media_diameter'] ? $record['media_diameter'] . ' ' . $row['media_diameter'] : $record['media_diameter'];
+                $newRow[$i]['tape_thickness'] = $row['tape_thickness'] ? $record['tape_thickness'] . ' ' . $row['tape_thickness'] : $record['tape_thickness'];
+                $newRow[$i]['slides'] = $row['sides'] ? $record['slides'] . ' ' . $row['sides'] : $record['slides'];
+                $newRow[$i]['track_type'] = $row['track_type'] ? $record['track_type'] . ' ' . $row['track_type'] : $record['track_type'];
+                $newRow[$i]['mono_stereo'] = $row['mono_or_stereo'] ? $record['mono_stereo'] . ' ' . $row['mono_or_stereo'] : $record['mono_stereo'];
+                $newRow[$i]['noice_reduction'] = $row['noise_reduction'] ? $record['noice_reduction'] . ' ' . $row['noise_reduction'] : $record['noice_reduction'];
+            }
+            if ($row['media_type'] == 'Film') {
+                $newRow[$i]['print_type'] = $row['print_type'] ? $record['print_type'] . ' ' . $row['print_type'] : $record['print_type'];
+                $newRow[$i]['footage'] = $row['footage'] ? $record['footage'] . ' ' . $row['footage'] : $record['footage'];
+                $newRow[$i]['color'] = $row['color'] ? $record['color'] . ' ' . $row['color'] : $record['color'];
+                $newRow[$i]['reel_core'] = $row['reel_core'] ? $record['reel_core'] . ' ' . $row['reel_core'] : $record['reel_core'];
+                $newRow[$i]['sound'] = $row['sound'] ? $record['sound'] . ' ' . $row['sound'] : $record['sound'];
+                $newRow[$i]['frame_rate'] = $row['frame_rate'] ? $record['frame_rate'] . ' ' . $row['frame_rate'] : $record['frame_rate'];
+                $newRow[$i]['acid_detection'] = $row['acid_detection'] ? $record['acid_detection'] . ' ' . $row['acid_detection'] : $record['acid_detection'];
+                $newRow[$i]['shrinkage'] = $row['shrinkage'] ? $record['shrinkage'] . ' ' . $row['shrinkage'] : $record['shrinkage'];
+            }
+            if ($row['media_type'] == 'Video') {
+                $newRow[$i]['recording_speed'] = $row['recording_speed'] ? $record['recording_speed'] . ' ' . $row['recording_speed'] : $record['recording_speed'];
+                $newRow[$i]['cassette_size'] = $row['cassette_size'] ? $record['cassette_size'] . ' ' . $row['cassette_size'] : $record['cassette_size'];
+                $newRow[$i]['format_version'] = $row['format_version'] ? $record['format_version'] . ' ' . $row['format_version'] : $record['format_version'];
+                $newRow[$i]['media_duration'] = $row['media_duration'] ? $record['media_duration'] . ' ' . $row['print_type'] : $record['media_duration'];
+            }
+            $i++;
+        }
+        return $newRow;
+    }
+
+    public function generatePrioritizationReport($records)
+    {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
                 ->setTitle("AVCC - Report")
@@ -538,12 +671,12 @@ class ExportReport extends ContainerAware {
         $activeSheet = $phpExcelObject->setActiveSheetIndex(0);
         $phpExcelObject->getActiveSheet()->setTitle('Prioritization Report');
         $row = 1;
-        // Prepare header row for report
+// Prepare header row for report
         $this->preparePrioritizationHeader($activeSheet, $row);
         $row ++;
         $this->preparePrioritizationRecords($activeSheet, $row, $records);
 
-        // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+// Set active sheet index to the first sheet, so Excel opens this as the first sheet
         $phpExcelObject->setActiveSheetIndex(0);
 
         return $phpExcelObject;
@@ -556,7 +689,8 @@ class ExportReport extends ContainerAware {
      * @param  Integer            $row
      * @return boolean
      */
-    private function preparePrioritizationHeader($activeSheet, $row) {
+    private function preparePrioritizationHeader($activeSheet, $row)
+    {
         $columns = new ExportFields();
         $this->columns = $columns->getPrioritizationColumns();
         foreach ($this->columns as $column => $columnName) {
@@ -575,7 +709,8 @@ class ExportReport extends ContainerAware {
      * @param  Integer            $row
      * @return boolean
      */
-    private function preparePrioritizationRecords($activeSheet, $row, $records) {
+    private function preparePrioritizationRecords($activeSheet, $row, $records)
+    {
 
         foreach ($records as $record) {
             $score = 0;
@@ -614,6 +749,7 @@ class ExportReport extends ContainerAware {
                 $score = $score + ($record->getVideoRecord()->getCassetteSize()) ? $record->getVideoRecord()->getCassetteSize()->getscore() : 0;
                 $score = $score + ($record->getVideoRecord()->getFormatVersion()) ? $record->getVideoRecord()->getFormatVersion()->getscore() : 0;
                 $score = $score + ($record->getVideoRecord()->getRecordingStandard()) ? $record->getVideoRecord()->getRecordingStandard()->getscore() : 0;
+
             }
             $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $score);
             $row ++;
