@@ -443,7 +443,7 @@ class ExportReport extends ContainerAware
             $newRow['updated_on'] =  $record->getUpdatedOn() ? $record->getUpdatedOn()->format('Y-m-d H:i:s')  : '' ;
             $newRow['user_name'] =  $record->getUser()->getName()  ;
 
-            if ($row['media_type'] == 'Audio') {
+            if ($record->getAudioRecord()) {
                 $newRow['media_duration'] =  ($record->getAudioRecord()->getMediaDuration()) ? $record->getAudioRecord()->getMediaDuration() : "";
                 $newRow['base'] = $record->getAudioRecord()->getBases() ? $record->getAudioRecord()->getBases()->getName()  : "";
                 $newRow['disk_diameter'] =  $record->getAudioRecord()->getDiskDiameters() ? $record->getAudioRecord()->getDiskDiameters()->getName()  : "";
@@ -454,7 +454,7 @@ class ExportReport extends ContainerAware
                 $newRow['mono_stereo'] = $record->getAudioRecord()->getMonoStereo() ? $record->getAudioRecord()->getMonoStereo()->getName()  : "";
                 $newRow['noice_reduction'] = $record->getAudioRecord()->getNoiceReduction() ? $record->getAudioRecord()->getNoiceReduction()->getName() : "";
             }
-            if ($row['media_type'] == 'Film') {
+            if ($record->getFilmRecord()) {
                 $newRow['print_type'] = $record->getFilmRecord()->getPrintType() ? $record->getFilmRecord()->getPrintType()->getName() : "";
                 $newRow['footage'] = $record->getFilmRecord()->getFootage() ? $record->getFilmRecord()->getFootage()->getName() : "";
                 $newRow['color'] =  $record->getFilmRecord()->getColors() ? $record->getFilmRecord()->getColors()->getName() : "";
@@ -464,7 +464,7 @@ class ExportReport extends ContainerAware
                 $newRow['acid_detection'] = $record->getFilmRecord()->getAcidDetectionStrip() ? $record->getFilmRecord()->getAcidDetectionStrip()->getName() : "";
                 $newRow['shrinkage'] = $record->getFilmRecord()->getShrinkage() ? $record->getFilmRecord()->getShrinkage()->getName() : "";
             }
-            if ($row['media_type'] == 'Video') {
+            if ($record->getVideoRecord()) {
                 $newRow['recording_speed'] =  $record->getVideoRecord()->getRecordingSpeed() ? $record->getVideoRecord()->getRecordingSpeed()->getName()   : "";
                 $newRow['cassette_size'] =  $record->getVideoRecord()->getCassetteSize() ? $record->getVideoRecord()->getCassetteSize()->getName()   : "";
                 $newRow['format_version'] =  $record->getVideoRecord()->getFormatVersion() ? $record->getVideoRecord()->getFormatVersion()->getName()  : "";
