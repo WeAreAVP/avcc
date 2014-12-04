@@ -791,18 +791,22 @@ class ExportReport extends ContainerAware
                                 $matched = false;
                                 if ($record['unique_id'] == $worksheet->getCellByColumnAndRow(3, $row)) {
                                     $matched = true;
+                                    $uniq = strtolower(str_replace(' ', '_', $record['unique_id']));
                                 }
                                 if ($matched) {
                                     $cell = $worksheet->getCellByColumnAndRow($col, $row);
                                     $columnName = strtolower(str_replace(' ', '_', $worksheet->getCellByColumnAndRow($col, 1)));
-                                    $rows[$row - 1][$columnName] = $cell->getValue();
+                                    $rows[$uniq][$columnName] = $cell->getValue();
                                 }
                             }
                         }
-                        if ($matched) {
-                            $newRows = $this->appendCellValuesByArray($record, $rows);
+                    }
+                    foreach($records as $record){
+                        $recUniq = strtolower(str_replace(' ', '_', $record['unique_id']));
+                        if (array_key_exists($recUniq, $rows)) {
+                            $newRows = $this->appendCellValuesByArray($record, $rows[$recUniq]);
                             if ($newRows)
-                                $this->prepareRecordsFromSphinx($activeSheet, $newrow, $newRows);
+                                $this->makeExcelRowsByArray($activeSheet, $newRows, $newrow);
                         } else {
                             $this->makeExcelRowsByArray($activeSheet, $record, $newrow);
                         }
