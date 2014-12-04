@@ -53,7 +53,7 @@ class ExportFields {
     );
     private $manifestColumns = array('Unique ID', 'Institution', 'Collection Name', 'Format', 'Print Type',
         "Reel Diameter\nDisc Diameter\nCassette Size", 'Title', 'Approximate Duration');
-    private $prioritizationCols = array('Project_Name', 'Collection_Name', 'Title', 'Total Score');
+    private $prioritizationCols = array('Project_Name', 'Collection_Name', 'Title','Unique_ID', 'Total Score');
 
     /**
      * Return array of columns for csv or xlsx tempate.
