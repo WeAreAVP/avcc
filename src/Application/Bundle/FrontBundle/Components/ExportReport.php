@@ -657,6 +657,7 @@ class ExportReport extends ContainerAware
                 echo 'getVideoRecord';
                 echo '<br>';
                 $score = $score + (float) (($record->getVideoRecord()->getRecordingSpeed()) ? $record->getVideoRecord()->getRecordingSpeed()->getScore() : 0);
+                echo 'here';
                 echo 'size '.$record->getVideoRecord()->getCassetteSize()->getScore().'<br>';
                 $score = $score + (float) (($record->getVideoRecord()->getCassetteSize()) ? $record->getVideoRecord()->getCassetteSize()->getScore() : 0);
                 $score = $score + (float) (($record->getVideoRecord()->getFormatVersion()) ? $record->getVideoRecord()->getFormatVersion()->getScore() : 0);
