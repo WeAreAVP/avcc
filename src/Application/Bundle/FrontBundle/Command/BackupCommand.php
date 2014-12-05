@@ -28,8 +28,8 @@ class BackupCommand extends ContainerAwareCommand {
         $entity = $em->getRepository('ApplicationFrontBundle:UserSettings')->findBy(array('enableBackup' => 1));
         if ($entity) {
             foreach ($entity as $record) {
-                $var = $record->getBackupEmail();
-                $email_to = $this->get_email_to($var);
+                $backupEmails = $record->getBackupEmail();
+                $email_to = $this->get_email_to($backupEmails, $record);
                 $completePath = null;
                 if ($record->getUser()->getOrganizations()) {
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($record->getUser()->getOrganizations()->getId());
@@ -60,13 +60,13 @@ class BackupCommand extends ContainerAwareCommand {
         } $output->writeln($text);
     }
 
-    public function get_email_to($array) {
+    public function get_email_to($backupEmails, $record) {
 // $var = $record->getBackupEmail();
         $return = array();
-        if (empty($array)) {
+        if (empty($backupEmails)) {
             $return = $record->getUser()->getEmail();
         } else {
-            $return = explode(',', $array);
+            $return = explode(',', $backupEmails);
         }
         return $return;
     }
