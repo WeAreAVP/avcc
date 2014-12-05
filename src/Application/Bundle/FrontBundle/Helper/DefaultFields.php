@@ -143,7 +143,7 @@ class DefaultFields
      * @param  integer $projectId
      * @return array
      */
-    public function getData($mediaType, EntityManager $em, Users $user, $projectId = null)
+    public function getData($mediaType, EntityManager $em, Users $user, $projectId = null, $recordId = null)
     {
         $data['mediaTypeId'] = $mediaType;
         $data['projectId'] = $projectId;
@@ -162,6 +162,8 @@ class DefaultFields
 
         $data['mediaType'] = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $data['mediaTypeId']));
 
+        $data['recordId'] = $recordId;
+        
         return $data;
     }
 

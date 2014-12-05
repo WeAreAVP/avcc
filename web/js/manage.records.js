@@ -13,6 +13,7 @@ function initialize_records_form() {
     $.mask.definitions['g'] = '[0-9,x]';
     $("#creationDate, #contentDate").mask("yggg-mg-dg", {optional: true});
     updateFormat();
+    onChangeMediaType();
 }
 function updateFormat() {
     /// call to get base dropdown options
@@ -129,5 +130,17 @@ function showUpdateFields() {
         }); // Ajax Call
     }).change();
 
+}
+
+function onChangeMediaType(){
+    $(".new #mediaType").change(function(){
+        if($(this).val() == 3){
+            window.location.href = baseUrl + 'video/new';
+        }else if($(this).val() == 2){
+            window.location.href = baseUrl + 'film/new';;
+        }else if($(this).val() == 1){
+            window.location.href = baseUrl + 'audio/new';;
+        }
+    });
 }
     

@@ -21,7 +21,7 @@
 				<?php 
 				
 				echo $view['form']->label((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]],' ');echo $audioField['title']; ?>
-                <div class="input-control" data-role="input-control">
+                <div class="input-control new" data-role="input-control">
                     <?php echo $view['form']->widget((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => array('class' => 'size4'))) ?>
                     <span class="has-error text-danger"><?php echo $view['form']->errors((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]]) ?></span>
                 </div>
@@ -29,9 +29,9 @@
         <?php endforeach; ?>
     </fieldset><br />
     <?php echo $view['form']->widget($form['record']['userId']) ?>
-    <?php echo $view['form']->widget($form['record']['mediaTypeHidden']) ?>
-    <?php echo $view['form']->widget($form['record']['projectHidden']) ?>
+    <a href="<?php echo $view['router']->generate('record_list') ?>" name="cancle" class="button">Cancel</a>
     <?php echo $view['form']->widget($form['submit'], array('attr' => array('class' => 'button primary'))) ?>
+    <?php echo $view['form']->widget($form['save_and_new']) ?>
     <?php echo $view['form']->widget($form['save_and_duplicate']) ?>
     <?php echo $view['form']->end($form) ?>
 </div>

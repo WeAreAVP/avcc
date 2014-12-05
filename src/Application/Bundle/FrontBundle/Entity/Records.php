@@ -86,6 +86,7 @@ class Records
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="media_type_id", referencedColumnName="id")
      * })
+     * @Assert\NotBlank(message="Media type is required")
      */
     private $mediaType;
 

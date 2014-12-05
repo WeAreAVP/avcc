@@ -30,7 +30,7 @@ class RecordsType extends AbstractType
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		if ($this->selectedOptions['projectId'])
+		if ($this->selectedOptions['recordId'])
 		{
 			$builder
 			->add('uniqueId')
@@ -53,11 +53,6 @@ class RecordsType extends AbstractType
 			->add('relatedMaterial')
 			->add('conditionNote')
 			->add('project')
-			->add('project', 'choice', array(
-				'choices' => $this->selectedOptions['projectsArr'],
-				'data' => $this->selectedOptions['projectId'],
-				'attr' => array('disabled' => 'disabled'),
-			))
 			->add('userId', 'hidden', array(
 				'data' => $this->selectedOptions['userId'],
 				'mapped' => false,
@@ -72,11 +67,6 @@ class RecordsType extends AbstractType
 			->add('reelDiameters')
 			->add('mediaTypeHidden', 'hidden', array(
 				'data' => $this->selectedOptions['mediaTypeId'],
-				'mapped' => false,
-				'required' => false,
-			))
-			->add('projectHidden', 'hidden', array(
-				'data' => $this->selectedOptions['projectId'],
 				'mapped' => false,
 				'required' => false,
 			))
@@ -114,23 +104,8 @@ class RecordsType extends AbstractType
 				'mapped' => false,
 				'required' => false,
 			))
-			->add('mediaType', 'choice', array(
-				'choices' => $this->selectedOptions['mediaTypesArr'],
-				'data' => $this->selectedOptions['mediaTypeId'],
-				'attr' => array('disabled' => 'disabled'),
-				'mapped' => false,
-			))
-			->add('reelDiameters')
-			->add('mediaTypeHidden', 'hidden', array(
-				'data' => $this->selectedOptions['mediaTypeId'],
-				'mapped' => false,
-				'required' => false,
-			))
-			->add('projectHidden', 'hidden', array(
-				'data' => null,
-				'mapped' => false,
-				'required' => false,
-			))
+			->add('mediaType')
+			->add('reelDiameters')			
 			->addEventListener(
 			FormEvents::PRE_SUBMIT, array($this, 'onPreSubmitData'))
 			->addEventListener(
@@ -147,35 +122,40 @@ class RecordsType extends AbstractType
 	public function onPreSubmitData(FormEvent $event)
 	{
 		$record = $event->getData();
-
-		$projectId = $record['projectHidden'];
-		$mediaTypeId = $record['mediaTypeHidden'];
+//		$projectId = $record['projectHidden'];
+		if (isset($record['mediaTypeHidden'])) {
+                    $mediaTypeId = $record['mediaTypeHidden'];
+                    $this->mediaTyp = $this->em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $mediaTypeId));
+                    $record['mediaType'] = $this->mediaTyp;
+                }
+                
 		$userId = $record['userId'];
-		$this->mediaTyp = $this->em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $mediaTypeId));
-		if ($projectId)
-		{
-			$this->proj = $this->em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
-		}
+		
+//		if ($projectId)
+//		{
+//			$this->proj = $this->em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
+//		}
 		$this->user = $this->em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
-		$record['mediaType'] = $this->mediaTyp;
+		
 	}
 
 	public function onPostSubmitData(FormEvent $event)
 	{
-
 		$record = $event->getData();
+                
 		if ($record->getId())
 		{
 			$record->setEditor($this->user);
 			$record->setUpdatedOnValue();
+                        $record->setMediaType($this->mediaTyp);
 		}
-		else
+		else{
 			$record->setUser($this->user);
-		$record->setMediaType($this->mediaTyp);
-		if ($this->proj)
-		{
-			$record->setProject($this->proj);
-		}
+                }
+//		if ($this->proj)
+//		{
+//			$record->setProject($this->proj);
+//		}
 	}
 
 	/**

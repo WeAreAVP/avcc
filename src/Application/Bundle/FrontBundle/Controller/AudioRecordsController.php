@@ -54,7 +54,7 @@ class AudioRecordsController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		$fieldsObj = new DefaultFields();
-		$data = $fieldsObj->getData(1, $em, $this->getUser(), $projectId=null);
+		$data = $fieldsObj->getData(1, $em, $this->getUser(),null);
 		$entity = new AudioRecords();
 		$form = $this->createCreateForm($entity, $em, $data);
 		$form->handleRequest($request);
@@ -73,6 +73,10 @@ class AudioRecordsController extends Controller
 				if ($form->get('save_and_duplicate')->isClicked())
 				{
 					return $this->redirect($this->generateUrl('record_audio_duplicate', array('audioRecId' => $entity->getId())));
+				}
+                                if ($form->get('save_and_new')->isClicked())
+				{
+					return $this->redirect($this->generateUrl('record_new', array('audioRecId' => $entity->getId())));
 				}
 
 
@@ -114,8 +118,9 @@ class AudioRecordsController extends Controller
 			'method' => 'POST',
 		));
 
-		$form->add('submit', 'submit', array('label' => 'Create'));
-		$form->add('save_and_duplicate', 'submit', array('label' => 'Duplicate'));
+		$form->add('submit', 'submit', array('label' => 'Save'));
+                $form->add('save_and_new', 'submit', array('label' => 'Save & New'));
+		$form->add('save_and_duplicate', 'submit', array('label' => 'Save & Duplicate'));
 
 		return $form;
 	}
@@ -209,7 +214,7 @@ class AudioRecordsController extends Controller
 			throw $this->createNotFoundException('Unable to find AudioRecords entity.');
 		}
 		$fieldsObj = new DefaultFields();
-		$data = $fieldsObj->getData(1, $em, $this->getUser());
+		$data = $fieldsObj->getData(1, $em, $this->getUser(), null, $entity->getRecord()->getId());
 		$editForm = $this->createEditForm($entity, $em, $data);
 		$deleteForm = $this->createDeleteForm($id);
 
@@ -269,7 +274,7 @@ class AudioRecordsController extends Controller
 		}
 		$user = $this->getUser();
 		$fieldsObj = new DefaultFields();
-		$data = $fieldsObj->getData(1, $em, $user);
+		$data = $fieldsObj->getData(1, $em, $user, null, $entity->getRecord()->getId());
 		$deleteForm = $this->createDeleteForm($id);
 		$editForm = $this->createEditForm($entity, $em, $data);
 		$editForm->handleRequest($request);
