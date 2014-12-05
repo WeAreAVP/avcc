@@ -63,7 +63,7 @@
     list-style: none;
 }
 .facet_checkbox{
-	margin-right: 5px;
+    margin-right: 5px;
 }
 .chekBoxFacet{
     display: block;
@@ -93,22 +93,33 @@
     margin-top: 3px;
 }
 #facet_sidebar ul li.title{
-	padding: 8px 10px 8px 10px;
+    padding: 8px 10px 8px 10px;
 }
 .metro .sidebar>ul li a{
-	padding: 5px 10px !important;
+    padding: 5px 10px !important;
 }
 .metro .sidebar>ul ul a{
-	padding: 1px 12px !important;
-	font-size: 13px !important;
+    padding: 1px 12px !important;
+    font-size: 13px !important;
 }
 #addKeyword{
-	margin: 5px 0px;
+    margin: 5px 0px;
 }
 #reset_all{
-	margin: 5px 10px;
+    margin: 5px 10px;
 }
 #div-select-all-records{
     font-size: 12px;
     text-align:center;
+}
+span.has-error {
+    color:red;
+}
+span.has-error ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+span.has-error ul li{
+    
 }
