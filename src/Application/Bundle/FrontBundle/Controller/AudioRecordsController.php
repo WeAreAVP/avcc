@@ -246,7 +246,8 @@ class AudioRecordsController extends Controller
 		));
 
 		$form->add('submit', 'submit', array('label' => 'Update'));
-		$form->add('save_and_duplicate', 'submit', array('label' => 'Duplicate'));
+		$form->add('save_and_new', 'submit', array('label' => 'Update & New'));
+		$form->add('save_and_duplicate', 'submit', array('label' => 'Update & Duplicate'));
 
 		return $form;
 	}
