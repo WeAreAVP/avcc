@@ -15,12 +15,7 @@
                 <ul class="dropdown-menu" data-role="dropdown">
 
                     <li>
-                        <a class="dropdown-toggle" href="#">Add Record</a>
-                        <ul class="dropdown-menu" data-role="dropdown">
-                            <li><a  href="<?php echo $view['router']->generate('record_new') ?>">Audio</a></li>
-                            <li> <a  href="<?php echo $view['router']->generate('record_film_new') ?>">Film</a></li>
-                            <li><a  href="<?php echo $view['router']->generate('record_video_new') ?>">Video</a></li>
-                        </ul>
+                        <a href="<?php echo $view['router']->generate('record_new') ?>">Add Record</a>                       
                     </li>
                     <?php if ($view['security']->isGranted('ROLE_MANAGER')): ?>
                         <li>
