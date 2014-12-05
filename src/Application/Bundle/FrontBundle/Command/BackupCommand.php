@@ -50,7 +50,6 @@ class BackupCommand extends ContainerAwareCommand {
                             $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $email_id);
                             //  $email->sendEmail('yahoo', 'just mail', $this->getContainer()->getParameter('from_email'), $email_id);
                         }
-                        $completePath = null;
                         $text = $rendered;
                     } else {
                         $text .= 'record not found';
