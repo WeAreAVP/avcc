@@ -29,8 +29,7 @@ class BackupCommand extends ContainerAwareCommand {
         if ($entity) {
             foreach ($entity as $record) {
                 $backupEmails = $record->getBackupEmail();
-                $email_to = $this->get_email_to($backupEmails, $record);
-                $completePath = null;
+                $email_to = $this->get_email_to($backupEmails, $record);                
                 if ($record->getUser()->getOrganizations()) {
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($record->getUser()->getOrganizations()->getId());
                     
@@ -41,7 +40,7 @@ class BackupCommand extends ContainerAwareCommand {
                         $text = $completePath;
                     }
                     $text = "here--".$completePath;
-                    if ($completePath != null) {
+                    if ($completePath) {
                         $baseUrl = $this->getContainer()->getParameter('baseUrl');
                         $templateParameters = array('user' => $record->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
                         $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
@@ -51,9 +50,10 @@ class BackupCommand extends ContainerAwareCommand {
                             $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $email_id);
                             //  $email->sendEmail('yahoo', 'just mail', $this->getContainer()->getParameter('from_email'), $email_id);
                         }
+                        $completePath = null;
                         $text = $rendered;
                     } else {
-                        $text = 'record not found';
+                        $text .= 'record not found';
                     }
                 }
             }
