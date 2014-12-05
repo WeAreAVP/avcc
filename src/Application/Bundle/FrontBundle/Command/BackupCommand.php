@@ -33,13 +33,15 @@ class BackupCommand extends ContainerAwareCommand {
                 $completePath = null;
                 if ($record->getUser()->getOrganizations()) {
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($record->getUser()->getOrganizations()->getId());
-                    $text = print_r($records);
+                    
                     $export = new ExportReport($this->getContainer());
                     if ($records) {
+                        $text = 'here';
                         $phpExcelObject = $export->generateReport($records);
                         $completePath = $export->saveReport('csv', $phpExcelObject);
                         $text = $completePath;
                     }
+                    $text = 'out';
                     if ($completePath != null) {
                         $baseUrl = $this->getContainer()->getParameter('baseUrl');
                         $templateParameters = array('user' => $record->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
