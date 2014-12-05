@@ -36,12 +36,11 @@ class BackupCommand extends ContainerAwareCommand {
                     
                     $export = new ExportReport($this->getContainer());
                     if ($records) {
-                        $text = 'here';
                         $phpExcelObject = $export->generateReport($records);
                         $completePath = $export->saveReport('csv', $phpExcelObject);
                         $text = $completePath;
                     }
-                    $text = 'out';
+                    $text = "here--".$completePath;
                     if ($completePath != null) {
                         $baseUrl = $this->getContainer()->getParameter('baseUrl');
                         $templateParameters = array('user' => $record->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
