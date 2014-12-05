@@ -135,6 +135,7 @@ function showUpdateFields() {
 
 function onChangeMediaType(){
     $(".new #mediaType").change(function(){
+        console.log($(this).val());
         if($(this).val() == 3){
             window.location.href = baseUrl + 'video/new';
         }else if($(this).val() == 2){

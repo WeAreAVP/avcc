@@ -39,6 +39,7 @@
 <script type="text/javascript">
     var baseUrl = '<?php echo $view['router']->generate('record')?>';
     var selectedFormat = '<?php echo ($entity->getRecord()) ? $entity->getRecord()->getFormat()->getId() : '';?>';
+    var selectedMediaType = 1;
     $(document).ready(function () {
         initialize_records_form();
     });
