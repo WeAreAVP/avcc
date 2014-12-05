@@ -11,6 +11,7 @@ use Application\Bundle\FrontBundle\Entity\VideoRecords;
 use Application\Bundle\FrontBundle\Form\VideoRecordsType;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
+use Symfony\Component\Form\FormError;
 
 /**
  * VideoRecords controller.
@@ -51,25 +52,39 @@ class VideoRecordsController extends Controller
         $entity = new VideoRecords();
         $form = $this->createCreateForm($entity, $em);
         $form->handleRequest($request);
-
+        $fieldsObj = new DefaultFields();
+        $data = $fieldsObj->getData(2, $em, $this->getUser(), null);
         if ($form->isValid()) {
             $em->persist($entity);
-            $em->flush();
-            $sphinxInfo = $this->getSphinxInfo();
-            $sphinxSearch = new SphinxSearch($em, $sphinxInfo, $entity->getId(), 3);
-            $sphinxSearch->insert();
-            // the save_and_dupplicate button was clicked
-            if ($form->get('save_and_duplicate')->isClicked()) {
-                return $this->redirect($this->generateUrl('record_video_duplicate', array('videoRecId' => $entity->getId())));
+            try {
+                $em->flush();
+                $sphinxInfo = $this->getSphinxInfo();
+                $sphinxSearch = new SphinxSearch($em, $sphinxInfo, $entity->getId(), 3);
+                $sphinxSearch->insert();
+                // the save_and_dupplicate button was clicked
+                if ($form->get('save_and_duplicate')->isClicked()) {
+                    return $this->redirect($this->generateUrl('record_video_duplicate', array('videoRecId' => $entity->getId())));
+                }
+                if ($form->get('save_and_new')->isClicked()) {
+                    return $this->redirect($this->generateUrl('record_video_new'));
+                }
+                $this->get('session')->getFlashBag()->add('success', 'Video record added succesfully.');
+
+                return $this->redirect($this->generateUrl('record_list'));
+            } catch (\Doctrine\DBAL\DBALException $e) {
+                if (is_int(strpos($e->getPrevious()->getMessage(), 'Duplicate entry'))) {
+                    $error = new FormError("The unique ID must be unique.");
+                    $recordForm = $form->get('record');
+                    $recordForm->get('uniqueId')->addError($error);
+                }
             }
-            $this->get('session')->getFlashBag()->add('success', 'Video record added succesfully.');
-
-            return $this->redirect($this->generateUrl('record_list'));
         }
-
+        $user_view_settings = $fieldsObj->getFieldSettings($this->getUser(), $em);
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
+            'fieldSettings' => $user_view_settings,
+            'type' => $data['mediaType']->getName(),
         );
     }
 
@@ -87,8 +102,9 @@ class VideoRecordsController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
-        $form->add('save_and_duplicate', 'submit', array('label' => 'Duplicate'));
+        $form->add('submit', 'submit', array('label' => 'Save'));
+        $form->add('save_and_new', 'submit', array('label' => 'Save & New'));
+        $form->add('save_and_duplicate', 'submit', array('label' => 'Save & Duplicate'));
 
         return $form;
     }
@@ -136,7 +152,7 @@ class VideoRecordsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ApplicationFrontBundle:VideoRecords')->findOneBy(array('record'=>$id));
+        $entity = $em->getRepository('ApplicationFrontBundle:VideoRecords')->findOneBy(array('record' => $id));
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find VideoRecords entity.');
@@ -145,8 +161,8 @@ class VideoRecordsController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return $this->render('ApplicationFrontBundle:VideoRecords:show.html.php', array(
-            'entity' => $entity,
-            'delete_form' => $deleteForm->createView(),
+                    'entity' => $entity,
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -167,7 +183,7 @@ class VideoRecordsController extends Controller
             throw $this->createNotFoundException('Unable to find VideoRecords entity.');
         }
         $fieldsObj = new DefaultFields();
-        $data = $fieldsObj->getData(3, $em, $this->getUser());
+        $data = $fieldsObj->getData(3, $em, $this->getUser(), null, $entity->getRecord()->getId());
         $editForm = $this->createEditForm($entity, $em, $data);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -196,8 +212,9 @@ class VideoRecordsController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
-        $form->add('save_and_duplicate', 'submit', array('label' => 'Duplicate'));
+        $form->add('submit', 'submit', array('label' => 'Save'));
+        $form->add('save_and_new', 'submit', array('label' => 'Save & New'));
+        $form->add('save_and_duplicate', 'submit', array('label' => 'Save & Duplicate'));
 
         return $form;
     }
@@ -220,29 +237,42 @@ class VideoRecordsController extends Controller
             throw $this->createNotFoundException('Unable to find VideoRecords entity.');
         }
         $fieldsObj = new DefaultFields();
-        $data = $fieldsObj->getData(3, $em, $this->getUser());
+        $data = $fieldsObj->getData(3, $em, $this->getUser(), null, $entity->getRecord()->getId());
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity, $em, $data);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $em->flush();
-            $sphinxInfo = $this->getSphinxInfo();
-            $sphinxSearch = new SphinxSearch($em, $sphinxInfo, $entity->getId(), 3);
-            $sphinxSearch->replace();
-            // the save_and_dupplicate button was clicked
-            if ($editForm->get('save_and_duplicate')->isClicked()) {
-                return $this->redirect($this->generateUrl('record_video_duplicate', array('videoRecId' => $id)));
+            try {
+                $em->flush();
+                $sphinxInfo = $this->getSphinxInfo();
+                $sphinxSearch = new SphinxSearch($em, $sphinxInfo, $entity->getId(), 3);
+                $sphinxSearch->replace();
+                // the save_and_dupplicate button was clicked
+                if ($editForm->get('save_and_duplicate')->isClicked()) {
+                    return $this->redirect($this->generateUrl('record_video_duplicate', array('videoRecId' => $id)));
+                }
+                if ($form->get('save_and_new')->isClicked()) {
+                    return $this->redirect($this->generateUrl('record_video_new'));
+                }
+                $this->get('session')->getFlashBag()->add('success', 'Video record updated succesfully.');
+
+                return $this->redirect($this->generateUrl('record_list'));
+            } catch (\Doctrine\DBAL\DBALException $e) {
+                if (is_int(strpos($e->getPrevious()->getMessage(), 'Duplicate entry'))) {
+                    $error = new FormError("The unique ID must be unique.");
+                    $recordForm = $editForm->get('record');
+                    $recordForm->get('uniqueId')->addError($error);
+                }
             }
-            $this->get('session')->getFlashBag()->add('success', 'Video record updated succesfully.');
-
-            return $this->redirect($this->generateUrl('record_list'));
         }
-
+        $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'fieldSettings' => $userViewSettings,
+            'type' => $data['mediaType']->getName(),
         );
     }
 
@@ -298,4 +328,5 @@ class VideoRecordsController extends Controller
     {
         return $this->container->getParameter('sphinx_param');
     }
+
 }

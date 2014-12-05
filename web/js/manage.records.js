@@ -6,6 +6,7 @@ function initialize_records_form() {
     $('#trackTypes_lbl').hide();
     $('#cassetteSize_lbl').hide();
     $("#formatVersion_lbl").hide();
+    $('.new #mediaType option[value="'+ selectedMediaType +'"]').attr("selected","selected");
     showUpdateFields();
     $.mask.definitions['y'] = '[1-2,x]';
     $.mask.definitions['m'] = '[0-1,x]';
@@ -13,7 +14,7 @@ function initialize_records_form() {
     $.mask.definitions['g'] = '[0-9,x]';
     $("#creationDate, #contentDate").mask("yggg-mg-dg", {optional: true});
     updateFormat();
-    onChangeMediaType();
+    onChangeMediaType();    
 }
 function updateFormat() {
     /// call to get base dropdown options

@@ -28,8 +28,9 @@
     </fieldset>
     <?php echo $view['form']->widget($edit_form['record']['userId']) ?>
     <?php echo $view['form']->widget($edit_form['record']['mediaTypeHidden']) ?>
-    <?php echo $view['form']->widget($edit_form['record']['projectHidden']) ?>
+    <a href="<?php echo $view['router']->generate('record_list') ?>" name="cancle" class="button">Cancel</a>
     <?php echo $view['form']->widget($edit_form['submit'], array('attr' => array('class' => 'button primary'))) ?>
+    <?php echo $view['form']->widget($edit_form['save_and_new']) ?>
     <?php echo $view['form']->widget($edit_form['save_and_duplicate']) ?>
     <?php echo $view['form']->end($edit_form) ?>
 </div>

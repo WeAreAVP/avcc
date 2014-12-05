@@ -11,6 +11,8 @@ use Application\Bundle\FrontBundle\Entity\FilmRecords;
 use Application\Bundle\FrontBundle\Form\FilmRecordsType;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
+use Symfony\Component\Form\FormError;
+
 /**
  * FilmRecords controller.
  *
@@ -28,7 +30,7 @@ class FilmRecordsController extends Controller
      */
     public function indexAction()
     {
-       $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('ApplicationFrontBundle:FilmRecords')->findAll();
 
@@ -50,27 +52,41 @@ class FilmRecordsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $entity = new FilmRecords();
-        $form = $this->createCreateForm($entity,$em);
+        $form = $this->createCreateForm($entity, $em);
         $form->handleRequest($request);
-
+        $fieldsObj = new DefaultFields();
+        $data = $fieldsObj->getData(2, $em, $this->getUser(), null);
         if ($form->isValid()) {
             $em->persist($entity);
-            $em->flush();
-            $shpinxInfo = $this->getSphinxInfo();
-            $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getId(), 2);
-            $sphinxSearch->insert();
-            // the save_and_dupplicate button was clicked
-            if ($form->get('save_and_duplicate')->isClicked()) {
-                return $this->redirect($this->generateUrl('record_film_duplicate', array('filmRecId' => $entity->getId())));
+            try {
+                $em->flush();
+                $shpinxInfo = $this->getSphinxInfo();
+                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getId(), 2);
+                $sphinxSearch->insert();
+                // the save_and_dupplicate button was clicked
+                if ($form->get('save_and_duplicate')->isClicked()) {
+                    return $this->redirect($this->generateUrl('record_film_duplicate', array('filmRecId' => $entity->getId())));
+                }
+                if ($form->get('save_and_new')->isClicked()) {
+                    return $this->redirect($this->generateUrl('record_film_new'));
+                }
+                $this->get('session')->getFlashBag()->add('success', 'Film record added succesfully.');
+
+                return $this->redirect($this->generateUrl('record_list'));
+            } catch (\Doctrine\DBAL\DBALException $e) {
+                if (is_int(strpos($e->getPrevious()->getMessage(), 'Duplicate entry'))) {
+                    $error = new FormError("The unique ID must be unique.");
+                    $recordForm = $form->get('record');
+                    $recordForm->get('uniqueId')->addError($error);
+                }
             }
-            $this->get('session')->getFlashBag()->add('success', 'Film record added succesfully.');
-
-            return $this->redirect($this->generateUrl('record_list'));
         }
-
+        $user_view_settings = $fieldsObj->getFieldSettings($this->getUser(), $em);
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
+            'fieldSettings' => $user_view_settings,
+            'type' => $data['mediaType']->getName(),
         );
     }
 
@@ -90,8 +106,9 @@ class FilmRecordsController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
-        $form->add('save_and_duplicate', 'submit', array('label' => 'Duplicate'));
+        $form->add('submit', 'submit', array('label' => 'Save'));
+        $form->add('save_and_new', 'submit', array('label' => 'Save & New'));
+        $form->add('save_and_duplicate', 'submit', array('label' => 'Save & Duplicate'));
 
         return $form;
     }
@@ -117,7 +134,7 @@ class FilmRecordsController extends Controller
             $entity = new FilmRecords();
         }
         $form = $this->createCreateForm($entity, $em, $data);
-        $user_view_settings = $fieldsObj->getFieldSettings($this->getUser(),$em);
+        $user_view_settings = $fieldsObj->getFieldSettings($this->getUser(), $em);
 
         return $this->render('ApplicationFrontBundle:FilmRecords:new.html.php', array(
                     'entity' => $entity,
@@ -125,7 +142,6 @@ class FilmRecordsController extends Controller
                     'fieldSettings' => $user_view_settings,
                     'type' => $data['mediaType']->getName(),
         ));
-
     }
 
     /**
@@ -142,7 +158,7 @@ class FilmRecordsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ApplicationFrontBundle:FilmRecords')->findOneBy(array('record'=>$id));
+        $entity = $em->getRepository('ApplicationFrontBundle:FilmRecords')->findOneBy(array('record' => $id));
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find FilmRecords entity.');
@@ -150,9 +166,9 @@ class FilmRecordsController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('ApplicationFrontBundle:FilmRecords:show.html.php',array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+        return $this->render('ApplicationFrontBundle:FilmRecords:show.html.php', array(
+                    'entity' => $entity,
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -176,27 +192,27 @@ class FilmRecordsController extends Controller
             throw $this->createNotFoundException('Unable to find FilmRecords entity.');
         }
         $fieldsObj = new DefaultFields();
-        $data = $fieldsObj->getData(2, $em, $this->getUser());
+        $data = $fieldsObj->getData(2, $em, $this->getUser(), null, $entity->getRecord()->getId());
         $editForm = $this->createEditForm($entity, $em, $data);
         $deleteForm = $this->createDeleteForm($id);
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
 
-        return $this->render('ApplicationFrontBundle:FilmRecords:edit.html.php',array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-            'fieldSettings' => $userViewSettings,
-            'type' => $data['mediaType']->getName(),
+        return $this->render('ApplicationFrontBundle:FilmRecords:edit.html.php', array(
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
+                    'fieldSettings' => $userViewSettings,
+                    'type' => $data['mediaType']->getName(),
         ));
     }
 
     /**
-    * Creates a form to edit a FilmRecords entity.
-    *
-    * @param FilmRecords $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
+     * Creates a form to edit a FilmRecords entity.
+     *
+     * @param FilmRecords $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
     private function createEditForm(FilmRecords $entity, $em, $data = null)
     {
         $form = $this->createForm(new FilmRecordsType($em, $data), $entity, array(
@@ -204,11 +220,13 @@ class FilmRecordsController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
-        $form->add('save_and_duplicate', 'submit', array('label' => 'Duplicate'));
+        $form->add('submit', 'submit', array('label' => 'Save'));
+        $form->add('save_and_new', 'submit', array('label' => 'Save & New'));
+        $form->add('save_and_duplicate', 'submit', array('label' => 'Save & Duplicate'));
 
         return $form;
     }
+
     /**
      * Edits an existing FilmRecords entity.
      *
@@ -230,31 +248,45 @@ class FilmRecordsController extends Controller
             throw $this->createNotFoundException('Unable to find FilmRecords entity.');
         }
         $fieldsObj = new DefaultFields();
-        $data = $fieldsObj->getData(2, $em, $this->getUser());
+        $data = $fieldsObj->getData(2, $em, $this->getUser(), null, $entity->getRecord()->getId());
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity, $em, $data);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            $em->flush();
-            $shpinxInfo = $this->getSphinxInfo();
-            $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getId(), 2);
-            $sphinxSearch->replace();
-            // the save_and_dupplicate button was clicked
-            if ($editForm->get('save_and_duplicate')->isClicked()) {
-                return $this->redirect($this->generateUrl('record_film_duplicate',array('filmRecId'=>$id)));
+            try {
+                $em->flush();
+                $shpinxInfo = $this->getSphinxInfo();
+                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getId(), 2);
+                $sphinxSearch->replace();
+                // the save_and_dupplicate button was clicked
+                if ($editForm->get('save_and_duplicate')->isClicked()) {
+                    return $this->redirect($this->generateUrl('record_film_duplicate', array('filmRecId' => $id)));
+                }
+                if ($form->get('save_and_new')->isClicked()) {
+                    return $this->redirect($this->generateUrl('record_film_new'));
+                }
+                $this->get('session')->getFlashBag()->add('success', 'Film record updated succesfully.');
+
+                return $this->redirect($this->generateUrl('record_list'));
+            } catch (\Doctrine\DBAL\DBALException $e) {
+                if (is_int(strpos($e->getPrevious()->getMessage(), 'Duplicate entry'))) {
+                    $error = new FormError("The unique ID must be unique.");
+                    $recordForm = $editForm->get('record');
+                    $recordForm->get('uniqueId')->addError($error);
+                }
             }
-            $this->get('session')->getFlashBag()->add('success', 'Film record updated succesfully.');
-
-            return $this->redirect($this->generateUrl('record_list'));
         }
-
+        $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'fieldSettings' => $userViewSettings,
+            'type' => $data['mediaType']->getName(),
         );
     }
+
     /**
      * Deletes a FilmRecords entity.
      *
@@ -295,10 +327,10 @@ class FilmRecordsController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('record_film_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm();
+                        ->setAction($this->generateUrl('record_film_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm();
     }
 
     /**
@@ -310,4 +342,5 @@ class FilmRecordsController extends Controller
     {
         return $this->container->getParameter('sphinx_param');
     }
+
 }

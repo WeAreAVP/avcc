@@ -151,13 +151,13 @@ class DefaultFields
         $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
 
         foreach ($mediaTypes as $media) {
-            $data['mediaTypesArr'][] = array($media->getId() => $media->getName());
+            $data['mediaTypesArr'][$media->getId()] = $media->getName();
         }
 
         $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
 
         foreach ($projects as $project) {
-            $data['projectsArr'][] = array($project->getId() => $project->getName());
+            $data['projectsArr'][$project->getId()] = $project->getName();
         }
 
         $data['mediaType'] = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $data['mediaTypeId']));
