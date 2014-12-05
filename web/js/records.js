@@ -99,7 +99,7 @@ function Records() {
                         "bServerSide": true,
                         retrieve: true,
                         destroy: true,
-                        "pageLength": 100,
+                        "iDisplayLength": 100,
                         "language": {
                             "info": "Showing _START_ - _END_ of _MAX_",
                             "infoFiltered": ''
