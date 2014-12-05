@@ -44,7 +44,7 @@ class VideoRecordsController extends Controller
      *
      * @Route("/", name="record_video_create")
      * @Method("POST")
-     * @Template("ApplicationFrontBundle:VideoRecords:new.html.twig")
+     * @Template("ApplicationFrontBundle:VideoRecords:new.html.php")
      */
     public function createAction(Request $request)
     {
@@ -53,7 +53,7 @@ class VideoRecordsController extends Controller
         $form = $this->createCreateForm($entity, $em);
         $form->handleRequest($request);
         $fieldsObj = new DefaultFields();
-        $data = $fieldsObj->getData(2, $em, $this->getUser(), null);
+        $data = $fieldsObj->getData(3, $em, $this->getUser(), null);
         if ($form->isValid()) {
             $em->persist($entity);
             try {
