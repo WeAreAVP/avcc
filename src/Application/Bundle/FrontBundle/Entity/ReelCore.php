@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="reel_core")
  * @ORM\Entity
  */
-class ReelCore {
-
+class ReelCore
+{
     /**
      * @var integer
      *
@@ -55,7 +55,8 @@ class ReelCore {
      *
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getName();
     }
 
@@ -64,7 +65,8 @@ class ReelCore {
      *
      * @return integer
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -73,7 +75,8 @@ class ReelCore {
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -84,7 +87,8 @@ class ReelCore {
      *
      * @return \Application\Bundle\FrontBundle\Entity\ReelCore
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
@@ -97,7 +101,8 @@ class ReelCore {
      *
      * @return \Application\Bundle\FrontBundle\Entity\ReelCore
      */
-    public function setOrganization(\Application\Bundle\FrontBundle\Entity\Organizations $organization) {
+    public function setOrganization(\Application\Bundle\FrontBundle\Entity\Organizations $organization)
+    {
         $this->organization = $organization;
 
         return $this;
@@ -108,7 +113,8 @@ class ReelCore {
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function getOrganization() {
+    public function getOrganization()
+    {
         return $this->organization;
     }
 
@@ -117,7 +123,8 @@ class ReelCore {
      *
      * @return real number
      */
-    public function getScore() {
+    public function getScore()
+    {
         return $this->score;
     }
 
@@ -128,7 +135,8 @@ class ReelCore {
      *
      * @return \Application\Bundle\FrontBundle\Entity\Colors
      */
-    public function setScore($score) {
+    public function setScore($score)
+    {
         $this->score = $score;
     }
 

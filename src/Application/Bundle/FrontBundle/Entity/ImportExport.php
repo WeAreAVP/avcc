@@ -73,7 +73,7 @@ class ImportExport
      * @var string
      */
     private $mergeToFile;
-    
+
     /**
      * @var boolean
      *
@@ -191,7 +191,7 @@ class ImportExport
 
     /**
      * Set merge to file field
-     * 
+     *
      * @param string $file
      */
     public function setMergeToFile($file)
@@ -201,7 +201,7 @@ class ImportExport
 
     /**
      * Return merge to file name
-     * 
+     *
      * @return string
      */
     public function getMergeToFile()

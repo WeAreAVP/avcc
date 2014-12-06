@@ -38,7 +38,7 @@ class Colors
      * @Assert\NotBlank(message="Score is required")
      */
     private $score;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="colorOrg")
      * @ORM\JoinColumn(
@@ -118,7 +118,7 @@ class Colors
     {
         return $this->organization;
     }
-    
+
     /**
      * Get score
      *

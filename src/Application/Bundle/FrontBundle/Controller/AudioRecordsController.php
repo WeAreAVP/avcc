@@ -75,7 +75,6 @@ class AudioRecordsController extends Controller
                     return $this->redirect($this->generateUrl('record_new', array('audioRecId' => $entity->getId())));
                 }
 
-
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
                 if (is_int(strpos($e->getPrevious()->getMessage(), 'Duplicate entry'))) {
@@ -86,6 +85,7 @@ class AudioRecordsController extends Controller
             }
         }
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
@@ -292,6 +292,7 @@ class AudioRecordsController extends Controller
             }
         }
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),

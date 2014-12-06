@@ -193,6 +193,7 @@ class RecordsController extends Controller
         $facetData = $this->getFacetFromSession();
         $makeCriteria = new SphinxHelper();
         $criteria = $makeCriteria->makeSphinxCriteria($facetData);
+
         return $criteria;
     }
 
@@ -336,7 +337,7 @@ class RecordsController extends Controller
 
     /**
      * Insert all records in sphinx
-     * 
+     *
      * @Route("/sphinx", name="record_sphinx")
      * @Template("ApplicationFrontBundle:Records:default.html.php")
      */
@@ -495,6 +496,7 @@ class RecordsController extends Controller
                 }
             }
         }
+
         return $text;
 
         exit;

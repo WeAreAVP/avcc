@@ -2,8 +2,8 @@
 
 namespace Application\Bundle\FrontBundle\Helper;
 
-class ExportFields {
-
+class ExportFields
+{
     private $columns = array(
         'Project_Name',
         'Collection_Name',
@@ -60,7 +60,8 @@ class ExportFields {
      *
      * @return array
      */
-    public function getExportColumns() {
+    public function getExportColumns()
+    {
         return $this->columns;
     }
 
@@ -69,7 +70,8 @@ class ExportFields {
      *
      * @return array
      */
-    public function getManifestColumns() {
+    public function getManifestColumns()
+    {
         return $this->manifestColumns;
     }
 
@@ -78,7 +80,8 @@ class ExportFields {
      *
      * @return array
      */
-    public function getPrioritizationColumns() {
+    public function getPrioritizationColumns()
+    {
         return $this->prioritizationCols;
     }
 

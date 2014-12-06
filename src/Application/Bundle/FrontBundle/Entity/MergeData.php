@@ -46,7 +46,7 @@ class MergeData
      * )
      */
     private $mergeToFile;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Users", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="userMergeData")
      * @ORM\JoinColumn(
@@ -61,7 +61,7 @@ class MergeData
 
     /**
      * Set exported file name
-     * 
+     *
      * @param File $file
      */
     public function setExportedFile(File $file = null)
@@ -70,8 +70,8 @@ class MergeData
     }
 
     /**
-     * Get exported file 
-     * 
+     * Get exported file
+     *
      * @return type
      */
     public function getExportedFile()
@@ -81,7 +81,7 @@ class MergeData
 
     /**
      * Set merge to file field
-     * 
+     *
      * @param File $file
      */
     public function setMergeToFile(File $file = null)
@@ -91,14 +91,14 @@ class MergeData
 
     /**
      * Return merge to file name
-     * 
+     *
      * @return string
      */
     public function getMergeToFile()
     {
         return $this->mergeToFile;
     }
-    
+
     /**
      * Set user.
      *

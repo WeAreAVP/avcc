@@ -15,10 +15,11 @@ class SphinxHelper
         );
     }
 
-    public function makeSphinxCriteria($facetData){
+    public function makeSphinxCriteria($facetData)
+    {
         $criteria = null;
         $criteriaArr = null;
-        
+
         $searchColumns = array(
             'mediaType' => 's_media_type',
             'commercial' => 's_commercial',
@@ -36,9 +37,9 @@ class SphinxHelper
             'contentDate' => 's_content_date',
             'contentDate' => 's_content_date',
         );
-        
+
         foreach ($searchColumns as $key => $value) {
-            if (isset($facetData[$key])){
+            if (isset($facetData[$key])) {
                 $criteriaArr[$value] = $facetData[$key];
             }
         }
@@ -62,6 +63,7 @@ class SphinxHelper
         if ($criteriaArr) {
             $criteria['criteriaArr'] = $criteriaArr;
         }
+
         return $criteria;
     }
 

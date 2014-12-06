@@ -163,7 +163,7 @@ class DefaultFields
         $data['mediaType'] = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $data['mediaTypeId']));
 
         $data['recordId'] = $recordId;
-        
+
         return $data;
     }
 
