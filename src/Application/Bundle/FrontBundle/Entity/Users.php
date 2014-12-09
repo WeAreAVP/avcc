@@ -102,7 +102,7 @@ class Users extends BaseUser
      * @ORM\OrderBy({"id"="ASC"})
      */
     private $userMergeData;
-    
+
     /**
      * Users constructor
      */
@@ -307,7 +307,7 @@ class Users extends BaseUser
     {
          $this->userSetting->remove($us);
     }
-    
+
     /**
      * Add userMergeData
      * @param \Application\Bundle\FrontBundle\Entity\MergeData $md

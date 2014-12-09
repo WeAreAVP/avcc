@@ -94,7 +94,7 @@ class Records
      * @ORM\Column(name="unique_id", unique=true, type="string")
      * @var string
      * @Assert\NotBlank(message="Unique id is required")
-	 * 
+     *
      */
     private $uniqueId;
 
@@ -948,15 +948,14 @@ class Records
     {
         return '';
     }
-	function getEditor()
-	{
-		return $this->editor;
-	}
+    public function getEditor()
+    {
+        return $this->editor;
+    }
 
-	function setEditor(\Application\Bundle\FrontBundle\Entity\Users $editor)
-	{
-		$this->editor = $editor;
-	}
-
+    public function setEditor(\Application\Bundle\FrontBundle\Entity\Users $editor)
+    {
+        $this->editor = $editor;
+    }
 
 }

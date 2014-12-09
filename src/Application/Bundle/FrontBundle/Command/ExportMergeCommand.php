@@ -5,10 +5,8 @@ namespace Application\Bundle\FrontBundle\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Application\Bundle\FrontBundle\Components\ExportReport;
-use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Application\Bundle\FrontBundle\Helper\EmailHelper;
 use Application\Bundle\FrontBundle\Helper\SphinxHelper;
@@ -81,6 +79,7 @@ class ExportMergeCommand extends ContainerAwareCommand
             }
         }
         $output->writeln($text);
+
         return true;
     }
 

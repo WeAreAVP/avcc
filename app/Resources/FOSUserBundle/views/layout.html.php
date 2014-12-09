@@ -27,7 +27,7 @@
         <?php $view['slots']->output('stylesheets') ?>
 
         <script src="<?php echo $view['assets']->getUrl('js/jquery.maskedinput.js') ?>"></script>
-        <script src="<?php echo $view['assets']->getUrl('js/jquery.simplemodal.1.4.4.min.js') ?>"></script>        
+        <script src="<?php echo $view['assets']->getUrl('js/jquery.simplemodal.1.4.4.min.js') ?>"></script>
     </head>
 
     <body class="metro">

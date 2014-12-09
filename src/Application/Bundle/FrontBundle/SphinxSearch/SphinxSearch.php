@@ -195,12 +195,12 @@ class SphinxSearch extends ContainerAware
 
         return $result;
     }
-    
+
     /**
      * Get meta data from sphinx.
      *
-     * @param User    $user
-     * @param string  $criteria
+     * @param User   $user
+     * @param string $criteria
      *
      * @return array
      */

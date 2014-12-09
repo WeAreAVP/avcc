@@ -26,11 +26,24 @@ use Application\Bundle\FrontBundle\Components\ExportReport;
  */
 class RecordsController extends Controller
 {
-
+    /**
+     * Object of DefaultFields
+     * @var DefaultFields
+     */
     private $defaultFields;
+    /**
+     * Columns for datatable.
+     * @var array
+     */
     private $columns = array();
+    /**
+     * Default limit for query.
+     * @var integer
+     */
     private $limit;
-
+    /**
+     * Constructor of RecordsController
+     */
     public function __construct()
     {
         $this->columns = array(
@@ -52,6 +65,8 @@ class RecordsController extends Controller
 
     /**
      * Lists all AudioRecords entities.
+     *
+     * @param Request $request
      *
      * @Route("/", name="record_list")
      * @Method("GET")
@@ -163,6 +178,7 @@ class RecordsController extends Controller
     }
 
     /**
+     * Set/unset facet values from session.
      *
      * @param Request $request
      *
@@ -193,9 +209,14 @@ class RecordsController extends Controller
         $facetData = $this->getFacetFromSession();
         $makeCriteria = new SphinxHelper();
         $criteria = $makeCriteria->makeSphinxCriteria($facetData);
+
         return $criteria;
     }
-
+    /**
+     * Set/unset facet values from session.
+     *
+     * @param Request $request
+     */
     protected function getFacetRequest(Request $request)
     {
         $data = $request->query->all();
@@ -207,7 +228,13 @@ class RecordsController extends Controller
             $session->remove('facetData');
         }
     }
-
+    /**
+     * Remove empty values from array.
+     *
+     * @param  array  $facet
+     * @param  string $index
+     * @return array
+     */
     protected function removeEmpty($facet, $index)
     {
         $result = array();
@@ -336,7 +363,7 @@ class RecordsController extends Controller
 
     /**
      * Insert all records in sphinx
-     * 
+     *
      * @Route("/sphinx", name="record_sphinx")
      * @Template("ApplicationFrontBundle:Records:default.html.php")
      */
@@ -495,6 +522,7 @@ class RecordsController extends Controller
                 }
             }
         }
+
         return $text;
 
         exit;

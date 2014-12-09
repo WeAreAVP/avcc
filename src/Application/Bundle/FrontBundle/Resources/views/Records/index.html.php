@@ -15,7 +15,7 @@
                 <ul class="dropdown-menu" data-role="dropdown">
 
                     <li>
-                        <a href="<?php echo $view['router']->generate('record_new') ?>">Add Record</a>                       
+                        <a href="<?php echo $view['router']->generate('record_new') ?>">Add Record</a>
                     </li>
                     <?php if ($view['security']->isGranted('ROLE_MANAGER')): ?>
                         <li>

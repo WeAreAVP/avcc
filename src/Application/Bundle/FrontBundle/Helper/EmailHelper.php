@@ -11,7 +11,7 @@ class EmailHelper
     }
 
     public function sendEmail($renderedTemplate, $subject, $fromEmail, $toEmail)
-    {        
+    {
         $body = $renderedTemplate;
 
         $message = \Swift_Message::newInstance()

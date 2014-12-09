@@ -80,6 +80,7 @@ class VideoRecordsController extends Controller
             }
         }
         $user_view_settings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
@@ -267,6 +268,7 @@ class VideoRecordsController extends Controller
             }
         }
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),

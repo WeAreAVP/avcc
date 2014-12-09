@@ -14,8 +14,8 @@ use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
  *
  * @Route("/report")
  */
-class ReportController extends Controller {
-
+class ReportController extends Controller
+{
     /**
      * Show Reports view.
      *
@@ -24,7 +24,8 @@ class ReportController extends Controller {
      * @Template()
      * @return array
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         return array();
     }
 
@@ -36,7 +37,8 @@ class ReportController extends Controller {
      * @Template()
      * @return array
      */
-    public function allFormatsAction($type) {
+    public function allFormatsAction($type)
+    {
         if (!in_array($type, array('csv', 'xlsx'))) {
             throw $this->createNotFoundException('Invalid report type');
         }
@@ -64,7 +66,8 @@ class ReportController extends Controller {
      * @Template()
      * @return array
      */
-    public function quantitativeAction() {
+    public function quantitativeAction()
+    {
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
@@ -85,7 +88,8 @@ class ReportController extends Controller {
      * @Template()
      * @return array
      */
-    public function manifestAction() {
+    public function manifestAction()
+    {
         $entityManager = $this->getDoctrine()->getManager();
 
         if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN'))
@@ -116,7 +120,8 @@ class ReportController extends Controller {
      * @Template()
      * @return array
      */
-    public function prioritizationReportAction($type) {
+    public function prioritizationReportAction($type)
+    {
         if (!in_array($type, array('csv', 'xlsx'))) {
             throw $this->createNotFoundException('Invalid report type');
         }
@@ -126,7 +131,7 @@ class ReportController extends Controller {
             $records = $entityManager->getRepository('ApplicationFrontBundle:Records')->findAll();
         else
             $records = $entityManager->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($this->getUser()->getOrganizations()->getId());
-  
+
         $exportComponent = new ExportReport($this->container);
         $phpExcelObject = $exportComponent->generatePrioritizationReport($records);
         $response = $exportComponent->outputReport($type, $phpExcelObject, 'prioritization_report');

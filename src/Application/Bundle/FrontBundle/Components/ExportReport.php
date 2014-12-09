@@ -172,17 +172,18 @@ class ExportReport extends ContainerAware
         $row = 1;
 // Prepare header row for report
         $this->prepareHeader($activeSheet, $row);
+
         return $phpExcelObject;
     }
 
     /**
      * Get records from sphinx
-     * 
+     *
      * @param type $user
      * @param type $sphinxInfo
      * @param type $sphinxCriteria
      * @param type $em
-     * 
+     *
      * @return type
      */
     public function fetchFromSphinx($user, $sphinxInfo, $sphinxCriteria, $em)
@@ -403,12 +404,12 @@ class ExportReport extends ContainerAware
 
     /**
      * Get records from sphinx for merge export file
-     * 
+     *
      * @param type $user
      * @param type $sphinxInfo
      * @param type $sphinxCriteria
      * @param type $em
-     * 
+     *
      * @return type
      */
     public function fetchFromSphinxToMerge($user, $sphinxInfo, $sphinxCriteria, $em, $mergeToFile)
@@ -641,6 +642,7 @@ class ExportReport extends ContainerAware
             $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $scale_score);
             $row ++;
         }
+
         return true;
     }
 

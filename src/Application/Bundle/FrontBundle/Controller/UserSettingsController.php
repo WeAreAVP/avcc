@@ -19,9 +19,9 @@ use DateTime;
  *
  * @Route("/fieldsettings")
  */
-class UserSettingsController extends Controller {
-
-	 /**
+class UserSettingsController extends Controller
+{
+     /**
      * User settings
      *
      * @Route("/cron", name="cron_setup")
@@ -29,14 +29,15 @@ class UserSettingsController extends Controller {
      * @Template()
      * @return array
      */
-	public function setupCronAction() {
-		$job = new Job('avcc:backup-report');
+    public function setupCronAction()
+    {
+        $job = new Job('avcc:backup-report');
             $date = new DateTime();
             $date->add(new DateInterval('PT1M'));
             $job->setExecuteAfter($date);
             $em->persist($job);
             $em->flush($job);
-	}
+    }
     /**
      * User settings
      *
@@ -45,7 +46,8 @@ class UserSettingsController extends Controller {
      * @Template()
      * @return array
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $this->getUser()->getId()));
@@ -73,7 +75,8 @@ class UserSettingsController extends Controller {
      * @Template()
      * @return array
      */
-    public function updateAction(Request $request) {
+    public function updateAction(Request $request)
+    {
         $success = FALSE;
         $reload = FALSE;
         if ($request->getMethod() == 'POST') {
@@ -108,14 +111,15 @@ class UserSettingsController extends Controller {
 
     /**
      * enable backup
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * 
+     *
      * @Route("/backup", name="field_settings_backup")
      * @Template()
      * @return array
      */
-    public function backupAction(Request $request) {
+    public function backupAction(Request $request)
+    {
         $session = $request->getSession();
         if ($session->get('error')) {
             $error = $session->get('error');
@@ -128,6 +132,7 @@ class UserSettingsController extends Controller {
                 ->findOneBy(array('user' => $this->getUser()->getId()));
         if ($userEntity) {
             $form = $this->createEditForm($userEntity);
+
             return array(
                 'entity' => $userEntity,
                 'form' => $form->createView(),
@@ -136,6 +141,7 @@ class UserSettingsController extends Controller {
         } else {
             $entity = new UserSettings();
             $form = $this->createNewForm($entity);
+
             return array(
                 'form' => $form->createView(),
                 'error' => $error,
@@ -145,46 +151,51 @@ class UserSettingsController extends Controller {
 
     /**
      * create New Form
-     * 
+     *
      * @param UserSettings $entity
-     * 
+     *
      * @return type
      */
-    public function createNewForm(UserSettings $entity) {
+    public function createNewForm(UserSettings $entity)
+    {
         $form = $this->createForm(new UserSettingsType(), $entity, array(
             'action' => $this->generateUrl('new_backup'),
             'method' => 'POST',
         ));
         $form->add('submit', 'submit', array('label' => 'Save', 'attr' => array('class' => 'button primary')));
+
         return $form;
     }
 
     /**
      * create Edit Form
-     * 
+     *
      * @param UserSettings $userEntity
-     * 
+     *
      * @return type
      */
-    public function createEditForm(UserSettings $userEntity) {
+    public function createEditForm(UserSettings $userEntity)
+    {
         $form = $this->createForm(new UserSettingsType(), $userEntity, array(
             'action' => $this->generateUrl('edit_backup', array('id' => $userEntity->getId())),
             'method' => 'POST',
         ));
         $form->add('submit', 'submit', array('label' => 'Save', 'attr' => array('class' => 'button primary')));
+
         return $form;
     }
 
     /**
      * edit form
-     * 
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @param  \Symfony\Component\HttpFoundation\Request $request
      * @Method ("POST")
      * @Route("/backup/{id}", name="edit_backup")
      * @Template()
      * @return array
      */
-    public function updateFormAction(Request $request, $id) {
+    public function updateFormAction(Request $request, $id)
+    {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('ApplicationFrontBundle:UserSettings')->find($id);
         if (!$entity) {
@@ -203,6 +214,7 @@ class UserSettingsController extends Controller {
             if (strpos($errors, 'Invalid email id')) {
                 $session = $request->getSession();
                 $session->set('error', 'Please enter valid email id');
+
                 return $this->redirect($this->generateUrl('field_settings_backup'));
             }
         }
@@ -211,19 +223,21 @@ class UserSettingsController extends Controller {
             $em->persist($entity);
             $em->flush();
         }
+
         return $this->redirect($this->generateUrl('field_settings_backup'));
     }
 
     /**
      * edit form
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * 
+     *
      * @Route("/new", name="new_backup")
      * @Template()
      * @return array
      */
-    public function newFormAction(Request $request) {
+    public function newFormAction(Request $request)
+    {
         $entity = new UserSettings();
         $form = $this->createNewForm($entity);
         $form->handleRequest($request);
@@ -237,6 +251,7 @@ class UserSettingsController extends Controller {
             if (strpos($errors, 'Invalid email id')) {
                 $session = $request->getSession();
                 $session->set('error', 'Please enter valid email id');
+
                 return $this->redirect($this->generateUrl('field_settings_backup'));
             }
         }
@@ -249,16 +264,18 @@ class UserSettingsController extends Controller {
             $em->persist($entity);
             $em->flush();
         }
+
         return $this->redirect($this->generateUrl('field_settings_backup'));
     }
 
      /**
      * add Backup Record command In Job
-     * 
+     *
      * @Route("/addBackup", name="backup_record")
      * @Template("ApplicationFrontBundle:UserSettings:default.html.php")
      */
-    public function addBackupRecordInJobAction() {
+    public function addBackupRecordInJobAction()
+    {
         $em = $this->getDoctrine()->getManager();
         $job = new Job('avcc:backup-report');
         $date = new DateTime();

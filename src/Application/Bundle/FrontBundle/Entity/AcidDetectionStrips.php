@@ -117,7 +117,7 @@ class AcidDetectionStrips
     {
         return $this->organization;
     }
-    
+
     /**
      * Get score
      *

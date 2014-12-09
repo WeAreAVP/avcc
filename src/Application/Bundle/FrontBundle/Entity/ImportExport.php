@@ -73,7 +73,7 @@ class ImportExport
      * @var string
      */
     private $fileName;
-    
+
     /**
      * @var boolean
      *
@@ -190,8 +190,8 @@ class ImportExport
     }
 
     /**
-     * Set file name field
-     * 
+     * Set file name field     * 
+     *
      * @param string $file
      */
     public function setFileName($file)

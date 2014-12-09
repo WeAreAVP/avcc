@@ -8,25 +8,25 @@
     </h1>
     <a href="<?php echo $view['router']->generate('record_edit', array('id' => $entity->getId())) ?>" class="button primary">Edit</a>
     <div class="clearfix"></div>
-	<div class="grid">
-		<div class="row">
-			<div class="span4">Created by: <?php echo $entity->getRecord()->getUser()->getName(); ?></div>
-			<?php if ($entity->getRecord()->getEditor()) : ?>
-				<div class="span4">Modified By: <?php echo $entity->getRecord()->getEditor()->getName(); ?></div>
-			<?php endif;
-			?>
-		</div>
-		<div class="row">
-			<div class="span4">Created at: <?php echo $entity->getRecord()->getCreatedOn()->format('Y-m-d H:i:s'); ?></div>
-			<?php if ($entity->getRecord()->getUpdatedOn()): ?>
-				<div class="span4">Modified at:  <?php echo $entity->getRecord()->getUpdatedOn()->format('Y-m-d H:i:s'); ?>
-				</div>
-				<?php
-			endif;
-			?>
-		</div>
+    <div class="grid">
+        <div class="row">
+            <div class="span4">Created by: <?php echo $entity->getRecord()->getUser()->getName(); ?></div>
+            <?php if ($entity->getRecord()->getEditor()) : ?>
+                <div class="span4">Modified By: <?php echo $entity->getRecord()->getEditor()->getName(); ?></div>
+            <?php endif;
+            ?>
+        </div>
+        <div class="row">
+            <div class="span4">Created at: <?php echo $entity->getRecord()->getCreatedOn()->format('Y-m-d H:i:s'); ?></div>
+            <?php if ($entity->getRecord()->getUpdatedOn()): ?>
+                <div class="span4">Modified at:  <?php echo $entity->getRecord()->getUpdatedOn()->format('Y-m-d H:i:s'); ?>
+                </div>
+                <?php
+            endif;
+            ?>
+        </div>
 
-	</div>
+    </div>
     <table class="table">
         <tbody>
 
@@ -62,151 +62,151 @@
                 <th class="text-right">Description</th>
                 <td><?php echo $entity->getRecord()->getDescription() ?></td>
             </tr>
-			<?php if ($entity->getRecord()->getCommercial()): ?>
-				<tr>
-					<th class="text-right">Commercial</th>
-					<td><?php echo $entity->getRecord()->getCommercial()->getName() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getDiskDiameters()): ?>
-				<tr>
-					<th class="text-right">Disk Diameter</th>
-					<td><?php echo $entity->getDiskDiameters()->getName() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getRecord()->getReelDiameters()): ?>
-				<tr>
-					<th class="text-right">Reel Diameter</th>
-					<td><?php echo $entity->getRecord()->getReelDiameters()->getName() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getMediaDiameters()): ?>
-				<tr>
-					<th class="text-right">Media Diameter</th>
-					<td><?php echo $entity->getMediaDiameters()->getName() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getBases()): ?>
-				<tr>
-					<th class="text-right">Base</th>
-					<td><?php echo $entity->getBases()->getName() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getRecord()->getContentDuration()): ?>
-				<tr>
-					<th class="text-right">Content Duration</th>
-					<td><?php echo $entity->getRecord()->getContentDuration() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getMediaDuration()): ?>
-				<tr>
-					<th class="text-right">Media Duration</th>
-					<td><?php echo $entity->getMediaDuration() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getRecord()->getCreationDate()): ?>
-				<tr>
-					<th class="text-right">Creation Date</th>
-					<td><?php echo $entity->getRecord()->getCreationDate() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getRecord()->getContentDate()): ?>
-				<tr>
-					<th class="text-right">Content Date</th>
-					<td><?php echo $entity->getRecord()->getContentDate() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getRecord()->getIsReview()): ?>
-				<tr>
-					<th class="text-right">Review</th>
-					<td><?php echo ($entity->getRecord()->getIsReview()) ? 'Yes' : 'No' ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getRecordingSpeed()): ?>
-				<tr>
-					<th class="text-right">Recording Speed</th>
-					<td><?php echo $entity->getRecordingSpeed() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getTapeThickness()): ?>
-				<tr>
-					<th class="text-right">Tape Thickness</th>
-					<td><?php echo $entity->getTapeThickness() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getSlides()): ?>
-				<tr>
-					<th class="text-right">Sides</th>
-					<td><?php echo $entity->getSlides() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getTrackTypes()): ?>
-				<tr>
-					<th class="text-right">Track Type</th>
-					<td><?php echo $entity->getTrackTypes() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getMonoStereo()): ?>
-				<tr>
-					<th class="text-right">Mono or Stereo</th>
-					<td><?php echo $entity->getMonoStereo() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getNoiceReduction()): ?>
-				<tr>
-					<th class="text-right">Noise Reduction </th>
-					<td><?php echo $entity->getNoiceReduction() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getRecord()->getGenreTerms()): ?>
-				<tr>
-					<th class="text-right">Genre Terms </th>
-					<td><?php echo $entity->getRecord()->getGenreTerms() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getRecord()->getContributor()): ?>
-				<tr>
-					<th class="text-right">Contributor </th>
-					<td><?php echo $entity->getRecord()->getContributor() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getRecord()->getGeneration()): ?>
-				<tr>
-					<th class="text-right">Generation </th>
-					<td><?php echo $entity->getRecord()->getGeneration() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getRecord()->getPart()): ?>
-				<tr>
-					<th class="text-right">Part </th>
-					<td><?php echo $entity->getRecord()->getPart() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getRecord()->getCopyrightRestrictions()): ?>
-				<tr>
-					<th class="text-right">Copyright Restrictions </th>
-					<td><?php echo $entity->getRecord()->getCopyrightRestrictions() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getRecord()->getDuplicatesDerivatives()): ?>
-				<tr>
-					<th class="text-right">Duplicates Derivatives </th>
-					<td><?php echo $entity->getRecord()->getDuplicatesDerivatives() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getRecord()->getRelatedMaterial()): ?>
-				<tr>
-					<th class="text-right">Related Material </th>
-					<td><?php echo $entity->getRecord()->getRelatedMaterial() ?></td>
-				</tr>
-			<?php endif; ?>
-			<?php if ($entity->getRecord()->getConditionNote()): ?>
-				<tr>
-					<th class="text-right">Condition Notes </th>
-					<td><?php echo $entity->getRecord()->getConditionNote() ?></td>
-				</tr>
-			<?php endif; ?>
-		</tbody>
+            <?php if ($entity->getRecord()->getCommercial()): ?>
+                <tr>
+                    <th class="text-right">Commercial</th>
+                    <td><?php echo $entity->getRecord()->getCommercial()->getName() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getDiskDiameters()): ?>
+                <tr>
+                    <th class="text-right">Disk Diameter</th>
+                    <td><?php echo $entity->getDiskDiameters()->getName() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getRecord()->getReelDiameters()): ?>
+                <tr>
+                    <th class="text-right">Reel Diameter</th>
+                    <td><?php echo $entity->getRecord()->getReelDiameters()->getName() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getMediaDiameters()): ?>
+                <tr>
+                    <th class="text-right">Media Diameter</th>
+                    <td><?php echo $entity->getMediaDiameters()->getName() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getBases()): ?>
+                <tr>
+                    <th class="text-right">Base</th>
+                    <td><?php echo $entity->getBases()->getName() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getRecord()->getContentDuration()): ?>
+                <tr>
+                    <th class="text-right">Content Duration</th>
+                    <td><?php echo $entity->getRecord()->getContentDuration() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getMediaDuration()): ?>
+                <tr>
+                    <th class="text-right">Media Duration</th>
+                    <td><?php echo $entity->getMediaDuration() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getRecord()->getCreationDate()): ?>
+                <tr>
+                    <th class="text-right">Creation Date</th>
+                    <td><?php echo $entity->getRecord()->getCreationDate() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getRecord()->getContentDate()): ?>
+                <tr>
+                    <th class="text-right">Content Date</th>
+                    <td><?php echo $entity->getRecord()->getContentDate() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getRecord()->getIsReview()): ?>
+                <tr>
+                    <th class="text-right">Review</th>
+                    <td><?php echo ($entity->getRecord()->getIsReview()) ? 'Yes' : 'No' ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getRecordingSpeed()): ?>
+                <tr>
+                    <th class="text-right">Recording Speed</th>
+                    <td><?php echo $entity->getRecordingSpeed() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getTapeThickness()): ?>
+                <tr>
+                    <th class="text-right">Tape Thickness</th>
+                    <td><?php echo $entity->getTapeThickness() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getSlides()): ?>
+                <tr>
+                    <th class="text-right">Sides</th>
+                    <td><?php echo $entity->getSlides() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getTrackTypes()): ?>
+                <tr>
+                    <th class="text-right">Track Type</th>
+                    <td><?php echo $entity->getTrackTypes() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getMonoStereo()): ?>
+                <tr>
+                    <th class="text-right">Mono or Stereo</th>
+                    <td><?php echo $entity->getMonoStereo() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getNoiceReduction()): ?>
+                <tr>
+                    <th class="text-right">Noise Reduction </th>
+                    <td><?php echo $entity->getNoiceReduction() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getRecord()->getGenreTerms()): ?>
+                <tr>
+                    <th class="text-right">Genre Terms </th>
+                    <td><?php echo $entity->getRecord()->getGenreTerms() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getRecord()->getContributor()): ?>
+                <tr>
+                    <th class="text-right">Contributor </th>
+                    <td><?php echo $entity->getRecord()->getContributor() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getRecord()->getGeneration()): ?>
+                <tr>
+                    <th class="text-right">Generation </th>
+                    <td><?php echo $entity->getRecord()->getGeneration() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getRecord()->getPart()): ?>
+                <tr>
+                    <th class="text-right">Part </th>
+                    <td><?php echo $entity->getRecord()->getPart() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getRecord()->getCopyrightRestrictions()): ?>
+                <tr>
+                    <th class="text-right">Copyright Restrictions </th>
+                    <td><?php echo $entity->getRecord()->getCopyrightRestrictions() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getRecord()->getDuplicatesDerivatives()): ?>
+                <tr>
+                    <th class="text-right">Duplicates Derivatives </th>
+                    <td><?php echo $entity->getRecord()->getDuplicatesDerivatives() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getRecord()->getRelatedMaterial()): ?>
+                <tr>
+                    <th class="text-right">Related Material </th>
+                    <td><?php echo $entity->getRecord()->getRelatedMaterial() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($entity->getRecord()->getConditionNote()): ?>
+                <tr>
+                    <th class="text-right">Condition Notes </th>
+                    <td><?php echo $entity->getRecord()->getConditionNote() ?></td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
     </table>
 </div>
 
