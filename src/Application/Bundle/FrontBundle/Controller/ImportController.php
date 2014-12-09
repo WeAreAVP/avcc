@@ -156,12 +156,12 @@ class ImportController extends Controller
                     $em->persist($import);
                     $em->flush();
 //
-//                    $job = new Job('avcc:import-records', array('id' => $import->getId()));
-//                    $date = new DateTime();
-//                    $date->add(new DateInterval('PT1M'));
-//                    $job->setExecuteAfter($date);
-//                    $em->persist($job);
-//                    $em->flush($job);
+                    $job = new Job('avcc:import-records', array('id' => $import->getId()));
+                    $date = new DateTime();
+                    $date->add(new DateInterval('PT1M'));
+                    $job->setExecuteAfter($date);
+                    $em->persist($job);
+                    $em->flush($job);
 
                     $this->get('session')->getFlashBag()->add('import_success', 'Import request successfully sent. You will receive an email shortly with download link.');
                 } else {
