@@ -71,7 +71,7 @@ class UserSettings {
      *
      * @ORM\Column(name="enable_backup", type="boolean", options={"default" = 0}, nullable=true)
      */
-    private $enableBackup;
+    private $enableBackup = 0;
 
     /**
      * @var \DateTime

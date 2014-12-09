@@ -33,9 +33,13 @@
                             </ul>
                         </li>
                     <?php endif; ?>
-                    <li>
-                        <a href="#">Import</a>
-                    </li>
+<!--                    <li>
+                        <a class="dropdown-toggle" href="#">Import</a>
+                            <ul class="dropdown-menu" data-role="dropdown">
+                                <li><a href="javascript://" class="import" data-type="csv">CSV</a></li>
+                                <li><a href="javascript://" class="import" data-type="xlsx">XLSX</a></li>
+                            </ul>
+                    </li>-->
                     <li>
                         <a href="#">Bulk Edit</a>
                     </li>
@@ -74,14 +78,14 @@
             <input type="hidden" name="selectedrecords" id="selectedrecords" value="<?php echo $recordsIds; ?>" />
             <input type="hidden" name="exportType" id="exportType" value="" />
         </div>
-        <?php $exportMergeMsg = null; ?>
+        <?php $successPopupMsg = null; ?>
         <?php foreach ($view['session']-> getFlash("export_merge") as $message): ?>
-            <?php $exportMergeMsg = $message ;?>
+            <?php $successPopupMsg = $message ;?>
         <?php endforeach; ?> 
         <?php ?>  
-        <?php $exportMergeErrorMsg = null; ?>
+        <?php $errorPopupMsg = null; ?>
         <?php foreach ($view['session']-> getFlash("export_merge_error") as $message): ?>
-            <?php $exportMergeErrorMsg = $message ;?>
+            <?php $errorPopupMsg = $message ;?>
         <?php endforeach; ?> 
         <?php ?>      
         <?php if (!$isAjax): ?>
@@ -99,8 +103,8 @@
                 record.initDataTable();
                 record.setAjaxExportUrl('<?php echo $view['router']->generate('record_export') ?>');
                 record.setPageUrl('<?php echo $view['router']->generate('record_list') ?>');
-                record.setMergeMsg('<?php echo $exportMergeMsg; ?>');
-                record.setErrMergeMsg('<?php echo $exportMergeErrorMsg; ?>');
+                record.setSuccessMsg('<?php echo $successPopupMsg; ?>');
+                record.setErrorMsg('<?php echo $errorPopupMsg; ?>');
                 record.bindEvents();
 
             </script>

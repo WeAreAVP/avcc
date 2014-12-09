@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * TrackTypes
  *
  * @ORM\Table(name="track_types")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\TrackTypesRepository")
  */
 class TrackTypes {
 

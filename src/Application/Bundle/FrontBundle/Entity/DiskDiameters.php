@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * DiskDiameters
  *
  * @ORM\Table(name="disk_diameters")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\DiskDiametersRepository")
  */
 class DiskDiameters {
 

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * ReelCore
  *
  * @ORM\Table(name="reel_core")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\ReelCoreRepository")
  */
 class ReelCore {
 

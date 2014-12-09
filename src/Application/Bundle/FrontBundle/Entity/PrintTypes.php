@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * PrintTypes
  *
  * @ORM\Table(name="print_types")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\PrintTypesRepository")
  */
 class PrintTypes {
 

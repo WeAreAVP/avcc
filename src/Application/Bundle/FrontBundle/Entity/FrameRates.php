@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * FrameRates
  *
  * @ORM\Table(name="frame_rates")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\FrameRatesRepository")
  */
 class FrameRates {
 

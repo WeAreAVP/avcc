@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * RecordingStandards
  *
  * @ORM\Table(name="recording_standards")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\RecordingStandardsRepository")
  */
 class RecordingStandards {
 

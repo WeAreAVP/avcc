@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * MediaDiameters
  *
  * @ORM\Table(name="media_diameters")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\MediaDiametersRepository")
  */
 class MediaDiameters {
 

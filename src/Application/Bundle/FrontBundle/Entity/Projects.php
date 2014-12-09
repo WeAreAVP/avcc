@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Projects
  *
  * @ORM\Table(name="projects")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\ProjectsRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Projects

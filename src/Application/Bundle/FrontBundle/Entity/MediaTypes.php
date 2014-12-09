@@ -11,7 +11,7 @@ use Application\Bundle\FrontBundle\Entity\Formats as Formats;
  * MediaTypes
  *
  * @ORM\Table(name="media_types")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\MediaTypesRepository")
  */
 class MediaTypes {
 

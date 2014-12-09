@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * TapeThickness
  *
  * @ORM\Table(name="tape_thickness")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\TapeThicknessRepository")
  */
 class TapeThickness {
 

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * AcidDetectionStrips
  *
  * @ORM\Table(name="acid_detection_strips")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\AcidDetectionStripsRepository")
  */
 class AcidDetectionStrips
 {

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * ReelDiameters
  *
  * @ORM\Table(name="reel_diameters")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\ReelDiametersRepository")
  */
 class ReelDiameters {
 

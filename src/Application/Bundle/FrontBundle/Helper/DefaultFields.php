@@ -13,7 +13,7 @@ class DefaultFields
 
     public function __construct()
     {
-
+        
     }
 
     public function getDefaultOrder()
@@ -163,7 +163,7 @@ class DefaultFields
         $data['mediaType'] = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $data['mediaTypeId']));
 
         $data['recordId'] = $recordId;
-        
+
         return $data;
     }
 
@@ -203,6 +203,35 @@ class DefaultFields
         }
 
         return $tableView;
+    }
+
+    public function getAllVocabularies(EntityManager $em)
+    {
+        $vocabularies = null;
+        $vocabularies['bases'] = $em->getRepository('ApplicationFrontBundle:Bases')->getAllAsArray();
+        $vocabularies['cassetteSizes'] = $em->getRepository('ApplicationFrontBundle:CassetteSizes')->getAllAsArray();
+        $vocabularies['colors'] = $em->getRepository('ApplicationFrontBundle:Colors')->getAllAsArray();
+        $vocabularies['commercial'] = $em->getRepository('ApplicationFrontBundle:Commercial')->getAllAsArray();
+        $vocabularies['diskDiameters'] = $em->getRepository('ApplicationFrontBundle:DiskDiameters')->getAllAsArray();
+        $vocabularies['formatVersions'] = $em->getRepository('ApplicationFrontBundle:FormatVersions')->getAllAsArray();
+        $vocabularies['formats'] = $em->getRepository('ApplicationFrontBundle:Formats')->getAllAsArray();
+        $vocabularies['frameRates'] = $em->getRepository('ApplicationFrontBundle:FrameRates')->getAllAsArray();
+        $vocabularies['mediaDiameters'] = $em->getRepository('ApplicationFrontBundle:MediaDiameters')->getAllAsArray();
+        $vocabularies['mediaTypes'] = $em->getRepository('ApplicationFrontBundle:MediaTypes')->getAllAsArray();
+        $vocabularies['monoStereo'] = $em->getRepository('ApplicationFrontBundle:MonoStereo')->getAllAsArray();
+        $vocabularies['noiseReduction'] = $em->getRepository('ApplicationFrontBundle:NoiceReduction')->getAllAsArray();
+        $vocabularies['printTypes'] = $em->getRepository('ApplicationFrontBundle:PrintTypes')->getAllAsArray();
+        $vocabularies['recordingSpeed'] = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->getAllAsArray();
+        $vocabularies['recordingStandards'] = $em->getRepository('ApplicationFrontBundle:RecordingStandards')->getAllAsArray();
+        $vocabularies['reelCore'] = $em->getRepository('ApplicationFrontBundle:ReelCore')->getAllAsArray();
+        $vocabularies['reelDiameters'] = $em->getRepository('ApplicationFrontBundle:ReelDiameters')->getAllAsArray();
+        $vocabularies['sides'] = $em->getRepository('ApplicationFrontBundle:Slides')->getAllAsArray();
+        $vocabularies['sounds'] = $em->getRepository('ApplicationFrontBundle:Sounds')->getAllAsArray();
+        $vocabularies['tapeThickness'] = $em->getRepository('ApplicationFrontBundle:TapeThickness')->getAllAsArray();
+        $vocabularies['trackTypes'] = $em->getRepository('ApplicationFrontBundle:TrackTypes')->getAllAsArray();
+        $vocabularies['acidDetectionStrips'] = $em->getRepository('ApplicationFrontBundle:AcidDetectionStrips')->getAllAsArray();
+        
+        return $vocabularies;
     }
 
 }

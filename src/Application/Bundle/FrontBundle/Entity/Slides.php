@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Slides
  *
  * @ORM\Table(name="slides")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\SlidesRepository")
  */
 class Slides {
 

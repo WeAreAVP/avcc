@@ -13,7 +13,7 @@ use Application\Bundle\FrontBundle\Entity\FormatVersions as FormatVersions;
  * Formats
  *
  * @ORM\Table(name="formats")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\FormatsRepository")
  */
 class Formats {
 

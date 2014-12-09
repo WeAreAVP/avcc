@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * RecordingSpeed
  *
  * @ORM\Table(name="recording_speed")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\RecordingSpeedRepository")
  */
 class RecordingSpeed {
 

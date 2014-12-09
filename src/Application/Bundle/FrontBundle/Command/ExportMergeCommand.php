@@ -41,7 +41,7 @@ class ExportMergeCommand extends ContainerAwareCommand
                     $criteria = $entity->getQueryOrId();
                 }
                 $export = new ExportReport($this->getContainer());
-                $mergeToFile = $entity->getMergeToFile();
+                $mergeToFile = $entity->getFileName();
                 if ($criteria != 'all' && array_key_exists('ids', $criteria)) {
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($criteria['ids']);
                     if ($records) {

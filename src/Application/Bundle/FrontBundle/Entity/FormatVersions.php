@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * FormatVersions
  *
  * @ORM\Table(name="format_versions")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\FormatVersionsRepository")
  */
 class FormatVersions {
 

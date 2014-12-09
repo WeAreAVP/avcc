@@ -23,8 +23,8 @@ function Records() {
     var totalRecords = 0;
     var totalCurrentPageRecords = 0;
     var ajaxExportUrl = null;
-    var mergeMsg = null;
-    var mergeMsgErr = null;
+    var successMsg = null;
+    var errorMsg = null;
     /**
      * Set the ajax URL of datatable.
      * @param {string} source
@@ -62,12 +62,12 @@ function Records() {
 
     }
     /**
-     * Set the merge file message.
-     * @param {string} merge_msg
+     * Set the popup message.
+     * @param {string} success_msg
      * 
      */
-    this.setMergeMsg = function (merge_msg) {
-        mergeMsg = merge_msg;
+    this.setSuccessMsg = function (success_msg) {
+        successMsg = success_msg;
 
     }
     /**
@@ -75,8 +75,8 @@ function Records() {
      * @param {string} merge_msg
      * 
      */
-    this.setErrMergeMsg = function (merge_msg) {
-        mergeMsgErr = merge_msg;
+    this.setErrorMsg = function (error_msg) {
+        errorMsg = error_msg;
 
     }
     /**
@@ -236,6 +236,7 @@ function Records() {
         selfObj.exportRequest();
         selfObj.closeClicked();
         selfObj.exportMergeRequest();
+        selfObj.showMergMsg();
         selfObj.showMsg();
         return true;
     }
@@ -613,12 +614,12 @@ function Records() {
             }
         });
     }
-    this.showMsg = function () {  
+    this.showMergMsg = function () {  
        var  msg = '';
-        if(mergeMsg){
-            msg = mergeMsg;
-        }else if(mergeMsgErr){
-            msg = '<span class="error">' + mergeMsgErr + '</span>';
+        if(successMsg){
+            msg = successMsg;
+        }else if(errorMsg){
+            msg = '<span class="error">' + errorMsg + '</span>';
         }
         if (msg) {
             $("#beforeExportMerge").hide();
@@ -634,6 +635,27 @@ function Records() {
                 },
             });
             $("#exportMergeModal").show();
+        }
+    }
+    
+    this.showMsg = function () {  
+       var  msg = '';
+        if(successMsg){
+            msg = successMsg;
+        }else if(errorMsg){
+            msg = '<span class="error">' + errorMsg + '</span>';
+        }
+        if (msg) { 
+            $("#messageText span").html(msg);
+            $("#messageModal").modal({
+                containerCss: {
+                    backgroundColor: "#fff",
+                    borderColor: "#fff",
+                    width: 400,
+                    height: 250,
+                },
+            });
+            $("#messageModal").show();
         }
     }
 }

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * MonoStereo
  *
  * @ORM\Table(name="mono_stereo")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\MonoStereoRepository")
  */
 class MonoStereo {
 

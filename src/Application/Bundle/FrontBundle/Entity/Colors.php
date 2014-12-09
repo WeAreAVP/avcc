@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Colors
  *
  * @ORM\Table(name="colors")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\ColorsRepository")
  */
 class Colors
 {

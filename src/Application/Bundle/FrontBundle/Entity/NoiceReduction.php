@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * NoiceReduction
  *
  * @ORM\Table(name="noice_reduction")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\NoiceReductionRepository")
  */
 class NoiceReduction {
 

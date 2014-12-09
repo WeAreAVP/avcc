@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * CassetteSizes
  *
  * @ORM\Table(name="cassette_sizes")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\CassetteSizesRepository")
  */
 class CassetteSizes {
 

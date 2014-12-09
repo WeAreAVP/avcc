@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Commercial
  *
  * @ORM\Table(name="commercial_unique")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\CommercialRepository")
  */
 class Commercial {
 
