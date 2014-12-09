@@ -43,9 +43,9 @@ class UserSettings
     /**
      * @var string
      *
-     * @ORM\Column(name="backup_email", type="text")
+     * @ORM\Column(name="backup_email", type="text", nullable=true)
      */
-    private $backupEmail;
+    private $backupEmail = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="MediaTypes", fetch="EAGER", inversedBy="mediaSetting")
