@@ -236,6 +236,7 @@ function Records() {
         selfObj.exportRequest();
         selfObj.closeClicked();
         selfObj.exportMergeRequest();
+        selfObj.importRequest();
         selfObj.showMergMsg();
         selfObj.showMsg();
         return true;
@@ -657,6 +658,22 @@ function Records() {
             });
             $("#messageModal").show();
         }
+    }
+    
+    this.importRequest = function(){
+        $('.import').click(function () {
+            var importType = $(this).attr('data-type');
+                $("#importModal").modal({
+                    containerCss: {
+                        backgroundColor: "#fff",
+                        borderColor: "#fff",
+                        width: 400,
+                        height: 250,
+                    },
+                });
+                $("#importModal emfiletype").val(importType);
+                $("#importModal").show();
+        });
     }
 }
 
