@@ -156,7 +156,7 @@ class ImportController extends Controller
                     $em->persist($import);
                     $em->flush();
 //
-                    $job = new Job('avcc:import-records', array('id' => $import->getId()));
+                    $job = new Job('avcc:import-report', array('id' => $import->getId()));
                     $date = new DateTime();
                     $date->add(new DateInterval('PT1M'));
                     $job->setExecuteAfter($date);
