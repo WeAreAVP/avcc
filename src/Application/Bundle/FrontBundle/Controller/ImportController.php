@@ -30,7 +30,7 @@ class ImportController extends Controller
      * Import file 
      *
      * @Route("/", name="import_records")
-     * @Method("GET")
+     * @Method("POST")
      * @Template("ApplicationFrontBundle:Records:default.html.php")
      * @return array
      */
