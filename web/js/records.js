@@ -671,7 +671,7 @@ function Records() {
                         height: 250,
                     },
                 });
-                $("#importModal emfiletype").val(importType);
+                $("#importModal #impfiletype").val(importType);
                 $("#importModal").show();
         });
     }
