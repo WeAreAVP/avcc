@@ -237,7 +237,7 @@ function Records() {
         selfObj.closeClicked();
         selfObj.exportMergeRequest();
         selfObj.importRequest();
-        selfObj.showMergMsg();
+//        selfObj.showMergMsg();
         selfObj.showMsg();
         return true;
     }

@@ -131,7 +131,7 @@ class ImportController extends Controller
         $em = $this->getDoctrine()->getManager();
         $data = $request->request->all();
         $type = $data['impfiletype'];
-        if ($request->files->get('impfile')) {
+        if ($request->files->get('importfile')) {
             $originalFileName = $request->files->get('importfile')->getClientOriginalName();
             $uploadedFileSize = $request->files->get('importfile')->getClientSize();
             $newFileName = null;
@@ -141,7 +141,7 @@ class ImportController extends Controller
                     mkdir($folderPath, 0777, TRUE);
                 $extension = $request->files->get('importfile')->getClientOriginalExtension();
                 $newFileName = $this->getUser()->getId() . "_import" . time() . "." . $extension;
-                if ($type == $extension) {
+                if ($type == strtolower($extension)) {
                     $request->files->get('importfile')->move($folderPath, $newFileName);
                     if (!$request->files->get('importfile')->isValid()) {
                         echo 'file uploaded';
@@ -162,15 +162,15 @@ class ImportController extends Controller
 //                    $em->persist($job);
 //                    $em->flush($job);
 
-                    $this->get('session')->getFlashBag()->add('export_merge', 'Import request successfully sent. You will receive an email shortly with download link.');
+                    $this->get('session')->getFlashBag()->add('import_success', 'Import request successfully sent. You will receive an email shortly with download link.');
                 } else {
-                    $this->get('session')->getFlashBag()->add('export_merge_error', 'File formate is not correct. Please try again.');
+                    $this->get('session')->getFlashBag()->add('import_error', 'File formate is not correct. Please try again.');
                 }
             } else {
-                $this->get('session')->getFlashBag()->add('export_merge_error', 'File is empty. Please try again.');
+                $this->get('session')->getFlashBag()->add('import_error', 'File is empty. Please try again.');
             }
         } else {
-            $this->get('session')->getFlashBag()->add('export_merge_error', 'Select file that require to import. Please try again.');
+            $this->get('session')->getFlashBag()->add('import_error', 'Select file that require to import. Please try again.');
         }
 
         return $this->redirect($this->generateUrl('record_list'));

@@ -81,13 +81,17 @@
         <?php $successPopupMsg = null; ?>
         <?php foreach ($view['session']-> getFlash("export_merge") as $message): ?>
             <?php $successPopupMsg = $message ;?>
+        <?php endforeach; ?>
+       <?php foreach ($view['session']-> getFlash("import_success") as $message): ?>
+            <?php $successPopupMsg = $message ;?>
         <?php endforeach; ?> 
-        <?php ?>  
         <?php $errorPopupMsg = null; ?>
         <?php foreach ($view['session']-> getFlash("export_merge_error") as $message): ?>
             <?php $errorPopupMsg = $message ;?>
-        <?php endforeach; ?> 
-        <?php ?>      
+        <?php endforeach; ?>
+        <?php foreach ($view['session']-> getFlash("import_error") as $message): ?>
+            <?php $errorPopupMsg = $message ;?>
+        <?php endforeach; ?>      
         <?php if (!$isAjax): ?>
             <?php $view['slots']->start('view_javascripts') ?>
 
