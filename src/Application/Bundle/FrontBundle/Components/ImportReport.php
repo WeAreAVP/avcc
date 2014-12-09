@@ -34,7 +34,7 @@ class ImportReport extends ContainerAware
             $em = $this->container->get('doctrine')->getEntityManager();
             $vocabularies = $fields->getAllVocabularies($em);
             $uniqueids = $em->getRepository('ApplicationFrontBundle:Records')->findAllUniqueIds();
-            $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAllProjects();
+            $projects = $em->getRepository('ApplicationFrontBundle:Projects')->getAllAsArray();
             $requiredMissing = false;
             foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
                 $highestRow = $worksheet->getHighestRow();
@@ -85,89 +85,89 @@ class ImportReport extends ContainerAware
                             $invalidValues['missing_fields'][] = 'Title missing at row ' . $row;
                         }
                         if (trim($project->getValue()) != '' && !in_array($project->getValue(), $projects)) {
-                            $invalidValues['projects'][] = $project->getValue() . ' at row ' . $row;
+                            $invalidValues['project_names'][] = $project->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if (trim($project->getValue()) == '') {
                             $invalidValues['missing_fields'][] = 'Project name missing at row ' . $row;
                         }
                         if (trim($mediaType->getValue()) != '' && !in_array($mediaType->getValue(), $vocabularies['mediaTypes'])) {
-                            $invalidValues['media_types'][] = $mediaType->getValue() . ' at row ' . $row;
+                            $invalidValues['media_types'][] = $mediaType->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if (trim($mediaType->getValue()) == '') {
                             $invalidValues['missing_fields'][] = 'Media type missing at row ' . $row;
                         }
 
                         if ($uniqueId->getValue() && in_array($uniqueId->getValue(), $uniqueids)) {
-                            $invalidValues['unique_ids'][] = $uniqueId->getValue() . ' at row ' . $row;
+                            $invalidValues['unique_ids'][] = $uniqueId->getValue() . ' at row ' . $row . ' already exist in db';
                         }
                         if (trim($uniqueId->getValue()) == '') {
                             $invalidValues['missing_fields'][] = 'Unique missing at ' . $row;
                         }
-                        if ($format->getValue() && in_array($format->getValue(), $vocabularies['formats'])) {
-                            $invalidValues['unique_ids'][] = $format->getValue() . ' at row ' . $row;
+                        if ($format->getValue() && !in_array($format->getValue(), $vocabularies['formats'])) {
+                            $invalidValues['formats'][] = $format->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if (trim($format->getValue()) == '') {
                             $invalidValues['missing_fields'][] = 'Format missing at row ' . $row;
                         }
                         if ($commercial->getValue() && !in_array($commercial->getValue(), $vocabularies['commercial'])) {
-                            $invalidValues['commercial'][] = $commercial->getValue() . ' at row ' . $row;
+                            $invalidValues['commercial'][] = $commercial->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($base->getValue() && !in_array($base->getValue(), $vocabularies['bases'])) {
-                            $invalidValues['bases'][] = $base->getValue() . ' at row ' . $row;
+                            $invalidValues['bases'][] = $base->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($printType->getValue() && !in_array($printType->getValue(), $vocabularies['printTypes'])) {
-                            $invalidValues['print_types'][] = $printType->getValue() . ' at row ' . $row;
+                            $invalidValues['print_types'][] = $printType->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($diskDiameter->getValue() && !in_array($diskDiameter->getValue(), $vocabularies['diskDiameters'])) {
-                            $invalidValues['disk_diameters'][] = $diskDiameter->getValue() . ' at row ' . $row;
+                            $invalidValues['disk_diameters'][] = $diskDiameter->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($reelDiameter->getValue() && !in_array($reelDiameter->getValue(), $vocabularies['reelDiameters'])) {
-                            $invalidValues['reel_diameters'][] = $reelDiameter->getValue() . ' at row ' . $row;
+                            $invalidValues['reel_diameters'][] = $reelDiameter->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($mediaDiameter->getValue() && !in_array($mediaDiameter->getValue(), $vocabularies['mediaDiameters'])) {
-                            $invalidValues['media_diameters'][] = $mediaDiameter->getValue() . ' at row ' . $row;
+                            $invalidValues['media_diameters'][] = $mediaDiameter->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($recordingSpeed->getValue() && !in_array($recordingSpeed->getValue(), $vocabularies['recordingSpeed'])) {
-                            $invalidValues['recording_speed'][] = $recordingSpeed->getValue() . ' at row ' . $row;
+                            $invalidValues['recording_speed'][] = $recordingSpeed->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($color->getValue() && !in_array($color->getValue(), $vocabularies['colors'])) {
-                            $invalidValues['colors'][] = $color->getValue() . ' at row ' . $row;
+                            $invalidValues['colors'][] = $color->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($tapeThickness->getValue() && !in_array($tapeThickness->getValue(), $vocabularies['tapeThickness'])) {
-                            $invalidValues['tape_thickness'][] = $tapeThickness->getValue() . ' at row ' . $row;
+                            $invalidValues['tape_thickness'][] = $tapeThickness->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($sides->getValue() && !in_array($sides->getValue(), $vocabularies['sides'])) {
-                            $invalidValues['sides'][] = $sides->getValue() . ' at row ' . $row;
+                            $invalidValues['sides'][] = $sides->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($trackType->getValue() && !in_array($trackType->getValue(), $vocabularies['trackTypes'])) {
-                            $invalidValues['track_types'][] = $trackType->getValue() . ' at row ' . $row;
+                            $invalidValues['track_types'][] = $trackType->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($monoOrStereo->getValue() && !in_array($monoOrStereo->getValue(), $vocabularies['monoStereo'])) {
-                            $invalidValues['mono_or_stereo'][] = $monoOrStereo->getValue() . ' at row ' . $row;
+                            $invalidValues['mono_or_stereo'][] = $monoOrStereo->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($noiseReduction->getValue() && !in_array($noiseReduction->getValue(), $vocabularies['noiseReduction'])) {
-                            $invalidValues['noise_reduction'][] = $noiseReduction->getValue() . ' at row ' . $row;
+                            $invalidValues['noise_reduction'][] = $noiseReduction->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($cassetteSize->getValue() && !in_array($cassetteSize->getValue(), $vocabularies['cassetteSizes'])) {
-                            $invalidValues['cassette_sizes'][] = $cassetteSize->getValue() . ' at row ' . $row;
+                            $invalidValues['cassette_sizes'][] = $cassetteSize->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($formatVersion->getValue() && !in_array($formatVersion->getValue(), $vocabularies['formatVersions'])) {
-                            $invalidValues['format_versions'][] = $formatVersion->getValue() . ' at row ' . $row;
+                            $invalidValues['format_versions'][] = $formatVersion->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($recordingStandard->getValue() && !in_array($recordingStandard->getValue(), $vocabularies['recordingStandards'])) {
-                            $invalidValues['recording_standards'][] = $recordingStandard->getValue() . ' at row ' . $row;
+                            $invalidValues['recording_standards'][] = $recordingStandard->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($reelOrCore->getValue() && !in_array($reelOrCore->getValue(), $vocabularies['reelCore'])) {
-                            $invalidValues['reel_or_core'][] = $reelOrCore->getValue() . ' at row ' . $row;
+                            $invalidValues['reel_or_core'][] = $reelOrCore->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($sound->getValue() && !in_array($sound->getValue(), $vocabularies['sounds'])) {
-                            $invalidValues['sounds'][] = $sound->getValue() . ' at row ' . $row;
+                            $invalidValues['sounds'][] = $sound->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($frameRate->getValue() && !in_array($frameRate->getValue(), $vocabularies['frameRates'])) {
-                            $invalidValues['frame_rates'][] = $frameRate->getValue() . ' at row ' . $row;
+                            $invalidValues['frame_rates'][] = $frameRate->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($acidDetectionStrip->getValue() && !in_array($acidDetectionStrip->getValue(), $vocabularies['acidDetectionStrips'])) {
-                            $invalidValues['acid_detection_strips'][] = $acidDetectionStrip->getValue() . ' at row ' . $row;
+                            $invalidValues['acid_detection_strips'][] = $acidDetectionStrip->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                     }
                 }
@@ -180,8 +180,8 @@ class ImportReport extends ContainerAware
 
     public function getRecordsFromFile($fileName, $user)
     {
-//        $fileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $fileName;
-        $fileCompletePath = '/Applications/XAMPP/xamppfiles/htdocs/avcc/web/' . $fileName;
+        $fileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $fileName;
+//        $fileCompletePath = '/Applications/XAMPP/xamppfiles/htdocs/avcc/web/' . $fileName;
         if (file_exists($fileCompletePath)) {
             $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($fileCompletePath);
             $invalidValues = null;
@@ -243,7 +243,7 @@ class ImportReport extends ContainerAware
                 }
             }
             if ($rows) {
-                $this->importRecords($rows, $user, $em);
+               return $this->importRecords($rows, $user, $em);
             }
         }
     }
@@ -252,7 +252,8 @@ class ImportReport extends ContainerAware
     {
         foreach ($rows as $row) {
             $record = new Records();
-            $record->setProject($row['project']);
+            $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('name' => $row['project']));
+            $record->setProject($project);
             $record->setCollectionName($row['collectionName']);
 
             $mediaType = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('name' => $row['mediaType']));
@@ -266,48 +267,65 @@ class ImportReport extends ContainerAware
 
             $record->setTitle($row['title']);
             $record->setDescription($row['description']);
-
-            $commercial = $em->getRepository('ApplicationFrontBundle:Formats')->findOneBy(array('name' => $row['commercial']));
-            $record->setCommercial($commercial);
-
+            if ($row['commercial']) {
+                $commercial = $em->getRepository('ApplicationFrontBundle:Commercial')->findOneBy(array('name' => $row['commercial']));
+                $record->setCommercial($commercial);
+            }
             $record->setContentDuration($row['contentDuration']);
             $record->setCreationDate($row['creationDate']);
             $record->setContentDate($row['contentDate']);
+            if ($row['reelDiameter']) {
+                $reel = $em->getRepository('ApplicationFrontBundle:ReelDiameters')->findOneBy(array('name' => $row['reelDiameter']));
+                $record->setReelDiameters($reel);
+            }
 
-            $reel = $em->getRepository('ApplicationFrontBundle:Formats')->findOneBy(array('name' => $row['reelDiameter']));
-            $record->setReelDiameters($reel);
-            $record->setGenreTerms($row['contentDate']);
-            $record->setContributor($row['contentDate']);
-            $record->setGeneration($row['contentDate']);
-            $record->setPart($row['contentDate']);
-            $record->setCopyrightRestrictions($row['contentDate']);
-            $record->setDuplicatesDerivatives($row['contentDate']);
-            $record->setRelatedMaterial($row['contentDate']);
-            $record->setConditionNote($row['contentDate']);
-            $record->setCreatedOn(date('Y-m-d H:i:s'));
+            $record->setGenreTerms($row['genreTerms']);
+            $record->setContributor($row['contributor']);
+            $record->setGeneration($row['generation']);
+            $record->setPart($row['part']);
+            $record->setCopyrightRestrictions($row['copyright']);
+            $record->setDuplicatesDerivatives($row['duplicates']);
+            $record->setRelatedMaterial($row['relatedMaterial']);
+            $record->setConditionNote($row['conditionNote']);
+            $record->setCreatedOnValue(date('Y-m-d H:i:s'));
             $record->setUser($user);
             $em->persist($record);
             $em->flush();
             if ($row['mediaType'] == 'Audio') {
                 $audio = new AudioRecords();
                 $audio->setMediaDuration($row['mediaDuration']);
-                $base = $em->getRepository('ApplicationFrontBundle:Bases')->findOneBy(array('name' => $row['base']));
-                $audio->setBases($base);
-                $diskDiameter = $em->getRepository('ApplicationFrontBundle:DiskDiameters')->findOneBy(array('name' => $row['diskDiameter']));
-                $audio->setDiskDiameters($diskDiameter);
-
-                $mediaD = $em->getRepository('ApplicationFrontBundle:MediaDiameters')->findOneBy(array('name' => $row['mediaDiameter']));
-                $audio->setMediaDiameters($mediaD);
-                $tapeThickness = $em->getRepository('ApplicationFrontBundle:TapeThickness')->findOneBy(array('name' => $row['tapeThickness']));
-                $audio->setTapeThickness($tapeThickness);
-                $side = $em->getRepository('ApplicationFrontBundle:Slides')->findOneBy(array('name' => $row['sides']));
-                $audio->setSlides($side);
-                $trackType = $em->getRepository('ApplicationFrontBundle:TrackType')->findOneBy(array('name' => $row['trackType']));
-                $audio->setTrackTypes($trackType);
-                $monostereo = $em->getRepository('ApplicationFrontBundle:MonoStereo')->findOneBy(array('name' => $row['monoOrStereo']));
-                $audio->setMonoStereo($monostereo);
-                $noise = $em->getRepository('ApplicationFrontBundle:NoiceReduction')->findOneBy(array('name' => $row['noiseReduction']));
-                $audio->setNoiceReduction($noise);
+                if ($row['base']) {
+                    $base = $em->getRepository('ApplicationFrontBundle:Bases')->findOneBy(array('name' => $row['base']));
+                    $audio->setBases($base);
+                }
+                if ($row['diskDiameter']) {
+                    $diskDiameter = $em->getRepository('ApplicationFrontBundle:DiskDiameters')->findOneBy(array('name' => $row['diskDiameter']));
+                    $audio->setDiskDiameters($diskDiameter);
+                }
+                if ($row['mediaDiameter']) {
+                    $mediaD = $em->getRepository('ApplicationFrontBundle:MediaDiameters')->findOneBy(array('name' => $row['mediaDiameter']));
+                    $audio->setMediaDiameters($mediaD);
+                }
+                if ($row['tapeThickness']) {
+                    $tapeThickness = $em->getRepository('ApplicationFrontBundle:TapeThickness')->findOneBy(array('name' => $row['tapeThickness']));
+                    $audio->setTapeThickness($tapeThickness);
+                }
+                if ($row['sides']) {
+                    $side = $em->getRepository('ApplicationFrontBundle:Slides')->findOneBy(array('name' => $row['sides']));
+                    $audio->setSlides($side);
+                }
+                if ($row['trackType']) {
+                    $trackType = $em->getRepository('ApplicationFrontBundle:TrackTypes')->findOneBy(array('name' => $row['trackType']));
+                    $audio->setTrackTypes($trackType);
+                }
+                if ($row['monoOrStereo']) {
+                    $monostereo = $em->getRepository('ApplicationFrontBundle:MonoStereo')->findOneBy(array('name' => $row['monoOrStereo']));
+                    $audio->setMonoStereo($monostereo);
+                }
+                if ($row['noiseReduction']) {
+                    $noise = $em->getRepository('ApplicationFrontBundle:NoiceReduction')->findOneBy(array('name' => $row['noiseReduction']));
+                    $audio->setNoiceReduction($noise);
+                }
                 $audio->setRecord($record);
                 $em->persist($audio);
                 $em->flush();                
@@ -358,12 +376,14 @@ class ImportReport extends ContainerAware
                     $formatVersion = $em->getRepository('ApplicationFrontBundle:FormatVersions')->findOneBy(array('name' => $row['formatVersion']));
                     $videoRecord->setFormatVersion($formatVersion);
                 }
-                $videoRecord->setRecordingStandard();
+                if ($row['recordingStandard']) {
+                    $recordingStandard = $em->getRepository('ApplicationFrontBundle:RecordingStandards')->findOneBy(array('name' => $row['recordingStandard']));
+                    $videoRecord->setRecordingStandard($recordingStandard);
+                }
                 $videoRecord->setRecord($record);
                 $em->persist($videoRecord);
                 $em->flush();
             }
-            
         }
         return count($rows);
     }

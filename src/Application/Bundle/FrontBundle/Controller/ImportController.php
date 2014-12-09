@@ -98,11 +98,21 @@ class ImportController extends Controller
         $fileName = 'allFormat_1417781547.csv';
         $import = new ImportReport($this->container);
         $validation = $import->validateVocabulary($fileName);
-        
-        
 
-        echo '<pre>';
-        print_r($validation);
+        if ($validation) {
+            echo '<pre>';
+            foreach ($validation as $key => $value){
+                echo '<p><b>'. str_replace('_', ' ', ucfirst($key)) . '</b><br />';
+                echo implode('<br />', $value);
+                echo '</p>';
+            }
+        }else{
+            $numberOfRecords = $import->getRecordsFromFile($fileName, $this->getUser());
+            echo '<pre>';
+            print_r($numberOfRecords);
+        }
+
+
         exit;
     }
 
