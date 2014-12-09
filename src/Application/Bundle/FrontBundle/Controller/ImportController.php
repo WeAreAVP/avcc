@@ -150,6 +150,7 @@ class ImportController extends Controller
                     $import->setUser($this->getUser());
                     $import->setFormat($type);
                     $import->setType("import");
+                    $import->setQueryOrId(0);
                     $import->setFileName($newFileName);
                     $import->setStatus(0);
                     $em->persist($import);
