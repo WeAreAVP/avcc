@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Application\Bundle\FrontBundle\Helper\EmailHelper;
 use Application\Bundle\FrontBundle\Helper\SphinxHelper;
 
-class ExportReportCommand extends ContainerAwareCommand
+class ImportReportCommand extends ContainerAwareCommand
 {
 
     protected function configure()
