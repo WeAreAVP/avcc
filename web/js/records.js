@@ -716,7 +716,9 @@ function Records() {
                                     top: '0px'
                                 },
                             });
-                            $("#bulkEditModal").show();
+                            $("#bulk_process").hide();
+                            $(".bulkEditform").html(response.html);
+                            $("#bulkEditModal, .bulkEditform").show();
 //                            $('#bulk_process').hide();
                         }
                     }
