@@ -33,13 +33,13 @@
                             </ul>
                         </li>
                     <?php endif; ?>
-<!--                    <li>
+                    <li>
                         <a class="dropdown-toggle" href="#">Import</a>
                             <ul class="dropdown-menu" data-role="dropdown">
                                 <li><a href="javascript://" class="import" data-type="csv">CSV</a></li>
                                 <li><a href="javascript://" class="import" data-type="xlsx">XLSX</a></li>
                             </ul>
-                    </li>-->
+                    </li>
                     <li>
                         <a href="#">Bulk Edit</a>
                     </li>

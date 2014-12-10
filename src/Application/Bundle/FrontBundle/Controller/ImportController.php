@@ -36,52 +36,6 @@ class ImportController extends Controller
      */
     public function indexAction(Request $request)
     {
-//        $em = $this->getDoctrine()->getManager();
-//        $data = $request->request->all();
-//        $type = $data['impfiletype'];
-//        if ($request->files->get('impfile')) {
-//            $originalFileName = $request->files->get('importfile')->getClientOriginalName();
-//            $uploadedFileSize = $request->files->get('importfile')->getClientSize();
-//            $newFileName = null;
-//            if ($uploadedFileSize > 0) {
-//                $folderPath = $this->container->getParameter('webUrl') . 'import/' . date('Y') . '/' . date('m') . '/';
-//                if (!is_dir($folderPath))
-//                    mkdir($folderPath, 0777, TRUE);
-//                $extension = $request->files->get('importfile')->getClientOriginalExtension();
-//                $newFileName = $this->getUser()->getId() . "_import" . time() . "." . $extension;
-//                if ($type == $extension) {
-//                    $request->files->get('importfile')->move($folderPath, $newFileName);
-//                    if (!$request->files->get('importfile')->isValid()) {
-//                        echo 'file uploaded';
-//                    }
-//                    $import = new ImportExport();
-//                    $import->setUser($this->getUser());
-//                    $import->setFormat($type);
-//                    $import->setType("import");
-//                    $import->setFileName($newFileName);
-//                    $import->setStatus(0);
-//                    $em->persist($import);
-//                    $em->flush();
-////
-////                    $job = new Job('avcc:import-records', array('id' => $import->getId()));
-////                    $date = new DateTime();
-////                    $date->add(new DateInterval('PT1M'));
-////                    $job->setExecuteAfter($date);
-////                    $em->persist($job);
-////                    $em->flush($job);
-//
-//                    $this->get('session')->getFlashBag()->add('export_merge', 'Import request successfully sent. You will receive an email shortly with download link.');
-//                } else {
-//                    $this->get('session')->getFlashBag()->add('export_merge_error', 'File formate is not correct. Please try again.');
-//                }
-//            } else {
-//                $this->get('session')->getFlashBag()->add('export_merge_error', 'File is empty. Please try again.');
-//            }
-//        } else {
-//            $this->get('session')->getFlashBag()->add('export_merge_error', 'Select file that require to import. Please try again.');
-//        }
-//
-//        return $this->redirect($this->generateUrl('record_list'));
     }
 
     /**
@@ -156,12 +110,12 @@ class ImportController extends Controller
                     $em->persist($import);
                     $em->flush();
 //
-                    $job = new Job('avcc:import-report', array('id' => $import->getId()));
-                    $date = new DateTime();
-                    $date->add(new DateInterval('PT1M'));
-                    $job->setExecuteAfter($date);
-                    $em->persist($job);
-                    $em->flush($job);
+//                    $job = new Job('avcc:import-report', array('id' => $import->getId()));
+//                    $date = new DateTime();
+//                    $date->add(new DateInterval('PT1M'));
+//                    $job->setExecuteAfter($date);
+//                    $em->persist($job);
+//                    $em->flush($job);
 
                     $this->get('session')->getFlashBag()->add('import_success', 'Import request successfully sent. You will receive an email shortly with download link.');
                 } else {
