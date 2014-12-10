@@ -6,7 +6,7 @@
 
             </div><br />
             <div class="modal-footer" id="bulk_edit_footer">
-                <button type="button" name="close" id="closeBtn" class="button closeBtn simplemodal-close">Close</button>
+                
             </div>
         </div>
     </form>
