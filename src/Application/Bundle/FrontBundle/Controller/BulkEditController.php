@@ -32,10 +32,14 @@ class BulkEditController extends Controller
             $posted = $request->request->all();
             $recordIds = $posted['records'];
             $success = false;
-            $errorMsg = 'Records not found';
+            $errorMsg = $recordIds;
             $html = '';
             $data['total_count'] = 0;
+
             echo json_encode(array('success' => $success, 'msg' => $errorMsg, 'html' => $html, 'count' => $data['total_count']));
+            $session = $this->getRequest()->getSession();
+            $session->remove("saveRecords");
+            $session->remove("allRecords");
             exit;
         }
     }

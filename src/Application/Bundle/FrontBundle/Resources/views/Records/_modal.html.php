@@ -78,7 +78,7 @@
 <div id="bulkEditModal" class="" tabindex="-1" role="dialog" style="display:none;">
     <h4 id="heading">Bulk Edit</h4>
     <div id="bulk_process">
-        <div class="modal-body" id="bulk_edit_body">
+        <div class="modal-body" id="bulk_edit_body" style="font-size: 12px;">
 
         </div>
         <div class="modal-footer" id="bulk_edit_footer">

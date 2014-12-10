@@ -700,7 +700,7 @@ function Records() {
                                     borderColor: "#fff",
                                     width: 400,
                                     height: 200,
-                                    top: '0px'
+                                    top: 0
                                 },
                             });
                             $("#bulkEditModal").show();
