@@ -80,7 +80,7 @@
     <div id="bulk_process">
         <div class="modal-body" id="bulk_edit_body" style="font-size: 12px;">
 
-        </div>
+        </div><br />
         <div class="modal-footer" id="bulk_edit_footer">
             <button type="button" name="close" id="closeBtn" class="button closeBtn simplemodal-close">Close</button>
         </div>

@@ -31,8 +31,8 @@ class BulkEditController extends Controller
         if ($request->isXmlHttpRequest()) {
             $posted = $request->request->all();
             $recordIds = $posted['records'];
-            $success = false;
-            $errorMsg = $recordIds;
+            $success = true;
+            $errorMsg = '';
             $html = '';
             $data['total_count'] = 0;
 

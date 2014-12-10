@@ -722,13 +722,13 @@ function Records() {
                 });
             } else {
                 $('#bulk_edit_body').css('color', '#b94a48');
-                $("#bulk_edit_body").html('<b>Select records to edit in bulk</b>');
+                $("#bulk_edit_body").html('<b>Select records to edit.</b>');
                 $("#bulkEditModal").modal({
                     containerCss: {
                         backgroundColor: "#fff",
                         borderColor: "#fff",
                         width: 400,
-                        height: 200,
+                        height: 150,
                         top: '0px'
                     },
                 });
