@@ -25,7 +25,7 @@ class ImportReport extends ContainerAware
 
     public function validateVocabulary($fileName)
     {
-        $fileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $fileName;
+        $fileCompletePath = $this->container->getParameter('webUrl') . 'import/' . date('Y') . '/' . date('m') . '/' . $fileName;
 //        $fileCompletePath = '/Applications/XAMPP/xamppfiles/htdocs/avcc/web/' . $fileName;
         if (file_exists($fileCompletePath)) {
             $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($fileCompletePath);
