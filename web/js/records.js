@@ -615,11 +615,11 @@ function Records() {
             }
         });
     }
-    this.showMergMsg = function () {  
-       var  msg = '';
-        if(successMsg){
+    this.showMergMsg = function () {
+        var msg = '';
+        if (successMsg) {
             msg = successMsg;
-        }else if(errorMsg){
+        } else if (errorMsg) {
             msg = '<span class="error">' + errorMsg + '</span>';
         }
         if (msg) {
@@ -638,15 +638,15 @@ function Records() {
             $("#exportMergeModal").show();
         }
     }
-    
-    this.showMsg = function () {  
-       var  msg = '';
-        if(successMsg){
+
+    this.showMsg = function () {
+        var msg = '';
+        if (successMsg) {
             msg = successMsg;
-        }else if(errorMsg){
+        } else if (errorMsg) {
             msg = '<span class="error">' + errorMsg + '</span>';
         }
-        if (msg) { 
+        if (msg) {
             $("#messageText span").html(msg);
             $("#messageText").show();
             $("#messageModal").modal({
@@ -660,20 +660,78 @@ function Records() {
             $("#messageModal").show();
         }
     }
-    
-    this.importRequest = function(){
+
+    this.importRequest = function () {
         $('.import').click(function () {
             var importType = $(this).attr('data-type');
-                $("#importModal").modal({
+            $("#importModal").modal({
+                containerCss: {
+                    backgroundColor: "#fff",
+                    borderColor: "#fff",
+                    width: 400,
+                    height: 250,
+                },
+            });
+            $("#importModal #impfiletype").val(importType);
+            $("#importModal").show();
+        });
+    }
+
+    this.validateRecords = function () {
+        $('#bulkEdit').click(function () {
+            var selectedrecords = $("#selectedrecords").val();
+            if (selectedrecords) {
+                $('#bulk_edit_body').css('color', 'black');
+                $('#bulk_edit_body').html('<img src="/images/ajax-loader.gif" /><span><b>Processing please wait...</b></span>');
+                $.ajax({
+                    type: 'POST',
+                    url: pageUrl + 'bulkedit/validation',
+                    data: {records: selectedrecords},
+                    dataType: 'json',
+                    success: function (response)
+                    {
+                        if (!response.success) {
+                            $('#bulk_edit_body').css('color', '#b94a48');
+                            $("#bulk_edit_body").html('<b>' + response.msg + '</b>');
+                            $("#bulkEditModal").modal({
+                                containerCss: {
+                                    backgroundColor: "#fff",
+                                    borderColor: "#fff",
+                                    width: 400,
+                                    height: 200,
+                                    top: '0px'
+                                },
+                            });
+                            $("#bulkEditModal").show();
+                        } else {
+                            $("#bulkEditModal").modal({
+                                containerCss: {
+                                    backgroundColor: "#fff",
+                                    borderColor: "#fff",
+                                    width: 400,
+                                    height: 200,
+                                    top: '0px'
+                                },
+                            });
+                            $("#bulkEditModal").show();
+//                            $('#bulk_process').hide();
+                        }
+                    }
+                });
+            } else {
+                $('#bulk_edit_body').css('color', '#b94a48');
+                $("#bulk_edit_body").html('<b>Select records to edit in bulk</b>');
+                $("#bulkEditModal").modal({
                     containerCss: {
                         backgroundColor: "#fff",
                         borderColor: "#fff",
                         width: 400,
-                        height: 250,
+                        height: 200,
+                        top: '0px'
                     },
                 });
-                $("#importModal #impfiletype").val(importType);
-                $("#importModal").show();
+                $("#bulkEditModal").show();
+            }
         });
     }
 }

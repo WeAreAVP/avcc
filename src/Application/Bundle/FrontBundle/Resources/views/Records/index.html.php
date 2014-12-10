@@ -41,7 +41,7 @@
                             </ul>
                     </li>
                     <li>
-                        <a href="#">Bulk Edit</a>
+                        <a href="javascript://" id="bulkEdit">Bulk Edit</a>
                     </li>
                 </ul>
             </div>

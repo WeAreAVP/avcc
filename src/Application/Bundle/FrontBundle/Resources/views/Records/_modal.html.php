@@ -75,3 +75,15 @@
         <button type="button" name="close" id="closeBtn" class="button closeBtn simplemodal-close">Close</button>
     </div>
 </div>
+<div id="bulkEditModal" class="" tabindex="-1" role="dialog" style="display:none;">
+    <h4 id="heading">Bulk Edit</h4>
+    <div id="bulk_process">
+        <div class="modal-body" id="bulk_edit_body">
+
+        </div>
+        <div class="modal-footer" id="bulk_edit_footer">
+            <button type="button" name="close" id="closeBtn" class="button closeBtn simplemodal-close">Close</button>
+        </div>
+    </div>
+    <div class="bulkEditform" style="display:none;"></div>
+</div>
