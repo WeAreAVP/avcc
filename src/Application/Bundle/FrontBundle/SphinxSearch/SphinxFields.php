@@ -29,12 +29,12 @@ class SphinxFields
             $this->prepareVideoFields();
         }
         $this->indexFields['id'] = $this->record->getRecord()->getId();
-        $this->indexFields['s_title'] = ($this->record->getRecord()->getTitle()) ? $this->record->getRecord()->getTitle() : "";
-        $this->indexFields['title'] = ($this->record->getRecord()->getTitle()) ? $this->record->getRecord()->getTitle() : "";
-        $this->indexFields['s_description'] = ($this->record->getRecord()->getDescription()) ? $this->record->getRecord()->getDescription() : "";
-        $this->indexFields['description'] = ($this->record->getRecord()->getDescription()) ? $this->record->getRecord()->getDescription() : "";
-        $this->indexFields['s_collection_name'] = ($this->record->getRecord()->getCollectionName()) ? $this->record->getRecord()->getCollectionName() : "";
-        $this->indexFields['collection_name'] = ($this->record->getRecord()->getCollectionName()) ? $this->record->getRecord()->getCollectionName() : "";
+        $this->indexFields['s_title'] = ($this->record->getRecord()->getTitle()) ? (string) $this->record->getRecord()->getTitle() : "";
+        $this->indexFields['title'] = ($this->record->getRecord()->getTitle()) ? (string) $this->record->getRecord()->getTitle() : "";
+        $this->indexFields['s_description'] = ($this->record->getRecord()->getDescription()) ? (string) $this->record->getRecord()->getDescription() : "";
+        $this->indexFields['description'] = ($this->record->getRecord()->getDescription()) ? (string) $this->record->getRecord()->getDescription() : "";
+        $this->indexFields['s_collection_name'] = ($this->record->getRecord()->getCollectionName()) ? (string) $this->record->getRecord()->getCollectionName() : "";
+        $this->indexFields['collection_name'] = ($this->record->getRecord()->getCollectionName()) ? (string) $this->record->getRecord()->getCollectionName() : "";
         $this->indexFields['s_creation_date'] = ($this->record->getRecord()->getCreationDate()) ? $this->record->getRecord()->getCreationDate() : "";
         $this->indexFields['creation_date'] = ($this->record->getRecord()->getCreationDate()) ? $this->record->getRecord()->getCreationDate() : "";
         $this->indexFields['s_content_date'] = ($this->record->getRecord()->getContentDate()) ? $this->record->getRecord()->getContentDate() : "";
