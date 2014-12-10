@@ -39,7 +39,7 @@ class ImportReportCommand extends ContainerAwareCommand
                 $user = $entity->getUser();
                 $fileName = $entity->getFileName();
                 $import = new ImportReport($this->getContainer());
-                $validateFields = $import->validateVocabulary();
+                $validateFields = $import->validateVocabulary($fileName);
                 if ($validateFields) {
                     $baseUrl = $this->getContainer()->getParameter('baseUrl');
                     $templateParameters = array('user' => $entity->getUser(), 'fieldErrors' => $validateFields);
