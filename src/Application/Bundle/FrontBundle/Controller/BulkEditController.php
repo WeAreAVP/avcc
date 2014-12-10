@@ -32,6 +32,7 @@ class BulkEditController extends Controller
             $posted = $request->request->all();
             $recordIds = $posted['records'];
             $html = '';
+            $errorMsg = '';
             if ($recordIds) {
                 if($recordIds == 'all'){
                     
