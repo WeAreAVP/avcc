@@ -82,7 +82,7 @@
         <?php foreach ($view['session']->getFlash("export_merge") as $message): ?>
             <?php $successPopupMsg = $message ;?>
         <?php endforeach; 
-        $view['session']->getFlashBag()->remove("export_merge");
+        $view['session']->getFlash()->remove("export_merge");
         ?>
        <?php foreach ($view['session']->getFlash("import_success") as $message): ?>
             <?php $successPopupMsg = $message ;?>
