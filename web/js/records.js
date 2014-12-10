@@ -239,6 +239,7 @@ function Records() {
         selfObj.importRequest();
 //        selfObj.showMergMsg();
         selfObj.showMsg();
+        selfObj.validateRecords();
         return true;
     }
     /**
