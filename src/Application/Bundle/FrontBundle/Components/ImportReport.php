@@ -12,6 +12,7 @@ use Application\Bundle\FrontBundle\Entity\AudioRecords;
 use Application\Bundle\FrontBundle\Entity\FilmRecords;
 use Application\Bundle\FrontBundle\Entity\VideoRecords;
 use PHPExcel_Style_NumberFormat as NumberFormat;
+
 class ImportReport extends ContainerAware
 {
 
@@ -124,7 +125,9 @@ class ImportReport extends ContainerAware
                         if ($reelDiameter->getValue() && !in_array($reelDiameter->getValue(), $vocabularies['reelDiameters'])) {
                             $invalidValues['reel_diameters'][] = $reelDiameter->getValue() . ' at row ' . $row . ' not exist in db';
                         }
-                        if ($mediaDiameter->getValue() && !in_array($mediaDiameter->getValue(), $vocabularies['mediaDiameters'])) {
+                        $nf = new NumberFormat();
+                        $mdValue = $nf->toFormattedString($mediaDiameter->getValue(), '0%');
+                        if ($mediaDiameter->getValue() && !in_array($mdValue, $vocabularies['mediaDiameters'])) {
                             $invalidValues['media_diameters'][] = $mediaDiameter->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         if ($recordingSpeed->getValue() && !in_array($recordingSpeed->getValue(), $vocabularies['recordingSpeed'])) {
@@ -411,4 +414,5 @@ class ImportReport extends ContainerAware
     {
         return $this->container->getParameter('sphinx_param');
     }
+
 }
