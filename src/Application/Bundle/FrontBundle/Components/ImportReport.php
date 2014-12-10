@@ -11,7 +11,7 @@ use Application\Bundle\FrontBundle\Entity\Records;
 use Application\Bundle\FrontBundle\Entity\AudioRecords;
 use Application\Bundle\FrontBundle\Entity\FilmRecords;
 use Application\Bundle\FrontBundle\Entity\VideoRecords;
-
+use PHPExcel_Style_NumberFormat as NumberFormat;
 class ImportReport extends ContainerAware
 {
 
@@ -213,7 +213,10 @@ class ImportReport extends ContainerAware
                             $rows[$row - 1]['printType'] = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
                             $rows[$row - 1]['diskDiameter'] = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
                             $rows[$row - 1]['reelDiameter'] = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
-                            $rows[$row - 1]['mediaDiameter'] = (string) $worksheet->getCellByColumnAndRow(17, $row)->getValue();
+                            $md = $worksheet->getCellByColumnAndRow(17, $row);
+                            $nf = new NumberFormat();
+                            $mdValue = $nf->toFormattedString($md->getValue(),FORMAT_GENERAL);
+                            $rows[$row - 1]['mediaDiameter'] = $mdValue;
                             $rows[$row - 1]['footage'] = $worksheet->getCellByColumnAndRow(18, $row)->getValue();
                             $rows[$row - 1]['recordingSpeed'] = $worksheet->getCellByColumnAndRow(19, $row)->getValue();
                             $rows[$row - 1]['color'] = $worksheet->getCellByColumnAndRow(20, $row)->getValue();
