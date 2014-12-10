@@ -29,7 +29,12 @@ class BulkEditController extends Controller
     public function validation(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
-            
+            $posted = $request->request->all();
+            $recordIds = $posted['records'];
+            $success = false;
+            $errorMsg = 'Records not found';
+            $html = '';
+            $data['total_count'] = 0;
             echo json_encode(array('success' => $success, 'msg' => $errorMsg, 'html' => $html, 'count' => $data['total_count']));
             exit;
         }
