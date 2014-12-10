@@ -50,16 +50,16 @@ class ImportReportCommand extends ContainerAwareCommand
                         $templateParameters = array('user' => $entity->getUser(), 'numberOfRecords' => $numberOfRecords);
                     }
                 }
-//                $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:import.email.html.php', $templateParameters);
+                $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:import.email.html.php', $templateParameters);
 //                $email = new EmailHelper($this->getContainer());
 //                $subject = 'Import Report';
 //                $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
 //                $entity->setStatus(1);
 //                $em->persist($entity);
 //                $em->flush();
-                $text = print_r($validateFields);
+                $text = $rendered;
             } else {
-                $text = 'export id not found';
+                $text = 'import id not found';
             }
         } else {
             $text = 'Hello';
