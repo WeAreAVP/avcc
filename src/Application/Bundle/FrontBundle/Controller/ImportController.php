@@ -117,7 +117,7 @@ class ImportController extends Controller
 //                    $em->persist($job);
 //                    $em->flush($job);
 
-                    $this->get('session')->getFlashBag()->add('import_success', 'Import request successfully sent. You will receive an email shortly with download link.');
+                    $this->get('session')->getFlashBag()->add('import_success', 'Import request successfully sent. You will receive a confirmation email shortly.');
                 } else {
                     $this->get('session')->getFlashBag()->add('import_error', 'File formate is not correct. Please try again.');
                 }
