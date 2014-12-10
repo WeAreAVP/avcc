@@ -53,7 +53,7 @@ class ImportReportCommand extends ContainerAwareCommand
                 $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:import.email.html.php', $templateParameters);
                 $email = new EmailHelper($this->getContainer());
                 $subject = 'Import Report';
-                $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
+//                $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
 //                $entity->setStatus(1);
 //                $em->persist($entity);
 //                $em->flush();
