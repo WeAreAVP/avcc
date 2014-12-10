@@ -31,11 +31,23 @@ class BulkEditController extends Controller
         if ($request->isXmlHttpRequest()) {
             $posted = $request->request->all();
             $recordIds = $posted['records'];
-            $success = true;
-            $errorMsg = '';
             $html = '';
+            if ($recordIds) {
+                if($recordIds == 'all'){
+                    
+                } else {
+                    
+                }
+                $templateParameters = array('selectedrecords' => $recordIds);
+                $html = $this->container->get('templating')->render('ApplicationFrontBundle:BulkEdit:bulkedit.html.php', $templateParameters);
+                $success = true;
+            } else {
+                $success = false;
+                $errorMsg = 'Select records to edit.';
+            }
+            
             $data['total_count'] = 0;
-
+            
             echo json_encode(array('success' => $success, 'msg' => $errorMsg, 'html' => $html, 'count' => $data['total_count']));
             $session = $this->getRequest()->getSession();
             $session->remove("saveRecords");

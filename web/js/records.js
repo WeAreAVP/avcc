@@ -684,7 +684,7 @@ function Records() {
             var selectedrecords = $("#selectedrecords").val();
             if (selectedrecords) {
                 $('#bulk_edit_body').css('color', 'black');
-                $('#bulk_edit_body').html('<img src="/images/ajax-loader.gif" /><span><b>Processing please wait...</b></span>');
+                $('#bulk_edit_body').html('<img src="/images/ajax-loader.gif" /> <span><b>Processing please wait...</b></span>');
                 $.ajax({
                     type: 'POST',
                     url: pageUrl + 'bulkedit/validation',
