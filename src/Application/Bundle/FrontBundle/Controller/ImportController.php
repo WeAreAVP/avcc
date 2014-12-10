@@ -117,15 +117,15 @@ class ImportController extends Controller
                     $em->persist($job);
                     $em->flush($job);
 
-                    $this->get('session')->getFlashBag()->add('import_success', 'Import request successfully sent. You will receive a confirmation email shortly.');
+                    $this->get('session')->getFlashBag()->add('report_success', 'Import request successfully sent. You will receive a confirmation email shortly.');
                 } else {
-                    $this->get('session')->getFlashBag()->add('import_error', 'File formate is not correct. Please try again.');
+                    $this->get('session')->getFlashBag()->add('report_error', 'File formate is not correct. Please try again.');
                 }
             } else {
-                $this->get('session')->getFlashBag()->add('import_error', 'File is empty. Please try again.');
+                $this->get('session')->getFlashBag()->add('report_error', 'File is empty. Please try again.');
             }
         } else {
-            $this->get('session')->getFlashBag()->add('import_error', 'Select file that require to import. Please try again.');
+            $this->get('session')->getFlashBag()->add('report_error', 'Select file that require to import. Please try again.');
         }
 
         return $this->redirect($this->generateUrl('record_list'));

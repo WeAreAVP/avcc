@@ -452,15 +452,15 @@ class RecordsController extends Controller
                     $em->persist($job);
                     $em->flush($job);
 
-                    $this->get('session')->getFlashBag()->add('export_merge', 'Merge and export request successfully sent. You will receive an email shortly with download link.');
+                    $this->get('session')->getFlashBag()->add('report_success', 'Merge and export request successfully sent. You will receive an email shortly with download link.');
                 } else {
-                    $this->get('session')->getFlashBag()->add('export_merge_error', 'File formate is not correct. Please try again.');
+                    $this->get('session')->getFlashBag()->add('report_error', 'File formate is not correct. Please try again.');
                 }
             } else {
-                $this->get('session')->getFlashBag()->add('export_merge_error', 'File is empty. Please try again.');
+                $this->get('session')->getFlashBag()->add('report_error', 'File is empty. Please try again.');
             }
         } else {
-            $this->get('session')->getFlashBag()->add('export_merge_error', 'Select file that require to merge. Please try again.');
+            $this->get('session')->getFlashBag()->add('report_error', 'Select file that require to merge. Please try again.');
         }
         $session->remove("saveRecords");
         $session->remove("allRecords");
