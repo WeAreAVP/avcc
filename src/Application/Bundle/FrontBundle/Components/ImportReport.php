@@ -213,7 +213,7 @@ class ImportReport extends ContainerAware
                             $rows[$row - 1]['printType'] = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
                             $rows[$row - 1]['diskDiameter'] = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
                             $rows[$row - 1]['reelDiameter'] = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
-                            $rows[$row - 1]['mediaDiameter'] = $worksheet->getCellByColumnAndRow(17, $row)->getValue();
+                            $rows[$row - 1]['mediaDiameter'] = (string) $worksheet->getCellByColumnAndRow(17, $row)->getValue();
                             $rows[$row - 1]['footage'] = $worksheet->getCellByColumnAndRow(18, $row)->getValue();
                             $rows[$row - 1]['recordingSpeed'] = $worksheet->getCellByColumnAndRow(19, $row)->getValue();
                             $rows[$row - 1]['color'] = $worksheet->getCellByColumnAndRow(20, $row)->getValue();
