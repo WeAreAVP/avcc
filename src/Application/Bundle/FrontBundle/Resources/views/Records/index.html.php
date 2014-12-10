@@ -82,18 +82,24 @@
         <?php foreach ($view['session']->getFlash("export_merge") as $message): ?>
             <?php $successPopupMsg = $message ;?>
         <?php endforeach; 
-        $app->getSession()->remove('import_success');
+        $app->getSession()->remove('export_merge');
         ?>
        <?php foreach ($view['session']->getFlash("import_success") as $message): ?>
             <?php $successPopupMsg = $message ;?>
-        <?php endforeach; ?> 
+        <?php endforeach; 
+        $app->getSession()->remove('import_success');
+        ?> 
         <?php $errorPopupMsg = null; ?>
         <?php foreach ($view['session']->getFlash("export_merge_error") as $message): ?>
             <?php $errorPopupMsg = $message ;?>
-        <?php endforeach; ?>
+        <?php endforeach; 
+        $app->getSession()->remove('export_merge_error');
+        ?>
         <?php foreach ($view['session']->getFlash("import_error") as $message): ?>
             <?php $errorPopupMsg = $message ;?>
-        <?php endforeach; ?>      
+        <?php endforeach; 
+        $app->getSession()->remove('import_error');
+        ?>      
         <?php if (!$isAjax): ?>
             <?php $view['slots']->start('view_javascripts') ?>
 
