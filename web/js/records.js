@@ -429,6 +429,7 @@ function Records() {
             $('input[name=record_checkbox]').prop('checked', false);
             $('#div-select-all-records').fadeOut('slow');
             $('#records tbody tr').removeClass("selected");
+            $("#selectedrecords").val('');
             $(this).hide();
             selfObj.saveState(0, 'all', 0);
         });
