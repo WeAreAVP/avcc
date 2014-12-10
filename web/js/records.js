@@ -558,7 +558,7 @@ function Records() {
     }
 
     this.closeClicked = function () {
-        $("#closeBtn").on("click", function () {
+        $("#closeBtn, .closeBtn").on("click", function () {
             $.modal.close();
             $('#selectAll').prop("checked", false);
             $('input[name=record_checkbox]').each(function () {

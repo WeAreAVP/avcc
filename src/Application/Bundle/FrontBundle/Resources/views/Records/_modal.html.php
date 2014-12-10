@@ -72,6 +72,6 @@
         </div>            
     </div>
     <div class="modal-footer" id="modal-footer">
-        <button type="button" name="close" id="closeBtn" class="button simplemodal-close">Close</button>
+        <button type="button" name="close" id="closeBtn" class="button closeBtn simplemodal-close">Close</button>
     </div>
 </div>
