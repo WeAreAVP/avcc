@@ -719,7 +719,6 @@ function Records() {
                             $("#bulk_process").hide();
                             $(".bulkEditform").html(response.html);
                             $("#bulkEditModal, .bulkEditform").show();
-//                            $('#bulk_process').hide();
                         }
                     }
                 });
