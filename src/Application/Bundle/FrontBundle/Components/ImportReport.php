@@ -180,7 +180,7 @@ class ImportReport extends ContainerAware
 
     public function getRecordsFromFile($fileName, $user)
     {
-        $fileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $fileName;
+        $fileCompletePath = $this->container->getParameter('webUrl') . 'import/' . date('Y') . '/' . date('m') . '/' . $fileName;
 //        $fileCompletePath = '/Applications/XAMPP/xamppfiles/htdocs/avcc/web/' . $fileName;
         if (file_exists($fileCompletePath)) {
             $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($fileCompletePath);
@@ -243,8 +243,10 @@ class ImportReport extends ContainerAware
                 }
             }
             if ($rows) {
-               return $this->importRecords($rows, $user, $em);
+                return $this->importRecords($rows, $user, $em);
             }
+        } else {
+            return 'file not found';
         }
     }
 
@@ -328,7 +330,7 @@ class ImportReport extends ContainerAware
                 }
                 $audio->setRecord($record);
                 $em->persist($audio);
-                $em->flush();                
+                $em->flush();
             }
             if ($row['mediaType'] == 'Film') {
                 $filmRecord = new FilmRecords();
