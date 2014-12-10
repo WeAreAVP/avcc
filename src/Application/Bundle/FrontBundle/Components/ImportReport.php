@@ -215,7 +215,7 @@ class ImportReport extends ContainerAware
                             $rows[$row - 1]['reelDiameter'] = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
                             $md = $worksheet->getCellByColumnAndRow(17, $row);
                             $nf = new NumberFormat();
-                            $mdValue = $nf->toFormattedString($md->getValue(),FORMAT_GENERAL);
+                            $mdValue = $nf->toFormattedString($md->getValue(),'General');
                             $rows[$row - 1]['mediaDiameter'] = $mdValue;
                             $rows[$row - 1]['footage'] = $worksheet->getCellByColumnAndRow(18, $row)->getValue();
                             $rows[$row - 1]['recordingSpeed'] = $worksheet->getCellByColumnAndRow(19, $row)->getValue();
