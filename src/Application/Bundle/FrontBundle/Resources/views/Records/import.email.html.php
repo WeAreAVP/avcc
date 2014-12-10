@@ -3,7 +3,7 @@
 <?php if (isset($fieldErrors)) { ?>
     <div>Following issues found while importing records.</div>
     <?php
-    foreach ($validation as $key => $value) {
+    foreach ($fieldErrors as $key => $value) {
         echo '<p><b>' . str_replace('_', ' ', ucfirst($key)) . '</b><br />';
         echo implode('<br />', $value);
         echo '</p>';
