@@ -568,6 +568,7 @@ function Records() {
             $('#records tr').each(function () {
                 $(this).removeClass("selected");
             });
+            $("#selectedrecords").val('');
             window.location.reload();
         });
     }
