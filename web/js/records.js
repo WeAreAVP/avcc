@@ -648,7 +648,7 @@ function Records() {
         }
         if (msg) { 
             $("#messageText span").html(msg);
-            $("#messageText span").show();
+            $("#messageText").show();
             $("#messageModal").modal({
                 containerCss: {
                     backgroundColor: "#fff",
