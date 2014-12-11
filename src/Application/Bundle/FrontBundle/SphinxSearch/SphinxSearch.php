@@ -222,4 +222,36 @@ class SphinxSearch extends ContainerAware
 
         return $result;
     }
+    
+    /**
+     * Select id column for listing from sphinx.
+     *
+     * @param array    $columnNames
+     * @param User    $user
+     * @param integer $offset
+     * @param integer $limit
+     * @param string  $sortColumn
+     * @param string  $sortOrder
+     * @param string  $criteria
+     *
+     * @return array
+     */
+    public function selectColumns($columnNames, $user, $offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null)
+    {
+        $sq = SphinxQL::create($this->conn);
+        $sq->select(implode(",", $columnNames))
+        ->from($this->indexName);
+        if ($criteria) {
+            $this->whereClause($criteria, $sq);
+        }
+        if ( ! in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
+            $sq->where('organization_id', "=", $user->getOrganizations()->getId());
+        }
+        $result = $sq->orderBy($sortColumn, $sortOrder)
+        ->limit($offset, $limit)
+        ->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
+        ->executeBatch();
+
+        return $result;
+    }
 }

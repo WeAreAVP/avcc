@@ -35,11 +35,20 @@ class BulkEditController extends Controller
             $recordIds = $posted['records'];
             $html = '';
             $errorMsg = '';
+            $em = $this->getDoctrine()->getManager();
             if ($recordIds) {
                 if ($recordIds == 'all') {
                     $sphinxInfo = $this->getSphinxInfo();
+                    $html = "all records";
                 } else {
-                    
+                    $recordIdsArray = explode(',', $recordIds);                    
+                    $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($recordIdsArray);
+                    $mediaType = $records[0]->getMediaType()->getId();
+                    $format = $records[0]->getFormat()->getId();
+//                    foreach ($records as $record){
+//                        
+//                    }
+                    $html = "$mediaType  $format";
                 }
                 $templateParameters = array('selectedrecords' => $recordIds);
                 $html = $this->container->get('templating')->render('ApplicationFrontBundle:BulkEdit:bulkedit.html.php', $templateParameters);
