@@ -45,7 +45,7 @@ function showUpdateFields() {
         var showCassetteSize = [59, 60, 33, 34, 35, 43, 44, 46, 47, 48, 52, 53, 54, 55, 57];
         var hideRecordingSpeedFormat = [37, 39, 40, 41];
         var hideIfFormat = [24, 25, 26];
-        
+
         if (jQuery.inArray(parseInt($(this).val()), showDiskDiameter) >= 0) {
             $('#diskDiameters_lbl').show();
         } else {
@@ -75,26 +75,13 @@ function showUpdateFields() {
         } else {
             $('#cassetteSize_lbl').hide();
         }
-        
+
         if (jQuery.inArray(parseInt($(this).val()), hideIfFormat) >= 0) {
             $('#slides_lbl, #monoStereo_lbl, #noiceReduction_lbl').hide();
         } else {
             $('#slides_lbl, #monoStereo_lbl, #noiceReduction_lbl').show();
         }
-        /// call to get base dropdown options
-        $.ajax({
-            type: "GET",
-            url: baseUrl + 'getBase/' + $(this).val(),
-            success: function (response) {
-                if (response != "") {
-                    $("#bases_lbl").show();
-                    $("#bases").html(response);
-                } else {
-                    $("#bases_lbl").hide();
-                }
-            }
-
-        }); // Ajax Call
+        getBaseOptions();
         /// call to get reel diameters dropdown options
         $.ajax({
             type: "GET",
@@ -160,4 +147,25 @@ function onChangeMediaType() {
         }
     });
 }
-    
+
+function getBaseOptions() {
+    /// call to get base dropdown options
+    $.ajax({
+        type: "GET",
+        url: baseUrl + 'getBase/' + $('#format').val(),
+        success: function (response) {
+            if (response != "") {
+                $("#bases_lbl").show();
+                $("#bases").html(response);
+            } else {
+                $("#bases_lbl").hide();
+            }
+        }
+
+    }); // Ajax Call
+}
+function onChangeBase() {
+    $(".#bases").change(function () {
+        getBaseOptions();
+    }).change();
+}
