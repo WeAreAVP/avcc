@@ -6,7 +6,7 @@ function initialize_records_form() {
     $('#trackTypes_lbl').hide();
     $('#cassetteSize_lbl').hide();
     $("#formatVersion_lbl").hide();
-    $('.new #mediaType option[value="'+ selectedMediaType +'"]').attr("selected","selected");
+    $('.new #mediaType option[value="' + selectedMediaType + '"]').attr("selected", "selected");
     showUpdateFields();
     $.mask.definitions['y'] = '[1-2,x]';
     $.mask.definitions['m'] = '[0-1,x]';
@@ -14,13 +14,13 @@ function initialize_records_form() {
     $.mask.definitions['g'] = '[0-9,x]';
     $("#creationDate, #contentDate").mask("yggg-mg-dg", {optional: true});
     updateFormat();
-    onChangeMediaType();    
+    onChangeMediaType();
 }
 function updateFormat() {
     /// call to get base dropdown options
-    if(selectedFormat){
+    if (selectedFormat) {
         url = baseUrl + 'getFormat/' + $("#mediaType").val() + '/' + selectedFormat;
-    }else{
+    } else {
         url = baseUrl + 'getFormat/' + $("#mediaType").val();
     }
     $.ajax({
@@ -43,6 +43,7 @@ function showUpdateFields() {
         var showTapeThickness = [1, 2, 3, 4, 5];
         var showTrackType = [1, 2, 3, 4, 5];
         var showCassetteSize = [59, 60, 33, 34, 35, 43, 44, 46, 47, 48, 52, 53, 54, 55, 57];
+        var hideRecordingSpeedFormat = [37, 39, 40, 41];
 
         if (jQuery.inArray(parseInt($(this).val()), showDiskDiameter) >= 0) {
             $('#diskDiameters_lbl').show();
@@ -101,20 +102,25 @@ function showUpdateFields() {
             }
 
         }); // Ajax Call 
-        /// call to get recording speed dropdown options
-        $.ajax({
-            type: "GET",
-            url: baseUrl + 'getRecordingSpeed/' + $(this).val() + '/' + $("#mediaType").val(),
-            success: function (response) {
-                if (response != "") {
-                    $("#recordingSpeed_lbl").show();
-                    $("#recordingSpeed").html(response);
-                } else {
-                    $("#recordingSpeed_lbl").hide();
+        if (jQuery.inArray(parseInt($(this).val()), hideRecordingSpeedFormat) >= 0) {
+            $('#recordingSpeed_lbl').hide();
+        } else {
+            $('#recordingSpeed_lbl').show();
+            /// call to get recording speed dropdown options
+            $.ajax({
+                type: "GET",
+                url: baseUrl + 'getRecordingSpeed/' + $(this).val() + '/' + $("#mediaType").val(),
+                success: function (response) {
+                    if (response != "") {
+                        $("#recordingSpeed_lbl").show();
+                        $("#recordingSpeed").html(response);
+                    } else {
+                        $("#recordingSpeed_lbl").hide();
+                    }
                 }
-            }
 
-        }); // Ajax Call        
+            }); // Ajax Call  
+        }
         /// call to get formatversion dropdown options
         $.ajax({
             type: "GET",
@@ -133,15 +139,17 @@ function showUpdateFields() {
 
 }
 
-function onChangeMediaType(){
-    $(".new #mediaType").change(function(){
+function onChangeMediaType() {
+    $(".new #mediaType").change(function () {
         console.log($(this).val());
-        if($(this).val() == 3){
+        if ($(this).val() == 3) {
             window.location.href = baseUrl + 'video/new';
-        }else if($(this).val() == 2){
-            window.location.href = baseUrl + 'film/new';;
-        }else if($(this).val() == 1){
-            window.location.href = baseUrl + 'audio/new';;
+        } else if ($(this).val() == 2) {
+            window.location.href = baseUrl + 'film/new';
+            ;
+        } else if ($(this).val() == 1) {
+            window.location.href = baseUrl + 'audio/new';
+            ;
         }
     });
 }

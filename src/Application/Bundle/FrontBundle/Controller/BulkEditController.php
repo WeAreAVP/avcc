@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
+use Application\Bundle\FrontBundle\Helper\SphinxHelper;
 
 /**
  * Bulk Edit controller.
@@ -34,8 +36,8 @@ class BulkEditController extends Controller
             $html = '';
             $errorMsg = '';
             if ($recordIds) {
-                if($recordIds == 'all'){
-                    
+                if ($recordIds == 'all') {
+                    $sphinxInfo = $this->getSphinxInfo();
                 } else {
                     
                 }
@@ -46,9 +48,9 @@ class BulkEditController extends Controller
                 $success = false;
                 $errorMsg = 'Select records to edit.';
             }
-            
+
             $data['total_count'] = 0;
-            
+
             echo json_encode(array('success' => $success, 'msg' => $errorMsg, 'html' => $html, 'count' => $data['total_count']));
             $session = $this->getRequest()->getSession();
             $session->remove("saveRecords");
@@ -60,6 +62,16 @@ class BulkEditController extends Controller
     public function editAction()
     {
         
+    }
+
+    /**
+     * Get sphinx parameters
+     *
+     * @return array
+     */
+    protected function getSphinxInfo()
+    {
+        return $this->container->getParameter('sphinx_param');
     }
 
 }

@@ -59,7 +59,7 @@ class VideoRecords
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\RecordingSpeed")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="recording_speed_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="recording_speed_id", referencedColumnName="id", nullable = true)
      * })
      */
     private $recordingSpeed;

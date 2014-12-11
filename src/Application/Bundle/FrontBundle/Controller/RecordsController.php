@@ -16,7 +16,6 @@ use Application\Bundle\FrontBundle\Helper\SphinxHelper;
 use JMS\JobQueueBundle\Entity\Job;
 use DateInterval;
 use DateTime;
-use Application\Bundle\FrontBundle\Components\ExportReport;
 
 /**
  * Records controller.
