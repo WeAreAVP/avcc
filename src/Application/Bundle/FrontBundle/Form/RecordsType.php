@@ -85,7 +85,14 @@ class RecordsType extends AbstractType
             $builder
                     ->add('uniqueId')
                     ->add('location')
-                    ->add('format')
+                    ->add('format', 'entity', array(
+                        'class' => 'ApplicationFrontBundle:Formats',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('f')
+                                    ->orderBy('f.name', 'ASC');
+                        },
+                        'required' => true
+                    ))
                     ->add('title')
                     ->add('collectionName')
                     ->add('description')
