@@ -52,7 +52,7 @@ class ReelDiametersController extends Controller
         $entity = new ReelDiameters();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
-
+        $em = $this->getDoctrine()->getManager();
         if ($form->isValid()) {
             $postedValue = $this->get('request')->request->get('application_bundle_frontbundle_reeldiameters');
             $f = $form->getData();
