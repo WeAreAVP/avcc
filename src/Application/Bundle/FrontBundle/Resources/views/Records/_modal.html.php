@@ -82,7 +82,7 @@
 
         </div><br />
         <div class="modal-footer" id="bulk_edit_footer">
-            <button type="button" name="close" id="closeBtn" class="button closeBtn simplemodal-close">Close</button>
+            <button type="button" name="close" id="" class="button simplemodal-close">Close</button>
         </div>
     </div>
     <div class="bulkEditform" style="display:none;"></div>
