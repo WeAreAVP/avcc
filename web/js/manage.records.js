@@ -166,6 +166,7 @@ function getBaseOptions() {
     }); // Ajax Call
 }
 function onChangeFormat() {
+    console.log($("#format").val());
     $("#format").change(function () {
         getBaseOptions();
     }).change();
