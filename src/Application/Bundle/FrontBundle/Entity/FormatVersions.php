@@ -36,7 +36,7 @@ class FormatVersions
      * @ORM\Column(name="score", type="float", options={"default" = 0})
      * @Assert\NotBlank(message="Score is required")
      */
-    private $score;
+    private $score = 0;
 
     /**
      * @ORM\ManyToOne(targetEntity="Formats" , fetch="EAGER", inversedBy="formatVersion")
