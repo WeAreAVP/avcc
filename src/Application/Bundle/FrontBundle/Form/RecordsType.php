@@ -32,88 +32,95 @@ class RecordsType extends AbstractType
     {
         if ($this->selectedOptions['recordId']) {
             $builder
-            ->add('uniqueId')
-            ->add('location')
-            ->add('format')
-            ->add('title')
-            ->add('collectionName')
-            ->add('description')
-            ->add('commercial')
-            ->add('contentDuration', 'text', array('required' => false))
-            ->add('creationDate', 'text', array('required' => false))
-            ->add('contentDate', 'text', array('required' => false))
-            ->add('isReview')
-            ->add('genreTerms')
-            ->add('contributor')
-            ->add('generation')
-            ->add('part')
-            ->add('copyrightRestrictions')
-            ->add('duplicatesDerivatives')
-            ->add('relatedMaterial')
-            ->add('conditionNote')
-            ->add('project')
-            ->add('userId', 'hidden', array(
-                'data' => $this->selectedOptions['userId'],
-                'mapped' => false,
-                'required' => false,
-            ))
-            ->add('mediaType', 'choice', array(
-                'choices' => $this->selectedOptions['mediaTypesArr'],
-                'data' => $this->selectedOptions['mediaTypeId'],
-                'attr' => array('disabled' => 'disabled'),
-                'mapped' => false,
-            ))
-            ->add('reelDiameters')
-            ->add('mediaTypeHidden', 'hidden', array(
-                'data' => $this->selectedOptions['mediaTypeId'],
-                'mapped' => false,
-                'required' => false,
-            ))
-            ->addEventListener(
-            FormEvents::PRE_SUBMIT, array($this, 'onPreSubmitData'))
-            ->addEventListener(
-            FormEvents::POST_SUBMIT, array($this, 'onPostSubmitData'))
+                    ->add('uniqueId')
+                    ->add('location')
+                    ->add('format', 'entity', array(
+                        'class' => 'ApplicationFrontBundle:Formats',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('f')
+                                    ->orderBy('f.name', 'ASC');
+                        },
+                        'required' => true
+                    ))
+                    ->add('title')
+                    ->add('collectionName')
+                    ->add('description')
+                    ->add('commercial')
+                    ->add('contentDuration', 'text', array('required' => false))
+                    ->add('creationDate', 'text', array('required' => false))
+                    ->add('contentDate', 'text', array('required' => false))
+                    ->add('isReview')
+                    ->add('genreTerms')
+                    ->add('contributor')
+                    ->add('generation')
+                    ->add('part')
+                    ->add('copyrightRestrictions')
+                    ->add('duplicatesDerivatives')
+                    ->add('relatedMaterial')
+                    ->add('conditionNote')
+                    ->add('project')
+                    ->add('userId', 'hidden', array(
+                        'data' => $this->selectedOptions['userId'],
+                        'mapped' => false,
+                        'required' => false,
+                    ))
+                    ->add('mediaType', 'choice', array(
+                        'choices' => $this->selectedOptions['mediaTypesArr'],
+                        'data' => $this->selectedOptions['mediaTypeId'],
+                        'attr' => array('disabled' => 'disabled'),
+                        'mapped' => false,
+                    ))
+                    ->add('reelDiameters')
+                    ->add('mediaTypeHidden', 'hidden', array(
+                        'data' => $this->selectedOptions['mediaTypeId'],
+                        'mapped' => false,
+                        'required' => false,
+                    ))
+                    ->addEventListener(
+                            FormEvents::PRE_SUBMIT, array($this, 'onPreSubmitData'))
+                    ->addEventListener(
+                            FormEvents::POST_SUBMIT, array($this, 'onPostSubmitData'))
             ;
         } else {
             $builder
-            ->add('uniqueId')
-            ->add('location')
-            ->add('format')
-            ->add('title')
-            ->add('collectionName')
-            ->add('description')
-            ->add('commercial')
-            ->add('contentDuration', 'text', array('required' => false))
-            ->add('creationDate', 'text', array('required' => false))
-            ->add('contentDate', 'text', array('required' => false))
-            ->add('isReview')
-            ->add('genreTerms')
-            ->add('contributor')
-            ->add('generation')
-            ->add('part')
-            ->add('copyrightRestrictions')
-            ->add('duplicatesDerivatives')
-            ->add('relatedMaterial')
-            ->add('conditionNote')
-            ->add('project')
-            ->add('userId', 'hidden', array(
-                'data' => $this->selectedOptions['userId'],
-                'mapped' => false,
-                'required' => false,
-            ))
-            ->add('mediaType')
-            ->add('reelDiameters')
-            ->addEventListener(
-            FormEvents::PRE_SUBMIT, array($this, 'onPreSubmitData'))
-            ->addEventListener(
-            FormEvents::POST_SUBMIT, array($this, 'onPostSubmitData'))
+                    ->add('uniqueId')
+                    ->add('location')
+                    ->add('format')
+                    ->add('title')
+                    ->add('collectionName')
+                    ->add('description')
+                    ->add('commercial')
+                    ->add('contentDuration', 'text', array('required' => false))
+                    ->add('creationDate', 'text', array('required' => false))
+                    ->add('contentDate', 'text', array('required' => false))
+                    ->add('isReview')
+                    ->add('genreTerms')
+                    ->add('contributor')
+                    ->add('generation')
+                    ->add('part')
+                    ->add('copyrightRestrictions')
+                    ->add('duplicatesDerivatives')
+                    ->add('relatedMaterial')
+                    ->add('conditionNote')
+                    ->add('project')
+                    ->add('userId', 'hidden', array(
+                        'data' => $this->selectedOptions['userId'],
+                        'mapped' => false,
+                        'required' => false,
+                    ))
+                    ->add('mediaType')
+                    ->add('reelDiameters')
+                    ->addEventListener(
+                            FormEvents::PRE_SUBMIT, array($this, 'onPreSubmitData'))
+                    ->addEventListener(
+                            FormEvents::POST_SUBMIT, array($this, 'onPostSubmitData'))
             ;
         }
     }
 
     public function onPreSetData(FormEvent $event)
     {
-
+        
     }
 
     public function onPreSubmitData(FormEvent $event)
@@ -121,10 +128,10 @@ class RecordsType extends AbstractType
         $record = $event->getData();
 //		$projectId = $record['projectHidden'];
         if (isset($record['mediaTypeHidden'])) {
-                    $mediaTypeId = $record['mediaTypeHidden'];
-                    $this->mediaTyp = $this->em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $mediaTypeId));
-                    $record['mediaType'] = $this->mediaTyp;
-                }
+            $mediaTypeId = $record['mediaTypeHidden'];
+            $this->mediaTyp = $this->em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $mediaTypeId));
+            $record['mediaType'] = $this->mediaTyp;
+        }
 
         $userId = $record['userId'];
 
@@ -133,7 +140,6 @@ class RecordsType extends AbstractType
 //			$this->proj = $this->em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
 //		}
         $this->user = $this->em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
-
     }
 
     public function onPostSubmitData(FormEvent $event)
@@ -143,10 +149,10 @@ class RecordsType extends AbstractType
         if ($record->getId()) {
             $record->setEditor($this->user);
             $record->setUpdatedOnValue();
-                        $record->setMediaType($this->mediaTyp);
+            $record->setMediaType($this->mediaTyp);
         } else {
             $record->setUser($this->user);
-                }
+        }
 //		if ($this->proj)
 //		{
 //			$record->setProject($this->proj);
@@ -160,7 +166,7 @@ class RecordsType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Application\Bundle\FrontBundle\Entity\Records',
-            'intention'  => 'records'
+            'intention' => 'records'
         ));
     }
 
