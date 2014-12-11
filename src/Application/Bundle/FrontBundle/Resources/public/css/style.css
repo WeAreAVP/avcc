@@ -123,3 +123,7 @@ span.has-error ul{
 span.has-error ul li{
     color:red;
 }
+#processing{
+    background: url('../../../images/ajax-loader.gif') no-repeat left;
+    padding-left: 38px;
+}

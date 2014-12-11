@@ -7,7 +7,6 @@ function initialize_records_form() {
     $('#cassetteSize_lbl').hide();
     $("#formatVersion_lbl").hide();
     $('.new #mediaType option[value="' + selectedMediaType + '"]').attr("selected", "selected");
-    showUpdateFields();
     $.mask.definitions['y'] = '[1-2,x]';
     $.mask.definitions['m'] = '[0-1,x]';
     $.mask.definitions['d'] = '[0-3,x]';
@@ -15,9 +14,13 @@ function initialize_records_form() {
     $("#creationDate, #contentDate").mask("yggg-mg-dg", {optional: true});
     updateFormat();
     onChangeMediaType();
+    showUpdateFields();
 }
 function updateFormat() {
+    var selfObj = this;
+    selfObj.ajaxCall = false;
     /// call to get base dropdown options
+//    $('#processing').html('<img src="/images/ajax-loader.gif" /> <span><b>Processing please wait...</b></span>');
     if (selectedFormat) {
         url = baseUrl + 'getFormat/' + $("#mediaType").val() + '/' + selectedFormat;
     } else {
@@ -30,15 +33,16 @@ function updateFormat() {
             if (response != "") {
                 $("#format").html(response);
                 $("#format").change();
-            } else {
+                $('#processing').hide();
+                $('#fieldsPanel').show();
             }
         }
 
-    }); // Ajax Call
+    }); // Ajax Call    
 }
 
 function showUpdateFields() {
-    $('#format').change(function () {
+    $('#format').change(function () {        
         var showDiskDiameter = [16, 17, 18, 19, 20, 28];
         var showMediaDiameter = [1, 2, 3, 4, 5, 24];
         var showTapeThickness = [1, 2, 3, 4, 5];
@@ -82,67 +86,73 @@ function showUpdateFields() {
         } else {
             $('#slides_lbl, #monoStereo_lbl, #noiceReduction_lbl').show();
         }
-        /// call to get base dropdown options
-        $.ajax({
-            type: "GET",
-            url: baseUrl + 'getBase/' + $('#format').val(),
-            success: function (response) {
-                if (response != "") {
-                    $("#bases_lbl").show();
-                    $("#bases").html(response);
-                } else {
-                    $("#bases_lbl").hide();
-                }
-            }
-
-        }); // Ajax Call
-        /// call to get reel diameters dropdown options
-        $.ajax({
-            type: "GET",
-            url: baseUrl + 'getReelDiameter/' + $(this).val() + '/' + $("#mediaType").val(),
-            success: function (response) {
-                if (response != "") {
-                    $("#reelDiameters_lbl").show();
-                    $("#reelDiameters").html(response);
-                } else {
-                    $("#reelDiameters_lbl").hide();
-                }
-            }
-
-        }); // Ajax Call 
-        if (jQuery.inArray(parseInt($(this).val()), hideRecordingSpeedFormat) >= 0) {
-            $('#recordingSpeed_lbl').hide();
-        } else {
-            $('#recordingSpeed_lbl').show();
-            /// call to get recording speed dropdown options
+        if ($(this).val()) {
+            /// call to get base dropdown options
             $.ajax({
                 type: "GET",
-                url: baseUrl + 'getRecordingSpeed/' + $(this).val() + '/' + $("#mediaType").val(),
+                url: baseUrl + 'getBase/' + $('#format').val(),
                 success: function (response) {
                     if (response != "") {
-                        $("#recordingSpeed_lbl").show();
-                        $("#recordingSpeed").html(response);
+                        $("#bases_lbl").show();
+                        $("#bases").html(response);
                     } else {
-                        $("#recordingSpeed_lbl").hide();
+                        $("#bases_lbl").hide();
                     }
+//                    selfObj.ajaxCall = true;
                 }
 
-            }); // Ajax Call  
-        }
-        /// call to get formatversion dropdown options
-        $.ajax({
-            type: "GET",
-            url: baseUrl + 'getFormatVersion/' + $(this).val(),
-            success: function (response) {
-                if (response != "") {
-                    $("#formatVersion_lbl").show();
-                    $("#formatVersion").html(response);
-                } else {
-                    $("#formatVersion_lbl").hide();
+            }); // Ajax Call
+            /// call to get reel diameters dropdown options
+            $.ajax({
+                type: "GET",
+                url: baseUrl + 'getReelDiameter/' + $(this).val() + '/' + $("#mediaType").val(),
+                success: function (response) {
+                    if (response != "") {
+                        $("#reelDiameters_lbl").show();
+                        $("#reelDiameters").html(response);
+                    } else {
+                        $("#reelDiameters_lbl").hide();
+                    }
+//                    selfObj.ajaxCall = true;
                 }
+
+            }); // Ajax Call 
+            if (jQuery.inArray(parseInt($(this).val()), hideRecordingSpeedFormat) >= 0) {
+                $('#recordingSpeed_lbl').hide();
+//                selfObj.ajaxCall = true;
+            } else {
+                $('#recordingSpeed_lbl').show();
+                /// call to get recording speed dropdown options
+                $.ajax({
+                    type: "GET",
+                    url: baseUrl + 'getRecordingSpeed/' + $(this).val() + '/' + $("#mediaType").val(),
+                    success: function (response) {
+                        if (response != "") {
+                            $("#recordingSpeed_lbl").show();
+                            $("#recordingSpeed").html(response);
+                        } else {
+                            $("#recordingSpeed_lbl").hide();
+                        }
+//                        selfObj.ajaxCall = true;
+                    }
+                }); // Ajax Call  
             }
+            /// call to get formatversion dropdown options
+            $.ajax({
+                type: "GET",
+                url: baseUrl + 'getFormatVersion/' + $(this).val(),
+                success: function (response) {
+                    if (response != "") {
+                        $("#formatVersion_lbl").show();
+                        $("#formatVersion").html(response);
+                    } else {
+                        $("#formatVersion_lbl").hide();
+                    }
+//                    selfObj.ajaxCall = true;
+                }
 
-        }); // Ajax Call        
+            }); // Ajax Call   
+        }
     }).change();
 
 }
