@@ -56,7 +56,7 @@ class ReelDiametersController extends Controller
         if ($form->isValid()) {
             $postedValue = $this->get('request')->request->get('application_bundle_frontbundle_reeldiameters');
             $f = $form->getData();
-            foreach ($postedValue['formatVersionFormat'] as $key => $value) {
+            foreach ($postedValue['reelFormat'] as $key => $value) {
                 $entity = new ReelDiameters();
                 $entity->setName($f->getName());
                 $format = $this->getDoctrine()->getRepository('ApplicationFrontBundle:Formats')->find($value);
