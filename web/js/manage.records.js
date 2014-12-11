@@ -15,7 +15,6 @@ function initialize_records_form() {
     $("#creationDate, #contentDate").mask("yggg-mg-dg", {optional: true});
     updateFormat();
     onChangeMediaType();
-//    onChangeFormat();
 }
 function updateFormat() {
     /// call to get base dropdown options
@@ -83,7 +82,20 @@ function showUpdateFields() {
         } else {
             $('#slides_lbl, #monoStereo_lbl, #noiceReduction_lbl').show();
         }
-        getBaseOptions();
+        /// call to get base dropdown options
+        $.ajax({
+            type: "GET",
+            url: baseUrl + 'getBase/' + $('#format').val(),
+            success: function (response) {
+                if (response != "") {
+                    $("#bases_lbl").show();
+                    $("#bases").html(response);
+                } else {
+                    $("#bases_lbl").hide();
+                }
+            }
+
+        }); // Ajax Call
         /// call to get reel diameters dropdown options
         $.ajax({
             type: "GET",
@@ -130,7 +142,7 @@ function showUpdateFields() {
                 }
             }
 
-        }); // Ajax Call
+        }); // Ajax Call        
     }).change();
 
 }
@@ -149,26 +161,3 @@ function onChangeMediaType() {
         }
     });
 }
-
-function getBaseOptions() {
-    /// call to get base dropdown options
-    $.ajax({
-        type: "GET",
-        url: baseUrl + 'getBase/' + $('#format').val(),
-        success: function (response) {
-            if (response != "") {
-                $("#bases_lbl").show();
-                $("#bases").html(response);
-            } else {
-                $("#bases_lbl").hide();
-            }
-        }
-
-    }); // Ajax Call
-}
-//function onChangeFormat() {
-//    console.log($("#format").val());
-//    $("#format").change(function () {
-//        getBaseOptions();
-//    }).change();
-//}
