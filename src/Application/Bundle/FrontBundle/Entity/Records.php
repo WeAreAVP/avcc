@@ -110,7 +110,7 @@ class Records
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Formats")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="format_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="format_id", referencedColumnName="id", nullable = false)
      * })
      * @Assert\NotBlank(message="Formats is required")
      */
