@@ -16,7 +16,7 @@ class ReelDiametersType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-          $isNew = true;
+        $isNew = true;
         if ($options['data']->getId())
             $isNew = false;
         if ($isNew) {
@@ -31,13 +31,21 @@ class ReelDiametersType extends AbstractType
                         },
                         'multiple' => true,
                         'mapped' => false,
+                        'required' => false
                     ))
             ;
         } else {
             $builder
                     ->add('name')
                     ->add('score')
-                    ->add('reelFormat')
+                    ->add('reelFormat','entity', array(
+                        'class' => 'ApplicationFrontBundle:Formats',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('f')
+                                    ->orderBy('f.name', 'ASC');
+                        },
+                        'required' => false
+                    ))
 //            ->add('organization')
             ;
         }
