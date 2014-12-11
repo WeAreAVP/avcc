@@ -48,10 +48,10 @@ class BulkEditController extends Controller
 //                    foreach ($records as $record){
 //                        
 //                    }
-                    $html = "$mediaType  $format";
+                    $html = "$mediaType  $format <br />";
                 }
                 $templateParameters = array('selectedrecords' => $recordIds);
-                $html = $this->container->get('templating')->render('ApplicationFrontBundle:BulkEdit:bulkedit.html.php', $templateParameters);
+                $html .= $this->container->get('templating')->render('ApplicationFrontBundle:BulkEdit:bulkedit.html.php', $templateParameters);
                 $success = true;
             } else {
                 $success = false;
