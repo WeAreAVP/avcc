@@ -15,6 +15,7 @@ function initialize_records_form() {
     $("#creationDate, #contentDate").mask("yggg-mg-dg", {optional: true});
     updateFormat();
     onChangeMediaType();
+    onChangeBase();
 }
 function updateFormat() {
     /// call to get base dropdown options
