@@ -15,7 +15,7 @@ function initialize_records_form() {
     $("#creationDate, #contentDate").mask("yggg-mg-dg", {optional: true});
     updateFormat();
     onChangeMediaType();
-    onChangeFormat();
+//    onChangeFormat();
 }
 function updateFormat() {
     /// call to get base dropdown options
@@ -166,9 +166,9 @@ function getBaseOptions() {
 
     }); // Ajax Call
 }
-function onChangeFormat() {
-    console.log($("#format").val());
-    $("#format").change(function () {
-        getBaseOptions();
-    }).change();
-}
+//function onChangeFormat() {
+//    console.log($("#format").val());
+//    $("#format").change(function () {
+//        getBaseOptions();
+//    }).change();
+//}
