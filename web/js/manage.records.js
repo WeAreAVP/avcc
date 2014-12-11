@@ -98,7 +98,6 @@ function showUpdateFields() {
                     } else {
                         $("#bases_lbl").hide();
                     }
-//                    selfObj.ajaxCall = true;
                 }
 
             }); // Ajax Call
@@ -113,13 +112,11 @@ function showUpdateFields() {
                     } else {
                         $("#reelDiameters_lbl").hide();
                     }
-//                    selfObj.ajaxCall = true;
                 }
 
             }); // Ajax Call 
             if (jQuery.inArray(parseInt($(this).val()), hideRecordingSpeedFormat) >= 0) {
                 $('#recordingSpeed_lbl').hide();
-//                selfObj.ajaxCall = true;
             } else {
                 $('#recordingSpeed_lbl').show();
                 /// call to get recording speed dropdown options
@@ -133,7 +130,6 @@ function showUpdateFields() {
                         } else {
                             $("#recordingSpeed_lbl").hide();
                         }
-//                        selfObj.ajaxCall = true;
                     }
                 }); // Ajax Call  
             }
@@ -148,7 +144,6 @@ function showUpdateFields() {
                     } else {
                         $("#formatVersion_lbl").hide();
                     }
-//                    selfObj.ajaxCall = true;
                 }
 
             }); // Ajax Call   
