@@ -30,6 +30,7 @@ function updateFormat() {
         success: function (response) {
             if (response != "") {
                 $("#format").html(response);
+                $("#format").change();
             } else {
             }
         }
