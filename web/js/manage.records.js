@@ -16,7 +16,7 @@ function initialize_records_form() {
     updateFormat();
     onChangeMediaType();
     showUpdateFields();
-    saveBulkEdit();
+    
 }
 function updateFormat() {
     var selfObj = this;
@@ -32,7 +32,6 @@ function updateFormat() {
         type: "GET",
         url: url,
         success: function (response) {
-            $("#format").html(response);
             if (response != "") {
                 $("#format").html(response);
                 $("#format").change();
