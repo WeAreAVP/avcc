@@ -711,8 +711,7 @@ function Records() {
                                 containerCss: {
                                     backgroundColor: "#fff",
                                     borderColor: "#fff",
-                                    width: 400,
-                                    height: 200,
+                                    width: 400,                                    
                                     top: '0px'
                                 },
                             });
