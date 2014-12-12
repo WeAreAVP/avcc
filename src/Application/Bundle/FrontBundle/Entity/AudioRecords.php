@@ -154,7 +154,7 @@ class AudioRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\AudtioRecords
      */
-    public function setDiskDiameters(DiskDiameters $diskDiameters)
+    public function setDiskDiameters(DiskDiameters $diskDiameters = null)
     {
         $this->diskDiameters = $diskDiameters;
 
@@ -178,7 +178,7 @@ class AudioRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\AudtioRecords
      */
-    public function setMediaDiameters(MediaDiameters $mediaDiameters)
+    public function setMediaDiameters(MediaDiameters $mediaDiameters = null)
     {
         $this->mediaDiameters = $mediaDiameters;
 
@@ -202,7 +202,7 @@ class AudioRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\AudtioRecords
      */
-    public function setBases(Bases $bases)
+    public function setBases(Bases $bases = null)
     {
         $this->bases = $bases;
 
@@ -250,7 +250,7 @@ class AudioRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\AudtioRecords
      */
-    public function setRecordingSpeed(RecordingSpeed $recordingSpeed)
+    public function setRecordingSpeed(RecordingSpeed $recordingSpeed = null)
     {
         $this->recordingSpeed = $recordingSpeed;
 
@@ -274,7 +274,7 @@ class AudioRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\AudtioRecords
      */
-    public function setTapeThickness(TapeThickness $tapeThickness)
+    public function setTapeThickness(TapeThickness $tapeThickness = null)
     {
         $this->tapeThickness = $tapeThickness;
 
@@ -298,7 +298,7 @@ class AudioRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\AudtioRecords
      */
-    public function setSlides(Slides $slides)
+    public function setSlides(Slides $slides = null)
     {
         $this->slides = $slides;
 
@@ -322,7 +322,7 @@ class AudioRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\AudtioRecords
      */
-    public function setTrackTypes(TrackTypes $trackTypes)
+    public function setTrackTypes(TrackTypes $trackTypes = null)
     {
         $this->trackTypes = $trackTypes;
 
@@ -346,7 +346,7 @@ class AudioRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\AudtioRecords
      */
-    public function setMonoStereo(MonoStereo $monoStereo)
+    public function setMonoStereo(MonoStereo $monoStereo = null)
     {
         $this->monoStereo = $monoStereo;
 
@@ -370,7 +370,7 @@ class AudioRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\AudtioRecords
      */
-    public function setNoiceReduction(NoiceReduction $noiceReduction)
+    public function setNoiceReduction(NoiceReduction $noiceReduction = null)
     {
         $this->noiceReduction = $noiceReduction;
 
