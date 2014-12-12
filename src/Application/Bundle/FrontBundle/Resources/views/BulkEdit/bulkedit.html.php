@@ -90,7 +90,7 @@
     </form>
 </div>
 <script type="text/javascript">
-    var baseUrl = '<?php echo $view['router']->generate('bulkedit') ?>';
+    var baseUrl = '<?php // echo $view['router']->generate('bulkedit') ?>';
     var selectedFormat = '';
     var selectedMediaType = '';
     var bulkEdit = '<?php echo $view['router']->generate('bulkedit_edit') ?>';
