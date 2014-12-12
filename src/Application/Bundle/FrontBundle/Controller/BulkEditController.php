@@ -138,12 +138,12 @@ class BulkEditController extends Controller
                 foreach ($recordIdsArray as $recordId) {
                     $record = $em->getRepository('ApplicationFrontBundle:Records')->find($recordId);
                     if ($posted['format']) {
-                        $format = $em->getRepository('ApplicationFrontBundle:Formats')->findOneBy(array('name' => $posted['format']));
+                        $format = $em->getRepository('ApplicationFrontBundle:Formats')->findOneBy(array('id' => $posted['format']));
                         $record->setProject($format);
                         $update = true;
                     }
                     if ($posted['project']) {
-                        $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('name' => $posted['project']));
+                        $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $posted['project']));
                         $record->setProject($project);
                         $update = true;
                     }
@@ -168,7 +168,7 @@ class BulkEditController extends Controller
                         $update = true;
                     }
                     if ($posted['commercial']) {
-                        $commercial = $em->getRepository('ApplicationFrontBundle:Commercial')->findOneBy(array('name' => $posted['commercial']));
+                        $commercial = $em->getRepository('ApplicationFrontBundle:Commercial')->findOneBy(array('id' => $posted['commercial']));
                         $record->setCommercial($commercial);
                         $update = true;
                     }
