@@ -718,10 +718,10 @@ function Records() {
                                     
                                 },
                             });
-                            $("#bulk_process").hide();
                             $(".bulkEditform").html(response.html);
                             $("#bulkEditModal").show();
                             $(".bulkEditform").show();
+                            $("#bulk_process").hide();
                         }
                     }
                 });
