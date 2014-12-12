@@ -33,20 +33,20 @@ class FilmRecords
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\PrintTypes")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="print_type_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="print_type_id", referencedColumnName="id", nullable=true)
      * })
      */
-    private $printType;
+    private $printType = null;
 
     /**
      * @var \Application\Bundle\FrontBundle\Entity\ReelCore
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\ReelCore")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="reel_core_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="reel_core_id", referencedColumnName="id", nullable=true)
      * })
      */
-    private $reelCore;
+    private $reelCore = null;
 
     /**
      * @var integer
@@ -70,7 +70,7 @@ class FilmRecords
      *   @ORM\JoinColumn(name="base_id", referencedColumnName="id", nullable=true)
      * })
      */
-    private $bases;
+    private $bases = null;
 
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Colors
@@ -80,7 +80,7 @@ class FilmRecords
      *   @ORM\JoinColumn(name="color_id", referencedColumnName="id", nullable=true)
      * })
      */
-    private $colors;
+    private $colors = null;
 
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Sounds
@@ -90,7 +90,7 @@ class FilmRecords
      *   @ORM\JoinColumn(name="sound_id", referencedColumnName="id", nullable=true)
      * })
      */
-    private $sound;
+    private $sound = null;
 
     /**
      * @var \Application\Bundle\FrontBundle\Entity\FrameRates
@@ -100,7 +100,7 @@ class FilmRecords
      *   @ORM\JoinColumn(name="frame_rate_id", referencedColumnName="id", nullable=true)
      * })
      */
-    private $frameRate;
+    private $frameRate = null;
 
     /**
      * @var \Application\Bundle\FrontBundle\Entity\AcidDetectionStrips
@@ -110,7 +110,7 @@ class FilmRecords
      *   @ORM\JoinColumn(name="acid_detection_id", referencedColumnName="id", nullable=true)
      * })
      */
-    private $acidDetectionStrip;
+    private $acidDetectionStrip = null;
 
     /**
      * @var float

@@ -144,7 +144,7 @@ class Records
      *   @ORM\JoinColumn(name="commercial_id", referencedColumnName="id", nullable = true)
      * })
      */
-    private $commercial;
+    private $commercial = null;
 
     /**
      * @var \Application\Bundle\FrontBundle\Entity\ReelDiameters
@@ -154,7 +154,7 @@ class Records
      *   @ORM\JoinColumn(name="reel_diameter_id", referencedColumnName="id", nullable = true)
      * })
      */
-    private $reelDiameters;
+    private $reelDiameters = null;
 
     /**
      * @var integer
