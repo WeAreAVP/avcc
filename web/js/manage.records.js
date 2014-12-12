@@ -32,6 +32,7 @@ function updateFormat() {
         type: "GET",
         url: url,
         success: function (response) {
+            $("#format").html(response);
             if (response != "") {
                 $("#format").html(response);
                 $("#format").change();
