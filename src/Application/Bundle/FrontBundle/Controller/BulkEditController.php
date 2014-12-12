@@ -36,7 +36,7 @@ class BulkEditController extends Controller
             $html = '';
             $errorMsg = '';
             $em = $this->getDoctrine()->getManager();
-            $disable = array('mediaType' => 0);
+            $disable = array('mediaType' => 0, "format" => 0);
             if ($recordIds) {
                 if ($recordIds == 'all') {
                     $sphinxInfo = $this->getSphinxInfo();
