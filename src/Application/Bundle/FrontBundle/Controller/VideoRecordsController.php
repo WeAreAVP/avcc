@@ -253,7 +253,7 @@ class VideoRecordsController extends Controller
                 if ($editForm->get('save_and_duplicate')->isClicked()) {
                     return $this->redirect($this->generateUrl('record_video_duplicate', array('videoRecId' => $id)));
                 }
-                if ($form->get('save_and_new')->isClicked()) {
+                if ($editForm->get('save_and_new')->isClicked()) {
                     return $this->redirect($this->generateUrl('record_video_new'));
                 }
                 $this->get('session')->getFlashBag()->add('success', 'Video record updated succesfully.');

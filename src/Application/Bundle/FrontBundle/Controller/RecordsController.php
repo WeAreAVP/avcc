@@ -466,4 +466,33 @@ class RecordsController extends Controller
 
         return $this->redirect($this->generateUrl('record_list'));
     }
+    
+    /**
+     * Finds and displays a AudioRecords entity.
+     *
+     * @param integer $id
+     *
+     * @Route("/record/{id}", name="record_show")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('id' => $id));
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Records entity.');
+        }
+
+        $fieldsObj = new DefaultFields();
+        $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+
+        return $this->render('ApplicationFrontBundle:Records:show.html.php', array(
+                    'entity' => $entity,
+                    'fieldSettings' => $userViewSettings
+        ));
+    }
 }

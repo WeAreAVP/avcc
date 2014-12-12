@@ -264,7 +264,7 @@ class FilmRecordsController extends Controller
                 if ($editForm->get('save_and_duplicate')->isClicked()) {
                     return $this->redirect($this->generateUrl('record_film_duplicate', array('filmRecId' => $id)));
                 }
-                if ($form->get('save_and_new')->isClicked()) {
+                if ($editForm->get('save_and_new')->isClicked()) {
                     return $this->redirect($this->generateUrl('record_film_new'));
                 }
                 $this->get('session')->getFlashBag()->add('success', 'Film record updated succesfully.');

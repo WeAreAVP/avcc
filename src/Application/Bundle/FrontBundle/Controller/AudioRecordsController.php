@@ -187,7 +187,7 @@ class AudioRecordsController extends Controller
      *
      * @param integer $id
      *
-     * @Route("/audio/{id}/edit", name="record_edit")
+     * @Route("/{id}/edit", name="record_edit")
      * @Method("GET")
      * @Template()
      * @return array
@@ -245,7 +245,7 @@ class AudioRecordsController extends Controller
      * @param Request $request
      * @param type    $id
      *
-     * @Route("/audio/{id}", name="record_update")
+     * @Route("/{id}", name="record_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:AudioRecords:edit.html.php")
      * @return array
