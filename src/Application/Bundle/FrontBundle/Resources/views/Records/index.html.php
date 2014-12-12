@@ -60,7 +60,7 @@
                                     <?php
                                 } else {
                                     ?>
-                                    <th id="<?php echo $value ?>"><?php echo str_replace('_', ' ', $column) ?></th>
+                                    <th id="<?php echo $value.'_th'  ?>"><?php echo str_replace('_', ' ', $column) ?></th>
                                 <?php } ?>
                             <?php } ?>
                         </tr>
