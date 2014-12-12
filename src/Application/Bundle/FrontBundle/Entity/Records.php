@@ -538,7 +538,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setCommercial(Commercial $commercial)
+    public function setCommercial(Commercial $commercial = null)
     {
         $this->commercial = $commercial;
 
@@ -562,7 +562,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setReelDiameters(ReelDiameters $reeldiameter)
+    public function setReelDiameters(ReelDiameters $reeldiameter = null)
     {
         $this->reelDiameters = $reeldiameter;
 

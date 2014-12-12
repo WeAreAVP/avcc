@@ -101,7 +101,7 @@ class VideoRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\VideoRecords
      */
-    public function setCassetteSize(CassetteSizes $cs)
+    public function setCassetteSize(CassetteSizes $cs = null)
     {
         $this->cassetteSize = $cs;
 
@@ -125,7 +125,7 @@ class VideoRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\VideoRecords
      */
-    public function setFormatVersion(FormatVersions $fv)
+    public function setFormatVersion(FormatVersions $fv = null)
     {
         $this->formatVersion = $fv;
 
@@ -173,7 +173,7 @@ class VideoRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\VideoRecords
      */
-    public function setRecordingSpeed(RecordingSpeed $recordingSpeed)
+    public function setRecordingSpeed(RecordingSpeed $recordingSpeed = null)
     {
         $this->recordingSpeed = $recordingSpeed;
 
@@ -197,7 +197,7 @@ class VideoRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\VideoRecords
      */
-    public function setRecordingStandard(RecordingStandards $recordingStandard)
+    public function setRecordingStandard(RecordingStandards $recordingStandard = null)
     {
         $this->recordingStandard = $recordingStandard;
 
