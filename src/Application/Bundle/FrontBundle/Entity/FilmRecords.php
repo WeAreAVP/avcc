@@ -242,7 +242,7 @@ class FilmRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\FilmRecords
      */
-    public function setBases(Bases $bases)
+    public function setBases(Bases $bases = null)
     {
         $this->bases = $bases;
 
@@ -266,7 +266,7 @@ class FilmRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\FilmRecords
      */
-    public function setColors(Colors $color)
+    public function setColors(Colors $color = null)
     {
         $this->colors = $color;
 
@@ -290,7 +290,7 @@ class FilmRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\FilmRecords
      */
-    public function setSound(Sounds $sound)
+    public function setSound(Sounds $sound = null)
     {
         $this->sound = $sound;
 
@@ -314,7 +314,7 @@ class FilmRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\FilmRecords
      */
-    public function setFrameRate(FrameRates $frameRate)
+    public function setFrameRate(FrameRates $frameRate = null)
     {
         $this->frameRate = $frameRate;
 
@@ -338,7 +338,7 @@ class FilmRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\FilmRecords
      */
-    public function setAcidDetectionStrip(AcidDetectionStrips $ads)
+    public function setAcidDetectionStrip(AcidDetectionStrips $ads = null)
     {
         $this->acidDetectionStrip = $ads;
 
