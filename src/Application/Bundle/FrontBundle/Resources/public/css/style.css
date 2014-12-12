@@ -127,3 +127,6 @@ span.has-error ul li{
     background: url('../../../images/ajax-loader.gif') no-repeat left;
     padding-left: 38px;
 }
+#bulkEditModal{
+    overflow-y: scroll;
+}
