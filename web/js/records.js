@@ -711,13 +711,15 @@ function Records() {
                                 containerCss: {
                                     backgroundColor: "#fff",
                                     borderColor: "#fff",
-                                    width: 400,                                    
+                                    width: 400,
+                                    height: 750,
                                     top: '0px'
                                 },
                             });
                             $("#bulk_process").hide();
                             $(".bulkEditform").html(response.html);
-                            $("#bulkEditModal, #bulkEditform").show();
+                            $("#bulkEditModal").show();
+                            $("#bulkEditform").show();
                         }
                     }
                 });
