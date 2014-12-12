@@ -6,7 +6,8 @@ function initialize_records_form() {
     $('#trackTypes_lbl').hide();
     $('#cassetteSize_lbl').hide();
     $("#formatVersion_lbl").hide();
-    $('.new #mediaType option[value="' + selectedMediaType + '"]').attr("selected", "selected");
+    if (selectedMediaType)
+        $('.new #mediaType option[value="' + selectedMediaType + '"]').attr("selected", "selected");
     $.mask.definitions['y'] = '[1-2,x]';
     $.mask.definitions['m'] = '[0-1,x]';
     $.mask.definitions['d'] = '[0-3,x]';
@@ -42,7 +43,7 @@ function updateFormat() {
 }
 
 function showUpdateFields() {
-    $('#format').change(function () {        
+    $('#format').change(function () {
         var showDiskDiameter = [16, 17, 18, 19, 20, 28];
         var showMediaDiameter = [1, 2, 3, 4, 5, 24];
         var showTapeThickness = [1, 2, 3, 4, 5];
@@ -164,5 +165,22 @@ function onChangeMediaType() {
             window.location.href = baseUrl + 'audio/new';
             ;
         }
+    });
+}
+
+function saveBulkEdit() {
+    $("#submitBulkEdit").click(function () {
+        data = $('#frmBulkEdit').serialize();
+        $.ajax({
+            type: "POST",
+            url: baseUrl + bulkEdit,
+            data: data,
+            dataType: 'json',
+            success: function (response) {
+                if (response.success == 'true') {
+                    window.location.reload();
+                } 
+            }
+        }); // Ajax Call  
     });
 }
