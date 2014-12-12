@@ -85,5 +85,5 @@
             <button type="button" name="close" id="" class="button simplemodal-close">Close</button>
         </div>
     </div>
-    <div class="bulkEditform" style="display:none;"></div>
+    <div class="bulkEditform" style=""></div>
 </div>
