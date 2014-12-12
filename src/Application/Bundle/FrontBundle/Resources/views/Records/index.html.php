@@ -56,7 +56,7 @@
                                 <?php
                                 if ($column == 'checkbox_Col') {
                                     ?>
-                                    <th id="<?php echo $value ?>"><input type="checkbox" name="selectAll" id="selectAll" /></th>
+                                    <th id="<?php echo $value.'_th' ?>"><input type="checkbox" name="selectAll" id="selectAll" /></th>
                                     <?php
                                 } else {
                                     ?>
