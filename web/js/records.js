@@ -719,7 +719,7 @@ function Records() {
                             $("#bulk_process").hide();
                             $(".bulkEditform").html(response.html);
                             $("#bulkEditModal").show();
-                            $("#bulkEditform").show();
+                            $(".bulkEditform").show();
                         }
                     }
                 });
