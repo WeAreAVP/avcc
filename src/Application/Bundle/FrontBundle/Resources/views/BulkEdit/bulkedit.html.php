@@ -1,4 +1,4 @@
-<div id="bulkEdit" class="" tabindex="-1" role="dialog" style="display:none;">
+<div id="bulkEdit" class="">
     <form method="post" name="frmBulkEdit" action="" id="frmBulkEdit">
         <input type="hidden" name="records" id="records" value="<?php echo $selectedrecords; ?>"/>
         <?php $isMediaDisable = $disableFields['mediaType']; ?>
