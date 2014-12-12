@@ -143,7 +143,7 @@ class BulkEditController extends Controller
                         $update = true;
                     }
                     if ($posted['project']) {
-                        $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $posted['project']));
+                        $project = $em->getRepository('ApplicationFrontBundle:Projects')->find($posted['project']);
                         $record->setProject($project);
                         $update = true;
                     }
