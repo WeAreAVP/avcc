@@ -89,6 +89,7 @@
         </div>
     </form>
 </div>
+<script src="<?php echo $view['assets']->getUrl('js/manage.records.js') ?>"></script>
 <script type="text/javascript">
     var baseUrl = '<?php // echo $view['router']->generate('bulkedit') ?>';
     var selectedFormat = '';
