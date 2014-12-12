@@ -137,6 +137,11 @@ class BulkEditController extends Controller
                 $recordIdsArray = explode(',', $recordIds);
                 foreach ($recordIdsArray as $recordId) {
                     $record = $em->getRepository('ApplicationFrontBundle:Records')->find($recordId);
+                    if ($posted['format']) {
+                        $format = $em->getRepository('ApplicationFrontBundle:Formats')->findOneBy(array('name' => $posted['format']));
+                        $record->setProject($format);
+                        $update = true;
+                    }
                     if ($posted['project']) {
                         $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('name' => $posted['project']));
                         $record->setProject($project);

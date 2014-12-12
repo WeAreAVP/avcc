@@ -174,7 +174,7 @@ function saveBulkEdit() {
         data = $('#frmBulkEdit').serialize();
         $.ajax({
             type: "POST",
-            url: baseUrl + bulkEdit,
+            url: bulkEdit,
             data: data,
             dataType: 'json',
             success: function (response) {
