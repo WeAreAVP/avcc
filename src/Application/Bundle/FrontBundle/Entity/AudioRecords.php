@@ -38,7 +38,7 @@ class AudioRecords
      *   @ORM\JoinColumn(name="disk_diameter_id", referencedColumnName="id")
      * })
      */
-    private $diskDiameters;
+    private $diskDiameters = null;
 
     /**
      * @var \Application\Bundle\FrontBundle\Entity\MediaDiameters
@@ -48,7 +48,7 @@ class AudioRecords
      *   @ORM\JoinColumn(name="media_diameter_id", referencedColumnName="id")
      * })
      */
-    private $mediaDiameters;
+    private $mediaDiameters = null;
 
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Bases
@@ -58,7 +58,7 @@ class AudioRecords
      *   @ORM\JoinColumn(name="base_id", referencedColumnName="id")
      * })
      */
-    private $bases;
+    private $bases = null;
 
     /**
      * @var integer
@@ -75,7 +75,7 @@ class AudioRecords
      *   @ORM\JoinColumn(name="recording_speed_id", referencedColumnName="id")
      * })
      */
-    private $recordingSpeed;
+    private $recordingSpeed = null;
 
     /**
      * @var \Application\Bundle\FrontBundle\Entity\TapeThickness
@@ -85,7 +85,7 @@ class AudioRecords
      *   @ORM\JoinColumn(name="tape_thickness_id", referencedColumnName="id")
      * })
      */
-    private $tapeThickness;
+    private $tapeThickness = null;
 
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Sides
@@ -95,7 +95,7 @@ class AudioRecords
      *   @ORM\JoinColumn(name="side_id", referencedColumnName="id")
      * })
      */
-    private $slides;
+    private $slides = null;
 
     /**
      * @var \Application\Bundle\FrontBundle\Entity\TrackTypes
@@ -105,7 +105,7 @@ class AudioRecords
      *   @ORM\JoinColumn(name="track_type_id", referencedColumnName="id")
      * })
      */
-    private $trackTypes;
+    private $trackTypes = null;
 
     /**
      * @var \Application\Bundle\FrontBundle\Entity\MonoStereo
@@ -115,7 +115,7 @@ class AudioRecords
      *   @ORM\JoinColumn(name="mono_stero_id", referencedColumnName="id")
      * })
      */
-    private $monoStereo;
+    private $monoStereo = null;
 
     /**
      * @var \Application\Bundle\FrontBundle\Entity\NoiceReduction
@@ -125,7 +125,7 @@ class AudioRecords
      *   @ORM\JoinColumn(name="noice_reduction_id", referencedColumnName="id")
      * })
      */
-    private $noiceReduction;
+    private $noiceReduction = null;
 
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Records
