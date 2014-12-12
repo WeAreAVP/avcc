@@ -67,7 +67,7 @@ class FilmRecords
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Bases")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="base_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="base_id", referencedColumnName="id", nullable=true)
      * })
      */
     private $bases;
@@ -77,7 +77,7 @@ class FilmRecords
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Colors")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="color_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="color_id", referencedColumnName="id", nullable=true)
      * })
      */
     private $colors;
@@ -87,7 +87,7 @@ class FilmRecords
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Sounds")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="sound_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="sound_id", referencedColumnName="id", nullable=true)
      * })
      */
     private $sound;
@@ -97,7 +97,7 @@ class FilmRecords
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\FrameRates")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="frame_rate_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="frame_rate_id", referencedColumnName="id", nullable=true)
      * })
      */
     private $frameRate;
@@ -107,7 +107,7 @@ class FilmRecords
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\AcidDetectionStrips")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="acid_detection_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="acid_detection_id", referencedColumnName="id", nullable=true)
      * })
      */
     private $acidDetectionStrip;

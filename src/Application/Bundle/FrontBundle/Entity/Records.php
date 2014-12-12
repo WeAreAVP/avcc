@@ -141,7 +141,7 @@ class Records
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Commercial")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="commercial_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="commercial_id", referencedColumnName="id", nullable = true)
      * })
      */
     private $commercial;
@@ -151,7 +151,7 @@ class Records
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\ReelDiameters")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="reel_diameter_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="reel_diameter_id", referencedColumnName="id", nullable = true)
      * })
      */
     private $reelDiameters;
