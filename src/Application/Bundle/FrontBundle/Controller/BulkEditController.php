@@ -127,7 +127,7 @@ class BulkEditController extends Controller
     {
         if ($request->isXmlHttpRequest()) {
             $posted = $request->request->all();
-            print_r($posted) exit;
+            print_r($posted); exit;
             $recordIds = $posted['records'];
             $mediaDisable = $posted['mediaDisable'];
             $em = $this->getDoctrine()->getManager();

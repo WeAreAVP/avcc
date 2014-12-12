@@ -16,6 +16,7 @@ function initialize_records_form() {
     updateFormat();
     onChangeMediaType();
     showUpdateFields();
+    saveBulkEdit()
 }
 function updateFormat() {
     var selfObj = this;
