@@ -13,7 +13,7 @@
                             <label for="mediaType" class="required"> </label>
                             <div data-role="input-control" class="input-control">
                                 <?php // $selected?>
-                                <select required="required" class="size4 disabled" name="mediaType" id="mediaTypeIn" disabled="disabled">
+                                <select required="required" class="size4 disabled" name="mediaType" id="mediaType" disabled="disabled">
                                     <?php foreach ($relatedFields['mediaTypes'] as $mediaType) { ?>
                                         <option value="<?php echo $mediaType->getId(); ?>"><?php echo $mediaType->getName() ?></option>
                                     <?php } ?>
