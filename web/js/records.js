@@ -711,9 +711,11 @@ function Records() {
                                 containerCss: {
                                     backgroundColor: "#fff",
                                     borderColor: "#fff",
-                                    width: 400,
-                                    height: 750,
-                                    top: '0px'
+                                    width: 450,
+                                    height: 550,
+                                    autoResize: true,
+                                    top: 50,
+                                    
                                 },
                             });
                             $("#bulk_process").hide();
