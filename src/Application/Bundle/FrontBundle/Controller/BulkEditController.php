@@ -174,7 +174,6 @@ class BulkEditController extends Controller
                     }
 
                     if ($update) {
-//                    $em->persist($record);
                         $em->flush();
                         $shpinxInfo = $this->getSphinxInfo();
                         $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $record->getId(), $record->getMediaType()->getId());
