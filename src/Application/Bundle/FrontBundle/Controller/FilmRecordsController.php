@@ -61,7 +61,7 @@ class FilmRecordsController extends Controller
             try {
                 $em->flush();
                 $shpinxInfo = $this->getSphinxInfo();
-                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getId(), 2);
+                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 2);
                 $sphinxSearch->insert();
                 // the save_and_dupplicate button was clicked
                 if ($form->get('save_and_duplicate')->isClicked()) {
@@ -258,7 +258,7 @@ class FilmRecordsController extends Controller
             try {
                 $em->flush();
                 $shpinxInfo = $this->getSphinxInfo();
-                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getId(), 2);
+                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 2);
                 $sphinxSearch->replace();
                 // the save_and_dupplicate button was clicked
                 if ($editForm->get('save_and_duplicate')->isClicked()) {

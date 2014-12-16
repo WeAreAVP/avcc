@@ -64,7 +64,7 @@ class AudioRecordsController extends Controller
             try {
                 $em->flush();
                 $shpinxInfo = $this->getSphinxInfo();
-                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getId(), 1);
+                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 1);
                 $sphinxSearch->insert();
                 $this->get('session')->getFlashBag()->add('success', 'Audio record added succesfully.');
                 // the save_and_dupplicate button was clicked
@@ -270,7 +270,7 @@ class AudioRecordsController extends Controller
             try {
                 $em->flush();
                 $shpinxInfo = $this->getSphinxInfo();
-                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getId(), 1);
+                $sphinxSearch = new SphinxSearch($em, $shpinxInfo,  $entity->getRecord()->getId(), 1);
                 $sphinxSearch->replace();
 
                 // the save_and_dupplicate button was clicked

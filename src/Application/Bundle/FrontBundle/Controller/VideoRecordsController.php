@@ -59,7 +59,7 @@ class VideoRecordsController extends Controller
             try {
                 $em->flush();
                 $sphinxInfo = $this->getSphinxInfo();
-                $sphinxSearch = new SphinxSearch($em, $sphinxInfo, $entity->getId(), 3);
+                $sphinxSearch = new SphinxSearch($em, $sphinxInfo, $entity->getRecord()->getId(), 3);
                 $sphinxSearch->insert();
                 // the save_and_dupplicate button was clicked
                 if ($form->get('save_and_duplicate')->isClicked()) {
@@ -247,7 +247,7 @@ class VideoRecordsController extends Controller
             try {
                 $em->flush();
                 $sphinxInfo = $this->getSphinxInfo();
-                $sphinxSearch = new SphinxSearch($em, $sphinxInfo, $entity->getId(), 3);
+                $sphinxSearch = new SphinxSearch($em, $sphinxInfo, $entity->getRecord()->getId(), 3);
                 $sphinxSearch->replace();
                 // the save_and_dupplicate button was clicked
                 if ($editForm->get('save_and_duplicate')->isClicked()) {
