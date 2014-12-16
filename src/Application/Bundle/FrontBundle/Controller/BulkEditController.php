@@ -41,8 +41,12 @@ class BulkEditController extends Controller
                 if ($recordIds == 'all') {
                     $sphinxInfo = $this->getSphinxInfo();
                     $columnNames = array('id');
-                    $recordIDs = $this->fetchFromSphinx($this->getUser(), $sphinxInfo, $em, $columnNames);
-                    print_r($recordIDs);exit;
+                    $recordsSph = $this->fetchFromSphinx($this->getUser(), $sphinxInfo, $em, $columnNames);
+                    $recordIdsArr = array();
+                    foreach($recordsSph as $recordSph){
+                        $recordIdsArr[] = $recordSph['id'];
+                    }
+                    print_r($recordIdsArr);exit;
                     $html = "all records";
                 } else {
                     $recordIdsArray = explode(',', $recordIds);
