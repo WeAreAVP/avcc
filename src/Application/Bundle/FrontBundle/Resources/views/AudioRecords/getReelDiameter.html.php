@@ -1,5 +1,6 @@
 <?php $view->extend('FOSUserBundle::default.layout.html.php') ?>
 <?php $view['slots']->start('body') ?>
+<?php if ($reeldiameters): ?>
 <option value=""></option>
 <?php
  foreach ($reeldiameters as $reeldiameter) {
@@ -8,6 +9,7 @@
 <?php
  }
 ?>
+<?php endif;?>
 <?php
 $view['slots']->stop();
 ?>
