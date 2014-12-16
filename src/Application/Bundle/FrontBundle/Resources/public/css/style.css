@@ -130,3 +130,6 @@ span.has-error ul li{
 #bulkEditModal{
     height: 500px;
 }
+#bulk_edit_body label{
+    color:#000!important;
+}
