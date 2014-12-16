@@ -712,7 +712,7 @@ function Records() {
                                     backgroundColor: "#fff",
                                     borderColor: "#fff",
                                     width: 450,
-                                    height: 400,
+                                    height: 550,
                                     autoResize: true,
                                     top: 50,
                                     
