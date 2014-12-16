@@ -337,9 +337,6 @@ class ImportReport extends ContainerAware
                 $audio->setRecord($record);
                 $em->persist($audio);
                 $em->flush();
-                $shpinxInfo = $this->getSphinxInfo();
-                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $audio->getId(), 1);
-                $sphinxSearch->insert();
             }
             if ($row['mediaType'] == 'Film') {
                 $filmRecord = new FilmRecords();
@@ -372,9 +369,6 @@ class ImportReport extends ContainerAware
                 $filmRecord->setRecord($record);
                 $em->persist($filmRecord);
                 $em->flush();
-                $shpinxInfo = $this->getSphinxInfo();
-                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $filmRecord->getId(), 2);
-                $sphinxSearch->insert();
             }
             if ($row['mediaType'] == 'Video') {
                 $videoRecord = new VideoRecords();
@@ -397,10 +391,10 @@ class ImportReport extends ContainerAware
                 $videoRecord->setRecord($record);
                 $em->persist($videoRecord);
                 $em->flush();
-                $shpinxInfo = $this->getSphinxInfo();
-                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $videoRecord->getId(), 3);
-                $sphinxSearch->insert();
             }
+            $shpinxInfo = $this->getSphinxInfo();
+            $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $record->getId());
+            $sphinxSearch->insert();
         }
         return count($rows);
     }
