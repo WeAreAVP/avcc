@@ -173,7 +173,7 @@ function onChangeMediaType() {
 function saveBulkEdit() {
     $("#submitBulkEdit").click(function () {
         data = $('#frmBulkEdit').serialize();
-        $.ajaxStart(function () {
+        $(document).ajaxStart(function () {
             $("#frmBulkEdit").hide();
             $('#editProcessing').css('color', 'black');
             $('#editProcessing').html('<img src="/images/ajax-loader.gif" /> <span><b>Processing please wait...</b></span>');
