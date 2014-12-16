@@ -86,7 +86,7 @@ class SphinxFields
      */
     private function prepareAudioFields()
     {
-        $this->indexFields['s_disk_diameter'] = $this->indexFields['disk_diameter'] = ($this->record->getAudioRecord()->getAudioRecord()->getDiskDiameters()) ? $this->record->getAudioRecord()->getDiskDiameters()->getName() : "";
+        $this->indexFields['s_disk_diameter'] = $this->indexFields['disk_diameter'] = ($this->record->getAudioRecord()->getDiskDiameters()) ? $this->record->getAudioRecord()->getDiskDiameters()->getName() : "";
         $this->indexFields['base'] = ($this->record->getAudioRecord()->getBases()) ? $this->record->getAudioRecord()->getBases()->getName() : "";
         $this->indexFields['s_base'] = ($this->record->getAudioRecord()->getBases()) ? $this->record->getAudioRecord()->getBases()->getName() : "";
         $this->indexFields['media_diameter'] = ($this->record->getAudioRecord()->getMediaDiameters()) ? $this->record->getAudioRecord()->getMediaDiameters()->getName() : "";
