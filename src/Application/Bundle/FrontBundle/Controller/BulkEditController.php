@@ -156,7 +156,7 @@ class BulkEditController extends Controller
 //                $recordIdsArray = explode(',', $recordIds);
                 foreach ($recordIdsArray as $recordId) {
                     $record = $em->getRepository('ApplicationFrontBundle:Records')->find($recordId);
-                    if (isset($posted['format'])) {
+                    if (isset($posted['format']) && $posted['format']) {
                         $format = $em->getRepository('ApplicationFrontBundle:Formats')->findOneBy(array('id' => $posted['format']));
                         $record->setFormat($format);
                         $update = true;
