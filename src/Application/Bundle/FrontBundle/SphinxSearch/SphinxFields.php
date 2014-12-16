@@ -104,7 +104,7 @@ class SphinxFields
      */
     private function prepareFilmFields()
     {
-        $this->indexFields['s_print_type'] = $this->indexFields['print_type'] = ($this->record->getFilmRecord()->getFilmRecord()->getPrintType()) ? $this->record->getFilmRecord()->getPrintType()->getName() : "";
+        $this->indexFields['s_print_type'] = $this->indexFields['print_type'] = ($this->record->getFilmRecord()->getPrintType()) ? $this->record->getFilmRecord()->getPrintType()->getName() : "";
         $this->indexFields['reel_core'] = ($this->record->getFilmRecord()->getReelCore()) ? $this->record->getFilmRecord()->getReelCore()->getName() : "";
         $this->indexFields['footage'] = ($this->record->getFilmRecord()->getFootage()) ? $this->record->getFilmRecord()->getFootage() : "";
         $this->indexFields['media_diameter'] = ($this->record->getFilmRecord()->getMediaDiameter()) ? $this->record->getFilmRecord()->getMediaDiameter() : "";
