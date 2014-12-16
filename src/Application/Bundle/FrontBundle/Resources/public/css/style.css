@@ -127,12 +127,12 @@ span.has-error ul li{
     background: url('../../../images/ajax-loader.gif') no-repeat left;
     padding-left: 38px;
 }
-#bulkEditDiv{
+/*#bulkEditDiv{
     height: 390px!important;
 }
 .bulkEditform{
     height: 330px!important;
-}
+}*/
 #bulk_edit_body label{
     color:#000!important;
 }
