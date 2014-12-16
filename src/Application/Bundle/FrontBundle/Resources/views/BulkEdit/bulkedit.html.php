@@ -10,7 +10,7 @@
             <div class="modal-body" id="bulk_edit_body" style="font-size: 12px;">
                 <fieldset>
                     <div id="mediatype_lbl" class="col-lg-6" style="">
-                        <label for="mediaType" class="required"> </label>
+                        <label for="mediaType" class="required">Media Type</label>
                         <div data-role="input-control" class="input-control">
                             <?php // $selected?>
                             <select class="size4 disabled" name="mediaType" id="mediaType" disabled="disabled">
@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     <div id="format_lbl" class="col-lg-6" style="">
-                        <label for="format" > </label>Format
+                        <label for="format" >Format</label>
                         <div data-role="input-control" class="input-control">
                             <select class="size4" name="format" id="format" <?php echo ($isMediaDisable) ? 'disabled="disabled"' : ''; ?>>
                                 <option value=""></option>                                    
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div id="project_lbl" class="col-lg-6" style="">
-                        <label for="project"> </label>Project Name
+                        <label for="project">Project Name</label>
                         <div data-role="input-control" class="input-control">
                             <select class="size4" name="project" id="project">
                                 <option value=""></option>
