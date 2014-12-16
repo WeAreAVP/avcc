@@ -40,6 +40,9 @@ class BulkEditController extends Controller
             if ($recordIds) {
                 if ($recordIds == 'all') {
                     $sphinxInfo = $this->getSphinxInfo();
+                    $columnNames = array('id');
+                    $recordIDs = $this->fetchFromSphinx($this->getUser(), $sphinxInfo, $em, $columnNames);
+                    print_r($recordIDs);exit;
                     $html = "all records";
                 } else {
                     $recordIdsArray = explode(',', $recordIds);
@@ -367,4 +370,32 @@ class BulkEditController extends Controller
         return $update;
     }
 
+    /**
+     * Get records from sphinx
+     *
+     * @param type  $user
+     * @param type  $sphinxInfo
+     * @param type  $em
+     * @param array $columnNames
+     * 
+     * @return array
+     */
+    public function fetchFromSphinx($user, $sphinxInfo, $em, $columnNames)
+    {
+        $count = 0;
+        $offset = 0;
+        $recordIds = array();
+        $sphinxObj = new SphinxSearch($em, $sphinxInfo);
+        while ($count == 0) {
+            $records = $sphinxObj->selectColumns($columnNames, $user, $offset, 1000,'id');
+            $recordIds[] = $records[0];
+            $totalFound = $records[1][1]['Value'];
+            $offset = $offset + 1000;
+            if ($totalFound < 1000) {
+                $count++;
+            }
+        }
+
+        return $recordIds;
+    }
 }
