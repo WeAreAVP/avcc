@@ -184,11 +184,10 @@ class BulkEditController extends Controller
             $session->remove("saveRecords");
             $session->remove("allRecords");
             echo json_encode(array('success' => true));
-            return true;
         } else {
             echo json_encode(array('success' => true));
-            return true;
         }
+        exit;
     }
 
 }
