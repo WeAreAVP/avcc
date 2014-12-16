@@ -359,11 +359,13 @@
                     </fieldset>
                 </div><br />
             </div>
-            <div class="modal-footer" id="bulk_edit_footer">
-                <button type="button" name="close" id="" class="button bulkEditCloseBtn simplemodal-close">Close</button>
-                <button type="button" name="submit" id="submitBulkEdit" class="button primary">Submit</button>
-            </div>
+            <div class="clearfix"></div>
+        </div><div class="clearfix"></div>
+        <div class="modal-footer" id="bulk_edit_footer">
+            <button type="button" name="close" id="" class="button bulkEditCloseBtn simplemodal-close">Close</button>
+            <button type="button" name="submit" id="submitBulkEdit" class="button primary">Submit</button>
         </div>
+
     </form>
 </div>
 <script src="<?php echo $view['assets']->getUrl('js/manage.records.js') ?>"></script>
