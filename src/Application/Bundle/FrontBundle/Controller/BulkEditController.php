@@ -41,23 +41,20 @@ class BulkEditController extends Controller
                 if ($recordIds == 'all') {
                     $sphinxInfo = $this->getSphinxInfo();
                     $shpinxRecordIds = $this->fetchFromSphinx($this->getUser(), $sphinxInfo, $em);
-                    $recordIdsArr = array();
+                    $recordIdsArray = array();
                     foreach ($shpinxRecordIds as $recIds) {
-                        $recordIdsArr = $recIds;
+                        $recordIdsArray = $recIds;
                     }
-                    print_r($recordIdsArr);
-                    exit;
-                    $html = "all records";
                 } else {
                     $recordIdsArray = explode(',', $recordIds);
-                    $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($recordIdsArray);
-                    $mediaTypeId = $records[0]->getMediaType()->getId();
-                    $formatId = $records[0]->getFormat()->getId();
-                    foreach ($records as $record) {
-                        if ($mediaTypeId != $record->getMediaType()->getId()) {
-                            $disable["mediaType"] = 1;
-                            $disable["format"] = 1;
-                        }
+                }
+                $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($recordIdsArray);
+                $mediaTypeId = $records[0]->getMediaType()->getId();
+                $formatId = $records[0]->getFormat()->getId();
+                foreach ($records as $record) {
+                    if ($mediaTypeId != $record->getMediaType()->getId()) {
+                        $disable["mediaType"] = 1;
+                        $disable["format"] = 1;
                     }
                 }
 
