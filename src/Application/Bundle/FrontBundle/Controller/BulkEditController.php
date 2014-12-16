@@ -139,7 +139,7 @@ class BulkEditController extends Controller
                     $record = $em->getRepository('ApplicationFrontBundle:Records')->find($recordId);
                     if ($posted['format']) {
                         $format = $em->getRepository('ApplicationFrontBundle:Formats')->findOneBy(array('id' => $posted['format']));
-                        $record->setProject($format);
+                        $record->setFormat($format);
                         $update = true;
                     }
                     if ($posted['project']) {
