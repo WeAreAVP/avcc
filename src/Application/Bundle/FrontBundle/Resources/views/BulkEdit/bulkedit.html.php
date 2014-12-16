@@ -1,7 +1,7 @@
 <div id="bulkEdit" class="">
     <div id="editProcessing"></div>
     <form method="post" name="frmBulkEdit" action="" id="frmBulkEdit">
-        <div class="bulkEditFields mCustomScrollbar">  
+        <div class="bulkEditFields mCustomScrollbar" style="height: 390px;">  
             <input type="hidden" name="records" id="records" value="<?php echo $selectedrecords; ?>"/>
             <?php $isMediaDisable = $disableFields['mediaType']; ?>
             <?php $isFormatDisable = $disableFields['format']; ?>
