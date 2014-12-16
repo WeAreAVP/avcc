@@ -1,4 +1,5 @@
 <div id="bulkEdit" class="">
+    <div id="editProcessing"></div>
     <form method="post" name="frmBulkEdit" action="" id="frmBulkEdit">
         <input type="hidden" name="records" id="records" value="<?php echo $selectedrecords; ?>"/>
         <?php $isMediaDisable = $disableFields['mediaType']; ?>
