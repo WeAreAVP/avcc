@@ -112,9 +112,7 @@
                                 <label for="bases"> </label>Base
                                 <div data-role="input-control" class="input-control">
                                     <select class="size4" name="bases" id="bases"> 
-                                        <?php foreach ($relatedFields['bases'] as $base) { ?>
-                                            <option value="<?php echo $base->getId(); ?>"><?php echo $base->getName() ?></option>
-                                        <?php } ?> 
+                                        <option value=""></option>
                                     </select>
                                 </div>
                             </div>
@@ -127,10 +125,8 @@
                             <div id="recordingSpeed_lbl" class="col-lg-6" style="display: block;">
                                 <label for="recordingSpeed"> </label>Recording Speed
                                 <div data-role="input-control" class="input-control">
-                                    <select class="size4" name="recordingSpeed" id="recordingSpeed">
-                                        <?php foreach ($relatedFields['recordingSpeed'] as $recordingSpeed) { ?>
-                                            <option value="<?php echo $recordingSpeed->getId(); ?>"><?php echo $recordingSpeed->getName() ?></option>
-                                        <?php } ?> 
+                                    <select class="size4" name="recordingSpeed" id="recordingSpeed">  
+                                        <option value=""></option>
                                     </select>
                                 </div>
                             </div>
@@ -148,6 +144,7 @@
                                 <label for="slides"> </label>Sides                
                                 <div data-role="input-control" class="input-control">
                                     <select class="size4" name="slides" id="slides">
+                                        <option value=""></option>
                                         <?php foreach ($relatedFields['sides'] as $side) { ?>
                                             <option value="<?php echo $side->getId(); ?>"><?php echo $side->getName() ?></option>
                                         <?php } ?>
@@ -168,6 +165,7 @@
                                 <label for="monoStereo"> </label>Mono or Stereo                
                                 <div data-role="input-control" class="input-control">
                                     <select class="size4" name="monoStereo" id="monoStereo">
+                                        <option value=""></option>
                                         <?php foreach ($relatedFields['monoStereo'] as $monoStereo) { ?>
                                             <option value="<?php echo $monoStereo->getId(); ?>"><?php echo $monoStereo->getName() ?></option>
                                         <?php } ?>
@@ -178,6 +176,7 @@
                                 <label for="noiceReduction"> </label>Noise Reduction
                                 <div data-role="input-control" class="input-control">
                                     <select class="size4" name="noiceReduction" id="noiceReduction">  
+                                        <option value=""></option>
                                         <?php foreach ($relatedFields['noiseReduction'] as $noiseReduction) { ?>
                                             <option value="<?php echo $noiseReduction->getId(); ?>"><?php echo $noiseReduction->getName() ?></option>
                                         <?php } ?>
