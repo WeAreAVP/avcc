@@ -25,18 +25,18 @@
                     echo $viedoField['title'];
                     ?>
                     <div class="input-control new" data-role="input-control">
-    <?php echo $view['form']->widget((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => $attr)) ?>
+                        <?php echo $view['form']->widget((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => $attr)) ?>
                         <span class="has-error text-danger"><?php echo $view['form']->errors((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]]) ?></span>
                     </div>
                 </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
         </fieldset><br />
         <?php echo $view['form']->widget($form['record']['userId']) ?>
         <a href="<?php echo $view['router']->generate('record_list') ?>" name="cancle" class="button">Cancel</a>
         <?php echo $view['form']->widget($form['submit'], array('attr' => array('class' => 'button primary'))) ?>
-        <?php echo $view['form']->widget($form['save_and_new']) ?>
-<?php echo $view['form']->widget($form['save_and_duplicate']) ?>
-<?php echo $view['form']->end($form) ?>
+        <?php echo $view['form']->widget($form['save_and_new']) ?>&nbsp;
+        <?php echo $view['form']->widget($form['save_and_duplicate']) ?>
+        <?php echo $view['form']->end($form) ?>
     </div>
 </div>
 <script src="<?php echo $view['assets']->getUrl('js/manage.records.js') ?>"></script>
