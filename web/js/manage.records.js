@@ -17,6 +17,7 @@ function initialize_records_form() {
     onChangeMediaType();
     showUpdateFields();
     saveBulkEdit();
+    closeBtn();
 }
 function updateFormat() {
     var selfObj = this;
@@ -180,8 +181,23 @@ function saveBulkEdit() {
             success: function (response) {
                 if (response.success === true) {
                     window.location.reload();
-                } 
+                }
             }
         }); // Ajax Call  
+    });
+}
+
+function closeBtn() {
+    $(".bulkEditCloseBtn").on('click', function () {
+        $.modal.close();
+        $('#selectAll').prop("checked", false);
+        $('input[name=record_checkbox]').each(function () {
+            $(this).prop("checked", false);
+        });
+        $('#records tr').each(function () {
+            $(this).removeClass("selected");
+        });
+        $("#selectedrecords").val('');
+        window.location.reload();
     });
 }
