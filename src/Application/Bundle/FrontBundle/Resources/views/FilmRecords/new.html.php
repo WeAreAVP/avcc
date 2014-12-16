@@ -33,8 +33,8 @@
             <?php endforeach; ?>
         </fieldset><br />
         <?php echo $view['form']->widget($form['record']['userId']) ?>
-        <a href="<?php echo $view['router']->generate('record_list') ?>" name="cancle" class="button">Cancel</a>
-        <?php echo $view['form']->widget($form['submit'], array('attr' => array('class' => 'button primary'))) ?>
+        <a href="<?php echo $view['router']->generate('record_list') ?>" name="cancle" class="button">Cancel</a>&nbsp;
+        <?php echo $view['form']->widget($form['submit'], array('attr' => array('class' => 'button primary'))) ?>&nbsp;
         <?php echo $view['form']->widget($form['save_and_new']) ?>&nbsp;
         <?php echo $view['form']->widget($form['save_and_duplicate']) ?>
         <?php echo $view['form']->end($form) ?>
