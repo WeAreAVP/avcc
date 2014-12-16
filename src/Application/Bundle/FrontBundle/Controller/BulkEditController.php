@@ -143,7 +143,17 @@ class BulkEditController extends Controller
             $em = $this->getDoctrine()->getManager();
             $update = false;
             if ($recordIds) {
-                $recordIdsArray = explode(',', $recordIds);
+                if ($recordIds == 'all') {
+                    $sphinxInfo = $this->getSphinxInfo();
+                    $shpinxRecordIds = $this->fetchFromSphinx($this->getUser(), $sphinxInfo, $em);
+                    $recordIdsArray = array();
+                    foreach ($shpinxRecordIds as $recIds) {
+                        $recordIdsArray = $recIds;
+                    }
+                } else {
+                    $recordIdsArray = explode(',', $recordIds);
+                }
+//                $recordIdsArray = explode(',', $recordIds);
                 foreach ($recordIdsArray as $recordId) {
                     $record = $em->getRepository('ApplicationFrontBundle:Records')->find($recordId);
                     if (isset($posted['format'])) {
