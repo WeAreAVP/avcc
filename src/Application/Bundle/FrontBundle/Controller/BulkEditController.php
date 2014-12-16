@@ -40,13 +40,13 @@ class BulkEditController extends Controller
             if ($recordIds) {
                 if ($recordIds == 'all') {
                     $sphinxInfo = $this->getSphinxInfo();
-                    $columnNames = array('id');
-                    $recordsSph = $this->fetchFromSphinx($this->getUser(), $sphinxInfo, $em, $columnNames);
+                    $shpinxRecordIds = $this->fetchFromSphinx($this->getUser(), $sphinxInfo, $em);
                     $recordIdsArr = array();
-                    foreach($recordsSph as $recordSph){
-                        $recordIdsArr[] = $recordSph['id'];
+                    foreach ($shpinxRecordIds as $recIds) {
+                        $recordIdsArr[] = $recIds;
                     }
-                    print_r($recordIdsArr);exit;
+                    print_r($recordIdsArr);
+                    exit;
                     $html = "all records";
                 } else {
                     $recordIdsArray = explode(',', $recordIds);
@@ -282,7 +282,7 @@ class BulkEditController extends Controller
             $update = true;
         }
         if ($update) {
-           $em->flush();        
+            $em->flush();
         }
         return $update;
     }
@@ -316,7 +316,7 @@ class BulkEditController extends Controller
             $update = true;
         }
         if ($update) {
-           $em->flush();        
+            $em->flush();
         }
         return $update;
     }
@@ -369,7 +369,7 @@ class BulkEditController extends Controller
             $update = true;
         }
         if ($update) {
-           $em->flush();        
+            $em->flush();
         }
         return $update;
     }
@@ -384,22 +384,31 @@ class BulkEditController extends Controller
      * 
      * @return array
      */
-    public function fetchFromSphinx($user, $sphinxInfo, $em, $columnNames)
+    protected function fetchFromSphinx($user, $sphinxInfo, $em)
     {
         $count = 0;
         $offset = 0;
         $recordIds = array();
         $sphinxObj = new SphinxSearch($em, $sphinxInfo);
         while ($count == 0) {
-            $records = $sphinxObj->selectColumns($columnNames, $user, $offset, 1000,'id');
-            $recordIds[] = $records[0];
+            $records = $sphinxObj->select($user, $offset, 1000, 'id');
+            $recordIds[] = $this->getRecordIds($records[0]);
             $totalFound = $records[1][1]['Value'];
             $offset = $offset + 1000;
             if ($totalFound < 1000) {
                 $count++;
             }
         }
-
         return $recordIds;
     }
+
+    protected function getRecordIds($sphinxRecords)
+    {
+        $recordIds = array();
+        foreach ($sphinxRecords as $record) {
+            $recordIds[] = $record['id'];
+        }
+        return $recordIds;
+    }
+
 }
