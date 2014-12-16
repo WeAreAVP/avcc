@@ -178,8 +178,8 @@ function saveBulkEdit() {
             data: data,
             dataType: 'json',
             success: function (response) {
-                console.log(response.success);
-                if (response.success == 'true') {
+                if (response.success === true) {
+                    console.log(response.success);
                     window.location.reload();
                 } 
             }
