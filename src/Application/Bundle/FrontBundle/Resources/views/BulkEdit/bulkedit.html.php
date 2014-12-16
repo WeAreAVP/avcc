@@ -1,4 +1,4 @@
-<div id="bulkEdit" class="mCustomScrollbar" style="height: 450px;">
+<div id="bulkEdit" class="">
     <form method="post" name="frmBulkEdit" action="" id="frmBulkEdit">
         <input type="hidden" name="records" id="records" value="<?php echo $selectedrecords; ?>"/>
         <?php $isMediaDisable = $disableFields['mediaType']; ?>
