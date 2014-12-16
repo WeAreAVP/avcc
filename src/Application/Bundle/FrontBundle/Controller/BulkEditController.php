@@ -120,7 +120,7 @@ class BulkEditController extends Controller
      *
      * @Route("/edit", name="bulkedit_edit")
      * @Method("POST")
-     * @Template()
+     * @Template("ApplicationFrontBundle:Records:default.html.php")
      * @return array
      */
     public function bulkEditAction(Request $request)
@@ -183,9 +183,11 @@ class BulkEditController extends Controller
             }
             $session->remove("saveRecords");
             $session->remove("allRecords");
-            return json_encode(array('success' => true));
+            echo json_encode(array('success' => true));
+            return true;
         } else {
-            return json_encode(array('success' => true));
+            echo json_encode(array('success' => true));
+            return true;
         }
     }
 
