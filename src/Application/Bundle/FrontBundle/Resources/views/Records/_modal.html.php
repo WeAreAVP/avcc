@@ -75,7 +75,7 @@
         <button type="button" name="close" id="closeBtn" class="button closeBtn simplemodal-close">Close</button>
     </div>
 </div>
-<div id="bulkEditModal" class="mCustomScrollbar" tabindex="-1" role="dialog" style="display:none;height:490px">
+<div id="bulkEditModal" class="mCustomScrollbar" tabindex="-1" role="dialog" style="display:none;height:500px">
     <h4 id="heading">Bulk Edit</h4>
     <div id="bulk_process">
         <div class="modal-body" id="bulk_edit_body" style="font-size: 12px;">
