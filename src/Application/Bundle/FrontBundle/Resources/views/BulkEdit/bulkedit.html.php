@@ -1,14 +1,14 @@
-<div id="bulkEditDiv" class="" style="height: 380px;">
+<div id="bulkEditDiv" class="">
     <div id="editProcessing"></div>
-    <form method="post" name="frmBulkEdit" action="" id="frmBulkEdit" style="height: 380px;">
-        <div class="bulkEditFields mCustomScrollbar" style="height: 330px;">  
+    <form method="post" name="frmBulkEdit" action="" id="frmBulkEdit">
+        <div class="bulkEditFields" style="">  
             <input type="hidden" name="records" id="records" value="<?php echo $selectedrecords; ?>"/>
             <?php $isMediaDisable = $disableFields['mediaType']; ?>
             <?php $isFormatDisable = $disableFields['format']; ?>
             <input type="hidden" name="mediaDisable" id="mediaDisable" value="<?php echo $isMediaDisable; ?>"/>
             <input type="hidden" name="formatDisable" id="formatDisable" value="<?php echo $isFormatDisable; ?>"/>
             <input type="hidden" name="mediaTypeId" id="mediaTypeId" value="<?php echo $mediaTypeId; ?>"/>
-            <div id="bulk_process" style="height: 330px;">
+            <div id="bulk_process">
                 <div class="modal-body" id="bulk_edit_body" style="font-size: 12px;">
                     <fieldset>
                         <div id="mediatype_lbl" class="col-lg-6" style="">
@@ -359,8 +359,7 @@
                     </fieldset>
                 </div><br />
             </div>
-            <div class="clearfix"></div>
-        </div><div class="clearfix"></div>
+        </div>
         <div class="modal-footer" id="bulk_edit_footer">
             <button type="button" name="close" id="" class="button bulkEditCloseBtn simplemodal-close">Close</button>
             <button type="button" name="submit" id="submitBulkEdit" class="button primary">Submit</button>
