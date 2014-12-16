@@ -43,9 +43,9 @@ class BulkEditController extends Controller
                     $shpinxRecordIds = $this->fetchFromSphinx($this->getUser(), $sphinxInfo, $em);
                     $recordIdsArr = array();
                     foreach ($shpinxRecordIds as $recIds) {
-                        $recordIdsArr[] = $recIds;
+                        $recordIdsArr = $recIds;
                     }
-                    print_r($shpinxRecordIds);
+                    print_r($recordIdsArr);
                     exit;
                     $html = "all records";
                 } else {
