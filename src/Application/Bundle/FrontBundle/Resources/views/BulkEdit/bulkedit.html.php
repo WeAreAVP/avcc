@@ -357,7 +357,7 @@
                 </fieldset>
             </div><br />
             <div class="modal-footer" id="bulk_edit_footer">
-                <button type="button" name="close" id="closeBtn" class="button closeBtn simplemodal-close">Close</button>
+                <button type="button" name="close" id="" class="button closeBtn simplemodal-close">Close</button>
                 <button type="button" name="submit" id="submitBulkEdit" class="button primary">Submit</button>
             </div>
         </div>
