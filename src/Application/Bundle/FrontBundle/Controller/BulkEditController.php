@@ -387,11 +387,11 @@ class BulkEditController extends Controller
         $recordIds = array();
         $sphinxObj = new SphinxSearch($em, $sphinxInfo);
         while ($count == 0) {
-            $records = $sphinxObj->selectColumns($columnNames, $user, $offset, 20,'id');
+            $records = $sphinxObj->selectColumns($columnNames, $user, $offset, 1000,'id');
             $recordIds[] = $records[0];
             $totalFound = $records[1][1]['Value'];
-            $offset = $offset + 20;
-            if ($totalFound < 20) {
+            $offset = $offset + 1000;
+            if ($totalFound < 1000) {
                 $count++;
             }
         }
