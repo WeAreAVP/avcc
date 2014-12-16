@@ -51,9 +51,6 @@ class BulkEditController extends Controller
                             $disable["mediaType"] = 1;
                             $disable["format"] = 1;
                         }
-//                        if($formatId != $record->getFormat()->getId()){
-//                            $disable["format"] = 1;
-//                        }
                     }
                 }
 
@@ -110,6 +107,13 @@ class BulkEditController extends Controller
         $data['reelCore'] = $em->getRepository('ApplicationFrontBundle:ReelCore')->findAll();
         $data['tapeThickness'] = $em->getRepository('ApplicationFrontBundle:TapeThickness')->findAll();
         $data['trackTypes'] = $em->getRepository('ApplicationFrontBundle:TrackTypes')->findAll();
+        $data['diskDiameters'] = $em->getRepository('ApplicationFrontBundle:DiskDiameters')->findAll();
+        $data['reelDiameters'] = $em->getRepository('ApplicationFrontBundle:ReelDiameters')->findAll();
+        $data['mediaDiameters'] = $em->getRepository('ApplicationFrontBundle:MediaDiameters')->findAll();
+        $data['bases'] = $em->getRepository('ApplicationFrontBundle:Bases')->findAll();
+        $data['recordingSpeed'] = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findAll();
+        $data['formatVersions'] = $em->getRepository('ApplicationFrontBundle:FormatVersions')->findAll();
+        $data['tapeThickness'] = $em->getRepository('ApplicationFrontBundle:TapeThickness')->findAll();
         return $data;
     }
 
@@ -131,6 +135,7 @@ class BulkEditController extends Controller
             $session = $this->getRequest()->getSession();
             $recordIds = $posted['records'];
             $mediaDisable = $posted['mediaDisable'];
+            $mediaTypeId = $posted['mediaTypeId'];
             $em = $this->getDoctrine()->getManager();
             $update = false;
             if ($recordIds) {
@@ -172,7 +177,33 @@ class BulkEditController extends Controller
                         $record->setCommercial($commercial);
                         $update = true;
                     }
-
+                    if (!$mediaDisable) {
+                        if ($mediaTypeId == 1) {
+                            $audioRecord = $em->getRepository('ApplicationFrontBundle:AudioRecords')->findOneBy(array('record' => $record->getId()));
+                            if ($posted['reelDiameters']) {
+                                $reelD = $em->getRepository('ApplicationFrontBundle:ReelDiameters')->findOneBy(array('id' => $posted['reelDiameters']));
+                                $record->setReelDiameters($reelD);
+                                $update = true;
+                            }
+                            $update = $this->updateAudioFields($audioRecord, $posted, $update);
+                        } elseif ($mediaTypeId == 2) {
+                            $filmRecord = $em->getRepository('ApplicationFrontBundle:FilmRecords')->findOneBy(array('record' => $record->getId()));
+                            if ($posted['reelDiameters']) {
+                                $reelD = $em->getRepository('ApplicationFrontBundle:ReelDiameters')->findOneBy(array('id' => $posted['reelDiameters']));
+                                $record->setReelDiameters($reelD);
+                                $update = true;
+                            }
+                            $update = $this->updateFilmFields($filmRecord, $posted, $update);
+                        } elseif ($mediaTypeId == 3) {
+                            $videoRecord = $em->getRepository('ApplicationFrontBundle:VideoRecords')->findOneBy(array('record' => $record->getId()));
+                            if ($posted['reelDiameters']) {
+                                $reelD = $em->getRepository('ApplicationFrontBundle:ReelDiameters')->findOneBy(array('id' => $posted['reelDiameters']));
+                                $record->setReelDiameters($reelD);
+                                $update = true;
+                            }
+                            $update = $this->updateVideoFields($videoRecord, $posted, $update);
+                        }
+                    }
                     if ($update) {
                         $em->flush();
                         $shpinxInfo = $this->getSphinxInfo();
@@ -188,6 +219,138 @@ class BulkEditController extends Controller
             echo json_encode(array('success' => true));
         }
         exit;
+    }
+
+    protected function updateAudioFields($audioRecord, $posted, $update)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if ($posted['diskDiameters']) {
+            $disk = $em->getRepository('ApplicationFrontBundle:DiskDiameters')->findOneBy(array('id' => $posted['diskDiameters']));
+            $audioRecord->setDiskDiameters($disk);
+            $update = true;
+        }
+        if ($posted['mediaDiameters']) {
+            $mediaD = $em->getRepository('ApplicationFrontBundle:MediaDiameters')->findOneBy(array('id' => $posted['mediaDiameters']));
+            $audioRecord->setMediaDiameters($mediaD);
+            $update = true;
+        }
+        if ($posted['bases']) {
+            $base = $em->getRepository('ApplicationFrontBundle:Bases')->findOneBy(array('id' => $posted['bases']));
+            $audioRecord->setBases($base);
+            $update = true;
+        }
+        if ($posted['mediaDuration']) {
+            $audioRecord->setMediaDuration($posted['mediaDuration']);
+            $update = true;
+        }
+        if ($posted['recordingSpeed']) {
+            $recordingSp = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findOneBy(array('id' => $posted['recordingSpeed']));
+            $audioRecord->setRecordingSpeed($recordingSp);
+            $update = true;
+        }
+        if ($posted['tapeThickness']) {
+            $tape = $em->getRepository('ApplicationFrontBundle:TapeThickness')->findOneBy(array('id' => $posted['tapeThickness']));
+            $audioRecord->setTapeThickness($tape);
+            $update = true;
+        }
+        if ($posted['slides']) {
+            $side = $em->getRepository('ApplicationFrontBundle:Slides')->findOneBy(array('id' => $posted['slides']));
+            $audioRecord->setSlides($side);
+            $update = true;
+        }
+        if ($posted['trackTypes']) {
+            $track = $em->getRepository('ApplicationFrontBundle:TrackTypes')->findOneBy(array('id' => $posted['trackTypes']));
+            $audioRecord->setTrackTypes($track);
+            $update = true;
+        }
+        if ($posted['monoStereo']) {
+            $monostereo = $em->getRepository('ApplicationFrontBundle:MonoStereo')->findOneBy(array('id' => $posted['monoStereo']));
+            $audioRecord->setMonoStereo($monostereo);
+            $update = true;
+        }
+        if ($posted['noiceReduction']) {
+            $noise = $em->getRepository('ApplicationFrontBundle:NoiceReduction')->findOneBy(array('id' => $posted['noiceReduction']));
+            $audioRecord->setNoiceReduction($noise);
+            $update = true;
+        }
+    }
+
+    protected function updateVideoFields($videoRecord, $posted, $update)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if ($posted['cassetteSize']) {
+            $cassete = $em->getRepository('ApplicationFrontBundle:CassetteSizes')->findOneBy(array('id' => $posted['cassetteSize']));
+            $videoRecord->setCassetteSize($cassete);
+            $update = true;
+        }
+        if ($posted['formatVersion']) {
+            $formatversion = $em->getRepository('ApplicationFrontBundle:FormatVersions')->findOneBy(array('id' => $posted['formatVersion']));
+            $videoRecord->setFormatVersion($formatversion);
+            $update = true;
+        }
+        if ($posted['mediaDuration']) {
+            $videoRecord->setMediaDuration($posted['mediaDuration']);
+            $update = true;
+        }
+        if ($posted['recordingSpeed']) {
+            $recordingSp = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findOneBy(array('id' => $posted['recordingSpeed']));
+            $videoRecord->setRecordingSpeed($recordingSp);
+            $update = true;
+        }
+        if ($posted['recordingStandard']) {
+            $recordingSt = $em->getRepository('ApplicationFrontBundle:RecordingStandards')->findOneBy(array('id' => $posted['recordingStandard']));
+            $videoRecord->setRecordingStandard($recordingSt);
+            $update = true;
+        }
+        return $update;
+    }
+
+    protected function updateFilmFields($filmRecord, $posted, $update)
+    {
+        $em = $this->getDoctrine()->getManager();
+        if ($posted['reelCore']) {
+            $reelcore = $em->getRepository('ApplicationFrontBundle:ReelCore')->findOneBy(array('id' => $posted['reelCore']));
+            $filmRecord->setReelCore($reelcore);
+            $update = true;
+        }
+        if ($posted['footage']) {
+            $filmRecord->setFootage($posted['footage']);
+            $update = true;
+        }
+        if ($posted['mediaDiameter']) {
+            $filmRecord->setMediaDiameter($posted['mediaDiameter']);
+            $update = true;
+        }
+        if ($posted['bases']) {
+            $base = $em->getRepository('ApplicationFrontBundle:Bases')->findOneBy(array('id' => $posted['bases']));
+            $filmRecord->setBases($base);
+            $update = true;
+        }
+        if ($posted['colors']) {
+            $color = $em->getRepository('ApplicationFrontBundle:Colors')->findOneBy(array('id' => $posted['colors']));
+            $filmRecord->setColors($color);
+            $update = true;
+        }
+        if ($posted['sound']) {
+            $sound = $em->getRepository('ApplicationFrontBundle:Sounds')->findOneBy(array('id' => $posted['sound']));
+            $filmRecord->setSound($sound);
+            $update = true;
+        }
+        if ($posted['frameRate']) {
+            $frame = $em->getRepository('ApplicationFrontBundle:FrameRates')->findOneBy(array('id' => $posted['frameRate']));
+            $filmRecord->setFrameRate($frame);
+            $update = true;
+        }
+        if ($posted['acidDetectionStrip']) {
+            $strip = $em->getRepository('ApplicationFrontBundle:AcidDetectionStrips')->findOneBy(array('id' => $posted['acidDetectionStrip']));
+            $filmRecord->setAcidDetectionStrip($strip);
+            $update = true;
+        }
+        if ($posted['printType']) {
+            $print = $em->getRepository('ApplicationFrontBundle:PrintTypes')->findOneBy(array('id' => $posted['printType']));
+            $filmRecord->setPrintType($print);
+            $update = true;
+        }
     }
 
 }
