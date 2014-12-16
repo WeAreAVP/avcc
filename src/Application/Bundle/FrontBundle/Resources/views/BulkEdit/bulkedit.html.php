@@ -13,7 +13,7 @@
                         <label for="mediaType" class="required"> </label>
                         <div data-role="input-control" class="input-control">
                             <?php // $selected?>
-                            <select required="required" class="size4 disabled" name="mediaType" id="mediaType" disabled="disabled">
+                            <select class="size4 disabled" name="mediaType" id="mediaType" disabled="disabled">
                                 <?php foreach ($relatedFields['mediaTypes'] as $mediaType) { ?>
                                     <option value="<?php echo $mediaType->getId(); ?>"><?php echo $mediaType->getName() ?></option>
                                 <?php } ?>
@@ -48,19 +48,19 @@
                     <div id="title_lbl" class="col-lg-6" style="">
                         <label for="title" class="required"> </label>Title
                         <div data-role="input-control" class="input-control">
-                            <input type="text" class="size4" required="required" name="title" id="title">                                
+                            <input type="text" class="size4" name="title" id="title">                                
                         </div>
                     </div>
                     <div id="collectionName_lbl" class="col-lg-6" style="">
                         <label for="collectionName"> </label>Collection Name
                         <div data-role="input-control" class="input-control">
-                            <input type="text" class="size4" required="required" name="collectionName" id="collectionName">                                
+                            <input type="text" class="size4" name="collectionName" id="collectionName">                                
                         </div>
                     </div>
                     <div id="description_lbl" class="col-lg-6" style="">
                         <label for="description"> </label>Description
                         <div data-role="input-control" class="input-control">
-                            <input type="text" class="size4" required="required" name="description" id="description">                                
+                            <input type="text" class="size4" name="description" id="description">                                
                         </div>
                     </div>
                     <div id="commercial_lbl" class="col-lg-6" style="">
@@ -272,7 +272,7 @@
                             <div id="printType_lbl" class="col-lg-6" style="">
                                 <label for="printType"> </label>Print Type
                                 <div data-role="input-control" class="input-control">
-                                    <select required="required" class="size4" name="printType" id="printType">
+                                    <select class="size4" name="printType" id="printType">
                                         <?php foreach ($relatedFields['printTypes'] as $printType) { ?>
                                             <option value="<?php echo $printType->getId(); ?>"><?php echo $printType->getName() ?></option>
                                         <?php } ?>
