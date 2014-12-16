@@ -82,6 +82,7 @@
                                 <label for="diskDiameters"> </label>Disk Diameter
                                 <div data-role="input-control" class="input-control">
                                     <select class="size4" name="diskDiameters" id="diskDiameters">
+                                        <option value=""></option>
                                         <?php foreach ($relatedFields['diskDiameters'] as $diskDiameter) { ?>
                                             <option value="<?php echo $diskDiameter->getId(); ?>"><?php echo $diskDiameter->getName() ?></option>
                                         <?php } ?>

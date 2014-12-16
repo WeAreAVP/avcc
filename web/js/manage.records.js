@@ -179,7 +179,7 @@ function saveBulkEdit() {
             dataType: 'json',
             success: function (response) {
                 if (response.success === true) {
-                    window.location.reload();
+//                    window.location.reload();
                 } 
             }
         }); // Ajax Call  
