@@ -185,7 +185,7 @@ class BulkEditController extends Controller
                                 $record->setReelDiameters($reelD);
                                 $update = true;
                             }
-                            $update = $this->updateAudioFields($audioRecord, $posted, $update);
+                            $this->updateAudioFields($audioRecord, $posted);
                         } elseif ($mediaTypeId == 2) {
                             $filmRecord = $em->getRepository('ApplicationFrontBundle:FilmRecords')->findOneBy(array('record' => $record->getId()));
                             if ($posted['reelDiameters']) {
@@ -193,7 +193,7 @@ class BulkEditController extends Controller
                                 $record->setReelDiameters($reelD);
                                 $update = true;
                             }
-                            $update = $this->updateFilmFields($filmRecord, $posted, $update);
+                            $this->updateFilmFields($filmRecord, $posted);
                         } elseif ($mediaTypeId == 3) {
                             $videoRecord = $em->getRepository('ApplicationFrontBundle:VideoRecords')->findOneBy(array('record' => $record->getId()));
                             if ($posted['reelDiameters']) {
@@ -201,7 +201,7 @@ class BulkEditController extends Controller
                                 $record->setReelDiameters($reelD);
                                 $update = true;
                             }
-                            $update = $this->updateVideoFields($videoRecord, $posted, $update);
+                            $this->updateVideoFields($videoRecord, $posted);
                         }
                     }
                     if ($update) {
@@ -221,9 +221,10 @@ class BulkEditController extends Controller
         exit;
     }
 
-    protected function updateAudioFields($audioRecord, $posted, $update)
+    protected function updateAudioFields($audioRecord, $posted)
     {
         $em = $this->getDoctrine()->getManager();
+        $update = false;
         if ($posted['diskDiameters']) {
             $disk = $em->getRepository('ApplicationFrontBundle:DiskDiameters')->findOneBy(array('id' => $posted['diskDiameters']));
             $audioRecord->setDiskDiameters($disk);
@@ -273,11 +274,16 @@ class BulkEditController extends Controller
             $audioRecord->setNoiceReduction($noise);
             $update = true;
         }
+        if ($update) {
+           $em->flush();        
+        }
+        return $update;
     }
 
-    protected function updateVideoFields($videoRecord, $posted, $update)
+    protected function updateVideoFields($videoRecord, $posted)
     {
         $em = $this->getDoctrine()->getManager();
+        $update = false;
         if ($posted['cassetteSize']) {
             $cassete = $em->getRepository('ApplicationFrontBundle:CassetteSizes')->findOneBy(array('id' => $posted['cassetteSize']));
             $videoRecord->setCassetteSize($cassete);
@@ -302,12 +308,16 @@ class BulkEditController extends Controller
             $videoRecord->setRecordingStandard($recordingSt);
             $update = true;
         }
+        if ($update) {
+           $em->flush();        
+        }
         return $update;
     }
 
-    protected function updateFilmFields($filmRecord, $posted, $update)
+    protected function updateFilmFields($filmRecord, $posted)
     {
         $em = $this->getDoctrine()->getManager();
+        $update = false;
         if ($posted['reelCore']) {
             $reelcore = $em->getRepository('ApplicationFrontBundle:ReelCore')->findOneBy(array('id' => $posted['reelCore']));
             $filmRecord->setReelCore($reelcore);
@@ -351,6 +361,10 @@ class BulkEditController extends Controller
             $filmRecord->setPrintType($print);
             $update = true;
         }
+        if ($update) {
+           $em->flush();        
+        }
+        return $update;
     }
 
 }
