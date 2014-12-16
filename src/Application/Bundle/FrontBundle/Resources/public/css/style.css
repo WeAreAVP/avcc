@@ -127,7 +127,7 @@ span.has-error ul li{
     background: url('../../../images/ajax-loader.gif') no-repeat left;
     padding-left: 38px;
 }
-#bulkEdit{
+#bulkEditDiv{
     height: 390px!important;
 }
 .bulkEditform{

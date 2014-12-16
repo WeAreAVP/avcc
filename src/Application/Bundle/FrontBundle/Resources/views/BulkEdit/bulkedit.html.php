@@ -1,4 +1,4 @@
-<div id="bulkEdit" class="">
+<div id="bulkEditDiv" class="">
     <div id="editProcessing"></div>
     <form method="post" name="frmBulkEdit" action="" id="frmBulkEdit">
         <div class="bulkEditFields mCustomScrollbar" style="height: 330px;">  
