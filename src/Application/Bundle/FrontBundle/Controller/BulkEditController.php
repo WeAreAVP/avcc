@@ -45,7 +45,7 @@ class BulkEditController extends Controller
                     foreach ($shpinxRecordIds as $recIds) {
                         $recordIdsArr[] = $recIds;
                     }
-                    print_r($recordIdsArr);
+                    print_r($shpinxRecordIds);
                     exit;
                     $html = "all records";
                 } else {
