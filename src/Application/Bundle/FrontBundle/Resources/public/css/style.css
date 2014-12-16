@@ -128,7 +128,8 @@ span.has-error ul li{
     padding-left: 38px;
 }
 .bulkEditFields{
-    height: 400px;
+    height: 390px;
+    overflow-y: scroll;
 }
 #bulk_edit_body label{
     color:#000!important;
