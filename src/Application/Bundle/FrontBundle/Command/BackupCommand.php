@@ -67,7 +67,7 @@ class BackupCommand extends ContainerAwareCommand
     {
 // $var = $record->getBackupEmail();
         $return = array();
-        if (empty($backupEmails)) {
+        if ($backupEmails && empty($backupEmails)) {
             $return = $record->getUser()->getEmail();
         } else {
             $return = explode(',', $backupEmails);
