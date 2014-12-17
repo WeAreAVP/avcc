@@ -127,6 +127,23 @@ class VideoRecordsController extends Controller
         $data = $fieldsObj->getData(3, $em, $this->getUser(), $projectId);
         if ($videoRecId) {
             $entity = $em->getRepository('ApplicationFrontBundle:VideoRecords')->find($videoRecId);
+            $entity->getRecord()->setUniqueId(NULL);
+            $entity->getRecord()->setLocation(NULL);
+            $entity->getRecord()->setTitle(NULL);
+            $entity->getRecord()->setDescription(NULL);
+            $entity->getRecord()->setContentDuration(NULL);
+            $entity->setFormatVersion(NULL);
+            $entity->getRecord()->setCreationDate(NULL);
+            $entity->getRecord()->setContentDate(NULL);
+            $entity->getRecord()->setIsReview(NULL);
+            $entity->setMediaDuration(NULL);
+            $entity->getRecord()->setGenreTerms(NULL);
+            $entity->getRecord()->setContributor(NULL);
+            $entity->getRecord()->setGeneration(NULL);
+            $entity->getRecord()->setPart(NULL);
+            $entity->getRecord()->setDuplicatesDerivatives(NULL);
+            $entity->getRecord()->setRelatedMaterial(NULL);
+            $entity->getRecord()->setConditionNote(NULL);
         } else {
             $entity = new VideoRecords();
         }
