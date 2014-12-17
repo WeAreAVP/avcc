@@ -32,6 +32,7 @@ class BackupCommand extends ContainerAwareCommand
             foreach ($entity as $record) {
                 $backupEmails = $record->getBackupEmail();
                 $email_to = $this->get_email_to($backupEmails, $record);
+                $text = print_r($email_to);
                 if ($record->getUser()->getOrganizations()) {
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($record->getUser()->getOrganizations()->getId());
 
@@ -52,7 +53,7 @@ class BackupCommand extends ContainerAwareCommand
 //                            $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $email_id);
                             //  $email->sendEmail('yahoo', 'just mail', $this->getContainer()->getParameter('from_email'), $email_id);
                         }
-                        $text = $rendered;
+                        $text .= $rendered;
                     } else {
                         $text .= 'record not found';
                     }
@@ -67,7 +68,7 @@ class BackupCommand extends ContainerAwareCommand
     {
 // $var = $record->getBackupEmail();
         $return = array();
-        if ($backupEmails && empty($backupEmails)) {
+        if (is_null($backupEmails) && empty($backupEmails)) {
             $return = $record->getUser()->getEmail();
         } else {
             $return = explode(',', $backupEmails);
