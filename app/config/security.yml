@@ -39,7 +39,7 @@ security:
         - { path: ^/vocabularies/, role: ROLE_SUPER_ADMIN }
         - { path: ^/fieldsettings, role: ROLE_MANAGER }
         - { path: ^/record/$, role: ROLE_USER }
-        - { path: ^/record/, role: ROLE_MANAGER }
+        - { path: ^/record/, role: ROLE_USER }
         - { path: ^/report/, role: ROLE_USER }
         - { path: ^/, role: ROLE_USER }
 

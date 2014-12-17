@@ -6,7 +6,9 @@
         <a href="<?php echo $view['router']->generate('record_list') ?>"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a> Record Detail
 
     </h1>
+    <?php if ($view['security']->isGranted('ROLE_CATALOGER')): ?>
     <a href="<?php echo $view['router']->generate('record_video_edit', array('id'=>$entity->getId())) ?>" class="button primary">Edit</a>
+    <?php endif;?>
     <div class="clearfix"></div>
     <div class="grid">
         <div class="row">

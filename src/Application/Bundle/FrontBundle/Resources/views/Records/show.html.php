@@ -18,7 +18,9 @@
         $rout = 'record_film_edit';
     endif;
     ?>
+    <?php if ($view['security']->isGranted('ROLE_CATALOGER')): ?>
     <a href="<?php echo $view['router']->generate($rout, array('id' => $id)) ?>" class="button primary">Edit</a>
+    <?php endif; ?>
     <div class="clearfix"></div>
     <div class="grid">
         <div class="row">
