@@ -137,6 +137,7 @@ class AudioRecordsController extends Controller
         $data = $fieldsObj->getData(1, $em, $this->getUser(), $projectId);
         if ($audioRecId) {
             $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->find($audioRecId);
+            $entity->setUniqueId(NULL);
         } else {
             $entity = new AudioRecords();
         }
