@@ -13,11 +13,10 @@
             <div class="button-dropdown place-left">
                 <button class="dropdown-toggle">Operations</button>
                 <ul class="dropdown-menu" data-role="dropdown">
-
-                    <li>
-                        <a href="<?php echo $view['router']->generate('record_new') ?>">Add Record</a>
-                    </li>
-                    <?php if ($view['security']->isGranted('ROLE_MANAGER')): ?>
+                    <?php if ($view['security']->isGranted('ROLE_CATALOGER')): ?>
+                        <li>
+                            <a href="<?php echo $view['router']->generate('record_new') ?>">Add Record</a>
+                        </li>
                         <li>
                             <a class="dropdown-toggle" href="#">Export</a>
                             <ul class="dropdown-menu" data-role="dropdown">
@@ -31,20 +30,18 @@
                                 <li><a href="javascript://" class="exportMerge" data-type="csv">CSV</a></li>
                                 <li><a href="javascript://" class="exportMerge" data-type="xlsx">XLSX</a></li>
                             </ul>
-                        </li>
-                    <?php endif; ?> 
-                   <?php if ($view['security']->isGranted('ROLE_CATALOGER')): ?>      
-                    <li>
-                        <a class="dropdown-toggle" href="#">Import</a>
+                        </li>                         
+                        <li>
+                            <a class="dropdown-toggle" href="#">Import</a>
                             <ul class="dropdown-menu" data-role="dropdown">
                                 <li><a href="javascript://" class="import" data-type="csv">CSV</a></li>
                                 <li><a href="javascript://" class="import" data-type="xlsx">XLSX</a></li>
                             </ul>
-                    </li>                      
-                    <li>
-                        <a href="javascript://" id="bulkEdit">Bulk Edit</a>
-                    </li>
-                    <?php endif;?>
+                        </li>                      
+                        <li>
+                            <a href="javascript://" id="bulkEdit">Bulk Edit</a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </div>
             <?php echo $view->render('ApplicationFrontBundle::Records/_modal.html.php') ?>
@@ -58,11 +55,11 @@
                                 <?php
                                 if ($column == 'checkbox_Col') {
                                     ?>
-                                    <th id="<?php echo $value.'_th' ?>"><input type="checkbox" name="selectAll" id="selectAll" /></th>
+                                    <th id="<?php echo $value . '_th' ?>"><input type="checkbox" name="selectAll" id="selectAll" /></th>
                                     <?php
                                 } else {
                                     ?>
-                                    <th id="<?php echo $value.'_th'  ?>"><?php echo str_replace('_', ' ', $column) ?></th>
+                                    <th id="<?php echo $value . '_th' ?>"><?php echo str_replace('_', ' ', $column) ?></th>
                                 <?php } ?>
                             <?php } ?>
                         </tr>
@@ -82,18 +79,20 @@
         </div>
         <?php $successPopupMsg = null; ?>
         <?php foreach ($view['session']->getFlash("report_success") as $message): ?>
-            <?php $successPopupMsg = $message ;?>
-        <?php endforeach; 
+            <?php $successPopupMsg = $message; ?>
+        <?php
+        endforeach;
         $app->getSession()->remove('report_success');
         ?>
         <?php $errorPopupMsg = null; ?>
         <?php foreach ($view['session']->getFlash("report_error") as $message): ?>
-            <?php $errorPopupMsg = $message ;?>
-        <?php endforeach; 
+            <?php $errorPopupMsg = $message; ?>
+        <?php
+        endforeach;
         $app->getSession()->remove('report_error');
         ?>       
-        <?php if (!$isAjax): ?>
-            <?php $view['slots']->start('view_javascripts') ?>
+<?php if (!$isAjax): ?>
+    <?php $view['slots']->start('view_javascripts') ?>
 
             <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
             <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/records.js') ?>"></script>
