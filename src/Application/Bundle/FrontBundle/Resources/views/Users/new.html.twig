@@ -62,12 +62,14 @@
                     <span class="has-error text-danger" for="{{ form.roles.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
             </div>
-            <label>Projects</label>
-            <div class="input-control select" data-role="input-control">
-                {{ form_widget(form.userProjects, {attr: {class:'size4'} }) }}
-                {% for errorItem in form.userProjects.vars.errors %}
-                    <span class="has-error text-danger" for="{{ form.userProjects.vars.id }}">{{ errorItem.message }}</span>
-                {% endfor %}
+            <div class="projectsDiv">
+                <label>Projects</label>
+                <div class="input-control select" data-role="input-control">
+                    {{ form_widget(form.userProjects, {attr: {class:'size4'} }) }}
+                    {% for errorItem in form.userProjects.vars.errors %}
+                        <span class="has-error text-danger" for="{{ form.userProjects.vars.id }}">{{ errorItem.message }}</span>
+                    {% endfor %}
+                </div>
             </div>
             {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
             or
