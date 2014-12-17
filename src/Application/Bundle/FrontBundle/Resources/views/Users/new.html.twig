@@ -81,9 +81,8 @@
     <script src="{{ asset('bundles/applicationfront/js/users.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            var user = new Users();
-            user.onChangeRole();
-            user.applyChosen();
+            var obj = new Users();
+            obj.bindAll();
         });
     </script>
 {% endblock body %}
