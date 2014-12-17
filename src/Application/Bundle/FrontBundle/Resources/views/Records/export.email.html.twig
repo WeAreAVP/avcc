@@ -1,9 +1,12 @@
 <div>Hi <b>{{ user.name }}</b>,</div>
 <br/>
+{% if notFound is defined and notFound !=''%}
+    <div>{{notFound}}</div>
+{% else %}    
 <div>You can download the file from the following link.</div>
 <br/>
 
    <a href="{{ baseUrl }}{{ fileUrl }}">Download</a><br />
-
+{% endif %}
 <br/><br/>
 <div>AVCC-team</div>

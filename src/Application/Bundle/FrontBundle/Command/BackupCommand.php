@@ -30,10 +30,11 @@ class BackupCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $entity = $em->getRepository('ApplicationFrontBundle:UserSettings')->findBy(array('enableBackup' => 1));
         if ($entity) {
+            $completePath = '';
+            $notFound = '';
             foreach ($entity as $record) {
                 $backupEmails = $record->getBackupEmail();
-                $email_to = $this->get_email_to($backupEmails, $record);
-                $text = print_r($email_to);
+                $emailTo = $this->getEmailTo($backupEmails, $record);
                 if ($record->getUser()->getOrganizations()) {
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($record->getUser()->getOrganizations()->getId());
 
@@ -42,22 +43,21 @@ class BackupCommand extends ContainerAwareCommand
                         $phpExcelObject = $export->generateReport($records);
                         $completePath = $export->saveReport('csv', $phpExcelObject);
                         $text = $completePath;
-                    }
-                    $text = "here--" . $completePath;
-                    if ($completePath) {
-                        $baseUrl = $this->getContainer()->getParameter('baseUrl');
-                        $templateParameters = array('user' => $record->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
-                        $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
-                        $email = new EmailHelper($this->getContainer());
-                        $subject = 'Record Backup';
-                        foreach ($email_to as $email_id) {
-//                            $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $email_id);
-                            //  $email->sendEmail('yahoo', 'just mail', $this->getContainer()->getParameter('from_email'), $email_id);
-                        }
-                        $text .= $rendered;
                     } else {
-                        $text .= 'record not found';
+                        $notFound = 'Records not found.';
                     }
+                    $baseUrl = $this->getContainer()->getParameter('baseUrl');
+                    $templateParameters = array('user' => $record->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath, 'notFound' => $notFound);
+
+                    $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
+                    $email = new EmailHelper($this->getContainer());
+                    $subject = 'Record Backup';
+                    foreach ($emailTo as $emailId) {
+                        $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $emailId);
+                    }
+                    $text = $rendered;
+                } else {
+                    $text = 'record not found';
                 }
             }
         } else {
@@ -65,16 +65,14 @@ class BackupCommand extends ContainerAwareCommand
         } $output->writeln($text);
     }
 
-    public function get_email_to($backupEmails, $record)
+    public function getEmailTo($backupEmails, $record)
     {
-// $var = $record->getBackupEmail();
         $return = array();
-        if ($backupEmails == "" || empty($backupEmails)) {
-            $return = $record->getUser()->getEmail();
+        if (empty($backupEmails) || $backupEmails == NULL) {
+            $return[] = $record->getUser()->getEmail();
         } else {
             $return = explode(',', $backupEmails);
         }
-
         return $return;
     }
 
