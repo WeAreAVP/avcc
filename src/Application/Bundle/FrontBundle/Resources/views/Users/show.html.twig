@@ -1,47 +1,60 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block body %}
-<div class="grid fluid">
-    <h1>
-        <a href="{{ path('users') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
-        User Details
-    </h1>
-    <ul class="inline">
-        <li>
-            <a href="{{ path('users_edit', { 'id': entity.id }) }}" class="button primary">
-                Edit
-            </a>
-        </li>
-			<li>{{ form(delete_form) }}</li>
-    </ul>
-    <dl class="horizontal">
-        <dt>Name</dt>
-        <dd>
-            {{ entity.name }}
-        </dd>
-    </dl>
-    <dl class="horizontal">
-        <dt>Username</dt>
-        <dd>
-            {{ entity.username }}
-        </dd>
-    </dl>
-    <dl class="horizontal">
-        <dt>Email</dt>
-        <dd>
-            {{ entity.email }}
-        </dd>
-    </dl>
-    <dl class="horizontal">
-        <dt>Organizations</dt>
-        <dd>{{ entity.organizations }}</dd>
-    </dl>
-    <div class="clearfix"></div>
-    <dl class="horizontal">
-        <dt>Roles</dt>
-        <dd>
-            {{entity.roles[0]|replace({'_': '', 'ROLE': " "})|trim()|capitalize}}
-        </dd>
-    </dl>
-</div>
+    <div class="grid fluid">
+        <h1>
+            <a href="{{ path('users') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+            User Details
+        </h1>
+        <ul class="inline">
+            <li>
+                <a href="{{ path('users_edit', { 'id': entity.id }) }}" class="button primary">
+                    Edit
+                </a>
+            </li>
+            <li>{{ form(delete_form) }}</li>
+        </ul>
+
+        <dl class="horizontal">
+            <dt>Name</dt>
+            <dd>
+                {{ entity.name }}
+            </dd>
+        </dl>
+        <dl class="horizontal">
+            <dt>Username</dt>
+            <dd>
+                {{ entity.username }}
+            </dd>
+        </dl>
+        <dl class="horizontal">
+            <dt>Email</dt>
+            <dd>
+                {{ entity.email }}
+            </dd>
+        </dl>
+        <dl class="horizontal">
+            <dt>Organizations</dt>
+            <dd>{{ entity.organizations }}</dd>
+        </dl>    
+        <div class="clearfix"></div>
+        <dl class="horizontal">
+            <dt>Roles</dt>
+            <dd>
+                {{entity.roles[0]|replace({'_': '', 'ROLE': " "})|trim()|capitalize}}
+            </dd>
+        </dl>
+        <div class="clearfix"></div>
+        {% if entity.userProjects %}
+        <dl class="horizontal">
+            <dt>Projects</dt>
+            <dd> 
+                {% for project in entity.userProjects %}
+                   {{ project.name ~ ','  }}
+                {% endfor %}
+            </dd>
+        </dl>
+        {% endif%}    
+
+    </div>
 {% endblock body %}
