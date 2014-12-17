@@ -308,7 +308,7 @@
             <?php endif; ?>
             <?php if ($entity->getCopyrightRestrictions()): ?>
                 <tr>
-                    <th class="text-right">Copyright Restrictions </th>
+                    <th class="text-right">Copyright / Restrictions</th>
                     <td><?php echo $entity->getCopyrightRestrictions() ?></td>
                 </tr>
             <?php endif; ?>
