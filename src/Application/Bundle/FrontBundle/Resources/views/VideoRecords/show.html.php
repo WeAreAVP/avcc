@@ -154,7 +154,7 @@
             <?php endif;?>
             <?php if($entity->getRecord()->getCopyrightRestrictions()):?>
             <tr>
-                <th class="text-right">Copyright Restrictions </th>
+                <th class="text-right">Copyright / Restrictions</th>
                 <td><?php echo $entity->getRecord()->getCopyrightRestrictions() ?></td>
             </tr>
             <?php endif;?>
