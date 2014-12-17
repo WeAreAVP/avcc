@@ -131,6 +131,28 @@ class FilmRecordsController extends Controller
         $data = $fieldsObj->getData(2, $em, $this->getUser(), $projectId);
         if ($filmRecId) {
             $entity = $em->getRepository('ApplicationFrontBundle:FilmRecords')->find($filmRecId);
+            $entity->getRecord()->setUniqueId(NULL);
+            $entity->getRecord()->setLocation(NULL);
+            $entity->getRecord()->setTitle(NULL);
+            $entity->getRecord()->setDescription(NULL);
+            $entity->getRecord()->setContentDuration(NULL);
+            $entity->setPrintType(NULL);
+            $entity->getRecord()->setCreationDate(NULL);
+            $entity->getRecord()->setContentDate(NULL);
+            $entity->getRecord()->setIsReview(NULL);
+            $entity->setFootage(NULL);
+            $entity->setMediaDiameter(NULL);
+            $entity->setColors(NULL);
+            $entity->setSound(NULL);
+            $entity->setAcidDetectionStrip(NULL);
+            $entity->setShrinkage(NULL);
+            $entity->getRecord()->setGenreTerms(NULL);
+            $entity->getRecord()->setContributor(NULL);
+            $entity->getRecord()->setGeneration(NULL);
+            $entity->getRecord()->setPart(NULL);
+            $entity->getRecord()->setDuplicatesDerivatives(NULL);
+            $entity->getRecord()->setRelatedMaterial(NULL);
+            $entity->getRecord()->setConditionNote(NULL);
         } else {
             $entity = new FilmRecords();
         }
