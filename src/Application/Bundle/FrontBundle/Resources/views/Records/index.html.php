@@ -32,17 +32,19 @@
                                 <li><a href="javascript://" class="exportMerge" data-type="xlsx">XLSX</a></li>
                             </ul>
                         </li>
-                    <?php endif; ?>
+                    <?php endif; ?> 
+                   <?php if ($view['security']->isGranted('ROLE_CATALOGER')): ?>      
                     <li>
                         <a class="dropdown-toggle" href="#">Import</a>
                             <ul class="dropdown-menu" data-role="dropdown">
                                 <li><a href="javascript://" class="import" data-type="csv">CSV</a></li>
                                 <li><a href="javascript://" class="import" data-type="xlsx">XLSX</a></li>
                             </ul>
-                    </li>
+                    </li>                      
                     <li>
                         <a href="javascript://" id="bulkEdit">Bulk Edit</a>
                     </li>
+                    <?php endif;?>
                 </ul>
             </div>
             <?php echo $view->render('ApplicationFrontBundle::Records/_modal.html.php') ?>
