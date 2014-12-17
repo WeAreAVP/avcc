@@ -90,25 +90,30 @@ class Users extends BaseUser
      * @ORM\OrderBy({"id"="ASC"})
      */
     private $userSetting;
-
+    
     /**
-     * @ORM\OneToMany(
-     *     targetEntity="MergeData",
-     *     mappedBy="user",
-     *     fetch="EAGER",
-     *     indexBy="user_id",
-     *     cascade={"all","merge","persist","refresh","remove"}
+     * @ORM\ManyToMany(targetEntity="Application\Bundle\FrontBundle\Entity\Projects", inversedBy="projectUsers", cascade={"all","refresh"})
+     * @ORM\JoinTable(
+     *     name="users_projects",
+     *     joinColumns={
+     *         @ORM\JoinColumn(
+     *             name="userId",
+     *             referencedColumnName="id",
+     *             nullable=false,
+     *         )
+     *     },
+     *     inverseJoinColumns={@ORM\JoinColumn(name="projectId", referencedColumnName="id", nullable=false, onDelete="RESTRICT")}
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
-    private $userMergeData;
-
+    private $userProjects;
     /**
      * Users constructor
      */
     public function __construct()
     {
         $this->userSetting = new ArrayCollection();
+        $this->userProjects = new ArrayCollection();
         parent::__construct();
     }
 
@@ -307,28 +312,50 @@ class Users extends BaseUser
     {
          $this->userSetting->remove($us);
     }
-
+    
     /**
-     * Add userMergeData
-     * @param \Application\Bundle\FrontBundle\Entity\MergeData $md
+     * Add user project
+     * @param \Application\Bundle\FrontBundle\Entity\Projects $project
      *
      */
-    public function addUserMergeData(MergeData $md)
+    public function addUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $project)
     {
-         if (!$this->userMergeData->contains($md)) {
+         if (!$this->userProjects->contains($project)) {
 
-             $this->userMergeData[] = $md;
-             $md->setUser($this);
+             $this->userProjects[] = $project;
+             $project->setProjectUser($this);
          }
     }
 
     /**
-     * Remove merge data
-     * @param \Application\Bundle\FrontBundle\Entity\MergeData $md
+     * Remove user project
+     * @param \Application\Bundle\FrontBundle\Entity\Projects $project
      *
      */
-    public function removeUserMergeData(MergeData $md)
+    public function removeUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $project)
     {
-         $this->userMergeData->remove($md);
+         $this->userProjects->remove($project);
     }
+    
+    /**
+     * 
+     * @param \Application\Bundle\FrontBundle\Entity\Projects $p
+     * @return \Application\Bundle\FrontBundle\Entity\Users
+     */
+    public function setUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $p)
+    {
+        $this->userProjects = $p;
+
+        return $this;
+    }
+
+    /**
+     * 
+     * @return type
+     */
+    public function getUserProjects()
+    {
+        return $this->userProjects;
+    }
+
 }

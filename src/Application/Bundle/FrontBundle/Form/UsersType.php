@@ -77,7 +77,8 @@ class UsersType extends AbstractType
                     'second_options' => array('label' => ' ', 'attr' => array('class' => 'form-control', 'placeholder' => 'Confirm Password')),
                     'invalid_message' => 'fos_user.password.mismatch',
                         )
-                )->addEventListener(
+                )->add('userProjects')
+                ->addEventListener(
                         FormEvents::POST_SET_DATA, array($this, 'onPreSetData'))
                 ->addEventListener(
                         FormEvents::PRE_SUBMIT, array($this, 'onPreSubmitData'))

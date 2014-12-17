@@ -4,7 +4,17 @@
  * @returns {Users}
  */
 function Users() {
+
+    var selfObj = this;
     
+    /**
+     * 
+     * @returns {undefined}
+     */
+    this.bindAll = function () {
+        selfObj.onChangeRole();
+        selfObj.applyChosen();
+    }
     /**
      * 
      * @returns {undefined}
@@ -17,6 +27,21 @@ function Users() {
             } else {
                 $('#application_bundle_frontbundle_users_organizations').removeAttr('required');
             }
+            if (selectedRole == 'ROLE_CATALOGER') {
+                $('.projectsDiv').show();
+                $("#application_bundle_frontbundle_users_userProjects").trigger("chosen:updated");
+                $('#application_bundle_frontbundle_users_userProjects').attr('required', 'required');
+            } else {
+                $('#application_bundle_frontbundle_users_userProjects').removeAttr('required');
+                $('.projectsDiv').hide();
+            }
         }).change();
+    }
+    /**
+     * 
+     * @returns {undefined}
+     */
+    this.applyChosen = function () {
+        $("#application_bundle_frontbundle_users_userProjects").chosen();
     }
 }

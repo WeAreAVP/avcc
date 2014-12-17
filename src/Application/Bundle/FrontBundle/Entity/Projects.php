@@ -3,6 +3,7 @@
 namespace Application\Bundle\FrontBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
 
 /**
  * Projects
@@ -74,6 +75,15 @@ class Projects
      */
     private $usersUpdated;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Application\Bundle\FrontBundle\Entity\Users", mappedBy="userProjects")
+     */
+    private $projectUsers;
+    
+    public function __construct() {
+        $this->projectUsers = new ArrayCollection();
+    }
+    
     /**
      * @ORM\PrePersist
      */
@@ -255,5 +265,47 @@ class Projects
 
         return $this;
     }
+    
+    /**
+     * Add user project
+     * @param \Application\Bundle\FrontBundle\Entity\Users $user
+     *
+     */
+    public function addProjectUsers(\Application\Bundle\FrontBundle\Entity\Users $user)
+    {
+         if (!$this->projectUsers->contains($user)) {
+             $this->projectUsers[] = $user;
+             $user->setUser($this);
+         }
+    }
 
+    /**
+     * Remove user project
+     * @param \Application\Bundle\FrontBundle\Entity\Users $user
+     *
+     */
+    public function removeProjectUsers(\Application\Bundle\FrontBundle\Entity\Users $user)
+    {
+         $this->projectUsers->remove($user);
+    }
+    /**
+     * 
+     * @param \Application\Bundle\FrontBundle\Entity\Users $u
+     * @return \Application\Bundle\FrontBundle\Entity\Projects
+     */
+    public function setProjectUsers(\Application\Bundle\FrontBundle\Entity\Users $u)
+    {
+        $this->projectUsers = $u;
+
+        return $this;
+    }
+
+    /**
+     * 
+     * @return type
+     */
+    public function getProjectUsers()
+    {
+        return $this->projectUsers;
+    }
 }
