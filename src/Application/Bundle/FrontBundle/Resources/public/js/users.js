@@ -13,7 +13,7 @@ function Users() {
      */
     this.bindAll = function () {
         selfObj.onChangeRole();
-        selfObj.applyChosen();
+//        selfObj.applyChosen();
     }
     /**
      * 
@@ -28,9 +28,9 @@ function Users() {
                 $('#application_bundle_frontbundle_users_organizations').removeAttr('required');
             }
             if (selectedRole == 'ROLE_CATALOGER') {
-                $('.projectsDiv').show();
-                $("#application_bundle_frontbundle_users_userProjects").trigger("chosen:updated");
+                $('.projectsDiv').show();             
                 $('#application_bundle_frontbundle_users_userProjects').attr('required', 'required');
+                $("#application_bundle_frontbundle_users_userProjects").chosen();
             } else {
                 $('#application_bundle_frontbundle_users_userProjects').removeAttr('required');
                 $('.projectsDiv').hide();

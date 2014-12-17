@@ -80,6 +80,8 @@
 
     </div>
 
+{% endblock body %}
+{% block view_javascripts %}
     <script src="{{ asset('bundles/applicationfront/js/users.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -87,4 +89,4 @@
             obj.bindAll();
         });
     </script>
-{% endblock body %}
+{% endblock view_javascripts %}
