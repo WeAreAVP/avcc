@@ -71,5 +71,11 @@
 
 	</div>
 
-
+<script src="{{ asset('bundles/applicationfront/js/users.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var user = new Users();
+        user.onChangeRole();
+    });
+</script>
 {% endblock body %}
