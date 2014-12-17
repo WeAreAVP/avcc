@@ -138,6 +138,25 @@ class AudioRecordsController extends Controller
         if ($audioRecId) {
             $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->find($audioRecId);
             $entity->getRecord()->setUniqueId(NULL);
+            $entity->getRecord()->setLocation(NULL);
+            $entity->getRecord()->setTitle(NULL);
+            $entity->getRecord()->setDescription(NULL);
+            $entity->getRecord()->setContentDuration(NULL);
+            $entity->setMediaDuration(NULL);
+            $entity->getRecord()->setCreationDate(NULL);
+            $entity->getRecord()->setContentDate(NULL);
+            $entity->getRecord()->setIsReview(NULL);
+            $entity->setSlides(NULL);
+            $entity->setTrackTypes(NULL);
+            $entity->setMonoStereo(NULL);
+            $entity->setNoiceReduction(NULL);
+            $entity->getRecord()->setGenreTerms(NULL);
+            $entity->getRecord()->setContributor(NULL);
+            $entity->getRecord()->setGeneration(NULL);
+            $entity->getRecord()->setPart(NULL);
+            $entity->getRecord()->setDuplicatesDerivatives(NULL);
+            $entity->getRecord()->setRelatedMaterial(NULL);
+            $entity->getRecord()->setConditionNote(NULL);
         } else {
             $entity = new AudioRecords();
         }
