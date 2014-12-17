@@ -10,10 +10,11 @@
         <div class="span11">
             <div id="div-select-all-records" style="display:none;"></div>
             <div class="clearfix"></div>
+            <?php if ($view['security']->isGranted('ROLE_CATALOGER')): ?>
             <div class="button-dropdown place-left">
                 <button class="dropdown-toggle">Operations</button>
                 <ul class="dropdown-menu" data-role="dropdown">
-                    <?php if ($view['security']->isGranted('ROLE_CATALOGER')): ?>
+                    
                         <li>
                             <a href="<?php echo $view['router']->generate('record_new') ?>">Add Record</a>
                         </li>
@@ -40,10 +41,10 @@
                         </li>                      
                         <li>
                             <a href="javascript://" id="bulkEdit">Bulk Edit</a>
-                        </li>
-                    <?php endif; ?>
+                        </li>                    
                 </ul>
             </div>
+            <?php endif; ?>
             <?php echo $view->render('ApplicationFrontBundle::Records/_modal.html.php') ?>
             <div class="table-responsive">
                 <table class="table hovered bordered" id="records">
