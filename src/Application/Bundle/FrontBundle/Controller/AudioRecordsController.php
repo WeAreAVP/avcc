@@ -461,17 +461,19 @@ class AudioRecordsController extends Controller
      * @param integer $formatId Format id
      *
      * @Route("/getFormatVersion/{formatId}", name="record_get_formatversion")
+     * @Route("/getFormatVersion/{formatId}/{versionId}", name="record_get_formatversion_version")
      * @Method("GET")
      * @Template()
      * @return template
      */
-    public function getFormatVersionAction($formatId)
+    public function getFormatVersionAction($formatId, $versionId = null)
     {
         $em = $this->getDoctrine()->getManager();
         $formatVersions = $em->getRepository('ApplicationFrontBundle:FormatVersions')->findBy(array('formatVersionFormat' => $formatId));
 
         return $this->render('ApplicationFrontBundle:AudioRecords:getFormatVersion.html.php', array(
-                    'formatVersions' => $formatVersions
+                    'formatVersions' => $formatVersions,
+                    'selectedVersion' => $versionId
         ));
     }
 
@@ -482,11 +484,12 @@ class AudioRecordsController extends Controller
      * @param integer $mediaTypeId
      *
      * @Route("/getReelDiameter/{formatId}/{mediaTypeId}", name="record_get_reeldiameter")
+     * @Route("/getReelDiameter/{formatId}/{mediaTypeId}/{selectedRD}", name="record_get_reeldiameter_selected")
      * @Method("GET")
      * @Template()
      * @return template
      */
-    public function getReelDiameterAction($formatId, $mediaTypeId)
+    public function getReelDiameterAction($formatId, $mediaTypeId, $selectedRD = Null)
     {
         $em = $this->getDoctrine()->getManager();
         if ($mediaTypeId == 2) {
@@ -496,7 +499,8 @@ class AudioRecordsController extends Controller
         }
 
         return $this->render('ApplicationFrontBundle:AudioRecords:getReelDiameter.html.php', array(
-                    'reeldiameters' => $reeldiameters
+                    'reeldiameters' => $reeldiameters,
+                    'selectRD' => $selectedRD
         ));
     }
 

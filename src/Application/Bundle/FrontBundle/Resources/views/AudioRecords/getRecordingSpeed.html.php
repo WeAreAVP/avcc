@@ -5,7 +5,7 @@
     <?php
     foreach ($speeds as $speed) {
         ?>
-        <option value="<?php echo $speed->getId() ?>"><?php echo $speed->getName() ?></option>
+        <option value="<?php echo $speed->getId() ?>" <?php echo ($speed->getId() == $selectedrs) ? 'selected="selected"' : '';?>><?php echo $speed->getName() ?></option>
         <?php
     }
     ?>

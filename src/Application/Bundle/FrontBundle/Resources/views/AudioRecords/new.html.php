@@ -47,6 +47,9 @@
     var baseUrl = '<?php echo $view['router']->generate('record') ?>';
     var selectedFormat = '<?php echo ($entity->getRecord()) ? $entity->getRecord()->getFormat()->getId() : ''; ?>';
     var selectedMediaType = 1;
+    var selectedFormatVersion = '';
+    var selectedRS = '<?php echo ($entity->getRecordingSpeed()) ? $entity->getRecordingSpeed()->getId() :'';?>';
+    var selectedRD = '<?php echo ($entity->getRecord() && $entity->getRecord()->getReelDiameter()) ? $entity->getRecord()->getReelDiameter()->getId() : ''; ?>';
     $(document).ready(function () {
         initialize_records_form();
     });

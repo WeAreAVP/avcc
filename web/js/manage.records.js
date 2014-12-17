@@ -105,9 +105,14 @@ function showUpdateFields() {
 
             }); // Ajax Call
             /// call to get reel diameters dropdown options
+            if (selectedRD) {
+                RDurl = baseUrl + 'getReelDiameter/' + $(this).val() + '/' + $("#mediaType").val() + '/' + selectedRD;
+            } else {
+                RDurl = baseUrl + 'getReelDiameter/' + $(this).val() + '/' + $("#mediaType").val();
+            }
             $.ajax({
                 type: "GET",
-                url: baseUrl + 'getReelDiameter/' + $(this).val() + '/' + $("#mediaType").val(),
+                url: RDurl,
                 success: function (response) {
                     if (response != "") {
                         $("#reelDiameters_lbl").show();
@@ -123,9 +128,14 @@ function showUpdateFields() {
             } else {
                 $('#recordingSpeed_lbl').show();
                 /// call to get recording speed dropdown options
+                if (selectedRS) {
+                    url = baseUrl + 'getRecordingSpeed/' + $(this).val() + '/' + $("#mediaType").val() + '/' + selectedRS;
+                } else {
+                    url = baseUrl + 'getRecordingSpeed/' + $(this).val() + '/' + $("#mediaType").val();
+                }
                 $.ajax({
                     type: "GET",
-                    url: baseUrl + 'getRecordingSpeed/' + $(this).val() + '/' + $("#mediaType").val(),
+                    url: url,
                     success: function (response) {
                         if (response != "") {
                             $("#recordingSpeed_lbl").show();
@@ -137,9 +147,14 @@ function showUpdateFields() {
                 }); // Ajax Call  
             }
             /// call to get formatversion dropdown options
+            if (selectedFormatVersion) {
+                formatVersiourl = baseUrl + 'getFormatVersion/' + $(this).val() + '/' + selectedFormatVersion;
+            } else {
+                formatVersiourl = baseUrl + 'getFormatVersion/' + $(this).val();
+            }
             $.ajax({
                 type: "GET",
-                url: baseUrl + 'getFormatVersion/' + $(this).val(),
+                url: formatVersiourl,
                 success: function (response) {
                     if (response != "") {
                         $("#formatVersion_lbl").show();

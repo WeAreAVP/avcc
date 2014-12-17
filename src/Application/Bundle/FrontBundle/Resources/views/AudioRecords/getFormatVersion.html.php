@@ -5,7 +5,7 @@
     <?php
     foreach ($formatVersions as $formatVersion) {
         ?>
-        <option value="<?php echo $formatVersion->getId() ?>"><?php echo $formatVersion->getName() ?></option>
+        <option value="<?php echo $formatVersion->getId() ?>" <?php echo ($formatVersion->getId() == $selectedVersion) ? 'selected="selected"' : '';?>><?php echo $formatVersion->getName() ?></option>
         <?php
     }
     ?>

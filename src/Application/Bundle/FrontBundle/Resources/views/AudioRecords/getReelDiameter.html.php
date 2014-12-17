@@ -5,7 +5,7 @@
 <?php
  foreach ($reeldiameters as $reeldiameter) {
 ?>
-<option value="<?php echo $reeldiameter->getId()?>"><?php echo $reeldiameter->getName()?></option>
+<option value="<?php echo $reeldiameter->getId()?>" <?php echo ($reeldiameter->getId() == $selectedRD) ? 'selected="selected"' : '';?>><?php echo $reeldiameter->getName()?></option>
 <?php
  }
 ?>
