@@ -290,7 +290,7 @@ class AudioRecordsController extends Controller
             try {
                 $em->flush();
                 $shpinxInfo = $this->getSphinxInfo();
-                $sphinxSearch = new SphinxSearch($em, $shpinxInfo,  $entity->getRecord()->getId(), 1);
+                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 1);
                 $sphinxSearch->replace();
 
                 // the save_and_dupplicate button was clicked
@@ -414,11 +414,12 @@ class AudioRecordsController extends Controller
      * @param integer $mediaTypeId
      *
      * @Route("/getRecordingSpeed/{formatId}/{mediaTypeId}", name="record_get_speed")
+     * @Route("/getRecordingSpeed/{formatId}/{mediaTypeId}/{selectedrs}", name="record_get_speed")
      * @Method("GET")
      * @Template()
      * @return template
      */
-    public function getRecordingSpeedAction($formatId, $mediaTypeId)
+    public function getRecordingSpeedAction($formatId, $mediaTypeId, $selectedrs = null)
     {
         $em = $this->getDoctrine()->getManager();
         if ($mediaTypeId == 3) {
@@ -428,7 +429,8 @@ class AudioRecordsController extends Controller
         }
 
         return $this->render('ApplicationFrontBundle:AudioRecords:getRecordingSpeed.html.php', array(
-                    'speeds' => $speeds
+                    'speeds' => $speeds,
+                    'selectedrs' => $selectedrs
         ));
     }
 
@@ -500,7 +502,7 @@ class AudioRecordsController extends Controller
 
         return $this->render('ApplicationFrontBundle:AudioRecords:getReelDiameter.html.php', array(
                     'reeldiameters' => $reeldiameters,
-                    'selectRD' => $selectedRD
+                    'selectedRD' => $selectedRD
         ));
     }
 
