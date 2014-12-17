@@ -14,6 +14,7 @@ use Application\Bundle\FrontBundle\Entity\UserSettings;
 
 class BackupCommand extends ContainerAwareCommand
 {
+
     protected function configure()
     {
         $this
@@ -42,7 +43,7 @@ class BackupCommand extends ContainerAwareCommand
                         $completePath = $export->saveReport('csv', $phpExcelObject);
                         $text = $completePath;
                     }
-                    $text = "here--".$completePath;
+                    $text = "here--" . $completePath;
                     if ($completePath) {
                         $baseUrl = $this->getContainer()->getParameter('baseUrl');
                         $templateParameters = array('user' => $record->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath);
@@ -68,7 +69,7 @@ class BackupCommand extends ContainerAwareCommand
     {
 // $var = $record->getBackupEmail();
         $return = array();
-        if (is_null($backupEmails) && empty($backupEmails)) {
+        if ($backupEmails == "" || empty($backupEmails)) {
             $return = $record->getUser()->getEmail();
         } else {
             $return = explode(',', $backupEmails);
