@@ -46,7 +46,7 @@
     var selectedMediaType = 3;
     var selectedFormatVersion = '';
     var selectedRS = '<?php echo ($entity->getRecordingSpeed()) ? $entity->getRecordingSpeed()->getId() :'';?>';
-    var selectedRD = '<?php echo ($entity->getRecord() && $entity->getRecord()->getReelDiameter()) ? $entity->getRecord()->getReelDiameter()->getId() : ''; ?>';
+    var selectedRD = '<?php echo ($entity->getRecord() && $entity->getRecord()->getReelDiameters()) ? $entity->getRecord()->getReelDiameters()->getId() : ''; ?>';
     $(document).ready(function () {
         initialize_records_form();
     });

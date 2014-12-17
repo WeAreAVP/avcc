@@ -47,7 +47,7 @@
     var selectedMediaType = 2;
     var selectedFormatVersion = '';
     var selectedRS = '';
-    var selectedRD = '<?php echo ($entity->getRecord() && $entity->getRecord()->getReelDiameter()) ? $entity->getRecord()->getReelDiameter()->getId() : ''; ?>';
+    var selectedRD = '<?php echo ($entity->getRecord() && $entity->getRecord()->getReelDiameters()) ? $entity->getRecord()->getReelDiameters()->getId() : ''; ?>';
     $(document).ready(function () {
         initialize_records_form();
     });
