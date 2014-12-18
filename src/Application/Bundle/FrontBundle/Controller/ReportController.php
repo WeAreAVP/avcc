@@ -163,4 +163,26 @@ class ReportController extends Controller
         return array('commercialUnique' => json_encode($highChart));
     }
 
+    /**
+     * Generate quantitative report
+     *
+     * @Route("/audiobase", name="audiobase")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function audiobaseAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        $criteria = array('s_media_type' => array('Audio'));
+        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('base', $criteria), 'base');
+        $highChart = array();
+        foreach ($result as $index => $base) {
+            $highChart[] = array($base['base'], (int) $base['total']);
+        }
+
+        return array('audiobase' => json_encode($highChart));
+    }
 }
