@@ -64,7 +64,7 @@ class OrganizationsController extends Controller
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Organization added succesfully.');
 
-            return $this->redirect($this->generateUrl('organizations', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('organizations');
         }
 
         return array(
