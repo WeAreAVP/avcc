@@ -514,7 +514,7 @@ class RecordsController extends Controller
      * @Template()
      * @return type
      */
-    public function getAllProjects($selectedProjectId = null)
+    public function getAllProjectsAction($selectedProjectId = null)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
