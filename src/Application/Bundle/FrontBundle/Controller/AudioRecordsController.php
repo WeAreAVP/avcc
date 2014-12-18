@@ -58,9 +58,10 @@ class AudioRecordsController extends Controller
         $entity = new AudioRecords();
         $form = $this->createCreateForm($entity, $em, $data);
         $form->handleRequest($request);
-        $error = '';
-        if ($form->isValid()) {
+        $error = '';        
+        if ($form->isValid()) {            
             $em->persist($entity);
+            
             try {
                 $em->flush();
                 $shpinxInfo = $this->getSphinxInfo();
@@ -76,16 +77,21 @@ class AudioRecordsController extends Controller
                 }
 
                 return $this->redirect($this->generateUrl('record_list'));
-            } catch (\Doctrine\DBAL\DBALException $e) {
+            } catch (\Doctrine\DBAL\DBALException $e) {                
                 if (is_int(strpos($e->getPrevious()->getMessage(), 'Duplicate entry'))) {
                     $error = new FormError("The unique ID must be unique.");
                     $recordForm = $form->get('record');
                     $recordForm->get('uniqueId')->addError($error);
                 }
+                if(is_int(strpos($e->getPrevious()->getMessage(), "Column 'format_id' cannot be null"))){
+                    $error = new FormError("Format is required field.");
+                    $recordForm = $form->get('record');
+                    $recordForm->get('format')->addError($error);
+                }
             }
         }
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
-
+        
         return array(
             'entity' => $entity,
             'form' => $form->createView(),

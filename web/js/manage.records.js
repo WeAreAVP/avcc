@@ -29,6 +29,8 @@ function updateFormat() {
     } else {
         url = baseUrl + 'getFormat/' + $("#mediaType").val();
     }
+    
+                
     $.ajax({
         type: "GET",
         url: url,
@@ -41,7 +43,7 @@ function updateFormat() {
             }
         }
 
-    }); // Ajax Call    
+    }); // Ajax Call 
 }
 
 function showUpdateFields() {
@@ -177,10 +179,8 @@ function onChangeMediaType() {
             window.location.href = baseUrl + 'video/new';
         } else if ($(this).val() == 2) {
             window.location.href = baseUrl + 'film/new';
-            ;
         } else if ($(this).val() == 1) {
             window.location.href = baseUrl + 'audio/new';
-            ;
         }
     });
 }

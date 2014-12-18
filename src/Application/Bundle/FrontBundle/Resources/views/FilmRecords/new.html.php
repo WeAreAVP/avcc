@@ -43,7 +43,7 @@
 <script src="<?php echo $view['assets']->getUrl('js/manage.records.js') ?>"></script>
 <script type="text/javascript">
     var baseUrl = '<?php echo $view['router']->generate('record') ?>';
-    var selectedFormat = '<?php echo ($entity->getRecord()) ? $entity->getRecord()->getFormat()->getId() : ''; ?>';
+    var selectedFormat = '<?php echo ($entity->getRecord() && $entity->getRecord()->getFormat()) ? $entity->getRecord()->getFormat()->getId() : ''; ?>';
     var selectedMediaType = 2;
     var selectedFormatVersion = '';
     var selectedRS = '';
