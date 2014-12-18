@@ -27,7 +27,7 @@ function Users() {
             } else {
                 $('#application_bundle_frontbundle_users_organizations').removeAttr('required');
             }
-            if (selectedRole == 'ROLE_CATALOGER') {
+            if (selectedRole == 'ROLE_CATALOGER' || selectedRole == 'ROLE_USER') {
                 $('.projectsDiv').show();             
                 $('#application_bundle_frontbundle_users_userProjects').attr('required', 'required');
                 $("#application_bundle_frontbundle_users_userProjects").chosen();

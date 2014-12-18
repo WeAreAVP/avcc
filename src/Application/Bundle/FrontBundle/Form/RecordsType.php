@@ -40,7 +40,8 @@ class RecordsType extends AbstractType
                         'query_builder' => function (EntityRepository $er) {
                             return $er->createQueryBuilder('f')
                                     ->orderBy('f.name', 'ASC');
-                        }
+                        },
+                        'required' => true        
                     ))
                     ->add('title')
                     ->add('collectionName')
