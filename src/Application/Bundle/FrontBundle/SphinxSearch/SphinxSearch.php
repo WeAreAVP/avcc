@@ -128,6 +128,7 @@ class SphinxSearch extends ContainerAware
                 foreach ($user->getUserProjects() as $project) {
                     $sq->where('project', "=", $project->getName());
                 }
+                $sq->where('organization_id', "=", $user->getOrganizations()->getId());
             }
             if (in_array("ROLE_MANAGER", $user->getRoles()) && $user->getOrganizations()) {
                 $sq->where('organization_id', "=", $user->getOrganizations()->getId());
