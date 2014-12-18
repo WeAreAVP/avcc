@@ -522,4 +522,30 @@ class AudioRecordsController extends Controller
         return $this->container->getParameter('sphinx_param');
     }
 
+    /**
+     * Get all project.
+     * 
+     * @param int $selectedProjectId
+     * 
+     * @Route("/getAllProjects", name="record_projects")
+     * @Route("/getAllProjects/{selectedProjectId}", name="record_user_projects")
+     * @Method("GET")
+     * @Template()
+     * @return type
+     */
+    public function getAllProjectsAction($selectedProjectId = null)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles()) && $user->getOrganizations()) {
+            $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $user->getOrganizations()->getId()));
+        } else {
+            $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
+        }
+
+        return $this->render('ApplicationFrontBundle:AudioRecords:getProjects.html.php', array(
+                    'projects' => $projects,
+                    'selectedProjectId' => $selectedProjectId
+        ));
+    }
 }
