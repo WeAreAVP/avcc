@@ -208,4 +208,27 @@ class ReportController extends Controller
 
         return array('filmbase' => json_encode($highChart));
     }
+    
+    /**
+     * Generate quantitative report
+     *
+     * @Route("/filmreeldiameter", name="filmreeldiameter")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function filmreeldiameterAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        $criteria = array('s_media_type' => array('Film'));
+        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('reel_diameter', $criteria), 'reel_diameter');
+        $highChart = array();
+        foreach ($result as $index => $base) {
+            $highChart[] = array($reelDiameter['reel_diameter'], (int) $reelDiameter['total']);
+        }
+
+        return array('reelDiameter' => json_encode($highChart));
+    }
 }
