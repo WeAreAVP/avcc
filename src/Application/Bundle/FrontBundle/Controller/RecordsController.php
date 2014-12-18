@@ -25,21 +25,25 @@ use DateTime;
  */
 class RecordsController extends Controller
 {
+
     /**
      * Object of DefaultFields
      * @var DefaultFields
      */
     private $defaultFields;
+
     /**
      * Columns for datatable.
      * @var array
      */
     private $columns = array();
+
     /**
      * Default limit for query.
      * @var integer
      */
     private $limit;
+
     /**
      * Constructor of RecordsController
      */
@@ -211,6 +215,7 @@ class RecordsController extends Controller
 
         return $criteria;
     }
+
     /**
      * Set/unset facet values from session.
      *
@@ -227,6 +232,7 @@ class RecordsController extends Controller
             $session->remove('facetData');
         }
     }
+
     /**
      * Remove empty values from array.
      *
@@ -467,7 +473,7 @@ class RecordsController extends Controller
 
         return $this->redirect($this->generateUrl('record_list'));
     }
-    
+
     /**
      * Finds and displays a AudioRecords entity.
      *
@@ -496,4 +502,32 @@ class RecordsController extends Controller
                     'fieldSettings' => $userViewSettings
         ));
     }
+    
+    /**
+     * Get all project.
+     * 
+     * @param int $selectedProjectId
+     * 
+     * @Route("/getAllProjects", name="record_projects")
+     * @Route("/getAllProjects/{selectedProjectId}", name="record_user_projects")
+     * @Method("GET")
+     * @Template()
+     * @return type
+     */
+    public function getAllProjects($selectedProjectId = null)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles()) && $user->getOrganizations()) {
+            $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $user->getOrganizations()->getId()));
+        } else {
+            $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
+        }
+
+        return $this->render('ApplicationFrontBundle:Records:getProjects.html.php', array(
+                    'projects' => $projects,
+                    'selectedProjectId' => $selectedProjectId
+        ));
+    }
+
 }

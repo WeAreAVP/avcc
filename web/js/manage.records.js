@@ -13,6 +13,7 @@ function initialize_records_form() {
     $.mask.definitions['d'] = '[0-3,x]';
     $.mask.definitions['g'] = '[0-9,x]';
     $("#creationDate, #contentDate").mask("yggg-mg-dg", {optional: true});
+    updateProjects();
     updateFormat();
     onChangeMediaType();
     showUpdateFields();
@@ -29,8 +30,8 @@ function updateFormat() {
     } else {
         url = baseUrl + 'getFormat/' + $("#mediaType").val();
     }
-    
-                
+
+
     $.ajax({
         type: "GET",
         url: url,
@@ -220,4 +221,21 @@ function closeBtn() {
         $("#selectedrecords").val('');
         window.location.reload();
     });
+}
+
+function updateProjects() {
+    if(selectedProject){
+        url = baseUrl + 'getAllProjects/' + selectedProject;
+    }else{
+        url = baseUrl + 'getAllProjects/';
+    }    
+    $.ajax({
+        type: "GET",
+        url: url,        
+        success: function (response) {
+            if (response != "") {
+                $("#project").html(response);
+            }
+        }
+    }); // Ajax Call     
 }
