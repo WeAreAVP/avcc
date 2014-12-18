@@ -232,7 +232,7 @@ function updateProjects() {
     console.log(urlProjects);
     $.ajax({
         type: "GET",
-        url: url,        
+        url: urlProjects,        
         success: function (response) {
             if (response != "") {
                 $("#project").html(response);
