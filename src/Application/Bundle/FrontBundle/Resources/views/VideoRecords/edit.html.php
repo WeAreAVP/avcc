@@ -44,6 +44,7 @@
     var selectedFormatVersion = '<?php echo ($entity->getFormatVersion()) ? $entity->getFormatVersion()->getId() :'';?>';
     var selectedRS = '<?php echo ($entity->getRecordingSpeed()) ? $entity->getRecordingSpeed()->getId() :'';?>';
     var selectedRD = '<?php echo ($entity->getRecord() && $entity->getRecord()->getReelDiameters()) ? $entity->getRecord()->getReelDiameters()->getId() : ''; ?>';
+    var selectedProject = '<?php echo ($entity->getRecord() && $entity->getRecord()->getProject()) ? $entity->getRecord()->getProject()->getId() : ''; ?>';
     $(document).ready(function () {
         initialize_records_form();
     });

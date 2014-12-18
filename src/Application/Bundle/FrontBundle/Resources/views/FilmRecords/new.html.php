@@ -48,6 +48,7 @@
     var selectedFormatVersion = '';
     var selectedRS = '';
     var selectedRD = '<?php echo ($entity->getRecord() && $entity->getRecord()->getReelDiameters()) ? $entity->getRecord()->getReelDiameters()->getId() : ''; ?>';
+    var selectedProject = '<?php echo ($entity->getRecord() && $entity->getRecord()->getProject()) ? $entity->getRecord()->getProject()->getId() : ''; ?>';
     $(document).ready(function () {
         initialize_records_form();
     });
