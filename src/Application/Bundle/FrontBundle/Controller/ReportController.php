@@ -225,7 +225,7 @@ class ReportController extends Controller
         $criteria = array('s_media_type' => array('Film'));
         $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('reel_diameter', $criteria), 'reel_diameter');
         $highChart = array();
-        foreach ($result as $index => $base) {
+        foreach ($result as $index => $reelDiameter) {
             $highChart[] = array($reelDiameter['reel_diameter'], (int) $reelDiameter['total']);
         }
 
