@@ -123,11 +123,14 @@ class SphinxSearch extends ContainerAware
         if ($criteria) {
             $this->whereClause($criteria, $sq);
         }
-        if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles()) && $user->getOrganizations()) {
-            $sq->where('organization_id', "=", $user->getOrganizations()->getId());
-        } elseif ((in_array("ROLE_USER", $user->getRoles()) || in_array("ROLE_CATALOGER", $user->getRoles())) && $this->getUser()->getUserProjects()) {
-            foreach ($this->getUser()->getUserProjects() as $project) {
-                $sq->where('project', "=", $project->getName());
+        if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
+            if (!in_array("ROLE_MANAGER", $user->getRoles()) && $this->getUser()->getUserProjects()) {
+                foreach ($this->getUser()->getUserProjects() as $project) {
+                    $sq->where('project', "=", $project->getName());
+                }
+            }
+            if (in_array("ROLE_MANAGER", $user->getRoles()) && $user->getOrganizations()) {
+                $sq->where('organization_id', "=", $user->getOrganizations()->getId());
             }
         }
         $result = $sq->orderBy($sortColumn, $sortOrder)
