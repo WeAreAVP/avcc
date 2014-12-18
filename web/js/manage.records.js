@@ -30,8 +30,6 @@ function updateFormat() {
     } else {
         url = baseUrl + 'getFormat/' + $("#mediaType").val();
     }
-
-
     $.ajax({
         type: "GET",
         url: url,
@@ -96,7 +94,7 @@ function showUpdateFields() {
             /// call to get base dropdown options
             $.ajax({
                 type: "GET",
-                url: baseUrl + 'getBase/' + $('#format').val(),
+                url: baseUrl + 'getBase/' + $(this).val(),
                 success: function (response) {
                     if (response != "") {
                         $("#bases_lbl").show();
@@ -169,7 +167,7 @@ function showUpdateFields() {
 
             }); // Ajax Call   
         }
-    }).change();
+    });
 
 }
 

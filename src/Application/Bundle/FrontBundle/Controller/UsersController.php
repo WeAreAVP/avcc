@@ -348,7 +348,7 @@ class UsersController extends Controller
      *
      * @param integer $orgId Organization id
      *
-     * @Route("/getOrganizationProjects/{orgId}", name="record_get_base")
+     * @Route("/getOrganizationProjects/{orgId}", name="record_get_project")
      * @Method("GET")
      * @Template()
      * @return template
