@@ -225,9 +225,9 @@ function closeBtn() {
 
 function updateProjects() {
     if(selectedProject){
-        urlProjects = baseUrl + 'getAllProjects/' + selectedProject;
+        urlProjects = '/getAllProjects/' + selectedProject;
     }else{
-        urlProjects = baseUrl + 'getAllProjects/';
+        urlProjects = '/getAllProjects';
     }    
     console.log(urlProjects);
     $.ajax({

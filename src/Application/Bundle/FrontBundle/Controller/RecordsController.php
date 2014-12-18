@@ -508,8 +508,8 @@ class RecordsController extends Controller
      * 
      * @param int $selectedProjectId
      * 
-     * @Route("record/getAllProjects", name="record_projects")
-     * @Route("record/getAllProjects/{selectedProjectId}", name="record_user_projects")
+     * @Route("/getAllProjects", name="record_projects")
+     * @Route("/getAllProjects/{selectedProjectId}", name="record_user_projects")
      * @Method("GET")
      * @Template()
      * @return type
