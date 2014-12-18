@@ -343,4 +343,24 @@ class UsersController extends Controller
         return $roleOptions;
     }
 
+    /**
+     * Displays a projects in dropdown.
+     *
+     * @param integer $orgId Organization id
+     *
+     * @Route("/getOrganizationProjects/{orgId}", name="record_get_base")
+     * @Method("GET")
+     * @Template()
+     * @return template
+     */
+    public function getOrganizationProjectsAction($orgId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $orgId));
+
+        return $this->render('ApplicationFrontBundle:Users:getProjects.html.php', array(
+                    'projects' => $projects
+        ));
+    }
+
 }

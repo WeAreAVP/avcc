@@ -394,7 +394,7 @@ class AudioRecordsController extends Controller
     }
 
     /**
-     * Displays a form to select media type abd projects.
+     * Displays a base values in dropdown.
      *
      * @param integer $formatId Format id
      *

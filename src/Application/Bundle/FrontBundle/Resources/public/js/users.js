@@ -6,7 +6,17 @@
 function Users() {
 
     var selfObj = this;
+    var baseUrl = null;
     
+    /**
+     * Set the error merge file message.
+     * @param {string} merge_msg
+     * 
+     */
+    this.setBaseUrl = function (base_url) {
+        baseUrl = base_url;
+    }
+
     /**
      * 
      * @returns {undefined}
@@ -14,25 +24,26 @@ function Users() {
     this.bindAll = function () {
         selfObj.onChangeRole();
 //        selfObj.applyChosen();
+        selfObj.getOrganizationProjects();    
     }
     /**
      * 
      * @returns {undefined}
      */
     this.onChangeRole = function () {
-        $('#application_bundle_frontbundle_users_roles').change(function () {
+        $('#roles').change(function () {
             var selectedRole = $(this).val();
             if (selectedRole != 'ROLE_SUPER_ADMIN') {
-                $('#application_bundle_frontbundle_users_organizations').attr('required', 'required');
+                $('#userOrganization').attr('required', 'required');
             } else {
-                $('#application_bundle_frontbundle_users_organizations').removeAttr('required');
+                $('#userOrganization').removeAttr('required');
             }
             if (selectedRole == 'ROLE_CATALOGER' || selectedRole == 'ROLE_USER') {
-                $('.projectsDiv').show();             
-                $('#application_bundle_frontbundle_users_userProjects').attr('required', 'required');
-                $("#application_bundle_frontbundle_users_userProjects").chosen();
+                $('.projectsDiv').show();
+                $('#userProjects').attr('required', 'required');
+                $("#userProjects").chosen();
             } else {
-                $('#application_bundle_frontbundle_users_userProjects').removeAttr('required');
+                $('#userProjects').removeAttr('required');
                 $('.projectsDiv').hide();
             }
         }).change();
@@ -42,6 +53,28 @@ function Users() {
      * @returns {undefined}
      */
     this.applyChosen = function () {
-        $("#application_bundle_frontbundle_users_userProjects").chosen();
+        $("#userProjects").chosen();
+    }
+
+    this.getOrganizationProjects = function () {
+        $('#userOrganization').change(function () {
+            if ($(this).val()) {
+                url = baseUrl + 'getOrganizationProjects/' + $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function (response) {
+                        if (response != "") {
+                            $("#userProjects").html(response);
+                            $("#userProjects").trigger("chosen:updated");
+                        }else{
+                            $("#userProjects").html("");
+                            $("#userProjects").trigger("chosen:updated");
+                        }
+                    }
+
+                }); // Ajax Call 
+            }
+        });
     }
 }
