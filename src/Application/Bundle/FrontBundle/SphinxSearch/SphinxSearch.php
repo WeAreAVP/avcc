@@ -124,8 +124,8 @@ class SphinxSearch extends ContainerAware
             $this->whereClause($criteria, $sq);
         }
         if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
-            if (!in_array("ROLE_MANAGER", $user->getRoles()) && $this->getUser()->getUserProjects()) {
-                foreach ($this->getUser()->getUserProjects() as $project) {
+            if (!in_array("ROLE_MANAGER", $user->getRoles()) && $user->getUserProjects()) {
+                foreach ($user->getUserProjects() as $project) {
                     $sq->where('project', "=", $project->getName());
                 }
             }
