@@ -140,5 +140,27 @@ class ReportController extends Controller
         return $response;
         return array();
     }
+    
+    /**
+     * Generate quantitative report
+     *
+     * @Route("/commercialunique", name="commercialunique")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function commercialuniqueAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('commercial'), 'commercial');
+        $highChart = array();
+        foreach ($result as $index => $cu) {
+            $highChart[] = array($cu['commercial'], (int) $cu['total']);
+        }
+
+        return array('commercialUnique' => json_encode($highChart));
+    }
 
 }
