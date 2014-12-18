@@ -53,7 +53,7 @@ class BackupCommand extends ContainerAwareCommand
                     $email = new EmailHelper($this->getContainer());
                     $subject = 'Record Backup';
                     foreach ($emailTo as $emailId) {
-                        $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $emailId);
+                        $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), trim($emailId));
                     }
                     $text = $rendered;
                 } else {

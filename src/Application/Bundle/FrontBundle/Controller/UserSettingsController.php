@@ -210,7 +210,7 @@ class UserSettingsController extends Controller
         $emailConstraint = new EmailConstraint();
         $emailConstraint->message = 'Invalid email id';
         foreach ($email_ids as $email) {
-            $errors = $this->get('validator')->validateValue($email, $emailConstraint);
+            $errors = $this->get('validator')->validateValue(trim($email), $emailConstraint);
             if (strpos($errors, 'Invalid email id')) {
                 $session = $request->getSession();
                 $session->set('error', 'Please enter valid email id');
