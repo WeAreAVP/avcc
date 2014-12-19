@@ -19,7 +19,7 @@
             ?>
             <div style="<?php echo ($viedoField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1].'_lbl' : $field[0].'_lbl' ?>">
                 <?php 
-                $attr = ($viedoField['is_required']) ? array('class' => 'size4', 'required'=> 'required') : array('class' => 'size4');
+                $attr = ($viedoField['is_required']) ? array('class' => 'size4') : array('class' => 'size4');
                 echo $view['form']->label((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]], ' ');echo $viedoField['title']; ?>
                 <div class="input-control text" data-role="input-control">
                     <?php echo $view['form']->widget((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => $attr)) ?>
