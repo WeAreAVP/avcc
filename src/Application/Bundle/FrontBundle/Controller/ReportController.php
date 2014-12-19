@@ -390,7 +390,7 @@ class ReportController extends Controller
         
         $highChart = array();
         foreach ($result as $index => $diskDiameter) {
-            $highChart[] = array($diskDiameter['disk_diameter'], (int) $reelDiameter['total']);
+            $highChart[] = array($diskDiameter['disk_diameter'], (int) $diskDiameter['total']);
         }
 
         return array('diskDiameter' => json_encode($highChart));
