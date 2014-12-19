@@ -95,7 +95,7 @@ class RecordsController extends Controller
             $parentFacet = isset($searchOn['parent_facet']) ? $searchOn['parent_facet'] : null;
         }
         $facet['mediaType'] = $this->removeEmpty($sphinxSearch->facetSelect('media_type', $this->getUser(), $criteria, $parentFacet), 'media_type');
-        $facet['formats'] = $this->removeEmpty($sphinxSearch->facetSelect('format', $criteria, $this->getUser(), $parentFacet), 'format');
+        $facet['formats'] = $this->removeEmpty($sphinxSearch->facetSelect('format', $this->getUser(), $criteria, $parentFacet), 'format');
         $facet['commercialUnique'] = $this->removeEmpty($sphinxSearch->facetSelect('commercial', $this->getUser(), $criteria, $parentFacet), 'commercial');
         $facet['bases'] = $this->removeEmpty($sphinxSearch->facetSelect('base', $this->getUser(), $criteria, $parentFacet), 'base');
         $facet['recordingStandards'] = $this->removeEmpty($sphinxSearch->facetSelect('recording_standard', $this->getUser(), $criteria, $parentFacet), 'recording_standard');
