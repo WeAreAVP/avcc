@@ -302,4 +302,50 @@ class ReportController extends Controller
 
         return array('printType' => json_encode($highChart));
     }
+    
+    /**
+     * Generate quantitative report
+     *
+     * @Route("/filmcolor", name="filmcolor")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function filmcolorAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        $criteria = array('s_media_type' => array('Film'));
+        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('color', $this->getUser(), $criteria), 'color');
+        $highChart = array();
+        foreach ($result as $index => $color) {
+            $highChart[] = array($color['color'], (int) $color['total']);
+        }
+
+        return array('color' => json_encode($highChart));
+    }
+    
+    /**
+     * Generate quantitative report
+     *
+     * @Route("/filmsound", name="filmsound")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function filmsoundAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        $criteria = array('s_media_type' => array('Film'));
+        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('sound', $this->getUser(), $criteria), 'sound');
+        $highChart = array();
+        foreach ($result as $index => $sound) {
+            $highChart[] = array($sound['sound'], (int) $sound['total']);
+        }
+
+        return array('sound' => json_encode($highChart));
+    }
 }
