@@ -150,12 +150,16 @@ class SphinxSearch extends ContainerAware
         if ($criteria && $facetColumn != $parentFacet) {
             $this->whereClause($criteria, $sq);
         }
-//        $this->roleCriteria($user, $sq);
+        $this->roleCriteria($user, $sq);
         $sq->where($facetColumn, '!=', '');
         $sq->groupBy($facetColumn)
                 ->orderBy($facetColumn, 'asc');
 
-        return $sq->execute();
+//        return $sq->execute();
+        $q = array('result'=>$sq->execute(),'query'=>$sq->getCompiled());
+        echo '<pre>';
+        print_r($q);
+        exit;
     }
 
     /**
