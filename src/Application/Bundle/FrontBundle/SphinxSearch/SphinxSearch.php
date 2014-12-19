@@ -159,7 +159,7 @@ class SphinxSearch extends ContainerAware
         $q = array('result'=>$sq->execute(),'query'=>$sq->getCompiled());
         echo '<pre>';
         print_r($q);
-        exit;
+//        exit;
     }
 
     /**
