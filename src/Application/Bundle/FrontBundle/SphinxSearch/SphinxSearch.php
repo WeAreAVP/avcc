@@ -223,8 +223,7 @@ class SphinxSearch extends ContainerAware
     }
 
     protected function roleCriteria($user, $sq)
-    { echo '<pre>';
- var_dump($user->getRoles());exit;
+    {
         if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
             if (!in_array("ROLE_MANAGER", $user->getRoles()) && $user->getUserProjects()) {
                 foreach ($user->getUserProjects() as $project) {
