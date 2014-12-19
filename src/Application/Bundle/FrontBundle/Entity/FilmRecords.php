@@ -146,7 +146,7 @@ class FilmRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\FilmRecords
      */
-    public function setPrintType(PrintTypes $pt)
+    public function setPrintType(PrintTypes $pt = null)
     {
         $this->printType = $pt;
 
@@ -170,7 +170,7 @@ class FilmRecords
      *
      * @return \Application\Bundle\FrontBundle\Entity\FilmRecords
      */
-    public function setReelCore(ReelCore $reelcore)
+    public function setReelCore(ReelCore $reelcore = null)
     {
         $this->reelCore = $reelcore;
 
