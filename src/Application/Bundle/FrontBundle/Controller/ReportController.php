@@ -274,7 +274,7 @@ class ReportController extends Controller
         $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('reel_core', $this->getUser(), $criteria), 'reel_core');
         $highChart = array();
         foreach ($result as $index => $reelCore) {
-            $highChart[] = array($reelCore['reel_core'], (int) $reelDiameter['total']);
+            $highChart[] = array($reelCore['reel_core'], (int) $reelCore['total']);
         }
 
         return array('reelCore' => json_encode($highChart));
