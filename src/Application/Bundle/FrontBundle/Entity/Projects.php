@@ -50,7 +50,7 @@ class Projects
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Organizations")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="organization_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="organization_id", referencedColumnName="id", nullable=false)
      * })
      */
     private $organization;
