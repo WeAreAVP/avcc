@@ -279,4 +279,27 @@ class ReportController extends Controller
 
         return array('reelCore' => json_encode($highChart));
     }
+    
+    /**
+     * Generate quantitative report
+     *
+     * @Route("/printtype", name="printtype")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function printtypeAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        $criteria = array('s_media_type' => array('Film'));
+        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('print_type', $this->getUser(), $criteria), 'print_type');
+        $highChart = array();
+        foreach ($result as $index => $printType) {
+            $highChart[] = array($printType['print_type'], (int) $printType['total']);
+        }
+
+        return array('printType' => json_encode($highChart));
+    }
 }

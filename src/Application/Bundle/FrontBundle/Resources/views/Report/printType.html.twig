@@ -1,7 +1,7 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block body %}
-    <h1>Film - Reel Core Report
+    <h1>Film Print Type Report
 	</h1>
 	<br/>
 	<div id="report_container">
@@ -17,7 +17,7 @@
 	<script type="text/javascript" src="{{ asset('js/exporting.js') }}"></script>
 
 	<script type="text/javascript">
-		var reelCore ={{ reelCore | raw }} ;
+		var printType ={{ printType | raw }} ;
 		$(window).load(function () {
 			$('#report_container').highcharts({
 				chart: {
@@ -37,7 +37,7 @@
 				},
 				yAxis: {
 					title: {
-						text: 'Total count per reel / core'
+						text: 'Total count per print types'
 					}
 				},
 				legend: {
@@ -57,9 +57,9 @@
 					pointFormat: '<span style="color:{point.color}">{point.name}</span><br/><b>Total:</b>{point.y}<br/>'
 				},
 				series: [{
-						name: 'Film Reel/Core',
+						name: 'Film Print Type',
 						colorByPoint: true,
-						data: reelCore
+						data: printType
 					}]
 			});
 
