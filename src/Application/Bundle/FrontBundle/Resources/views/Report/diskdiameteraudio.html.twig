@@ -1,7 +1,7 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block body %}
-    <h1>Audio - Open Reel Report
+    <h1>Audio - Disk Diameter Report
 	</h1>
 	<br/>
 	<div id="report_container">
@@ -17,7 +17,7 @@
 	<script type="text/javascript" src="{{ asset('js/exporting.js') }}"></script>
 
 	<script type="text/javascript">
-		var reelDiameter ={{ reelDiameter | raw }} ;
+		var diskDiameter ={{ diskDiameter | raw }} ;
 		$(window).load(function () {
 			$('#report_container').highcharts({
 				chart: {
@@ -37,7 +37,7 @@
 				},
 				yAxis: {
 					title: {
-						text: 'Total count per open reel format'
+						text: 'Total count per open disk diameter format'
 					}
 				},
 				legend: {
@@ -57,9 +57,9 @@
 					pointFormat: '<span style="color:{point.color}">{point.name}</span><br/><b>Total:</b>{point.y}<br/>'
 				},
 				series: [{
-						name: 'Reel Diameter',
+						name: 'Disk Diameter',
 						colorByPoint: true,
-						data: reelDiameter
+						data: diskDiameter
 					}]
 			});
 

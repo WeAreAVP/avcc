@@ -371,4 +371,28 @@ class ReportController extends Controller
 
         return array('acid' => json_encode($highChart));
     }
+    
+    /**
+     * Generate quantitative report
+     *
+     * @Route("/diskdiameteraudio", name="diskdiameteraudio")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function diskdiameteraudioAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        $criteria = array('s_format' => array('"LP"', '"45"', '"78"', '"Lacquer Disc"', '"Transcription Disc "'));
+        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('disk_diameter', $this->getUser(), $criteria), 'disk_diameter');
+        
+        $highChart = array();
+        foreach ($result as $index => $diskDiameter) {
+            $highChart[] = array($diskDiameter['disk_diameter'], (int) $reelDiameter['total']);
+        }
+
+        return array('diskDiameter' => json_encode($highChart));
+    }
 }
