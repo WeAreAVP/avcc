@@ -16,6 +16,7 @@ use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
  */
 class ReportController extends Controller
 {
+
     /**
      * Show Reports view.
      *
@@ -140,7 +141,7 @@ class ReportController extends Controller
         return $response;
         return array();
     }
-    
+
     /**
      * Generate quantitative report
      *
@@ -154,7 +155,7 @@ class ReportController extends Controller
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('commercial'), 'commercial');
+        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('commercial', $this->getUser()), 'commercial');
         $highChart = array();
         foreach ($result as $index => $cu) {
             $highChart[] = array($cu['commercial'], (int) $cu['total']);
@@ -177,7 +178,7 @@ class ReportController extends Controller
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
         $criteria = array('s_media_type' => array('Audio'));
-        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('base', $criteria), 'base');
+        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('base', $this->getUser(), $criteria), 'base');
         $highChart = array();
         foreach ($result as $index => $base) {
             $highChart[] = array($base['base'], (int) $base['total']);
@@ -185,7 +186,7 @@ class ReportController extends Controller
 
         return array('audiobase' => json_encode($highChart));
     }
-    
+
     /**
      * Generate quantitative report
      *
@@ -200,7 +201,7 @@ class ReportController extends Controller
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
         $criteria = array('s_media_type' => array('Film'));
-        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('base', $criteria), 'base');
+        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('base', $this->getUser(), $criteria), 'base');
         $highChart = array();
         foreach ($result as $index => $base) {
             $highChart[] = array($base['base'], (int) $base['total']);
@@ -208,7 +209,7 @@ class ReportController extends Controller
 
         return array('filmbase' => json_encode($highChart));
     }
-    
+
     /**
      * Generate quantitative report
      *
@@ -223,7 +224,7 @@ class ReportController extends Controller
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
         $criteria = array('s_media_type' => array('Film'));
-        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('reel_diameter', $criteria), 'reel_diameter');
+        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('reel_diameter', $this->getUser(), $criteria), 'reel_diameter');
         $highChart = array();
         foreach ($result as $index => $reelDiameter) {
             $highChart[] = array($reelDiameter['reel_diameter'], (int) $reelDiameter['total']);
@@ -231,4 +232,28 @@ class ReportController extends Controller
 
         return array('reelDiameter' => json_encode($highChart));
     }
+
+    /**
+     * Generate quantitative report
+     *
+     * @Route("/openreelaudio", name="openreelaudio")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function openreelaudioAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        $criteria = array('s_media_type' => array('Audio'), 's_format' => array('1/4 Inch Open Reel Audio', '1/2 Inch Open Reel Audio', '1/2 Inch Open Reel Audio - Digital', '1 Inch Open Reel Audio', '2 Inch Open Reel Audio'));
+        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('reel_diameter', $this->getUser(), $criteria), 'reel_diameter');
+        $highChart = array();
+        foreach ($result as $index => $reelDiameter) {
+            $highChart[] = array($reelDiameter['reel_diameter'], (int) $reelDiameter['total']);
+        }
+
+        return array('reelDiameter' => json_encode($highChart));
+    }
+
 }

@@ -94,17 +94,17 @@ class RecordsController extends Controller
             $criteria = $searchOn['criteriaArr'];
             $parentFacet = isset($searchOn['parent_facet']) ? $searchOn['parent_facet'] : null;
         }
-        $facet['mediaType'] = $this->removeEmpty($sphinxSearch->facetSelect('media_type', $criteria, $parentFacet), 'media_type');
-        $facet['formats'] = $this->removeEmpty($sphinxSearch->facetSelect('format', $criteria, $parentFacet), 'format');
-        $facet['commercialUnique'] = $this->removeEmpty($sphinxSearch->facetSelect('commercial', $criteria, $parentFacet), 'commercial');
-        $facet['bases'] = $this->removeEmpty($sphinxSearch->facetSelect('base', $criteria, $parentFacet), 'base');
-        $facet['recordingStandards'] = $this->removeEmpty($sphinxSearch->facetSelect('recording_standard', $criteria, $parentFacet), 'recording_standard');
-        $facet['printTypes'] = $this->removeEmpty($sphinxSearch->facetSelect('print_type', $criteria, $parentFacet), 'print_type');
-        $facet['projectNames'] = $this->removeEmpty($sphinxSearch->facetSelect('project', $criteria, $parentFacet), 'project');
-        $facet['reelDiameters'] = $this->removeEmpty($sphinxSearch->facetSelect('reel_diameter', $criteria, $parentFacet), 'reel_diameter');
-        $facet['discDiameters'] = $this->removeEmpty($sphinxSearch->facetSelect('disk_diameter', $criteria, $parentFacet), 'disk_diameter');
-        $facet['acidDetection'] = $this->removeEmpty($sphinxSearch->facetSelect('acid_detection', $criteria, $parentFacet), 'acid_detection');
-        $facet['collectionNames'] = $this->removeEmpty($sphinxSearch->facetSelect('collection_name', $criteria, $parentFacet), 'collection_name');
+        $facet['mediaType'] = $this->removeEmpty($sphinxSearch->facetSelect('media_type', $this->getUser(), $criteria, $parentFacet), 'media_type');
+        $facet['formats'] = $this->removeEmpty($sphinxSearch->facetSelect('format', $criteria, $this->getUser(), $parentFacet), 'format');
+        $facet['commercialUnique'] = $this->removeEmpty($sphinxSearch->facetSelect('commercial', $this->getUser(), $criteria, $parentFacet), 'commercial');
+        $facet['bases'] = $this->removeEmpty($sphinxSearch->facetSelect('base', $this->getUser(), $criteria, $parentFacet), 'base');
+        $facet['recordingStandards'] = $this->removeEmpty($sphinxSearch->facetSelect('recording_standard', $this->getUser(), $criteria, $parentFacet), 'recording_standard');
+        $facet['printTypes'] = $this->removeEmpty($sphinxSearch->facetSelect('print_type', $this->getUser(), $criteria, $parentFacet), 'print_type');
+        $facet['projectNames'] = $this->removeEmpty($sphinxSearch->facetSelect('project', $this->getUser(), $criteria, $parentFacet), 'project');
+        $facet['reelDiameters'] = $this->removeEmpty($sphinxSearch->facetSelect('reel_diameter', $this->getUser(), $criteria, $parentFacet), 'reel_diameter');
+        $facet['discDiameters'] = $this->removeEmpty($sphinxSearch->facetSelect('disk_diameter', $this->getUser(), $criteria, $parentFacet), 'disk_diameter');
+        $facet['acidDetection'] = $this->removeEmpty($sphinxSearch->facetSelect('acid_detection', $this->getUser(), $criteria, $parentFacet), 'acid_detection');
+        $facet['collectionNames'] = $this->removeEmpty($sphinxSearch->facetSelect('collection_name', $this->getUser(), $criteria, $parentFacet), 'collection_name');
 
         $view = array(
             'facets' => $facet,

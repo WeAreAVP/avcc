@@ -123,17 +123,8 @@ class SphinxSearch extends ContainerAware
         if ($criteria) {
             $this->whereClause($criteria, $sq);
         }
-        if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
-            if (!in_array("ROLE_MANAGER", $user->getRoles()) && $user->getUserProjects()) {
-                foreach ($user->getUserProjects() as $project) {
-                    $sq->where('project', "=", $project->getName());
-                }
-                $sq->where('organization_id', "=", $user->getOrganizations()->getId());
-            }
-            if (in_array("ROLE_MANAGER", $user->getRoles()) && $user->getOrganizations()) {
-                $sq->where('organization_id', "=", $user->getOrganizations()->getId());
-            }
-        }
+        $this->roleCriteria($user, $sq);
+
         $result = $sq->orderBy($sortColumn, $sortOrder)
                 ->limit($offset, $limit)
                 ->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
@@ -151,7 +142,7 @@ class SphinxSearch extends ContainerAware
      *
      * @return array
      */
-    public function facetSelect($facetColumn, $criteria = null, $parentFacet = false)
+    public function facetSelect($facetColumn, $user, $criteria = null, $parentFacet = false)
     {
         $sq = SphinxQL::create($this->conn)
                 ->select($facetColumn, SphinxQL::expr('count(*) AS total'))
@@ -159,6 +150,7 @@ class SphinxSearch extends ContainerAware
         if ($criteria && $facetColumn != $parentFacet) {
             $this->whereClause($criteria, $sq);
         }
+        $this->roleCriteria($user, $sq);
         $sq->where($facetColumn, '!=', '');
         $sq->groupBy($facetColumn)
                 ->orderBy($facetColumn, 'asc');
@@ -221,9 +213,7 @@ class SphinxSearch extends ContainerAware
         if ($criteria) {
             $this->whereClause($criteria, $sq);
         }
-        if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
-            $sq->where('organization_id', "=", $user->getOrganizations()->getId());
-        }
+        $this->roleCriteria($user, $sq);
         $result = $sq
                 ->limit(0)
                 ->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
@@ -232,36 +222,19 @@ class SphinxSearch extends ContainerAware
         return $result;
     }
 
-    /**
-     * Select id column for listing from sphinx.
-     *
-     * @param array    $columnNames
-     * @param User    $user
-     * @param integer $offset
-     * @param integer $limit
-     * @param string  $sortColumn
-     * @param string  $sortOrder
-     * @param string  $criteria
-     *
-     * @return array
-     */
-    public function selectColumns($columnNames, $user, $offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null)
+    protected function roleCriteria($user, $sq)
     {
-        $sq = SphinxQL::create($this->conn);
-        $sq->select(implode(",", $columnNames))
-                ->from($this->indexName);
-        if ($criteria) {
-            $this->whereClause($criteria, $sq);
-        }
         if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
-            $sq->where('organization_id', "=", $user->getOrganizations()->getId());
+            if (!in_array("ROLE_MANAGER", $user->getRoles()) && $user->getUserProjects()) {
+                foreach ($user->getUserProjects() as $project) {
+                    $sq->where('project', "=", $project->getName());
+                }
+                $sq->where('organization_id', "=", $user->getOrganizations()->getId());
+            }
+            if (in_array("ROLE_MANAGER", $user->getRoles()) && $user->getOrganizations()) {
+                $sq->where('organization_id', "=", $user->getOrganizations()->getId());
+            }
         }
-        $result = $sq->orderBy($sortColumn, $sortOrder)
-                ->limit($offset, $limit)
-                ->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
-                ->executeBatch();
-
-        return $result;
     }
 
 }
