@@ -348,4 +348,27 @@ class ReportController extends Controller
 
         return array('sound' => json_encode($highChart));
     }
+    
+    /**
+     * Generate quantitative report
+     *
+     * @Route("/aciddetection", name="aciddetection")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function aciddetectionAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        $criteria = array('s_media_type' => array('Film'));
+        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('acid_detection', $this->getUser(), $criteria), 'acid_detection');
+        $highChart = array();
+        foreach ($result as $index => $acid) {
+            $highChart[] = array($acid['acid_detection'], (int) $acid['total']);
+        }
+
+        return array('acid' => json_encode($highChart));
+    }
 }
