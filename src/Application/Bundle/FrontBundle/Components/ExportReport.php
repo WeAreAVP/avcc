@@ -272,14 +272,14 @@ class ExportReport extends ContainerAware
                         $newrow++;
                     }
                     if (count($rows) > 0) {
-                        print_r($rows);
                         foreach ($rows as $row) {                            
+                                                    print_r($row);
 //                            $this->makeExcelRowsByArray($activeSheet, false, $row, $newrow);
 //                            $newrow++;
                         }
                     }
 
-                    return print_r($rows);;
+                    return $newphpExcelObject;
                 } else {
                     return "The file $mergeToFile is empty";
                 }
