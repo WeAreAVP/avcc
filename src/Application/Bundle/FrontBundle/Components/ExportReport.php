@@ -763,7 +763,7 @@ class ExportReport extends ContainerAware
 
     protected function mergeRow($activeSheet, $mergRow, $row)
     {
-        $activeSheet->setCellValueExplicitByColumnAndRow(45, $row, $mergRow['project']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(45, $row, $mergRow['project_name']);
         $activeSheet->setCellValueExplicitByColumnAndRow(46, $row, $mergRow['collection_name']);
         $activeSheet->setCellValueExplicitByColumnAndRow(47, $row, $mergRow['media_type']);
         $activeSheet->setCellValueExplicitByColumnAndRow(48, $row, $mergRow['unique_id']);
@@ -771,7 +771,7 @@ class ExportReport extends ContainerAware
         $activeSheet->setCellValueExplicitByColumnAndRow(50, $row, $mergRow['format']);
         $activeSheet->setCellValueExplicitByColumnAndRow(51, $row, $mergRow['title']);
         $activeSheet->setCellValueExplicitByColumnAndRow(52, $row, $mergRow['description']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(53, $row, $mergRow['commercial']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(53, $row, $mergRow['commercial_or_unique']);
         $activeSheet->setCellValueExplicitByColumnAndRow(54, $row, $mergRow['content_duration']);
         $activeSheet->setCellValueExplicitByColumnAndRow(56, $row, $mergRow['creation_date']);
         $activeSheet->setCellValueExplicitByColumnAndRow(57, $row, $mergRow['content_date']);
@@ -780,13 +780,13 @@ class ExportReport extends ContainerAware
         $activeSheet->setCellValueExplicitByColumnAndRow(35, $row, $mergRow['contributor']);
         $activeSheet->setCellValueExplicitByColumnAndRow(36, $row, $mergRow['generation']);
         $activeSheet->setCellValueExplicitByColumnAndRow(37, $row, $mergRow['part']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(38, $row, $mergRow['copyright_restrictions']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(39, $row, $mergRow['duplicates_derivatives']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(38, $row, $mergRow['copyright_/_restrictions']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(39, $row, $mergRow['duplicates_/_derivatives']);
         $activeSheet->setCellValueExplicitByColumnAndRow(40, $row, $mergRow['related_material']);
         $activeSheet->setCellValueExplicitByColumnAndRow(41, $row, $mergRow['condition_note']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(42, $row, ($mergRow['created_on']) ? $mergRow['created_on'] : '');
-        $activeSheet->setCellValueExplicitByColumnAndRow(43, $row, ($mergRow['updated_on']) ? $mergRow['updated_on'] : '');
-        $activeSheet->setCellValueExplicitByColumnAndRow(44, $row, $mergRow['user_name']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(42, $row, ($mergRow['time_stamp']) ? $mergRow['time_stamp'] : '');
+        $activeSheet->setCellValueExplicitByColumnAndRow(43, $row, ($mergRow['timestamp_-_last_change']) ? $mergRow['timestamp_-_last_change'] : '');
+        $activeSheet->setCellValueExplicitByColumnAndRow(44, $row, $mergRow['cataloger']);
 
         if ($mergRow['media_type'] == 'Audio') {
             $activeSheet->setCellValueExplicitByColumnAndRow(55, $row, $mergRow['media_duration']);
@@ -794,10 +794,10 @@ class ExportReport extends ContainerAware
             $activeSheet->setCellValueExplicitByColumnAndRow(60, $row, $mergRow['disk_diameter']);
             $activeSheet->setCellValueExplicitByColumnAndRow(62, $row, $mergRow['media_diameter']);
             $activeSheet->setCellValueExplicitByColumnAndRow(66, $row, $mergRow['tape_thickness']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(67, $row, $mergRow['slides']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(67, $row, $mergRow['sides']);
             $activeSheet->setCellValueExplicitByColumnAndRow(68, $row, $mergRow['track_type']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(69, $row, $mergRow['mono_stereo']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(70, $row, $mergRow['noice_reduction']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(69, $row, $mergRow['mono_or_stereo']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(70, $row, $mergRow['noise_reduction']);
         }
         if ($mergRow['media_type'] == 'Film') {
             $activeSheet->setCellValueExplicitByColumnAndRow(59, $row, $mergRow['print_type']);
