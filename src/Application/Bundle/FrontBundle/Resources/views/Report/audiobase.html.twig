@@ -1,7 +1,7 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block body %}
-    <h1>Audio Base Report
+    <h1><a href="{{ path('report') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>Audio Base Report
 	</h1>
 	<br/>
 	<div id="audiobase_container">
@@ -24,7 +24,7 @@
 					type: 'column'
 				},
 				title: {
-					text: 'Quantitative Report'
+					text: ''
 				},
 				subtitle: {
 					text: ''
