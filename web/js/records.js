@@ -490,15 +490,14 @@ function Records() {
             });
             if (checked) {
                 var exportType = $(this).attr('data-type');
-//                $("#exportModal").modal({
-//                    containerCss: {
-//                        backgroundColor: "#fff",
-//                        borderColor: "#fff",
-//                        width: 400,
-//                        height: 150,
-//                    },
-//                });
-                $("#exportModal").modal();
+                $("#exportModal").modal({
+                    containerCss: {
+                        backgroundColor: "#fff",
+                        borderColor: "#fff",
+                        width: 400,
+                        height: 150,
+                    },
+                });
                 $("#exportType").val(exportType);
                 $("#exportModal").show();
             } else {

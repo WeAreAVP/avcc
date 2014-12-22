@@ -1,4 +1,4 @@
-<div id="" class="" tabindex="-1" role="dialog" style="display:none;">
+<div id="exportModal" class="" tabindex="-1" role="dialog" style="display:none;">
     <h4>Export Records</h4>
     <div id="beforeExport">
         <p><span style="font-size:13px;">Are you sure you want to export the record(s)?</span></p>
@@ -86,29 +86,4 @@
         </div>
     </div>
     <div class="bulkEditform" style="display:none;"></div>
-</div>
-
-<div id="exportModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Export Records</h3>
-    </div>
-    <div class="modal-body">
-        <div id="beforeExport">
-            <p><span style="font-size:13px;">Are you sure you want to export the record(s)?</span></p>
-            <div class="pull-right">
-                <button type="button" name="close" id="close" class="button closeModal simplemodal-close">No</button> &nbsp;
-                <button type="button" name="yes" class="button primary" id="exportRequest">Yes</button>
-            </div>
-        </div>
-        <div id="afterExport" style="display:none;">
-            <p><span style="font-size:13px;">You will receive an email shortly with download link of exported records.</span></p>
-            <div class="pull-right">
-                <button type="button" name="close" id="closeBtn" class="button simplemodal-close">Close</button>
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    </div>
 </div>
