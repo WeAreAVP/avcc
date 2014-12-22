@@ -776,17 +776,17 @@ class ExportReport extends ContainerAware
         $activeSheet->setCellValueExplicitByColumnAndRow(56, $row, $mergRow['creation_date']);
         $activeSheet->setCellValueExplicitByColumnAndRow(57, $row, $mergRow['content_date']);
         $activeSheet->setCellValueExplicitByColumnAndRow(61, $row, $mergRow['reel_diameter']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(34, $row, $mergRow['genre_terms']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(35, $row, $mergRow['contributor']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(36, $row, $mergRow['generation']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(37, $row, $mergRow['part']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(38, $row, $mergRow['copyright_/_restrictions']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(39, $row, $mergRow['duplicates_/_derivatives']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(40, $row, $mergRow['related_material']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(41, $row, $mergRow['condition_note']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(42, $row, ($mergRow['time_stamp']) ? $mergRow['time_stamp'] : '');
-        $activeSheet->setCellValueExplicitByColumnAndRow(43, $row, ($mergRow['timestamp_-_last_change']) ? $mergRow['timestamp_-_last_change'] : '');
-        $activeSheet->setCellValueExplicitByColumnAndRow(44, $row, $mergRow['cataloger']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(79, $row, $mergRow['genre_terms']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(80, $row, $mergRow['contributor']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(81, $row, $mergRow['generation']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(82, $row, $mergRow['part']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(83, $row, $mergRow['copyright_/_restrictions']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(84, $row, $mergRow['duplicates_/_derivatives']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(85, $row, $mergRow['related_material']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(86, $row, $mergRow['condition_note']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(87, $row, ($mergRow['time_stamp']) ? $mergRow['time_stamp'] : '');
+        $activeSheet->setCellValueExplicitByColumnAndRow(88, $row, ($mergRow['timestamp_-_last_change']) ? $mergRow['timestamp_-_last_change'] : '');
+        $activeSheet->setCellValueExplicitByColumnAndRow(89, $row, $mergRow['cataloger']);
 
         if ($mergRow['media_type'] == 'Audio') {
             $activeSheet->setCellValueExplicitByColumnAndRow(55, $row, $mergRow['media_duration']);
