@@ -243,41 +243,42 @@ class ExportReport extends ContainerAware
                     $newRows = array();
                     $newrow = 2;
                     $matched = false;
-                    foreach ($records as $record) {
-                        for ($row = 2; $row <= $highestRow; ++$row) {
-                            for ($col = 0; $col < $highestColumnIndex; ++$col) {
-                                if (is_object($record)) {
-                                    if ($record->getUniqueId() == $worksheet->getCellByColumnAndRow(3, $row)) {
-                                        $matched = true;
-                                        $uniq = strtolower(str_replace(' ', '_', $record->getUniqueId()));
-                                    }
-                                } else {
-                                    if ($record['unique_id'] == $worksheet->getCellByColumnAndRow(3, $row)) {
-                                        $matched = true;
-                                        $uniq = strtolower(str_replace(' ', '_', $record['unique_id']));
-                                    }
-                                }
-                                if ($matched) {
-                                    $cell = $worksheet->getCellByColumnAndRow($col, $row);
-                                    $columnName = strtolower(str_replace(' ', '_', $worksheet->getCellByColumnAndRow($col, 1)));
-                                    $rows[$uniq][$columnName] = $cell->getValue();
-                                }
+                    $uniqueIdIndex = 3;
+                    for ($row = 1; $row <= 1; ++$row) {
+                        for ($col = 0; $col < $highestColumnIndex; ++$col) {
+                            $cell = $worksheet->getCellByColumnAndRow($col, $row);
+                            if (strtolower(str_replace('_', ' ', $cell->getValue())) == 'unique id') {
+                                $uniqueIdIndex = $col;
                             }
+                        }
+                    }
+                    for ($row = 2; $row <= $highestRow; ++$row) {
+                        for ($col = 0; $col < $highestColumnIndex; ++$col) {
+                            $uniq = strtolower(str_replace(' ', '_', $worksheet->getCellByColumnAndRow($uniqueIdIndex, $row)));
+                            $cell = $worksheet->getCellByColumnAndRow($col, $row);
+                            $columnName = strtolower(str_replace(' ', '_', $worksheet->getCellByColumnAndRow($col, 1)));
+                            $rows[$uniq][$columnName] = $cell->getValue();
                         }
                     }
                     foreach ($records as $rec) {
                         $recUniq = strtolower(str_replace(' ', '_', $rec->getUniqueId()));
                         if (array_key_exists($recUniq, $rows)) {
-                            $newRows = $this->appendCellValuesByObject($rec, $rows[$recUniq]);
-                            $this->makeExcelRowsByArray($activeSheet, $newRows, $newrow);
+//                            $newRows = $this->appendCellValuesByObject($rec, $rows[$recUniq]);
+                            $this->makeExcelRowsByArray($activeSheet, $rec, $rows[$recUniq], $newrow);
+                            unset($rows[$recUniq]);
                         } else {
                             $this->makeExcelRows($activeSheet, $rec, $newrow);
                         }
                         $newrow++;
                     }
-                    if ($records) {
-                        return $newphpExcelObject;
+                    if (count($rows) > 0) {
+                        foreach ($rows as $row) {
+                            $this->makeExcelRowsByArray($activeSheet, false, $row, $newrow);
+                            $newrow++;
+                        }
                     }
+
+                    return $newphpExcelObject;
                 } else {
                     return "The file $mergeToFile is empty";
                 }
@@ -346,59 +347,109 @@ class ExportReport extends ContainerAware
     public function appendCellValuesByObject($record, $row)
     {
         $newRow = null;
-        $newRow['project'] = $row['project_name'] ? $record->getProject() . ' ' . $row['project_name'] : $record->getProject();
-        $newRow['collection_name'] = $row['collection_name'] ? $record->getCollectionName() . ' ' . $row['collection_name'] : $record->getCollectionName();
-        $newRow['media_type'] = $row['media_type'] ? $record->getMediaType() . ' ' . $row['media_type'] : $record->getMediaType();
+        $newRow['project'] = $record->getProject() ? $record->getProject()->getName() : '';
+        $newRow['collection_name'] = $record->getCollectionName();
+        $newRow['media_type'] = $record->getMediaType() ? $record->getMediaType()->getName() : '';
         $newRow['unique_id'] = $record->getUniqueId();
-        $newRow['location'] = $row['location'] ? $record->getLocation() . ' ' . $row['location'] : $record->getLocation();
-        $newRow['format'] = $row['format'] ? ($record->getFormat()->getName() ? $record->getFormat()->getName() . ' ' . $row['format'] : $row['format']) : ($record->getFormat()->getName()) ? $record->getFormat()->getName() : '';
-        $newRow['title'] = $row['title'] ? $record->getTitle() . ' ' . $row['title'] : $record->getTitle();
-        $newRow['description'] = $row['description'] ? $record->getDescription() . ' ' . $row['description'] : $record->getDescription();
-        $newRow['commercial'] = $row['commercial_or_unique'] ? ($record->getCommercial() ? $record->getCommercial()->getName() . ' ' . $row['commercial_or_unique'] : '') : ($record->getCommercial() ? $record->getCommercial()->getName() : '');
-        $newRow['content_duration'] = $row['content_duration'] ? $record->getContentDuration() . ' ' . $row['content_duration'] : $record->getContentDuration();
-        $newRow['creation_date'] = $row['creation_date'] ? $record->getCreationDate() . ' ' . $row['creation_date'] : $record->getCreationDate();
-        $newRow['content_date'] = $row['content_date'] ? $record->getContentDate() . ' ' . $row['content_date'] : $record->getContentDate();
-        $newRow['reel_diameter'] = $row['reel_diameter'] ? ($record->getReelDiameters() ? $record->getReelDiameters()->getName() . ' ' . $row['reel_diameter'] : '') : ($record->getReelDiameters() ? $record->getReelDiameters()->getName() : '');
-        $newRow['genre_terms'] = $row['genre_terms'] ? $record->getGenreTerms() . ' ' . $row['genre_terms'] : $record->getGenreTerms();
-        $newRow['contributor'] = $row['contributor'] ? $record->getContributor() . ' ' . $row['genre_terms'] : $record->getContributor();
-        $newRow['generation'] = $row['generation'] ? $record->getGeneration() . ' ' . $row['genre_terms'] : $record->getGeneration();
-        $newRow['part'] = $row['part'] ? $record->getPart() . ' ' . $row['genre_terms'] : $record->getPart();
-        $newRow['copyright_restrictions'] = $row['copyright_/_restrictions'] ? $record->getCopyrightRestrictions() . ' ' . $row['copyright_/_restrictions'] : $record->getCopyrightRestrictions();
-        $newRow['duplicates_derivatives'] = $row['duplicates_/_derivatives'] ? $record->getDuplicatesDerivatives() . ' ' . $row['duplicates_/_derivatives'] : $record->getDuplicatesDerivatives();
-        $newRow['related_material'] = $row['related_material'] ? $record->getRelatedMaterial() . ' ' . $row['related_material'] : $record->getRelatedMaterial();
-        $newRow['condition_note'] = $row['condition_note'] ? $record->getConditionNote() . ' ' . $row['condition_note'] : $record->getConditionNote();
-        $newRow['created_on'] = ($row['time_stamp']) ? $record->getCreatedOn()->format('Y-m-d H:i:s') . ' ' . $row['time_stamp'] : $record->getCreatedOn()->format('Y-m-d H:i:s');
-        $newRow['updated_on'] = $row['timestamp_-_last_change'] ? ($record->getUpdatedOn() ? $record->getUpdatedOn()->format('Y-m-d H:i:s') . ' ' . $row['timestamp_-_last_change'] : '') : ($record->getUpdatedOn() ? $record->getUpdatedOn()->format('Y-m-d H:i:s') : '');
-        $newRow['user_name'] = $row['cataloger'] ? $record->getUser()->getName() . ' ' . $row['cataloger'] : $record->getUser()->getName();
+        $newRow['location'] = $record->getLocation();
+        $newRow['format'] = $record->getFormat()->getName() ? $record->getFormat()->getName() : '';
+        $newRow['title'] = $record->getTitle();
+        $newRow['description'] = $record->getDescription();
+        $newRow['commercial'] = $record->getCommercial() ? $record->getCommercial()->getName() : '';
+        $newRow['content_duration'] = $record->getContentDuration();
+        $newRow['creation_date'] = $record->getCreationDate();
+        $newRow['content_date'] = $record->getContentDate();
+        $newRow['reel_diameter'] = $record->getReelDiameters() ? $record->getReelDiameters()->getName() : '';
+        $newRow['genre_terms'] = $record->getGenreTerms();
+        $newRow['contributor'] = $record->getContributor();
+        $newRow['generation'] = $record->getGeneration();
+        $newRow['part'] = $record->getPart();
+        $newRow['copyright_restrictions'] = $record->getCopyrightRestrictions();
+        $newRow['duplicates_derivatives'] = $record->getDuplicatesDerivatives();
+        $newRow['related_material'] = $record->getRelatedMaterial();
+        $newRow['condition_note'] = $record->getConditionNote();
+        $newRow['created_on'] = $record->getCreatedOn()->format('Y-m-d H:i:s');
+        $newRow['updated_on'] = $record->getUpdatedOn() ? $record->getUpdatedOn()->format('Y-m-d H:i:s') : '';
+        $newRow['user_name'] = $record->getUser()->getName();
 
         if ($row['media_type'] == 'Audio') {
-            $newRow['media_duration'] = $row['media_duration'] ? ($record->getAudioRecord()->getMediaDuration() ? $record->getAudioRecord()->getMediaDuration() . ' ' . $row['media_duration'] : "") : ($record->getAudioRecord()->getMediaDuration() ? $record->getAudioRecord()->getMediaDuration() : "");
-            $newRow['base'] = $row['base'] ? ($record->getAudioRecord()->getBases() ? $record->getAudioRecord()->getBases()->getName() . ' ' . $row['base'] : "") : ($record->getAudioRecord()->getBases() ? $record->getAudioRecord()->getBases()->getName() : "");
-            $newRow['disk_diameter'] = $row['disk_diameter'] ? ($record->getAudioRecord()->getDiskDiameters() ? $record->getAudioRecord()->getDiskDiameters()->getName() . ' ' . $row['disk_diameter'] : "") : ($record->getAudioRecord()->getDiskDiameters() ? $record->getAudioRecord()->getDiskDiameters()->getName() : "");
-            $newRow['media_diameter'] = $row['media_diameter'] ? ($record->getAudioRecord()->getMediaDiameters() ? $record->getAudioRecord()->getMediaDiameters()->getName() . ' ' . $row['media_diameter'] : "") : ($record->getAudioRecord()->getMediaDiameters() ? $record->getAudioRecord()->getMediaDiameters()->getName() : "");
-            $newRow['tape_thickness'] = $row['tape_thickness'] ? ($record->getAudioRecord()->getTapeThickness() ? $record->getAudioRecord()->getTapeThickness()->getName() . ' ' . $row['tape_thickness'] : "") : ($record->getAudioRecord()->getTapeThickness() ? $record->getAudioRecord()->getTapeThickness()->getName() : "");
-            $newRow['slides'] = $row['sides'] ? ($record->getAudioRecord()->getSlides() ? $record->getAudioRecord()->getSlides()->getName() . ' ' . $row['sides'] : "") : ($record->getAudioRecord()->getSlides() ? $record->getAudioRecord()->getSlides()->getName() : "");
-            $newRow['track_type'] = $row['track_type'] ? ($record->getAudioRecord()->getTrackTypes() ? $record->getAudioRecord()->getTrackTypes()->getName() . ' ' . $row['track_type'] : "") : ($record->getAudioRecord()->getTrackTypes() ? $record->getAudioRecord()->getTrackTypes()->getName() : "");
-            $newRow['mono_stereo'] = $row['mono_or_stereo'] ? ($record->getAudioRecord()->getMonoStereo() ? $record->getAudioRecord()->getMonoStereo()->getName() . ' ' . $row['mono_or_stereo'] : "") : ($record->getAudioRecord()->getMonoStereo() ? $record->getAudioRecord()->getMonoStereo()->getName() : "");
-            $newRow['noice_reduction'] = $row['noise_reduction'] ? ($record->getAudioRecord()->getNoiceReduction() ? $record->getAudioRecord()->getNoiceReduction()->getName() . ' ' . $row['noise_reduction'] : "") : ($record->getAudioRecord()->getNoiceReduction() ? $record->getAudioRecord()->getNoiceReduction()->getName() : "");
+            $newRow['media_duration'] = $record->getAudioRecord()->getMediaDuration();
+            $newRow['base'] = $record->getAudioRecord()->getBases() ? $record->getAudioRecord()->getBases()->getName() : "";
+            $newRow['disk_diameter'] = $record->getAudioRecord()->getDiskDiameters() ? $record->getAudioRecord()->getDiskDiameters()->getName() : "";
+            $newRow['media_diameter'] = $record->getAudioRecord()->getMediaDiameters() ? $record->getAudioRecord()->getMediaDiameters()->getName() : "";
+            $newRow['tape_thickness'] = $record->getAudioRecord()->getTapeThickness() ? $record->getAudioRecord()->getTapeThickness()->getName() : "";
+            $newRow['slides'] = $record->getAudioRecord()->getSlides() ? $record->getAudioRecord()->getSlides()->getName() : "";
+            $newRow['track_type'] = $record->getAudioRecord()->getTrackTypes() ? $record->getAudioRecord()->getTrackTypes()->getName() : "";
+            $newRow['mono_stereo'] = $record->getAudioRecord()->getMonoStereo() ? $record->getAudioRecord()->getMonoStereo()->getName() : "";
+            $newRow['noice_reduction'] = $record->getAudioRecord()->getNoiceReduction() ? $record->getAudioRecord()->getNoiceReduction()->getName() : "";
         }
         if ($row['media_type'] == 'Film') {
-            $newRow['print_type'] = $row['print_type'] ? ($record->getFilmRecord()->getPrintType() ? $record->getFilmRecord()->getPrintType()->getName() . ' ' . $row['print_type'] : "") : ($record->getFilmRecord()->getPrintType() ? $record->getFilmRecord()->getPrintType()->getName() : "");
-            $newRow['footage'] = $row['footage'] ? ($record->getFilmRecord()->getFootage() ? $record->getFilmRecord()->getFootage()->getName() . ' ' . $row['footage'] : "") : ($record->getFilmRecord()->getFootage() ? $record->getFilmRecord()->getFootage()->getName() : "");
-            $newRow['color'] = $row['color'] ? ($record->getFilmRecord()->getColors() ? $record->getFilmRecord()->getColors()->getName() . ' ' . $row['color'] : "") : ($record->getFilmRecord()->getColors() ? $record->getFilmRecord()->getColors()->getName() : "");
-            $newRow['reel_core'] = $row['reel_core'] ? ($record->getFilmRecord()->getReelCore() ? $record->getFilmRecord()->getReelCore()->getName() . ' ' . $row['reel_core'] : "") : ($record->getFilmRecord()->getReelCore() ? $record->getFilmRecord()->getReelCore()->getName() : "");
-            $newRow['sound'] = $row['sound'] ? ($record->getFilmRecord()->getSound() ? $record->getFilmRecord()->getSound()->getName() . ' ' . $row['sound'] : "") : ($record->getFilmRecord()->getSound() ? $record->getFilmRecord()->getSound()->getName() : "");
-            $newRow['frame_rate'] = $row['frame_rate'] ? ($record->getFilmRecord()->getFrameRate() ? $record->getFilmRecord()->getFrameRate()->getName() . ' ' . $row['frame_rate'] : "") : ($record->getFilmRecord()->getFrameRate() ? $record->getFilmRecord()->getFrameRate()->getName() : "");
-            $newRow['acid_detection'] = $row['acid_detection'] ? ($record->getFilmRecord()->getAcidDetectionStrip() ? $record->getFilmRecord()->getAcidDetectionStrip()->getName() . ' ' . $row['acid_detection'] : "") : ($record->getFilmRecord()->getAcidDetectionStrip() ? $record->getFilmRecord()->getAcidDetectionStrip()->getName() : "");
-            $newRow['shrinkage'] = $row['shrinkage'] ? ($record->getFilmRecord()->getShrinkage() ? $record->getFilmRecord()->getShrinkage()->getName() . ' ' . $row['shrinkage'] : "") : ($record->getFilmRecord()->getShrinkage() ? $record->getFilmRecord()->getShrinkage()->getName() : "");
+            $newRow['print_type'] = $record->getFilmRecord()->getPrintType() ? $record->getFilmRecord()->getPrintType()->getName() : "";
+            $newRow['footage'] = $record->getFilmRecord()->getFootage() ? $record->getFilmRecord()->getFootage()->getName() : "";
+            $newRow['color'] = $record->getFilmRecord()->getColors() ? $record->getFilmRecord()->getColors()->getName() : "";
+            $newRow['reel_core'] = $record->getFilmRecord()->getReelCore() ? $record->getFilmRecord()->getReelCore()->getName() : "";
+            $newRow['sound'] = $record->getFilmRecord()->getSound() ? $record->getFilmRecord()->getSound()->getName() : "";
+            $newRow['frame_rate'] = $record->getFilmRecord()->getFrameRate() ? $record->getFilmRecord()->getFrameRate()->getName() : "";
+            $newRow['acid_detection'] = $record->getFilmRecord()->getAcidDetectionStrip() ? $record->getFilmRecord()->getAcidDetectionStrip()->getName() : "";
+            $newRow['shrinkage'] = $record->getFilmRecord()->getShrinkage() ? $record->getFilmRecord()->getShrinkage()->getName() : "";
         }
         if ($row['media_type'] == 'Video') {
-            $newRow['recording_speed'] = $row['recording_speed'] ? ($record->getVideoRecord()->getRecordingSpeed() ? $record->getVideoRecord()->getRecordingSpeed()->getName() . ' ' . $row['recording_speed'] : "") : ($record->getVideoRecord()->getRecordingSpeed() ? $record->getVideoRecord()->getRecordingSpeed()->getName() : "");
-            $newRow['cassette_size'] = $row['cassette_size'] ? ($record->getVideoRecord()->getCassetteSize() ? $record->getVideoRecord()->getCassetteSize()->getName() . ' ' . $row['cassette_size'] : "") : ($record->getVideoRecord()->getCassetteSize() ? $record->getVideoRecord()->getCassetteSize()->getName() : "");
-            $newRow['format_version'] = $row['format_version'] ? ($record->getVideoRecord()->getFormatVersion() ? $record->getVideoRecord()->getFormatVersion()->getName() . ' ' . $row['format_version'] : "") : ($record->getVideoRecord()->getFormatVersion() ? $record->getVideoRecord()->getFormatVersion()->getName() : "");
-            $newRow['media_duration'] = $row['media_duration'] ? ($record->getVideoRecord()->getRecordingStandard() ? $record->getVideoRecord()->getRecordingStandard()->getName() . ' ' . $row['media_duration'] : "") : ($record->getVideoRecord()->getRecordingStandard() ? $record->getVideoRecord()->getRecordingStandard()->getName() : "");
+            $newRow['recording_speed'] = $record->getVideoRecord()->getRecordingSpeed() ? $record->getVideoRecord()->getRecordingSpeed()->getName() : "";
+            $newRow['cassette_size'] = $record->getVideoRecord()->getCassetteSize() ? $record->getVideoRecord()->getCassetteSize()->getName() : "";
+            $newRow['format_version'] = $record->getVideoRecord()->getFormatVersion() ? $record->getVideoRecord()->getFormatVersion()->getName() : "";
+            $newRow['media_duration'] = $record->getVideoRecord()->getRecordingStandard() ? $record->getVideoRecord()->getRecordingStandard()->getName() : "";
         }
-
+        $newRow['external_project'] = $row['project_name'];
+        $newRow['external_collection_name'] = $row['collection_name'];
+        $newRow['external_media_type'] = $row['media_type'];
+        $newRow['external_unique_id'] = $row['unique_id'];
+        $newRow['external_location'] = $row['location'];
+        $newRow['external_format'] = $row['format'];
+        $newRow['external_title'] = $row['title'];
+        $newRow['external_description'] = $row['description'];
+        $newRow['external_commercial'] = $row['commercial_or_unique'];
+        $newRow['external_content_duration'] = $row['content_duration'];
+        $newRow['external_creation_date'] = $row['creation_date'];
+        $newRow['external_content_date'] = $row['content_date'];
+        $newRow['external_reel_diameter'] = $row['reel_diameter'];
+        $newRow['external_genre_terms'] = $row['genre_terms'];
+        $newRow['external_contributor'] = $row['contributor'];
+        $newRow['external_generation'] = $row['generation'];
+        $newRow['external_part'] = $row['part'];
+        $newRow['external_copyright_restrictions'] = $row['copyright_/_restrictions'];
+        $newRow['external_duplicates_derivatives'] = $row['duplicates_/_derivatives'];
+        $newRow['external_related_material'] = $row['related_material'];
+        $newRow['external_condition_note'] = $row['condition_note'];
+        $newRow['external_created_on'] = $row['time_stamp'];
+        $newRow['external_updated_on'] = $row['timestamp_-_last_change'];
+        $newRow['external_user_name'] = $row['cataloger'];
+        if ($row['media_type'] == 'Audio') {
+            $newRow['external_media_duration'] = $row['media_duration'];
+            $newRow['external_base'] = $row['base'];
+            $newRow['external_disk_diameter'] = $row['disk_diameter'];
+            $newRow['external_media_diameter'] = $row['media_diameter'];
+            $newRow['external_tape_thickness'] = $row['tape_thickness'];
+            $newRow['external_slides'] = $row['sides'];
+            $newRow['external_track_type'] = $row['track_type'];
+            $newRow['external_mono_stereo'] = $row['mono_or_stereo'];
+            $newRow['external_noice_reduction'] = $row['noise_reduction'];
+        }
+        if ($row['media_type'] == 'Film') {
+            $newRow['external_print_type'] = $row['print_type'];
+            $newRow['external_footage'] = $row['footage'];
+            $newRow['external_color'] = $row['color'];
+            $newRow['external_reel_core'] = $row['reel_core'];
+            $newRow['external_sound'] = $row['sound'];
+            $newRow['external_frame_rate'] = $row['frame_rate'];
+            $newRow['external_acid_detection'] = $row['acid_detection'];
+            $newRow['external_shrinkage'] = $row['shrinkage'];
+        }
+        if ($row['media_type'] == 'Video') {
+            $newRow['external_recording_speed'] = $row['recording_speed'];
+            $newRow['external_cassette_size'] = $row['cassette_size'];
+            $newRow['external_format_version'] = $row['format_version'];
+            $newRow['external_media_duration'] = $row['media_duration'];
+        }
         return $newRow;
     }
 
@@ -435,59 +486,115 @@ class ExportReport extends ContainerAware
         return $phpExcelObject;
     }
 
-    public function makeExcelRowsByArray($activeSheet, $record, $row)
+    public function makeExcelRowsByArray($activeSheet, $record, $mergRow, $row)
     {
-        $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record['project']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record['collection_name']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $record['media_type']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $record['unique_id']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $record['location']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, $record['format']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $record['title']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $record['description']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, $record['commercial']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $record['content_duration']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $record['creation_date']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $record['content_date']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(16, $row, $record['reel_diameter']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(34, $row, $record['genre_terms']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(35, $row, $record['contributor']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(36, $row, $record['generation']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(37, $row, $record['part']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(38, $row, $record['copyright_restrictions']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(39, $row, $record['duplicates_derivatives']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(40, $row, $record['related_material']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(41, $row, $record['condition_note']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(42, $row, ($record['created_on']) ? $record['created_on'] : '');
-        $activeSheet->setCellValueExplicitByColumnAndRow(43, $row, ($record['updated_on']) ? $record['updated_on'] : '');
-        $activeSheet->setCellValueExplicitByColumnAndRow(44, $row, $record['user_name']);
+        if ($record) {
+            $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record['project']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record['collection_name']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $record['media_type']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $record['unique_id']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $record['location']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, $record['format']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $record['title']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $record['description']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, $record['commercial']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $record['content_duration']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $record['creation_date']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $record['content_date']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(16, $row, $record['reel_diameter']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(34, $row, $record['genre_terms']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(35, $row, $record['contributor']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(36, $row, $record['generation']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(37, $row, $record['part']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(38, $row, $record['copyright_restrictions']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(39, $row, $record['duplicates_derivatives']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(40, $row, $record['related_material']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(41, $row, $record['condition_note']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(42, $row, ($record['created_on']) ? $record['created_on'] : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(43, $row, ($record['updated_on']) ? $record['updated_on'] : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(44, $row, $record['user_name']);
 
-        if ($record['media_type'] == 'Audio') {
-            $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, $record['media_duration']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $record['base']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(15, $row, $record['disk_diameter']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(17, $row, $record['media_diameter']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(21, $row, $record['tape_thickness']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(22, $row, $record['slides']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(23, $row, $record['track_type']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(24, $row, $record['mono_stereo']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(25, $row, $record['noice_reduction']);
+            if ($record['media_type'] == 'Audio') {
+                $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, $record['media_duration']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $record['base']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(15, $row, $record['disk_diameter']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(17, $row, $record['media_diameter']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(21, $row, $record['tape_thickness']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(22, $row, $record['slides']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(23, $row, $record['track_type']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(24, $row, $record['mono_stereo']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(25, $row, $record['noice_reduction']);
+            }
+            if ($record['media_type'] == 'Film') {
+                $activeSheet->setCellValueExplicitByColumnAndRow(14, $row, $record['print_type']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(18, $row, $record['footage']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(20, $row, $record['color']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(29, $row, $record['reel_core']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(30, $row, $record['sound']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(31, $row, $record['frame_rate']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(32, $row, $record['acid_detection']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(33, $row, $record['shrinkage']);
+            }
+            if ($record['media_type'] == 'Video') {
+                $activeSheet->setCellValueExplicitByColumnAndRow(19, $row, $record['recording_speed']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(26, $row, $record['cassette_size']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(27, $row, $record['format_version']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(28, $row, $record['media_duration']);
+            }
         }
-        if ($record['media_type'] == 'Film') {
-            $activeSheet->setCellValueExplicitByColumnAndRow(14, $row, $record['print_type']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(18, $row, $record['footage']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(20, $row, $record['color']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(29, $row, $record['reel_core']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(30, $row, $record['sound']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(31, $row, $record['frame_rate']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(32, $row, $record['acid_detection']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(33, $row, $record['shrinkage']);
-        }
-        if ($record['media_type'] == 'Video') {
-            $activeSheet->setCellValueExplicitByColumnAndRow(19, $row, $record['recording_speed']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(26, $row, $record['cassette_size']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(27, $row, $record['format_version']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(28, $row, $record['media_duration']);
+        if ($mergRow) {
+            $activeSheet->setCellValueExplicitByColumnAndRow(45, $row, $mergRow['external_project']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(46, $row, $mergRow['external_collection_name']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(47, $row, $mergRow['external_media_type']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(48, $row, $mergRow['external_unique_id']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(49, $row, $mergRow['external_location']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(50, $row, $mergRow['external_format']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(51, $row, $mergRow['external_title']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(52, $row, $mergRow['external_description']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(53, $row, $mergRow['external_commercial']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(54, $row, $mergRow['external_content_duration']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(56, $row, $mergRow['external_creation_date']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(57, $row, $mergRow['external_content_date']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(61, $row, $mergRow['external_reel_diameter']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(34, $row, $mergRow['external_genre_terms']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(35, $row, $mergRow['external_contributor']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(36, $row, $mergRow['external_generation']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(37, $row, $mergRow['external_part']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(38, $row, $mergRow['external_copyright_restrictions']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(39, $row, $mergRow['external_duplicates_derivatives']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(40, $row, $mergRow['external_related_material']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(41, $row, $mergRow['external_condition_note']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(42, $row, ($mergRow['external_created_on']) ? $mergRow['external_created_on'] : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(43, $row, ($mergRow['external_updated_on']) ? $mergRow['external_updated_on'] : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(44, $row, $mergRow['external_user_name']);
+
+            if ($mergRow['external_media_type'] == 'Audio') {
+                $activeSheet->setCellValueExplicitByColumnAndRow(55, $row, $mergRow['external_media_duration']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(58, $row, $mergRow['external_base']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(60, $row, $mergRow['external_disk_diameter']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(62, $row, $mergRow['external_media_diameter']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(66, $row, $mergRow['external_tape_thickness']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(67, $row, $mergRow['external_slides']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(68, $row, $mergRow['external_track_type']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(69, $row, $mergRow['external_mono_stereo']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(70, $row, $mergRow['external_noice_reduction']);
+            }
+            if ($mergRow['external_media_type'] == 'Film') {
+                $activeSheet->setCellValueExplicitByColumnAndRow(59, $row, $mergRow['external_print_type']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(63, $row, $mergRow['external_footage']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(65, $row, $mergRow['external_color']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(74, $row, $mergRow['external_reel_core']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(75, $row, $mergRow['external_sound']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(76, $row, $mergRow['external_frame_rate']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(77, $row, $mergRow['external_acid_detection']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(78, $row, $mergRow['external_shrinkage']);
+            }
+            if ($mergRow['external_media_type'] == 'Video') {
+                $activeSheet->setCellValueExplicitByColumnAndRow(64, $row, $mergRow['external_recording_speed']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(71, $row, $mergRow['external_cassette_size']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(72, $row, $mergRow['external_format_version']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(73, $row, $mergRow['external_media_duration']);
+            }
         }
     }
 
