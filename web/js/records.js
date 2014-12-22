@@ -500,7 +500,7 @@ function Records() {
 //                });
                 $("#exportModal").modal();
                 $("#exportType").val(exportType);
-//                $("#exportModal").show();
+                $("#exportModal").show();
             } else {
                 $.Dialog({
                     'title': 'Error',
