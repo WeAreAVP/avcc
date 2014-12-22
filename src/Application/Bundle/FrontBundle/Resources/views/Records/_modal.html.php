@@ -20,7 +20,7 @@
     <div class="modal-body">
         <form action="<?php echo $view['router']->generate('record_export_merge') ?>" method="post" enctype="multipart/form-data" name="frmExportMerge">
             <div id="beforeExportMerge">
-                <p><span style="font-size:13px;">Are you sure you want to export and merge the record(s)?</span></p>
+                <p><span style="font-size:13px;"></span></p>
                 <div class="pull-right">
                     <input type="file" name="mergetofile" class="required" required="required" /><br /><br />
                     <input type="hidden" name="emrecordIds" id="emrecordIds" value="" />
