@@ -225,12 +225,14 @@ class ExportReport extends ContainerAware
         }
     }
 
-    public function mergeRecords($records, $mergeToFile)
+    public function mergeRecords($records, $mergeToFile, $newphpExcelObject = null)
     {
         $mergeFileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $mergeToFile;
         if (file_exists($mergeFileCompletePath)) {
             $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($mergeFileCompletePath);
-            $newphpExcelObject = $this->initMergeReport();
+            if ($newphpExcelObject == null) {
+                $newphpExcelObject = $this->initMergeReport();
+            }
             $activeSheet = $newphpExcelObject->setActiveSheetIndex(0);
 
             foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
@@ -261,23 +263,33 @@ class ExportReport extends ContainerAware
                         }
                     }
                     foreach ($records as $rec) {
-                        $recUniq = strtolower(str_replace(' ', '_', $rec->getUniqueId()));
-                        if (array_key_exists($recUniq, $rows)) {
+                        if (is_object($rec)) {
+                            $recUniq = strtolower(str_replace(' ', '_', $rec->getUniqueId()));
+                            if (array_key_exists($recUniq, $rows)) {
 //                            $newRows = $this->appendCellValuesByObject($rec, $rows[$recUniq]);
-                            $this->makeExcelRows($activeSheet, $rec, $rows[$recUniq], $newrow);
-                            unset($rows[$recUniq]);
+                                $this->makeExcelRows($activeSheet, $rec, $rows[$recUniq], $newrow);
+                                unset($rows[$recUniq]);
+                            } else {
+                                $this->makeExcelRows($activeSheet, $rec, false, $newrow);
+                            }
                         } else {
-                            $this->makeExcelRows($activeSheet, $rec, false, $newrow);
+                            $recUniq = strtolower(str_replace(' ', '_', $rec['unique_id']));
+                            if (array_key_exists($recUniq, $rows)) {
+//                            $newRows = $this->appendCellValuesByObject($rec, $rows[$recUniq]);
+                                $this->makeExcelRowsByArray($activeSheet, $rec, $rows[$recUniq], $newrow);
+                                unset($rows[$recUniq]);
+                            } else {
+                                $this->makeExcelRowsByArray($activeSheet, $rec, false, $newrow);
+                            }
                         }
                         $newrow++;
                     }
                     if (count($rows) > 0) {
-                        foreach ($rows as $row) {                            
+                        foreach ($rows as $row) {
                             $this->makeExcelRowsByArray($activeSheet, false, $row, $newrow);
                             $newrow++;
                         }
                     }
-
                     return $newphpExcelObject;
                 } else {
                     return "The file $mergeToFile is empty";
@@ -470,7 +482,7 @@ class ExportReport extends ContainerAware
      */
     public function fetchFromSphinxToMerge($user, $sphinxInfo, $sphinxCriteria, $em, $mergeToFile)
     {
-        $phpExcelObject = $this->initReport();
+        $phpExcelObject = $this->initMergeReport();
         $row = 2;
         $count = 0;
         $offset = 0;
@@ -479,7 +491,7 @@ class ExportReport extends ContainerAware
             $records = $sphinxObj->select($user, $offset, 1000, 'title', 'asc', $sphinxCriteria);
             $rec = $records[0];
             $totalFound = $records[1][1]['Value'];
-            $phpExcelObject = $this->megerArrayRecords($rec, $mergeToFile, $phpExcelObject);
+            $phpExcelObject = $this->mergeRecords($rec, $mergeToFile, $phpExcelObject);
             $offset = $offset + 1000;
             $row++;
             if ($totalFound < 1000) {
@@ -832,7 +844,7 @@ class ExportReport extends ContainerAware
 
         return $phpExcelObject;
     }
-    
+
     /**
      * Create the Header for report.
      *
@@ -852,4 +864,5 @@ class ExportReport extends ContainerAware
 
         return TRUE;
     }
+
 }
