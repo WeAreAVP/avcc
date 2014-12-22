@@ -719,60 +719,6 @@ class ExportReport extends ContainerAware
         return true;
     }
 
-    public function megerArrayRecords($records, $mergeToFile, $newphpExcelObject)
-    {
-        $mergeFileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $mergeToFile;
-        if (file_exists($mergeFileCompletePath)) {
-            $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($mergeFileCompletePath);
-            $activeSheet = $newphpExcelObject->setActiveSheetIndex(0);
-            foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
-                $highestRow = $worksheet->getHighestRow();
-                $highestColumn = $worksheet->getHighestColumn();
-                $excelCell = new PHPExcel_Cell(null, null, $worksheet);
-                $highestColumnIndex = $excelCell->columnIndexFromString($highestColumn);
-                if ($highestRow > 0) {
-                    $rows = array();
-                    $newRows = array();
-                    $newrow = 2;
-                    foreach ($records as $record) {
-                        for ($row = 2; $row <= $highestRow; ++$row) {
-                            for ($col = 0; $col < $highestColumnIndex; ++$col) {
-                                $matched = false;
-                                if ($record['unique_id'] == $worksheet->getCellByColumnAndRow(3, $row)) {
-                                    $matched = true;
-                                    $uniq = strtolower(str_replace(' ', '_', $record['unique_id']));
-                                }
-                                if ($matched) {
-                                    $cell = $worksheet->getCellByColumnAndRow($col, $row);
-                                    $columnName = strtolower(str_replace(' ', '_', $worksheet->getCellByColumnAndRow($col, 1)));
-                                    $rows[$uniq][$columnName] = $cell->getValue();
-                                }
-                            }
-                        }
-                    }
-                    foreach ($records as $record) {
-                        $recUniq = strtolower(str_replace(' ', '_', $record['unique_id']));
-                        if (array_key_exists($recUniq, $rows)) {
-                            $newRows = $this->appendCellValuesByArray($record, $rows[$recUniq]);
-                            if ($newRows)
-                                $this->makeExcelRowsByArray($activeSheet, $newRows, $newrow);
-                        } else {
-                            $this->makeExcelRowsByArray($activeSheet, $record, $newrow);
-                        }
-                        $newrow ++;
-                    }
-                    if ($records) {
-                        return $newphpExcelObject;
-                    }
-                } else {
-                    return "The file $mergeToFile is empty";
-                }
-            }
-        } else {
-            return "The file $mergeToFile does not exist";
-        }
-    }
-
     protected function mergeRow($activeSheet, $mergRow, $row)
     {
         $activeSheet->setCellValueExplicitByColumnAndRow(45, $row, $mergRow['project_name']);
