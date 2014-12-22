@@ -230,7 +230,7 @@ class ExportReport extends ContainerAware
         $mergeFileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $mergeToFile;
         if (file_exists($mergeFileCompletePath)) {
             $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($mergeFileCompletePath);
-            $newphpExcelObject = $this->initReport();
+            $newphpExcelObject = $this->initMergeReport();
             $activeSheet = $newphpExcelObject->setActiveSheetIndex(0);
 
             foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
@@ -817,4 +817,39 @@ class ExportReport extends ContainerAware
         }
     }
 
+    public function initMergeReport()
+    {
+        $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
+        $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
+                ->setTitle("AVCC - Report")
+                ->setSubject("Report for all formats")
+                ->setDescription("Report for all formats");
+        $activeSheet = $phpExcelObject->setActiveSheetIndex(0);
+        $phpExcelObject->getActiveSheet()->setTitle('All Formats');
+        $row = 1;
+// Prepare header row for report
+        $this->prepareHeaderMerge($activeSheet, $row);
+
+        return $phpExcelObject;
+    }
+    
+    /**
+     * Create the Header for report.
+     *
+     * @param  PHPExcel_Worksheet $activeSheet
+     * @param  Integer            $row
+     * @return boolean
+     */
+    private function prepareHeaderMerge($activeSheet, $row)
+    {
+        $columns = new ExportFields();
+        $this->columns = array_merge($columns->getExportColumns(), $columns->getExportMergeColumns());
+        foreach ($this->columns as $column => $columnName) {
+            $activeSheet->setCellValueExplicitByColumnAndRow($column, $row, str_replace('_', ' ', $columnName));
+            $activeSheet->getColumnDimensionByColumn($column)->setWidth(20);
+            $activeSheet->getStyleByColumnAndRow($column)->getFont()->setBold(true);
+        }
+
+        return TRUE;
+    }
 }

@@ -51,6 +51,53 @@ class ExportFields
         'Timestamp_-_Last_Change',
         'Cataloger'
     );
+    private $mergeColumns = array(
+        'Ext_Project_Name',
+        'Ext_Collection_Name',
+        'Ext_Media_Type',
+        'Ext_Unique_ID',
+        'Ext_Location',
+        'Ext_Format',
+        'Ext_Title',
+        'Ext_Description',
+        'Ext_Commercial_or_Unique',
+        'Ext_Content_Duration',
+        'Ext_Media_Duration',
+        'Ext_Creation_Date',
+        'Ext_Content_Date',
+        'Ext_Base',
+        'Ext_Print_Type',
+        'Ext_Disk_Diameter',
+        'Ext_Reel_Diameter',
+        'Ext_Media_Diameter',
+        'Ext_Footage',
+        'Ext_Recording_Speed',
+        'Ext_Color',
+        'Ext_Tape_Thickness',
+        'Ext_Sides',
+        'Ext_Track_Type',
+        'Ext_Mono_or_Stereo',
+        'Ext_Noise_Reduction',
+        'Ext_Cassette_Size',
+        'Ext_Format_Version',
+        'Ext_Recording_Standard',
+        'Ext_Reel_or_Core',
+        'Ext_Sound',
+        'Ext_Frame_Rate',
+        'Ext_Acid_Detection_Strip',
+        'Ext_Shrinkage',
+        'Ext_Genre_Terms',
+        'Ext_Contributor',
+        'Ext_Generation',
+        'Ext_Part',
+        'Ext_Copyright_/_Restrictions',
+        'Ext_Duplicates_/_Derivatives',
+        'Ext_Related_Material',
+        'Ext_Condition_Note',
+        'Ext_Time_Stamp',
+        'Ext_Timestamp_-_Last_Change',
+        'Ext_Cataloger'
+    );
     private $manifestColumns = array('Unique ID', 'Institution', 'Collection Name', 'Format', 'Print Type',
         "Reel Diameter\nDisc Diameter\nCassette Size", 'Title', 'Approximate Duration');
     private $prioritizationCols = array('Project_Name', 'Collection_Name', 'Title','Unique_ID', 'Total Score');
@@ -85,4 +132,13 @@ class ExportFields
         return $this->prioritizationCols;
     }
 
+    /**
+     * Return array of columns for csv or xlsx tempate.
+     *
+     * @return array
+     */
+    public function getExportMergeColumns()
+    {
+        return $this->mergeColumns;
+    }
 }
