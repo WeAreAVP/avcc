@@ -44,8 +44,8 @@ class ExportMergeCommand extends ContainerAwareCommand
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($criteria['ids']);
                     if ($records) {
                         $phpExcelObject = $export->mergeRecords($records, $mergeToFile);
-                        $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
-                        $text = $completePath;
+//                        $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+                        $text = $phpExcelObject;
                     } else {
                         $text = 'records not found';
                     }

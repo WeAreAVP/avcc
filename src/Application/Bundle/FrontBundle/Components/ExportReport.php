@@ -279,7 +279,7 @@ class ExportReport extends ContainerAware
                         }
                     }
 
-                    return $newphpExcelObject;
+                    return print_r($rows);;
                 } else {
                     return "The file $mergeToFile is empty";
                 }
