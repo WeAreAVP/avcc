@@ -372,6 +372,7 @@
     var baseUrl = '<?php echo $view['router']->generate('record') ?>';
     var selectedFormat = '';
     var selectedMediaType = '';
+    var selectedProject = '';
     var bulkEdit = '<?php echo $view['router']->generate('bulkedit_edit') ?>';
     $(document).ready(function () {
         initialize_records_form();
