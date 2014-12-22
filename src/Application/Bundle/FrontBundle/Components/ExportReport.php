@@ -273,9 +273,8 @@ class ExportReport extends ContainerAware
                     }
                     if (count($rows) > 0) {
                         foreach ($rows as $row) {                            
-                                                    print_r($row);
-//                            $this->makeExcelRowsByArray($activeSheet, false, $row, $newrow);
-//                            $newrow++;
+                            $this->makeExcelRowsByArray($activeSheet, false, $row, $newrow);
+                            $newrow++;
                         }
                     }
 
@@ -764,57 +763,57 @@ class ExportReport extends ContainerAware
 
     protected function mergeRow($activeSheet, $mergRow, $row)
     {
-        $activeSheet->setCellValueExplicitByColumnAndRow(45, $row, $mergRow['external_project']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(46, $row, $mergRow['external_collection_name']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(47, $row, $mergRow['external_media_type']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(48, $row, $mergRow['external_unique_id']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(49, $row, $mergRow['external_location']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(50, $row, $mergRow['external_format']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(51, $row, $mergRow['external_title']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(52, $row, $mergRow['external_description']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(53, $row, $mergRow['external_commercial']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(54, $row, $mergRow['external_content_duration']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(56, $row, $mergRow['external_creation_date']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(57, $row, $mergRow['external_content_date']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(61, $row, $mergRow['external_reel_diameter']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(34, $row, $mergRow['external_genre_terms']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(35, $row, $mergRow['external_contributor']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(36, $row, $mergRow['external_generation']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(37, $row, $mergRow['external_part']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(38, $row, $mergRow['external_copyright_restrictions']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(39, $row, $mergRow['external_duplicates_derivatives']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(40, $row, $mergRow['external_related_material']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(41, $row, $mergRow['external_condition_note']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(42, $row, ($mergRow['external_created_on']) ? $mergRow['external_created_on'] : '');
-        $activeSheet->setCellValueExplicitByColumnAndRow(43, $row, ($mergRow['external_updated_on']) ? $mergRow['external_updated_on'] : '');
-        $activeSheet->setCellValueExplicitByColumnAndRow(44, $row, $mergRow['external_user_name']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(45, $row, $mergRow['project']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(46, $row, $mergRow['collection_name']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(47, $row, $mergRow['media_type']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(48, $row, $mergRow['unique_id']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(49, $row, $mergRow['location']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(50, $row, $mergRow['format']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(51, $row, $mergRow['title']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(52, $row, $mergRow['description']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(53, $row, $mergRow['commercial']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(54, $row, $mergRow['content_duration']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(56, $row, $mergRow['creation_date']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(57, $row, $mergRow['content_date']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(61, $row, $mergRow['reel_diameter']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(34, $row, $mergRow['genre_terms']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(35, $row, $mergRow['contributor']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(36, $row, $mergRow['generation']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(37, $row, $mergRow['part']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(38, $row, $mergRow['copyright_restrictions']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(39, $row, $mergRow['duplicates_derivatives']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(40, $row, $mergRow['related_material']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(41, $row, $mergRow['condition_note']);
+        $activeSheet->setCellValueExplicitByColumnAndRow(42, $row, ($mergRow['created_on']) ? $mergRow['created_on'] : '');
+        $activeSheet->setCellValueExplicitByColumnAndRow(43, $row, ($mergRow['updated_on']) ? $mergRow['updated_on'] : '');
+        $activeSheet->setCellValueExplicitByColumnAndRow(44, $row, $mergRow['user_name']);
 
-        if ($mergRow['external_media_type'] == 'Audio') {
-            $activeSheet->setCellValueExplicitByColumnAndRow(55, $row, $mergRow['external_media_duration']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(58, $row, $mergRow['external_base']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(60, $row, $mergRow['external_disk_diameter']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(62, $row, $mergRow['external_media_diameter']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(66, $row, $mergRow['external_tape_thickness']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(67, $row, $mergRow['external_slides']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(68, $row, $mergRow['external_track_type']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(69, $row, $mergRow['external_mono_stereo']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(70, $row, $mergRow['external_noice_reduction']);
+        if ($mergRow['media_type'] == 'Audio') {
+            $activeSheet->setCellValueExplicitByColumnAndRow(55, $row, $mergRow['media_duration']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(58, $row, $mergRow['base']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(60, $row, $mergRow['disk_diameter']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(62, $row, $mergRow['media_diameter']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(66, $row, $mergRow['tape_thickness']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(67, $row, $mergRow['slides']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(68, $row, $mergRow['track_type']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(69, $row, $mergRow['mono_stereo']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(70, $row, $mergRow['noice_reduction']);
         }
-        if ($mergRow['external_media_type'] == 'Film') {
-            $activeSheet->setCellValueExplicitByColumnAndRow(59, $row, $mergRow['external_print_type']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(63, $row, $mergRow['external_footage']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(65, $row, $mergRow['external_color']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(74, $row, $mergRow['external_reel_core']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(75, $row, $mergRow['external_sound']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(76, $row, $mergRow['external_frame_rate']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(77, $row, $mergRow['external_acid_detection']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(78, $row, $mergRow['external_shrinkage']);
+        if ($mergRow['media_type'] == 'Film') {
+            $activeSheet->setCellValueExplicitByColumnAndRow(59, $row, $mergRow['print_type']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(63, $row, $mergRow['footage']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(65, $row, $mergRow['color']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(74, $row, $mergRow['reel_core']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(75, $row, $mergRow['sound']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(76, $row, $mergRow['frame_rate']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(77, $row, $mergRow['acid_detection']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(78, $row, $mergRow['shrinkage']);
         }
-        if ($mergRow['external_media_type'] == 'Video') {
-            $activeSheet->setCellValueExplicitByColumnAndRow(64, $row, $mergRow['external_recording_speed']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(71, $row, $mergRow['external_cassette_size']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(72, $row, $mergRow['external_format_version']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(73, $row, $mergRow['external_media_duration']);
+        if ($mergRow['media_type'] == 'Video') {
+            $activeSheet->setCellValueExplicitByColumnAndRow(64, $row, $mergRow['recording_speed']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(71, $row, $mergRow['cassette_size']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(72, $row, $mergRow['format_version']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(73, $row, $mergRow['media_duration']);
         }
     }
 
