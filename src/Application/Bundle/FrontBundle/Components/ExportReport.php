@@ -272,9 +272,10 @@ class ExportReport extends ContainerAware
                         $newrow++;
                     }
                     if (count($rows) > 0) {
-                        foreach ($rows as $row => $uniqueid) {
-                            $this->makeExcelRowsByArray($activeSheet, false, $row[$uniqueid], $newrow);
-                            $newrow++;
+                        echo print_r($row);
+                        foreach ($rows as $row) {                            
+//                            $this->makeExcelRowsByArray($activeSheet, false, $row, $newrow);
+//                            $newrow++;
                         }
                     }
 
