@@ -88,7 +88,7 @@
     </div>
     <div class="bulkEditform" style="display:none;"></div>
 </div>
-<div id="bulkEditModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+<div id="bulkEditModal" class="modal" tabindex="1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
     <div class='modal-dialog'>
         <div class='modal-content'>
             <div class="modal-header">
@@ -96,7 +96,6 @@
                 <h3 id="myModalLabel">Bulk Edit</h3>
             </div>
             <div class="modal-body">
-
                 <div id="bulk_edit_body"></div>
             </div>
             <div class="modal-footer">
