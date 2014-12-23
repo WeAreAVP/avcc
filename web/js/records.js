@@ -530,8 +530,8 @@ function Records() {
                         $("#afterExport").show();
                     }
                 });
-            } else {
-                $.modal.close();
+            } else { 
+                $("#exportModal").modal('hide');
                 $.Dialog({
                     'title': 'Error',
                     'content': '<span style="font-size:13px;">Error occured. Please try again.</span>',
