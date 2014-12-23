@@ -490,14 +490,7 @@ function Records() {
             });
             if (checked) {
                 var exportType = $(this).attr('data-type');
-                $("#exportModal").modal({
-                    containerCss: {
-                        backgroundColor: "#fff",
-                        borderColor: "#fff",
-                        width: 400,
-                        height: 150,
-                    },
-                });
+                $("#exportModal").modal('show');
                 $("#exportType").val(exportType);
                 $("#exportModal").show();
             } else {
@@ -584,14 +577,7 @@ function Records() {
             });
             if (checked) {
                 var exportType = $(this).attr('data-type');
-                $("#exportMergeModal").modal({
-                    containerCss: {
-                        backgroundColor: "#fff",
-                        borderColor: "#fff",
-                        width: 400,
-                        height: 250,
-                    },
-                });
+                $("#exportMergeModal").modal('show');
                 $("#beforeExportMerge").show();
                 $("#modal-footer").show();
                 $("#afterExportMerge").hide();
@@ -630,14 +616,7 @@ function Records() {
             $("#modal-footer").hide();
             $("#afterExportMerge").show();
             $("#afterExportMerge span").html(msg);
-            $("#exportMergeModal").modal({
-                containerCss: {
-                    backgroundColor: "#fff",
-                    borderColor: "#fff",
-                    width: 400,
-                    height: 250,
-                },
-            });
+            $("#exportMergeModal").modal('show');
             $("#exportMergeModal").show();
         }
     }
@@ -652,14 +631,7 @@ function Records() {
         if (msg) {
             $("#messageText span").html(msg);
             $("#messageText").show();
-            $("#messageModal").modal({
-                containerCss: {
-                    backgroundColor: "#fff",
-                    borderColor: "#fff",
-                    width: 400,
-                    height: 250,
-                },
-            });
+            $("#messageModal").modal('show');
             $("#messageModal").show();
         }
     }
@@ -667,14 +639,7 @@ function Records() {
     this.importRequest = function () {
         $('.import').click(function () {
             var importType = $(this).attr('data-type');
-            $("#importModal").modal({
-                containerCss: {
-                    backgroundColor: "#fff",
-                    borderColor: "#fff",
-                    width: 400,
-                    height: 250,
-                },
-            });
+            $("#importModal").modal('show');
             $("#importModal #impfiletype").val(importType);
             $("#importModal").show();
         });
