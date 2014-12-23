@@ -10,7 +10,7 @@
             <input type="hidden" name="formatDisable" id="formatDisable" value="<?php echo $isFormatDisable; ?>"/>
             <input type="hidden" name="mediaTypeId" id="mediaTypeId" value="<?php echo $mediaTypeId; ?>"/>
             <div id="bulk_process">
-                <div class="modal-body" id="bulk_edit_body" style="font-size: 12px;">
+                <div class="modal-body" id="bulk_edit_body">
                     <fieldset>
                         <div id="mediatype_lbl" class="col-lg-6" style="">
                             <label for="mediaType" class="required">Media Type</label>
