@@ -95,12 +95,7 @@
     </div>
     <div class="modal-body">
         <div id="bulk_process">
-        <div class="modal-body" id="bulk_edit_body" style="font-size: 12px;">
-
-        </div><br />
-        <div class="modal-footer" id="bulk_edit_footer">
-            <button type="button" name="close" id="" class="button simplemodal-close">Close</button>
-        </div>
+        
         </div>
         <div id="process_body" >
             <div style="text-align: center;padding: 10px;">
