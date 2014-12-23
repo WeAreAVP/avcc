@@ -696,30 +696,9 @@ function Records() {
                         if (!response.success) {
                             $('#bulk_edit_body').css('color', '#b94a48');
                             $("#bulk_edit_body").html('<b>' + response.msg + '</b>');
-//                            $("#bulkEditModal").modal({
-//                                containerCss: {
-//                                    backgroundColor: "#fff",
-//                                    borderColor: "#fff",
-//                                    width: 400,
-//                                    height: 200,
-//                                    top: 0
-//                                },
-//                            });
-$("#bulkEditModal").modal('show');
-//                            $("#bulkEditModal").show();
+                            $("#bulkEditModal").modal('show');
                         } else {
-//                            $("#bulkEditModal").modal({
-//                                containerCss: {
-//                                    backgroundColor: "#fff",
-//                                    borderColor: "#fff",
-//                                    width: 450,
-//                                    height: 550,
-//                                    autoResize: true,
-//                                    top: 50,
-//                                    
-//                                },
-//                            });
-$("#bulkEditModal").modal('show');
+                            $("#bulkEditModal").modal('show');
                             $(".bulkEditform").html(response.html);
                             $("#bulkEditModal").show();
                             $(".bulkEditform").show();
@@ -730,17 +709,7 @@ $("#bulkEditModal").modal('show');
             } else {
                 $('#bulk_edit_body').css('color', '#b94a48');
                 $("#bulk_edit_body").html('<b>Select records to edit.</b>');
-//                $("#bulkEditModal").modal({
-//                    containerCss: {
-//                        backgroundColor: "#fff",
-//                        borderColor: "#fff",
-//                        width: 400,
-//                        height: 150,
-//                        top: '0px'
-//                    },
-//                });
-$("#bulkEditModal").modal('show');
-//                $("#bulkEditModal").show();
+                $("#bulkEditModal").modal('show');
             }
         });
     }

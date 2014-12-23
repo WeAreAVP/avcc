@@ -1,5 +1,5 @@
 <div id="bulkEditDiv" class="">
-    <div class="modal-body" id="editProcessing" style="font-size: 12px;">
+    <div class="modal-body" id="editProcessing" style="font-size: 12px;display: none;">
     </div>
     <form method="post" name="frmBulkEdit" action="" id="frmBulkEdit">
         <div class="bulkEditFields" style="">  

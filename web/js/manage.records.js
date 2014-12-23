@@ -189,6 +189,7 @@ function saveBulkEdit() {
         data = $('#frmBulkEdit').serialize();
         $(document).ajaxStart(function () {
             $("#frmBulkEdit").hide();
+            $('#editProcessing').show();
             $('#editProcessing').css('color', 'black');
             $('#editProcessing').html('<img src="/images/ajax-loader.gif" /> <span><b>Processing please wait...</b></span>');
         });
