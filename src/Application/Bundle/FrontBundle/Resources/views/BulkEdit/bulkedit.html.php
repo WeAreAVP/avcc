@@ -2,15 +2,14 @@
     <div class="modal-body" id="editProcessing" style="font-size: 12px;display: none;">
     </div>
     <form method="post" name="frmBulkEdit" action="" id="frmBulkEdit">
-        <div class="bulkEditFields" style="">  
             <input type="hidden" name="records" id="records" value="<?php echo $selectedrecords; ?>"/>
             <?php $isMediaDisable = $disableFields['mediaType']; ?>
             <?php $isFormatDisable = $disableFields['format']; ?>
             <input type="hidden" name="mediaDisable" id="mediaDisable" value="<?php echo $isMediaDisable; ?>"/>
             <input type="hidden" name="formatDisable" id="formatDisable" value="<?php echo $isFormatDisable; ?>"/>
             <input type="hidden" name="mediaTypeId" id="mediaTypeId" value="<?php echo $mediaTypeId; ?>"/>
-            <div id="bulk_process">
-                <div class="modal-body" id="bulk_edit_body">
+            <div id="" style='max-height: 400px;overflow-y: auto;'>
+                <div class="modal-body" id="">
                     <fieldset>
                         <div id="mediatype_lbl" class="col-lg-6" style="">
                             <label for="mediaType" class="required">Media Type</label>
@@ -358,8 +357,7 @@
                             </div>
                         </div>
                     </fieldset>
-                </div><br />
-            </div>
+                </div>
         </div>
         <div class="modal-footer" id="bulk_edit_footer">
             <button type="button" name="close" id="" class="button bulkEditCloseBtn" data-dismiss="modal">Close</button>
