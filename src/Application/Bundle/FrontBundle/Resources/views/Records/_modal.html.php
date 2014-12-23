@@ -94,14 +94,8 @@
         <h3 id="myModalLabel">Bulk Edit</h3>
     </div>
     <div class="modal-body">
-        <div id="bulk_process">
         
-        </div>
-        <div id="process_body" >
-            <div style="text-align: center;padding: 10px;">
-                <img src="/assets/images/ajax-loader.gif" /><span>Processing please wait...</span>
-            </div>
-        </div>
+        <div id="bulk_edit_body"></div>
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true" id="">CLose</button>
