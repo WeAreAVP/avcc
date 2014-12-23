@@ -378,13 +378,6 @@ class RecordsController extends Controller
         $records = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
         $shpinxInfo = $this->getSphinxInfo();
         foreach ($records as $record) {
-//            if ($record->getMediaType()->getId() == 1) {
-//                $recordId = $record->getAudioRecord()->getId();
-//            } elseif ($record->getMediaType()->getId() == 2) {
-//                $recordId = $record->getFilmRecord()->getId();
-//            } else {
-//                $recordId = $record->getVideoRecord()->getId();
-//            }
             $recordId = $record->getId();
             $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId, $record->getMediaType()->getId());
             $row = $sphinxSearch->insert();

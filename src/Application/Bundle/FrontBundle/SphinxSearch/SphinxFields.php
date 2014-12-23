@@ -18,16 +18,7 @@ class SphinxFields
      */
     public function prepareFields(EntityManager $entityManager, $recordId, $recordTypeId)
     {
-//        if ($recordTypeId == 1) {
-//            $this->record = $entityManager->getRepository('ApplicationFrontBundle:AudioRecords')->findOneBy(array('id' => $recordId));
-//            $this->prepareAudioFields();
-//        } elseif ($recordTypeId == 2) {
-//            $this->record = $entityManager->getRepository('ApplicationFrontBundle:FilmRecords')->findOneBy(array('id' => $recordId));
-//            $this->prepareFilmFields();
-//        } else {
-//            $this->record = $entityManager->getRepository('ApplicationFrontBundle:VideoRecords')->findOneBy(array('id' => $recordId));
-//            $this->prepareVideoFields();
-//        }
+
         $this->record = $entityManager->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('id' => $recordId));
         
         $this->indexFields['id'] = $this->record->getId();
@@ -58,7 +49,7 @@ class SphinxFields
         $this->indexFields['part'] = ($this->record->getPart()) ? $this->record->getPart() : "";
         $this->indexFields['generation'] = ($this->record->getGeneration()) ? $this->record->getGeneration() : "";
         $this->indexFields['project'] = $this->indexFields['s_project'] = ($this->record->getProject()) ? $this->record->getProject()->getName() : "";
-        $this->indexFields['organization_id'] = ($this->record->getUser()->getOrganizations()) ? $this->record->getUser()->getOrganizations()->getId() : "";
+        $this->indexFields['organization_id'] = ($this->record->getProject()->getOrganization()) ? $this->record->getProject()->getOrganization()->getId() : "";
         $this->indexFields['user_id'] = ($this->record->getUser()) ? $this->record->getUser()->getId() : "";
         $this->indexFields['user_name'] = ($this->record->getUser()) ? $this->record->getUser()->getName() : "";
         $this->indexFields['copyright_restrictions'] = ($this->record->getCopyrightRestrictions()) ? $this->record->getCopyrightRestrictions() : "";
@@ -67,15 +58,13 @@ class SphinxFields
         $this->indexFields['condition_note'] = ($this->record->getConditionNote()) ? $this->record->getConditionNote() : "";
         $this->indexFields['created_on'] = ($this->record->getCreatedOn()) ? $this->record->getCreatedOn()->format('Y-m-d H:i:s') : "";
         $this->indexFields['updated_on'] = ($this->record->getUpdatedOn()) ? $this->record->getUpdatedOn()->format('Y-m-d H:i:s') : "";
+        $this->indexFields['project_id'] = ($this->record->getProject()) ? $this->record->getProject()->getId() : "";
 
         if ($this->record->getAudioRecord()) {
-//            $this->record = $entityManager->getRepository('ApplicationFrontBundle:AudioRecords')->findOneBy(array('id' => $recordId));
             $this->prepareAudioFields();
         } elseif ($this->record->getFilmRecord()) {
-//            $this->record = $entityManager->getRepository('ApplicationFrontBundle:FilmRecords')->findOneBy(array('id' => $recordId));
             $this->prepareFilmFields();
         } else {
-//            $this->record = $entityManager->getRepository('ApplicationFrontBundle:VideoRecords')->findOneBy(array('id' => $recordId));
             $this->prepareVideoFields();
         }
         return $this->indexFields;

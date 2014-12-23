@@ -33,12 +33,14 @@
                 {% endfor %}
             </div>
             {% if is_granted('ROLE_SUPER_ADMIN') %}
-                <label>Organizations</label>
-                <div class="input-control select" data-role="input-control">
-                    {{ form_widget(form.organizations, {id:'userOrganization',attr: {class:'size4'} }) }}
-                    {% for errorItem in form.organizations.vars.errors %}
-                        <span class="has-error text-danger" for="{{ form.organizations.vars.id }}">{{ errorItem.message }}</span>
-                    {% endfor %}
+                <div id="orgDiv"> 
+                    <label>Organizations</label>
+                    <div class="input-control select" data-role="input-control">
+                        {{ form_widget(form.organizations, {id:'userOrganization',attr: {class:'size4'} }) }}
+                        {% for errorItem in form.organizations.vars.errors %}
+                            <span class="has-error text-danger" for="{{ form.organizations.vars.id }}">{{ errorItem.message }}</span>
+                        {% endfor %}
+                    </div>
                 </div>
             {% endif %}
             <label>Password</label>

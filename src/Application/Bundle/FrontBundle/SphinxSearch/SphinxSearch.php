@@ -230,9 +230,13 @@ class SphinxSearch extends ContainerAware
     {
         if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
             if (!in_array("ROLE_MANAGER", $user->getRoles()) && $user->getUserProjects()) {
+                $projectIdArr = null;
                 foreach ($user->getUserProjects() as $project) {
-                    $sq->where('project', "=", $project->getName());
+                    $projectIdArr[] = $project->getId();
+//                    $sq->where('project', "=", $project->getName());
                 }
+                if ($projectIdArr)
+                    $sq->where('project_id', 'IN', $projectIdArr);
                 $sq->where('organization_id', "=", $user->getOrganizations()->getId());
             }
             if (in_array("ROLE_MANAGER", $user->getRoles()) && $user->getOrganizations()) {
