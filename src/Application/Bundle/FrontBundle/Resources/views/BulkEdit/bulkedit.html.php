@@ -1,5 +1,6 @@
 <div id="bulkEditDiv" class="">
-    <div id="editProcessing"></div>
+    <div class="modal-body" id="editProcessing" style="font-size: 12px;">
+    </div>
     <form method="post" name="frmBulkEdit" action="" id="frmBulkEdit">
         <div class="bulkEditFields" style="">  
             <input type="hidden" name="records" id="records" value="<?php echo $selectedrecords; ?>"/>
@@ -361,7 +362,7 @@
             </div>
         </div>
         <div class="modal-footer" id="bulk_edit_footer">
-            <button type="button" name="close" id="" class="button bulkEditCloseBtn simplemodal-close">Close</button>
+            <button type="button" name="close" id="" class="button bulkEditCloseBtn" data-dismiss="modal">Close</button>
             <button type="button" name="submit" id="submitBulkEdit" class="button primary">Submit</button>
         </div>
 
