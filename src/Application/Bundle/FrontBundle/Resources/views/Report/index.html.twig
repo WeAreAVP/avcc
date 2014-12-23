@@ -7,8 +7,8 @@
     <div class="grid ">
         <div data-role="tab-control" class="tab-control">
             <ul class="tabs">
-                <li class="active"><a href="#_xls">XLS/CSV</a></li>
-                <li class=""><a href="#_quantitaive">Graphs</a></li>
+                <li id="xlsTab" class="active"><a href="#_xls">XLS/CSV</a></li>
+                <li id="graphsTab" class=""><a href="#_quantitaive">Graphs</a></li>
             </ul>
 
             <div class="frames">
@@ -231,6 +231,18 @@
         </div>
     </div>
 
-
+    <script>
+        $(document).ready(function () {
+            var href = $(location).attr('href');
+            if(href.indexOf("#_quantitaive") > 0){
+                $("#xlsTab").removeClass('active');
+                $("#graphsTab").addClass('active');                
+            }else{
+                $("#xlsTab").addClass('active');
+                $("#graphsTab").removeClass('active');  
+            }
+            console.log(href);
+        });
+    </script>
 
 {% endblock %}
