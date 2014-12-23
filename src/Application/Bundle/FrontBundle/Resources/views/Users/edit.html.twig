@@ -57,7 +57,7 @@
             </div>
             <label>Roles</label>
             <div class="input-control select" data-role="input-control">
-                {{ form_widget(edit_form.roles, {attr: {class:'size4'} }) }}
+                {{ form_widget(edit_form.roles, {id:'roles', attr: {class:'size4'} }) }}
                 {% for errorItem in edit_form.roles.vars.errors %}
                     <span class="has-error text-danger" for="{{ edit_form.roles.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
@@ -65,7 +65,7 @@
             <div class="projectsDiv">
                 <label>Projects</label>
                 <div class="input-control select" data-role="input-control">
-                    {{ form_widget(edit_form.userProjects, {attr: {class:'size4'} }) }}
+                    {{ form_widget(edit_form.userProjects, {id:'userProjects', attr: {class:'size4'} }) }}
                     {% for errorItem in edit_form.userProjects.vars.errors %}
                         <span class="has-error text-danger" for="{{ edit_form.userProjects.vars.id }}">{{ errorItem.message }}</span>
                     {% endfor %}
@@ -82,7 +82,9 @@
     <script src="{{ asset('bundles/applicationfront/js/users.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            var baseUrl = '{{ path('users') }}';
             var obj = new Users();
+            obj.setBaseUrl(baseUrl);
             obj.bindAll();
         });
     </script>

@@ -266,7 +266,6 @@ class ExportReport extends ContainerAware
                         if (is_object($rec)) {
                             $recUniq = strtolower(str_replace(' ', '_', $rec->getUniqueId()));
                             if (array_key_exists($recUniq, $rows)) {
-//                            $newRows = $this->appendCellValuesByObject($rec, $rows[$recUniq]);
                                 $this->makeExcelRows($activeSheet, $rec, $rows[$recUniq], $newrow);
                                 unset($rows[$recUniq]);
                             } else {
@@ -275,7 +274,6 @@ class ExportReport extends ContainerAware
                         } else {
                             $recUniq = strtolower(str_replace(' ', '_', $rec['unique_id']));
                             if (array_key_exists($recUniq, $rows)) {
-//                            $newRows = $this->appendCellValuesByObject($rec, $rows[$recUniq]);
                                 $this->makeExcelRowsByArray($activeSheet, $rec, $rows[$recUniq], $newrow);
                                 unset($rows[$recUniq]);
                             } else {
