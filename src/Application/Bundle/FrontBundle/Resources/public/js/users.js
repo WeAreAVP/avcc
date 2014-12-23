@@ -44,6 +44,7 @@ function Users() {
                 $('.projectsDiv').show();
                 $('#userProjects').attr('required', 'required');
                 $("#userProjects").chosen();
+                $('#orgDiv').show();
             } else {
                 $('#userProjects').removeAttr('required');
                 $('.projectsDiv').hide();
