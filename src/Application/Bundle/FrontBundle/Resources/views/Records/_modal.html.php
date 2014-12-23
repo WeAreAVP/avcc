@@ -87,7 +87,7 @@
                 <div class="modal-body" id="bulk_edit_body" style="font-size: 12px;">
                 </div>
                 <div class="modal-footer" id="bulk_edit_footer">
-                    <button type="button" name="close" id="" class="button simplemodal-close">Close</button>
+                    <button type="button" name="close" id="" class="button" data-dismiss="modal">Close</button>
                 </div>                
             </div>
             <div class="bulkEditform" style="display:none;">                
