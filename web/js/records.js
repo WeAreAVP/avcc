@@ -705,8 +705,8 @@ function Records() {
 //                                    top: 0
 //                                },
 //                            });
-$("#bulkEditModal").modal();
-                            $("#bulkEditModal").show();
+$("#bulkEditModal").modal('show');
+//                            $("#bulkEditModal").show();
                         } else {
 //                            $("#bulkEditModal").modal({
 //                                containerCss: {
@@ -719,7 +719,7 @@ $("#bulkEditModal").modal();
 //                                    
 //                                },
 //                            });
-$("#bulkEditModal").modal();
+$("#bulkEditModal").modal('show');
                             $(".bulkEditform").html(response.html);
                             $("#bulkEditModal").show();
                             $(".bulkEditform").show();
@@ -739,8 +739,8 @@ $("#bulkEditModal").modal();
 //                        top: '0px'
 //                    },
 //                });
-$("#bulkEditModal").modal();
-                $("#bulkEditModal").show();
+$("#bulkEditModal").modal('show');
+//                $("#bulkEditModal").show();
             }
         });
     }
