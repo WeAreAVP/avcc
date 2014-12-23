@@ -89,16 +89,20 @@
     <div class="bulkEditform" style="display:none;"></div>
 </div>
 <div id="bulkEditModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="myModalLabel">Bulk Edit</h3>
-    </div>
-    <div class="modal-body">
-        
-        <div id="bulk_edit_body"></div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true" id="">CLose</button>
-        
-    </div>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Bulk Edit</h3>
+            </div>
+            <div class="modal-body">
+
+                <div id="bulk_edit_body"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true" id="">CLose</button>
+
+            </div>
+        </div>
+    </div> 
 </div>
