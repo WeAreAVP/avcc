@@ -76,7 +76,7 @@
         <button type="button" name="close" id="closeBtn" class="button closeBtn simplemodal-close">Close</button>
     </div>
 </div>
-<div id="bulkEditModal" class="mCustomScrollbar" tabindex="-1" role="dialog" style="display:none;height:500px">
+<div id="bulkEditModal1" class="mCustomScrollbar" tabindex="-1" role="dialog" style="display:none;height:500px">
     <h4 id="heading">Bulk Edit</h4>
     <div id="bulk_process">
         <div class="modal-body" id="bulk_edit_body" style="font-size: 12px;">
@@ -87,4 +87,29 @@
         </div>
     </div>
     <div class="bulkEditform" style="display:none;"></div>
+</div>
+<div id="bulkEditModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display:none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Bulk Edit</h3>
+    </div>
+    <div class="modal-body">
+        <div id="bulk_process">
+        <div class="modal-body" id="bulk_edit_body" style="font-size: 12px;">
+
+        </div><br />
+        <div class="modal-footer" id="bulk_edit_footer">
+            <button type="button" name="close" id="" class="button simplemodal-close">Close</button>
+        </div>
+        </div>
+        <div id="process_body" >
+            <div style="text-align: center;padding: 10px;">
+                <img src="/assets/images/ajax-loader.gif" /><span>Processing please wait...</span>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true" id="">CLose</button>
+        
+    </div>
 </div>

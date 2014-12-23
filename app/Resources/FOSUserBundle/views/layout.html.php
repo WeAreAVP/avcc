@@ -17,6 +17,7 @@
         <link href="<?php echo $view['assets']->getUrl('css/metro-bootstrap-responsive.min.css') ?>" type="text/css" rel="stylesheet" />
         <link href="<?php echo $view['assets']->getUrl('css/iconFont.min.css') ?>" type="text/css" rel="stylesheet" />
         <link href="<?php echo $view['assets']->getUrl('css/chosen.css') ?>" type="text/css" rel="stylesheet" />
+        <link href="<?php echo $view['assets']->getUrl('css/modal.css') ?>" type="text/css" rel="stylesheet" />
         <!-- Custom styles for this template -->
         <link href="<?php echo $view['assets']->getUrl('bundles/applicationfront/css/style.css') ?>" rel="stylesheet">
         <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('css/jquery.mCustomScrollbar.css') ?>" />
@@ -27,7 +28,8 @@
         <?php $view['slots']->output('stylesheets') ?>
 
         <script src="<?php echo $view['assets']->getUrl('js/jquery.maskedinput.js') ?>"></script>
-        <script src="<?php echo $view['assets']->getUrl('js/jquery.simplemodal.1.4.4.min.js') ?>"></script>
+<!--        <script src="<?php echo $view['assets']->getUrl('js/jquery.simplemodal.1.4.4.min.js') ?>"></script>-->
+        <script src="<?php echo $view['assets']->getUrl('js/modal.js') ?>"></script>
     </head>
 
     <body class="metro">
