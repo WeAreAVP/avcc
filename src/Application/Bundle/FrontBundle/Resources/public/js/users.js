@@ -35,8 +35,10 @@ function Users() {
             var selectedRole = $(this).val();
             if (selectedRole != 'ROLE_SUPER_ADMIN') {
                 $('#userOrganization').attr('required', 'required');
+                $('#orgDiv').show();
             } else {
                 $('#userOrganization').removeAttr('required');
+                $('#orgDiv').hide();
             }
             if (selectedRole == 'ROLE_CATALOGER' || selectedRole == 'ROLE_USER') {
                 $('.projectsDiv').show();
