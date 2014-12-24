@@ -46,47 +46,55 @@
                             <td><?php echo number_format($audio['sum_content_duration'] / $audio['total'], 2) ?></td>
                             <td>
                                 <?php
-                                echo $uncompress1 = ($audio['sum_content_duration'] * 34.56) / 1024 / 1024;
+                                echo $uncompress1 = number_format(($audio['sum_content_duration'] * 34.56) / 1024 / 1024, 5);
                                 $totalUncompress1 += $uncompress1;
                                 ?>
                             </td>
                             <td>
-                                <?php echo $uncompress2 = ($audio['sum_content_duration'] * 17.28) / 1024 / 1024;
+                                <?php
+                                echo $uncompress2 = number_format(($audio['sum_content_duration'] * 17.28) / 1024 / 1024, 5);
                                 $totalUncompress2 += $uncompress2;
                                 ?>
                             </td>
                             <td>
-                                <?php echo $uncompress3 = ($audio['sum_content_duration'] * 11.52) / 1024 / 1024;
+                                <?php
+                                echo $uncompress3 = number_format(($audio['sum_content_duration'] * 11.52) / 1024 / 1024, 5);
                                 $totalUncompress3 += $uncompress3;
                                 ?>
                             </td>
                             <td>
-                                <?php echo $uncompress4 = ($audio['sum_content_duration'] * 10.584) / 1024 / 1024; 
+                                <?php
+                                echo $uncompress4 = number_format(($audio['sum_content_duration'] * 10.584) / 1024 / 1024, 5);
                                 $totalUncompress4 += $uncompress4;
                                 ?>
                             </td>
                             <td>
-                                <?php echo $uncompress5 = ($audio['sum_content_duration'] * 17.28) / 1024 / 1024; 
+                                <?php
+                                echo $uncompress5 = number_format(($audio['sum_content_duration'] * 17.28) / 1024 / 1024, 5);
                                 $totalUncompress5 += $uncompress5;
                                 ?>
                             </td>
                             <td>
-                                <?php echo $uncompress6 = ($audio['sum_content_duration'] * 8.64) / 1024 / 1024; 
+                                <?php
+                                echo $uncompress6 = number_format(($audio['sum_content_duration'] * 8.64) / 1024 / 1024, 5);
                                 $totalUncompress6 += $uncompress6;
                                 ?>
                             </td>
                             <td>
-                                <?php echo $uncompress7 = ($audio['sum_content_duration'] * 5.75) / 1024 / 1024;
+                                <?php
+                                echo $uncompress7 = number_format(($audio['sum_content_duration'] * 5.75) / 1024 / 1024, 5);
                                 $totalUncompress7 += $uncompress7;
                                 ?>
                             </td>
                             <td>
-                                <?php echo $uncompress8 = ($audio['sum_content_duration'] * 5.292) / 1024 / 1024;
+                                <?php
+                                echo $uncompress8 = number_format(($audio['sum_content_duration'] * 5.292) / 1024 / 1024, 5);
                                 $totalUncompress8 += $uncompress8;
                                 ?>
                             </td>
                             <td>
-                                <?php echo $kbps = ($audio['sum_content_duration'] * 1.92) / 1024 / 1024;
+                                <?php
+                                echo $kbps = number_format(($audio['sum_content_duration'] * 1.92) / 1024 / 1024, 5);
                                 $totalKbps += $kbps;
                                 ?>
                             </td>                            
