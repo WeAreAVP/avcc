@@ -129,10 +129,10 @@ class SphinxSearch extends ContainerAware
                 ->limit($offset, $limit)
                 ->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
                 ->executeBatch();
-        $q = array('result'=>$result,'query'=>$sq->getCompiled());
-        echo '<pre>';
-        print_r($q);
-        exit;
+//        $q = array('result'=>$result,'query'=>$sq->getCompiled());
+//        echo '<pre>';
+//        print_r($q);
+//        exit;
         return $result;
     }
 
