@@ -156,10 +156,10 @@ class SphinxSearch extends ContainerAware
                 ->orderBy($facetColumn, 'asc');
 
         return $sq->execute();
-//        $q = array('result'=>$sq->execute(),'query'=>$sq->getCompiled());
-//        echo '<pre>';
-//        print_r($q);
-//        exit;
+        $q = array('result'=>$sq->execute(),'query'=>$sq->getCompiled());
+        echo '<pre>';
+        print_r($q);
+        exit;
     }
 
     /**
@@ -243,6 +243,35 @@ class SphinxSearch extends ContainerAware
                 $sq->where('organization_id', "=", $user->getOrganizations()->getId());
             }
         }
+    }
+    
+    /**
+     * get count and media/content duration sum for report.
+     *
+     * @param string $facetColumn
+     * @param array  $criteria
+     * @param string $parentFacet
+     *
+     * @return array
+     */
+    public function facetSumSelect($facetColumn, $user, $criteria = null, $parentFacet = false)
+    {
+        $sq = SphinxQL::create($this->conn)
+                ->select($facetColumn, SphinxQL::expr('count(*) AS total'), SphinxQL::expr('sum(content_duration) AS sum_content_duration'))
+                ->from($this->indexName);
+        if ($criteria && $facetColumn != $parentFacet) {
+            $this->whereClause($criteria, $sq);
+        }
+        $this->roleCriteria($user, $sq);
+        $sq->where($facetColumn, '!=', '');
+        $sq->groupBy($facetColumn)
+                ->orderBy($facetColumn, 'asc');
+
+        return $sq->execute();
+//        $q = array('result'=>$sq->execute(),'query'=>$sq->getCompiled());
+//        echo '<pre>';
+//        print_r($q);
+//        exit;
     }
 
 }

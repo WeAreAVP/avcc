@@ -395,4 +395,24 @@ class ReportController extends Controller
 
         return array('diskDiameter' => json_encode($highChart));
     }
+    
+    /**
+     * Generate file size calculator report
+     *
+     * @Route("/filesize", name="filesize")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function fileSizeAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('format', $this->getUser()), 'format');
+        
+
+        return array('result' => $result);
+    }
+
 }
