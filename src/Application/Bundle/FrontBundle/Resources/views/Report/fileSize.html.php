@@ -25,7 +25,8 @@
                 <tbody>                    
                     <?php foreach ($audioResult as $audio) { ?>
                         <tr>
-                            <td rowspan="<?php echo count($audioResult); ?>"> Audio </td>
+                            <!--<td rowspan="<?php echo count($audioResult); ?>"> Audio </td>-->
+                            <td> Audio </td>
                             <td><?php echo $audio['format']?></td>
                             <td><?php echo $audio['total']?></td>
                             <td><?php echo $audio['sum_content_duration']?></td>
