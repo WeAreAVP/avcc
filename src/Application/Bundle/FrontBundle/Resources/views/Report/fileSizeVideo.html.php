@@ -130,6 +130,5 @@
         </div>
     </div>
 </div>
-</div>
 <?php
 $view['slots']->stop();
