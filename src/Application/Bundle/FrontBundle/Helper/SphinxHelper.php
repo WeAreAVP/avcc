@@ -52,7 +52,7 @@ class SphinxHelper
                         $criteriaArr['*'] = $keyword['value'];
                     }
                 } else {
-                    $criteriaArr['s_' . $keyword['type']] = $keyword['value'];
+                    $criteriaArr['s_' . $keyword['type']] = '"'.$keyword['value'].'"';
                 }
             }
         }
