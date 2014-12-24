@@ -401,7 +401,7 @@ class ReportController extends Controller
      *
      * @Route("/filesize", name="filesize")
      * @Method("GET")
-     * @Template()
+     * @Template("ApplicationFrontBundle:Report:fileSize.html.php")
      * @return array
      */
     public function fileSizeAction()
