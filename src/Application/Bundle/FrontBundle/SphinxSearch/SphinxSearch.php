@@ -155,7 +155,7 @@ class SphinxSearch extends ContainerAware
         $sq->groupBy($facetColumn)
                 ->orderBy($facetColumn, 'asc');
 
-        return $sq->execute();
+//        return $sq->execute();
         $q = array('result'=>$sq->execute(),'query'=>$sq->getCompiled());
         echo '<pre>';
         print_r($q);
