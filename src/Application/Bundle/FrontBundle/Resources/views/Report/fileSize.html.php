@@ -23,15 +23,18 @@
                     </tr>
                 </thead>
                 <tbody>                    
-                    <?php foreach ($audioResult as $audio) { ?>
+                    <?php $i = 1;
+                    foreach ($audioResult as $audio) {
+                        ?>
                         <tr>
-                            <!--<td rowspan="<?php echo count($audioResult); ?>"> Audio </td>-->
-                            <td> Audio </td>
-                            <td><?php echo $audio['format']?></td>
-                            <td><?php echo $audio['total']?></td>
-                            <td><?php echo $audio['sum_content_duration']?></td>
-                            <td><?php echo number_format($audio['sum_content_duration']/$audio['total'],2)?></td>
-                            <td><?php echo number_format(($audio['sum_content_duration']*34.56)/1024/1024,2)?></td>
+                            <?php if ($i == 1) { ?>
+                                <td rowspan="<?php echo count($audioResult); ?>"> Audio </td>
+    <?php } ?>
+                            <td><?php echo $audio['format'] ?></td>
+                            <td><?php echo $audio['total'] ?></td>
+                            <td><?php echo $audio['sum_content_duration'] ?></td>
+                            <td><?php echo number_format($audio['sum_content_duration'] / $audio['total'], 2) ?></td>
+                            <td><?php echo number_format(($audio['sum_content_duration'] * 34.56) / 1024 / 1024, 2) ?></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -42,6 +45,7 @@
                             <td></td>                            
                         </tr>                    
                         <?php
+                        $i++;
                     }
                     ?>
                 </tbody>
