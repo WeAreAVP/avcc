@@ -28,7 +28,7 @@
                         ?>
                         <tr>
                             <?php if ($i == 1) { ?>
-                                <td rowspan="<?php echo count($audioResult); ?>"> Audio </td>
+                                <td rowspan="<?php echo count($audioResult); ?>" valign="middle"> Audio </td>
     <?php } ?>
                             <td><?php echo $audio['format'] ?></td>
                             <td><?php echo $audio['total'] ?></td>
