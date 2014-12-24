@@ -2,6 +2,9 @@
 <?php $view['slots']->start('body') ?>
 <div class="grid">
     <div class="row">
+        <h1><a href="<?php echo $view['router']->generate('report') ?>"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+            File Size Calculator for Digitized Assets
+        </h1>        
         <div class="table-responsive">
             <table class="table hovered bordered">
                 <thead>
