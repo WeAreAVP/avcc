@@ -409,9 +409,11 @@ class ReportController extends Controller
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('format', $this->getUser()), 'format');
+        $criteria = array('s_media_type' => array('"Audio"','"Video'));
+        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $criteria), 'format');
         
-
+        echo '<pre>';
+        print_r($result);
         return array('result' => $result);
     }
 

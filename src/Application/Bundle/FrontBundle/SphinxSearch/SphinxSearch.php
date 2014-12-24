@@ -129,10 +129,6 @@ class SphinxSearch extends ContainerAware
                 ->limit($offset, $limit)
                 ->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
                 ->executeBatch();
-//        $q = array('result'=>$result,'query'=>$sq->getCompiled());
-//        echo '<pre>';
-//        print_r($q);
-//        exit;
         return $result;
     }
 
@@ -236,7 +232,6 @@ class SphinxSearch extends ContainerAware
                 $projectIdArr = null;
                 foreach ($user->getUserProjects() as $project) {
                     $projectIdArr[] = $project->getId();
-//                    $sq->where('project', "=", $project->getName());
                 }
                 if ($projectIdArr)
                     $sq->where('project_id', 'IN', $projectIdArr);
@@ -257,7 +252,7 @@ class SphinxSearch extends ContainerAware
      *
      * @return array
      */
-    public function facetSumSelect($facetColumn, $user, $criteria = null, $parentFacet = false)
+    public function facetDurationSumSelect($facetColumn, $user, $criteria = null, $parentFacet = false)
     {
         $sq = SphinxQL::create($this->conn)
                 ->select($facetColumn, SphinxQL::expr('count(*) AS total'), SphinxQL::expr('sum(content_duration) AS sum_content_duration'))
