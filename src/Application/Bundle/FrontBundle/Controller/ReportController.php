@@ -414,6 +414,7 @@ class ReportController extends Controller
         
         echo '<pre>';
         print_r($result);
+        exit;
         return array('result' => $result);
     }
 
