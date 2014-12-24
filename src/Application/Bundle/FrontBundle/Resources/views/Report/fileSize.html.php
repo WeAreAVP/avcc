@@ -105,7 +105,7 @@
                     ?>
                 </tbody>
                 <tfoot>
-                    <tr>
+                    <tr class="text-bold">
                         <td>Total File Space</td>
                         <td></td>
                         <td></td>
