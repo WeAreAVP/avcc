@@ -131,7 +131,7 @@ class SphinxSearch extends ContainerAware
                 ->executeBatch();
         $q = array('result'=>$result,'query'=>$sq->getCompiled());
         echo '<pre>';
-        print_r($criteria);
+        print_r($q);
         exit;
         return $result;
     }
