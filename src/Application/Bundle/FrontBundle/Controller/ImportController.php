@@ -116,16 +116,19 @@ class ImportController extends Controller
                     $job->setExecuteAfter($date);
                     $em->persist($job);
                     $em->flush($job);
-
-                    $this->get('session')->getFlashBag()->add('report_success', 'Import request successfully sent. You will receive a confirmation email shortly.');
+                    $message = array('heading'=>'Import', 'message'=>'Import request successfully sent. You will receive a confirmation email shortly.');
+                    $this->get('session')->getFlashBag()->add('report_success', $message);
                 } else {
-                    $this->get('session')->getFlashBag()->add('report_error', 'File formate is not correct. Please try again.');
+                    $message = array('heading'=>'Import', 'message'=>'File formate is not correct. Please try again.');
+                    $this->get('session')->getFlashBag()->add('report_error', $message);
                 }
             } else {
-                $this->get('session')->getFlashBag()->add('report_error', 'File is empty. Please try again.');
+                $message = array('heading'=>'Import', 'message'=>'File is empty. Please try again.');
+                $this->get('session')->getFlashBag()->add('report_error', $message);
             }
         } else {
-            $this->get('session')->getFlashBag()->add('report_error', 'Select file that require to import. Please try again.');
+            $message = array('heading'=>'Import', 'message'=>'Select file that require to import. Please try again.');
+            $this->get('session')->getFlashBag()->add('report_error', $message);
         }
 
         return $this->redirect($this->generateUrl('record_list'));
