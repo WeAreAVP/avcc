@@ -399,12 +399,12 @@ class ReportController extends Controller
     /**
      * Generate file size calculator report
      *
-     * @Route("/filesize", name="filesize")
+     * @Route("/filesizeaudio", name="filesizeaudio")
      * @Method("GET")
-     * @Template("ApplicationFrontBundle:Report:fileSize.html.php")
+     * @Template("ApplicationFrontBundle:Report:fileSizeAudio.html.php")
      * @return array
      */
-    public function fileSizeAction()
+    public function fileSizeAudioAction()
     {
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
@@ -413,6 +413,26 @@ class ReportController extends Controller
         $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $audioCriteria), 'format');
         
         return array('audioResult' => $audioResult);
+    }
+    
+    /**
+     * Generate file size calculator report
+     *
+     * @Route("/filesizevideo", name="filesizevideo")
+     * @Method("GET")
+     * @Template("ApplicationFrontBundle:Report:fileSizeVideo.html.php")
+     * @return array
+     */
+    public function fileSizeVideoAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        
+        $videoCriteria = array('s_media_type' => array('Video'));
+        $videoResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $videoCriteria), 'format');
+        
+        return array('videoResult' => $videoResult);
     }
 
 }
