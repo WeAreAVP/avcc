@@ -25,6 +25,7 @@ function Records() {
     var ajaxExportUrl = null;
     var successMsg = null;
     var errorMsg = null;
+    var popupHeading = null;
     /**
      * Set the ajax URL of datatable.
      * @param {string} source
@@ -72,11 +73,20 @@ function Records() {
     }
     /**
      * Set the error merge file message.
-     * @param {string} merge_msg
+     * @param {string} error_msg
      * 
      */
     this.setErrorMsg = function (error_msg) {
         errorMsg = error_msg;
+
+    }
+    /**
+     * Set the heading for popup.
+     * @param {string} heading
+     * 
+     */
+    this.setPopupHeading = function (heading) {
+        popupHeading = heading;
 
     }
     /**
@@ -628,6 +638,7 @@ function Records() {
             msg = '<span class="error">' + errorMsg + '</span>';
         }
         if (msg) {
+            $("#heading").html(popupHeading);
             $("#messageText span").html(msg);
             $("#messageText").show();
             $("#messageModal").modal('show');

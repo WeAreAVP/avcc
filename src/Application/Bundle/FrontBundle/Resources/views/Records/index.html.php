@@ -78,16 +78,16 @@
             <input type="hidden" name="selectedrecords" id="selectedrecords" value="<?php echo $recordsIds; ?>" />
             <input type="hidden" name="exportType" id="exportType" value="" />
         </div>
-        <?php $successPopupMsg = null; ?>
+        <?php $heading = null; $successPopupMsg = null; ?>
         <?php foreach ($view['session']->getFlash("report_success") as $message): ?>
-            <?php $successPopupMsg = $message; ?>
+            <?php $successPopupMsg = $message['message']; $heading = $message['heading'];?>
         <?php
         endforeach;
         $app->getSession()->remove('report_success');
         ?>
         <?php $errorPopupMsg = null; ?>
         <?php foreach ($view['session']->getFlash("report_error") as $message): ?>
-            <?php $errorPopupMsg = $message; ?>
+            <?php $errorPopupMsg = $message['message']; $heading = $message['heading']; ?>
         <?php
         endforeach;
         $app->getSession()->remove('report_error');
@@ -100,7 +100,6 @@
             <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/tristate-0.9.2.js') ?>"></script>
             <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/jquery.blockUI.js') ?>"></script>
             <script type="text/javascript">
-
                 var record = new Records();
                 record.setAjaxSource('<?php echo $view['router']->generate('record_dataTable') ?>');
                 record.setAjaxSaveStateUrl('<?php echo $view['router']->generate('record_saveState') ?>');
@@ -109,8 +108,8 @@
                 record.setPageUrl('<?php echo $view['router']->generate('record_list') ?>');
                 record.setSuccessMsg('<?php echo $successPopupMsg; ?>');
                 record.setErrorMsg('<?php echo $errorPopupMsg; ?>');
+                record.setPopupHeading('<?php echo $heading; ?>');
                 record.bindEvents();
-
             </script>
             <?php
             $view['slots']->stop();

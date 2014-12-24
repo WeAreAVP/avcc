@@ -450,16 +450,19 @@ class RecordsController extends Controller
                     $job->setExecuteAfter($date);
                     $em->persist($job);
                     $em->flush($job);
-
-                    $this->get('session')->getFlashBag()->add('report_success', 'Merge and export request successfully sent. You will receive an email shortly with download link.');
+                    $message = array('heading'=>'Export Merge', 'message'=>'Merge and export request successfully sent. You will receive an email shortly with download link.');
+                    $this->get('session')->getFlashBag()->add('report_success', $message);
                 } else {
-                    $this->get('session')->getFlashBag()->add('report_error', 'File formate is not correct. Please try again.');
+                    $message = array('heading'=>'Export Merge', 'message'=>'File formate is not correct. Please try again.');
+                    $this->get('session')->getFlashBag()->add('report_error', $message);
                 }
             } else {
-                $this->get('session')->getFlashBag()->add('report_error', 'File is empty. Please try again.');
+                $message = array('heading'=>'Export Merge', 'message'=>'File is empty. Please try again.');
+                $this->get('session')->getFlashBag()->add('report_error', $message);
             }
         } else {
-            $this->get('session')->getFlashBag()->add('report_error', 'Select file that require to merge. Please try again.');
+            $message = array('heading'=>'Export Merge', 'message'=>'Select file that require to merge. Please try again.');
+            $this->get('session')->getFlashBag()->add('report_error', $message);
         }
         $session->remove("saveRecords");
         $session->remove("allRecords");
