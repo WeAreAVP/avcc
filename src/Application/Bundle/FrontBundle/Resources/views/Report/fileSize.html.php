@@ -120,7 +120,6 @@
                         <td><?php echo $totalUncompress7; ?></td>
                         <td><?php echo $totalUncompress8; ?></td>
                         <td><?php echo $totalKbps; ?></td>
-                        <td></td>
                     </tr>
                 </tfoot>
             </table>
