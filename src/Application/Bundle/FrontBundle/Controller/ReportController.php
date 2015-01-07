@@ -439,7 +439,7 @@ class ReportController extends Controller
                             }
                         }
                     }
-                    $formatInfo[$type][$f] = array('sum_duration' => $sumDuration, 'total' => $audio['total']);
+                    $formatInfo[$type][$f] = array('sum_duration' => $sumDuration, 'total' => $format['total']);
                 }
             }
         }
