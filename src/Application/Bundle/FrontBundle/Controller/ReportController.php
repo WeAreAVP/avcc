@@ -409,39 +409,42 @@ class ReportController extends Controller
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        $audioCriteria = array('s_media_type' => array('Audio'));
-        $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $audioCriteria), 'format');
-        $_records = array();
-        foreach ($audioResult as $audio) {
-            $recordCriteria = array('s_format' => array($audio['format']));
-            $count = 0;
-            $offset = 0;
-            while ($count == 0) {
-                $records = $sphinxSearch->select($this->getUser(), $offset, 1000, 'title', 'asc', $recordCriteria);
-                $_records = array_merge($_records, $records[0]);
-                $totalFound = $records[1][1]['Value'];
-                $offset = $offset + 1000;
-                if ($totalFound < 1000) {
-                    $count++;
-                }
-            }
-            if ($_records) {
-                $sumDuration = 0;
-                $f = str_replace(" ", "_", $audio['format']);
-                foreach ($_records as $rec) {
-                    if($rec['format'] == $audio['format']){                        
-                        if($rec['content_duration']){
-                            $sumDuration = $sumDuration + $rec['content_duration'];
-                        }else{
-                            $sumDuration = $sumDuration + $rec['media_duration'];
-                        }
+        $types = array('Audio', 'Video', 'Film');
+        foreach ($types as $type) {
+            $typeCriteria = array('s_media_type' => array($type));
+            $formatResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $typeCriteria), 'format');
+            $_records = array();
+            foreach ($formatResult as $format) {
+                $recordCriteria = array('s_format' => array($format['format']));
+                $count = 0;
+                $offset = 0;
+                while ($count == 0) {
+                    $records = $sphinxSearch->select($this->getUser(), $offset, 1000, 'title', 'asc', $recordCriteria);
+                    $_records = array_merge($_records, $records[0]);
+                    $totalFound = $records[1][1]['Value'];
+                    $offset = $offset + 1000;
+                    if ($totalFound < 1000) {
+                        $count++;
                     }
                 }
-                $format[$f] = array('sum_duration'=> $sumDuration, 'total' => $audio['total']);
+                if ($_records) {
+                    $sumDuration = 0;
+                    $f = str_replace(" ", "_", $format['format']);
+                    foreach ($_records as $rec) {
+                        if ($rec['format'] == $format['format']) {
+                            if ($rec['content_duration']) {
+                                $sumDuration = $sumDuration + $rec['content_duration'];
+                            } else {
+                                $sumDuration = $sumDuration + $rec['media_duration'];
+                            }
+                        }
+                    }
+                    $formatInfo[$type][$f] = array('sum_duration' => $sumDuration, 'total' => $audio['total']);
+                }
             }
         }
         echo '<pre>';
-        print_r($format);
+        print_r($formatInfo);
         die;
         return array('audioResult' => $audioResult);
     }
