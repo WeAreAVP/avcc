@@ -419,12 +419,28 @@ class ReportController extends Controller
             while ($count == 0) {
                 $records = $sphinxSearch->select($this->getUser(), $offset, 1000, 'title', 'asc', $recordCriteria);
                 $_records = array_merge($_records, $records[0]);
-                $totalFound = $records[1][1]['Value'];                
+                $totalFound = $records[1][1]['Value'];
                 $offset = $offset + 1000;
                 if ($totalFound < 1000) {
                     $count++;
                 }
-            }            
+            }
+            if ($_records) {
+                $sumDuration = 0;
+                $formatRecordCount = 0;
+                foreach ($_records as $rec) {
+                    if($rec['format'] == $audio['format']){
+                        $f = str_replace(" ", "_", $audio['format']);
+                        if($audio['content_duration']){
+                            $sumDuration = $sumDuration + $audio['content_duration'];
+                        }else{
+                            $sumDuration = $sumDuration + $audio['media_duration'];
+                        }
+                        $formatRecordCount ++;
+                    }
+                }
+                $format[$f] = ['sum_duration'=> $sumDuration, 'total' => $formatRecordCount];
+            }
         }
         echo '<pre>';
         print_r($_records);
