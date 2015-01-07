@@ -434,7 +434,7 @@ class ReportController extends Controller
                         if ($rec['format'] == $format['format']) {
                             if ($rec['content_duration']) {
                                 $sumDuration = $sumDuration + $rec['content_duration'];
-                            } elseif($type != 'Film') {
+                            } elseif ($type != 'Film') {
                                 $sumDuration = $sumDuration + $rec['media_duration'];
                             }
                         }
@@ -488,10 +488,9 @@ class ReportController extends Controller
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-
         $types = array('Audio', 'Video', 'Film');
-        foreach ($types as $type) {
-            $typeCriteria = array('s_media_type' => array($type));
+        foreach ($types as $mediatype) {
+            $typeCriteria = array('s_media_type' => array($mediatype));
             $formatResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $typeCriteria), 'format');
             $_records = array();
             foreach ($formatResult as $format) {
@@ -514,26 +513,30 @@ class ReportController extends Controller
                         if ($rec['format'] == $format['format']) {
                             if ($rec['content_duration']) {
                                 $sumDuration = $sumDuration + $rec['content_duration'];
-                            } elseif($type != 'Film') {
+                            } elseif ($type != 'Film') {
                                 $sumDuration = $sumDuration + $rec['media_duration'];
                             }
                         }
                     }
-                    $formatInfo[$type][$f] = array('format'=> $format['format'], 'sum_content_duration' => $sumDuration, 'total' => $format['total']);
+                    $formatInfo[$mediatype][$f] = array('format' => $format['format'], 'sum_content_duration' => $sumDuration, 'total' => $format['total']);
                 }
             }
         }
-        $typeFormats["audio"] = $formatInfo['Audio'];
-        $typeFormats["video"] = $formatInfo['Video'];
-        $typeFormats["film"] = $formatInfo['Film'];
+        if (isset($formatInfo)) {
+            $typeFormats["audio"] = $formatInfo['Audio'];
+            $typeFormats["video"] = $formatInfo['Video'];
+            $typeFormats["film"] = $formatInfo['Film'];
 //        echo '<pre>';
 //        print_r($typeFormats);
 //        die;
-        $exportComponent = new ExportReport($this->container);
-        $phpExcelObject = $exportComponent->generateFileSizeAssetsReport($typeFormats);
-        $response = $exportComponent->outputReport($type, $phpExcelObject, 'file_size_calculator');
+            $exportComponent = new ExportReport($this->container);
+            $phpExcelObject = $exportComponent->generateFileSizeAssetsReport($typeFormats);
+            $response = $exportComponent->outputReport($type, $phpExcelObject, 'file_size_calculator');
 
-        return $response;
+            return $response;
+        } else {
+            throw $this->createNotFoundException('No record found for report.');
+        }
     }
 
     /**
