@@ -398,79 +398,6 @@ class ReportController extends Controller
 
     /**
      * Generate file size calculator report
-     *
-     * @Route("/filesizeaudio", name="filesizeaudio")
-     * @Method("GET")
-     * @Template("ApplicationFrontBundle:Report:fileSizeAudio.html.php")
-     * @return array
-     */
-    public function fileSizeAudioAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $shpinxInfo = $this->container->getParameter('sphinx_param');
-        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        $types = array('Audio', 'Video', 'Film');
-        foreach ($types as $type) {
-            $typeCriteria = array('s_media_type' => array($type));
-            $formatResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $typeCriteria), 'format');
-            $_records = array();
-            foreach ($formatResult as $format) {
-                $recordCriteria = array('s_format' => array($format['format']));
-                $count = 0;
-                $offset = 0;
-                while ($count == 0) {
-                    $records = $sphinxSearch->select($this->getUser(), $offset, 1000, 'title', 'asc', $recordCriteria);
-                    $_records = array_merge($_records, $records[0]);
-                    $totalFound = $records[1][1]['Value'];
-                    $offset = $offset + 1000;
-                    if ($totalFound < 1000) {
-                        $count++;
-                    }
-                }
-                if ($_records) {
-                    $sumDuration = 0;
-                    $f = str_replace(" ", "_", $format['format']);
-                    foreach ($_records as $rec) {
-                        if ($rec['format'] == $format['format']) {
-                            if ($rec['content_duration']) {
-                                $sumDuration = $sumDuration + $rec['content_duration'];
-                            } elseif ($type != 'Film') {
-                                $sumDuration = $sumDuration + $rec['media_duration'];
-                            }
-                        }
-                    }
-                    $formatInfo[$type][$f] = array('sum_duration' => $sumDuration, 'total' => $format['total']);
-                }
-            }
-        }
-        echo '<pre>';
-        print_r($formatInfo);
-        die;
-        return array('audioResult' => $audioResult);
-    }
-
-    /**
-     * Generate file size calculator report
-     *
-     * @Route("/filesizevideo", name="filesizevideo")
-     * @Method("GET")
-     * @Template("ApplicationFrontBundle:Report:fileSizeVideo.html.php")
-     * @return array
-     */
-    public function fileSizeVideoAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $shpinxInfo = $this->container->getParameter('sphinx_param');
-        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-
-        $videoCriteria = array('s_media_type' => array('Video'));
-        $videoResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $videoCriteria), 'format');
-
-        return array('videoResult' => $videoResult);
-    }
-
-    /**
-     * Generate file size calculator report
      * 
      * @param  string $type
      * 
@@ -526,9 +453,7 @@ class ReportController extends Controller
             $typeFormats["audio"] = $formatInfo['Audio'];
             $typeFormats["video"] = $formatInfo['Video'];
             $typeFormats["film"] = $formatInfo['Film'];
-//        echo '<pre>';
-//        print_r($typeFormats);
-//        die;
+            
             $exportComponent = new ExportReport($this->container);
             $phpExcelObject = $exportComponent->generateFileSizeAssetsReport($typeFormats);
             $response = $exportComponent->outputReport($type, $phpExcelObject, 'file_size_calculator');
