@@ -427,7 +427,6 @@ class ReportController extends Controller
             }
             if ($_records) {
                 $sumDuration = 0;
-                $formatRecordCount = 0;
                 $f = str_replace(" ", "_", $audio['format']);
                 foreach ($_records as $rec) {
                     if($rec['format'] == $audio['format']){                        
@@ -436,10 +435,9 @@ class ReportController extends Controller
                         }else{
                             $sumDuration = $sumDuration + $rec['media_duration'];
                         }
-                        $formatRecordCount ++;
                     }
                 }
-                $format[$f] = array('sum_duration'=> $sumDuration, 'total' => $formatRecordCount);
+                $format[$f] = array('sum_duration'=> $sumDuration, 'total' => $audio['total']);
             }
         }
         echo '<pre>';
