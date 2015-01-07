@@ -439,7 +439,7 @@ class ReportController extends Controller
                         $formatRecordCount ++;
                     }
                 }
-                $format[$f] = ['sum_duration'=> $sumDuration, 'total' => $formatRecordCount];
+                $format[$f] = array('sum_duration'=> $sumDuration, 'total' => $formatRecordCount);
             }
         }
         echo '<pre>';
