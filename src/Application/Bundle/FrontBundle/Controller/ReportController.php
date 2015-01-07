@@ -519,7 +519,7 @@ class ReportController extends Controller
                             }
                         }
                     }
-                    $formatInfo[$type][$f] = array('format'=> $format['format'], 'sum_duration' => $sumDuration, 'total' => $format['total']);
+                    $formatInfo[$type][$f] = array('format'=> $format['format'], 'sum_content_duration' => $sumDuration, 'total' => $format['total']);
                 }
             }
         }
