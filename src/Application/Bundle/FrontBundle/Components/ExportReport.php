@@ -920,19 +920,33 @@ class ExportReport extends ContainerAware
                 $row ++;
             }
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Total File Space");
+            $activeSheet->getStyleByColumnAndRow(0)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "");
+            $activeSheet->getStyleByColumnAndRow(1)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, "");
+            $activeSheet->getStyleByColumnAndRow(2)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "");
+            $activeSheet->getStyleByColumnAndRow(3)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, "");
+            $activeSheet->getStyleByColumnAndRow(4)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, number_format($totalUncompress1, 5));
+            $activeSheet->getStyleByColumnAndRow(5)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, number_format($totalUncompress2, 5));
+            $activeSheet->getStyleByColumnAndRow(6)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, number_format($totalUncompress3, 5));
+            $activeSheet->getStyleByColumnAndRow(7)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, number_format($totalUncompress4, 5));
+            $activeSheet->getStyleByColumnAndRow(8)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, number_format($totalUncompress5, 5));
+            $activeSheet->getStyleByColumnAndRow(9)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, number_format($totalUncompress6, 5));
+            $activeSheet->getStyleByColumnAndRow(10)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, number_format($totalUncompress7, 5));
+            $activeSheet->getStyleByColumnAndRow(11)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, number_format($totalUncompress8, 5));
+            $activeSheet->getStyleByColumnAndRow(12)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, number_format($totalKbps, 5));
+            $activeSheet->getStyleByColumnAndRow(13)->getFont()->setBold(true);
             $row ++;
         }
         return $row;
