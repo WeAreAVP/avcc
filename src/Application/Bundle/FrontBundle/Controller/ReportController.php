@@ -440,7 +440,7 @@ class ReportController extends Controller
      * 
      * @param  string $type
      * 
-     * @Route("/filesizecalculator{type}", name="filesizecalculator_report")
+     * @Route("/filesizecalculator/{type}", name="filesizecalculator_report")
      * @Method("GET")
      * @Template()
      * @return array
@@ -480,7 +480,7 @@ class ReportController extends Controller
      * 
      * @param  string $type
      * 
-     * @Route("/linearfootcalculator{type}", name="linearfootcalculator_report")
+     * @Route("/linearfootcalculator/{type}", name="linearfootcalculator_report")
      * @Method("GET")
      * @Template()
      * @return array
