@@ -519,16 +519,16 @@ class ReportController extends Controller
                             }
                         }
                     }
-                    $formatInfo[$type][$f] = array('sum_duration' => $sumDuration, 'total' => $format['total']);
+                    $formatInfo[$type][$f] = array('format'=> $format['format'], 'sum_duration' => $sumDuration, 'total' => $format['total']);
                 }
             }
         }
         $typeFormats["audio"] = $formatInfo['Audio'];
         $typeFormats["video"] = $formatInfo['Video'];
         $typeFormats["film"] = $formatInfo['Film'];
-        echo '<pre>';
-        print_r($typeFormats);
-        die;
+//        echo '<pre>';
+//        print_r($typeFormats);
+//        die;
         $exportComponent = new ExportReport($this->container);
         $phpExcelObject = $exportComponent->generateFileSizeAssetsReport($typeFormats);
         $response = $exportComponent->outputReport($type, $phpExcelObject, 'file_size_calculator');
