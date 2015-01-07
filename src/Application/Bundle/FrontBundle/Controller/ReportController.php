@@ -440,7 +440,7 @@ class ReportController extends Controller
      * 
      * @param  string $type
      * 
-     * @Route("/filesizecalculator", name="filesizecalculator")
+     * @Route("/filesizecalculator", name="filesizecalculator_report")
      * @Method("GET")
      * @Template()
      * @return array
