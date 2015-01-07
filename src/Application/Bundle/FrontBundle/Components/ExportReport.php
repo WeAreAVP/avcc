@@ -817,7 +817,7 @@ class ExportReport extends ContainerAware
                 ->setSubject("File Size Calculator for Digitized Assets")
                 ->setDescription("File Size Calculator for Digitized Assets");
         $activeSheet = $phpExcelObject->setActiveSheetIndex(0);
-        $phpExcelObject->getActiveSheet()->setTitle('File Size Calculator for Digitized Assets');
+        $phpExcelObject->getActiveSheet()->setTitle('File Size Calculator');
         $row = 2;
 
         $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "File Size Calculator for Digitized Assets");
