@@ -822,7 +822,7 @@ class ExportReport extends ContainerAware
 
         $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "File Size Calculator for Digitized Assets");
         $activeSheet->getColumnDimensionByColumn(1)->setWidth(20);
-        $activeSheet->getStyleByColumnAndRow(1)->getFont()->setBold(true);
+        $activeSheet->getStyleByColumnAndRow(1, $row)->getFont()->setBold(true);
         $row++;
         $exportFields = new ExportFields();
         $columns = $exportFields->getFileSizeCalculatorColumns();
