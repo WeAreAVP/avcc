@@ -450,9 +450,11 @@ class ReportController extends Controller
         if (!in_array($type, array('xlsx'))) {
             throw $this->createNotFoundException('Invalid report type');
         }
+        
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        
         $audioCriteria = array('s_media_type' => array('Audio'));
         $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $audioCriteria), 'format');
         
@@ -465,9 +467,45 @@ class ReportController extends Controller
         $typeFormats["audio"] = $audioResult;
         $typeFormats["video"] = $videoResult;
         $typeFormats["film"] = $filmResult;
+        
         $exportComponent = new ExportReport($this->container);
         $phpExcelObject = $exportComponent->generateFileSizeAssetsReport($typeFormats);
         $response = $exportComponent->outputReport($type, $phpExcelObject, 'file_size_calculator');
+        
+        return $response;
+    }    
+    
+    /**
+     * Generate linear foot calculator report
+     * 
+     * @param  string $type
+     * 
+     * @Route("/linearfootcalculator{type}", name="linearfootcalculator_report")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function linearFootCalculatorAction($type)
+    {
+        if (!in_array($type, array('xlsx'))) {
+            throw $this->createNotFoundException('Invalid report type');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        
+        $audioCriteria = array('s_media_type' => array('Audio'));
+        $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $audioCriteria), 'format');
+        
+        $videoCriteria = array('s_media_type' => array('Video'));
+        $videoResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $videoCriteria), 'format');
+        
+        $typeFormats["audio"] = $audioResult;
+        $typeFormats["video"] = $videoResult;
+        
+        $exportComponent = new ExportReport($this->container);
+        $phpExcelObject = $exportComponent->generateLinearFootReport($typeFormats);
+        $response = $exportComponent->outputReport($type, $phpExcelObject, 'linear_foot_calculator');
         
         return $response;
     }

@@ -922,13 +922,9 @@ class ExportReport extends ContainerAware
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Total File Space");
             $activeSheet->getStyleByColumnAndRow(0)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "");
-            $activeSheet->getStyleByColumnAndRow(1)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, "");
-            $activeSheet->getStyleByColumnAndRow(2)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "");
-            $activeSheet->getStyleByColumnAndRow(3)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, "");
-            $activeSheet->getStyleByColumnAndRow(4)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, number_format($totalUncompress1, 5));
             $activeSheet->getStyleByColumnAndRow(5)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, number_format($totalUncompress2, 5));
@@ -1091,5 +1087,90 @@ class ExportReport extends ContainerAware
             $row ++;
         }
         return $row;
+    }
+    
+    public function generateLinearFootReport($records)
+    {
+        $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
+        $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
+                ->setTitle("AVCC - Report")
+                ->setSubject("Linear Foot Calculator")
+                ->setDescription("Linear Foot Calculator");
+        $activeSheet = $phpExcelObject->setActiveSheetIndex(0);
+        $phpExcelObject->getActiveSheet()->setTitle('LinearFootCalculator');
+        $row = 2;
+
+        $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "Linear Foot Calculator");
+        $activeSheet->getColumnDimensionByColumn(1)->setWidth(20);
+        $activeSheet->getStyleByColumnAndRow(1)->getFont()->setBold(true);
+        $row++;
+        $exportFields = new ExportFields();
+        $columns = $exportFields->getLinearFootCalculatorColumns();
+        if ($records['audio']) {
+            $this->prepareHeaderLinearFootCalculator($activeSheet, $row, $columns);
+            $row++;
+            $row = $this->prepareLinearFootCalculatorAudioRecords($activeSheet, $row, $records['audio']);
+            
+        }
+        $row = $row + 2;
+        if ($records['video']) {
+            $this->prepareHeaderLinearFootCalculator($activeSheet, $row, $columns);
+            $row++;
+            $row = $this->prepareLinearFootCalculatorVideoRecords($activeSheet, $row, $records['video']);
+            
+        }        
+        $phpExcelObject->setActiveSheetIndex(0);
+
+        return $phpExcelObject;
+    }
+    
+    /**
+     * Create the Header for report.
+     *
+     * @param  PHPExcel_Worksheet $activeSheet
+     * @param  Integer            $row
+     * @return boolean
+     */
+    private function prepareHeaderLinearFootCalculator($activeSheet, $row, $columns)
+    {
+        foreach ($columns as $column => $columnName) {
+            $activeSheet->setCellValueExplicitByColumnAndRow($column, $row, $columnName);
+            $activeSheet->getColumnDimensionByColumn($column)->setWidth(20);
+            $activeSheet->getStyleByColumnAndRow($column)->getFont()->setBold(true);
+        }
+
+        return TRUE;
+    }
+
+    private function prepareLinearFootCalculatorAudioRecords($activeSheet, $row, $records)
+    {
+        $totalLinearCount = 0.00;
+        if ($records) {
+            foreach ($records as $audio) {
+                $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Audio");
+                $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $audio['format']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $audio['sum_content_duration']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $audio['total']);
+                $linearCount = $this->calculateLinearFeet($audio['total'], $audio['sum_content_duration']);
+                $totalLinearCount += $linearCount;
+                $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $linearCount);
+                
+                $row ++;
+            }
+            $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "");
+            $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "");
+            $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, "");
+            $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "Total File Space");
+            $activeSheet->getStyleByColumnAndRow(3)->getFont()->setBold(true);
+            $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, number_format($totalLinearCount, 5));
+            $activeSheet->getStyleByColumnAndRow(4)->getFont()->setBold(true);
+            $row ++;
+        }
+        return $row;
+    }
+    
+    private function calculateLinearFeet($totalCount, $width)
+    {
+        return number_format(($totalCount * $width) / 12, 5);
     }
 }

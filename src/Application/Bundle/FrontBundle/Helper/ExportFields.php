@@ -150,6 +150,8 @@ class ExportFields
             'MPEG4 2.0Mbps',
         )
     );
+    
+    private $linearFootCalculatorColumns = array('Media Type', 'Format', 'Width', 'Total Count', 'Linear Feet');
 
     /**
      * Return array of columns for csv or xlsx tempate.
@@ -200,5 +202,16 @@ class ExportFields
     {
         return $this->fileSizeCalculatorColumns;
     }
+    
+    /**
+     * Return array of linear foot calculator columns for csv or xlsx tempate.
+     *
+     * @return array
+     */
+    public function getLinearFootCalculatorColumns()
+    {
+        return $this->linearFootCalculatorColumns;
+    }
+    
 
 }

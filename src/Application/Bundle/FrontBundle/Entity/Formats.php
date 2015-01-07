@@ -101,8 +101,8 @@ class Formats
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
-    private $reelDiameter;
-
+    private $reelDiameter;    
+    
     /**
      * Formats constructor
      */
@@ -281,7 +281,7 @@ class Formats
     /**
      * Get score
      *
-     * @return real number
+     * @return foat score
      */
     public function getScore()
     {
@@ -293,11 +293,11 @@ class Formats
      *
      * @param float $score
      *
-     * @return \Application\Bundle\FrontBundle\Entity\Colors
+     * @return float score
      */
     public function setScore($score)
     {
         $this->score = $score;
     }
-
+    
 }

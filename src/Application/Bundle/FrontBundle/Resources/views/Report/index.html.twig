@@ -15,7 +15,7 @@
             <div class="frames">
                 <div id="_xls" class="frame" style="display: block;">
                     <div class="row">
-                        <div class="span5">
+                        <div class="span4">
                             <div class="listview small">
                                 <a href="{{ path('all_formats', { 'type': 'xlsx' }) }}" class="list">
                                     <div class="list-content">
@@ -52,7 +52,7 @@
                                 </a>                                    
                             </div>
                         </div>
-                        <div class="span5">
+                        <div class="span4">
                             <div class="listview small">                                
                                 <a href="{{ path('manifest') }}" class="list">
                                     <div class="list-content">
@@ -89,6 +89,21 @@
                                 </a>    
                             </div>
                         </div>
+                         <div class="span4">
+                            <div class="listview small">                                                                                                
+                                <a href="{{ path('linearfootcalculator_report_report', { 'type': 'xlsx' }) }}" class="list">
+                                    <div class="list-content">
+                                        <img src="/images/excel2013icon.png" class="icon">
+                                        <div class="data">
+                                            <span class="list-title">Linear Foot Calculator</span>
+                                            <div class="rating small no-margin">
+                                                Downlad as XLSX
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>    
+                            </div>
+                        </div>             
                     </div>
                 </div>
                 <div id="_quantitaive" class="frame" style="display: block;">
