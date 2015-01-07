@@ -830,21 +830,18 @@ class ExportReport extends ContainerAware
             $this->prepareHeaderFileSizeCalculator($activeSheet, $row, $columns['audio']);
             $row++;
             $row = $this->prepareFileSizeCalculatorAudioRecords($activeSheet, $row, $records['audio']);
-            
         }
         $row = $row + 5;
         if ($records['video']) {
             $this->prepareHeaderFileSizeCalculator($activeSheet, $row, $columns['video']);
             $row++;
             $row = $this->prepareFileSizeCalculatorVideoRecords($activeSheet, $row, $records['video']);
-            
         }
         $row = $row + 5;
         if ($records['film']) {
             $this->prepareHeaderFileSizeCalculator($activeSheet, $row, $columns['film']);
             $row++;
             $row = $this->prepareFileSizeCalculatorFilmRecords($activeSheet, $row, $records['film']);
-            
         }
         $phpExcelObject->setActiveSheetIndex(0);
 
@@ -863,7 +860,7 @@ class ExportReport extends ContainerAware
         foreach ($columns as $column => $columnName) {
             $activeSheet->setCellValueExplicitByColumnAndRow($column, $row, $columnName);
             $activeSheet->getColumnDimensionByColumn($column)->setWidth(20);
-            $activeSheet->getStyleByColumnAndRow($column)->getFont()->setBold(true);
+            $activeSheet->getStyleByColumnAndRow($column, $row)->getFont()->setBold(true);
         }
 
         return TRUE;
@@ -920,29 +917,29 @@ class ExportReport extends ContainerAware
                 $row ++;
             }
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Total File Space");
-            $activeSheet->getStyleByColumnAndRow(0)->getFont()->setBold(true);
+            $activeSheet->getStyleByColumnAndRow(0, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, number_format($totalUncompress1, 5));
-            $activeSheet->getStyleByColumnAndRow(5)->getFont()->setBold(true);
+            $activeSheet->getStyleByColumnAndRow(5, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, number_format($totalUncompress2, 5));
-            $activeSheet->getStyleByColumnAndRow(6)->getFont()->setBold(true);
+            $activeSheet->getStyleByColumnAndRow(6, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, number_format($totalUncompress3, 5));
-            $activeSheet->getStyleByColumnAndRow(7)->getFont()->setBold(true);
+            $activeSheet->getStyleByColumnAndRow(7, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, number_format($totalUncompress4, 5));
-            $activeSheet->getStyleByColumnAndRow(8)->getFont()->setBold(true);
+            $activeSheet->getStyleByColumnAndRow(8, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, number_format($totalUncompress5, 5));
-            $activeSheet->getStyleByColumnAndRow(9)->getFont()->setBold(true);
+            $activeSheet->getStyleByColumnAndRow(9, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, number_format($totalUncompress6, 5));
-            $activeSheet->getStyleByColumnAndRow(10)->getFont()->setBold(true);
+            $activeSheet->getStyleByColumnAndRow(10, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, number_format($totalUncompress7, 5));
-            $activeSheet->getStyleByColumnAndRow(11)->getFont()->setBold(true);
+            $activeSheet->getStyleByColumnAndRow(11, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, number_format($totalUncompress8, 5));
-            $activeSheet->getStyleByColumnAndRow(12)->getFont()->setBold(true);
+            $activeSheet->getStyleByColumnAndRow(12, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, number_format($totalKbps, 5));
-            $activeSheet->getStyleByColumnAndRow(13)->getFont()->setBold(true);
+            $activeSheet->getStyleByColumnAndRow(13, $row)->getFont()->setBold(true);
             $row ++;
         }
         return $row;
@@ -1004,24 +1001,34 @@ class ExportReport extends ContainerAware
                 $row ++;
             }
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Total File Space");
+            $activeSheet->getStyleByColumnAndRow(0, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, number_format($totalVUncompress1, 5));
+            $activeSheet->getStyleByColumnAndRow(5, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, number_format($totalVUncompress2, 5));
+            $activeSheet->getStyleByColumnAndRow(6, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, number_format($totalLossless, 5));
+            $activeSheet->getStyleByColumnAndRow(7, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, number_format($totalFFV1, 5));
+            $activeSheet->getStyleByColumnAndRow(8, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, number_format($totalMPEG2, 5));
+            $activeSheet->getStyleByColumnAndRow(9, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, number_format($totalProRes, 5));
+            $activeSheet->getStyleByColumnAndRow(10, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, number_format($totalDV25, 5));
+            $activeSheet->getStyleByColumnAndRow(11, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, number_format($totalMPEG45, 5));
+            $activeSheet->getStyleByColumnAndRow(12, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, number_format($totalMPEG42, 5));
+            $activeSheet->getStyleByColumnAndRow(13, $row)->getFont()->setBold(true);
             $row ++;
         }
         return $row;
     }
-    
+
     private function prepareFileSizeCalculatorFilmRecords($activeSheet, $row, $records)
     {
         $i = 1;
@@ -1040,55 +1047,63 @@ class ExportReport extends ContainerAware
                 $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $film['total']);
                 $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $film['sum_content_duration']);
                 $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, number_format($film['sum_content_duration'] / $film['total'], 2));
-                
+
                 $k4Uncompressed = $this->calculateFileSize($film['sum_content_duration'], 69905);
                 $total4kUnCommpressed += $k4Uncompressed;
                 $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, $k4Uncompressed);
-                
+
                 $k4Lossless = $this->calculateFileSize($film['sum_content_duration'], 34952.5);
                 $total4kLossLess += $k4Lossless;
                 $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $k4Lossless);
-                
+
                 $k2Uncompressed = $this->calculateFileSize($film['sum_content_duration'], 17500);
                 $total2kUnCommpressed += $k2Uncompressed;
                 $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $k2Uncompressed);
-                
+
                 $k2Lossless = $this->calculateFileSize($film['sum_content_duration'], 8750);
                 $total2KLossless += $k2Lossless;
                 $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, $k2Lossless);
-                
+
                 $AVCIntra100 = $this->calculateFileSize($film['sum_content_duration'], 943);
                 $totalAVCIntra100 += $AVCIntra100;
                 $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $AVCIntra100);
-                
+
                 $MPEG45 = $this->calculateFileSize($film['sum_content_duration'], 36);
                 $totalMPEG45 += $MPEG45;
-                $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $MPEG45);
-                
+                $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, $MPEG45);
+
                 $MPEG42 = $this->calculateFileSize($film['sum_content_duration'], 17.1);
                 $totalMPEG42 += $MPEG42;
-                $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $MPEG42);
-                
+                $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $MPEG42);
+
                 $i++;
                 $row ++;
             }
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Total File Space");
+            $activeSheet->getStyleByColumnAndRow(0, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, number_format($total4kUnCommpressed, 5));
+            $activeSheet->getStyleByColumnAndRow(5, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, number_format($total4kLossLess, 5));
+            $activeSheet->getStyleByColumnAndRow(6, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, number_format($total2kUnCommpressed, 5));
+            $activeSheet->getStyleByColumnAndRow(7, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, number_format($total2KLossless, 5));
+            $activeSheet->getStyleByColumnAndRow(8, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, number_format($totalAVCIntra100, 5));
-            $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, number_format($totalMPEG45, 5));
-            $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, number_format($totalMPEG42, 5));
+            $activeSheet->getStyleByColumnAndRow(9, $row)->getFont()->setBold(true);
+            $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, number_format($totalMPEG45, 5));
+            $activeSheet->getStyleByColumnAndRow(10, $row)->getFont()->setBold(true);
+            $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, number_format($totalMPEG42, 5));
+            $activeSheet->getStyleByColumnAndRow(11, $row)->getFont()->setBold(true);
             $row ++;
         }
         return $row;
     }
-    
+
     public function generateLinearFootReport($records)
     {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
@@ -1102,28 +1117,20 @@ class ExportReport extends ContainerAware
 
         $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "Linear Foot Calculator");
         $activeSheet->getColumnDimensionByColumn(1)->setWidth(20);
-        $activeSheet->getStyleByColumnAndRow(1)->getFont()->setBold(true);
+        $activeSheet->getStyleByColumnAndRow(1, $row)->getFont()->setBold(true);
         $row++;
         $exportFields = new ExportFields();
         $columns = $exportFields->getLinearFootCalculatorColumns();
         if ($records['audio']) {
             $this->prepareHeaderLinearFootCalculator($activeSheet, $row, $columns);
             $row++;
-            $row = $this->prepareLinearFootCalculatorAudioRecords($activeSheet, $row, $records['audio']);
-            
+            $row = $this->prepareLinearFootCalculatorRecords($activeSheet, $row, $records);
         }
-        $row = $row + 2;
-        if ($records['video']) {
-            $this->prepareHeaderLinearFootCalculator($activeSheet, $row, $columns);
-            $row++;
-            $row = $this->prepareLinearFootCalculatorVideoRecords($activeSheet, $row, $records['video']);
-            
-        }        
         $phpExcelObject->setActiveSheetIndex(0);
 
         return $phpExcelObject;
     }
-    
+
     /**
      * Create the Header for report.
      *
@@ -1136,41 +1143,75 @@ class ExportReport extends ContainerAware
         foreach ($columns as $column => $columnName) {
             $activeSheet->setCellValueExplicitByColumnAndRow($column, $row, $columnName);
             $activeSheet->getColumnDimensionByColumn($column)->setWidth(20);
-            $activeSheet->getStyleByColumnAndRow($column)->getFont()->setBold(true);
+            $activeSheet->getStyleByColumnAndRow($column, $row)->getFont()->setBold(true);
         }
 
         return TRUE;
     }
 
-    private function prepareLinearFootCalculatorAudioRecords($activeSheet, $row, $records)
+    private function prepareLinearFootCalculatorRecords($activeSheet, $row, $records)
     {
+        $totalLinearAudioCount = 0.00;
+        $totalLinearVideoCount = 0.00;
         $totalLinearCount = 0.00;
         if ($records) {
-            foreach ($records as $audio) {
-                $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Audio");
-                $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $audio['format']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $audio['sum_content_duration']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $audio['total']);
-                $linearCount = $this->calculateLinearFeet($audio['total'], $audio['sum_content_duration']);
-                $totalLinearCount += $linearCount;
-                $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $linearCount);
-                
+            if ($records['audio']) {
+                foreach ($records['audio'] as $audio) {
+                    $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Audio");
+                    $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $audio['format']);
+                    $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $audio['sum_content_duration']);
+                    $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $audio['total']);
+                    $linearAudioCount = $this->calculateLinearFeet($audio['total'], $audio['sum_content_duration']);
+                    $totalLinearAudioCount += $linearAudioCount;
+                    $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $linearAudioCount);
+
+                    $row ++;
+                }
+                $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "");
+                $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "");
+                $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, "");
+                $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "Total Linear Feet Audio:");
+                $activeSheet->getStyleByColumnAndRow(3, $row)->getFont()->setBold(true);
+                $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, number_format($totalLinearAudioCount, 5));
+                $activeSheet->getStyleByColumnAndRow(4, $row)->getFont()->setBold(true);
                 $row ++;
             }
+            if ($records['video']) {
+                foreach ($records['video'] as $video) {
+                    $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Video");
+                    $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $video['format']);
+                    $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $video['sum_content_duration']);
+                    $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $video['total']);
+                    $linearVideoCount = $this->calculateLinearFeet($video['total'], $video['sum_content_duration']);
+                    $totalLinearVideoCount += $linearVideoCount;
+                    $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $linearVideoCount);
+
+                    $row ++;
+                }
+                $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "");
+                $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "");
+                $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, "");
+                $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "Total Linear Feet Video:");
+                $activeSheet->getStyleByColumnAndRow(3, $row)->getFont()->setBold(true);
+                $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, number_format($totalLinearVideoCount, 5));
+                $activeSheet->getStyleByColumnAndRow(4, $row)->getFont()->setBold(true);
+                $row++;
+            }
+            $totalLinearCount = $totalLinearAudioCount + $totalLinearVideoCount;
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, "");
-            $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "Total File Space");
-            $activeSheet->getStyleByColumnAndRow(3)->getFont()->setBold(true);
+            $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "Grand Total:");
+            $activeSheet->getStyleByColumnAndRow(3, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, number_format($totalLinearCount, 5));
-            $activeSheet->getStyleByColumnAndRow(4)->getFont()->setBold(true);
-            $row ++;
+            $activeSheet->getStyleByColumnAndRow(4, $row)->getFont()->setBold(true);
         }
         return $row;
     }
-    
+
     private function calculateLinearFeet($totalCount, $width)
     {
         return number_format(($totalCount * $width) / 12, 5);
     }
+
 }
