@@ -411,7 +411,7 @@ class ReportController extends Controller
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
         $audioCriteria = array('s_media_type' => array('Audio'));
         $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $audioCriteria), 'format');
-        $_records = null;
+        $_records = array();
         foreach ($audioResult as $audio) {
             $recordCriteria = array('s_format' => array($audio['format']));
             $count = 0;
