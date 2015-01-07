@@ -248,7 +248,7 @@ class ReportController extends Controller
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
         $criteria = array('s_format' => array('"1/4 Inch Open Reel Audio"', '"1/2 Inch Open Reel Audio"', '"1/2 Inch Open Reel Audio - Digital"', '"1 Inch Open Reel Audio"', '"2 Inch Open Reel Audio"'));
         $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('reel_diameter', $this->getUser(), $criteria), 'reel_diameter');
-        
+
         $highChart = array();
         foreach ($result as $index => $reelDiameter) {
             $highChart[] = array($reelDiameter['reel_diameter'], (int) $reelDiameter['total']);
@@ -256,7 +256,7 @@ class ReportController extends Controller
 
         return array('reelDiameter' => json_encode($highChart));
     }
-    
+
     /**
      * Generate quantitative report
      *
@@ -279,7 +279,7 @@ class ReportController extends Controller
 
         return array('reelCore' => json_encode($highChart));
     }
-    
+
     /**
      * Generate quantitative report
      *
@@ -302,7 +302,7 @@ class ReportController extends Controller
 
         return array('printType' => json_encode($highChart));
     }
-    
+
     /**
      * Generate quantitative report
      *
@@ -325,7 +325,7 @@ class ReportController extends Controller
 
         return array('color' => json_encode($highChart));
     }
-    
+
     /**
      * Generate quantitative report
      *
@@ -348,7 +348,7 @@ class ReportController extends Controller
 
         return array('sound' => json_encode($highChart));
     }
-    
+
     /**
      * Generate quantitative report
      *
@@ -371,7 +371,7 @@ class ReportController extends Controller
 
         return array('acid' => json_encode($highChart));
     }
-    
+
     /**
      * Generate quantitative report
      *
@@ -387,7 +387,7 @@ class ReportController extends Controller
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
         $criteria = array('s_format' => array('"LP"', '"45"', '"78"', '"Lacquer Disc"', '"Transcription Disc"'));
         $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('disk_diameter', $this->getUser(), $criteria), 'disk_diameter');
-        
+
         $highChart = array();
         foreach ($result as $index => $diskDiameter) {
             $highChart[] = array($diskDiameter['disk_diameter'], (int) $diskDiameter['total']);
@@ -395,7 +395,7 @@ class ReportController extends Controller
 
         return array('diskDiameter' => json_encode($highChart));
     }
-    
+
     /**
      * Generate file size calculator report
      *
@@ -411,10 +411,27 @@ class ReportController extends Controller
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
         $audioCriteria = array('s_media_type' => array('Audio'));
         $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $audioCriteria), 'format');
-        
+        $_records = null;
+        foreach ($audioResult as $audio) {
+            $recordCriteria = array('s_format' => array($audio['format']));
+            $count = 0;
+            $offset = 0;
+            while ($count == 0) {
+                $records = $sphinxSearch->select($this->getUser(), $offset, 20, 'title', 'asc', $recordCriteria);
+                $_records = array_merge($_records, $records[0]);
+                $totalFound = $records[1][1]['Value'];                
+                $offset = $offset + 20;
+                if ($totalFound < 20) {
+                    $count++;
+                }
+            }            
+        }
+        echo '<pre>';
+        print_r($_records);
+        die;
         return array('audioResult' => $audioResult);
     }
-    
+
     /**
      * Generate file size calculator report
      *
@@ -428,10 +445,10 @@ class ReportController extends Controller
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        
+
         $videoCriteria = array('s_media_type' => array('Video'));
         $videoResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $videoCriteria), 'format');
-        
+
         return array('videoResult' => $videoResult);
     }
 
@@ -450,31 +467,31 @@ class ReportController extends Controller
         if (!in_array($type, array('xlsx'))) {
             throw $this->createNotFoundException('Invalid report type');
         }
-        
+
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        
+
         $audioCriteria = array('s_media_type' => array('Audio'));
         $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $audioCriteria), 'format');
-        
+
         $videoCriteria = array('s_media_type' => array('Video'));
         $videoResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $videoCriteria), 'format');
-        
+
         $filmCriteria = array('s_media_type' => array('Film'));
         $filmResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $filmCriteria), 'format');
-        
+
         $typeFormats["audio"] = $audioResult;
         $typeFormats["video"] = $videoResult;
         $typeFormats["film"] = $filmResult;
-        
+
         $exportComponent = new ExportReport($this->container);
         $phpExcelObject = $exportComponent->generateFileSizeAssetsReport($typeFormats);
         $response = $exportComponent->outputReport($type, $phpExcelObject, 'file_size_calculator');
-        
+
         return $response;
-    }    
-    
+    }
+
     /**
      * Generate linear foot calculator report
      * 
@@ -493,20 +510,21 @@ class ReportController extends Controller
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        
+
         $audioCriteria = array('s_media_type' => array('Audio'));
         $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $audioCriteria), 'format');
-        
+
         $videoCriteria = array('s_media_type' => array('Video'));
         $videoResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $videoCriteria), 'format');
-        
+
         $typeFormats["audio"] = $audioResult;
         $typeFormats["video"] = $videoResult;
-        
+
         $exportComponent = new ExportReport($this->container);
         $phpExcelObject = $exportComponent->generateLinearFootReport($typeFormats);
         $response = $exportComponent->outputReport($type, $phpExcelObject, 'linear_foot_calculator');
-        
+
         return $response;
     }
+
 }
