@@ -830,6 +830,13 @@ class ExportReport extends ContainerAware
             $this->prepareHeaderFileSizeCalculator($activeSheet, $row, $columns['audio']);
             $row++;
             $this->prepareFileSizeCalculatorAudioRecords($activeSheet, $row, $records['audio']);
+            $row + 5;
+        }
+        if ($records['video']) {
+            $this->prepareHeaderFileSizeCalculator($activeSheet, $row, $columns['video']);
+            $row++;
+            $this->prepareFileSizeCalculatorVideoRecords($activeSheet, $row, $records['video']);
+            $row + 5;
         }
 
         $phpExcelObject->setActiveSheetIndex(0);
@@ -870,61 +877,128 @@ class ExportReport extends ContainerAware
         if ($records) {
             foreach ($records as $audio) {
                 if ($i == 1)
-                    $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "Audio");
-                $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $audio['format']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $audio['total']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $audio['sum_content_duration']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, number_format($audio['sum_content_duration'] / $audio['total'], 2));
+                    $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Audio");
+                $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $audio['format']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $audio['total']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $audio['sum_content_duration']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, number_format($audio['sum_content_duration'] / $audio['total'], 2));
                 $uncompress1 = $this->calculateFileSize($audio['sum_content_duration'], 34.56);
                 $totalUncompress1 += $uncompress1;
-                $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $uncompress1);
+                $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, $uncompress1);
                 $uncompress2 = $this->calculateFileSize($audio['sum_content_duration'], 17.28);
                 $totalUncompress2 += $uncompress2;
-                $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $uncompress2);
+                $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $uncompress2);
                 $uncompress3 = $this->calculateFileSize($audio['sum_content_duration'], 11.52);
                 $totalUncompress3 += $uncompress3;
-                $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, $uncompress3);
+                $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $uncompress3);
                 $uncompress4 = $this->calculateFileSize($audio['sum_content_duration'], 10.584);
                 $totalUncompress4 += $uncompress4;
-                $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $uncompress4);
+                $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, $uncompress4);
                 $uncompress5 = $this->calculateFileSize($audio['sum_content_duration'], 17.28);
                 $totalUncompress5 += $uncompress5;
-                $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, $uncompress5);
+                $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $uncompress5);
                 $uncompress6 = $this->calculateFileSize($audio['sum_content_duration'], 8.64);
                 $totalUncompress6 += $uncompress6;
-                $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $uncompress6);
+                $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, $uncompress6);
                 $uncompress7 = $this->calculateFileSize($audio['sum_content_duration'], 5.75);
                 $totalUncompress7 += $uncompress7;
-                $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $uncompress7);
+                $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $uncompress7);
                 $uncompress8 = $this->calculateFileSize($audio['sum_content_duration'], 5.292);
                 $totalUncompress8 += $uncompress8;
-                $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $uncompress8);
+                $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $uncompress8);
                 $kbps = $this->calculateFileSize($audio['sum_content_duration'], 1.92);
                 $totalKbps += $kbps;
-                $activeSheet->setCellValueExplicitByColumnAndRow(14, $row, $kbps);
+                $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $kbps);
                 $i++;
                 $row ++;
             }
-            $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "Total File Space");
+            $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Total File Space");
+            $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, "");
-            $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, "");
-            $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $totalUncompress1);
-            $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $totalUncompress2);
-            $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, $totalUncompress3);
-            $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $totalUncompress4);
-            $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, $totalUncompress5);
-            $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $totalUncompress6);
-            $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $totalUncompress7);
-            $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $totalUncompress8);
-            $activeSheet->setCellValueExplicitByColumnAndRow(14, $row, $totalKbps);
+            $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, number_format($totalUncompress1, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, number_format($totalUncompress2, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, number_format($totalUncompress3, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, number_format($totalUncompress4, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, number_format($totalUncompress5, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, number_format($totalUncompress6, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, number_format($totalUncompress7, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, number_format($totalUncompress8, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, number_format($totalKbps, 5));
         }
     }
 
     private function calculateFileSize($totalDuration, $value)
     {
         return number_format(($totalDuration * $value) / 1024 / 1024, 5);
+    }
+
+    private function prepareFileSizeCalculatorVideoRecords($activeSheet, $row, $records)
+    {
+        $i = 1;
+        $totalVUncompress1 = 0.00;
+        $totalVUncompress2 = 0.00;
+        $totalLossless = 0.00;
+        $totalFFV1 = 0.00;
+        $totalMPEG2 = 0.00;
+        $totalProRes = 0.00;
+        $totalDV25 = 0.00;
+        $totalMPEG45 = 0.00;
+        $totalMPEG42 = 0.00;
+        if ($records) {
+            foreach ($records as $video) {
+                if ($i == 1)
+                    $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Video");
+                $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $video['format']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $video['total']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $video['sum_content_duration']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, number_format($video['sum_content_duration'] / $video['total'], 2));
+                $VUncompress1 = $this->calculateFileSize($video['sum_content_duration'], 34.56);
+                $totalVUncompress1 += $VUncompress1;
+                $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, $VUncompress1);
+                $VUncompress2 = $this->calculateFileSize($video['sum_content_duration'], 17.28);
+                $totalVUncompress2 += $VUncompress2;
+                $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $VUncompress2);
+                $Lossless = $this->calculateFileSize($video['sum_content_duration'], 11.52);
+                $totalLossless += $Lossless;
+                $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $Lossless);
+                $FFV1 = $this->calculateFileSize($video['sum_content_duration'], 10.584);
+                $totalFFV1 += $FFV1;
+                $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, $FFV1);
+                $MPEG2 = $this->calculateFileSize($video['sum_content_duration'], 17.28);
+                $totalMPEG2 += $MPEG2;
+                $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $MPEG2);
+                $ProRes = $this->calculateFileSize($video['sum_content_duration'], 8.64);
+                $totalProRes += $ProRes;
+                $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, $ProRes);
+                $DV25 = $this->calculateFileSize($video['sum_content_duration'], 5.75);
+                $totalDV25 += $DV25;
+                $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $DV25);
+                $MPEG45 = $this->calculateFileSize($video['sum_content_duration'], 5.292);
+                $totalMPEG45 += $MPEG45;
+                $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $MPEG45);
+                $MPEG42 = $this->calculateFileSize($video['sum_content_duration'], 1.92);
+                $totalMPEG42 += $MPEG42;
+                $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $MPEG42);
+                $i++;
+                $row ++;
+            }
+            $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Total File Space");
+            $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "");
+            $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, "");
+            $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "");
+            $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, "");
+            $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, number_format($totalVUncompress1, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, number_format($totalVUncompress2, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, number_format($totalLossless, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, number_format($totalFFV1, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, number_format($totalMPEG2, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, number_format($totalProRes, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, number_format($totalDV25, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, number_format($totalMPEG45, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, number_format($totalMPEG42, 5));
+        }
     }
 
 }
