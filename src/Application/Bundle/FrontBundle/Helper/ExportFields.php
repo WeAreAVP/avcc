@@ -4,6 +4,7 @@ namespace Application\Bundle\FrontBundle\Helper;
 
 class ExportFields
 {
+
     private $columns = array(
         'Project_Name',
         'Collection_Name',
@@ -100,7 +101,41 @@ class ExportFields
     );
     private $manifestColumns = array('Unique ID', 'Institution', 'Collection Name', 'Format', 'Print Type',
         "Reel Diameter\nDisc Diameter\nCassette Size", 'Title', 'Approximate Duration');
-    private $prioritizationCols = array('Project_Name', 'Collection_Name', 'Title','Unique_ID', 'Total Score');
+    private $prioritizationCols = array('Project_Name', 'Collection_Name', 'Title', 'Unique_ID', 'Total Score');
+    private $fileSizeCalculatorColumns = array(
+        'audio' => array(
+            'Media Type',
+            'Format',
+            'Count',
+            'Total Duration',
+            'Average Duration',
+            '96/24 Uncompressed WAV Stereo',
+            '48/24 Uncompressed WAV Stereo',
+            '48/16 Uncompressed WAV Stereo',
+            '44.1/16 Uncompressed WAV Stereo',
+            '96/24 Uncompressed WAV Mono',
+            '48/24 Uncompressed WAV Mono',
+            '48/16 Uncompressed WAV Mono',
+            '44.1/16 Uncompressed WAV Mono',
+            '256Kbps MP3',
+        ),
+        'video' => array(
+            'Media Type',
+            'Format',
+            'Count',
+            'Total Duration',
+            'Average Duration',
+            'Uncompressed 10-bit .mov HD',
+            'Uncompressed 10-bit .mov SD',
+            'Lossless compression 10-bit JP2k',
+            'FFV1 10-bit',
+            'MPEG2 8-bit',
+            'ProRes 422',
+            'DV25',
+            'MPEG4 5.0Mbps',
+            'MPEG4 2.0Mbps',
+        )
+    );
 
     /**
      * Return array of columns for csv or xlsx tempate.
@@ -141,4 +176,15 @@ class ExportFields
     {
         return $this->mergeColumns;
     }
+
+    /**
+     * Return array of file size calculator columns for csv or xlsx tempate.
+     *
+     * @return array
+     */
+    public function getFileSizeCalculatorColumns()
+    {
+        return $this->fileSizeCalculatorColumns;
+    }
+
 }

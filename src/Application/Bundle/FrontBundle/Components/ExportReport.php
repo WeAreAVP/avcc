@@ -809,4 +809,122 @@ class ExportReport extends ContainerAware
         return TRUE;
     }
 
+    public function generateFileSizeAssetsReport($records)
+    {
+        $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
+        $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
+                ->setTitle("AVCC - Report")
+                ->setSubject("File Size Calculator for Digitized Assets")
+                ->setDescription("File Size Calculator for Digitized Assets");
+        $activeSheet = $phpExcelObject->setActiveSheetIndex(0);
+        $phpExcelObject->getActiveSheet()->setTitle('File Size Calculator for Digitized Assets');
+        $row = 2;
+
+        $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "File Size Calculator for Digitized Assets");
+        $activeSheet->getColumnDimensionByColumn(1)->setWidth(20);
+        $activeSheet->getStyleByColumnAndRow(1)->getFont()->setBold(true);
+        $row++;
+        $exportFields = new ExportFields();
+        $columns = $exportFields->getFileSizeCalculatorColumns();
+        if ($records['audio']) {
+            $this->prepareHeaderFileSizeCalculator($activeSheet, $row, $columns['audio']);
+            $row++;
+            $this->prepareFileSizeCalculatorAudioRecords($activeSheet, $row, $records['audio']);
+        }
+
+        $phpExcelObject->setActiveSheetIndex(0);
+
+        return $phpExcelObject;
+    }
+
+    /**
+     * Create the Header for report.
+     *
+     * @param  PHPExcel_Worksheet $activeSheet
+     * @param  Integer            $row
+     * @return boolean
+     */
+    private function prepareHeaderFileSizeCalculator($activeSheet, $row, $columns)
+    {
+        foreach ($columns as $column => $columnName) {
+            $activeSheet->setCellValueExplicitByColumnAndRow($column, $row, $columnName);
+            $activeSheet->getColumnDimensionByColumn($column)->setWidth(20);
+            $activeSheet->getStyleByColumnAndRow($column)->getFont()->setBold(true);
+        }
+
+        return TRUE;
+    }
+
+    private function prepareFileSizeCalculatorAudioRecords($activeSheet, $row, $records)
+    {
+        $i = 1;
+        $totalUncompress1 = 0.00;
+        $totalUncompress2 = 0.00;
+        $totalUncompress3 = 0.00;
+        $totalUncompress4 = 0.00;
+        $totalUncompress5 = 0.00;
+        $totalUncompress6 = 0.00;
+        $totalUncompress7 = 0.00;
+        $totalUncompress8 = 0.00;
+        $totalKbps = 0.00;
+        if ($records) {
+            foreach ($records as $audio) {
+                if ($i == 1)
+                    $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "Audio");
+                $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $audio['format']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $audio['total']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $audio['sum_content_duration']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, number_format($audio['sum_content_duration'] / $audio['total'], 2));
+                $uncompress1 = $this->calculateFileSize($audio['sum_content_duration'], 34.56);
+                $totalUncompress1 += $uncompress1;
+                $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $uncompress1);
+                $uncompress2 = $this->calculateFileSize($audio['sum_content_duration'], 17.28);
+                $totalUncompress2 += $uncompress2;
+                $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $uncompress2);
+                $uncompress3 = $this->calculateFileSize($audio['sum_content_duration'], 11.52);
+                $totalUncompress3 += $uncompress3;
+                $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, $uncompress3);
+                $uncompress4 = $this->calculateFileSize($audio['sum_content_duration'], 10.584);
+                $totalUncompress4 += $uncompress4;
+                $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $uncompress4);
+                $uncompress5 = $this->calculateFileSize($audio['sum_content_duration'], 17.28);
+                $totalUncompress5 += $uncompress5;
+                $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, $uncompress5);
+                $uncompress6 = $this->calculateFileSize($audio['sum_content_duration'], 8.64);
+                $totalUncompress6 += $uncompress6;
+                $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $uncompress6);
+                $uncompress7 = $this->calculateFileSize($audio['sum_content_duration'], 5.75);
+                $totalUncompress7 += $uncompress7;
+                $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $uncompress7);
+                $uncompress8 = $this->calculateFileSize($audio['sum_content_duration'], 5.292);
+                $totalUncompress8 += $uncompress8;
+                $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $uncompress8);
+                $kbps = $this->calculateFileSize($audio['sum_content_duration'], 1.92);
+                $totalKbps += $kbps;
+                $activeSheet->setCellValueExplicitByColumnAndRow(14, $row, $kbps);
+                $i++;
+                $row ++;
+            }
+            $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "Total File Space");
+            $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, "");
+            $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "");
+            $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, "");
+            $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, "");
+            $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $totalUncompress1);
+            $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $totalUncompress2);
+            $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, $totalUncompress3);
+            $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $totalUncompress4);
+            $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, $totalUncompress5);
+            $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $totalUncompress6);
+            $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $totalUncompress7);
+            $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $totalUncompress8);
+            $activeSheet->setCellValueExplicitByColumnAndRow(14, $row, $totalKbps);
+        }
+    }
+
+    private function calculateFileSize($totalDuration, $value)
+    {
+        return number_format(($totalDuration * $value) / 1024 / 1024, 5);
+    }
+
 }

@@ -435,4 +435,30 @@ class ReportController extends Controller
         return array('videoResult' => $videoResult);
     }
 
+    /**
+     * Generate file size calculator report
+     *
+     * @Route("/filesizecalculator", name="filesizecalculator")
+     * @Method("GET")
+     * @Template("ApplicationFrontBundle:Report:fileSizeAudio.html.php")
+     * @return array
+     */
+    public function fileSizeCalculatorAction($type)
+    {
+        if (!in_array($type, array('xlsx'))) {
+            throw $this->createNotFoundException('Invalid report type');
+        }
+        $em = $this->getDoctrine()->getManager();
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        $audioCriteria = array('s_media_type' => array('Audio'));
+        $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $audioCriteria), 'format');
+        
+        $typeFormats["audio"] = $audioResult;
+        $exportComponent = new ExportReport($this->container);
+        $phpExcelObject = $exportComponent->generateFileSizeAssetsReport($typeFormats);
+        $response = $exportComponent->outputReport($type, $phpExcelObject, 'file_size_calculator');
+        
+        return $response;
+    }
 }
