@@ -926,6 +926,7 @@ class ExportReport extends ContainerAware
             $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, number_format($totalUncompress7, 5));
             $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, number_format($totalUncompress8, 5));
             $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, number_format($totalKbps, 5));
+            $row ++;
         }
     }
 
@@ -954,31 +955,31 @@ class ExportReport extends ContainerAware
                 $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $video['total']);
                 $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $video['sum_content_duration']);
                 $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, number_format($video['sum_content_duration'] / $video['total'], 2));
-                $VUncompress1 = $this->calculateFileSize($video['sum_content_duration'], 34.56);
+                $VUncompress1 = $this->calculateFileSize($video['sum_content_duration'], 10240);
                 $totalVUncompress1 += $VUncompress1;
                 $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, $VUncompress1);
-                $VUncompress2 = $this->calculateFileSize($video['sum_content_duration'], 17.28);
+                $VUncompress2 = $this->calculateFileSize($video['sum_content_duration'], 1800);
                 $totalVUncompress2 += $VUncompress2;
                 $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $VUncompress2);
-                $Lossless = $this->calculateFileSize($video['sum_content_duration'], 11.52);
+                $Lossless = $this->calculateFileSize($video['sum_content_duration'], 900);
                 $totalLossless += $Lossless;
                 $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $Lossless);
-                $FFV1 = $this->calculateFileSize($video['sum_content_duration'], 10.584);
+                $FFV1 = $this->calculateFileSize($video['sum_content_duration'], 600);
                 $totalFFV1 += $FFV1;
                 $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, $FFV1);
-                $MPEG2 = $this->calculateFileSize($video['sum_content_duration'], 17.28);
+                $MPEG2 = $this->calculateFileSize($video['sum_content_duration'], 427);
                 $totalMPEG2 += $MPEG2;
                 $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $MPEG2);
-                $ProRes = $this->calculateFileSize($video['sum_content_duration'], 8.64);
+                $ProRes = $this->calculateFileSize($video['sum_content_duration'], 306);
                 $totalProRes += $ProRes;
                 $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, $ProRes);
-                $DV25 = $this->calculateFileSize($video['sum_content_duration'], 5.75);
+                $DV25 = $this->calculateFileSize($video['sum_content_duration'], 240);
                 $totalDV25 += $DV25;
                 $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $DV25);
-                $MPEG45 = $this->calculateFileSize($video['sum_content_duration'], 5.292);
+                $MPEG45 = $this->calculateFileSize($video['sum_content_duration'], 36);
                 $totalMPEG45 += $MPEG45;
                 $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $MPEG45);
-                $MPEG42 = $this->calculateFileSize($video['sum_content_duration'], 1.92);
+                $MPEG42 = $this->calculateFileSize($video['sum_content_duration'], 17.1);
                 $totalMPEG42 += $MPEG42;
                 $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $MPEG42);
                 $i++;
@@ -998,6 +999,7 @@ class ExportReport extends ContainerAware
             $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, number_format($totalDV25, 5));
             $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, number_format($totalMPEG45, 5));
             $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, number_format($totalMPEG42, 5));
+            $row ++;
         }
     }
 
