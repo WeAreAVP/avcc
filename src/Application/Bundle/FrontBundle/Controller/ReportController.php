@@ -417,11 +417,11 @@ class ReportController extends Controller
             $count = 0;
             $offset = 0;
             while ($count == 0) {
-                $records = $sphinxSearch->select($this->getUser(), $offset, 20, 'title', 'asc', $recordCriteria);
+                $records = $sphinxSearch->select($this->getUser(), $offset, 1000, 'title', 'asc', $recordCriteria);
                 $_records = array_merge($_records, $records[0]);
                 $totalFound = $records[1][1]['Value'];                
-                $offset = $offset + 20;
-                if ($totalFound < 20) {
+                $offset = $offset + 1000;
+                if ($totalFound < 1000) {
                     $count++;
                 }
             }            
