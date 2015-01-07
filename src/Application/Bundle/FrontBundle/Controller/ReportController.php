@@ -428,9 +428,9 @@ class ReportController extends Controller
             if ($_records) {
                 $sumDuration = 0;
                 $formatRecordCount = 0;
+                $f = str_replace(" ", "_", $audio['format']);
                 foreach ($_records as $rec) {
-                    if($rec['format'] == $audio['format']){
-                        $f = str_replace(" ", "_", $audio['format']);
+                    if($rec['format'] == $audio['format']){                        
                         if($audio['content_duration']){
                             $sumDuration = $sumDuration + $audio['content_duration'];
                         }else{
