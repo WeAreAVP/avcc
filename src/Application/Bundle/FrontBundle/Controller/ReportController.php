@@ -437,10 +437,12 @@ class ReportController extends Controller
 
     /**
      * Generate file size calculator report
-     *
+     * 
+     * @param  string $type
+     * 
      * @Route("/filesizecalculator", name="filesizecalculator")
      * @Method("GET")
-     * @Template("ApplicationFrontBundle:Report:fileSizeAudio.html.php")
+     * @Template()
      * @return array
      */
     public function fileSizeCalculatorAction($type)
