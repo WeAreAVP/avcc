@@ -443,7 +443,7 @@ class ReportController extends Controller
             }
         }
         echo '<pre>';
-        print_r($_records);
+        print_r($format);
         die;
         return array('audioResult' => $audioResult);
     }
