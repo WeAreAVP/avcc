@@ -456,7 +456,11 @@ class ReportController extends Controller
         $audioCriteria = array('s_media_type' => array('Audio'));
         $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $audioCriteria), 'format');
         
+        $videoCriteria = array('s_media_type' => array('Video'));
+        $videoResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $videoCriteria), 'format');
+        
         $typeFormats["audio"] = $audioResult;
+        $typeFormats["video"] = $videoResult;
         $exportComponent = new ExportReport($this->container);
         $phpExcelObject = $exportComponent->generateFileSizeAssetsReport($typeFormats);
         $response = $exportComponent->outputReport($type, $phpExcelObject, 'file_size_calculator');
