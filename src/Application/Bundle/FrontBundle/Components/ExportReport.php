@@ -840,6 +840,12 @@ class ExportReport extends ContainerAware
             
         }
         $row = $row + 5;
+        if ($records['film']) {
+            $this->prepareHeaderFileSizeCalculator($activeSheet, $row, $columns['film']);
+            $row++;
+            $row = $this->prepareFileSizeCalculatorFilmRecords($activeSheet, $row, $records['film']);
+            
+        }
         $phpExcelObject->setActiveSheetIndex(0);
 
         return $phpExcelObject;
@@ -1005,5 +1011,71 @@ class ExportReport extends ContainerAware
         }
         return $row;
     }
-
+    
+    private function prepareFileSizeCalculatorFilmRecords($activeSheet, $row, $records)
+    {
+        $i = 1;
+        $total4kUnCommpressed = 0.00;
+        $total4kLossLess = 0.00;
+        $total2kUnCommpressed = 0.00;
+        $total2KLossless = 0.00;
+        $totalAVCIntra100 = 0.00;
+        $totalMPEG45 = 0.00;
+        $totalMPEG42 = 0.00;
+        if ($records) {
+            foreach ($records as $film) {
+                if ($i == 1)
+                    $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Film");
+                $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $film['format']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $film['total']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $film['sum_content_duration']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, number_format($film['sum_content_duration'] / $film['total'], 2));
+                
+                $k4Uncompressed = $this->calculateFileSize($film['sum_content_duration'], 69905);
+                $total4kUnCommpressed += $k4Uncompressed;
+                $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, $k4Uncompressed);
+                
+                $k4Lossless = $this->calculateFileSize($film['sum_content_duration'], 34952.5);
+                $total4kLossLess += $k4Lossless;
+                $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $k4Lossless);
+                
+                $k2Uncompressed = $this->calculateFileSize($film['sum_content_duration'], 17500);
+                $total2kUnCommpressed += $k2Uncompressed;
+                $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $k2Uncompressed);
+                
+                $k2Lossless = $this->calculateFileSize($film['sum_content_duration'], 8750);
+                $total2KLossless += $k2Lossless;
+                $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, $k2Lossless);
+                
+                $AVCIntra100 = $this->calculateFileSize($film['sum_content_duration'], 943);
+                $totalAVCIntra100 += $AVCIntra100;
+                $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $AVCIntra100);
+                
+                $MPEG45 = $this->calculateFileSize($film['sum_content_duration'], 36);
+                $totalMPEG45 += $MPEG45;
+                $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $MPEG45);
+                
+                $MPEG42 = $this->calculateFileSize($film['sum_content_duration'], 17.1);
+                $totalMPEG42 += $MPEG42;
+                $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $MPEG42);
+                
+                $i++;
+                $row ++;
+            }
+            $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Total File Space");
+            $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "");
+            $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, "");
+            $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "");
+            $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, "");
+            $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, number_format($total4kUnCommpressed, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, number_format($total4kLossLess, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, number_format($total2kUnCommpressed, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, number_format($total2KLossless, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, number_format($totalAVCIntra100, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, number_format($totalMPEG45, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, number_format($totalMPEG42, 5));
+            $row ++;
+        }
+        return $row;
+    }
 }

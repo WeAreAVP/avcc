@@ -134,6 +134,20 @@ class ExportFields
             'DV25',
             'MPEG4 5.0Mbps',
             'MPEG4 2.0Mbps',
+        ),
+        'film' => array(
+            'Media Type',
+            'Format',
+            'Count',
+            'Total Duration',
+            'Average Duration',
+            '4k Uncompressed',
+            '4k Lossless compression',
+            '2k Uncompressed',
+            '2k Lossless compression',
+            'AVC Intra 100',
+            'MPEG4 5.0Mbps',
+            'MPEG4 2.0Mbps',
         )
     );
 
