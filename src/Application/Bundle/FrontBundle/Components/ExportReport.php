@@ -830,13 +830,13 @@ class ExportReport extends ContainerAware
             $this->prepareHeaderFileSizeCalculator($activeSheet, $row, $columns['audio']);
             $row++;
             $this->prepareFileSizeCalculatorAudioRecords($activeSheet, $row, $records['audio']);
-            $row + 5;
+            $row = $row + 5;
         }
         if ($records['video']) {
             $this->prepareHeaderFileSizeCalculator($activeSheet, $row, $columns['video']);
             $row++;
             $this->prepareFileSizeCalculatorVideoRecords($activeSheet, $row, $records['video']);
-            $row + 5;
+            $row = $row + 5;
         }
 
         $phpExcelObject->setActiveSheetIndex(0);
