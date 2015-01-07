@@ -829,16 +829,17 @@ class ExportReport extends ContainerAware
         if ($records['audio']) {
             $this->prepareHeaderFileSizeCalculator($activeSheet, $row, $columns['audio']);
             $row++;
-            $this->prepareFileSizeCalculatorAudioRecords($activeSheet, $row, $records['audio']);
-            $row = $row + 5;
+            $row = $this->prepareFileSizeCalculatorAudioRecords($activeSheet, $row, $records['audio']);
+            
         }
+        $row = $row + 5;
         if ($records['video']) {
             $this->prepareHeaderFileSizeCalculator($activeSheet, $row, $columns['video']);
             $row++;
-            $this->prepareFileSizeCalculatorVideoRecords($activeSheet, $row, $records['video']);
-            $row = $row + 5;
+            $row = $this->prepareFileSizeCalculatorVideoRecords($activeSheet, $row, $records['video']);
+            
         }
-
+        $row = $row + 5;
         $phpExcelObject->setActiveSheetIndex(0);
 
         return $phpExcelObject;
@@ -928,6 +929,7 @@ class ExportReport extends ContainerAware
             $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, number_format($totalKbps, 5));
             $row ++;
         }
+        return $row;
     }
 
     private function calculateFileSize($totalDuration, $value)
@@ -1001,6 +1003,7 @@ class ExportReport extends ContainerAware
             $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, number_format($totalMPEG42, 5));
             $row ++;
         }
+        return $row;
     }
 
 }
