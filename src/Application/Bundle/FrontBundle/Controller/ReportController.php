@@ -419,6 +419,9 @@ class ReportController extends Controller
         foreach ($types as $mediatype) {
             $typeCriteria = array('s_media_type' => array($mediatype));
             $formatResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $typeCriteria), 'format');
+            echo  "<pre>";
+            print_r($formatResult);
+            die;
             $_records = array();
             if ($formatResult) {
                 foreach ($formatResult as $format) {
