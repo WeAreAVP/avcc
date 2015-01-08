@@ -135,7 +135,6 @@ class BulkEditController extends Controller
     {
         if ($request->isXmlHttpRequest()) {
             $posted = $request->request->all();
-//            print_r($posted); exit;
             $session = $this->getRequest()->getSession();
             $recordIds = $posted['records'];
             $mediaDisable = $posted['mediaDisable'];
@@ -153,7 +152,6 @@ class BulkEditController extends Controller
                 } else {
                     $recordIdsArray = explode(',', $recordIds);
                 }
-//                $recordIdsArray = explode(',', $recordIds);
                 foreach ($recordIdsArray as $recordId) {
                     $record = $em->getRepository('ApplicationFrontBundle:Records')->find($recordId);
                     if (isset($posted['format']) && $posted['format']) {
@@ -408,7 +406,14 @@ class BulkEditController extends Controller
         }
         return $recordIds;
     }
-
+    
+    /**
+     * Get record ids from sphinx records
+     * 
+     * @param array $sphinxRecords
+     * 
+     * @return array
+     */
     protected function getRecordIds($sphinxRecords)
     {
         $recordIds = array();

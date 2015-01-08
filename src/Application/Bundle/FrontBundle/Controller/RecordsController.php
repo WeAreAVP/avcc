@@ -221,6 +221,7 @@ class RecordsController extends Controller
      * Set/unset facet values from session.
      *
      * @param Request $request
+     * 
      */
     protected function getFacetRequest(Request $request)
     {
@@ -239,6 +240,7 @@ class RecordsController extends Controller
      *
      * @param  array  $facet
      * @param  string $index
+     * 
      * @return array
      */
     protected function removeEmpty($facet, $index)
@@ -358,10 +360,8 @@ class RecordsController extends Controller
             $job->setExecuteAfter($date);
             $em->persist($job);
             $em->flush($job);
-//            if ($session->has("saveRecords")) {
             $session->remove("saveRecords");
             $session->remove("allRecords");
-//            }
             echo json_encode(array('success' => true));
             exit;
         }
