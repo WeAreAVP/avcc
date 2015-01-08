@@ -12,11 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class FrameRatesRepository extends EntityRepository
 {
-    public function getAllAsArray(){
+    public function getAllAsArray()
+    {
         $names = $this->getEntityManager()->createQuery('SELECT distinct(frameRates.name)'
                 . ' from ApplicationFrontBundle:FrameRates frameRates'
                 )->getScalarResult();
         $frameRates = array_map("current",$names);
+
         return $frameRates;
     }
 }

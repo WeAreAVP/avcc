@@ -12,11 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class FormatsRepository extends EntityRepository
 {
-    public function getAllAsArray(){
+    public function getAllAsArray()
+    {
         $names = $this->getEntityManager()->createQuery('SELECT formats.name'
                 . ' from ApplicationFrontBundle:Formats formats'
                 )->getScalarResult();
         $formats = array_map("current",$names);
+
         return $formats;
     }
 }

@@ -3,7 +3,6 @@
 namespace Application\Bundle\FrontBundle\Components;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
-use Application\Bundle\FrontBundle\Helper\ExportFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use PHPExcel_Cell;
 use Application\Bundle\FrontBundle\Helper\DefaultFields;
@@ -175,6 +174,7 @@ class ImportReport extends ContainerAware
                     }
                 }
             }
+
             return $invalidValues;
         } else {
             return 'file not found';
@@ -396,6 +396,7 @@ class ImportReport extends ContainerAware
             $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $record->getId());
             $sphinxSearch->insert();
         }
+
         return count($rows);
     }
 

@@ -221,7 +221,7 @@ class RecordsController extends Controller
      * Set/unset facet values from session.
      *
      * @param Request $request
-     * 
+     *
      */
     protected function getFacetRequest(Request $request)
     {
@@ -238,9 +238,9 @@ class RecordsController extends Controller
     /**
      * Remove empty values from array.
      *
-     * @param  array  $facet
-     * @param  string $index
-     * 
+     * @param array  $facet
+     * @param string $index
+     *
      * @return array
      */
     protected function removeEmpty($facet, $index)
@@ -501,10 +501,10 @@ class RecordsController extends Controller
     }
 
     /**
-     * Insert score values. 
-     *  
+     * Insert score values.
+     *
      * @param Request $request
-     * 
+     *
      * @Route("/updatescore", name="record_udatescore")
      * @Method("GET")
      * @Template("ApplicationFrontBundle:Records:updateScore.html.php")
@@ -517,9 +517,9 @@ class RecordsController extends Controller
 
     /**
      * Save score values in db
-     *  
+     *
      * @param Request $request
-     * 
+     *
      * @Route("/savescore", name="record_savescore")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:Records:updateScore.html.php")
@@ -580,7 +580,7 @@ class RecordsController extends Controller
                                                                 $record->setScore($scoreValue);
                                                                 $em->flush();
                                                             }
-                                                            $updated[] = $entityName . " : " . $vocabValue . " : " . $scoreValue;                                                           
+                                                            $updated[] = $entityName . " : " . $vocabValue . " : " . $scoreValue;
                                                         }
                                                     }
                                                 }
@@ -593,9 +593,9 @@ class RecordsController extends Controller
                     }
                     if($isUpdate)
                         unlink ($newfile);
-                }                
-            } 
-            
+                }
+            }
+
             return array('updated'=>isset($updated)? $updated : null);
         }
     }

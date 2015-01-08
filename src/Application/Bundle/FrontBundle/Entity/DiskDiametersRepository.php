@@ -12,11 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class DiskDiametersRepository extends EntityRepository
 {
-    public function getAllAsArray(){
-        $names = $this->getEntityManager()->createQuery('SELECT distinct(diskDiameters.name)' 
+    public function getAllAsArray()
+    {
+        $names = $this->getEntityManager()->createQuery('SELECT distinct(diskDiameters.name)'
                 . ' from ApplicationFrontBundle:DiskDiameters diskDiameters'
                 )->getScalarResult();
         $dd = array_map("current",$names);
+
         return $dd;
     }
 }

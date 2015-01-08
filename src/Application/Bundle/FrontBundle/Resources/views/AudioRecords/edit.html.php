@@ -17,7 +17,7 @@
             $field = explode('.', $audioField['field']);
             ?>
             <div style="<?php echo ($audioField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>">
-                <?php 
+                <?php
                 $attr = ($audioField['is_required']) ? array('class' => 'size4', 'required'=> 'required') : array('class' => 'size4');
                 echo $view['form']->label((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]], ' ');
                 echo $audioField['title'] ?>

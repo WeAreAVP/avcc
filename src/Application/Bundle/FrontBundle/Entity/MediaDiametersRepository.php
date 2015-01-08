@@ -12,11 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class MediaDiametersRepository extends EntityRepository
 {
-    public function getAllAsArray(){
+    public function getAllAsArray()
+    {
         $names = $this->getEntityManager()->createQuery('SELECT distinct(mediaDiameters.name)'
                 . ' from ApplicationFrontBundle:MediaDiameters mediaDiameters'
                 )->getScalarResult();
         $md = array_map("current",$names);
+
         return $md;
     }
 }

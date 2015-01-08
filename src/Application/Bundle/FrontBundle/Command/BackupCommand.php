@@ -73,6 +73,7 @@ class BackupCommand extends ContainerAwareCommand
         } else {
             $return = explode(',', $backupEmails);
         }
+
         return $return;
     }
 

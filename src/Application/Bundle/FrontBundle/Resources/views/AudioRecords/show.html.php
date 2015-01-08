@@ -10,7 +10,7 @@
     <a href="<?php echo $view['router']->generate('record_edit', array('id' => $entity->getId())) ?>" class="button primary">Edit</a>
     <?php endif;?>
     <div class="clearfix"></div>
-    
+
     <div class="grid">
         <div class="row">
             <div class="span4">Created by: <?php echo $entity->getRecord()->getUser()->getName(); ?></div>

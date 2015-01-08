@@ -12,11 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class ColorsRepository extends EntityRepository
 {
-    public function getAllAsArray(){
+    public function getAllAsArray()
+    {
         $names = $this->getEntityManager()->createQuery('SELECT colors.name'
                 . ' from ApplicationFrontBundle:Colors colors'
                 )->getScalarResult();
         $colors = array_map("current",$names);
+
         return $colors;
     }
 }

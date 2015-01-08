@@ -13,7 +13,7 @@ class DefaultFields
 
     public function __construct()
     {
-        
+
     }
 
     public function getDefaultOrder()
@@ -230,7 +230,7 @@ class DefaultFields
         $vocabularies['tapeThickness'] = $em->getRepository('ApplicationFrontBundle:TapeThickness')->getAllAsArray();
         $vocabularies['trackTypes'] = $em->getRepository('ApplicationFrontBundle:TrackTypes')->getAllAsArray();
         $vocabularies['acidDetectionStrips'] = $em->getRepository('ApplicationFrontBundle:AcidDetectionStrips')->getAllAsArray();
-        
+
         return $vocabularies;
     }
 

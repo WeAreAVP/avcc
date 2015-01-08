@@ -58,10 +58,10 @@ class AudioRecordsController extends Controller
         $entity = new AudioRecords();
         $form = $this->createCreateForm($entity, $em, $data);
         $form->handleRequest($request);
-        $error = '';        
-        if ($form->isValid()) {            
+        $error = '';
+        if ($form->isValid()) {
             $em->persist($entity);
-            
+
             try {
                 $em->flush();
                 $shpinxInfo = $this->getSphinxInfo();
@@ -77,8 +77,8 @@ class AudioRecordsController extends Controller
                 }
 
                 return $this->redirect($this->generateUrl('record_list'));
-            } catch (\Doctrine\DBAL\DBALException $e) {                
-                if(is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))){
+            } catch (\Doctrine\DBAL\DBALException $e) {
+                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))) {
                     $error = new FormError("Project is required field.");
                     $recordForm = $form->get('record');
                     $recordForm->get('project')->addError($error);
@@ -88,15 +88,15 @@ class AudioRecordsController extends Controller
                     $recordForm = $form->get('record');
                     $recordForm->get('uniqueId')->addError($error);
                 }
-                if(is_int(strpos($e->getPrevious()->getMessage(), "Column 'format_id' cannot be null"))){
+                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'format_id' cannot be null"))) {
                     $error = new FormError("Format is required field.");
                     $recordForm = $form->get('record');
                     $recordForm->get('format')->addError($error);
-                }                
+                }
             }
         }
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
-        
+
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
@@ -315,7 +315,7 @@ class AudioRecordsController extends Controller
 
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
-                if(is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))){
+                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))) {
                     $error = new FormError("Project is required field.");
                     $recordForm = $form->get('record');
                     $recordForm->get('project')->addError($error);
@@ -325,11 +325,11 @@ class AudioRecordsController extends Controller
                     $recordForm = $editForm->get('record');
                     $recordForm->get('uniqueId')->addError($error);
                 }
-                if(is_int(strpos($e->getPrevious()->getMessage(), "Column 'format_id' cannot be null"))){
+                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'format_id' cannot be null"))) {
                     $error = new FormError("Format is required field.");
                     $recordForm = $form->get('record');
                     $recordForm->get('format')->addError($error);
-                }                
+                }
             }
         }
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
@@ -539,9 +539,9 @@ class AudioRecordsController extends Controller
 
     /**
      * Get all project.
-     * 
+     *
      * @param int $selectedProjectId
-     * 
+     *
      * @Route("/getAllProjects", name="record_projects")
      * @Route("/getAllProjects/{selectedProjectId}", name="record_user_projects")
      * @Method("GET")

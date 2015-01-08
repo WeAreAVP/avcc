@@ -12,11 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class RecordingSpeedRepository extends EntityRepository
 {
-    public function getAllAsArray(){
+    public function getAllAsArray()
+    {
         $names= $this->getEntityManager()->createQuery('SELECT distinct(recordingSpeed.name)'
                 . ' from ApplicationFrontBundle:RecordingSpeed recordingSpeed'
                 )->getScalarResult();
         $rs = array_map("current",$names);
+
         return $rs;
     }
 }

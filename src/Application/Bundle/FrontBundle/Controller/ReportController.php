@@ -398,9 +398,9 @@ class ReportController extends Controller
 
     /**
      * Generate file size calculator report
-     * 
-     * @param  string $type
-     * 
+     *
+     * @param string $type
+     *
      * @Route("/filesizecalculator/{type}", name="filesizecalculator_report")
      * @Method("GET")
      * @Template()
@@ -470,9 +470,9 @@ class ReportController extends Controller
 
     /**
      * Generate linear foot calculator report
-     * 
-     * @param  string $type
-     * 
+     *
+     * @param string $type
+     *
      * @Route("/linearfootcalculator/{type}", name="linearfootcalculator_report")
      * @Method("GET")
      * @Template()

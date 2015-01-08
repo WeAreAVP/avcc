@@ -190,7 +190,7 @@ class ImportExport
     }
 
     /**
-     * Set file name field     * 
+     * Set file name field     *
      *
      * @param string $file
      */
@@ -201,7 +201,7 @@ class ImportExport
 
     /**
      * Return file name
-     * 
+     *
      * @return string
      */
     public function getFileName()

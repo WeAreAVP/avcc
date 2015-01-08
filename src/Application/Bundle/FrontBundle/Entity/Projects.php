@@ -79,11 +79,12 @@ class Projects
      * @ORM\ManyToMany(targetEntity="Application\Bundle\FrontBundle\Entity\Users", mappedBy="userProjects")
      */
     private $projectUsers;
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->projectUsers = new ArrayCollection();
     }
-    
+
     /**
      * @ORM\PrePersist
      */
@@ -265,7 +266,7 @@ class Projects
 
         return $this;
     }
-    
+
     /**
      * Add user project
      * @param \Application\Bundle\FrontBundle\Entity\Users $user
@@ -289,8 +290,8 @@ class Projects
          $this->projectUsers->remove($user);
     }
     /**
-     * 
-     * @param \Application\Bundle\FrontBundle\Entity\Users $u
+     *
+     * @param  \Application\Bundle\FrontBundle\Entity\Users    $u
      * @return \Application\Bundle\FrontBundle\Entity\Projects
      */
     public function setProjectUsers(\Application\Bundle\FrontBundle\Entity\Users $u)
@@ -301,7 +302,7 @@ class Projects
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getProjectUsers()

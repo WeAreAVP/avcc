@@ -101,8 +101,8 @@ class Formats
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
-    private $reelDiameter;    
-    
+    private $reelDiameter;
+
     /**
      * Formats constructor
      */
@@ -299,5 +299,5 @@ class Formats
     {
         $this->score = $score;
     }
-    
+
 }

@@ -79,7 +79,7 @@ class RecordsRepository extends EntityRepository
                 . ' from ApplicationFrontBundle:Records r'
                 )->getScalarResult();
         $ids = array_map("current",$uniqueids);
-        
+
         return $ids;
     }
 

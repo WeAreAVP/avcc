@@ -11,7 +11,7 @@
     </div>
     <div id="fieldsPanel" style="display:none;">
         <?php echo $view['form']->start($form) ?>
-        <?php echo $view['form']->errors($form) ?>    
+        <?php echo $view['form']->errors($form) ?>
         <fieldset>
             <?php echo $view['form']->errors($form) ?>
             <?php foreach ($fieldSettings[strtolower($type)] as $viedoField): ?>
