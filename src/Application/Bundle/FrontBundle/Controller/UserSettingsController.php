@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
 use JMS\JobQueueBundle\Entity\Job;
 use DateInterval;
 use DateTime;
+
 /**
  * UserSettings controller.
  *
@@ -21,7 +22,8 @@ use DateTime;
  */
 class UserSettingsController extends Controller
 {
-     /**
+
+    /**
      * User settings
      *
      * @Route("/cron", name="cron_setup")
@@ -32,12 +34,13 @@ class UserSettingsController extends Controller
     public function setupCronAction()
     {
         $job = new Job('avcc:backup-report');
-            $date = new DateTime();
-            $date->add(new DateInterval('PT1M'));
-            $job->setExecuteAfter($date);
-            $em->persist($job);
-            $em->flush($job);
+        $date = new DateTime();
+        $date->add(new DateInterval('PT1M'));
+        $job->setExecuteAfter($date);
+        $em->persist($job);
+        $em->flush($job);
     }
+
     /**
      * User settings
      *
@@ -209,13 +212,15 @@ class UserSettingsController extends Controller
         }
         $emailConstraint = new EmailConstraint();
         $emailConstraint->message = 'Invalid email id';
-        foreach ($email_ids as $email) {
-            $errors = $this->get('validator')->validateValue(trim($email), $emailConstraint);
-            if (strpos($errors, 'Invalid email id')) {
-                $session = $request->getSession();
-                $session->set('error', 'Please enter valid email id');
+        if (isset($email_ids)) {
+            foreach ($email_ids as $email) {
+                $errors = $this->get('validator')->validateValue(trim($email), $emailConstraint);
+                if (strpos($errors, 'Invalid email id')) {
+                    $session = $request->getSession();
+                    $session->set('error', 'Please enter valid email id');
 
-                return $this->redirect($this->generateUrl('field_settings_backup'));
+                    return $this->redirect($this->generateUrl('field_settings_backup'));
+                }
             }
         }
         if ($editForm->isValid()) {
@@ -268,7 +273,7 @@ class UserSettingsController extends Controller
         return $this->redirect($this->generateUrl('field_settings_backup'));
     }
 
-     /**
+    /**
      * add Backup Record command In Job
      *
      * @Route("/addBackup", name="backup_record")
@@ -280,7 +285,7 @@ class UserSettingsController extends Controller
         $job = new Job('avcc:backup-report');
         $date = new DateTime();
         $date->setTime(0, 0);
-     //   $date->add(new DateInterval('PT1M'));
+        //   $date->add(new DateInterval('PT1M'));
         $job->setExecuteAfter($date);
         $em->persist($job);
         $em->flush($job);
