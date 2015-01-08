@@ -441,7 +441,7 @@ class ReportController extends Controller
                             if ($rec['format'] == $format['format']) {
                                 if ($rec['content_duration']) {
                                     $sumDuration = $sumDuration + $rec['content_duration'];
-                                } elseif ($type != 'Film') {
+                                } elseif ($mediatype['media_type'] != 'Film') {
                                     $sumDuration = $sumDuration + $rec['media_duration'];
                                 }
                             }
