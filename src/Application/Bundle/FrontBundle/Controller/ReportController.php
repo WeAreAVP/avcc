@@ -420,40 +420,44 @@ class ReportController extends Controller
             $typeCriteria = array('s_media_type' => array($mediatype));
             $formatResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $typeCriteria), 'format');
             $_records = array();
-            foreach ($formatResult as $format) {
-                $recordCriteria = array('s_format' => array($format['format']));
-                $count = 0;
-                $offset = 0;
-                while ($count == 0) {
-                    $records = $sphinxSearch->select($this->getUser(), $offset, 1000, 'title', 'asc', $recordCriteria);
-                    $_records = array_merge($_records, $records[0]);
-                    $totalFound = $records[1][1]['Value'];
-                    $offset = $offset + 1000;
-                    if ($totalFound < 1000) {
-                        $count++;
-                    }
-                }
-                if ($_records) {
-                    $sumDuration = 0;
-                    $f = str_replace(" ", "_", $format['format']);
-                    foreach ($_records as $rec) {
-                        if ($rec['format'] == $format['format']) {
-                            if ($rec['content_duration']) {
-                                $sumDuration = $sumDuration + $rec['content_duration'];
-                            } elseif ($type != 'Film') {
-                                $sumDuration = $sumDuration + $rec['media_duration'];
-                            }
+            if ($formatResult) {
+                foreach ($formatResult as $format) {
+                    $recordCriteria = array('s_format' => array($format['format']));
+                    $count = 0;
+                    $offset = 0;
+                    while ($count == 0) {
+                        $records = $sphinxSearch->select($this->getUser(), $offset, 1000, 'title', 'asc', $recordCriteria);
+                        $_records = array_merge($_records, $records[0]);
+                        $totalFound = $records[1][1]['Value'];
+                        $offset = $offset + 1000;
+                        if ($totalFound < 1000) {
+                            $count++;
                         }
                     }
-                    $formatInfo[$mediatype][$f] = array('format' => $format['format'], 'sum_content_duration' => $sumDuration, 'total' => $format['total']);
+                    if ($_records) {
+                        $sumDuration = 0;
+                        $f = str_replace(" ", "_", $format['format']);
+                        foreach ($_records as $rec) {
+                            if ($rec['format'] == $format['format']) {
+                                if ($rec['content_duration']) {
+                                    $sumDuration = $sumDuration + $rec['content_duration'];
+                                } elseif ($type != 'Film') {
+                                    $sumDuration = $sumDuration + $rec['media_duration'];
+                                }
+                            }
+                        }
+                        $formatInfo[$mediatype][$f] = array('format' => $format['format'], 'sum_content_duration' => $sumDuration, 'total' => $format['total']);
+                    }
                 }
+            } else {
+                throw $this->createNotFoundException('No record found for report.');
             }
         }
         if (isset($formatInfo)) {
             $typeFormats["audio"] = $formatInfo['Audio'];
             $typeFormats["video"] = $formatInfo['Video'];
             $typeFormats["film"] = $formatInfo['Film'];
-            
+
             $exportComponent = new ExportReport($this->container);
             $phpExcelObject = $exportComponent->generateFileSizeAssetsReport($typeFormats);
             $response = $exportComponent->outputReport($type, $phpExcelObject, 'file_size_calculator');
