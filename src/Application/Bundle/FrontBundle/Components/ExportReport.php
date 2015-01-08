@@ -826,22 +826,22 @@ class ExportReport extends ContainerAware
         $row++;
         $exportFields = new ExportFields();
         $columns = $exportFields->getFileSizeCalculatorColumns();
-        if ($records['audio']) {
+        if (isset($records['Audio'])) {
             $this->prepareHeaderFileSizeCalculator($activeSheet, $row, $columns['audio']);
             $row++;
-            $row = $this->prepareFileSizeCalculatorAudioRecords($activeSheet, $row, $records['audio']);
+            $row = $this->prepareFileSizeCalculatorAudioRecords($activeSheet, $row, $records['Audio']);
         }
         $row = $row + 5;
-        if ($records['video']) {
+        if (isset($records['Video'])) {
             $this->prepareHeaderFileSizeCalculator($activeSheet, $row, $columns['video']);
             $row++;
-            $row = $this->prepareFileSizeCalculatorVideoRecords($activeSheet, $row, $records['video']);
+            $row = $this->prepareFileSizeCalculatorVideoRecords($activeSheet, $row, $records['Video']);
         }
         $row = $row + 5;
-        if ($records['film']) {
+        if (isset($records['Film'])) {
             $this->prepareHeaderFileSizeCalculator($activeSheet, $row, $columns['film']);
             $row++;
-            $row = $this->prepareFileSizeCalculatorFilmRecords($activeSheet, $row, $records['film']);
+            $row = $this->prepareFileSizeCalculatorFilmRecords($activeSheet, $row, $records['Film']);
         }
         $phpExcelObject->setActiveSheetIndex(0);
 

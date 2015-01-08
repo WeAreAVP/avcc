@@ -454,12 +454,12 @@ class ReportController extends Controller
             }
         }
         if (isset($formatInfo)) {
-            $typeFormats["audio"] = $formatInfo['Audio'];
-            $typeFormats["video"] = $formatInfo['Video'];
-            $typeFormats["film"] = $formatInfo['Film'];
+//            $typeFormats["audio"] = $formatInfo['Audio'];
+//            $typeFormats["video"] = $formatInfo['Video'];
+//            $typeFormats["film"] = $formatInfo['Film'];
 
             $exportComponent = new ExportReport($this->container);
-            $phpExcelObject = $exportComponent->generateFileSizeAssetsReport($typeFormats);
+            $phpExcelObject = $exportComponent->generateFileSizeAssetsReport($formatInfo);
             $response = $exportComponent->outputReport($type, $phpExcelObject, 'file_size_calculator');
 
             return $response;
