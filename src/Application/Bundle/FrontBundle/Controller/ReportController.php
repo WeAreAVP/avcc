@@ -417,7 +417,7 @@ class ReportController extends Controller
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
         $types = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('media_type', $this->getUser()), 'media_type');
         foreach ($types as $mediatype) {
-            $typeCriteria = array('s_media_type' => array($mediatype));
+            $typeCriteria = array('s_media_type' => array($mediatype['media_type']));
             $formatResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $typeCriteria), 'format');
             $_records = array();
             if ($formatResult) {
