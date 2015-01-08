@@ -446,7 +446,7 @@ class ReportController extends Controller
                                 }
                             }
                         }
-                        $formatInfo[$mediatype][$f] = array('format' => $format['format'], 'sum_content_duration' => $sumDuration, 'total' => $format['total']);
+                        $formatInfo[$mediatype['media_type']][$f] = array('format' => $format['format'], 'sum_content_duration' => $sumDuration, 'total' => $format['total']);
                     }
                 }
             } else {
