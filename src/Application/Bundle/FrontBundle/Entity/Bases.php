@@ -158,7 +158,7 @@ class Bases
     /**
      * Get score
      *
-     * @return real number
+     * @return float
      */
     public function getScore()
     {
@@ -170,7 +170,7 @@ class Bases
      *
      * @param float $score
      *
-     * @return \Application\Bundle\FrontBundle\Entity\Colors
+     * @return float
      */
     public function setScore($score)
     {

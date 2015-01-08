@@ -16,6 +16,7 @@ use Application\Bundle\FrontBundle\Helper\SphinxHelper;
 use JMS\JobQueueBundle\Entity\Job;
 use DateInterval;
 use DateTime;
+use PHPExcel_Cell;
 
 /**
  * Records controller.
@@ -450,18 +451,18 @@ class RecordsController extends Controller
                     $job->setExecuteAfter($date);
                     $em->persist($job);
                     $em->flush($job);
-                    $message = array('heading'=>'Export Merge', 'message'=>'Merge and export request successfully sent. You will receive an email shortly with download link.');
+                    $message = array('heading' => 'Export Merge', 'message' => 'Merge and export request successfully sent. You will receive an email shortly with download link.');
                     $this->get('session')->getFlashBag()->add('report_success', $message);
                 } else {
-                    $message = array('heading'=>'Export Merge', 'message'=>'File formate is not correct. Please try again.');
+                    $message = array('heading' => 'Export Merge', 'message' => 'File formate is not correct. Please try again.');
                     $this->get('session')->getFlashBag()->add('report_error', $message);
                 }
             } else {
-                $message = array('heading'=>'Export Merge', 'message'=>'File is empty. Please try again.');
+                $message = array('heading' => 'Export Merge', 'message' => 'File is empty. Please try again.');
                 $this->get('session')->getFlashBag()->add('report_error', $message);
             }
         } else {
-            $message = array('heading'=>'Export Merge', 'message'=>'Select file that require to merge. Please try again.');
+            $message = array('heading' => 'Export Merge', 'message' => 'Select file that require to merge. Please try again.');
             $this->get('session')->getFlashBag()->add('report_error', $message);
         }
         $session->remove("saveRecords");
@@ -498,4 +499,100 @@ class RecordsController extends Controller
                     'fieldSettings' => $userViewSettings
         ));
     }
+
+    /**
+     * Insert score values. 
+     *  
+     * @param Request $request
+     * 
+     * @Route("/updatescore", name="record_udatescore")
+     * @Method("GET")
+     * @Template("ApplicationFrontBundle:Records:updateScore.html.php")
+     * @return array
+     */
+    public function uploapScoreAction(Request $request)
+    {
+//        return array();
+    }
+
+    /**
+     * Save score values in db
+     *  
+     * @param Request $request
+     * 
+     * @Route("/savescore", name="record_savescore")
+     * @Method("POST")
+     * @Template()
+     * @return array
+     */
+    public function saveScoreAction(Request $request)
+    {
+        if ($request->files->get('uploadfile')) {
+            $originalFileName = $request->files->get('uploadfile')->getClientOriginalName();
+            $uploadedFileSize = $request->files->get('uploadfile')->getClientSize();
+
+            $newFileName = null;
+            if ($uploadedFileSize > 0) {
+                $folderPath = $this->container->getParameter('webUrl') . 'uploads/' . date('Y') . '/' . date('m') . '/';
+//                $folderPath = '/Applications/XAMPP/htdocs/avcc/uploads/';
+                if (!is_dir($folderPath))
+                    mkdir($folderPath, 0777, TRUE);
+                $extension = $request->files->get('uploadfile')->getClientOriginalExtension();
+                $newFileName = $this->getUser()->getId() . "_score" . time() . "." . $extension;
+                $validTypes = array('csv', 'xlsx');
+                if (in_array($extension, $validTypes)) {
+                    $request->files->get('uploadfile')->move($folderPath, $newFileName);
+                    if (!$request->files->get('uploadfile')->isValid()) {
+                        echo 'file uploaded<br />';
+                        $em = $this->getDoctrine()->getManager();
+                        $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($folderPath . $newFileName);
+                        foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
+                            $highestRow = $worksheet->getHighestRow();
+                            $highestColumn = $worksheet->getHighestColumn();
+                            $excelCell = new PHPExcel_Cell(null, null, $worksheet);
+                            $highestColumnIndex = $excelCell->columnIndexFromString($highestColumn);
+                            if ($highestRow > 0) {
+                                for ($row = 3; $row <= 3; ++$row) {
+                                    for ($col = 0; $col < $highestColumnIndex; ++$col) {
+                                        $cell = $worksheet->getCellByColumnAndRow($col, $row);
+                                        $fileColumns[$col] = $cell->getValue();
+                                    }
+                                }
+
+                                foreach ($fileColumns as $fileColumn) {
+                                    if ($fileColumn) {
+                                        for ($row = 4; $row <= $highestRow; ++$row) {
+                                            $vocabValueCell = $worksheet->getCellByColumnAndRow(1, $row);
+                                            $vocabValue = $vocabValueCell->getValue();
+                                            if ($vocabValue) {
+                                                $entityNameCell = $worksheet->getCellByColumnAndRow(0, $row);
+                                                $entityName = str_replace(" ", "", ucfirst($entityNameCell->getValue()));
+                                                if ($entityName) {
+                                                    $records = $em->getRepository('ApplicationFrontBundle:' . $entityName)->findBy(array('name' => trim($vocabValue)));
+                                                    if ($records) {
+                                                        $scoreValueCell = $worksheet->getCellByColumnAndRow(2, $row);
+                                                        $scoreValue = $scoreValueCell->getValue();
+                                                        if ($scoreValue != "") {
+                                                            foreach ($records as $record) {
+                                                                $record->setScore($scoreValue);
+                                                                $em->flush();
+                                                            }
+                                                            echo $entityName . " : " . $vocabValue . " : " . $scoreValue;
+                                                            echo '<br />';
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            exit;
+        }
+    }
+
 }
