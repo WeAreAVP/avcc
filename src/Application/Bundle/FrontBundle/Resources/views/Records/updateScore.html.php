@@ -12,6 +12,13 @@
                 <input type="submit" name="submit" class="button" value="Update Score" />
             </div>
         </form>
+        <p>
+            <?php 
+              if(isset($updated)){
+                  echo implode("<br />", $updated);
+              }
+            ?>
+        </p>
     </div>
 </div>
 

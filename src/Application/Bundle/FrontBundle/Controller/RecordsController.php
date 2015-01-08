@@ -522,7 +522,7 @@ class RecordsController extends Controller
      * 
      * @Route("/savescore", name="record_savescore")
      * @Method("POST")
-     * @Template()
+     * @Template("ApplicationFrontBundle:Records:updateScore.html.php")
      * @return array
      */
     public function saveScoreAction(Request $request)
@@ -541,11 +541,13 @@ class RecordsController extends Controller
                 $newFileName = $this->getUser()->getId() . "_score" . time() . "." . $extension;
                 $validTypes = array('csv', 'xlsx');
                 if (in_array($extension, $validTypes)) {
+                    $newfile = $folderPath.$newFileName;
                     $request->files->get('uploadfile')->move($folderPath, $newFileName);
                     if (!$request->files->get('uploadfile')->isValid()) {
                         echo 'file uploaded<br />';
                         $em = $this->getDoctrine()->getManager();
-                        $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($folderPath . $newFileName);
+                        $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($newfile);
+                        $isUpdate = false;
                         foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
                             $highestRow = $worksheet->getHighestRow();
                             $highestColumn = $worksheet->getHighestColumn();
@@ -570,6 +572,7 @@ class RecordsController extends Controller
                                                 if ($entityName) {
                                                     $records = $em->getRepository('ApplicationFrontBundle:' . $entityName)->findBy(array('name' => trim($vocabValue)));
                                                     if ($records) {
+                                                        $isUpdate = true;
                                                         $scoreValueCell = $worksheet->getCellByColumnAndRow(2, $row);
                                                         $scoreValue = $scoreValueCell->getValue();
                                                         if ($scoreValue != "") {
@@ -577,8 +580,7 @@ class RecordsController extends Controller
                                                                 $record->setScore($scoreValue);
                                                                 $em->flush();
                                                             }
-                                                            echo $entityName . " : " . $vocabValue . " : " . $scoreValue;
-                                                            echo '<br />';
+                                                            $updated[] = $entityName . " : " . $vocabValue . " : " . $scoreValue;                                                           
                                                         }
                                                     }
                                                 }
@@ -589,9 +591,12 @@ class RecordsController extends Controller
                             }
                         }
                     }
-                }
-            }
-            exit;
+                    if($isUpdate)
+                        unlink ($newfile);
+                }                
+            } 
+            
+            return array('updated'=>isset($updated)? $updated : null);
         }
     }
 
