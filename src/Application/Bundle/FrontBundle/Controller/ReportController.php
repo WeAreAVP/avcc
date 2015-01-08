@@ -416,8 +416,8 @@ class ReportController extends Controller
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
 //        $types = array('Audio', 'Video', 'Film');
-        $types = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('media_type', $this->getUser()), 'media_type');
-        echo '<br />';
+        $types = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('media_type', $this->getUser()), 'media_type');
+        echo '<pre>';
         print_r($types);
         die;
         foreach ($types as $mediatype) {
