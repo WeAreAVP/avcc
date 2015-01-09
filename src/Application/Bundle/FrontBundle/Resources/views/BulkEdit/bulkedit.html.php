@@ -19,15 +19,15 @@
                                     <?php foreach ($relatedFields['mediaTypes'] as $mediaType) { ?>
                                         <option value="<?php echo $mediaType->getId(); ?>"><?php echo $mediaType->getName() ?></option>
                                     <?php } ?>
-                                </select> 
+                                </select>
                             </div>
                         </div>
                         <div id="format_lbl" class="col-lg-6" style="">
                             <label for="format" >Format</label>
                             <div data-role="input-control" class="input-control">
                                 <select class="size4" name="format" id="format" <?php echo ($isMediaDisable) ? 'disabled="disabled"' : ''; ?>>
-                                    <option value=""></option>                                    
-                                </select> 
+                                    <option value=""></option>
+                                </select>
                             </div>
                         </div>
                         <div id="project_lbl" class="col-lg-6" style="">
@@ -38,31 +38,31 @@
                                     <?php foreach ($relatedFields['projects'] as $project) { ?>
                                         <option value="<?php echo $project->getId(); ?>"><?php echo $project->getName() ?></option>
                                     <?php } ?>
-                                </select>                                                       
+                                </select>
                             </div>
                         </div>
                         <div id="location_lbl" class="col-lg-6" style="">
-                            <label for="location" >Location</label> 
+                            <label for="location" >Location</label>
                             <div data-role="input-control" class="input-control">
-                                <input type="text" class="size4" name="location" id="location">                                
+                                <input type="text" class="size4" name="location" id="location">
                             </div>
                         </div>
                         <div id="title_lbl" class="col-lg-6" style="">
                             <label for="title" class="required">Title</label>
                             <div data-role="input-control" class="input-control">
-                                <input type="text" class="size4" name="title" id="title">                                
+                                <input type="text" class="size4" name="title" id="title">
                             </div>
                         </div>
                         <div id="collectionName_lbl" class="col-lg-6" style="">
                             <label for="collectionName">Collection Name</label>
                             <div data-role="input-control" class="input-control">
-                                <input type="text" class="size4" name="collectionName" id="collectionName">                                
+                                <input type="text" class="size4" name="collectionName" id="collectionName">
                             </div>
                         </div>
                         <div id="description_lbl" class="col-lg-6" style="">
                             <label for="description">Description</label>
                             <div data-role="input-control" class="input-control">
-                                <input type="text" class="size4" name="description" id="description">                                
+                                <input type="text" class="size4" name="description" id="description">
                             </div>
                         </div>
                         <div id="commercial_lbl" class="col-lg-6" style="">
@@ -73,9 +73,9 @@
                                     <?php foreach ($relatedFields['commercial'] as $commercial) { ?>
                                         <option value="<?php echo $commercial->getId(); ?>"><?php echo $commercial->getName() ?></option>
                                     <?php } ?>
-                                </select>                                                       
+                                </select>
                             </div>
-                        </div>                    
+                        </div>
                         <?php
                         if (!$isMediaDisable) {
                             if ($mediaTypeId == 1) {
@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
                                 <div id="reelDiameters_lbl" class="col-lg-6" style="display: block;">
-                                    <label for="reelDiameters">Reel Diameter </label>               
+                                    <label for="reelDiameters">Reel Diameter </label>
                                     <div data-role="input-control" class="input-control">
                                         <select class="size4" name="reelDiameters" id="reelDiameters">
                                             <?php foreach ($relatedFields['reelDiameters'] as $reelDiameter) { ?>
@@ -107,55 +107,55 @@
                                         <select class="size4" name="mediaDiameters" id="mediaDiameters">
                                             <?php foreach ($relatedFields['mediaDiameters'] as $mediaDiameter) { ?>
                                                 <option value="<?php echo $mediaDiameter->getId(); ?>"><?php echo $mediaDiameter->getName() ?></option>
-                                            <?php } ?>                                      
-                                        </select>                                            
+                                            <?php } ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div id="bases_lbl" class="col-lg-6" style="display: block;">
                                     <label for="bases">Base</label>
                                     <div data-role="input-control" class="input-control">
-                                        <select class="size4" name="bases" id="bases"> 
+                                        <select class="size4" name="bases" id="bases">
                                             <option value=""></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div id="mediaDuration_lbl" class="col-lg-6" style="">
-                                    <label for="mediaDuration">Media Duration</label> 
+                                    <label for="mediaDuration">Media Duration</label>
                                     <div data-role="input-control" class="input-control">
-                                        <input type="text" class="size4" name="mediaDuration" id="mediaDuration"> 
+                                        <input type="text" class="size4" name="mediaDuration" id="mediaDuration">
                                     </div>
                                 </div>
                                 <div id="recordingSpeed_lbl" class="col-lg-6" style="display: block;">
                                     <label for="recordingSpeed">Recording Speed</label>
                                     <div data-role="input-control" class="input-control">
-                                        <select class="size4" name="recordingSpeed" id="recordingSpeed">  
+                                        <select class="size4" name="recordingSpeed" id="recordingSpeed">
                                             <option value=""></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div id="tapeThickness_lbl" class="col-lg-6" style="display: block;">
-                                    <label for="tapeThickness">Tape Thickness</label> 
+                                    <label for="tapeThickness">Tape Thickness</label>
                                     <div data-role="input-control" class="input-control">
                                         <select class="size4" name="tapeThickness" id="tapeThickness">
                                             <?php foreach ($relatedFields['tapeThickness'] as $tapeThickness) { ?>
                                                 <option value="<?php echo $tapeThickness->getId(); ?>"><?php echo $tapeThickness->getName() ?></option>
-                                            <?php } ?> 
+                                            <?php } ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div id="slides_lbl" class="col-lg-6" style="">
-                                    <label for="slides">Sides</label>                
+                                    <label for="slides">Sides</label>
                                     <div data-role="input-control" class="input-control">
                                         <select class="size4" name="slides" id="slides">
                                             <option value=""></option>
                                             <?php foreach ($relatedFields['sides'] as $side) { ?>
                                                 <option value="<?php echo $side->getId(); ?>"><?php echo $side->getName() ?></option>
                                             <?php } ?>
-                                        </select> 
+                                        </select>
                                     </div>
                                 </div>
                                 <div id="trackTypes_lbl" class="col-lg-6" style="display: block;">
-                                    <label for="trackTypes">Track Type</label> 
+                                    <label for="trackTypes">Track Type</label>
                                     <div data-role="input-control" class="input-control">
                                         <select class="size4" name="trackTypes" id="trackTypes">
                                             <?php foreach ($relatedFields['trackTypes'] as $trackType) { ?>
@@ -165,7 +165,7 @@
                                     </div>
                                 </div>
                                 <div id="monoStereo_lbl" class="col-lg-6" style="">
-                                    <label for="monoStereo">Mono or Stereo</label>                
+                                    <label for="monoStereo">Mono or Stereo</label>
                                     <div data-role="input-control" class="input-control">
                                         <select class="size4" name="monoStereo" id="monoStereo">
                                             <option value=""></option>
@@ -178,7 +178,7 @@
                                 <div id="noiceReduction_lbl" class="col-lg-6" style="">
                                     <label for="noiceReduction">Noise Reduction</label>
                                     <div data-role="input-control" class="input-control">
-                                        <select class="size4" name="noiceReduction" id="noiceReduction">  
+                                        <select class="size4" name="noiceReduction" id="noiceReduction">
                                             <option value=""></option>
                                             <?php foreach ($relatedFields['noiseReduction'] as $noiseReduction) { ?>
                                                 <option value="<?php echo $noiseReduction->getId(); ?>"><?php echo $noiseReduction->getName() ?></option>
@@ -192,7 +192,7 @@
                                 <div id="reelCore_lbl" class="col-lg-6" style="">
                                     <label for="reelCore">Reel or Core </label>
                                     <div data-role="input-control" class="input-control">
-                                        <select class="size4" name="reelCore" id="reelCore">  
+                                        <select class="size4" name="reelCore" id="reelCore">
                                             <?php foreach ($relatedFields['reelCore'] as $reelCore) { ?>
                                                 <option value="<?php echo $reelCore->getId(); ?>"><?php echo $reelCore->getName() ?></option>
                                             <?php } ?>
@@ -200,7 +200,7 @@
                                     </div>
                                 </div>
                                 <div id="reelDiameters_lbl" class="col-lg-6" style="display: block;">
-                                    <label for="reelDiameters">Reel Diameter</label>                
+                                    <label for="reelDiameters">Reel Diameter</label>
                                     <div data-role="input-control" class="input-control">
                                         <select class="size4" name="reelDiameters" id="reelDiameters">
                                             <?php foreach ($relatedFields['reelDiameters'] as $reelDiameter) { ?>
@@ -210,13 +210,13 @@
                                     </div>
                                 </div>
                                 <div id="footage_lbl" class="col-lg-6" style="">
-                                    <label for="footage">Footage</label> 
+                                    <label for="footage">Footage</label>
                                     <div data-role="input-control" class="input-control">
-                                        <input type="number" class="size4" name="footage" id="footage"> 
+                                        <input type="number" class="size4" name="footage" id="footage">
                                     </div>
                                 </div>
                                 <div id="mediaDiameter_lbl" class="col-lg-6" style="">
-                                    <label for="mediaDiameter">Media Diameter</label> 
+                                    <label for="mediaDiameter">Media Diameter</label>
                                     <div data-role="input-control" class="input-control">
                                         <input type="number" class="size4" name="mediaDiameter" id="mediaDiameter">                        <span class="has-error text-danger"></span>
                                     </div>
@@ -242,13 +242,13 @@
                                     </div>
                                 </div>
                                 <div id="sound_lbl" class="col-lg-6" style="">
-                                    <label for="sound">Sound</label> 
+                                    <label for="sound">Sound</label>
                                     <div data-role="input-control" class="input-control">
                                         <select class="size4" name="sound" id="sound">
                                             <?php foreach ($relatedFields['sounds'] as $sound) { ?>
                                                 <option value="<?php echo $sound->getId(); ?>"><?php echo $sound->getName() ?></option>
                                             <?php } ?>
-                                        </select> 
+                                        </select>
                                     </div>
                                 </div>
                                 <div id="frameRate_lbl" class="col-lg-6" style="">
@@ -262,7 +262,7 @@
                                     </div>
                                 </div>
                                 <div id="acidDetectionStrip_lbl" class="col-lg-6" style="">
-                                    <label for="acidDetectionStrip">Acid Detection Strip</label> 
+                                    <label for="acidDetectionStrip">Acid Detection Strip</label>
                                     <div data-role="input-control" class="input-control">
                                         <select class="size4" name="acidDetectionStrip" id="acidDetectionStrip">
                                             <?php foreach ($relatedFields['acidDetectionStrips'] as $acidDetectionStrip) { ?>
@@ -295,7 +295,7 @@
                                     </div>
                                 </div>
                                 <div id="reelDiameters_lbl" class="col-lg-6" style="display: block;">
-                                    <label for="reelDiameters">Reel Diameter</label>                
+                                    <label for="reelDiameters">Reel Diameter</label>
                                     <div data-role="input-control" class="input-control">
                                         <select class="size4" name="reelDiameters" id="reelDiameters">
                                             <?php foreach ($relatedFields['reelDiameters'] as $reelDiameter) { ?>
@@ -305,7 +305,7 @@
                                     </div>
                                 </div>
                                 <div id="formatVersion_lbl" class="col-lg-6" style="display: block;">
-                                    <label for="formatVersion">Format Version</label> 
+                                    <label for="formatVersion">Format Version</label>
                                     <div data-role="input-control" class="input-control">
                                         <select class="size4" name="formatVersion" id="formatVersion">
                                             <?php foreach ($relatedFields['formatVersions'] as $formatVersion) { ?>
@@ -315,9 +315,9 @@
                                     </div>
                                 </div>
                                 <div id="mediaDuration_lbl" class="col-lg-6" style="">
-                                    <label for="mediaDuration">Media Duration</label> 
+                                    <label for="mediaDuration">Media Duration</label>
                                     <div data-role="input-control" class="input-control">
-                                        <input type="text" class="size4" name="mediaDuration" id="mediaDuration"> 
+                                        <input type="text" class="size4" name="mediaDuration" id="mediaDuration">
                                     </div>
                                 </div>
                                 <div id="recordingSpeed_lbl" class="col-lg-6" style="">
@@ -326,18 +326,18 @@
                                         <select class="size4" name="recordingSpeed" id="recordingSpeed">
                                             <?php foreach ($relatedFields['recordingSpeed'] as $recordingSpeed) { ?>
                                                 <option value="<?php echo $recordingSpeed->getId(); ?>"><?php echo $recordingSpeed->getName() ?></option>
-                                            <?php } ?> 
+                                            <?php } ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div id="recordingStandard_lbl" class="col-lg-6" style="">
-                                    <label for="recordingStandard">Recording Standards</label> 
+                                    <label for="recordingStandard">Recording Standards</label>
                                     <div data-role="input-control" class="input-control">
                                         <select class="size4" name="recordingStandard" id="recordingStandard">
                                             <?php foreach ($relatedFields['recordingStandards'] as $recordingStandard) { ?>
                                                 <option value="<?php echo $recordingStandard->getId(); ?>"><?php echo $recordingStandard->getName() ?></option>
-                                            <?php } ?> 
-                                        </select> 
+                                            <?php } ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <?php
@@ -345,15 +345,15 @@
                         }
                         ?>
                         <div id="contentDuration_lbl" class="col-lg-6" style="">
-                            <label for="contentDuration">Content Duration</label> 
+                            <label for="contentDuration">Content Duration</label>
                             <div data-role="input-control" class="input-control">
                                 <input type="text" class="size4" name="contentDuration" id="contentDuration">
                             </div>
                         </div>
                         <div id="copyrightRestrictions_lbl" class="col-lg-6" style="">
-                            <label for="copyrightRestrictions">Copyrights</label> 
+                            <label for="copyrightRestrictions">Copyrights</label>
                             <div data-role="input-control" class="input-control">
-                                <input type="text" class="size4" maxlength="250" name="copyrightRestrictions" id="copyrightRestrictions">                            
+                                <input type="text" class="size4" maxlength="250" name="copyrightRestrictions" id="copyrightRestrictions">
                             </div>
                         </div>
                     </fieldset>
@@ -377,4 +377,3 @@
         initialize_records_form();
     });
 </script>
-

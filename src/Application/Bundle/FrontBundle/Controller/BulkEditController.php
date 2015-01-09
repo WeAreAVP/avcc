@@ -8,7 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
-use Application\Bundle\FrontBundle\Helper\SphinxHelper;
 
 /**
  * Bulk Edit controller.
@@ -87,7 +86,7 @@ class BulkEditController extends Controller
 
     /**
      * Get related field data for bulk edit
-     * 
+     *
      * @return array
      */
     protected function getRelatedFields()
@@ -118,6 +117,7 @@ class BulkEditController extends Controller
         $data['recordingSpeed'] = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findAll();
         $data['formatVersions'] = $em->getRepository('ApplicationFrontBundle:FormatVersions')->findAll();
         $data['tapeThickness'] = $em->getRepository('ApplicationFrontBundle:TapeThickness')->findAll();
+
         return $data;
     }
 
@@ -289,6 +289,7 @@ class BulkEditController extends Controller
         if ($update) {
             $em->flush();
         }
+
         return $update;
     }
 
@@ -323,6 +324,7 @@ class BulkEditController extends Controller
         if ($update) {
             $em->flush();
         }
+
         return $update;
     }
 
@@ -376,6 +378,7 @@ class BulkEditController extends Controller
         if ($update) {
             $em->flush();
         }
+
         return $update;
     }
 
@@ -386,7 +389,7 @@ class BulkEditController extends Controller
      * @param type  $sphinxInfo
      * @param type  $em
      * @param array $columnNames
-     * 
+     *
      * @return array
      */
     protected function fetchFromSphinx($user, $sphinxInfo, $em)
@@ -404,14 +407,15 @@ class BulkEditController extends Controller
                 $count++;
             }
         }
+
         return $recordIds;
     }
-    
+
     /**
      * Get record ids from sphinx records
-     * 
+     *
      * @param array $sphinxRecords
-     * 
+     *
      * @return array
      */
     protected function getRecordIds($sphinxRecords)
@@ -420,6 +424,7 @@ class BulkEditController extends Controller
         foreach ($sphinxRecords as $record) {
             $recordIds[] = $record['id'];
         }
+
         return $recordIds;
     }
 

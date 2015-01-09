@@ -12,11 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class AcidDetectionStripsRepository extends EntityRepository
 {
-    public function getAllAsArray(){
+    public function getAllAsArray()
+    {
         $names = $this->getEntityManager()->createQuery('SELECT distinct(acidDetectionStrips.name)'
                 . ' from ApplicationFrontBundle:AcidDetectionStrips  acidDetectionStrips'
                 )->getScalarResult();
         $acidDetectionStrips = array_map("current",$names);
+
         return $acidDetectionStrips;
     }
 }

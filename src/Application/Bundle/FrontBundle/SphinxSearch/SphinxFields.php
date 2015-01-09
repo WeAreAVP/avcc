@@ -20,7 +20,7 @@ class SphinxFields
     {
 
         $this->record = $entityManager->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('id' => $recordId));
-        
+
         $this->indexFields['id'] = $this->record->getId();
         $this->indexFields['s_title'] = ($this->record->getTitle()) ? (string) $this->record->getTitle() : "";
         $this->indexFields['title'] = ($this->record->getTitle()) ? (string) $this->record->getTitle() : "";
@@ -67,6 +67,7 @@ class SphinxFields
         } else {
             $this->prepareVideoFields();
         }
+
         return $this->indexFields;
     }
 

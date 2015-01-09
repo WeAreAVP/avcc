@@ -12,11 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class PrintTypesRepository extends EntityRepository
 {
-    public function getAllAsArray(){
+    public function getAllAsArray()
+    {
         $names = $this->getEntityManager()->createQuery('SELECT printTypes.name'
                 . ' from ApplicationFrontBundle:PrintTypes printTypes'
                 )->getScalarResult();
         $pt = array_map("current",$names);
+
         return $pt;
     }
 }

@@ -7,11 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Application\Bundle\FrontBundle\Helper\DefaultFields;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Application\Bundle\FrontBundle\Entity\ImportExport;
-use Application\Bundle\FrontBundle\Helper\SphinxHelper;
 use JMS\JobQueueBundle\Entity\Job;
 use DateInterval;
 use DateTime;
@@ -27,7 +24,7 @@ class ImportController extends Controller
 {
 
     /**
-     * Import file 
+     * Import file
      *
      * @Route("/", name="import_index")
      * @Method("POST")
@@ -39,7 +36,7 @@ class ImportController extends Controller
     }
 
     /**
-     * Import file 
+     * Import file
      *
      * @Route("/import", name="import_record")
      * @Method("GET")
@@ -55,26 +52,25 @@ class ImportController extends Controller
 
         if ($validation) {
             echo '<pre>';
-            foreach ($validation as $key => $value){
+            foreach ($validation as $key => $value) {
                 echo '<p><b>'. str_replace('_', ' ', ucfirst($key)) . '</b><br />';
                 echo implode('<br />', $value);
                 echo '</p>';
             }
-        }else{
+        } else {
             $numberOfRecords = $import->getRecordsFromFile($fileName, $this->getUser());
             echo '<pre>';
             print_r($numberOfRecords);
         }
 
-
         exit;
     }
 
     /**
-     * Import file 
-     * 
+     * Import file
+     *
      * @param Request $request
-     * 
+     *
      * @Route("/importRecords", name="import_records")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:Records:default.html.php")

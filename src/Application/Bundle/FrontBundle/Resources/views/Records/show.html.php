@@ -90,37 +90,37 @@
                     <td><?php echo $entity->getCommercial()->getName() ?></td>
                 </tr>
             <?php endif; ?>
-            <?php if ($entity->getAudioRecord()): ?>  
+            <?php if ($entity->getAudioRecord()): ?>
                 <?php if ($entity->getAudioRecord()->getDiskDiameters()): ?>
                     <tr>
                         <th class="text-right">Disk Diameter</th>
                         <td><?php echo $entity->getAudioRecord()->getDiskDiameters()->getName() ?></td>
                     </tr>
                 <?php endif; ?>
-            <?php endif; ?>  
-            <?php if ($entity->getVideoRecord()): ?>          
+            <?php endif; ?>
+            <?php if ($entity->getVideoRecord()): ?>
                 <?php if ($entity->getVideoRecord()->getCassetteSize()): ?>
                     <tr>
                         <th class="text-right">Cassette Size</th>
                         <td><?php echo $entity->getVideoRecord()->getCassetteSize()->getName() ?></td>
                     </tr>
-                <?php endif; ?>    
-            <?php endif; ?>  
-            <?php if ($entity->getFilmRecord()): ?> 
+                <?php endif; ?>
+            <?php endif; ?>
+            <?php if ($entity->getFilmRecord()): ?>
                 <?php if ($entity->getFilmRecord()->getReelCore()): ?>
                     <tr>
                         <th class="text-right">Reel or Core</th>
                         <td><?php echo $entity->getFilmRecord()->getReelCore()->getName() ?></td>
                     </tr>
                 <?php endif; ?>
-            <?php endif; ?>         
+            <?php endif; ?>
             <?php if ($entity->getReelDiameters()): ?>
                 <tr>
                     <th class="text-right">Reel Diameter</th>
                     <td><?php echo $entity->getReelDiameters()->getName() ?></td>
                 </tr>
             <?php endif; ?>
-            <?php if ($entity->getAudioRecord()): ?>  
+            <?php if ($entity->getAudioRecord()): ?>
                 <?php if ($entity->getAudioRecord()->getMediaDiameters()): ?>
                     <tr>
                         <th class="text-right">Media Diameter</th>
@@ -134,7 +134,7 @@
                     </tr>
                 <?php endif; ?>
             <?php endif; ?>
-            <?php if ($entity->getFilmRecord()): ?> 
+            <?php if ($entity->getFilmRecord()): ?>
                 <?php if ($entity->getFilmRecord()->getFootage()): ?>
                     <tr>
                         <th class="text-right">Footage</th>
@@ -165,7 +165,7 @@
                         <td><?php echo $entity->getFilmRecord()->getSound()->getName() ?></td>
                     </tr>
                 <?php endif; ?>
-            <?php endif; ?>        
+            <?php endif; ?>
             <?php if ($entity->getContentDuration()): ?>
                 <tr>
                     <th class="text-right">Content Duration</th>
@@ -187,7 +187,7 @@
                         <td><?php echo $entity->getVideoRecord()->getMediaDuration() ?></td>
                     </tr>
                 <?php endif; ?>
-            <?php endif; ?>        
+            <?php endif; ?>
             <?php if ($entity->getCreationDate()): ?>
                 <tr>
                     <th class="text-right">Creation Date</th>
@@ -206,7 +206,7 @@
                     <td><?php echo ($entity->getIsReview()) ? 'Yes' : 'No' ?></td>
                 </tr>
             <?php endif; ?>
-            <?php if ($entity->getAudioRecord()): ?>     
+            <?php if ($entity->getAudioRecord()): ?>
                 <?php if ($entity->getAudioRecord()->getRecordingSpeed()): ?>
                     <tr>
                         <th class="text-right">Recording Speed</th>
@@ -243,8 +243,8 @@
                         <td><?php echo $entity->getAudioRecord()->getNoiceReduction() ?></td>
                     </tr>
                 <?php endif; ?>
-            <?php endif; ?> 
-            <?php if ($entity->getVideoRecord()): ?>        
+            <?php endif; ?>
+            <?php if ($entity->getVideoRecord()): ?>
                 <?php if ($entity->getVideoRecord()->getFormatVersion()): ?>
                     <tr>
                         <th class="text-right">Format Version</th>
@@ -262,7 +262,7 @@
                         <th class="text-right">Recording Standard</th>
                         <td><?php echo $entity->getVideoRecord()->getRecordingStandard() ?></td>
                     </tr>
-                <?php endif; ?>  
+                <?php endif; ?>
             <?php endif; ?>
             <?php if ($entity->getFilmRecord()): ?>
                 <?php if ($entity->getFilmRecord()->getFrameRate()): ?>
@@ -283,7 +283,7 @@
                         <td><?php echo $entity->getFilmRecord()->getShrinkage() ?></td>
                     </tr>
                 <?php endif; ?>
-            <?php endif; ?>        
+            <?php endif; ?>
             <?php if ($entity->getGenreTerms()): ?>
                 <tr>
                     <th class="text-right">Genre Terms </th>

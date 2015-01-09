@@ -14,7 +14,7 @@
             <div class="button-dropdown place-left">
                 <button class="dropdown-toggle">Operations</button>
                 <ul class="dropdown-menu" data-role="dropdown">
-                    
+
                         <li>
                             <a href="<?php echo $view['router']->generate('record_new') ?>">Add Record</a>
                         </li>
@@ -31,17 +31,17 @@
                                 <li><a href="javascript://" class="exportMerge" data-type="csv">CSV</a></li>
                                 <li><a href="javascript://" class="exportMerge" data-type="xlsx">XLSX</a></li>
                             </ul>
-                        </li>                         
+                        </li>
                         <li>
                             <a class="dropdown-toggle" href="#">Import</a>
                             <ul class="dropdown-menu" data-role="dropdown">
                                 <li><a href="javascript://" class="import" data-type="csv">CSV</a></li>
                                 <li><a href="javascript://" class="import" data-type="xlsx">XLSX</a></li>
                             </ul>
-                        </li>                      
+                        </li>
                         <li>
                             <a href="javascript://" id="bulkEdit">Bulk Edit</a>
-                        </li>                    
+                        </li>
                 </ul>
             </div>
             <?php endif; ?>
@@ -91,7 +91,7 @@
         <?php
         endforeach;
         $app->getSession()->remove('report_error');
-        ?>       
+        ?>
 <?php if (!$isAjax): ?>
     <?php $view['slots']->start('view_javascripts') ?>
 

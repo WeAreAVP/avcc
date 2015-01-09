@@ -12,11 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class CassetteSizesRepository extends EntityRepository
 {
-    public function getAllAsArray(){
+    public function getAllAsArray()
+    {
         $names = $this->getEntityManager()->createQuery('SELECT distinct(cassetteSizes.name)'
                 . ' from ApplicationFrontBundle:CassetteSizes cassetteSizes'
                 )->getScalarResult();
         $cassetteSizes = array_map("current",$names);
+
         return $cassetteSizes;
     }
 }

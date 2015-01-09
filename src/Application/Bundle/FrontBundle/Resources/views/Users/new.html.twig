@@ -33,7 +33,7 @@
                 {% endfor %}
             </div>
             {% if is_granted('ROLE_SUPER_ADMIN') %}
-                <div id="orgDiv"> 
+                <div id="orgDiv">
                     <label>Organizations</label>
                     <div class="input-control select" data-role="input-control">
                         {{ form_widget(form.organizations, {id:'userOrganization',attr: {class:'size4'} }) }}

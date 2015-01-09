@@ -36,7 +36,7 @@
         <dl class="horizontal">
             <dt>Organizations</dt>
             <dd>{{ entity.organizations }}</dd>
-        </dl>    
+        </dl>
         <div class="clearfix"></div>
         <dl class="horizontal">
             <dt>Roles</dt>
@@ -48,13 +48,13 @@
         {% if entity.userProjects %}
         <dl class="horizontal">
             <dt>Projects</dt>
-            <dd> 
+            <dd>
                 {% for project in entity.userProjects %}
                    {{ project.name ~ ','  }}
                 {% endfor %}
             </dd>
         </dl>
-        {% endif%}    
+        {% endif%}
 
     </div>
 {% endblock body %}

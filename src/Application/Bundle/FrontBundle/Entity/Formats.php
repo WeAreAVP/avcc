@@ -101,8 +101,8 @@ class Formats
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
-    private $reelDiameter;    
-    
+    private $reelDiameter;
+
     /**
      * @var width
      *
@@ -326,6 +326,5 @@ class Formats
     public function setWidth($width)
     {
         $this->width = $width;
-    }
-    
+    } 
 }

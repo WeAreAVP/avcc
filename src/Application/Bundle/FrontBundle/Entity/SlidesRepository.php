@@ -12,11 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class SlidesRepository extends EntityRepository
 {
-    public function getAllAsArray(){
+    public function getAllAsArray()
+    {
         $names = $this->getEntityManager()->createQuery('SELECT distinct(slides.name)'
                 . ' from ApplicationFrontBundle:Slides slides'
                 )->getScalarResult();
         $slides = array_map("current",$names);
+
         return $slides;
     }
 }

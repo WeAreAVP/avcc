@@ -12,11 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class ReelCoreRepository extends EntityRepository
 {
-    public function getAllAsArray(){
+    public function getAllAsArray()
+    {
         $names=  $this->getEntityManager()->createQuery('SELECT distinct(reelCore.name)'
                 . ' from ApplicationFrontBundle:ReelCore reelCore'
                 )->getScalarResult();
         $reel = array_map("current",$names);
+
         return $reel;
     }
 }

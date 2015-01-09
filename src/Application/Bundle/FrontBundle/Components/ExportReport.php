@@ -288,6 +288,7 @@ class ExportReport extends ContainerAware
                             $newrow++;
                         }
                     }
+
                     return $newphpExcelObject;
                 } else {
                     return "The file $mergeToFile is empty";
@@ -465,6 +466,7 @@ class ExportReport extends ContainerAware
             $newRow['external_format_version'] = $row['format_version'];
             $newRow['external_media_duration'] = $row['media_duration'];
         }
+
         return $newRow;
     }
 
@@ -942,6 +944,7 @@ class ExportReport extends ContainerAware
             $activeSheet->getStyleByColumnAndRow(13, $row)->getFont()->setBold(true);
             $row ++;
         }
+
         return $row;
     }
 
@@ -1026,6 +1029,7 @@ class ExportReport extends ContainerAware
             $activeSheet->getStyleByColumnAndRow(13, $row)->getFont()->setBold(true);
             $row ++;
         }
+
         return $row;
     }
 
@@ -1101,6 +1105,7 @@ class ExportReport extends ContainerAware
             $activeSheet->getStyleByColumnAndRow(11, $row)->getFont()->setBold(true);
             $row ++;
         }
+
         return $row;
     }
 
@@ -1206,6 +1211,7 @@ class ExportReport extends ContainerAware
             $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, number_format($totalLinearCount, 5));
             $activeSheet->getStyleByColumnAndRow(4, $row)->getFont()->setBold(true);
         }
+
         return $row;
     }
 

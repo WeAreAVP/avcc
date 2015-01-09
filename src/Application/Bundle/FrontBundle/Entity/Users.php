@@ -90,7 +90,7 @@ class Users extends BaseUser
      * @ORM\OrderBy({"id"="ASC"})
      */
     private $userSetting;
-    
+
     /**
      * @ORM\ManyToMany(targetEntity="Application\Bundle\FrontBundle\Entity\Projects", inversedBy="projectUsers", cascade={"refresh"})
      * @ORM\JoinTable(
@@ -312,7 +312,7 @@ class Users extends BaseUser
     {
          $this->userSetting->remove($us);
     }
-    
+
     /**
      * Add user project
      * @param \Application\Bundle\FrontBundle\Entity\Projects $project
@@ -336,10 +336,10 @@ class Users extends BaseUser
     {
          $this->userProjects->remove($project);
     }
-    
+
     /**
-     * 
-     * @param \Application\Bundle\FrontBundle\Entity\Projects $p
+     *
+     * @param  \Application\Bundle\FrontBundle\Entity\Projects $p
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
     public function setUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $p)
@@ -350,7 +350,7 @@ class Users extends BaseUser
     }
 
     /**
-     * 
+     *
      * @return type
      */
     public function getUserProjects()

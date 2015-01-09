@@ -129,6 +129,7 @@ class SphinxSearch extends ContainerAware
                 ->limit($offset, $limit)
                 ->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
                 ->executeBatch();
+
         return $result;
     }
 
@@ -242,7 +243,7 @@ class SphinxSearch extends ContainerAware
             }
         }
     }
-    
+
     /**
      * get count and media/content duration sum for report.
      *

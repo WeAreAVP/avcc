@@ -12,11 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class TrackTypesRepository extends EntityRepository
 {
-    public function getAllAsArray(){
+    public function getAllAsArray()
+    {
         $names = $this->getEntityManager()->createQuery('SELECT distinct(trackTypes.name)'
                 . ' from ApplicationFrontBundle:TrackTypes trackTypes'
                 )->getScalarResult();
         $tt = array_map("current",$names);
+
         return $tt;
     }
 }

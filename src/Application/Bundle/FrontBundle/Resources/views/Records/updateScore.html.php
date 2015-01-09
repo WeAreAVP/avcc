@@ -13,8 +13,8 @@
             </div>
         </form>
         <p>
-            <?php 
-              if(isset($updated)){
+            <?php
+              if (isset($updated)) {
                   echo implode("<br />", $updated);
               }
             ?>

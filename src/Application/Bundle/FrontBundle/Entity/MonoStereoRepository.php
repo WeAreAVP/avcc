@@ -12,11 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class MonoStereoRepository extends EntityRepository
 {
-    public function getAllAsArray(){
+    public function getAllAsArray()
+    {
         $names = $this->getEntityManager()->createQuery('SELECT monoStereo.name'
                 . ' from ApplicationFrontBundle:MonoStereo monoStereo'
                 )->getScalarResult();
         $monoStero = array_map("current",$names);
+
         return $monoStero;
     }
 }

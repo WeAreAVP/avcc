@@ -74,7 +74,7 @@ class FilmRecordsController extends Controller
 
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
-                if(is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))){
+                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))) {
                     $error = new FormError("Project is required field.");
                     $recordForm = $form->get('record');
                     $recordForm->get('project')->addError($error);
@@ -84,11 +84,11 @@ class FilmRecordsController extends Controller
                     $recordForm = $form->get('record');
                     $recordForm->get('uniqueId')->addError($error);
                 }
-                if(is_int(strpos($e->getPrevious()->getMessage(), "Column 'format_id' cannot be null"))){
+                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'format_id' cannot be null"))) {
                     $error = new FormError("Format is required field.");
                     $recordForm = $form->get('record');
                     $recordForm->get('format')->addError($error);
-                }                
+                }
             }
         }
         $user_view_settings = $fieldsObj->getFieldSettings($this->getUser(), $em);
@@ -303,7 +303,7 @@ class FilmRecordsController extends Controller
 
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
-                if(is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))){
+                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))) {
                     $error = new FormError("Project is required field.");
                     $recordForm = $form->get('record');
                     $recordForm->get('project')->addError($error);
@@ -313,11 +313,11 @@ class FilmRecordsController extends Controller
                     $recordForm = $editForm->get('record');
                     $recordForm->get('uniqueId')->addError($error);
                 }
-                if(is_int(strpos($e->getPrevious()->getMessage(), "Column 'format_id' cannot be null"))){
+                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'format_id' cannot be null"))) {
                     $error = new FormError("Format is required field.");
                     $recordForm = $form->get('record');
                     $recordForm->get('format')->addError($error);
-                }                
+                }
             }
         }
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);

@@ -12,11 +12,13 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProjectsRepository extends EntityRepository
 {
-    public function getAllAsArray(){
+    public function getAllAsArray()
+    {
         $names = $this->getEntityManager()->createQuery('SELECT projects.name'
                 . ' from ApplicationFrontBundle:Projects projects'
                 )->getScalarResult();
         $p = array_map("current",$names);
+
         return $p;
     }
 }
