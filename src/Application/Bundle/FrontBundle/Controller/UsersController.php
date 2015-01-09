@@ -39,9 +39,10 @@ class UsersController extends Controller
         } else {
             $entities = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $this->getUser()->getOrganizations()));
         }
-
+        $currentUserId = $this->getUser()->getId();
         return array(
             'entities' => $entities,
+            'currentUserId' => $currentUserId 
         );
     }
 

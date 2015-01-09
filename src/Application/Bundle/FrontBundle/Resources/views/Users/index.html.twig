@@ -24,6 +24,7 @@
 			</thead>
 			<tbody>
 				{% for entity in entities %}
+                                    {% if entity.id != currentUserId %}
 					<tr>
 
 						<td><a href="{{ path('users_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
@@ -44,6 +45,7 @@
 							</td>
 						{% endif %}
 					</tr>
+                                        {% endif %}
 				{% endfor %}
 			</tbody>
 		</table>
