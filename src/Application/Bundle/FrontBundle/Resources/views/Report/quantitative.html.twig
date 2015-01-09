@@ -2,10 +2,10 @@
 
 {% block body %}
     <h1><a href="{{ path('report') }}#_quantitaive"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>Format Report
-	</h1>
-	<br/>
-	<div id="quantitative_container">
-	</div>
+    </h1>
+    <br/>
+    <div id="quantitative_container">
+    </div>
 
 
 
@@ -13,58 +13,65 @@
 {% endblock %}
 {% block view_javascripts %}
 
-	<script type="text/javascript" src="{{ asset('js/highcharts.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('js/exporting.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/highcharts.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/exporting.js') }}"></script>
 
-	<script type="text/javascript">
-		var formats ={{ formats | raw }} ;
-		$(window).load(function () {
-			$('#quantitative_container').highcharts({
-				chart: {
-					type: 'column'
-				},
-				title: {
-					text: ''
-				},
-				subtitle: {
-					text: ''
-				},
-				credits: {
-					enabled: false
-				},
-				xAxis: {
-					type: 'category'
-				},
-				yAxis: {
-					title: {
-						text: 'Total count per format'
-					}
-				},
-				legend: {
-					enabled: false
-				},
-				plotOptions: {
-					series: {
-						borderWidth: 0,
-						dataLabels: {
-							enabled: true,
-							format: '{point.y}'
-						}
-					}
-				},
-				tooltip: {
-					headerFormat: '<span><b>{series.name}: </b></span>',
-					pointFormat: '<span style="color:{point.color}">{point.name}</span><br/><b>Total:</b>{point.y}<br/>'
-				},
-				series: [{
-						name: 'Format',
-						colorByPoint: true,
-						data: formats
-					}]
-			});
+    <script type="text/javascript">
+        var formats ={{ formats | raw }} ;
+                $(window).load(function () {
+            $('#quantitative_container').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                credits: {
+                    enabled: false
+                },
+                xAxis: {
+                    type: 'category',
+                    labels: {
+                        rotation: -90,
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total count per format'
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y}'
+                        }
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span><b>{series.name}: </b></span>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span><br/><b>Total:</b>{point.y}<br/>'
+                },
+                series: [{
+                        name: 'Format',
+                        colorByPoint: true,
+                        data: formats
+                    }]
+            });
 
-		});
+        });
 
 
-	</script>
+    </script>
 {% endblock %}

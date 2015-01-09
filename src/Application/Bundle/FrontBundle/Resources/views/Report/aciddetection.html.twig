@@ -3,10 +3,10 @@
 {% block body %}
     <h1><a href="{{ path('report') }}#_quantitaive"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
         Film Acid Detection Strip Report
-	</h1>
-	<br/>
-	<div id="report_container">
-	</div>
+    </h1>
+    <br/>
+    <div id="report_container">
+    </div>
 
 
 
@@ -14,58 +14,58 @@
 {% endblock %}
 {% block view_javascripts %}
 
-	<script type="text/javascript" src="{{ asset('js/highcharts.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('js/exporting.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/highcharts.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/exporting.js') }}"></script>
 
-	<script type="text/javascript">
-		var acid ={{ acid | raw }} ;
-		$(window).load(function () {
-			$('#report_container').highcharts({
-				chart: {
-					type: 'column'
-				},
-				title: {
-					text: ''
-				},
-				subtitle: {
-					text: ''
-				},
-				credits: {
-					enabled: false
-				},
-				xAxis: {
-					type: 'category'
-				},
-				yAxis: {
-					title: {
-						text: 'Total count per sound'
-					}
-				},
-				legend: {
-					enabled: false
-				},
-				plotOptions: {
-					series: {
-						borderWidth: 0,
-						dataLabels: {
-							enabled: true,
-							format: '{point.y}'
-						}
-					}
-				},
-				tooltip: {
-					headerFormat: '<span><b>{series.name}: </b></span>',
-					pointFormat: '<span style="color:{point.color}">{point.name}</span><br/><b>Total:</b>{point.y}<br/>'
-				},
-				series: [{
-						name: 'Film Acid Detection Strip',
-						colorByPoint: true,
-						data: acid
-					}]
-			});
+    <script type="text/javascript">
+        var acid ={{ acid | raw }} ;
+                $(window).load(function () {
+            $('#report_container').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                credits: {
+                    enabled: false
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total count per sound'
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y}'
+                        }
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span><b>{series.name}: </b></span>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span><br/><b>Total:</b>{point.y}<br/>'
+                },
+                series: [{
+                        name: 'Film Acid Detection Strip',
+                        colorByPoint: true,
+                        data: acid
+                    }]
+            });
 
-		});
+        });
 
 
-	</script>
+    </script>
 {% endblock %}
