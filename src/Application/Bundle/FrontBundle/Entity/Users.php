@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
  * Users
  *
  * @ORM\Table(name="users")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\UsersRepository")
  * @ORM\HasLifecycleCallbacks
  * @UniqueEntity(fields="username", message="Username already in use.")
  * @UniqueEntity(fields="email", message="Email already in use.")
