@@ -1164,7 +1164,7 @@ class ExportReport extends ContainerAware
                 foreach ($records['audio'] as $audio) {
                     $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Audio");
                     $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $audio['format']);
-                    $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $audio['sum_content_duration']);
+                    $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $audio['width']);
                     $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $audio['total']);
                     $linearAudioCount = $this->calculateLinearFeet($audio['total'], $audio['width']);
                     $totalLinearAudioCount += $linearAudioCount;
@@ -1185,7 +1185,7 @@ class ExportReport extends ContainerAware
                 foreach ($records['video'] as $video) {
                     $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Video");
                     $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $video['format']);
-                    $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $video['sum_content_duration']);
+                    $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $video['width']);
                     $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $video['total']);
                     $linearVideoCount = $this->calculateLinearFeet($video['total'], $video['width']);
                     $totalLinearVideoCount += $linearVideoCount;
