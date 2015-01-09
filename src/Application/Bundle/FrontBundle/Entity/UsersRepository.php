@@ -14,9 +14,9 @@ class UsersRepository extends EntityRepository
 {
     public function getUsersWithoutCurentLoggedIn($id, $organizationId = null)
     {
-        $where = ' Where id != '. $id;
+        $where = ' Where u.id != '. $id;
         if($organizationId){
-            $where .= ' AND organizations = '.$organizationId;
+            $where .= ' AND u.organizations = '.$organizationId;
         }
         $query = $this->getEntityManager()->createQuery('SELECT u'
                 . ' from ApplicationFrontBundle:Users u '
