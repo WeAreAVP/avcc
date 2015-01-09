@@ -59,7 +59,7 @@ class SphinxFields
         $this->indexFields['created_on'] = ($this->record->getCreatedOn()) ? $this->record->getCreatedOn()->format('Y-m-d H:i:s') : "";
         $this->indexFields['updated_on'] = ($this->record->getUpdatedOn()) ? $this->record->getUpdatedOn()->format('Y-m-d H:i:s') : "";
         $this->indexFields['project_id'] = ($this->record->getProject()) ? $this->record->getProject()->getId() : "";
-        $this->indexFields['width'] = ($this->record->getFormat()) ? (int) $this->record->getFormat()->getWidth() : 0;
+        $this->indexFields['width'] = ($this->record->getFormat()) ? (float) $this->record->getFormat()->getWidth() : 0;
         if ($this->record->getAudioRecord()) {
             $this->prepareAudioFields();
         } elseif ($this->record->getFilmRecord()) {
