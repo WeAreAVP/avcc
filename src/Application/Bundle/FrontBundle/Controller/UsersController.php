@@ -37,7 +37,7 @@ class UsersController extends Controller
         if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
             $entities = $em->getRepository('ApplicationFrontBundle:Users')->getUsersWithoutCurentLoggedIn($currentUserId);
         } else {
-            $entities = $em->getRepository('ApplicationFrontBundle:Users')->getUsersWithoutCurentLoggedIn($currentUserId,  $this->getUser()->getOrganizations());
+            $entities = $em->getRepository('ApplicationFrontBundle:Users')->getUsersWithoutCurentLoggedIn($currentUserId,  $this->getUser()->getOrganizations()->getId());
         }
         
         return array(
