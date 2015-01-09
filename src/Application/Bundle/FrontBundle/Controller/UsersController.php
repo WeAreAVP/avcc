@@ -33,16 +33,15 @@ class UsersController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
-        if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
-            $entities = $em->getRepository('ApplicationFrontBundle:Users')->findAll();
-        } else {
-            $entities = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $this->getUser()->getOrganizations()));
-        }
         $currentUserId = $this->getUser()->getId();
+        if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+            $entities = $em->getRepository('ApplicationFrontBundle:Users')->getUsersWithoutCurentLoggedIn($currentUserId);
+        } else {
+            $entities = $em->getRepository('ApplicationFrontBundle:Users')->getUsersWithoutCurentLoggedIn($currentUserId,  $this->getUser()->getOrganizations());
+        }
+        
         return array(
             'entities' => $entities,
-            'currentUserId' => $currentUserId 
         );
     }
 
