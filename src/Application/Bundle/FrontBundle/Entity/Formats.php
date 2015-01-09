@@ -35,10 +35,10 @@ class Formats
     private $name;
 
     /**
-     * @var real
+     * @var score
      *
      * @ORM\Column(name="score", type="float", options={"default" = 0})
-     * @Assert\NotBlank(message="Score is required")
+     * 
      */
     private $score = 0;
 
@@ -103,6 +103,12 @@ class Formats
      */
     private $reelDiameter;    
     
+    /**
+     * @var width
+     *
+     * @ORM\Column(name="width", type="float", nullable=true, options={"default" = 0})
+     */
+    private $width = 0;
     /**
      * Formats constructor
      */
@@ -298,6 +304,28 @@ class Formats
     public function setScore($score)
     {
         $this->score = $score;
+    }
+    
+    /**
+     * Get width
+     *
+     * @return foat width
+     */
+    public function getWidth()
+    {
+        return $this->width;
+    }
+
+    /**
+     * Set width
+     *
+     * @param float $width
+     *
+     * @return float width
+     */
+    public function setWidth($width)
+    {
+        $this->width = $width;
     }
     
 }
