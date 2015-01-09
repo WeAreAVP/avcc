@@ -16,7 +16,7 @@ class UsersRepository extends EntityRepository
     {
         $where = ' Where u.id != '. $id;
         if($organizationId){
-            $where .= ' AND u.organizations = '.$organizationId;
+            $where .= ' AND u.organizations = "'.$organizationId.'"';
         }
         $query = $this->getEntityManager()->createQuery('SELECT u'
                 . ' from ApplicationFrontBundle:Users u '
