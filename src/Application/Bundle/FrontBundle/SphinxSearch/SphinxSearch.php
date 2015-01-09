@@ -267,10 +267,31 @@ class SphinxSearch extends ContainerAware
                 ->orderBy($facetColumn, 'asc');
 
         return $sq->execute();
-//        $q = array('result'=>$sq->execute(),'query'=>$sq->getCompiled());
-//        echo '<pre>';
-//        print_r($q);
-//        exit;
+    }
+    
+    /**
+     * get width for report.
+     *
+     * @param string $facetColumn
+     * @param array  $criteria
+     * @param string $parentFacet
+     *
+     * @return array
+     */
+    public function facetWidthSelect($facetColumn, $user, $criteria = null, $parentFacet = false)
+    {
+        $sq = SphinxQL::create($this->conn)
+                ->select($facetColumn, SphinxQL::expr('count(*) AS total'), SphinxQL::expr('width'))
+                ->from($this->indexName);
+        if ($criteria && $facetColumn != $parentFacet) {
+            $this->whereClause($criteria, $sq);
+        }
+        $this->roleCriteria($user, $sq);
+        $sq->where($facetColumn, '!=', '');
+        $sq->groupBy($facetColumn)
+                ->orderBy($facetColumn, 'asc');
+
+        return $sq->execute();
     }
 
 }

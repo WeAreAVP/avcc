@@ -488,10 +488,10 @@ class ReportController extends Controller
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
 
         $audioCriteria = array('s_media_type' => array('Audio'));
-        $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $audioCriteria), 'format');
+        $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $audioCriteria), 'format');
 
         $videoCriteria = array('s_media_type' => array('Video'));
-        $videoResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $videoCriteria), 'format');
+        $videoResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $videoCriteria), 'format');
 
         $typeFormats["audio"] = $audioResult;
         $typeFormats["video"] = $videoResult;
