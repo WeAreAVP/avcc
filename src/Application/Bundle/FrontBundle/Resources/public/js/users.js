@@ -7,14 +7,24 @@ function Users() {
 
     var selfObj = this;
     var baseUrl = null;
-    
+    var organizationId = null;
+
     /**
-     * Set the error merge file message.
-     * @param {string} merge_msg
+     * Set the base url.
+     * @param {string} base_url
      * 
      */
     this.setBaseUrl = function (base_url) {
         baseUrl = base_url;
+    }
+
+    /**
+     * Set the organization id.
+     * @param {string} organization_id
+     * 
+     */
+    this.setOrganizationId = function (organization_id) {
+        organizationId = organization_id;
     }
 
     /**
@@ -24,7 +34,7 @@ function Users() {
     this.bindAll = function () {
         selfObj.onChangeRole();
 //        selfObj.applyChosen();
-        selfObj.getOrganizationProjects();    
+        selfObj.getOrganizationProjects();
     }
     /**
      * 
@@ -60,24 +70,30 @@ function Users() {
     }
 
     this.getOrganizationProjects = function () {
-        $('#userOrganization').change(function () {
-            if ($(this).val()) {
-                url = baseUrl + 'getOrganizationProjects/' + $(this).val();
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    success: function (response) {
-                        if (response != "") {
-                            $("#userProjects").html(response);
-                            $("#userProjects").trigger("chosen:updated");
-                        }else{
-                            $("#userProjects").html("");
-                            $("#userProjects").trigger("chosen:updated");
-                        }
+        var orgId;
+        if (organizationId) {
+            orgId = organizationId;
+        } else {
+            $('#userOrganization').change(function () {
+                orgId = $(this).val();
+            });
+        }
+        if (orgId) {
+            url = baseUrl + 'getOrganizationProjects/' + orgId;
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (response) {
+                    if (response != "") {
+                        $("#userProjects").html(response);
+                        $("#userProjects").trigger("chosen:updated");
+                    } else {
+                        $("#userProjects").html("");
+                        $("#userProjects").trigger("chosen:updated");
                     }
+                }
 
-                }); // Ajax Call 
-            }
-        });
+            }); // Ajax Call 
+        }
     }
 }

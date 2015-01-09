@@ -12,6 +12,7 @@ use Application\Bundle\FrontBundle\Form\VideoRecordsType;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * VideoRecords controller.
@@ -132,6 +133,9 @@ class VideoRecordsController extends Controller
      */
     public function newAction($projectId = null, $videoRecId = null)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
+            throw new AccessDeniedException('Access Denied.');
+        }
         $em = $this->getDoctrine()->getManager();
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(3, $em, $this->getUser(), $projectId);
@@ -204,6 +208,9 @@ class VideoRecordsController extends Controller
      */
     public function editAction($id)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
+            throw new AccessDeniedException('Access Denied.');
+        }
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('ApplicationFrontBundle:VideoRecords')->find($id);
 

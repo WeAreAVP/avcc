@@ -12,6 +12,7 @@ use Application\Bundle\FrontBundle\Form\AudioRecordsType;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * AudioRecords controller.
@@ -143,6 +144,9 @@ class AudioRecordsController extends Controller
      */
     public function newAction($projectId = null, $audioRecId = null)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
+            throw new AccessDeniedException('Access Denied.');
+        }
         $fieldsObj = new DefaultFields();
         $em = $this->getDoctrine()->getManager();
         $data = $fieldsObj->getData(1, $em, $this->getUser(), $projectId);
@@ -225,6 +229,9 @@ class AudioRecordsController extends Controller
      */
     public function editAction($id)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
+            throw new AccessDeniedException('Access Denied.');
+        }
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->find($id);
@@ -563,4 +570,5 @@ class AudioRecordsController extends Controller
                     'selectedProjectId' => $selectedProjectId
         ));
     }
+
 }

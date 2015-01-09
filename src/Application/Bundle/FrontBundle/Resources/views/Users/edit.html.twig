@@ -85,9 +85,11 @@
     <script type="text/javascript">
         $(document).ready(function () {
             var baseUrl = '{{ path('users') }}';
+            var organizationId = '{{ organizationId }}';
             var obj = new Users();
             obj.setBaseUrl(baseUrl);
             obj.bindAll();
+            obj.setOrganizationId(organizationId);
         });
     </script>
 {% endblock view_javascripts %}

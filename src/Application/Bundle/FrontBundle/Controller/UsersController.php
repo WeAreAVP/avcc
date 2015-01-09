@@ -125,10 +125,14 @@ class UsersController extends Controller
 
         $entity = new Users();
         $form = $this->createCreateForm($entity);
-
+        $organizationId = '';
+        if (false === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+            $organizationId = $this->getUser()->getOrganizations()->getId();
+        }
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
+            'organizationId' => $organizationId
         );
     }
 

@@ -12,6 +12,7 @@ use Application\Bundle\FrontBundle\Form\FilmRecordsType;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * FilmRecords controller.
@@ -136,6 +137,9 @@ class FilmRecordsController extends Controller
      */
     public function newAction($projectId = null, $filmRecId = null)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
+            throw new AccessDeniedException('Access Denied.');
+        }
         $em = $this->getDoctrine()->getManager();
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(2, $em, $this->getUser(), $projectId);
@@ -217,6 +221,9 @@ class FilmRecordsController extends Controller
      */
     public function editAction($id)
     {
+        if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
+            throw new AccessDeniedException('Access Denied.');
+        }
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:FilmRecords')->find($id);
