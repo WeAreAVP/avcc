@@ -87,12 +87,12 @@ function Dashboard() {
 //                        }]
 //                });
 
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    success: function (response) {
-                        if (response != "") {   
-                            console.log(response);
+//                $.ajax({
+//                    type: "GET",
+//                    url: url,
+//                    success: function (response) {
+//                        if (response != "") {
+//                            console.log(response);
                             $('#formatCount').highcharts({
                                 chart: {
                                     renderTo: 'formatCount',
@@ -141,13 +141,26 @@ function Dashboard() {
                                 series: [{
                                         name: 'Format',
                                         colorByPoint: true,
-                                        data: response
+                                        data: (function () {
+                                            var data;
+                                            $.ajax({
+                                                url: url,
+//                                                data: query,
+                                                async: false,
+//                                                content: "application/json",
+                                                type: "GET",
+                                                success: function (response) {
+                                                    data = response;
+                                                }
+                                            });
+                                            return data;
+                                        })()
                                     }]
                             });
-                        }
-                    }
-
-                }); // Ajax Call 
+//                        }
+//                    }
+//
+//                }); // Ajax Call 
             }
         }).change();
     }
