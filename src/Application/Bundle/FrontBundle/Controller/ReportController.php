@@ -505,8 +505,10 @@ class ReportController extends Controller
 
     /**
      * Generate formatcount report
-     *
-     * @Route("/getFormatCount{projectid}", name="getFormatCount")
+     * 
+     * @param string $projectid 
+     * 
+     * @Route("/getFormatCount/{projectid}", name="getFormatCount")
      * @Method("GET")
      * @Template()
      * @return array
