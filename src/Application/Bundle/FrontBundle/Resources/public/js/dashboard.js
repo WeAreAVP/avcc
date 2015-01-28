@@ -161,6 +161,6 @@ function Dashboard() {
 //
 //                }); // Ajax Call 
             }
-        });
+        }).change();
     }
 }
