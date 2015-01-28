@@ -22,7 +22,7 @@ function Dashboard() {
      * @returns {undefined}
      */
     this.bindAll = function () {
-        selfObj.onChangeRole();
+        selfObj.onChangeProjects();
     }
     /**
      * 
