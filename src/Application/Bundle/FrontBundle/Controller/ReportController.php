@@ -503,4 +503,32 @@ class ReportController extends Controller
         return $response;
     }
 
+    /**
+     * Generate formatcount report
+     *
+     * @Route("/getFormatCount{projectid}", name="getFormatCount")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function getFormatCountAction($projectid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        if($projectid == 'all'){
+          $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('format', $this->getUser()), 'format');
+        }else{
+          $projectCriteria = array('project_id' => $projectid);  
+          $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('format', $this->getUser(), $projectCriteria), 'format');  
+        }
+        
+        $highChart = array();
+        foreach ($result as $index => $format) {
+            $highChart[] = array($format['format'], (int) $format['total']);
+        }
+        
+       echo json_encode(array('formats' => json_encode($highChart)));
+       exit;
+    }
 }

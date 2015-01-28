@@ -4,6 +4,8 @@ namespace Application\Bundle\FrontBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -12,6 +14,7 @@ use Application\Bundle\FrontBundle\Entity\Users;
 use Application\Bundle\FrontBundle\Form\Type\RegistrationFormType;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\Entity\UserSettings as UserSettings;
+
 /**
  * Default controller.
  *
@@ -36,6 +39,10 @@ class DefaultController extends Controller
     }
 
     /**
+     * Dashboard 
+     * 
+     * @Route("/dashboard", name="dashboard")
+     * @Method("GET")
      * @Template()
      *
      * @return type renders index.html.twig template
@@ -48,8 +55,18 @@ class DefaultController extends Controller
             throw new AccessDeniedException('This user does not have access to this section.');
             $this->redirect($this->generateUrl("application_front"));
         }
+        $em = $this->getDoctrine()->getManager();
+        if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+            $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
+        } else {
+            $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $this->getUser()->getOrganizations()));
+        }
 
-        return $this->render('ApplicationFrontBundle:Default:index.html.twig', array('name' => $user->getUsername()));
+        return $this->render('ApplicationFrontBundle:Default:index.html.twig', array(
+                    'name' => $user->getUsername(),
+                    'projects' => $projects
+                        )
+        );
     }
 
     /**

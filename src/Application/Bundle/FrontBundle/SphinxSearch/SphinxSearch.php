@@ -179,7 +179,9 @@ class SphinxSearch extends ContainerAware
                 } elseif ($value == 2) {
                     $sq->where($key, '=', 0);
                 }
-            } else {
+            } if ($key == 'project_id') {
+                $sq->where('project_id', "=", $value);
+            }else {
 
                 $_value = (is_array($value)) ? '"'.implode('" | "', $value).'"' : $value;
 

@@ -1,25 +1,22 @@
 {% extends 'FOSUserBundle::layout.html.twig' %}
 {% block body %}
 	<h1>
-		Dashboard
+            <div class="place-left">Dashboard</div> 
+            <div class="margin5 place-left">
+                <select name="projects" id="projects">
+                  <option value="all">All Projects</option>
+                {% for project in projects %}
+                    <option value="{{ project.id }}">{{ project.name }}</option>
+                {% endfor %}
+                </select>
+            </div>
 	</h1>
 
-	<div class="tile double bg-cyan">
-		<div class="tile-content icon">
-			<i class="icon-list"></i>
-		</div>
-		<div class="brand bg-black">
-			<span class="label fg-white">Projects</span>
-
-		</div>
-	</div>
-	<div class="tile double bg-green">
-		<div class="tile-content icon">
-			<i class="icon-search"></i>
-		</div>
-		<div class="brand bg-black">
-			<span class="label fg-white">Search records</span>
-
-		</div>
-	</div>
+    <div class="row">
+        <div class="span24">
+            <div id="formatCount">
+                
+            </div>
+        </div>
+    </div>
 {% endblock body %}
