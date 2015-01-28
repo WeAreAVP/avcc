@@ -95,7 +95,6 @@ function Dashboard() {
 //                            console.log(response);
                             $('#formatCount').highcharts({
                                 chart: {
-                                    renderTo: 'formatCount',
                                     type: 'column'
                                 },
                                 title: {
@@ -110,7 +109,7 @@ function Dashboard() {
                                 xAxis: {
                                     type: 'category',
                                     labels: {
-                                        rotation: -90,
+//                                        rotation: -90,
                                         style: {
                                             fontSize: '13px',
                                             fontFamily: 'Verdana, sans-serif'
