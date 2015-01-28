@@ -16,93 +16,79 @@
                     <div class="row">
                         <div class="span4">
                             <div class="listview small">
-                                <a href="{{ path('all_formats', { 'type': 'xlsx' }) }}" class="list">
+                                <div class="list">
                                     <div class="list-content">
                                         <img src="/images/excel2013icon.png" class="icon">
-                                        <div class="data">
-                                            <span class="list-title">All Records</span>
-                                            <div class="rating small no-margin">
+
+                                        <span class="rating small no-margin">All Records</span>
+                                        <a href="{{ path('all_formats', { 'type': 'xlsx' }) }}" class="data">
+                                            <div class="list-title small place-left no-margin">
                                                 Downlad as XLSX
                                             </div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <a href="{{ path('all_formats', { 'type': 'csv' }) }}" class="list">
-                                    <div class="list-content">
-                                        <img src="/images/excel2013icon.png" class="icon">
-                                        <div class="data">
-                                            <span class="list-title">All Records</span>
-                                            <div class="rating small no-margin">
+                                        </a>
+                                        <a href="{{ path('all_formats', { 'type': 'csv' }) }}" class="data">
+                                            <div class="list-title small place-right no-margin">
                                                 Downlad as CSV
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
-                                </a>
-                                <a href="{{ path('prioritization_report', { 'type': 'xlsx' }) }}" class="list">
+                                </div>
+                                <div class="list">
                                     <div class="list-content">
                                         <img src="/images/excel2013icon.png" class="icon">
-                                        <div class="data">
-                                            <span class="list-title">Prioritization Report</span>
-                                            <div class="rating small no-margin">
+
+                                        <span class="rating small no-margin">Prioritization Report</span>
+                                        <a href="{{ path('prioritization_report', { 'type': 'xlsx' }) }}" class="data">
+                                            <div class="list-title small place-left no-margin">
                                                 Downlad as XLSX
                                             </div>
-                                        </div>
+                                        </a>
+                                        <a href="{{ path('prioritization_report', { 'type': 'csv' }) }}" class="data">
+                                            <div class="list-title small place-right no-margin">
+                                                Downlad as CSV
+                                            </div>
+                                        </a>    
                                     </div>
-                                </a>
+                                </div>
+                                <div class="list">
+                                    <div class="list-content">
+                                        <img src="/images/excel2013icon.png" class="icon">
+                                        <span class="rating small no-margin">Manifest Reports</span>
+                                        <a href="{{ path('manifest') }}" class="data">
+                                            <div class="list-title small place-left no-margin">
+                                                Download as XLSX
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="span4">
                             <div class="listview small">
-                                <a href="{{ path('manifest') }}" class="list">
+                                <div class="list">
                                     <div class="list-content">
                                         <img src="/images/excel2013icon.png" class="icon">
-                                        <div class="data">
-                                            <span class="list-title">Manifest Reports</span>
-                                            <div class="rating small no-margin">
+                                        <span class="rating list-title no-margin">File Size Calculator for Digitized Assets</span>
+                                        <a href="{{ path('filesizecalculator_report', { 'type': 'xlsx' }) }}" class="data">
+                                            <div class="list-title small place-left no-margin">
                                                 Download as XLSX
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
-                                </a>
-                                <a href="{{ path('prioritization_report', { 'type': 'csv' }) }}" class="list">
+                                </div> 
+                                <div class="list">
                                     <div class="list-content">
                                         <img src="/images/excel2013icon.png" class="icon">
-                                        <div class="data">
-                                            <span class="list-title">Prioritization Report</span>
-                                            <div class="rating small no-margin">
-                                                Downlad as CSV
+                                        <span class="rating small no-margin">Linear Foot Calculator</span>
+                                        <a href="{{ path('linearfootcalculator_report', { 'type': 'xlsx' }) }}" class="data">
+                                            <div class="list-title small place-left no-margin">
+                                                Download as XLSX
                                             </div>
-                                        </div>
+                                        </a>
                                     </div>
-                                </a>
-                                <a href="{{ path('filesizecalculator_report', { 'type': 'xlsx' }) }}" class="list">
-                                    <div class="list-content">
-                                        <img src="/images/excel2013icon.png" class="icon">
-                                        <div class="data">
-                                            <span class="list-title">File Size Calculator for Digitized Assets</span>
-                                            <div class="rating small no-margin">
-                                                Downlad as XLSX
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
+                                </div>             
                             </div>
-                        </div>
-                         <div class="span4">
-                            <div class="listview small">
-                                <a href="{{ path('linearfootcalculator_report', { 'type': 'xlsx' }) }}" class="list">
-                                    <div class="list-content">
-                                        <img src="/images/excel2013icon.png" class="icon">
-                                        <div class="data">
-                                            <span class="list-title">Linear Foot Calculator</span>
-                                            <div class="rating small no-margin">
-                                                Downlad as XLSX
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
+                        </div>                        
                     </div>
                 </div>
                 <div id="_quantitaive" class="frame" style="display: block;">
@@ -260,10 +246,10 @@
     <script>
         $(document).ready(function () {
             var href = $(location).attr('href');
-            if(href.indexOf("#_quantitaive") > 0){
+            if (href.indexOf("#_quantitaive") > 0) {
                 $("#xlsTab").removeClass('active');
                 $("#graphsTab").addClass('active');
-            }else{
+            } else {
                 $("#xlsTab").addClass('active');
                 $("#graphsTab").removeClass('active');
             }
