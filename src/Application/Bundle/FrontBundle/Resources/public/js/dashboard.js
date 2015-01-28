@@ -150,6 +150,8 @@ function Dashboard() {
                                                 type: "GET",
                                                 success: function (response) {
                                                     data = response;
+                                                    console.log(data);
+                                                    
                                                 }
                                             });
                                             return data;
