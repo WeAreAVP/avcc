@@ -521,7 +521,7 @@ class ReportController extends Controller
         if($projectid == 'all'){
           $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('format', $this->getUser()), 'format');
         }else{
-          $projectCriteria = array('project_id' => $projectid);  
+          $projectCriteria = array('project_id' => (int) $projectid);  
           $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('format', $this->getUser(), $projectCriteria), 'format');  
         }
         

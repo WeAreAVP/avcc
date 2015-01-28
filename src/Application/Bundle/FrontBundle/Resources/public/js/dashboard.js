@@ -92,7 +92,8 @@ function Dashboard() {
                     url: url,
                     success: function (response) {
                         if (response != "") {    
-                            console.log(response);
+                            formats = response;
+                            console.log(formats);
                             $('#formatCount').highcharts({
                                 chart: {
                                     type: 'column'
@@ -140,7 +141,7 @@ function Dashboard() {
                                 series: [{
                                         name: 'Format',
                                         colorByPoint: true,
-                                        data: response
+                                        data: formats
                                     }]
                             });
                         }
