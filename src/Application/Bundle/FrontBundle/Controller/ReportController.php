@@ -533,4 +533,35 @@ class ReportController extends Controller
        echo json_encode($highChart);
        exit;
     }
+    
+    /**
+     * Generate commercial/unique report
+     * 
+     * @param string $projectid 
+     * 
+     * @Route("/getCommercialUniqueCount/{projectid}", name="getCommercialUniqueCount")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function getCommercialUniqueCountAction($projectid)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        if($projectid == 'all'){
+          $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('commercial', $this->getUser()), 'commercial');
+        }else{
+          $projectCriteria = array('project_id' => (int) $projectid);  
+          $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('commercial', $this->getUser(), $projectCriteria), 'commercial');  
+        }
+        
+        $highChart = array();
+        foreach ($result as $index => $commercial) {
+            $highChart[] = array(stripslashes($commercial['commercial']), (int) $commercial['total']);
+        }
+        
+       echo json_encode($highChart);
+       exit;
+    }
 }

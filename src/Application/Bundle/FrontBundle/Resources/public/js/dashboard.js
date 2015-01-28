@@ -32,7 +32,8 @@ function Dashboard() {
         $('#projects').change(function () {
             var selectedProject = $(this).val();
             if (selectedProject) {
-                url = baseUrl + 'getFormatCount/' + selectedProject;
+                formatUrl = baseUrl + 'getFormatCount/' + selectedProject;
+                cuUrl = baseUrl + 'getCommercialUniqueCount/' + selectedProject;
                 $('#formatCount').highcharts({
                     chart: {
                         type: 'column'
@@ -49,7 +50,7 @@ function Dashboard() {
                     xAxis: {
                         type: 'category',
                         labels: {
-                                        rotation: -90,
+                            rotation: -90,
                             style: {
                                 fontSize: '13px',
                                 fontFamily: 'Verdana, sans-serif'
@@ -83,7 +84,70 @@ function Dashboard() {
                             data: (function () {
                                 var data;
                                 $.ajax({
-                                    url: url,
+                                    url: formatUrl,
+                                    async: false,
+                                    dataType: "json",
+                                    type: "GET",
+                                    success: function (response) {
+                                        data = response;
+                                    }
+                                });
+                                return data;
+                            })()
+                        }]
+                });
+                
+                $('#commercialUnique').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: ''
+                    },
+                    subtitle: {
+                        text: ''
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    xAxis: {
+                        type: 'category',
+                        labels: {
+                            rotation: -90,
+                            style: {
+                                fontSize: '13px',
+                                fontFamily: 'Verdana, sans-serif'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Total count per format'
+                        }
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        series: {
+                            borderWidth: 0,
+                            dataLabels: {
+                                enabled: true,
+                                format: '{point.y}'
+                            }
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '<span><b>{series.name}: </b></span>',
+                        pointFormat: '<span style="color:{point.color}">{point.name}</span><br/><b>Total:</b>{point.y}<br/>'
+                    },
+                    series: [{
+                            name: 'Commercial/Unique',
+                            colorByPoint: true,
+                            data: (function () {
+                                var data;
+                                $.ajax({
+                                    url: cuUrl,
                                     async: false,
                                     dataType: "json",
                                     type: "GET",
