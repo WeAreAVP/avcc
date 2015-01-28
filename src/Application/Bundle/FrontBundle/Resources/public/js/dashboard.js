@@ -147,7 +147,7 @@ function Dashboard() {
 //                                                data: query,
                                                 async: false,
 //                                                content: "application/json",
-                                                datatype: "json",
+                                                dataType: "json",
                                                 type: "GET",
                                                 success: function (response) {
                                                     data = response;
