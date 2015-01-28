@@ -33,11 +33,11 @@ function Dashboard() {
             var selectedProject = $(this).val();
             if (selectedProject) {
                 url = baseUrl + 'getFormatCount/' + selectedProject;
-                formats = [["1 Inch Open Reel Audio", 4], ["1 Inch Open Reel Video", 2], ["1/2 Inch Open Reel Audio", 4], ["1/2 Inch Open Reel Audio - Digital", 4]];
-//                chart = new Highcharts.Chart({
+//                formats = [["1 Inch Open Reel Audio",4],["1 Inch Open Reel Video",2],["1\/2 Inch Open Reel Audio",4],["1\/2 Inch Open Reel Audio - Digital",4],["1\/2 Inch Open Reel Video",1],["1\/4 Inch Open Reel Audio",29],["1\/4 Inch Open Reel Video",2],["1610\/1630 (U-matic)",2],["16mm",5],["17mm",1],["2 Inch Open Reel Audio",3],["2 Inch Open Reel Video",2],["35mm",1],["45 RPM Disc",2],["70mm",3],["78 RPM Disc",3],["8-Track",3],["8mm",11],["9.5mm",1],["ADAT (VHS)",8]];
+////                chart = new Highcharts.Chart({
 //                $('#formatCount').highcharts({
 //                    chart: {
-//                        renderTo: 'formatCount',
+////                        renderTo: 'formatCount',
 //                        type: 'column'
 //                    },
 //                    title: {
@@ -91,8 +91,8 @@ function Dashboard() {
                     type: "GET",
                     url: url,
                     success: function (response) {
-                        console.log(response);
-                        if (response != "") {                            
+                        if (response != "") {    
+                            console.log(response);
                             $('#formatCount').highcharts({
                                 chart: {
                                     type: 'column'
