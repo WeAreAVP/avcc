@@ -32,7 +32,7 @@ function Dashboard() {
         $('#projects').change(function () {
             var selectedProject = $(this).val();
             if (selectedProject) {
-                url = baseUrl + 'report/getFormatCount/' + selectedProject;
+                url = baseUrl + 'getFormatCount/' + selectedProject;
                 $.ajax({
                     type: "GET",
                     url: url,
