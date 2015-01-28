@@ -527,10 +527,10 @@ class ReportController extends Controller
         
         $highChart = array();
         foreach ($result as $index => $format) {
-            $highChart[] = array($format['format'], (int) $format['total']);
+            $highChart[] = array(stripslashes($format['format']), (int) $format['total']);
         }
         
-       echo json_encode(array('formats' => json_encode($highChart)));
+       echo json_encode($highChart);
        exit;
     }
 }

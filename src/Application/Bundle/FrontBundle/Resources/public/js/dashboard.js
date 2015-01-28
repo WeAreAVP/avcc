@@ -33,6 +33,60 @@ function Dashboard() {
             var selectedProject = $(this).val();
             if (selectedProject) {
                 url = baseUrl + 'getFormatCount/' + selectedProject;
+                formats = [["1 Inch Open Reel Audio", 4], ["1 Inch Open Reel Video", 2], ["1/2 Inch Open Reel Audio", 4], ["1/2 Inch Open Reel Audio - Digital", 4]];
+//                chart = new Highcharts.Chart({
+//                $('#formatCount').highcharts({
+//                    chart: {
+//                        renderTo: 'formatCount',
+//                        type: 'column'
+//                    },
+//                    title: {
+//                        text: ''
+//                    },
+//                    subtitle: {
+//                        text: ''
+//                    },
+//                    credits: {
+//                        enabled: false
+//                    },
+//                    xAxis: {
+//                        type: 'category',
+//                        labels: {
+//                            rotation: -90,
+//                            style: {
+//                                fontSize: '13px',
+//                                fontFamily: 'Verdana, sans-serif'
+//                            }
+//                        }
+//                    },
+//                    yAxis: {
+//                        title: {
+//                            text: 'Total count per format'
+//                        }
+//                    },
+//                    legend: {
+//                        enabled: false
+//                    },
+//                    plotOptions: {
+//                        series: {
+//                            borderWidth: 0,
+//                            dataLabels: {
+//                                enabled: true,
+//                                format: '{point.y}'
+//                            }
+//                        }
+//                    },
+//                    tooltip: {
+//                        headerFormat: '<span><b>{series.name}: </b></span>',
+//                        pointFormat: '<span style="color:{point.color}">{point.name}</span><br/><b>Total:</b>{point.y}<br/>'
+//                    },
+//                    series: [{
+//                            name: 'Format',
+//                            colorByPoint: true,
+//                            data: formats
+//                        }]
+//                });
+
                 $.ajax({
                     type: "GET",
                     url: url,
