@@ -656,9 +656,6 @@ class ReportController extends Controller
                 }
                 $total[] = array("Film" => array("totalRecords" => $filmTotal, "linearFeet" => "", "fileSize" => $totalFilmFileSize));
             }
-            echo "<pre>";
-            print_r($total);
-            die;
             echo json_encode($total);
             exit;
         }
