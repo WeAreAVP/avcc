@@ -483,18 +483,7 @@ class ReportController extends Controller
         if (!in_array($type, array('xlsx'))) {
             throw $this->createNotFoundException('Invalid report type');
         }
-        $em = $this->getDoctrine()->getManager();
-        $shpinxInfo = $this->container->getParameter('sphinx_param');
-        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-
-        $audioCriteria = array('s_media_type' => array('Audio'));
-        $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $audioCriteria), 'format');
-
-        $videoCriteria = array('s_media_type' => array('Video'));
-        $videoResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $videoCriteria), 'format');
-
-        $typeFormats["audio"] = $audioResult;
-        $typeFormats["video"] = $videoResult;
+        $typeFormats = $this->getLinearFeet();
 
         $exportComponent = new ExportReport($this->container);
         $phpExcelObject = $exportComponent->generateLinearFootReport($typeFormats);
@@ -518,22 +507,22 @@ class ReportController extends Controller
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        if($projectid == 'all'){
-          $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('format', $this->getUser()), 'format');
-        }else{
-          $projectCriteria = array('project_id' => (int) $projectid);  
-          $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('format', $this->getUser(), $projectCriteria), 'format');  
+        if ($projectid == 'all') {
+            $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('format', $this->getUser()), 'format');
+        } else {
+            $projectCriteria = array('project_id' => (int) $projectid);
+            $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('format', $this->getUser(), $projectCriteria), 'format');
         }
-        
+
         $highChart = array();
         foreach ($result as $index => $format) {
             $highChart[] = array(stripslashes($format['format']), (int) $format['total']);
         }
-        
-       echo json_encode($highChart);
-       exit;
+
+        echo json_encode($highChart);
+        exit;
     }
-    
+
     /**
      * Generate commercial/unique report
      * 
@@ -549,19 +538,87 @@ class ReportController extends Controller
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        if($projectid == 'all'){
-          $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('commercial', $this->getUser()), 'commercial');
-        }else{
-          $projectCriteria = array('project_id' => (int) $projectid);  
-          $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('commercial', $this->getUser(), $projectCriteria), 'commercial');  
+        if ($projectid == 'all') {
+            $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('commercial', $this->getUser()), 'commercial');
+        } else {
+            $projectCriteria = array('project_id' => (int) $projectid);
+            $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('commercial', $this->getUser(), $projectCriteria), 'commercial');
         }
-        
+
         $highChart = array();
         foreach ($result as $index => $commercial) {
             $highChart[] = array(stripslashes($commercial['commercial']), (int) $commercial['total']);
         }
-        
-       echo json_encode($highChart);
-       exit;
+
+        echo json_encode($highChart);
+        exit;
     }
+
+    private function getLinearFeet()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        $audioCriteria = array('s_media_type' => array('Audio'));
+        $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $audioCriteria), 'format');
+
+        $videoCriteria = array('s_media_type' => array('Video'));
+        $videoResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $videoCriteria), 'format');
+        
+        $filmCriteria = array('s_media_type' => array('Film'));
+        $filmResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $filmCriteria), 'format');
+
+        
+        $typeFormats["audio"] = $audioResult;
+        $typeFormats["video"] = $videoResult;
+        $typeFormats["film"] = $filmResult;
+        
+        return $typeFormats;
+    }
+
+    public function getTotalRecordsAction()
+    {
+        $records = $this->getLinearFeet();
+        $totalLinearAudioCount = 0.00;
+        $totalLinearVideoCount = 0.00;
+        $totalLinearCount = 0.00;
+        $total = array();
+        if ($records) {
+            if ($records['audio']) {
+                $autioTotal = 0;
+                foreach ($records['audio'] as $audio) {
+                    $linearAudioCount = $this->calculateLinearFeet($audio['total'], $audio['width']);
+                    $totalLinearAudioCount += $linearAudioCount;
+                    $autioTotal += $audio['total'];
+                }
+                $total = array("Audio" => array("totalRecords" => $autioTotal, "linearFeet" => $totalLinearAudioCount));
+            }
+            if ($records['video']) {
+                $videoTotal = 0;
+                foreach ($records['video'] as $video) {
+                    $linearVideoCount = $this->calculateLinearFeet($video['total'], $video['width']);
+                    $totalLinearVideoCount += $linearVideoCount;
+                    $videoTotal += $video['total'];
+                }
+                $total = array("Video" => array("totalRecords" => $videoTotal, "linearFeet" => $totalLinearVideoCount));
+            }
+            if ($records['film']) {
+                $filmTotal = 0;
+                foreach ($records['film'] as $film) {
+//                    $linearVideoCount = $this->calculateLinearFeet($film['total'], $film['width']);
+//                    $totalLinearVideoCount += $linearVideoCount;
+                    $filmTotal += $film['total'];
+                }
+                $total = array("Film" => array("totalRecords" => $filmTotal, "linearFeet" => ""));
+            }
+            echo json_encode($total);
+            exit;
+        }
+    }
+
+    private function calculateLinearFeet($totalCount, $width)
+    {
+        return number_format(($totalCount * $width) / 12, 5);
+    }
+
 }

@@ -34,6 +34,7 @@ function Dashboard() {
             if (selectedProject) {
                 formatUrl = baseUrl + 'getFormatCount/' + selectedProject;
                 cuUrl = baseUrl + 'getCommercialUniqueCount/' + selectedProject;
+                totalRecordsUrl = baseUrl + 'getTotalRecords/' + selectedProject;
                 $('#formatCount').highcharts({
                     chart: {
                         type: 'column'
@@ -96,7 +97,7 @@ function Dashboard() {
                             })()
                         }]
                 });
-                
+
                 $('#commercialUnique').highcharts({
                     chart: {
                         type: 'column'
@@ -159,6 +160,23 @@ function Dashboard() {
                             })()
                         }]
                 });
+                ////// ajax call to get total records, linear feet for media types.
+                $.ajax({
+                    type: "GET",
+                    url: totalRecordsUrl,
+                    dataType: "json",
+                    success: function (response) {
+                        console.log(response);
+                        if(response){
+                            $('#audtioTotal').html(response.Audio.totalRecords);
+                            $('#audtiolinear').html(response.Audio.linearFeet);
+                            $('#videoTotal').html(response.Video.totalRecords);
+                            $('#videolinear').html(response.Video.linearFeet);
+                        }
+                    }
+
+                }); // Ajax Call 
+
             }
         }).change();
     }
