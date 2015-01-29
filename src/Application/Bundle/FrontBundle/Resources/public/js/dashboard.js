@@ -101,7 +101,7 @@ function Dashboard() {
                 $('#commercialUnique').highcharts({
                     chart: {
                         type: 'column',
-                        width: 400,
+                        width: 455,
                         height: 400
                     },
                     title: {

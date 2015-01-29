@@ -551,7 +551,7 @@ class ReportController extends Controller
         $total = array();
         if ($records) {
             if ($records['Audio']) {
-                $autioTotal = 0;
+                $audioTotal = 0;
                 $totalAudioFileSize = 0.00;
                 foreach ($records['Audio'] as $audio) {
                     $linearAudioCount = $this->calculateLinearFeet($audio['total'], $audio['width']);
