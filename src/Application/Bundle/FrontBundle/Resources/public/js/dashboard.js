@@ -30,6 +30,19 @@ function Dashboard() {
      */
     this.onChangeProjects = function () {
         $('#projects').change(function () {
+            $.blockUI({
+                message: 'Please wait...',
+                css: {
+                    border: 'none',
+                    padding: '15px',
+                    backgroundColor: '#000',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    opacity: .5,
+                    color: '#fff',
+                    zIndex: 999999
+                }
+            });
             var selectedProject = $(this).val();
             if (selectedProject) {
                 formatUrl = baseUrl + 'getFormatCount/' + selectedProject;
@@ -186,6 +199,7 @@ function Dashboard() {
                                 $('#filmfile').html(response[2].Film.fileSize);
                             }
                         }
+                        $.unblockUI();
                     }
 
                 }); // Ajax Call 
