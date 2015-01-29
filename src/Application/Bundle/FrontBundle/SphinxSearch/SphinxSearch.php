@@ -179,11 +179,11 @@ class SphinxSearch extends ContainerAware
                 } elseif ($value == 2) {
                     $sq->where($key, '=', 0);
                 }
-            } if ($key == 'project_id') {
+            } elseif ($key == 'project_id') {
                 $sq->where('project_id', "=", $value);
-            }else {
+            } else {
 
-                $_value = (is_array($value)) ? '"'.implode('" | "', $value).'"' : $value;
+                $_value = (is_array($value)) ? '"' . implode('" | "', $value) . '"' : $value;
 
                 $sq->match($key, $_value, true);
             }
@@ -270,7 +270,7 @@ class SphinxSearch extends ContainerAware
 
         return $sq->execute();
     }
-    
+
     /**
      * get width for report.
      *
