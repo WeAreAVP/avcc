@@ -602,7 +602,9 @@ class ReportController extends Controller
             $filmCriteria[] = array('project_id' => (int) $projectid);
         }
         $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $audioCriteria), 'format');
-
+echo "<pre>";
+print_r($audioResult);
+die;
         $videoResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $videoCriteria), 'format');
 
         $filmResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $filmCriteria), 'format');
