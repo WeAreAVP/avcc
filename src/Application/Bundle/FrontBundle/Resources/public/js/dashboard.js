@@ -172,8 +172,8 @@ function Dashboard() {
                             $('#audtiolinear').html(response[0].Audio.linearFeet);
                             $('#videoTotal').html(response[1].Video.totalRecords);
                             $('#videolinear').html(response[1].Video.linearFeet);
-                            $('#filmTotal').html(response[1].Film.totalRecords);
-                            $('#filmlinear').html(response[1].Film.linearFeet);
+                            $('#filmTotal').html(response[2].Film.totalRecords);
+                            $('#filmlinear').html(response[2].Film.linearFeet);
                         }
                     }
 
