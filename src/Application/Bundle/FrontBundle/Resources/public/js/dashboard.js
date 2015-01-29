@@ -183,17 +183,17 @@ function Dashboard() {
                     success: function (response) {
                         console.log(response);
                         if (response) {
-                            if (response[0].Audio) {
+                            if (typeof response[0] !== "undefined" && response[0].Audio) {
                                 $('#audioTotal').html(response[0].Audio.totalRecords);
                                 $('#audiolinear').html(response[0].Audio.linearFeet);
                                 $('#audiofile').html(response[0].Audio.fileSize);
                             }
-                            if (response[1].Video) {
+                            if (typeof response[1] !== "undefined") {
                                 $('#videoTotal').html(response[1].Video.totalRecords);
                                 $('#videolinear').html(response[1].Video.linearFeet);
                                 $('#videofile').html(response[1].Video.fileSize);
                             }
-                            if (response[2].Film) {
+                            if (typeof response[2] !== "undefined" && response[2].Film) {
                                 $('#filmTotal').html(response[2].Film.totalRecords);
                                 $('#filmlinear').html(response[2].Film.linearFeet);
                                 $('#filmfile').html(response[2].Film.fileSize);
