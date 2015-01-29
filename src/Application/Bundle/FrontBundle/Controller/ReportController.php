@@ -635,30 +635,30 @@ class ReportController extends Controller
                     ////// File size calculations
                     $k4Uncompressed = $this->calculateFileSize($film['sum_content_duration'], 69905);
                     $totalFilmFileSize = $totalFilmFileSize + $k4Uncompressed;
-                    
+
                     $k4Lossless = $this->calculateFileSize($film['sum_content_duration'], 34952.5);
                     $totalFilmFileSize = $totalFilmFileSize + $k4Lossless;
-                    
+
                     $k2Uncompressed = $this->calculateFileSize($film['sum_content_duration'], 17500);
                     $totalFilmFileSize = $totalFilmFileSize + $k2Uncompressed;
-                    
+
                     $k2Lossless = $this->calculateFileSize($film['sum_content_duration'], 8750);
                     $totalFilmFileSize = $totalFilmFileSize + $k2Lossless;
-                    
+
                     $AVCIntra100 = $this->calculateFileSize($film['sum_content_duration'], 943);
                     $totalFilmFileSize = $totalFilmFileSize + $AVCIntra100;
-                    
+
                     $MPEG45 = $this->calculateFileSize($film['sum_content_duration'], 36);
                     $totalFilmFileSize = $totalFilmFileSize + $MPEG45;
-                    
+
                     $MPEG42 = $this->calculateFileSize($film['sum_content_duration'], 17.1);
                     $totalFilmFileSize = $totalFilmFileSize + $MPEG42;
                 }
                 $total[] = array("Film" => array("totalRecords" => $filmTotal, "linearFeet" => "", "fileSize" => $totalFilmFileSize));
             }
-            echo json_encode($total);
-            exit;
         }
+        echo json_encode($total);
+        exit;
     }
 
     /**
