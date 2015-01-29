@@ -564,24 +564,55 @@ class ReportController extends Controller
 
         $videoCriteria = array('s_media_type' => array('Video'));
         $videoResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $videoCriteria), 'format');
-        
+
         $filmCriteria = array('s_media_type' => array('Film'));
         $filmResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $filmCriteria), 'format');
 
-        
+
         $typeFormats["audio"] = $audioResult;
         $typeFormats["video"] = $videoResult;
         $typeFormats["film"] = $filmResult;
-        
+
         return $typeFormats;
     }
 
-    public function getTotalRecordsAction()
+    /**
+     * Generate quantitative report
+     * 
+     * @param string $projectid 
+     * 
+     * @Route("/getTotalRecords/{projectid}", name="getTotalRecords")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function getTotalRecordsAction($projectid)
     {
-        $records = $this->getLinearFeet();
+        $em = $this->getDoctrine()->getManager();
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        $audioCriteria[] = array('s_media_type' => array('Audio'));
+        $videoCriteria[] = array('s_media_type' => array('Video'));
+        $filmCriteria[] = array('s_media_type' => array('Film'));
+        if ($projectid != 'all') {
+            $audioCriteria[] = array('project_id' => (int) $projectid);
+
+            $videoCriteria[] = array('project_id' => (int) $projectid);
+
+            $filmCriteria[] = array('project_id' => (int) $projectid);
+        }
+        $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $audioCriteria), 'format');
+
+        $videoResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $videoCriteria), 'format');
+
+        $filmResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $filmCriteria), 'format');
+
+        $records["audio"] = $audioResult;
+        $records["video"] = $videoResult;
+        $records["film"] = $filmResult;
+
         $totalLinearAudioCount = 0.00;
         $totalLinearVideoCount = 0.00;
-        $totalLinearCount = 0.00;
         $total = array();
         if ($records) {
             if ($records['audio']) {
