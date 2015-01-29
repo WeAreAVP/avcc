@@ -100,7 +100,9 @@ function Dashboard() {
 
                 $('#commercialUnique').highcharts({
                     chart: {
-                        type: 'column'
+                        type: 'column',
+                        width: 400,
+                        height: 400
                     },
                     title: {
                         text: ''
@@ -166,14 +168,20 @@ function Dashboard() {
                     url: totalRecordsUrl,
                     dataType: 'json',
                     success: function (response) {
-                        console.log(response[0].Audio);
-                        if(response){
-                            $('#audtioTotal').html(response[0].Audio.totalRecords);
-                            $('#audtiolinear').html(response[0].Audio.linearFeet);
-                            $('#videoTotal').html(response[1].Video.totalRecords);
-                            $('#videolinear').html(response[1].Video.linearFeet);
-                            $('#filmTotal').html(response[2].Film.totalRecords);
-                            $('#filmlinear').html(response[2].Film.linearFeet);
+                        console.log(response);
+                        if (response) {
+                            if (response[0].Audio) {
+                                $('#audtioTotal').html(response[0].Audio.totalRecords);
+                                $('#audtiolinear').html(response[0].Audio.linearFeet);
+                            }
+                            if (response[1].Video) {
+                                $('#videoTotal').html(response[1].Video.totalRecords);
+                                $('#videolinear').html(response[1].Video.linearFeet);
+                            }
+                            if (response[2].Film) {
+                                $('#filmTotal').html(response[2].Film.totalRecords);
+                                $('#filmlinear').html(response[2].Film.linearFeet);
+                            }
                         }
                     }
 

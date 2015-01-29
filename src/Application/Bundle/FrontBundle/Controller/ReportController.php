@@ -412,52 +412,8 @@ class ReportController extends Controller
             throw $this->createNotFoundException('Invalid report type');
         }
 
-        $em = $this->getDoctrine()->getManager();
-        $shpinxInfo = $this->container->getParameter('sphinx_param');
-        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        $types = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('media_type', $this->getUser()), 'media_type');
-        foreach ($types as $mediatype) {
-            $typeCriteria = array('s_media_type' => array($mediatype['media_type']));
-            $formatResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $typeCriteria), 'format');
-            $_records = array();
-            if ($formatResult) {
-                foreach ($formatResult as $format) {
-                    $recordCriteria = array('s_format' => array($format['format']));
-                    $count = 0;
-                    $offset = 0;
-                    while ($count == 0) {
-                        $records = $sphinxSearch->select($this->getUser(), $offset, 1000, 'title', 'asc', $recordCriteria);
-                        $_records = array_merge($_records, $records[0]);
-                        $totalFound = $records[1][1]['Value'];
-                        $offset = $offset + 1000;
-                        if ($totalFound < 1000) {
-                            $count++;
-                        }
-                    }
-                    if ($_records) {
-                        $sumDuration = 0;
-                        $f = str_replace(" ", "_", $format['format']);
-                        foreach ($_records as $rec) {
-                            if ($rec['format'] == $format['format']) {
-                                if ($rec['content_duration']) {
-                                    $sumDuration = $sumDuration + $rec['content_duration'];
-                                } elseif ($mediatype['media_type'] != 'Film') {
-                                    $sumDuration = $sumDuration + $rec['media_duration'];
-                                }
-                            }
-                        }
-                        $formatInfo[$mediatype['media_type']][$f] = array('format' => $format['format'], 'sum_content_duration' => $sumDuration, 'total' => $format['total']);
-                    }
-                }
-            } else {
-                throw $this->createNotFoundException('No record found for report.');
-            }
-        }
+        $formatInfo = $this->getFileSizeAndLinearFootageInfo();
         if (isset($formatInfo)) {
-//            $typeFormats["audio"] = $formatInfo['Audio'];
-//            $typeFormats["video"] = $formatInfo['Video'];
-//            $typeFormats["film"] = $formatInfo['Film'];
-
             $exportComponent = new ExportReport($this->container);
             $phpExcelObject = $exportComponent->generateFileSizeAssetsReport($formatInfo);
             $response = $exportComponent->outputReport($type, $phpExcelObject, 'file_size_calculator');
@@ -588,28 +544,13 @@ class ReportController extends Controller
      */
     public function getTotalRecordsAction($projectid)
     {
-        $em = $this->getDoctrine()->getManager();
-        $shpinxInfo = $this->container->getParameter('sphinx_param');
-        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        $audioCriteria = array('s_media_type' => array('Audio'));
-        $videoCriteria = array('s_media_type' => array('Video'));
-        $filmCriteria = array('s_media_type' => array('Film'));
-        if ($projectid != 'all') {
-            $audioCriteria['project_id'] = (int) $projectid;
-
-            $videoCriteria['project_id'] = (int) $projectid;
-
-            $filmCriteria['project_id'] = (int) $projectid;
-        }
-        $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $audioCriteria), 'format');
-
-        $videoResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $videoCriteria), 'format');
-
-        $filmResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $filmCriteria), 'format');
-
-        $records["audio"] = $audioResult;
-        $records["video"] = $videoResult;
-        $records["film"] = $filmResult;
+        $records = $this->getFileSizeAndLinearFootageInfo($projectid);
+        echo '<pre>';
+        print_r($records);
+        die;
+//        $records["audio"] = $audioResult;
+//        $records["video"] = $videoResult;
+//        $records["film"] = $filmResult;
 
         $totalLinearAudioCount = 0.00;
         $totalLinearVideoCount = 0.00;
@@ -647,9 +588,72 @@ class ReportController extends Controller
         }
     }
 
+    /**
+     * Formula for linear footage
+     * 
+     * @param integer $totalCount
+     * @param integer $width
+     * 
+     * @return number
+     */
     private function calculateLinearFeet($totalCount, $width)
     {
         return number_format(($totalCount * $width) / 12, 5);
+    }
+
+    /**
+     * File size and linear footage info calculations
+     * 
+     * @param integer/string $projectId
+     * 
+     * @return array
+     */
+    private function getFileSizeAndLinearFootageInfo($projectid = null)
+    {
+        $formatInfo = null;
+        $em = $this->getDoctrine()->getManager();
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        $types = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('media_type', $this->getUser()), 'media_type');
+        foreach ($types as $mediatype) {
+            $typeCriteria = array('s_media_type' => array($mediatype['media_type']));
+            if ($projectid && $projectid != 'all') {
+                $typeCriteria['project_id'] = (int) $projectid;
+            }
+            $formatResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $typeCriteria), 'format');
+            $_records = array();
+            if ($formatResult) {
+                foreach ($formatResult as $format) {
+                    $recordCriteria = array('s_format' => array($format['format']));
+                    $count = 0;
+                    $offset = 0;
+                    while ($count == 0) {
+                        $records = $sphinxSearch->select($this->getUser(), $offset, 1000, 'title', 'asc', $recordCriteria);
+                        $_records = array_merge($_records, $records[0]);
+                        $totalFound = $records[1][1]['Value'];
+                        $offset = $offset + 1000;
+                        if ($totalFound < 1000) {
+                            $count++;
+                        }
+                    }
+                    if ($_records) {
+                        $sumDuration = 0;
+                        $f = str_replace(" ", "_", $format['format']);
+                        foreach ($_records as $rec) {
+                            if ($rec['format'] == $format['format']) {
+                                if ($rec['content_duration']) {
+                                    $sumDuration = $sumDuration + $rec['content_duration'];
+                                } elseif ($mediatype['media_type'] != 'Film') {
+                                    $sumDuration = $sumDuration + $rec['media_duration'];
+                                }
+                            }
+                        }
+                        $formatInfo[$mediatype['media_type']][$f] = array('format' => $format['format'], 'sum_content_duration' => $sumDuration, 'total' => $format['total'], 'width' => $format['width']);
+                    }
+                }
+            }
+        }
+        return $formatInfo;
     }
 
 }

@@ -258,7 +258,7 @@ class SphinxSearch extends ContainerAware
     public function facetDurationSumSelect($facetColumn, $user, $criteria = null, $parentFacet = false)
     {
         $sq = SphinxQL::create($this->conn)
-                ->select($facetColumn, SphinxQL::expr('count(*) AS total'), SphinxQL::expr('sum(content_duration) AS sum_content_duration'))
+                ->select($facetColumn, SphinxQL::expr('count(*) AS total'), SphinxQL::expr('sum(content_duration) AS sum_content_duration'), SphinxQL::expr('width'))
                 ->from($this->indexName);
         if ($criteria && $facetColumn != $parentFacet) {
             $this->whereClause($criteria, $sq);
