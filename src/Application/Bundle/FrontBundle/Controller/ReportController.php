@@ -545,44 +545,120 @@ class ReportController extends Controller
     public function getTotalRecordsAction($projectid)
     {
         $records = $this->getFileSizeAndLinearFootageInfo($projectid);
-        echo '<pre>';
-        print_r($records);
-        die;
-//        $records["audio"] = $audioResult;
-//        $records["video"] = $videoResult;
-//        $records["film"] = $filmResult;
 
         $totalLinearAudioCount = 0.00;
         $totalLinearVideoCount = 0.00;
         $total = array();
         if ($records) {
-            if ($records['audio']) {
+            if ($records['Audio']) {
                 $autioTotal = 0;
-                foreach ($records['audio'] as $audio) {
+                $totalAudioFileSize = 0.00;
+                foreach ($records['Audio'] as $audio) {
                     $linearAudioCount = $this->calculateLinearFeet($audio['total'], $audio['width']);
                     $totalLinearAudioCount += $linearAudioCount;
-                    $autioTotal += $audio['total'];
+                    $audioTotal += $audio['total'];
+                    ///// File size calculations
+                    $uncompress1 = $this->calculateFileSize($audio['sum_content_duration'], 34.56);
+                    $totalAudioFileSize = $totalAudioFileSize + $uncompress1;
+
+                    $uncompress2 = $this->calculateFileSize($audio['sum_content_duration'], 17.28);
+                    $totalAudioFileSize = $totalAudioFileSize + $uncompress2;
+
+                    $uncompress3 = $this->calculateFileSize($audio['sum_content_duration'], 11.52);
+                    $totalAudioFileSize = $totalAudioFileSize + $uncompress3;
+
+                    $uncompress4 = $this->calculateFileSize($audio['sum_content_duration'], 10.584);
+                    $totalAudioFileSize = $totalAudioFileSize + $uncompress4;
+
+                    $uncompress5 = $this->calculateFileSize($audio['sum_content_duration'], 17.28);
+                    $totalAudioFileSize = $totalAudioFileSize + $uncompress5;
+
+                    $uncompress6 = $this->calculateFileSize($audio['sum_content_duration'], 8.64);
+                    $totalAudioFileSize = $totalAudioFileSize + $uncompress6;
+
+                    $uncompress7 = $this->calculateFileSize($audio['sum_content_duration'], 5.75);
+                    $totalAudioFileSize = $totalAudioFileSize + $uncompress7;
+
+                    $uncompress8 = $this->calculateFileSize($audio['sum_content_duration'], 5.292);
+                    $totalAudioFileSize = $totalAudioFileSize + $uncompress8;
+
+                    $kbps = $this->calculateFileSize($audio['sum_content_duration'], 1.92);
+                    $totalAudioFileSize = $totalAudioFileSize + $kbps;
                 }
-                $total[] = array("Audio" => array("totalRecords" => $autioTotal, "linearFeet" => $totalLinearAudioCount));
+                $total[] = array("Audio" => array("totalRecords" => $audioTotal, "linearFeet" => $totalLinearAudioCount, "fileSize" => $totalAudioFileSize));
             }
-            if ($records['video']) {
+            if ($records['Video']) {
                 $videoTotal = 0;
-                foreach ($records['video'] as $video) {
+                $totalVideoFileSize = 0.00;
+                foreach ($records['Video'] as $video) {
                     $linearVideoCount = $this->calculateLinearFeet($video['total'], $video['width']);
                     $totalLinearVideoCount += $linearVideoCount;
                     $videoTotal += $video['total'];
+                    ///// File size calculations
+                    $VUncompress1 = $this->calculateFileSize($video['sum_content_duration'], 10240);
+                    $totalVideoFileSize = $totalVideoFileSize + $VUncompress1;
+
+                    $VUncompress2 = $this->calculateFileSize($video['sum_content_duration'], 1800);
+                    $totalVideoFileSize = $totalVideoFileSize + $VUncompress2;
+
+                    $Lossless = $this->calculateFileSize($video['sum_content_duration'], 900);
+                    $totalVideoFileSize = $totalVideoFileSize + $Lossless;
+
+                    $FFV1 = $this->calculateFileSize($video['sum_content_duration'], 600);
+                    $totalVideoFileSize = $totalVideoFileSize + $FFV1;
+
+                    $MPEG2 = $this->calculateFileSize($video['sum_content_duration'], 427);
+                    $totalVideoFileSize = $totalVideoFileSize + $MPEG2;
+
+                    $ProRes = $this->calculateFileSize($video['sum_content_duration'], 306);
+                    $totalVideoFileSize = $totalVideoFileSize + $ProRes;
+
+                    $DV25 = $this->calculateFileSize($video['sum_content_duration'], 240);
+                    $totalVideoFileSize = $totalVideoFileSize + $DV25;
+
+                    $MPEG45 = $this->calculateFileSize($video['sum_content_duration'], 36);
+                    $totalVideoFileSize = $totalVideoFileSize + $MPEG45;
+
+                    $MPEG42 = $this->calculateFileSize($video['sum_content_duration'], 17.1);
+                    $totalVideoFileSize = $totalVideoFileSize + $MPEG42;
                 }
-                $total[] = array("Video" => array("totalRecords" => $videoTotal, "linearFeet" => $totalLinearVideoCount));
+                $total[] = array("Video" => array("totalRecords" => $videoTotal, "linearFeet" => $totalLinearVideoCount, "fileSize" => $totalVideoFileSize));
             }
-            if ($records['film']) {
+            if ($records['Film']) {
                 $filmTotal = 0;
-                foreach ($records['film'] as $film) {
+                $totalFilmFileSize = 0.00;
+                foreach ($records['Film'] as $film) {
 //                    $linearVideoCount = $this->calculateLinearFeet($film['total'], $film['width']);
 //                    $totalLinearVideoCount += $linearVideoCount;
                     $filmTotal += $film['total'];
+
+                    ////// File size calculations
+                    $k4Uncompressed = $this->calculateFileSize($film['sum_content_duration'], 69905);
+                    $totalFilmFileSize = $totalFilmFileSize + $k4Uncompressed;
+                    
+                    $k4Lossless = $this->calculateFileSize($film['sum_content_duration'], 34952.5);
+                    $totalFilmFileSize = $totalFilmFileSize + $k4Lossless;
+                    
+                    $k2Uncompressed = $this->calculateFileSize($film['sum_content_duration'], 17500);
+                    $totalFilmFileSize = $totalFilmFileSize + $k2Uncompressed;
+                    
+                    $k2Lossless = $this->calculateFileSize($film['sum_content_duration'], 8750);
+                    $totalFilmFileSize = $totalFilmFileSize + $k2Lossless;
+                    
+                    $AVCIntra100 = $this->calculateFileSize($film['sum_content_duration'], 943);
+                    $totalFilmFileSize = $totalFilmFileSize + $AVCIntra100;
+                    
+                    $MPEG45 = $this->calculateFileSize($film['sum_content_duration'], 36);
+                    $totalFilmFileSize = $totalFilmFileSize + $MPEG45;
+                    
+                    $MPEG42 = $this->calculateFileSize($film['sum_content_duration'], 17.1);
+                    $totalFilmFileSize = $totalFilmFileSize + $MPEG42;
                 }
-                $total[] = array("Film" => array("totalRecords" => $filmTotal, "linearFeet" => ""));
+                $total[] = array("Film" => array("totalRecords" => $filmTotal, "linearFeet" => "", "fileSize" => $totalFilmFileSize));
             }
+            echo "<pre>";
+            print_r($totalFilmFileSize);
+            die;
             echo json_encode($total);
             exit;
         }
@@ -654,6 +730,11 @@ class ReportController extends Controller
             }
         }
         return $formatInfo;
+    }
+
+    private function calculateFileSize($totalDuration, $value)
+    {
+        return number_format(($totalDuration * $value) / 1024 / 1024, 5);
     }
 
 }
