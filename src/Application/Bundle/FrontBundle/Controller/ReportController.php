@@ -595,16 +595,14 @@ class ReportController extends Controller
         $videoCriteria = array('s_media_type' => array('Video'));
         $filmCriteria = array('s_media_type' => array('Film'));
         if ($projectid != 'all') {
-            $audioCriteria[] = array('project_id' => (int) $projectid);
+            $audioCriteria['project_id'] = (int) $projectid;
 
-            $videoCriteria[] = array('project_id' => (int) $projectid);
+            $videoCriteria['project_id'] = (int) $projectid;
 
-            $filmCriteria[] = array('project_id' => (int) $projectid);
+            $filmCriteria['project_id'] = (int) $projectid;
         }
         $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $audioCriteria), 'format');
-echo "<pre>";
-print_r($audioCriteria);
-die;
+
         $videoResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $videoCriteria), 'format');
 
         $filmResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $filmCriteria), 'format');
