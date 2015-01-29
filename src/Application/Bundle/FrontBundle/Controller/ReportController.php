@@ -642,7 +642,7 @@ class ReportController extends Controller
                 }
                 $total[] = array("Film" => array("totalRecords" => $filmTotal, "linearFeet" => ""));
             }
-            echo json_encode($records);
+            echo json_encode($total);
             exit;
         }
     }
