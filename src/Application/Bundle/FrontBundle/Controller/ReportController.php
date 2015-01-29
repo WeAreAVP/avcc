@@ -622,7 +622,7 @@ class ReportController extends Controller
                     $totalLinearAudioCount += $linearAudioCount;
                     $autioTotal += $audio['total'];
                 }
-                $total = array("Audio" => array("totalRecords" => $autioTotal, "linearFeet" => $totalLinearAudioCount));
+                $total[] = array("Audio" => array("totalRecords" => $autioTotal, "linearFeet" => $totalLinearAudioCount));
             }
             if ($records['video']) {
                 $videoTotal = 0;
@@ -631,7 +631,7 @@ class ReportController extends Controller
                     $totalLinearVideoCount += $linearVideoCount;
                     $videoTotal += $video['total'];
                 }
-                $total = array("Video" => array("totalRecords" => $videoTotal, "linearFeet" => $totalLinearVideoCount));
+                $total[] = array("Video" => array("totalRecords" => $videoTotal, "linearFeet" => $totalLinearVideoCount));
             }
             if ($records['film']) {
                 $filmTotal = 0;
@@ -640,7 +640,7 @@ class ReportController extends Controller
 //                    $totalLinearVideoCount += $linearVideoCount;
                     $filmTotal += $film['total'];
                 }
-                $total = array("Film" => array("totalRecords" => $filmTotal, "linearFeet" => ""));
+                $total[] = array("Film" => array("totalRecords" => $filmTotal, "linearFeet" => ""));
             }
             echo json_encode($total);
             exit;
