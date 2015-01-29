@@ -591,9 +591,9 @@ class ReportController extends Controller
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        $audioCriteria[] = array('s_media_type' => array('Audio'));
-        $videoCriteria[] = array('s_media_type' => array('Video'));
-        $filmCriteria[] = array('s_media_type' => array('Film'));
+        $audioCriteria = array('s_media_type' => array('Audio'));
+        $videoCriteria = array('s_media_type' => array('Video'));
+        $filmCriteria = array('s_media_type' => array('Film'));
         if ($projectid != 'all') {
             $audioCriteria[] = array('project_id' => (int) $projectid);
 
