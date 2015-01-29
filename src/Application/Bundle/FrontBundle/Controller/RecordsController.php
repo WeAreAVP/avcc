@@ -21,7 +21,7 @@ use PHPExcel_Cell;
 /**
  * Records controller.
  *
- * @Route("/")
+ * @Route("/record_list")
  *
  */
 class RecordsController extends Controller

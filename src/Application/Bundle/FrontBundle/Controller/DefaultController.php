@@ -41,7 +41,7 @@ class DefaultController extends Controller
     /**
      * Dashboard 
      * 
-     * @Route("/dashboard", name="dashboard")
+     * @Route("/", name="dashboard")
      * @Method("GET")
      * @Template()
      *
