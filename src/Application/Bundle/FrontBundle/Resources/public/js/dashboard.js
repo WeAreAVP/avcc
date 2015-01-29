@@ -170,8 +170,8 @@ function Dashboard() {
                         if(response){
                             $('#audtioTotal').html(response[0].Audio.totalRecords);
                             $('#audtiolinear').html(response[0].Audio.linearFeet);
-                            $('#videoTotal').html(response[0].Video.totalRecords);
-                            $('#videolinear').html(response[0].Video.linearFeet);
+                            $('#videoTotal').html(response[1].Video.totalRecords);
+                            $('#videolinear').html(response[1].Video.linearFeet);
                         }
                     }
 
