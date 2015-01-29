@@ -29,20 +29,20 @@ function Dashboard() {
      * @returns {undefined}
      */
     this.onChangeProjects = function () {
+        $.blockUI({
+            message: 'Please wait...',
+            css: {
+                border: 'none',
+                padding: '15px',
+                backgroundColor: '#000',
+                '-webkit-border-radius': '10px',
+                '-moz-border-radius': '10px',
+                opacity: .5,
+                color: '#fff',
+                zIndex: 999999
+            }
+        });
         $('#projects').change(function () {
-            $.blockUI({
-                message: 'Please wait...',
-                css: {
-                    border: 'none',
-                    padding: '15px',
-                    backgroundColor: '#000',
-                    '-webkit-border-radius': '10px',
-                    '-moz-border-radius': '10px',
-                    opacity: .5,
-                    color: '#fff',
-                    zIndex: 999999
-                }
-            });
             var selectedProject = $(this).val();
             if (selectedProject) {
                 formatUrl = baseUrl + 'getFormatCount/' + selectedProject;
@@ -183,6 +183,15 @@ function Dashboard() {
                     success: function (response) {
                         console.log(response);
                         if (response) {
+                            $('#audioTotal').html(0);
+                            $('#audiolinear').html(0.00);
+                            $('#audiofile').html(0.00);
+                            $('#videoTotal').html(0);
+                            $('#videolinear').html(0.00);
+                            $('#videofile').html(0.00);
+                            $('#filmTotal').html(0);
+                            $('#filmlinear').html(0.00);
+                            $('#filmfile').html(0.00);
                             if (typeof response[0] !== "undefined" && response[0].Audio) {
                                 $('#audioTotal').html(response[0].Audio.totalRecords);
                                 $('#audiolinear').html(response[0].Audio.linearFeet);
