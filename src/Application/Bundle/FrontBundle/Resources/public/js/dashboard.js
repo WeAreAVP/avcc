@@ -164,9 +164,9 @@ function Dashboard() {
                 $.ajax({
                     type: "GET",
                     url: totalRecordsUrl,
-                    dataType: "json",
+                    dataType: 'json',
                     success: function (response) {
-                        console.log(response);
+                        console.log(response[0].Audio);
                         if(response){
                             $('#audtioTotal').html(response.Audio.totalRecords);
                             $('#audtiolinear').html(response.Audio.linearFeet);
