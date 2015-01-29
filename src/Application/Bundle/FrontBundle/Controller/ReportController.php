@@ -603,7 +603,7 @@ class ReportController extends Controller
         }
         $audioResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $audioCriteria), 'format');
 echo "<pre>";
-print_r($audioResult);
+print_r($audioCriteria);
 die;
         $videoResult = $sphinxSearch->removeEmpty($sphinxSearch->facetWidthSelect('format', $this->getUser(), $videoCriteria), 'format');
 
