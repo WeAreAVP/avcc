@@ -550,7 +550,7 @@ class ReportController extends Controller
         $totalLinearVideoCount = 0.00;
         $total = array();
         if ($records) {
-            if ($records['Audio']) {
+            if (isset($records['Audio'])) {
                 $audioTotal = 0;
                 $totalAudioFileSize = 0.00;
                 foreach ($records['Audio'] as $audio) {
@@ -587,7 +587,7 @@ class ReportController extends Controller
                 }
                 $total[] = array("Audio" => array("totalRecords" => $audioTotal, "linearFeet" => $totalLinearAudioCount, "fileSize" => $totalAudioFileSize));
             }
-            if ($records['Video']) {
+            if (isset($records['Video'])) {
                 $videoTotal = 0;
                 $totalVideoFileSize = 0.00;
                 foreach ($records['Video'] as $video) {
@@ -624,7 +624,7 @@ class ReportController extends Controller
                 }
                 $total[] = array("Video" => array("totalRecords" => $videoTotal, "linearFeet" => $totalLinearVideoCount, "fileSize" => $totalVideoFileSize));
             }
-            if ($records['Film']) {
+            if (isset($records['Film'])) {
                 $filmTotal = 0;
                 $totalFilmFileSize = 0.00;
                 foreach ($records['Film'] as $film) {
