@@ -168,10 +168,10 @@ function Dashboard() {
                     success: function (response) {
                         console.log(response[0].Audio);
                         if(response){
-                            $('#audtioTotal').html(response.Audio.totalRecords);
-                            $('#audtiolinear').html(response.Audio.linearFeet);
-                            $('#videoTotal').html(response.Video.totalRecords);
-                            $('#videolinear').html(response.Video.linearFeet);
+                            $('#audtioTotal').html(response[0].Audio.totalRecords);
+                            $('#audtiolinear').html(response[0].Audio.linearFeet);
+                            $('#videoTotal').html(response[0].Video.totalRecords);
+                            $('#videolinear').html(response[0].Video.linearFeet);
                         }
                     }
 
