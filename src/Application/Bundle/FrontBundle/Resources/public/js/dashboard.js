@@ -126,7 +126,6 @@ function Dashboard() {
                                 type: "GET",
                                 success: function (response) {
                                     data = response;
-                                    $.unblockUI();
                                 }
                             });
                         }
@@ -205,7 +204,6 @@ function Dashboard() {
             url: totalRecordsUrl,
             dataType: 'json',
             success: function (response) {
-                console.log(response);
                 if (response) {
                     $('#audioTotal').html(0);
                     $('#audiolinear').html(0.00);
@@ -231,6 +229,7 @@ function Dashboard() {
                         $('#filmlinear').html(response[2].Film.linearFeet);
                         $('#filmfile').html(response[2].Film.fileSize);
                     }
+                    $.unblockUI();
                 }
 
             }
