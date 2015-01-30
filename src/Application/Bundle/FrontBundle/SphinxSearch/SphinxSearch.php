@@ -152,19 +152,17 @@ class SphinxSearch extends ContainerAware
         }
         $this->roleCriteria($user, $sq);
         $sq->where($facetColumn, '!=', '');
-        
-        if($groupByColumnName) {
+
+        if ($groupByColumnName) {
             $sq->groupBy($groupByColumnName);
-        } else {
-            $sq->groupBy($facetColumn);
         }
-        if($orderByColumnName) {
+        $sq->groupBy($facetColumn);
+        if ($orderByColumnName) {
             $sq->orderBy($orderByColumnName, 'asc');
-        } else {
-            $sq->orderBy($facetColumn, 'asc');
         }
-        
-                $sq->limit(0, 100);
+        $sq->orderBy($facetColumn, 'asc');
+
+        $sq->limit(0, 100);
         return $sq->execute();
 //        $q = array('result'=>$sq->execute(),'query'=>$sq->getCompiled());
 //        echo '<pre>';
