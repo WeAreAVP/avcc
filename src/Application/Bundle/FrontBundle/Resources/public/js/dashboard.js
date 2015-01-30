@@ -31,7 +31,6 @@ function Dashboard() {
      * @returns {undefined}
      */
     this.bindAll = function () {
-        console.log(formatData);
         if (formatData) {
             selfObj.charts('all', formatData);
         }

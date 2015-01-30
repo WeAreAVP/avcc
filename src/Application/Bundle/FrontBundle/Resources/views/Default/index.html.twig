@@ -56,7 +56,6 @@
         $(document).ready(function () {
             var baseUrl = '{{ path('report') }}';
             var formats ={{ formats | raw }} ;
-                    console.log(formats);
             var obj = new Dashboard();
             obj.setBaseUrl(baseUrl);
             obj.setFormats(formats);
