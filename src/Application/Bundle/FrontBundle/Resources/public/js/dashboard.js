@@ -31,9 +31,9 @@ function Dashboard() {
      * @returns {undefined}
      */
     this.bindAll = function () {
-//        if (formatData) {
-//            selfObj.charts('all');
-//        }
+        if (formatData) {
+            selfObj.charts('all');
+        }
         selfObj.onChangeProjects();
     };
     /**
