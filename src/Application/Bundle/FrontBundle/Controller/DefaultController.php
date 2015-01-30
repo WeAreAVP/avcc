@@ -65,7 +65,7 @@ class DefaultController extends Controller
         
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('format', $this->getUser()), 'format');
+        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('format', $this->getUser(), null, false, 'media_type', 'media_type'), 'format');
         
         $formatsChart = array();
         foreach ($result as $index => $format) {
