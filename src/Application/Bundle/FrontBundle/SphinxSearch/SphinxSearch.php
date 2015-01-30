@@ -275,6 +275,7 @@ class SphinxSearch extends ContainerAware
         $sq->where($facetColumn, '!=', '');
         $sq->groupBy($facetColumn)
                 ->orderBy($facetColumn, 'asc');
+        $sq->limit(0, 100);
 
         return $sq->execute();
     }
@@ -300,6 +301,7 @@ class SphinxSearch extends ContainerAware
         $sq->where($facetColumn, '!=', '');
         $sq->groupBy($facetColumn)
                 ->orderBy($facetColumn, 'asc');
+        $sq->limit(0, 100);
 
         return $sq->execute();
     }
