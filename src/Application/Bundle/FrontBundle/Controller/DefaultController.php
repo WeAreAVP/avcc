@@ -14,6 +14,7 @@ use Application\Bundle\FrontBundle\Entity\Users;
 use Application\Bundle\FrontBundle\Form\Type\RegistrationFormType;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\Entity\UserSettings as UserSettings;
+use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 
 /**
  * Default controller.
