@@ -61,10 +61,19 @@ class DefaultController extends Controller
         } else {
             $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $this->getUser()->getOrganizations()));
         }
-
+        
+        $shpinxInfo = $this->container->getParameter('sphinx_param');
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('format', $this->getUser()), 'format');
+        
+        $formatsChart = array();
+        foreach ($result as $index => $format) {
+            $formatsChart[] = array($format['format'], (int) $format['total']);
+        }
         return $this->render('ApplicationFrontBundle:Default:index.html.twig', array(
                     'name' => $user->getUsername(),
-                    'projects' => $projects
+                    'projects' => $projects,
+                    'formats' => $formatsChart
                         )
         );
     }

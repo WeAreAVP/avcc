@@ -7,7 +7,7 @@ function Dashboard() {
 
     var selfObj = this;
     var baseUrl = null;
-
+    var formatData = null;
     /**
      * Set the base url.
      * @param {string} base_url
@@ -17,6 +17,15 @@ function Dashboard() {
         baseUrl = base_url;
     }
 
+    /**
+     * Set the formats for hight charts.
+     * @param {array} format_data
+     * 
+     */
+    this.setFormats = function (format_data) {
+        formatData = format_data;
+    }
+    
     /**
      * 
      * @returns {undefined}
