@@ -31,10 +31,10 @@ function Dashboard() {
      * @returns {undefined}
      */
     this.bindAll = function () {
-        if (formatData) {
-            selfObj.charts('all');
-        }
-//        selfObj.onChangeProjects();
+//        if (formatData) {
+//            selfObj.charts('all');
+//        }
+        selfObj.onChangeProjects();
     };
     /**
      * 
