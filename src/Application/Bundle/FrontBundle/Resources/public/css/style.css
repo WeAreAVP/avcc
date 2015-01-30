@@ -136,3 +136,9 @@ span.has-error ul li{
 #bulk_edit_body label{
     color:#000!important;
 }
+.dashboardRecordsInfo{
+    margin-left:20px;
+}
+.dashboardRecordsInfo table{
+    margin-top:124px;
+}
