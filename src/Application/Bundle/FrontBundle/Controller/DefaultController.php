@@ -75,7 +75,7 @@ class DefaultController extends Controller
         return $this->render('ApplicationFrontBundle:Default:index.html.twig', array(
                     'name' => $user->getUsername(),
                     'projects' => $projects,
-                    'formats' => array('formats' => json_encode($formatsChart))
+                    'formats' => json_encode($formatsChart)
                         )
         );
     }
