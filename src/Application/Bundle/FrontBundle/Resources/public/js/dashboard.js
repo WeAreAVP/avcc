@@ -31,8 +31,9 @@ function Dashboard() {
      * @returns {undefined}
      */
     this.bindAll = function () {
+        console.log(formatData);
         if (formatData) {
-            selfObj.charts('all');
+            selfObj.charts('all', formatData);
         }
         selfObj.onChangeProjects();
     };
@@ -45,12 +46,12 @@ function Dashboard() {
         $('#projects').change(function () {
             var selectedProject = $(this).val();
             if (selectedProject) {
-                selfObj.charts(selectedProject);
+                selfObj.charts(selectedProject, formatData);
             }
         });
     };
 
-    this.charts = function (selectedProject) {
+    this.charts = function (selectedProject, formatData) {
         $.blockUI({
             message: 'Please wait...',
             css: {
@@ -116,16 +117,20 @@ function Dashboard() {
                     colorByPoint: true,
                     data: (function () {
                         var data;
-                        $.ajax({
-                            url: formatUrl,
-                            async: false,
-                            dataType: "json",
-                            type: "GET",
-                            success: function (response) {
-                                data = response;
-                                $.unblockUI();
-                            }
-                        });
+                        if (formatData) {
+                            data = formatData;
+                        } else {
+                            $.ajax({
+                                url: formatUrl,
+                                async: false,
+                                dataType: "json",
+                                type: "GET",
+                                success: function (response) {
+                                    data = response;
+                                    $.unblockUI();
+                                }
+                            });
+                        }
                         return data;
                     })()
                 }]
@@ -228,7 +233,7 @@ function Dashboard() {
                         $('#filmfile').html(response[2].Film.fileSize);
                     }
                 }
-                
+
             }
 
         }); // Ajax Call 

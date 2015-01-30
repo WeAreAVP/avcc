@@ -53,9 +53,10 @@
     <script src="{{ asset('bundles/applicationfront/js/dashboard.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.blockUI.js') }}"></script>
     <script type="text/javascript">
+        var formats = {{ formats | raw }};
+        console.log(formats);
         $(document).ready(function () {
-            var baseUrl = '{{ path('report') }}';
-            var formats = {{ formats | raw }};
+            var baseUrl = '{{ path('report') }}';            
             var obj = new Dashboard();
             obj.setBaseUrl(baseUrl);
             obj.setFormats(formats);
