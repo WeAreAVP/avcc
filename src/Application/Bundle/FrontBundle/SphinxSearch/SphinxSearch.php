@@ -142,7 +142,7 @@ class SphinxSearch extends ContainerAware
      *
      * @return array
      */
-    public function facetSelect($facetColumn, $user, $criteria = null, $parentFacet = false, $orderByColumnName = null)
+    public function facetSelect($facetColumn, $user, $criteria = null, $parentFacet = false, $groupByColumnName = null)
     {
         $sq = SphinxQL::create($this->conn)
                 ->select($facetColumn, SphinxQL::expr('count(*) AS total'))
@@ -152,18 +152,18 @@ class SphinxSearch extends ContainerAware
         }
         $this->roleCriteria($user, $sq);
         $sq->where($facetColumn, '!=', '');
-        $sq->groupBy($facetColumn);
-        if($orderByColumnName) {
-            $sq->orderBy($orderByColumnName, 'asc');
+        
+        if($groupByColumnName) {
+            $sq->groupBy($groupByColumnName);
         } else {
-            $sq->orderBy($facetColumn, 'asc');
+            $sq->groupBy($facetColumn);
         }
-
-        return $sq->execute();
-//        $q = array('result'=>$sq->execute(),'query'=>$sq->getCompiled());
-//        echo '<pre>';
-//        print_r($q);
-//        exit;
+        $sq->orderBy($facetColumn, 'asc');
+//        return $sq->execute();
+        $q = array('result'=>$sq->execute(),'query'=>$sq->getCompiled());
+        echo '<pre>';
+        print_r($q);
+        exit;
     }
 
     /**
