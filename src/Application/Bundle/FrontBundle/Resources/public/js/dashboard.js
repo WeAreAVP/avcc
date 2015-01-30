@@ -123,6 +123,7 @@ function Dashboard() {
                             type: "GET",
                             success: function (response) {
                                 data = response;
+                                $.unblockUI();
                             }
                         });
                         return data;
@@ -227,7 +228,7 @@ function Dashboard() {
                         $('#filmfile').html(response[2].Film.fileSize);
                     }
                 }
-                $.unblockUI();
+                
             }
 
         }); // Ajax Call 
