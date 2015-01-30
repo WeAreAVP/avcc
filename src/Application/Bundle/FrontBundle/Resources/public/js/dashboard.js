@@ -51,19 +51,6 @@ function Dashboard() {
     };
 
     this.charts = function (selectedProject, formatData) {
-        $.blockUI({
-            message: 'Please wait...',
-            css: {
-                border: 'none',
-                padding: '15px',
-                backgroundColor: '#000',
-                '-webkit-border-radius': '10px',
-                '-moz-border-radius': '10px',
-                opacity: .5,
-                color: '#fff',
-                zIndex: 999999
-            }
-        });
         formatUrl = baseUrl + 'getFormatCount/' + selectedProject;
         cuUrl = baseUrl + 'getCommercialUniqueCount/' + selectedProject;
         totalRecordsUrl = baseUrl + 'getTotalRecords/' + selectedProject;
@@ -119,6 +106,19 @@ function Dashboard() {
                         if (formatData) {
                             data = formatData;
                         } else {
+                            $.blockUI({
+                                message: 'Please wait...',
+                                css: {
+                                    border: 'none',
+                                    padding: '15px',
+                                    backgroundColor: '#000',
+                                    '-webkit-border-radius': '10px',
+                                    '-moz-border-radius': '10px',
+                                    opacity: .5,
+                                    color: '#fff',
+                                    zIndex: 999999
+                                }
+                            });
                             $.ajax({
                                 url: formatUrl,
                                 async: false,
@@ -126,6 +126,7 @@ function Dashboard() {
                                 type: "GET",
                                 success: function (response) {
                                     data = response;
+                                    $.unblockUI();
                                 }
                             });
                         }
@@ -228,8 +229,7 @@ function Dashboard() {
                         $('#filmTotal').html(response[2].Film.totalRecords);
                         $('#filmlinear').html(response[2].Film.linearFeet);
                         $('#filmfile').html(response[2].Film.fileSize);
-                    }
-                    $.unblockUI();
+                    }                    
                 }
 
             }
