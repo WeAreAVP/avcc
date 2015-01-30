@@ -138,7 +138,9 @@ span.has-error ul li{
 }
 .dashboardRecordsInfo{
     margin-left:20px;
+    position:relative;
 }
-.dashboardRecordsInfo table{
-    margin-top:101px;
+.dashboardRecordsInfo table.dashboardTotals{
+    position: absolute;
+    top:120px;
 }
