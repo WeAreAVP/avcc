@@ -141,6 +141,6 @@ span.has-error ul li{
     position:relative;
 }
 .dashboardRecordsInfo table.dashboardTotals{
-    position: fixed;
+    position: absolute;
     top:120px;
 }
