@@ -71,10 +71,11 @@ class DefaultController extends Controller
         foreach ($result as $index => $format) {
             $formatsChart[] = array($format['format'], (int) $format['total']);
         }
+        
         return $this->render('ApplicationFrontBundle:Default:index.html.twig', array(
                     'name' => $user->getUsername(),
                     'projects' => $projects,
-                    'formats' => $formatsChart
+                    'formats' => array('formats' => json_encode($formatsChart))
                         )
         );
     }

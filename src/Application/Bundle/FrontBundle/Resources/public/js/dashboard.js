@@ -15,7 +15,7 @@ function Dashboard() {
      */
     this.setBaseUrl = function (base_url) {
         baseUrl = base_url;
-    }
+    };
 
     /**
      * Set the formats for hight charts.
@@ -24,20 +24,24 @@ function Dashboard() {
      */
     this.setFormats = function (format_data) {
         formatData = format_data;
-    }
+    };
     
     /**
      * 
      * @returns {undefined}
      */
     this.bindAll = function () {
+        if(formatData){
+            selfObj.charts('all');
+        }
         selfObj.onChangeProjects();
-    }
+    };
     /**
      * 
      * @returns {undefined}
      */
     this.onChangeProjects = function () {
+        formatData = "";
         $.blockUI({
             message: 'Please wait...',
             css: {
@@ -54,7 +58,13 @@ function Dashboard() {
         $('#projects').change(function () {
             var selectedProject = $(this).val();
             if (selectedProject) {
-                formatUrl = baseUrl + 'getFormatCount/' + selectedProject;
+                selfObj.charts(selectedProject);
+            }
+        });
+    };
+    
+    this.charts = function(selectedProject){
+          formatUrl = baseUrl + 'getFormatCount/' + selectedProject;
                 cuUrl = baseUrl + 'getCommercialUniqueCount/' + selectedProject;
                 totalRecordsUrl = baseUrl + 'getTotalRecords/' + selectedProject;
                 $('#formatCount').highcharts({
@@ -221,8 +231,5 @@ function Dashboard() {
                     }
 
                 }); // Ajax Call 
-
-            }
-        }).change();
     }
 }

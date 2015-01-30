@@ -162,7 +162,7 @@ class SphinxSearch extends ContainerAware
         }
         $sq->orderBy($facetColumn, 'asc');
 
-        $sq->limit(0, 100);
+        $sq->limit(0, 1000);
         return $sq->execute();
 //        $q = array('result'=>$sq->execute(),'query'=>$sq->getCompiled());
 //        echo '<pre>';
@@ -275,7 +275,7 @@ class SphinxSearch extends ContainerAware
         $sq->where($facetColumn, '!=', '');
         $sq->groupBy($facetColumn)
                 ->orderBy($facetColumn, 'asc');
-        $sq->limit(0, 100);
+        $sq->limit(0, 1000);
 
         return $sq->execute();
     }
@@ -301,7 +301,7 @@ class SphinxSearch extends ContainerAware
         $sq->where($facetColumn, '!=', '');
         $sq->groupBy($facetColumn)
                 ->orderBy($facetColumn, 'asc');
-        $sq->limit(0, 100);
+        $sq->limit(0, 1000);
 
         return $sq->execute();
     }
