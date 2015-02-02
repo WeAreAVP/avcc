@@ -152,10 +152,6 @@ function Records() {
                     selected.splice(index, 1);
                 }
                 $(this).toggleClass('selected', function () {
-                    var input = $("#" + id + " td:first").html();
-                    var recId = $(input).attr('value');
-                    console.log(pageUrl + "record/" + recId);
-                    window.location = pageUrl + "record/" + recId;
 //                    var input = $("#" + id + " td:first").html();
 //                    if ($(this).hasClass('selected') === true) {
 //                        $("#" + $(input).attr('id')).attr("checked", "checked");
@@ -263,6 +259,7 @@ function Records() {
         selfObj.showMsg();
         selfObj.validateRecords();
         selfObj.checkBoxes();
+        selfObj.onClickTr();
         return true;
     }
     /**
@@ -502,13 +499,13 @@ function Records() {
             }
         });
     };
-    
-    this.checkBoxes = function(){
-         $(document).on ('click','.checkboxes',function(){
-           selfObj.saveState($(this).val());
-         });  
+
+    this.checkBoxes = function () {
+        $(document).on('click', '.checkboxes', function () {
+            selfObj.saveState($(this).val());
+        });
     };
-    
+
     this.exportRequest = function () {
         $('.export').click(function () {
             var checked = false;
@@ -707,5 +704,14 @@ function Records() {
             }
         });
     }
+
+    this.onClickTr = function () {
+        $(document).on('click', '#records tr', function () {
+            var input = $(this + " td:first").html();
+            var recId = $(input).attr('value');
+            console.log(pageUrl + "record/" + recId);
+            window.location = pageUrl + "record/" + recId;
+        });
+    };
 }
 
