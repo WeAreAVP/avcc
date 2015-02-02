@@ -258,6 +258,7 @@ function Records() {
 //        selfObj.showMergMsg();
         selfObj.showMsg();
         selfObj.validateRecords();
+        selfObj.checkBoxes();
         return true;
     }
     /**
