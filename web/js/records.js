@@ -496,8 +496,15 @@ function Records() {
                 $("#selectedrecords").val(response.recordIds);
             }
         });
-    }
-
+    };
+    
+    this.checkBoxes = function(){
+         $(".checkboxes").click(function(){
+           console.log($(this).val());  
+           selfObj.saveState($(this).val());
+         });  
+    };
+    
     this.exportRequest = function () {
         $('.export').click(function () {
             var checked = false;
