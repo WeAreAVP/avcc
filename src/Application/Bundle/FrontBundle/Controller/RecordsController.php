@@ -291,6 +291,9 @@ class RecordsController extends Controller
                 $session->remove("saveRecords");
             $recordsIds = 'all';
         } else {
+            if (!$data['checked']){
+                $session->remove("saveRecords");
+            }    
             if ($session->has("saveRecords")) {
                 $checked = $session->get("saveRecords");
             }
