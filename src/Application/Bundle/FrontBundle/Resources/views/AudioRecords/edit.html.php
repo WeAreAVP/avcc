@@ -20,7 +20,9 @@
                 <?php
                 $attr = ($audioField['is_required']) ? array('class' => 'size4', 'required'=> 'required') : array('class' => 'size4');
                 echo $view['form']->label((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]], ' ');
-                echo $audioField['title'] ?>
+                echo $audioField['title'];
+                echo ($audioField['is_required']) ? "&nbsp;<span>*</span>" : "";
+                ?>
                 <div class="input-control <?php echo (count($field) == 2 && $field[1] == 'isReview') ? '' : 'text'; ?>" data-role="input-control">
     <?php echo $view['form']->widget((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => $attr)) ?>
                     <span class="has-error text-danger"><?php echo $view['form']->errors((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]]) ?></span>
