@@ -194,14 +194,14 @@ class DefaultFields
 
             $tableView[$mainIndex][] = ($value['project']) ? '<a href="' . $url . '">' . $value['project'] . '</a>' : $value['project'];
 //			$tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['title'] . '</a>';
-            $tableView[$mainIndex][] = $value['format'];
+            $tableView[$mainIndex][] = '<a href="' . $url . '">' .$value['format'] . '</a>';
             $tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['unique_id'] . '</a>';
 
-            $tableView[$mainIndex][] = $value['title'];
+            $tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['title'] . '</a>';
 
-            $tableView[$mainIndex][] = $value['collection_name'];
+            $tableView[$mainIndex][] = '<a href="' . $url . '">' .$value['collection_name'] . '</a>';
 
-            $tableView[$mainIndex][] = $value['location'];
+            $tableView[$mainIndex][] = '<a href="' . $url . '">' .$value['location'] . '</a>';
         }
 
         return $tableView;

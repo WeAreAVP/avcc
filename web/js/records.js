@@ -259,7 +259,6 @@ function Records() {
         selfObj.showMsg();
         selfObj.validateRecords();
         selfObj.checkBoxes();
-        selfObj.onClickTr();
         return true;
     }
     /**
@@ -499,13 +498,13 @@ function Records() {
             }
         });
     };
-
-    this.checkBoxes = function () {
-        $(document).on('click', '.checkboxes', function () {
-            selfObj.saveState($(this).val());
-        });
+    
+    this.checkBoxes = function(){
+         $(document).on ('click','.checkboxes',function(){
+           selfObj.saveState($(this).val());
+         });  
     };
-
+    
     this.exportRequest = function () {
         $('.export').click(function () {
             var checked = false;
@@ -704,15 +703,5 @@ function Records() {
             }
         });
     }
-
-    this.onClickTr = function () {
-//        $(document).on('click', '#records tr', function () {
-        $('#records tr').click(function(){
-            var input = $(this + " td:first").html();
-            var recId = $(input).attr('value');
-            console.log(pageUrl + "record/" + recId);
-            window.location = pageUrl + "record/" + recId;
-        });
-    };
 }
 
