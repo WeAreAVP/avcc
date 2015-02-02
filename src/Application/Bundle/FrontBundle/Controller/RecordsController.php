@@ -487,9 +487,9 @@ class RecordsController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        
         $entity = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('id' => $id));
-
+//        $entity = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIdsArray($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Records entity.');
         }

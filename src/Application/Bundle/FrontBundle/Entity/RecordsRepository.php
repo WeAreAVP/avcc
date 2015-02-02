@@ -66,8 +66,8 @@ class RecordsRepository extends EntityRepository
     public function findRecordsByIds($ids)
     {
         $query = $this->getEntityManager()
-        ->createQuery("SELECT r from ApplicationFrontBundle:Records r "
-        . "WHERE r.id IN  (:ids)");
+                ->createQuery("SELECT r from ApplicationFrontBundle:Records r "
+                . "WHERE r.id IN  (:ids)");
         $query->setParameter('ids', $ids);
 
         return $query->getResult();
@@ -76,11 +76,26 @@ class RecordsRepository extends EntityRepository
     public function findAllUniqueIds()
     {
         $uniqueids = $this->getEntityManager()->createQuery('SELECT r.uniqueId'
-                . ' from ApplicationFrontBundle:Records r'
+                        . ' from ApplicationFrontBundle:Records r'
                 )->getScalarResult();
-        $ids = array_map("current",$uniqueids);
+        $ids = array_map("current", $uniqueids);
 
         return $ids;
+    }
+
+    public function findRecordsByIdsArray($ids)
+    {
+        $query = $this->getEntityManager()->createQuery("SELECT r as record, ar as audio, m.name as mediaType, vr as video, fr as film, p.name as projectTitle"
+                                . " FROM ApplicationFrontBundle:Records r"
+                                . " LEFT JOIN ApplicationFrontBundle:MediaTypes m WITH r.mediaType = m.id"
+                                . " LEFT JOIN ApplicationFrontBundle:Projects p WITH r.project = p.id"
+                                . " LEFT JOIN ApplicationFrontBundle:AudioRecords ar WITH ar.record = r.id "
+                                . " LEFT JOIN ApplicationFrontBundle:VideoRecords vr WITH vr.record = r.id "
+                                . " LEFT JOIN ApplicationFrontBundle:FilmRecords fr WITH fr.record = r.id "
+                                . " Where r.id = $ids"
+                        )
+                        ->getResult(2);
+        return $query;
     }
 
 }

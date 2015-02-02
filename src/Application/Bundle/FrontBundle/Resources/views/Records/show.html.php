@@ -19,7 +19,7 @@
     endif;
     ?>
     <?php if ($view['security']->isGranted('ROLE_CATALOGER')): ?>
-    <a href="<?php echo $view['router']->generate($rout, array('id' => $id)) ?>" class="button primary">Edit</a>
+        <a href="<?php echo $view['router']->generate($rout, array('id' => $id)) ?>" class="button primary">Edit</a>
     <?php endif; ?>
     <div class="clearfix"></div>
     <div class="grid">
@@ -42,8 +42,11 @@
 
     </div>
     <table class="table">
-        <tbody>
-
+        <tbody>            
+            <tr>
+                <th class="text-right" width="20%">Media Type</th>
+                <td width="80%"><?php echo $entity->getMediaType() ?></td>
+            </tr>    
             <tr>
                 <th class="text-right" width="20%">Media Type</th>
                 <td width="80%"><?php echo $entity->getMediaType() ?></td>
@@ -331,7 +334,7 @@
                     <th class="text-right">Condition Notes </th>
                     <td><?php echo $entity->getConditionNote() ?></td>
                 </tr>
-            <?php endif; ?>
+            <?php endif; ?>                
         </tbody>
     </table>
 </div>
