@@ -152,6 +152,9 @@ function Records() {
                     selected.splice(index, 1);
                 }
                 $(this).toggleClass('selected', function () {
+                    var input = $("#" + id + " td:first").html();
+                    var recId = $(input).attr('value');
+                    window.location.href = pageUrl."record/".recId;
 //                    var input = $("#" + id + " td:first").html();
 //                    if ($(this).hasClass('selected') === true) {
 //                        $("#" + $(input).attr('id')).attr("checked", "checked");
