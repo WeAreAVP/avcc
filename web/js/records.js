@@ -154,6 +154,7 @@ function Records() {
                 $(this).toggleClass('selected', function () {
                     var input = $("#" + id + " td:first").html();
                     var recId = $(input).attr('value');
+                    console.log(pageUrl + "record/" + recId);
                     window.location = pageUrl + "record/" + recId;
 //                    var input = $("#" + id + " td:first").html();
 //                    if ($(this).hasClass('selected') === true) {
