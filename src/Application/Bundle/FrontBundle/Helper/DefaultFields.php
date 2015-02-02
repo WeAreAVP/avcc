@@ -178,6 +178,8 @@ class DefaultFields
             } elseif ($session->has("saveRecords")) {
                 if (in_array($value['id'], $session->get("saveRecords"))) {
                     $checked = 'checked = "checked"';
+                }else{
+                    $checked = '';
                 }
             }
             $mediaType = $value['media_type'];
@@ -188,7 +190,7 @@ class DefaultFields
             } else {
                 $url = 'record/' . $value['id'];
             }
-            $tableView[$mainIndex][] = '<input id="row_' . $value['id'] . '"' . $checked . '  type="checkbox" name="record_checkbox" class="checkboxes" onclick="" value="' . $value['id'] . '" />';
+            $tableView[$mainIndex][] = '<input data-saveRec="'.implode(",",$session->get("saveRecords")).'" id="row_' . $value['id'] . '"' . $checked . '  type="checkbox" name="record_checkbox" class="checkboxes" onclick="" value="' . $value['id'] . '" />';
 
             $tableView[$mainIndex][] = ($value['project']) ? '<a href="' . $url . '">' . $value['project'] . '</a>' : $value['project'];
 //			$tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['title'] . '</a>';
