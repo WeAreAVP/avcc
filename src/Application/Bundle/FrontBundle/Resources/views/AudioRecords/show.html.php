@@ -19,15 +19,7 @@
             <?php endif;
             ?>
         </div>
-        <div class="row">
-            <div class="span4">Created at: <?php echo $entity->getRecord()->getCreatedOn()->format('Y-m-d H:i:s'); ?></div>
-            <?php if ($entity->getRecord()->getUpdatedOn()): ?>
-                <div class="span4">Modified at:  <?php echo $entity->getRecord()->getUpdatedOn()->format('Y-m-d H:i:s'); ?>
-                </div>
-                <?php
-            endif;
-            ?>
-        </div>
+        
 
     </div>
     <table class="table">
