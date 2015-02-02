@@ -44,7 +44,7 @@ security:
         - { path: ^/record/$, role: ROLE_USER }
         - { path: ^/record/, role: ROLE_USER }
         - { path: ^/report/, role: ROLE_USER }
-        - { path: ^/, role: ROLE_USER }
+#        - { path: ^/, role: ROLE_USER }
 
 
 
