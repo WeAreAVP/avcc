@@ -138,7 +138,7 @@ function Records() {
                         "rowCallback": function (row, data) {
                             if ($(data[0]).attr("checked") == "checked") {
                                 $(row).addClass("selected");
-                            }else{
+                            } else {
                                 $(this).removeClass('selected');
                             }
                         }
@@ -152,7 +152,7 @@ function Records() {
                     selected.splice(index, 1);
                 }
                 $(this).toggleClass('selected', function () {
-//                    var input = $("#" + id + " td:first").html();
+                    var input = $("#" + id + " td:first").html();
 //                    if ($(this).hasClass('selected') === true) {
 //                        $("#" + $(input).attr('id')).attr("checked", "checked");
 //                        $("#" + $(input).attr('id')).prop("checked", true);
@@ -161,7 +161,11 @@ function Records() {
 //                        $("#" + $(input).attr('id')).prop("checked", false);
 //                        $(this).removeClass('selected');
 //                    }
-//                    selfObj.saveState($(input).attr('value'));
+                    if ($("#" + $(input).attr('id')).attr("checked")=="checked" || $("#" + $(input).attr('id')).prop("checked", true)) {
+                        selfObj.saveState($(input).attr('value'));
+                    }else if ($("#" + $(input).attr('id')).attr("checked")=="" || $("#" + $(input).attr('id')).prop("checked", false)){
+                        selfObj.saveState($(input).attr('value'));
+                    }
                 });
 
             });
@@ -542,7 +546,7 @@ function Records() {
                         $("#afterExport").show();
                     }
                 });
-            } else { 
+            } else {
                 $("#exportModal").modal('hide');
                 $.Dialog({
                     'title': 'Error',
