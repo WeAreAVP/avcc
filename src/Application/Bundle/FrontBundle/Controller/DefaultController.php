@@ -241,4 +241,5 @@ class DefaultController extends Controller
 
         $this->get('mailer')->send($message);
     }
+
 }
