@@ -501,7 +501,6 @@ function Records() {
     
     this.checkBoxes = function(){
          $(document).on ('click','.checkboxes',function(){
-           console.log($(this).val());
            selfObj.saveState($(this).val());
          });  
     };
