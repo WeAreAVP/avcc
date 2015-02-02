@@ -161,6 +161,7 @@ function Records() {
 //                        $("#" + $(input).attr('id')).prop("checked", false);
 //                        $(this).removeClass('selected');
 //                    }
+                    console.log($(input).attr('value'));
                     if ($("#" + $(input).attr('id')).attr("checked")=="checked" || $("#" + $(input).attr('id')).prop("checked", true)) {
                         selfObj.saveState($(input).attr('value'));
                     }else if ($("#" + $(input).attr('id')).attr("checked")=="" || $("#" + $(input).attr('id')).prop("checked", false)){
