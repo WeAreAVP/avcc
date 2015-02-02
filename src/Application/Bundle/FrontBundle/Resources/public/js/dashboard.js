@@ -57,7 +57,7 @@ function Dashboard() {
         $('#formatCount').highcharts({
             chart: {
                 type: 'column',
-                width: 1400,
+                width: 1500,
                 height: 400
             },
             title: {
