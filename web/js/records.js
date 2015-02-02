@@ -706,7 +706,8 @@ function Records() {
     }
 
     this.onClickTr = function () {
-        $(document).on('click', '#records tr', function () {
+//        $(document).on('click', '#records tr', function () {
+        $('#records tr').click(function(){
             var input = $(this + " td:first").html();
             var recId = $(input).attr('value');
             console.log(pageUrl + "record/" + recId);
