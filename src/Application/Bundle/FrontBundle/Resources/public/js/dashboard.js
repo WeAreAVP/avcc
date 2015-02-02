@@ -56,7 +56,9 @@ function Dashboard() {
         totalRecordsUrl = baseUrl + 'getTotalRecords/' + selectedProject;
         $('#formatCount').highcharts({
             chart: {
-                type: 'column'
+                type: 'column',
+                width: 1200,
+                height: 400
             },
             title: {
                 text: ''
