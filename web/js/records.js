@@ -138,6 +138,8 @@ function Records() {
                         "rowCallback": function (row, data) {
                             if ($(data[0]).attr("checked") == "checked") {
                                 $(row).addClass("selected");
+                            }else{
+                                $(this).removeClass('selected');
                             }
                         }
                     });
