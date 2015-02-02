@@ -136,9 +136,9 @@ function Records() {
                         },
 //                        "ajax": ajaxSaveStateUrl,
                         "rowCallback": function (row, data) {
-//                            if ($(data[0]).attr("checked") == "checked") {
+                            if ($(data[0]).attr("checked") == "checked") {
                                 $(row).addClass("selected");
-//                            }
+                            }
                         }
                     });
             $('#records tbody').on('click', 'tr', function () {
