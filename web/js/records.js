@@ -500,8 +500,9 @@ function Records() {
     };
     
     this.checkBoxes = function(){
+        console.log($('.checkboxes').val());  
          $(".checkboxes").on ('click',function(){
-           console.log($(this).val());  
+           
            selfObj.saveState($(this).val());
          });  
     };
