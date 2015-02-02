@@ -500,7 +500,7 @@ function Records() {
     };
     
     this.checkBoxes = function(){
-         $(".checkboxes").click(function(){
+         $(".checkboxes").on ('click',function(){
            console.log($(this).val());  
            selfObj.saveState($(this).val());
          });  
