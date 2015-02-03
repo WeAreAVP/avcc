@@ -1,6 +1,8 @@
 {% extends 'FOSUserBundle::layout.html.twig' %}
 
 {% block body -%}
+    
+    
 	<h1>Projects
 		{% if is_granted('ROLE_MANAGER') %}
 			<small class="on-right">
@@ -10,7 +12,7 @@
 	</h1>
 
 	<div class="table-responsive">
-		<table class="table bordered">
+		<table class="table bordered tablesorter" id="projectsTable">
 			<thead>
 				<tr>
 					<th>Name</th>
@@ -55,5 +57,9 @@
 
 
 
-
+ <script type="text/javascript">
+        $(document).ready(function () {
+            $("#projectsTable").tablesorter(); 
+        });
+    </script>
 {% endblock %}
