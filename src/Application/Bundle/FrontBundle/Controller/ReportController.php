@@ -411,7 +411,7 @@ class ReportController extends Controller
      */
     public function fileSizeCalculatorAction($type)
     {
-        if (!in_array($type, array('xlsx'))) {
+        if (!in_array($type, array('xlsx', 'csv'))) {
             throw $this->createNotFoundException('Invalid report type');
         }
 
@@ -439,7 +439,7 @@ class ReportController extends Controller
      */
     public function linearFootCalculatorAction($type)
     {
-        if (!in_array($type, array('xlsx'))) {
+        if (!in_array($type, array('xlsx', 'csv'))) {
             throw $this->createNotFoundException('Invalid report type');
         }
         $typeFormats = $this->getLinearFeet();
