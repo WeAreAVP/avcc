@@ -6,6 +6,9 @@ function initialize_records_form() {
     $('#trackTypes_lbl').hide();
     $('#cassetteSize_lbl').hide();
     $("#formatVersion_lbl").hide();
+    $('#bases_lbl').hide();
+    $('#recordingSpeed_lbl').hide();
+
     if (selectedMediaType)
         $('.new #mediaType option[value="' + selectedMediaType + '"]').attr("selected", "selected");
     $.mask.definitions['y'] = '[1-2,x]';
@@ -47,6 +50,7 @@ function updateFormat() {
 
 function showUpdateFields() {
     $('#format').change(function () {
+        console.log($(this).val());
         var showDiskDiameter = [16, 17, 18, 19, 20, 28];
         var showMediaDiameter = [1, 2, 3, 4, 5, 24];
         var showTapeThickness = [1, 2, 3, 4, 5];
@@ -166,8 +170,18 @@ function showUpdateFields() {
                 }
 
             }); // Ajax Call   
+        } else {
+            $('#diskDiameters_lbl').hide();
+            $('#reelDiameters_lbl').hide();
+            $('#mediaDiameters_lbl').hide();
+            $('#tapeThickness_lbl').hide();
+            $('#trackTypes_lbl').hide();
+            $('#cassetteSize_lbl').hide();
+            $("#formatVersion_lbl").hide();
+            $('#bases_lbl').hide();
+            $('#recordingSpeed_lbl').hide();
         }
-    });
+    }).change();
 
 }
 
@@ -223,14 +237,14 @@ function closeBtn() {
 }
 
 function updateProjects() {
-    if(selectedProject){
+    if (selectedProject) {
         urlProjects = baseUrl + 'getAllProjects/' + selectedProject;
-    }else{
+    } else {
         urlProjects = baseUrl + 'getAllProjects';
-    }   
+    }
     $.ajax({
         type: "GET",
-        url: urlProjects,        
+        url: urlProjects,
         success: function (response) {
             if (response != "") {
                 $("#project").html(response);
