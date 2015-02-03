@@ -60,6 +60,7 @@ function showUpdateFields() {
         var showCassetteSize = [59, 60, 33, 34, 35, 43, 44, 46, 47, 48, 52, 53, 54, 55, 57];
         var hideRecordingSpeedFormat = [37, 39, 40, 41];
         var hideIfFormat = [24, 25, 26];
+        var showSideIfFormat = [1, 10, 11,13,14,16,17,18,19,20,27,28];
 
         if (jQuery.inArray(parseInt($(this).val()), showDiskDiameter) >= 0) {
             $('#diskDiameters_lbl').show();
@@ -95,6 +96,11 @@ function showUpdateFields() {
             $('#slides_lbl, #monoStereo_lbl, #noiceReduction_lbl').hide();
         } else {
             $('#slides_lbl, #monoStereo_lbl, #noiceReduction_lbl').show();
+        }
+        if (jQuery.inArray(parseInt($(this).val()), showSideIfFormat) >= 0) {
+            $('#slides_lbl').show();
+        } else {
+            $('#slides_lbl').hide();
         }
         if ($(this).val()) {
             /// call to get base dropdown options
