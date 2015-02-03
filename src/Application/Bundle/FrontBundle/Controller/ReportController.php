@@ -84,13 +84,16 @@ class ReportController extends Controller
     /**
      * Generate Manifest for shipping to vendor and Quote from Vendor report.
      *
-     * @Route("/manifest", name="manifest")
+     * @Route("/manifest/{type}", name="manifest")
      * @Method("GET")
      * @Template()
      * @return array
      */
-    public function manifestAction()
+    public function manifestAction($type)
     {
+        if (!in_array($type, array('csv', 'xlsx'))) {
+            throw $this->createNotFoundException('Invalid report type');
+        }
         $entityManager = $this->getDoctrine()->getManager();
 
         if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN'))
@@ -107,7 +110,7 @@ class ReportController extends Controller
 
         $exportComponent = new ExportReport($this->container);
         $exportComponent->prepareManifestReport($activeSheet, $records);
-        $response = $exportComponent->outputReport('xlsx', $phpExcelObject, 'manifest_report');
+        $response = $exportComponent->outputReport($type, $phpExcelObject, 'manifest_report');
 
         return $response;
         return array();

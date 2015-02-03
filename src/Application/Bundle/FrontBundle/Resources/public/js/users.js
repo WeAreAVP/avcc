@@ -53,7 +53,9 @@ function Users() {
             if (selectedRole == 'ROLE_CATALOGER' || selectedRole == 'ROLE_USER') {
                 $('.projectsDiv').show();
                 $('#userProjects').attr('required', 'required');
-                $("#userProjects").chosen();
+                $("#userProjects").chosen({
+                    placeholder_text_multiple: "Select Projects"
+                });
                 $('#orgDiv').show();
             } else {
                 $('#userProjects').removeAttr('required');
@@ -66,7 +68,9 @@ function Users() {
      * @returns {undefined}
      */
     this.applyChosen = function () {
-        $("#userProjects").chosen();
+        $("#userProjects").chosen({
+                    placeholder_text_multiple: "Select Projects"
+                });
     }
 
     this.getOrganizationProjects = function () {
