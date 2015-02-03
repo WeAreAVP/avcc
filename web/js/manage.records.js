@@ -190,10 +190,16 @@ function showUpdateFields() {
 function onChangeMediaType() {
     $(".new #mediaType").change(function () {        
         if ($(this).val() == 3) {
+            $('#fieldsPanel').hide();
+            $('#processing').show();
             window.location.href = baseUrl + 'video/new';
         } else if ($(this).val() == 2) {
+            $('#fieldsPanel').hide();
+            $('#processing').show();
             window.location.href = baseUrl + 'film/new';
         } else if ($(this).val() == 1) {
+            $('#fieldsPanel').hide();
+            $('#processing').show();
             window.location.href = baseUrl + 'audio/new';
         }
     });
