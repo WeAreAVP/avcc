@@ -46,11 +46,7 @@
             <tr>
                 <th class="text-right" width="20%">Media Type</th>
                 <td width="80%"><?php echo $entity->getMediaType() ?></td>
-            </tr>    
-            <tr>
-                <th class="text-right" width="20%">Media Type</th>
-                <td width="80%"><?php echo $entity->getMediaType() ?></td>
-            </tr>
+            </tr> 
             <tr>
                 <th class="text-right">Unique Id</th>
                 <td><?php echo $entity->getUniqueId() ?></td>

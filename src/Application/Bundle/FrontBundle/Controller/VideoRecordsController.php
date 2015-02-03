@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 /**
  * VideoRecords controller.
  *
- * @Route("/record/video")
+ * @Route("/record")
  */
 class VideoRecordsController extends Controller
 {
@@ -43,7 +43,7 @@ class VideoRecordsController extends Controller
     /**
      * Creates a new VideoRecords entity.
      *
-     * @Route("/", name="record_video_create")
+     * @Route("/video/", name="record_video_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:VideoRecords:new.html.php")
      */
@@ -124,9 +124,9 @@ class VideoRecordsController extends Controller
     /**
      * Displays a form to create a new VideoRecords entity.
      *
-     * @Route("/new", name="record_video_new")
-     * @Route("/new/{projectId}", name="record_video_new_against_project")
-     * @Route("/new/{videoRecId}/duplicate", name="record_video_duplicate")
+     * @Route("/video/new", name="record_video_new")
+     * @Route("/video/new/{projectId}", name="record_video_new_against_project")
+     * @Route("/video/new/{videoRecId}/duplicate", name="record_video_duplicate")
      * @Method("GET")
      * @Template()
      * @return template
@@ -169,32 +169,6 @@ class VideoRecordsController extends Controller
                     'form' => $form->createView(),
                     'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
-        ));
-    }
-
-    /**
-     * Finds and displays a VideoRecords entity.
-     *
-     * @Route("/{id}", name="record_video_show")
-     * @Method("GET")
-     * @Template()
-     * @return template
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ApplicationFrontBundle:VideoRecords')->findOneBy(array('record' => $id));
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find VideoRecords entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('ApplicationFrontBundle:VideoRecords:show.html.php', array(
-                    'entity' => $entity,
-                    'delete_form' => $deleteForm->createView(),
         ));
     }
 

@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 /**
  * FilmRecords controller.
  *
- * @Route("/record/film")
+ * @Route("/record")
  */
 class FilmRecordsController extends Controller
 {
@@ -45,7 +45,7 @@ class FilmRecordsController extends Controller
      *
      * @param Request $request
      *
-     * @Route("/", name="record_film_create")
+     * @Route("/film/", name="record_film_create")
      * @Method("POST")
      * @Template("ApplicationFrontBundle:FilmRecords:new.html.php")
      */
@@ -128,9 +128,9 @@ class FilmRecordsController extends Controller
     /**
      * Displays a form to create a new FilmRecords entity.
      *
-     * @Route("/new", name="record_film_new")
-     * @Route("/new/{projectId}", name="record_film_new_against_project")
-     * @Route("/new/{filmRecId}/duplicate", name="record_film_duplicate")
+     * @Route("/film/new", name="record_film_new")
+     * @Route("/film/new/{projectId}", name="record_film_new_against_project")
+     * @Route("/film/new/{filmRecId}/duplicate", name="record_film_duplicate")
      * @Method("GET")
      * @Template()
      * @return template
@@ -178,34 +178,6 @@ class FilmRecordsController extends Controller
                     'form' => $form->createView(),
                     'fieldSettings' => $user_view_settings,
                     'type' => $data['mediaType']->getName(),
-        ));
-    }
-
-    /**
-     * Finds and displays a FilmRecords entity.
-     *
-     * @param integer $id
-     *
-     * @Route("/{id}", name="record_film_show")
-     * @Method("GET")
-     * @Template()
-     * @return array
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('ApplicationFrontBundle:FilmRecords')->findOneBy(array('record' => $id));
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find FilmRecords entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('ApplicationFrontBundle:FilmRecords:show.html.php', array(
-                    'entity' => $entity,
-                    'delete_form' => $deleteForm->createView(),
         ));
     }
 

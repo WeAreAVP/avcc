@@ -183,13 +183,13 @@ class DefaultFields
                 }
             }
             $mediaType = $value['media_type'];
-            if ($mediaType == 'Film' || $mediaType == 'Films') {
-                $url = 'record/film/' . $value['id'];
-            } elseif ($mediaType == 'Video' || $mediaType == 'Videos') {
-                $url = 'record/video/' . $value['id'];
-            } else {
+//            if ($mediaType == 'Film' || $mediaType == 'Films') {
+//                $url = 'record/film/' . $value['id'];
+//            } elseif ($mediaType == 'Video' || $mediaType == 'Videos') {
+//                $url = 'record/video/' . $value['id'];
+//            } else {
                 $url = 'record/' . $value['id'];
-            }
+//            }
             $tableView[$mainIndex][] = '<input id="row_' . $value['id'] . '"' . $checked . '  type="checkbox" name="record_checkbox" class="checkboxes" onclick="" value="' . $value['id'] . '" />';
 
             $tableView[$mainIndex][] = ($value['project']) ? '<a href="' . $url . '">' . $value['project'] . '</a>' : $value['project'];
