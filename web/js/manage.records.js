@@ -1,4 +1,5 @@
 function initialize_records_form() {
+    $('#format_lbl').hide();
     $('#diskDiameters_lbl').hide();
     $('#reelDiameters_lbl').hide();
     $('#mediaDiameters_lbl').hide();
@@ -38,6 +39,7 @@ function updateFormat() {
         url: url,
         success: function (response) {
             if (response != "") {
+                $('#format_lbl').show();
                 $("#format").html(response);
                 $("#format").change();
                 $('#processing').hide();
@@ -181,13 +183,12 @@ function showUpdateFields() {
             $('#bases_lbl').hide();
             $('#recordingSpeed_lbl').hide();
         }
-    }).change();
+    });
 
 }
 
 function onChangeMediaType() {
-    $(".new #mediaType").change(function () {
-        console.log($(this).val());
+    $(".new #mediaType").change(function () {        
         if ($(this).val() == 3) {
             window.location.href = baseUrl + 'video/new';
         } else if ($(this).val() == 2) {

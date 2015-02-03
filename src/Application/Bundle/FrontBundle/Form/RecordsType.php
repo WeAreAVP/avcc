@@ -41,7 +41,8 @@ class RecordsType extends AbstractType
                             return $er->createQueryBuilder('f')
                                     ->orderBy('f.name', 'ASC');
                         },
-                        'required' => true
+                        'required' => true,
+                        'empty_data' => ''
                     ))
                     ->add('title')
                     ->add('collectionName')
@@ -127,7 +128,7 @@ class RecordsType extends AbstractType
 
     public function onPreSetData(FormEvent $event)
     {
-
+        
     }
 
     public function onPreSubmitData(FormEvent $event)
