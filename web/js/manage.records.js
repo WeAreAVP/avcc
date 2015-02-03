@@ -61,7 +61,8 @@ function showUpdateFields() {
         var hideRecordingSpeedFormat = [37, 39, 40, 41];
         var hideIfFormat = [24, 25, 26];
         var showSideIfFormat = [1, 10, 11,13,14,16,17,18,19,20,27,28];
-
+        var showNoiceRedIfFormat = [1, 2,4, 5,6,7,10,13,14,27];
+        
         if (jQuery.inArray(parseInt($(this).val()), showDiskDiameter) >= 0) {
             $('#diskDiameters_lbl').show();
         } else {
@@ -93,14 +94,19 @@ function showUpdateFields() {
         }
 
         if (jQuery.inArray(parseInt($(this).val()), hideIfFormat) >= 0) {
-            $('#slides_lbl, #monoStereo_lbl, #noiceReduction_lbl').hide();
+            $('#slides_lbl, #monoStereo_lbl').hide();
         } else {
-            $('#slides_lbl, #monoStereo_lbl, #noiceReduction_lbl').show();
+            $('#slides_lbl, #monoStereo_lbl').show();
         }
         if (jQuery.inArray(parseInt($(this).val()), showSideIfFormat) >= 0) {
             $('#slides_lbl').show();
         } else {
             $('#slides_lbl').hide();
+        }
+        if (jQuery.inArray(parseInt($(this).val()), showNoiceRedIfFormat) >= 0) {
+            $('#noiceReduction_lbl').show();
+        } else {
+            $('#noiceReduction_lbl').hide();
         }
         if ($(this).val()) {
             /// call to get base dropdown options
