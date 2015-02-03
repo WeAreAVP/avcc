@@ -2,61 +2,85 @@
 
 {% block body %}
     <div class="grid fluid">
-		<h1>
-			<a href="{{ path('organizations') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
-			Organization Detail
-		</h1>
+        <h1>
+            <a href="{{ path('organizations') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+            Organization Detail
+        </h1>
 
 
-		<ul class="inline">
-			<li>
-				<a href="{{ path('organizations_edit', { 'id': entity.id }) }}" class="button primary">
-					Edit
-				</a>
-			</li>
-{#			<li>{{ form(delete_form) }}</li>#}
-		</ul>
-		<dl class="horizontal">
-			<dt>Name</dt>
-			<dd>{{ entity.name }}</dd>
-		</dl>
-		<dl class="horizontal">
-			<dt>Department</dt>
-			<dd>{{ entity.departmentname }}</dd>
-		</dl>
-		<dl class="horizontal">
-			<dt>Address</dt>
-			<dd>{{ entity.address }}</dd>
-		</dl>
-		<dl class="horizontal">
-			<dt>Contact Name</dt>
-			<dd>{{ entity.contactpersonname }}</dd>
-		</dl>
-		<dl class="horizontal">
-			<dt>Contact Email</dt>
-			<dd>{{ entity.contactpersonemail }}</dd>
-		</dl>
-		<dl class="horizontal">
-			<dt>Contact Phone</dt>
-			<dd>{{ entity.contactpersonphone }}</dd>
-		</dl>
-		<dl class="horizontal">
-			<dt>Created On</dt>
-			<dd>{{ entity.createdon|date('Y-m-d H:i:s') }}</dd>
-		</dl>
-		<dl class="horizontal">
-			<dt>Updated On</dt>
-			<dd>{{ entity.updatedon|date('Y-m-d H:i:s') }}</dd>
-		</dl>
-		<dl class="horizontal">
-			<dt>Created by</dt>
-			<dd>{{ entity.userscreated }}</dd>
-		</dl>
-		<dl class="horizontal">
-			<dt>Updated by</dt>
-			<dd>{{ entity.usersupdated }}</dd>
-		</dl>
-
-	</div>
+        <ul class="inline">
+            <li>
+                <a href="{{ path('organizations_edit', { 'id': entity.id }) }}" class="button primary">
+                    Edit
+                </a>
+            </li>
+            {#			<li>{{ form(delete_form) }}</li>#}
+        </ul>
+        <dl class="horizontal">
+            <dt>Name</dt>
+            <dd>{{ entity.name }}</dd>
+        </dl>
+        <dl class="horizontal">
+            <dt>Department</dt>
+            <dd>{{ entity.departmentname }}</dd>
+        </dl>
+        {% if entity.departmentname == "" %}
+            <div class="clearfix"></div>
+        {% endif%}
+        <dl class="horizontal">
+            <dt>Address</dt>
+            <dd>{{ entity.address }}</dd>
+        </dl>
+        {% if entity.address == "" %}
+            <div class="clearfix"></div>
+        {% endif%}
+        <dl class="horizontal">
+            <dt>Contact Name</dt>
+            <dd>{{ entity.contactpersonname }}</dd>
+        </dl>
+        {% if entity.contactpersonname == "" %}
+            <div class="clearfix"></div>
+        {% endif%}
+        <dl class="horizontal">
+            <dt>Contact Email</dt>
+            <dd>{{ entity.contactpersonemail }}</dd>
+        </dl>
+        {% if entity.contactpersonemail == "" %}
+            <div class="clearfix"></div>
+        {% endif%}
+        <dl class="horizontal">
+            <dt>Contact Phone</dt>
+            <dd>{{ entity.contactpersonphone }}</dd>
+        </dl>
+        {% if entity.contactpersonphone == "" %}
+            <div class="clearfix"></div>
+        {% endif%}
+        <dl class="horizontal">
+            <dt>Created On</dt>
+            <dd>{{ entity.createdon|date('Y-m-d H:i:s') }}</dd>
+        </dl>
+        {% if entity.createdon == "" %}
+            <div class="clearfix"></div>
+        {% endif%}
+        <dl class="horizontal">
+            <dt>Updated On</dt>
+            <dd>{{ entity.updatedon|date('Y-m-d H:i:s') }}</dd>
+        </dl>
+        {% if entity.updatedon == "" %}
+            <div class="clearfix"></div>
+        {% endif%}
+        <dl class="horizontal">
+            <dt>Created by</dt>
+            <dd>{{ entity.userscreated }}</dd>
+        </dl>
+        {% if entity.userscreated == "" %}
+            <div class="clearfix"></div>
+        {% endif%}
+        <dl class="horizontal">
+            <dt>Updated by</dt>
+            <dd>{{ entity.usersupdated }}</dd>
+        </dl>
+        <div class="clearfix"></div>
+    </div>
 
 {% endblock %}
