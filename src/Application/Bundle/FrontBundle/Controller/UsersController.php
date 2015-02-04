@@ -37,9 +37,9 @@ class UsersController extends Controller
         if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
             $entities = $em->getRepository('ApplicationFrontBundle:Users')->getUsersWithoutCurentLoggedIn($currentUserId);
         } else {
-            $entities = $em->getRepository('ApplicationFrontBundle:Users')->getUsersWithoutCurentLoggedIn($currentUserId,  $this->getUser()->getOrganizations()->getId());
+            $entities = $em->getRepository('ApplicationFrontBundle:Users')->getUsersWithoutCurentLoggedIn($currentUserId, $this->getUser()->getOrganizations()->getId());
         }
-        
+
         return array(
             'entities' => $entities,
         );
@@ -365,6 +365,32 @@ class UsersController extends Controller
         return $this->render('ApplicationFrontBundle:Users:getProjects.html.php', array(
                     'projects' => $projects
         ));
+    }
+
+    /**
+     * Active/Inactive User.
+     *
+     * @param integer $id User id
+     * @param integer $status User status id
+     * 
+     * @Route("/changestatus/{id}/{status}", name="user_changestatus")
+     * @Method("GET")
+     * @Template()
+     * @return redirection
+     */
+    public function changeStatusAction($id, $status)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('ApplicationFrontBundle:Users')->find($id);
+        if($status == 1){
+            $user->setEnabled(0);
+            $this->get('session')->getFlashBag()->add('success', 'User disabled succesfully.');
+        }else{
+            $user->setEnabled(1);
+            $this->get('session')->getFlashBag()->add('success', 'User activated succesfully.');
+        }        
+        $em->flush();
+        return $this->redirect($this->generateUrl('users'));
     }
 
 }

@@ -38,8 +38,22 @@
 						</td>
 						{% if is_granted('ROLE_MANAGER') %}
 							<td class="text-center">
+                                                                {% if entity.enabled == true %}
+                                                                        {% set status = "Active" %}
+                                                                        {% set statusId = "1" %}
+                                                                        {% set class = "icon-checkmark" %}
+                                                                        {% set title = "Active" %}
+                                                                    {% else %}    
+                                                                        {% set status = "Inactive" %}
+                                                                        {% set statusId = "0" %}
+                                                                        {% set class = "icon-blocked" %}
+                                                                        {% set title = "Inactive" %}
+                                                                    {% endif %}
 								{# <a class="glyphicon glyphicon-list-alt" title="View detail" href="{{ path('users_show', { 'id': entity.id }) }}"></a>&nbsp;#}
-								<a class="icon-pencil" title="Edit" href="{{ path('users_edit', { 'id': entity.id }) }}"></a> |
+								<a class="{{class}} small-size" title="{{title}}" href="{{ path('user_changestatus', { 'id': entity.id, 'status': statusId }) }}">
+{#                                                                    {{status}}#}
+                                                                </a> | 
+                                                                <a class="icon-pencil" title="Edit" href="{{ path('users_edit', { 'id': entity.id }) }}"></a> |
 								<a class="icon-remove" title="Delete" href="{{ path('users_delete', { 'id': entity.id }) }}"></a>
 							</td>
 						{% endif %}
