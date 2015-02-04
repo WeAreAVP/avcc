@@ -239,7 +239,7 @@ class DefaultController extends Controller
                 ->setTo($toEmail)
                 ->setBody($body);
 //        $this->get('mailer')->send($message);
-        $this->container->getParameter('mailer_transport')->send($message);
+        $this->container->getParameter('mailer')->send($message);
     }
 
 }
