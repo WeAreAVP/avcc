@@ -238,8 +238,7 @@ class DefaultController extends Controller
                 ->setFrom($fromEmail)
                 ->setTo($toEmail)
                 ->setBody($body);
-//        $this->get('mailer')->send($message);
-        $this->container->getParameter('mailer')->send($message);
+        $this->get('mailer')->send($message);
     }
 
 }
