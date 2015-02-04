@@ -23,6 +23,23 @@ function initialize_records_form() {
     showUpdateFields();
     saveBulkEdit();
     closeBtn();
+    $("input,textarea,select").keypress(function () {
+        changes = true;
+    });
+    $("select").click(function () {
+        changes = true;
+    });
+
+    window.onbeforeunload = function () {
+        if (changes)
+        {
+            return 'The changes are not saved and will be lost.';
+        }
+    }
+    $('form').submit(function () {
+        changes = false;
+        return true; // return false to cancel form action
+    });
 }
 function updateFormat() {
     var selfObj = this;
@@ -60,9 +77,9 @@ function showUpdateFields() {
         var showCassetteSize = [59, 60, 33, 34, 35, 43, 44, 46, 47, 48, 52, 53, 54, 55, 57];
         var hideRecordingSpeedFormat = [37, 39, 40, 41];
         var hideIfFormat = [24, 25, 26];
-        var showSideIfFormat = [1, 10, 11,13,14,16,17,18,19,20,27,28];
-        var showNoiceRedIfFormat = [1, 2,4, 5,6,7,10,13,14,27];
-        
+        var showSideIfFormat = [1, 10, 11, 13, 14, 16, 17, 18, 19, 20, 27, 28];
+        var showNoiceRedIfFormat = [1, 2, 4, 5, 6, 7, 10, 13, 14, 27];
+
         if (jQuery.inArray(parseInt($(this).val()), showDiskDiameter) >= 0) {
             $('#diskDiameters_lbl').show();
         } else {
@@ -200,7 +217,7 @@ function showUpdateFields() {
 }
 
 function onChangeMediaType() {
-    $(".new #mediaType").change(function () {        
+    $(".new #mediaType").change(function () {
         if ($(this).val() == 3) {
             $('#fieldsPanel').hide();
             $('#processing').show();
