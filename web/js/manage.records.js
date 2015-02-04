@@ -27,9 +27,13 @@ function initialize_records_form() {
         changes = true;
     });
     $("select").click(function () {
-        changes = true;
+        if ($(this).attr('id') != 'mediaType'){
+            changes = true;
+        }else{
+            chages = false;
+        }
     });
-
+    
     window.onbeforeunload = function () {
         if (changes)
         {
@@ -69,7 +73,6 @@ function updateFormat() {
 
 function showUpdateFields() {
     $('#format').change(function () {
-        console.log($(this).val());
         var showDiskDiameter = [16, 17, 18, 19, 20, 28];
         var showMediaDiameter = [1, 2, 3, 4, 5, 24];
         var showTapeThickness = [1, 2, 3, 4, 5];
