@@ -291,9 +291,9 @@ class RecordsController extends Controller
                 $session->remove("saveRecords");
             $recordsIds = 'all';
         } else {
-            if (!$data['checked']){
+            if (!$data['checked']) {
                 $session->remove("saveRecords");
-            }    
+            }
             if ($session->has("saveRecords")) {
                 $checked = $session->get("saveRecords");
             }
@@ -487,18 +487,73 @@ class RecordsController extends Controller
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        
+
         $entity = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('id' => $id));
-//        $entity = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIdsArray($id);
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Records entity.');
         }
+        $entityArray = array();
+        $entityArray["mediaType"] = $entity->getMediaType()->getName();
+        $entityArray["uniqueId"] = $entity->getUniqueId();
+        $entityArray["project"] = $entity->getProject()->getName();
+        $entityArray["location"] = $entity->getLocation();
+        $entityArray["format"] = $entity->getFormat()->getName();
+        $entityArray["title"] = $entity->getTitle();
+        $entityArray["collectionName"] = $entity->getCollectionName();
+        $entityArray["description"] = $entity->getDescription();
+        $entityArray["contentDuration"] = $entity->getContentDuration();
+        $entityArray["creationDate"] = $entity->getCreationDate();
+        $entityArray["contentDate"] = $entity->getContentDate();
+        $entityArray["isReview"] = $entity->getIsReview();
+        $entityArray["genreTerms"] = $entity->getGenreTerms();
+        $entityArray["contributor"] = $entity->getContributor();
+        $entityArray["generation"] = $entity->getGeneration();
+        $entityArray["part"] = $entity->getPart();
+        $entityArray["copyrightRestrictions"] = $entity->getCopyrightRestrictions();
+        $entityArray["duplicatesDerivatives"] = $entity->getDuplicatesDerivatives();
+        $entityArray["relatedMaterial"] = $entity->getRelatedMaterial();
+        $entityArray["conditionNote"] = $entity->getConditionNote();
+        $entityArray["commercial"] = $entity->getCommercial() ? $entity->getCommercial()->getName() : '';
+        $entityArray["reelDiameters"] = $entity->getReelDiameters() ? $entity->getReelDiameters()->getName() : '';
+        if ($entity->getMediaType()->getId() == 1) {
+            $entityArray['diskDiameters'] = ($entity->getAudioRecord()->getDiskDiameters()) ? $entity->getAudioRecord()->getDiskDiameters()->getName() : "";
+            $entityArray['bases'] = ($entity->getAudioRecord()->getBases()) ? $entity->getAudioRecord()->getBases()->getName() : "";
+            $entityArray['mediaDiameters'] = ($entity->getAudioRecord()->getMediaDiameters()) ? $entity->getAudioRecord()->getMediaDiameters()->getName() : "";
+            $entityArray['mediaDuration'] = ($entity->getAudioRecord()->getMediaDuration()) ? $entity->getAudioRecord()->getMediaDuration() : "";
+            $entityArray['recordingSpeed'] = ($entity->getAudioRecord()->getRecordingSpeed()) ? $entity->getAudioRecord()->getRecordingSpeed()->getName() : "";
+            $entityArray['tapeThickness'] = ($entity->getAudioRecord()->getTapeThickness()) ? $entity->getAudioRecord()->getTapeThickness()->getName() : "";
+            $entityArray['slides'] = ($entity->getAudioRecord()->getSlides()) ? $entity->getAudioRecord()->getSlides()->getName() : "";
+            $entityArray['trackTypes'] = ($entity->getAudioRecord()->getTrackTypes()) ? $entity->getAudioRecord()->getTrackTypes()->getName() : "";
+            $entityArray['monoStereo'] = ($entity->getAudioRecord()->getMonoStereo()) ? $entity->getAudioRecord()->getMonoStereo()->getName() : "";
+            $entityArray['noiceReduction'] = ($entity->getAudioRecord()->getNoiceReduction()) ? $entity->getAudioRecord()->getNoiceReduction()->getName() : "";
+        } elseif ($entity->getMediaType()->getId() == 2) {
+            $entityArray['printType'] = ($entity->getFilmRecord()->getPrintType()) ? $entity->getFilmRecord()->getPrintType()->getName() : "";
+            $entityArray['reelCore'] = ($entity->getFilmRecord()->getReelCore()) ? $entity->getFilmRecord()->getReelCore()->getName() : "";
+            $entityArray['footage'] = ($entity->getFilmRecord()->getFootage()) ? $entity->getFilmRecord()->getFootage() : "";
+            $entityArray['mediaDiameters'] = ($entity->getFilmRecord()->getMediaDiameter()) ? $entity->getFilmRecord()->getMediaDiameter() : "";
+            $entityArray['bases'] = ($entity->getFilmRecord()->getBases()) ? $entity->getFilmRecord()->getBases()->getName() : "";
+            $entityArray['color'] = ($entity->getFilmRecord()->getColors()) ? $entity->getFilmRecord()->getColors()->getName() : "";
+            $entityArray['sound'] = ($entity->getFilmRecord()->getSound()) ? $entity->getFilmRecord()->getSound()->getName() : "";
+            $entityArray['frameRate'] = ($entity->getFilmRecord()->getFrameRate()) ? $entity->getFilmRecord()->getFrameRate()->getName() : "";
+            $entityArray['acidDetection'] = ($entity->getFilmRecord()->getAcidDetectionStrip()) ? $entity->getFilmRecord()->getAcidDetectionStrip()->getName() : "";
+            $entityArray['shrinkage'] = ($entity->getFilmRecord()->getShrinkage()) ? $entity->getFilmRecord()->getShrinkage() : "";
+        } else {
+            $entityArray['cassetteSize'] = ($entity->getVideoRecord()->getCassetteSize()) ? $entity->getVideoRecord()->getCassetteSize()->getName() : "";
+            $entityArray['mediaDuration'] = ($entity->getVideoRecord()->getMediaDuration()) ? $entity->getVideoRecord()->getMediaDuration() : "";
+            $entityArray['formatVersion'] = ($entity->getVideoRecord()->getFormatVersion()) ? $entity->getVideoRecord()->getFormatVersion()->getName() : "";
+            $entityArray['recordingSpeed'] = ($entity->getVideoRecord()->getRecordingSpeed()) ? $entity->getVideoRecord()->getRecordingSpeed()->getName() : "";
+            $entityArray['recordingStandard'] = ($entity->getVideoRecord()->getRecordingStandard()) ? $entity->getVideoRecord()->getRecordingStandard()->getName() : "";
+        }
 
+//        echo "<pre>";
+//        print_r($entityArray);
+//        die;
         $fieldsObj = new DefaultFields();
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
 
         return $this->render('ApplicationFrontBundle:Records:show.html.php', array(
                     'entity' => $entity,
+                    'entityArray' => $entityArray,
                     'fieldSettings' => $userViewSettings
         ));
     }
@@ -544,7 +599,7 @@ class RecordsController extends Controller
                 $newFileName = $this->getUser()->getId() . "_score" . time() . "." . $extension;
                 $validTypes = array('csv', 'xlsx');
                 if (in_array($extension, $validTypes)) {
-                    $newfile = $folderPath.$newFileName;
+                    $newfile = $folderPath . $newFileName;
                     $request->files->get('uploadfile')->move($folderPath, $newFileName);
                     if (!$request->files->get('uploadfile')->isValid()) {
                         echo 'file uploaded<br />';
@@ -594,12 +649,12 @@ class RecordsController extends Controller
                             }
                         }
                     }
-                    if($isUpdate)
-                        unlink ($newfile);
+                    if ($isUpdate)
+                        unlink($newfile);
                 }
             }
 
-            return array('updated'=>isset($updated)? $updated : null);
+            return array('updated' => isset($updated) ? $updated : null);
         }
     }
 
