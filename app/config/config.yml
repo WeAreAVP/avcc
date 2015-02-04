@@ -82,8 +82,6 @@ fos_user:
     from_email:
         address:        "%mail_from_email%"
         sender_name:    AVCC AVPreserve
-    service:
-        mailer: fos_user.mailer.default  
 
 doctrine_migrations:
     dir_name: %kernel.root_dir%/DoctrineMigrations
