@@ -82,6 +82,8 @@ fos_user:
     from_email:
         address:        "%from_email%"
         sender_name:    AVCC AVPreserve
+    service:
+        mailer: fos_user.mailer.twig_swift    
 
 doctrine_migrations:
     dir_name: %kernel.root_dir%/DoctrineMigrations
