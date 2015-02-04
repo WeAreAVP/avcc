@@ -80,7 +80,7 @@ fos_user:
         form:
             type: application_user_profile
     from_email:
-        address:        "%from_email%"
+        address:        "%mail_from_email%"
         sender_name:    AVCC AVPreserve
     service:
         mailer: fos_user.mailer.twig_swift  
