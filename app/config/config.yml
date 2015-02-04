@@ -29,7 +29,7 @@ twig:
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
-    use_controller: false
+    use_controller: true
     bundles:        [ ]
     #java: /usr/bin/java
     filters:
@@ -56,7 +56,7 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
-
+    
 # Swiftmailer Configuration
 swiftmailer:
 #    transport:  sendmail
@@ -83,7 +83,7 @@ fos_user:
         address:        "%from_email%"
         sender_name:    AVCC AVPreserve
     service:
-        mailer: fos_user.mailer.twig_swift    
+        mailer: fos_user.mailer.twig_swift  
 
 doctrine_migrations:
     dir_name: %kernel.root_dir%/DoctrineMigrations
