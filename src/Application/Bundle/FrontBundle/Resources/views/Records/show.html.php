@@ -7,14 +7,14 @@
 
     </h1>
     <?php
-    if ($entity->getAudioRecord()):
+    if ($entity->getMediaType()->getId() == 1):
         $id = $entity->getAudioRecord()->getId();
         $rout = 'record_edit';
-    elseif ($entity->getVideoRecord()):
+    elseif ($entity->getMediaType()->getId() == 3):
         $id = $entity->getVideoRecord()->getId();
         $rout = 'record_video_edit';
     else:
-        $id = $entity->getFilmRecord()->getId();
+     echo   $id = $entity->getFilmRecord()->getId();
         $rout = 'record_film_edit';
     endif;
     ?>

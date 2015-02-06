@@ -186,7 +186,7 @@ class FilmRecordsController extends Controller
      *
      * @param integer $id
      *
-     * @Route("/{id}/edit", name="record_film_edit")
+     * @Route("/film/{id}/edit", name="record_film_edit")
      * @Method("GET")
      * @Template()
      * @return template
@@ -245,7 +245,7 @@ class FilmRecordsController extends Controller
      * @param Request $request
      * @param type    $id
      *
-     * @Route("/{id}", name="record_film_update")
+     * @Route("/film/{id}", name="record_film_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:FilmRecords:edit.html.php")
      * @return template
@@ -279,7 +279,7 @@ class FilmRecordsController extends Controller
                     return $this->redirect($this->generateUrl('record_film_new'));
                 }
                 $this->get('session')->getFlashBag()->add('success', 'Film record updated succesfully.');
-
+                
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
                 if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))) {
@@ -316,7 +316,7 @@ class FilmRecordsController extends Controller
      * @param Request $request
      * @param integer $id
      *
-     * @Route("/{id}", name="record_film_delete")
+     * @Route("/film/{id}", name="record_film_delete")
      * @Method("DELETE")
      * @return Redirect
      */

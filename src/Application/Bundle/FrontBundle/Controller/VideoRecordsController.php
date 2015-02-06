@@ -175,7 +175,7 @@ class VideoRecordsController extends Controller
     /**
      * Displays a form to edit an existing VideoRecords entity.
      *
-     * @Route("/{id}/edit", name="record_video_edit")
+     * @Route("/video/{id}/edit", name="record_video_edit")
      * @Method("GET")
      * @Template()
      * @return template
@@ -231,7 +231,7 @@ class VideoRecordsController extends Controller
     /**
      * Edits an existing VideoRecords entity.
      *
-     * @Route("/{id}", name="record_video_update")
+     * @Route("/video/{id}", name="record_video_update")
      * @Method("PUT")
      * @Template("ApplicationFrontBundle:VideoRecords:edit.html.php")
      * @return redirect
@@ -299,7 +299,7 @@ class VideoRecordsController extends Controller
     /**
      * Deletes a VideoRecords entity.
      *
-     * @Route("/{id}", name="record_video_delete")
+     * @Route("/video/{id}", name="record_video_delete")
      * @Method("DELETE")
      * @return redorect
      */
