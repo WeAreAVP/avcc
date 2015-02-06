@@ -192,11 +192,12 @@ class UsersController extends Controller
         }
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
-
+        $organizationId = ($user->getOrganizations()) ? $user->getOrganizations()->getId() : "";
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'organizationId' => $organizationId,
         );
     }
 
