@@ -22,11 +22,11 @@ monolog:
             path:  "%kernel.logs_dir%/%kernel.environment%.log"
             level: debug
 
-swiftmailer:
-    transport:  sendmail
-    encryption: ssl
-    #transport: "%mailer_transport%"
-    #host:      "%mailer_host%"
-    #username:  "%mailer_user%"
-    #password:  "%mailer_password%"
-    #spool:     { type: memory }
+#swiftmailer:
+#    transport:  sendmail
+#    encryption: ssl
+#    transport: "%mailer_transport%"
+#    host:      "%mailer_host%"
+#    username:  "%mailer_user%"
+#    password:  "%mailer_password%"
+#    spool:     { type: memory }
