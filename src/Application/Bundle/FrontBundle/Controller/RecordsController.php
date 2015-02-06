@@ -530,12 +530,12 @@ class RecordsController extends Controller
             $entityArray['printType'] = ($entity->getFilmRecord()->getPrintType()) ? $entity->getFilmRecord()->getPrintType()->getName() : "";
             $entityArray['reelCore'] = ($entity->getFilmRecord()->getReelCore()) ? $entity->getFilmRecord()->getReelCore()->getName() : "";
             $entityArray['footage'] = ($entity->getFilmRecord()->getFootage()) ? $entity->getFilmRecord()->getFootage() : "";
-            $entityArray['mediaDiameters'] = ($entity->getFilmRecord()->getMediaDiameter()) ? $entity->getFilmRecord()->getMediaDiameter() : "";
+            $entityArray['mediaDiameter'] = ($entity->getFilmRecord()->getMediaDiameter()) ? $entity->getFilmRecord()->getMediaDiameter() : "";
             $entityArray['bases'] = ($entity->getFilmRecord()->getBases()) ? $entity->getFilmRecord()->getBases()->getName() : "";
-            $entityArray['color'] = ($entity->getFilmRecord()->getColors()) ? $entity->getFilmRecord()->getColors()->getName() : "";
+            $entityArray['colors'] = ($entity->getFilmRecord()->getColors()) ? $entity->getFilmRecord()->getColors()->getName() : "";
             $entityArray['sound'] = ($entity->getFilmRecord()->getSound()) ? $entity->getFilmRecord()->getSound()->getName() : "";
             $entityArray['frameRate'] = ($entity->getFilmRecord()->getFrameRate()) ? $entity->getFilmRecord()->getFrameRate()->getName() : "";
-            $entityArray['acidDetection'] = ($entity->getFilmRecord()->getAcidDetectionStrip()) ? $entity->getFilmRecord()->getAcidDetectionStrip()->getName() : "";
+            $entityArray['acidDetectionStrip'] = ($entity->getFilmRecord()->getAcidDetectionStrip()) ? $entity->getFilmRecord()->getAcidDetectionStrip()->getName() : "";
             $entityArray['shrinkage'] = ($entity->getFilmRecord()->getShrinkage()) ? $entity->getFilmRecord()->getShrinkage() : "";
         } else {
             $entityArray['cassetteSize'] = ($entity->getVideoRecord()->getCassetteSize()) ? $entity->getVideoRecord()->getCassetteSize()->getName() : "";
