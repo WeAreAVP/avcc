@@ -14,7 +14,7 @@
         $id = $entity->getVideoRecord()->getId();
         $rout = 'record_video_edit';
     else:
-     echo   $id = $entity->getFilmRecord()->getId();
+        $id = $entity->getFilmRecord()->getId();
         $rout = 'record_film_edit';
     endif;
     ?>
