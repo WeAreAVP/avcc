@@ -27,13 +27,13 @@ function initialize_records_form() {
         changes = true;
     });
     $("select").click(function () {
-        if ($(this).attr('id') != 'mediaType'){
+        if ($(this).attr('id') != 'mediaType') {
             changes = true;
-        }else{
+        } else {
             chages = false;
         }
     });
-    
+
     window.onbeforeunload = function () {
         if (changes)
         {
@@ -82,6 +82,7 @@ function showUpdateFields() {
         var hideIfFormat = [24, 25, 26];
         var showSideIfFormat = [1, 10, 11, 13, 14, 16, 17, 18, 19, 20, 27, 28];
         var showNoiceRedIfFormat = [1, 2, 4, 5, 6, 7, 10, 13, 14, 27];
+        var hideBaseIfFormat = [3, 4, 5];
 
         if (jQuery.inArray(parseInt($(this).val()), showDiskDiameter) >= 0) {
             $('#diskDiameters_lbl').show();
@@ -129,20 +130,24 @@ function showUpdateFields() {
             $('#noiceReduction_lbl').hide();
         }
         if ($(this).val()) {
-            /// call to get base dropdown options
-            $.ajax({
-                type: "GET",
-                url: baseUrl + 'getBase/' + $(this).val(),
-                success: function (response) {
-                    if (response != "") {
-                        $("#bases_lbl").show();
-                        $("#bases").html(response);
-                    } else {
-                        $("#bases_lbl").hide();
+            if (jQuery.inArray(parseInt($(this).val()), hideBaseIfFormat) >= 0) {
+                $("#bases_lbl").hide();
+            } else {
+                /// call to get base dropdown options
+                $.ajax({
+                    type: "GET",
+                    url: baseUrl + 'getBase/' + $(this).val(),
+                    success: function (response) {
+                        if (response != "") {
+                            $("#bases_lbl").show();
+                            $("#bases").html(response);
+                        } else {
+                            $("#bases_lbl").hide();
+                        }
                     }
-                }
 
-            }); // Ajax Call
+                }); // Ajax Call
+            }
             /// call to get reel diameters dropdown options
             if (selectedRD) {
                 RDurl = baseUrl + 'getReelDiameter/' + $(this).val() + '/' + $("#mediaType").val() + '/' + selectedRD;
