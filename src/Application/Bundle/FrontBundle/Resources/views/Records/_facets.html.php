@@ -207,6 +207,7 @@
                             <li><a href="javascript://;" class="customToken" data-fieldName="Content Date"  data-columnName="content_date" style="font-size: 12px!important;">Content Date</a></li>
                             <li><a href="javascript://;" class="customToken" data-fieldName="Genre Terms"  data-columnName="genre_terms" style="font-size: 12px!important;">Genre Terms</a></li>
                             <li><a href="javascript://;" class="customToken" data-fieldName="Contributor"  data-columnName="contributor" style="font-size: 12px!important;">Contributor</a></li>
+                            <li><a href="javascript://;" class="customToken" data-fieldName="Unique ID"  data-columnName="unique_id" style="font-size: 12px!important;">Unique ID</a></li>
                         </ul>
                     </div>
                     <div class="clearfix"></div>
