@@ -588,7 +588,7 @@ class ReportController extends Controller
                     $kbps = $this->calculateFileSize($audio['sum_content_duration'], 1.92);
                     $totalAudioFileSize = $totalAudioFileSize + $kbps;
                 }
-                $total[] = array("Audio" => array("totalRecords" => $audioTotal, "linearFeet" => round($totalLinearAudioCount, 1), "fileSize" => $totalAudioFileSize));
+                $total[] = array("Audio" => array("totalRecords" => $audioTotal, "linearFeet" => round($totalLinearAudioCount, 1), "fileSize" => round($totalAudioFileSize, 1)));
             }
             if (isset($records['Video'])) {
                 $videoTotal = 0;
@@ -625,7 +625,7 @@ class ReportController extends Controller
                     $MPEG42 = $this->calculateFileSize($video['sum_content_duration'], 17.1);
                     $totalVideoFileSize = $totalVideoFileSize + $MPEG42;
                 }
-                $total[] = array("Video" => array("totalRecords" => $videoTotal, "linearFeet" => round($totalLinearVideoCount, 1), "fileSize" => $totalVideoFileSize));
+                $total[] = array("Video" => array("totalRecords" => $videoTotal, "linearFeet" => round($totalLinearVideoCount, 1), "fileSize" => round($totalVideoFileSize, 1)));
             }
             if (isset($records['Film'])) {
                 $filmTotal = 0;
@@ -657,7 +657,7 @@ class ReportController extends Controller
                     $MPEG42 = $this->calculateFileSize($film['sum_content_duration'], 17.1);
                     $totalFilmFileSize = $totalFilmFileSize + $MPEG42;
                 }
-                $total[] = array("Film" => array("totalRecords" => $filmTotal, "linearFeet" => "", "fileSize" => $totalFilmFileSize));
+                $total[] = array("Film" => array("totalRecords" => $filmTotal, "linearFeet" => "", "fileSize" => round($totalFilmFileSize, 1)));
             }
         }
         echo json_encode($total);
