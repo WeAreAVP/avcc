@@ -950,7 +950,7 @@ class ExportReport extends ContainerAware
 
     private function calculateFileSize($totalDuration, $value)
     {
-        return number_format(($totalDuration * $value) / 1024 / 1024, 5);
+        return number_format(($totalDuration * $value) / 1024 / 1024, 1);
     }
 
     private function prepareFileSizeCalculatorVideoRecords($activeSheet, $row, $records)
@@ -1126,7 +1126,7 @@ class ExportReport extends ContainerAware
         $row++;
         $exportFields = new ExportFields();
         $columns = $exportFields->getLinearFootCalculatorColumns();
-        if ($records['audio']) {
+        if ($records) {
             $this->prepareHeaderLinearFootCalculator($activeSheet, $row, $columns);
             $row++;
             $row = $this->prepareLinearFootCalculatorRecords($activeSheet, $row, $records);
@@ -1217,7 +1217,7 @@ class ExportReport extends ContainerAware
 
     private function calculateLinearFeet($totalCount, $width)
     {
-        return number_format(($totalCount * $width) / 12, 5);
+        return number_format(($totalCount * $width) / 12, 1);
     }
 
 }
