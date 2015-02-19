@@ -569,7 +569,7 @@ class AudioRecordsController extends Controller {
 
             $user_ids = $em->getRepository('ApplicationFrontBundle:Users')
                     ->createQueryBuilder('p')
-                    ->select('id')
+                    ->select('p.id')
                     ->where('p.organization_id = :id')
                     ->setParameter('id', $user->getOrganizations()->getId())
                     ->getQuery()
