@@ -99,7 +99,7 @@ class RecordsRepository extends EntityRepository {
                 . "WHERE o.id =  :organization AND r.uniqueId = :unique");
         $query->setParameter('organization', $organizationID);
         $query->setParameter('unique', $unique_id);
-        return $query->getSingleResult();
+        return $query->getResult();
     }
 
 }
