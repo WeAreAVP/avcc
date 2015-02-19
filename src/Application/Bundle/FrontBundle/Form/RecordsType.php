@@ -134,6 +134,9 @@ class RecordsType extends AbstractType
     public function onPreSubmitData(FormEvent $event)
     {
         $record = $event->getData();
+        echo '<pre>';
+        print_r($record);
+        exit;
 //		$projectId = $record['projectHidden'];
         if (isset($record['mediaTypeHidden'])) {
             $mediaTypeId = $record['mediaTypeHidden'];
