@@ -57,12 +57,11 @@ function uniqueIdCheck() {
             dataType: 'json',
             success: function (response) {
                 if (response.success == 'false') {
-                    $('#uniqueId_lbl .has-error').text('Unique id is required');
+                    $('#uniqueId_lbl .has-error').text('The unique ID must be unique.');
                     $('#uniqueId').val('');
                 }else{
                     $('#uniqueId_lbl .has-error').text('');
                 }
-                console.log('almost done wd every thng....');
             }
         });
     });
