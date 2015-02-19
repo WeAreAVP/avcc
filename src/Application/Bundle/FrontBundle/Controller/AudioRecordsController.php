@@ -558,7 +558,7 @@ class AudioRecordsController extends Controller {
      * @param Request $request
      * 
      * @Route("/checkUniqueId", name="check_id")
-     * @Method("GET")
+     * @Method("POST")
      */
     public function checkUniqueId(Request $request) {
         if ($_GET) {

@@ -49,11 +49,12 @@ function initialize_records_form() {
 
 function uniqueIdCheck() {
     $('#uniqueId').blur(function () {
+        var id = $('#uniqueId').val();
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: baseUrl + 'checkUniqueId' ,
+            data: { unique_id:  id},
             dataType: 'json',
-            data: { unique_id:  $('#uniqueId').val()},
             success: function (response) {
                 console.log('almost done wd every thng....');
             }
