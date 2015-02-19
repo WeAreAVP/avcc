@@ -566,14 +566,18 @@ class AudioRecordsController extends Controller {
 
             $userId = $_POST['user'];
             $user = $em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
+            $rsm = new ResultSetMapping();
+            $query = $em->createNativeQuery('SELECT id FROM users WHERE organization_id = ?', $rsm);
+            $query->setParameter(1, $user->getOrganizations()->getId());
 
-            $user_ids = $em->getRepository('ApplicationFrontBundle:Users')
-                    ->createQueryBuilder('p')
-                    ->select('p.id')
-                    ->where('p.organization = 1')
-                  //  ->setParameter('id', $user->getOrganizations()->getId())
-                    ->getQuery()
-                    ->getResult();
+            $user_ids = $query->getResult();
+//            $user_ids = $em->getRepository('ApplicationFrontBundle:Users')
+//                    ->createQueryBuilder('p')
+//                    ->select('p.id')
+//                    ->where('p.organization = 1')
+//                    //  ->setParameter('id', $user->getOrganizations()->getId())
+//                    ->getQuery()
+//                    ->getResult();
             echo '<pre>';
             print_r($user_ids);
 
@@ -586,7 +590,7 @@ class AudioRecordsController extends Controller {
 //                    ->getQuery();
 //
 //            $products = $query->getResult();
-            
+
             echo $user->getOrganizations()->getId();
             echo 'hereeeee';
             die;
