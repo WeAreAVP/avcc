@@ -570,7 +570,7 @@ class AudioRecordsController extends Controller {
             $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($user->getOrganizations()->getId(), $_POST['unique_id'] );
         
             echo 'erteg b <pre>';
-            print_r($records);
+            echo count($records);
 
 //            $repository = $em->getRepository('ApplicationFrontBundle:Records');
 //            $query = $repository->createQueryBuilder('p')
