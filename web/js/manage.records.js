@@ -50,10 +50,11 @@ function initialize_records_form() {
 function uniqueIdCheck() {
     $('#uniqueId').blur(function () {
         var id = $('#uniqueId').val();
+        var user_id = $('#application_bundle_frontbundle_audiorecords_record_userId').val();
         $.ajax({
             type: "POST",
             url: baseUrl + 'checkUniqueId' ,
-            data: { unique_id:  id},
+            data: { unique_id:  id, user : user_id},
             dataType: 'json',
             success: function (response) {
                 console.log('almost done wd every thng....');
