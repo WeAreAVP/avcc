@@ -51,7 +51,7 @@ function uniqueIdCheck() {
     $('#uniqueId').blur(function () {
         $.ajax({
             type: "POST",
-            url: 'http://avccqa.avpreserve.com/records/checkid' ,
+            url: baseUrl + 'checkid' ,
             dataType: 'json',
             data: { unique_id:  $('#uniqueId').val()},
             success: function (response) {

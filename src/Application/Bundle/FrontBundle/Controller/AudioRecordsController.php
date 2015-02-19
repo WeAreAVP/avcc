@@ -19,8 +19,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  *
  * @Route("/record")
  */
-class AudioRecordsController extends Controller
-{
+class AudioRecordsController extends Controller {
 
     /**
      * Lists all AudioRecords entities.
@@ -30,8 +29,7 @@ class AudioRecordsController extends Controller
      * @Template()
      * @return array
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
@@ -51,8 +49,7 @@ class AudioRecordsController extends Controller
      * @Template("ApplicationFrontBundle:AudioRecords:new.html.php")
      * @return array
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(1, $em, $this->getUser(), null);
@@ -115,8 +112,7 @@ class AudioRecordsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(AudioRecords $entity, $em, $data = null)
-    {
+    private function createCreateForm(AudioRecords $entity, $em, $data = null) {
         $form = $this->createForm(new AudioRecordsType($em, $data), $entity, array(
             'action' => $this->generateUrl('record_create'),
             'method' => 'POST',
@@ -142,8 +138,7 @@ class AudioRecordsController extends Controller
      * @Template()
      * @return array
      */
-    public function newAction($projectId = null, $audioRecId = null)
-    {
+    public function newAction($projectId = null, $audioRecId = null) {
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
         }
@@ -196,8 +191,7 @@ class AudioRecordsController extends Controller
      * @Template()
      * @return array
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->findOneBy(array('record' => $id));
@@ -227,8 +221,7 @@ class AudioRecordsController extends Controller
      * @Template()
      * @return array
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
         }
@@ -263,8 +256,7 @@ class AudioRecordsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(AudioRecords $entity, $em, $data = null)
-    {
+    private function createEditForm(AudioRecords $entity, $em, $data = null) {
         $form = $this->createForm(new AudioRecordsType($em, $data), $entity, array(
             'action' => $this->generateUrl('record_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -288,8 +280,7 @@ class AudioRecordsController extends Controller
      * @Template("ApplicationFrontBundle:AudioRecords:edit.html.php")
      * @return array
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->find($id);
@@ -360,8 +351,7 @@ class AudioRecordsController extends Controller
      * @Method("DELETE")
      * @return redirect
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -387,8 +377,7 @@ class AudioRecordsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
                         ->setAction($this->generateUrl('record_delete', array('id' => $id)))
                         ->setMethod('DELETE')
@@ -403,8 +392,7 @@ class AudioRecordsController extends Controller
      * @Template()
      * @return template
      */
-    public function addRecordAction()
-    {
+    public function addRecordAction() {
         $em = $this->getDoctrine()->getManager();
         $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
         $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
@@ -425,8 +413,7 @@ class AudioRecordsController extends Controller
      * @Template()
      * @return template
      */
-    public function getBaseAction($formatId)
-    {
+    public function getBaseAction($formatId) {
         $em = $this->getDoctrine()->getManager();
         $bases = $em->getRepository('ApplicationFrontBundle:Bases')->findBy(array('baseFormat' => $formatId));
 
@@ -447,8 +434,7 @@ class AudioRecordsController extends Controller
      * @Template()
      * @return template
      */
-    public function getRecordingSpeedAction($formatId, $mediaTypeId, $selectedrs = null)
-    {
+    public function getRecordingSpeedAction($formatId, $mediaTypeId, $selectedrs = null) {
         $em = $this->getDoctrine()->getManager();
         if ($mediaTypeId == 3) {
             $speeds = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findBy(array('recSpeedFormat' => NULL));
@@ -474,8 +460,7 @@ class AudioRecordsController extends Controller
      * @Template()
      * @return template
      */
-    public function getFormatAction($mediaTypeId, $formatId = null)
-    {
+    public function getFormatAction($mediaTypeId, $formatId = null) {
         $em = $this->getDoctrine()->getManager();
         $formats = $em->getRepository('ApplicationFrontBundle:Formats')->findBy(array('mediaType' => $mediaTypeId));
 
@@ -496,8 +481,7 @@ class AudioRecordsController extends Controller
      * @Template()
      * @return template
      */
-    public function getFormatVersionAction($formatId, $versionId = null)
-    {
+    public function getFormatVersionAction($formatId, $versionId = null) {
         $em = $this->getDoctrine()->getManager();
         $formatVersions = $em->getRepository('ApplicationFrontBundle:FormatVersions')->findBy(array('formatVersionFormat' => $formatId));
 
@@ -519,8 +503,7 @@ class AudioRecordsController extends Controller
      * @Template()
      * @return template
      */
-    public function getReelDiameterAction($formatId, $mediaTypeId, $selectedRD = Null)
-    {
+    public function getReelDiameterAction($formatId, $mediaTypeId, $selectedRD = Null) {
         $em = $this->getDoctrine()->getManager();
         if ($mediaTypeId == 2) {
             $reeldiameters = $em->getRepository('ApplicationFrontBundle:ReelDiameters')->findBy(array('reelFormat' => NULL));
@@ -539,8 +522,7 @@ class AudioRecordsController extends Controller
      *
      * @return array
      */
-    protected function getSphinxInfo()
-    {
+    protected function getSphinxInfo() {
         return $this->container->getParameter('sphinx_param');
     }
 
@@ -555,8 +537,7 @@ class AudioRecordsController extends Controller
      * @Template()
      * @return type
      */
-    public function getAllProjectsAction($selectedProjectId = null)
-    {
+    public function getAllProjectsAction($selectedProjectId = null) {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles()) && $user->getOrganizations()) {
@@ -569,6 +550,21 @@ class AudioRecordsController extends Controller
                     'projects' => $projects,
                     'selectedProjectId' => $selectedProjectId
         ));
+    }
+
+    /**
+     * check unique id of record
+     * 
+     * @param Request $request
+     * 
+     * @Route("/checkid", name="check_id")
+     * @Method("POST")
+     */
+    public function checkUniqueId(Request $request) {
+        if ($_POST) {
+            echo $_POST['unique_id'];
+            exit;
+        }
     }
 
 }
