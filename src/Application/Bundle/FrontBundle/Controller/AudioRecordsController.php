@@ -566,10 +566,17 @@ class AudioRecordsController extends Controller {
 
             $userId = $_POST['user'];
             $user = $em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
-            $query = $this->getDoctrine()->getEntityManager()->createQuery('SELECT id FROM ApplicationFrontBundle:Users  WHERE organization_id = :org_id');
-            $query->setParameter('org_id', $user->getOrganizations()->getId());
+            
+            $em2 = $this->getDoctrine()->getEntityManager();
+            $connection = $em2->getConnection();
+            $statement = $connection->prepare('SELECT id FROM users  WHERE organization_id = :org_id');
+            $statement->bindValue('org_id', $user->getOrganizations()->getId());
+            $statement->execute();
+            $user_ids = $statement->fetchAll();
 
-            $user_ids = $query->getResult();
+
+
+
 //            $user_ids = $em->getRepository('ApplicationFrontBundle:Users')
 //                    ->createQueryBuilder('p')
 //                    ->select('p.id')
