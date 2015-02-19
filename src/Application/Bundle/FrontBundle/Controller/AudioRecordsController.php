@@ -568,7 +568,7 @@ class AudioRecordsController extends Controller {
             echo '<pre>';
             print_r($user);
      
-            return;
+            die;
         }
         echo 'here';
         die;
