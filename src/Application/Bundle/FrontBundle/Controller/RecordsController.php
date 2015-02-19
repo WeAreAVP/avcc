@@ -657,5 +657,20 @@ class RecordsController extends Controller
             return array('updated' => isset($updated) ? $updated : null);
         }
     }
-
+    
+    /**
+     * check unique id of record
+     * 
+     * @param Request $request
+     * 
+     * @Route("/checkid", name="check_id")
+     * @Method("POST")
+     */
+    public function checkUniqueId(Request $request)
+    {
+        if($_POST){
+            echo $_POST['unique_id'];
+            exit;
+        }
+    }
 }

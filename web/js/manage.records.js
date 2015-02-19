@@ -23,6 +23,7 @@ function initialize_records_form() {
     showUpdateFields();
     saveBulkEdit();
     closeBtn();
+    uniqueIdCheck();
     $("input,textarea,select").keypress(function () {
         changes = true;
     });
@@ -43,6 +44,20 @@ function initialize_records_form() {
     $('form').submit(function () {
         changes = false;
         return true; // return false to cancel form action
+    });
+}
+
+function uniqueIdCheck() {
+    $('#uniqueId').blur(function () {
+        $.ajax({
+            type: "POST",
+            url: baseUrl +'records/checkid' ,
+            tye: 'json',
+            data:{ unique_id:  $('#uniqueId').val()},
+            success: function (response) {
+                console.log('almost done wd every thng....');
+            }
+        });
     });
 }
 function updateFormat() {
