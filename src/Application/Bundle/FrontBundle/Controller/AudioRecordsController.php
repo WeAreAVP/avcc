@@ -557,7 +557,7 @@ class AudioRecordsController extends Controller {
      * 
      * @param Request $request
      * 
-     * @Route("/checkid", name="check_id")
+     * @Route("/checkUniqueId", name="check_id")
      * @Method("POST")
      */
     public function checkUniqueId(Request $request) {
