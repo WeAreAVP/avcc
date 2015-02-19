@@ -560,7 +560,7 @@ class AudioRecordsController extends Controller {
      * @Route("/checkUniqueId", name="check_id")
      * @Method("POST")
      */
-    public function checkUniqueId(Request $request) {
+    public function checkUniqueIdAction(Request $request) {
         $unique = $request->request->get('unique_id');
         if ($unique) {
             $em = $this->getDoctrine()->getManager();
