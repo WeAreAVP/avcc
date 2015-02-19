@@ -51,9 +51,9 @@ function uniqueIdCheck() {
     $('#uniqueId').blur(function () {
         $.ajax({
             type: "POST",
-            url: '/records/checkid' ,
-            tye: 'json',
-            data:{ unique_id:  $('#uniqueId').val()},
+            url: 'records/checkid' ,
+            dataType: 'json',
+            data: { unique_id:  $('#uniqueId').val()},
             success: function (response) {
                 console.log('almost done wd every thng....');
             }
