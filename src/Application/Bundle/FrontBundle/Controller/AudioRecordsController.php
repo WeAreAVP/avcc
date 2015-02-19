@@ -563,8 +563,29 @@ class AudioRecordsController extends Controller {
     public function checkUniqueId(Request $request) {
         if ($_POST) {
             $em = $this->getDoctrine()->getManager();
+
             $userId = $_POST['user'];
             $user = $em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
+
+            $user_ids = $em->getRepository('ApplicationFrontBundle:Users')
+                    ->createQueryBuilder('p')
+                    ->select('id')
+                    ->where('p.organization_id = :id')
+                    ->setParameter('id', $user->getOrganizations()->getId())
+                    ->getResult();
+            echo '<pre>';
+            print_r($user_ids);
+
+            $repository = $em->getRepository('ApplicationFrontBundle:Records');
+            $query = $repository->createQueryBuilder('p')
+                    ->where('p.user_id IN :ids')
+                    ->where('p.unique_id NOT LIKE :unique_id')
+                    ->setParameter('ids', $user_ids)
+                    ->setParameter('unique_id', $_POST['unique_id'])
+                    ->getQuery();
+
+            $products = $query->getResult();
+            
             echo $user->getOrganizations()->getId();
             echo 'hereeeee';
             die;
