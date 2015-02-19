@@ -570,22 +570,22 @@ class AudioRecordsController extends Controller {
             $user_ids = $em->getRepository('ApplicationFrontBundle:Users')
                     ->createQueryBuilder('p')
                     ->select('p.id')
-                    ->where('p.organization_id = :id')
-                    ->setParameter('id', $user->getOrganizations()->getId())
+                    ->where('p.organization_id = 1')
+                  //  ->setParameter('id', $user->getOrganizations()->getId())
                     ->getQuery()
                     ->getResult();
             echo '<pre>';
             print_r($user_ids);
 
-            $repository = $em->getRepository('ApplicationFrontBundle:Records');
-            $query = $repository->createQueryBuilder('p')
-                    ->where('p.user_id IN :ids')
-                    ->where('p.unique_id NOT LIKE :unique_id')
-                    ->setParameter('ids', $user_ids)
-                    ->setParameter('unique_id', $_POST['unique_id'])
-                    ->getQuery();
-
-            $products = $query->getResult();
+//            $repository = $em->getRepository('ApplicationFrontBundle:Records');
+//            $query = $repository->createQueryBuilder('p')
+//                    ->where('p.user_id IN :ids')
+//                    ->where('p.unique_id NOT LIKE :unique_id')
+//                    ->setParameter('ids', $user_ids)
+//                    ->setParameter('unique_id', $_POST['unique_id'])
+//                    ->getQuery();
+//
+//            $products = $query->getResult();
             
             echo $user->getOrganizations()->getId();
             echo 'hereeeee';
