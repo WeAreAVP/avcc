@@ -93,7 +93,7 @@ class RecordsRepository extends EntityRepository {
 
     public function findOrganizationUniqueidRecords($organizationID, $unique_id) {
         $query = $this->getEntityManager()
-                ->createQuery("SELECT count(r) from ApplicationFrontBundle:Records r "
+                ->createQuery("SELECT r from ApplicationFrontBundle:Records r "
                 . "JOIN r.user u "
                 . "JOIN u.organizations o "
                 . "WHERE o.id =  :organization AND r.uniqueId = :unique");
