@@ -57,7 +57,10 @@ function uniqueIdCheck() {
             dataType: 'json',
             success: function (response) {
                 if (response.success == 'false') {
-                    $('#uniqueId_lbl .has-error').text('hello wrong....');
+                    $('#uniqueId_lbl .has-error').text('Unique id is required');
+                    $('#uniqueId').val('');
+                }else{
+                    $('#uniqueId_lbl .has-error').text('');
                 }
                 console.log('almost done wd every thng....');
             }
