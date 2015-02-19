@@ -19,8 +19,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  *
  * @Route("/record")
  */
-class VideoRecordsController extends Controller
-{
+class VideoRecordsController extends Controller {
 
     /**
      * Lists all VideoRecords entities.
@@ -29,8 +28,7 @@ class VideoRecordsController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('ApplicationFrontBundle:VideoRecords')->findAll();
@@ -47,8 +45,7 @@ class VideoRecordsController extends Controller
      * @Method("POST")
      * @Template("ApplicationFrontBundle:VideoRecords:new.html.php")
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $entity = new VideoRecords();
         $form = $this->createCreateForm($entity, $em);
@@ -107,8 +104,7 @@ class VideoRecordsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(VideoRecords $entity, $em, $data = null)
-    {
+    private function createCreateForm(VideoRecords $entity, $em, $data = null) {
         $form = $this->createForm(new VideoRecordsType($em, $data), $entity, array(
             'action' => $this->generateUrl('record_video_create'),
             'method' => 'POST',
@@ -131,8 +127,7 @@ class VideoRecordsController extends Controller
      * @Template()
      * @return template
      */
-    public function newAction($projectId = null, $videoRecId = null)
-    {
+    public function newAction($projectId = null, $videoRecId = null) {
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
         }
@@ -180,8 +175,7 @@ class VideoRecordsController extends Controller
      * @Template()
      * @return template
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
         }
@@ -214,8 +208,7 @@ class VideoRecordsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(VideoRecords $entity, $em, $data = null)
-    {
+    private function createEditForm(VideoRecords $entity, $em, $data = null) {
         $form = $this->createForm(new VideoRecordsType($em, $data), $entity, array(
             'action' => $this->generateUrl('record_video_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -236,8 +229,7 @@ class VideoRecordsController extends Controller
      * @Template("ApplicationFrontBundle:VideoRecords:edit.html.php")
      * @return redirect
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:VideoRecords')->find($id);
@@ -303,8 +295,7 @@ class VideoRecordsController extends Controller
      * @Method("DELETE")
      * @return redorect
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -330,8 +321,7 @@ class VideoRecordsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
                         ->setAction($this->generateUrl('record_video_delete', array('id' => $id)))
                         ->setMethod('DELETE')
@@ -344,9 +334,31 @@ class VideoRecordsController extends Controller
      *
      * @return array
      */
-    protected function getSphinxInfo()
-    {
+    protected function getSphinxInfo() {
         return $this->container->getParameter('sphinx_param');
+    }
+
+    /**
+     * check unique id of record
+     * 
+     * @param Request $request
+     * 
+     * @Route("/checkUniqueId", name="check_id")
+     * @Method("POST")
+     */
+    public function checkUniqueIdAction(Request $request) {
+        if ($request->getMethod() == 'POST') {
+            $unique = $request->request->get('unique_id');
+            $em = $this->getDoctrine()->getManager();
+            $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
+            if (count($records) == 0) {
+                $result = array('success' => 'true');
+            } else {
+                $result = array('success' => 'false');
+            }
+            echo json_encode($result);
+            exit;
+        }
     }
 
 }
