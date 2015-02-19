@@ -147,8 +147,8 @@ class RecordsType extends AbstractType {
 
     public function onPostSubmitData(FormEvent $event) {
         $record = $event->getData();
-        echo '<pre>';
-        print_r($record);
+        echo $record->getId();
+      //  print_r($record->getId());
         exit;
         if ($record->getId()) {
             $record->setEditor($this->user);
