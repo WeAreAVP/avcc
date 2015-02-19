@@ -568,8 +568,8 @@ class AudioRecordsController extends Controller {
             $user = $em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
                                    
             $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($user->getOrganizations()->getId(), $_POST['unique_id'] );
-
-            echo '<pre>';
+        
+            echo 'erteg b <pre>';
             print_r($records);
 
 //            $repository = $em->getRepository('ApplicationFrontBundle:Records');
