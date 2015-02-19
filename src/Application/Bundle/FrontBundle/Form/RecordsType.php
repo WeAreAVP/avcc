@@ -10,8 +10,7 @@ use Symfony\Component\Form\FormEvents;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
-class RecordsType extends AbstractType
-{
+class RecordsType extends AbstractType {
 
     private $selectedOptions;
     private $em;
@@ -19,8 +18,7 @@ class RecordsType extends AbstractType
     private $proj;
     private $user;
 
-    public function __construct(EntityManager $em, $selectedOptions = null)
-    {
+    public function __construct(EntityManager $em, $selectedOptions = null) {
         $this->selectedOptions = $selectedOptions;
         $this->em = $em;
     }
@@ -29,8 +27,7 @@ class RecordsType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         if ($this->selectedOptions['recordId']) {
             $builder
                     ->add('uniqueId')
@@ -126,17 +123,12 @@ class RecordsType extends AbstractType
         }
     }
 
-    public function onPreSetData(FormEvent $event)
-    {
+    public function onPreSetData(FormEvent $event) {
         
     }
 
-    public function onPreSubmitData(FormEvent $event)
-    {
+    public function onPreSubmitData(FormEvent $event) {
         $record = $event->getData();
-        echo '<pre>';
-        print_r($record);
-        exit;
 //		$projectId = $record['projectHidden'];
         if (isset($record['mediaTypeHidden'])) {
             $mediaTypeId = $record['mediaTypeHidden'];
@@ -153,10 +145,11 @@ class RecordsType extends AbstractType
         $this->user = $this->em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
     }
 
-    public function onPostSubmitData(FormEvent $event)
-    {
+    public function onPostSubmitData(FormEvent $event) {
         $record = $event->getData();
-
+        echo '<pre>';
+        print_r($record);
+        exit;
         if ($record->getId()) {
             $record->setEditor($this->user);
             $record->setUpdatedOnValue();
@@ -173,8 +166,7 @@ class RecordsType extends AbstractType
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'Application\Bundle\FrontBundle\Entity\Records',
             'intention' => 'records'
@@ -184,8 +176,7 @@ class RecordsType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return 'application_bundle_frontbundle_records';
     }
 
