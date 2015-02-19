@@ -96,7 +96,7 @@ class RecordsRepository extends EntityRepository {
                 ->createQuery("SELECT r from ApplicationFrontBundle:Records r "
                 . "JOIN r.user u "
                 . "JOIN u.organizations o "
-                . "WHERE o.id =  :organization AND r.unique_id = :unique");
+                . "WHERE o.id =  :organization AND r.uniqueId = :unique");
         $query->setParameter('organization', $organizationID);
         $query->setParameter('unique', $unique_id);
         return $query->getResult();
