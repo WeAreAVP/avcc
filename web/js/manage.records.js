@@ -50,13 +50,15 @@ function initialize_records_form() {
 function uniqueIdCheck() {
     $('#uniqueId').blur(function () {
         var id = $('#uniqueId').val();
-        var user_id = $('#application_bundle_frontbundle_audiorecords_record_userId').val();
         $.ajax({
             type: "POST",
-            url: baseUrl + 'checkUniqueId' ,
-            data: { unique_id:  id, user : user_id},
+            url: baseUrl + 'checkUniqueId',
+            data: {unique_id: id},
             dataType: 'json',
             success: function (response) {
+                if (response.success == 'false') {
+                    $('#uniqueId_lbl .has-error').text('hello wrong....');
+                }
                 console.log('almost done wd every thng....');
             }
         });
