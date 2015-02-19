@@ -51,7 +51,7 @@ function uniqueIdCheck() {
     $('#uniqueId').blur(function () {
         $.ajax({
             type: "POST",
-            url: baseUrl +'records/checkid' ,
+            url: baseUrl +'checkid' ,
             tye: 'json',
             data:{ unique_id:  $('#uniqueId').val()},
             success: function (response) {
