@@ -567,7 +567,7 @@ class AudioRecordsController extends Controller {
             $user = $em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
             echo '<pre>';
             print_r($user);
-     
+             die;
             return;
         }
         echo 'here';
