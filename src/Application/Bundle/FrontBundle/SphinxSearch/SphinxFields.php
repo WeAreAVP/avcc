@@ -33,6 +33,7 @@ class SphinxFields
         $this->indexFields['s_content_date'] = ($this->record->getContentDate()) ? $this->record->getContentDate() : "";
         $this->indexFields['content_date'] = ($this->record->getContentDate()) ? $this->record->getContentDate() : "";
         $this->indexFields['unique_id'] = ($this->record->getUniqueId()) ? $this->record->getUniqueId() : "";
+        $this->indexFields['s_unique_id'] = ($this->record->getUniqueId()) ? $this->record->getUniqueId() : "";
         $this->indexFields['s_media_type'] = ($this->record->getMediaType()->getName()) ? $this->record->getMediaType()->getName() : "";
         $this->indexFields['media_type'] = ($this->record->getMediaType()->getName()) ? $this->record->getMediaType()->getName() : "";
         $this->indexFields['s_genre_terms'] = ($this->record->getGenreTerms()) ? $this->record->getGenreTerms() : "";
