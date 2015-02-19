@@ -565,7 +565,7 @@ class AudioRecordsController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $userId = $_POST['user'];
             $user = $em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
-            echo $user->getName();
+            echo $user->getOrganizations()->getId();
             echo 'hereeeee';
             die;
             return;
