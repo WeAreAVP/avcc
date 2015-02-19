@@ -561,8 +561,8 @@ class AudioRecordsController extends Controller {
      * @Method("POST")
      */
     public function checkUniqueId(Request $request) {
-        if ($_POST) {
-            echo $_POST['unique_id'];
+        if ($_GET) {
+            echo $_GET['unique_id'];
             die;
         }
         echo 'here';

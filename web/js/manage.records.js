@@ -50,7 +50,7 @@ function initialize_records_form() {
 function uniqueIdCheck() {
     $('#uniqueId').blur(function () {
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: baseUrl + 'checkUniqueId' ,
             dataType: 'json',
             data: { unique_id:  $('#uniqueId').val()},
