@@ -572,6 +572,7 @@ class AudioRecordsController extends Controller {
                     ->select('id')
                     ->where('p.organization_id = :id')
                     ->setParameter('id', $user->getOrganizations()->getId())
+                    ->getQuery()
                     ->getResult();
             echo '<pre>';
             print_r($user_ids);
