@@ -561,9 +561,10 @@ class AudioRecordsController extends Controller {
      * @Method("POST")
      */
     public function checkUniqueId(Request $request) {
-        if ($request->getParameter('unique_id')) {
+        $unique = $request->request->get('unique_id');
+        if ($unique) {
             $em = $this->getDoctrine()->getManager();
-            $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($user->getOrganizations()->getId(), $request->getParameter('unique_id'));
+            $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($user->getOrganizations()->getId(), $unique);
             echo $records;
             echo $user->getOrganizations()->getId();
             echo 'hereeeee';
