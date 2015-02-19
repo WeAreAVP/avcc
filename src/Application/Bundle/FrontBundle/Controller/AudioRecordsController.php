@@ -566,10 +566,10 @@ class AudioRecordsController extends Controller {
         if ($unique) {
             $em = $this->getDoctrine()->getManager();
             $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
-            echo $records;
+            echo count($records);
             echo 'hereeeee';
             die;
-            if($records == 0){
+            if(count($records) == 0){
                 $result = array('success' => 'true');
             }else{
                 $result = array('success' => 'false');
