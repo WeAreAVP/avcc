@@ -564,11 +564,11 @@ class AudioRecordsController extends Controller {
         if ($_POST) {
             $em = $this->getDoctrine()->getManager();
             $userId = $_POST['user'];
-            $user = $this->em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
+            $user = $em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
             echo '<pre>';
             print_r($user);
      
-            die;
+            return;
         }
         echo 'here';
         die;
