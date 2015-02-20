@@ -363,9 +363,9 @@ class VideoRecordsController extends Controller {
                 $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecords($this->getUser()->getOrganizations()->getId(), $unique, $id);
             }
             if (count($records) == 0) {
-                return 'unique id not unique';
-            } else {
                 return '';
+            } else {
+                return 'unique id not unique';
             }
         } else {
             $record = $request->request->get('application_bundle_frontbundle_audiorecords');

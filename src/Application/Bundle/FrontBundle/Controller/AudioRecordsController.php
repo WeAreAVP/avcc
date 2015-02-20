@@ -575,10 +575,13 @@ class AudioRecordsController extends Controller {
                 $em = $this->getDoctrine()->getManager();
                 $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecords($this->getUser()->getOrganizations()->getId(), $unique, $id);
             }
+            echo '<pre>';
+            print_r($records);
+            exit;
             if (count($records) == 0) {
-                return 'unique id not unique';
-            } else {
                 return '';
+            } else {
+                return 'unique id not unique';
             }
         } else {
             $record = $request->request->get('application_bundle_frontbundle_audiorecords');
