@@ -556,7 +556,7 @@ class AudioRecordsController extends Controller {
     public function checkUniqueId(Request $request) {
         echo 'here';
 //       if ($request->getMethod() == 'POST') {
-        $unique = $request->request->get('unique_id');
+        $unique = $request->request->get('uniqueId');
         echo $unique;
         echo '<br>';
         echo $this->getUser()->getOrganizations()->getId();
