@@ -93,7 +93,7 @@ class Records {
     private $mediaType;
 
     /**
-     * @ORM\Column(name="unique_id", unique=true, type="string")
+     * @ORM\Column(name="unique_id", type="string")
      * @var string
      * @Assert\NotBlank(message="Unique id is required")
      *
