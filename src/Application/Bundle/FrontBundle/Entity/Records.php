@@ -16,7 +16,7 @@ use Application\Bundle\FrontBundle\Entity\ReelDiameters as ReelDiameters;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\ExecutionContext;
-
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 /**
  * Records
  *
@@ -907,12 +907,12 @@ class Records {
         )));
     }
 
-    public function checkUniqueId(ExecutionContext $context) {
+    public function checkUniqueId(ExecutionContextInterface $context) {
         $unique = $this->getUniqueId();
         $em = $this->getDoctrine()->getManager();
         $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
         if (count($records) > 0) {
-            $context->addViolation('unique id must be unique', array(), null);
+            $context->addViolation('uniqueId', 'unique id must be unique');
         }
     }
 
