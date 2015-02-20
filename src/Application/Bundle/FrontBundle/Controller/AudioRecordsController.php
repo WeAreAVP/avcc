@@ -54,12 +54,12 @@ class AudioRecordsController extends Controller {
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(1, $em, $this->getUser(), null);
         $entity = new AudioRecords();
-        $form = $this->createCreateForm($entity, $em, $data);
-        $form->handleRequest($request);
-        $error ='';
-        
         $unique = $request->request->get('uniqueId');
         echo 'checkk === ' . $unique;
+        exit;
+        $form = $this->createCreateForm($entity, $em, $data);
+        $form->handleRequest($request);
+        $error = '';
         $result = $this->checkUniqueId($request);
         echo $result;
         exit;
