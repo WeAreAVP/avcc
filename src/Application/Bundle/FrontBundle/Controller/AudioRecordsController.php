@@ -54,21 +54,12 @@ class AudioRecordsController extends Controller {
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(1, $em, $this->getUser(), null);
         $entity = new AudioRecords();
-        echo '<pre>';
-        //  print_r($request);
-        $unique = $request->request->get('application_bundle_frontbundle_audiorecords');
-        //  echo 'checkk === ' . $unique;
-        // exit;
         $form = $this->createCreateForm($entity, $em, $data);
         $form->handleRequest($request);
         $error = '';
         $result = $this->checkUniqueId($request);
-        $recordForm = $form->get('record')->getData();
-       print_r($unique);
-        //   echo $result;
         exit;
         if ($form->isValid()) {
-            print_r($form->get('uniqueId'));
 
             $em->persist($entity);
             try {
@@ -565,11 +556,11 @@ class AudioRecordsController extends Controller {
     public function checkUniqueId(Request $request) {
         echo 'here<pre>';
         echo $request->getMethod();
-        $unique = $request->request->get('uniqueId');
+        $unique = $request->request->get('application_bundle_frontbundle_audiorecords')['record']['uniqueId'];
         echo '1 === ' . $unique;
         echo '<br>';
         echo $this->getUser()->getOrganizations()->getId();
-
+        exit;
         $role = $this->getUser()->getRoles();
         //   if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
         $em = $this->getDoctrine()->getManager();
