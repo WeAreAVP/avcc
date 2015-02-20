@@ -130,6 +130,8 @@ class RecordsType extends AbstractType {
 
     public function onPreSubmitData(FormEvent $event) {
         $record = $event->getData();
+        echo '<pre>';
+        print_r($record);
 //		$projectId = $record['projectHidden'];
         if (isset($record['mediaTypeHidden'])) {
             $mediaTypeId = $record['mediaTypeHidden'];
@@ -147,11 +149,11 @@ class RecordsType extends AbstractType {
     }
 
     public function onPostSubmitData(FormEvent $event) {
+        echo '<br>hererererer........';
         $record = $event->getData();
+        echo $record['uniqueId'];
      //   $this->get('uniqueId')->addError(new FormError('error message'));
-        $userId = $record['userId'];
-        $this->user = $this->em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
-        $records = $this->em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $record['uniqueId']);
+        $records = $this->em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->user->getUser()->getOrganizations()->getId(), $record['uniqueId']);
         if (count($records) == 0) {
             echo 'no error here';
         } else {
