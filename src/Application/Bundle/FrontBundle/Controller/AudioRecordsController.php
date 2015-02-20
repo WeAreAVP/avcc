@@ -563,8 +563,10 @@ class AudioRecordsController extends Controller {
     }
 
     public function checkUniqueId(Request $request, $id = 0) {
-        
+
         if ($id) {
+            echo $id;
+            exit;
             $record = $request->request->get('application_bundle_frontbundle_audiorecords');
             $unique = $record['record']['uniqueId'];
             $user = $this->getUser();
@@ -575,9 +577,6 @@ class AudioRecordsController extends Controller {
                 $em = $this->getDoctrine()->getManager();
                 $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecordsEdit($this->getUser()->getOrganizations()->getId(), $unique, $id);
             }
-            echo 'HERERE :  <pre>';
-            print_r($records);
-            exit;
             if (count($records) == 0) {
                 return '';
             } else {
