@@ -14,6 +14,7 @@ use Application\Bundle\FrontBundle\Entity\VideoRecords as VideoRecords;
 use Application\Bundle\FrontBundle\Entity\FilmRecords as FilmRecords;
 use Application\Bundle\FrontBundle\Entity\ReelDiameters as ReelDiameters;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * Records
@@ -23,8 +24,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\HasLifecycleCallbacks
  * 
  */
-class Records
-{
+class Records {
 
     /**
      * @var integer
@@ -69,6 +69,7 @@ class Records
      * })
      */
     private $user;
+
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Users
      *
@@ -272,17 +273,15 @@ class Records
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
     /**
      * @ORM\PrePersist
      */
-    public function setCreatedOnValue()
-    {
-        if ( ! $this->getCreatedOn()) {
+    public function setCreatedOnValue() {
+        if (!$this->getCreatedOn()) {
             $this->createdOn = new \DateTime();
         }
     }
@@ -290,8 +289,7 @@ class Records
     /**
      * @ORM\PreUpdate
      */
-    public function setUpdatedOnValue()
-    {
+    public function setUpdatedOnValue() {
         $this->updatedOn = new \DateTime();
     }
 
@@ -300,8 +298,7 @@ class Records
      *
      * @return \Datetime
      */
-    public function getCreatedOn()
-    {
+    public function getCreatedOn() {
         return $this->createdOn;
     }
 
@@ -310,8 +307,7 @@ class Records
      *
      * @return \Datetime
      */
-    public function getUpdatedOn()
-    {
+    public function getUpdatedOn() {
         return $this->updatedOn;
     }
 
@@ -322,8 +318,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setUser(Users $user)
-    {
+    public function setUser(Users $user) {
         $this->user = $user;
 
         return $this;
@@ -334,8 +329,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
@@ -346,8 +340,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setUniqueId($uniqueId)
-    {
+    public function setUniqueId($uniqueId) {
         $this->uniqueId = $uniqueId;
 
         return $this;
@@ -358,8 +351,7 @@ class Records
      *
      * @return string
      */
-    public function getUniqueId()
-    {
+    public function getUniqueId() {
         return $this->uniqueId;
     }
 
@@ -370,8 +362,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setProject(Projects $project)
-    {
+    public function setProject(Projects $project) {
         $this->project = $project;
 
         return $this;
@@ -382,8 +373,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Projects
      */
-    public function getProject()
-    {
+    public function getProject() {
         return $this->project;
     }
 
@@ -394,8 +384,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setMediaType(MediaTypes $mediaType)
-    {
+    public function setMediaType(MediaTypes $mediaType) {
         $this->mediaType = $mediaType;
 
         return $this;
@@ -406,8 +395,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\MediaTypes
      */
-    public function getMediaType()
-    {
+    public function getMediaType() {
         return $this->mediaType;
     }
 
@@ -418,8 +406,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setLocation($location)
-    {
+    public function setLocation($location) {
         $this->location = $location;
 
         return $this;
@@ -430,8 +417,7 @@ class Records
      *
      * @return string
      */
-    public function getLocation()
-    {
+    public function getLocation() {
         return $this->location;
     }
 
@@ -442,8 +428,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setFormat(Formats $format)
-    {
+    public function setFormat(Formats $format) {
         $this->format = $format;
 
         return $this;
@@ -454,8 +439,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function getFormat()
-    {
+    public function getFormat() {
         return $this->format;
     }
 
@@ -466,8 +450,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
 
         return $this;
@@ -478,8 +461,7 @@ class Records
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -490,8 +472,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setCollectionName($collectionName)
-    {
+    public function setCollectionName($collectionName) {
         $this->collectionName = $collectionName;
 
         return $this;
@@ -502,8 +483,7 @@ class Records
      *
      * @return string
      */
-    public function getCollectionName()
-    {
+    public function getCollectionName() {
         return $this->collectionName;
     }
 
@@ -514,8 +494,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
 
         return $this;
@@ -526,8 +505,7 @@ class Records
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -538,8 +516,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setCommercial(Commercial $commercial = null)
-    {
+    public function setCommercial(Commercial $commercial = null) {
         $this->commercial = $commercial;
 
         return $this;
@@ -550,8 +527,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function getCommercial()
-    {
+    public function getCommercial() {
         return $this->commercial;
     }
 
@@ -562,8 +538,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setReelDiameters(ReelDiameters $reeldiameter = null)
-    {
+    public function setReelDiameters(ReelDiameters $reeldiameter = null) {
         $this->reelDiameters = $reeldiameter;
 
         return $this;
@@ -574,8 +549,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function getReelDiameters()
-    {
+    public function getReelDiameters() {
         return $this->reelDiameters;
     }
 
@@ -586,8 +560,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setContentDuration($contentDuration)
-    {
+    public function setContentDuration($contentDuration) {
         $this->contentDuration = $contentDuration;
 
         return $this;
@@ -598,8 +571,7 @@ class Records
      *
      * @return integer
      */
-    public function getContentDuration()
-    {
+    public function getContentDuration() {
         return $this->contentDuration;
     }
 
@@ -610,8 +582,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setCreationDate($creationDate)
-    {
+    public function setCreationDate($creationDate) {
         $this->creationDate = $creationDate;
 
         return $this;
@@ -622,8 +593,7 @@ class Records
      *
      * @return string
      */
-    public function getCreationDate()
-    {
+    public function getCreationDate() {
         return $this->creationDate;
     }
 
@@ -634,8 +604,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setContentDate($contentDate)
-    {
+    public function setContentDate($contentDate) {
         $this->contentDate = $contentDate;
 
         return $this;
@@ -646,8 +615,7 @@ class Records
      *
      * @return string
      */
-    public function getContentDate()
-    {
+    public function getContentDate() {
         return $this->contentDate;
     }
 
@@ -658,8 +626,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setIsReview($isReview)
-    {
+    public function setIsReview($isReview) {
         $this->isReview = $isReview;
 
         return $this;
@@ -670,8 +637,7 @@ class Records
      *
      * @return boolean
      */
-    public function getIsReview()
-    {
+    public function getIsReview() {
         return $this->isReview;
     }
 
@@ -682,8 +648,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setGenreTerms($genreTerms)
-    {
+    public function setGenreTerms($genreTerms) {
         $this->genreTerms = $genreTerms;
 
         return $this;
@@ -694,8 +659,7 @@ class Records
      *
      * @return string
      */
-    public function getGenreTerms()
-    {
+    public function getGenreTerms() {
         return $this->genreTerms;
     }
 
@@ -706,8 +670,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setContributor($contributor)
-    {
+    public function setContributor($contributor) {
         $this->contributor = $contributor;
 
         return $this;
@@ -718,8 +681,7 @@ class Records
      *
      * @return string
      */
-    public function getContributor()
-    {
+    public function getContributor() {
         return $this->contributor;
     }
 
@@ -730,8 +692,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setGeneration($generation)
-    {
+    public function setGeneration($generation) {
         $this->generation = $generation;
 
         return $this;
@@ -742,8 +703,7 @@ class Records
      *
      * @return string
      */
-    public function getGeneration()
-    {
+    public function getGeneration() {
         return $this->generation;
     }
 
@@ -754,8 +714,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setPart($part)
-    {
+    public function setPart($part) {
         $this->part = $part;
 
         return $this;
@@ -766,8 +725,7 @@ class Records
      *
      * @return string
      */
-    public function getPart()
-    {
+    public function getPart() {
         return $this->part;
     }
 
@@ -778,8 +736,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setCopyrightRestrictions($copyrightRestrictions)
-    {
+    public function setCopyrightRestrictions($copyrightRestrictions) {
         $this->copyrightRestrictions = $copyrightRestrictions;
 
         return $this;
@@ -790,8 +747,7 @@ class Records
      *
      * @return string
      */
-    public function getCopyrightRestrictions()
-    {
+    public function getCopyrightRestrictions() {
         return $this->copyrightRestrictions;
     }
 
@@ -802,8 +758,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setDuplicatesDerivatives($duplicatesDerivatives)
-    {
+    public function setDuplicatesDerivatives($duplicatesDerivatives) {
         $this->duplicatesDerivatives = $duplicatesDerivatives;
 
         return $this;
@@ -814,8 +769,7 @@ class Records
      *
      * @return string
      */
-    public function getDuplicatesDerivatives()
-    {
+    public function getDuplicatesDerivatives() {
         return $this->duplicatesDerivatives;
     }
 
@@ -826,8 +780,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setRelatedMaterial($relatedMaterial)
-    {
+    public function setRelatedMaterial($relatedMaterial) {
         $this->relatedMaterial = $relatedMaterial;
 
         return $this;
@@ -838,8 +791,7 @@ class Records
      *
      * @return string
      */
-    public function getRelatedMaterial()
-    {
+    public function getRelatedMaterial() {
         return $this->relatedMaterial;
     }
 
@@ -850,8 +802,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setConditionNote($conditionNote)
-    {
+    public function setConditionNote($conditionNote) {
         $this->conditionNote = $conditionNote;
 
         return $this;
@@ -862,8 +813,7 @@ class Records
      *
      * @return string
      */
-    public function getConditionNote()
-    {
+    public function getConditionNote() {
         return $this->conditionNote;
     }
 
@@ -874,8 +824,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setAudioRecord(AudioRecords $ar)
-    {
+    public function setAudioRecord(AudioRecords $ar) {
         $this->audioRecord = $ar;
 
         return $this;
@@ -886,8 +835,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\AudioRecords
      */
-    public function getAudioRecord()
-    {
+    public function getAudioRecord() {
         return $this->audioRecord;
     }
 
@@ -898,8 +846,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setVideoRecord(VideoRecords $vr)
-    {
+    public function setVideoRecord(VideoRecords $vr) {
         $this->videoRecord = $vr;
 
         return $this;
@@ -910,8 +857,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\VideoRecords
      */
-    public function getVideoRecord()
-    {
+    public function getVideoRecord() {
         return $this->videoRecord;
     }
 
@@ -922,8 +868,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setFilmRecord(FilmRecords $fr)
-    {
+    public function setFilmRecord(FilmRecords $fr) {
         $this->filmRecord = $fr;
 
         return $this;
@@ -934,8 +879,7 @@ class Records
      *
      * @return \Application\Bundle\FrontBundle\Entity\FilmRecords
      */
-    public function getFilmRecord()
-    {
+    public function getFilmRecord() {
         return $this->filmRecord;
     }
 
@@ -944,18 +888,32 @@ class Records
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '';
     }
-    public function getEditor()
-    {
+
+    public function getEditor() {
         return $this->editor;
     }
 
-    public function setEditor(\Application\Bundle\FrontBundle\Entity\Users $editor)
-    {
+    public function setEditor(\Application\Bundle\FrontBundle\Entity\Users $editor) {
         $this->editor = $editor;
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata) {
+        $metadata->addConstraint(new Assert\Callback(array(
+            'methods' => array('isAuthorValid'),
+        )));
+    }
+
+    public function isAuthorValid(ExecutionContext $context) {
+        $unique = $this->getUniqueId();
+       // $em = $this->getDoctrine()->getManager();
+        $records = 2;
+       // $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
+        if (count($records) > 0) {
+            $context->addViolation('unique id must be unique', array(), null);
+        }
     }
 
 }

@@ -137,11 +137,11 @@ class RecordsType extends AbstractType {
         }
         $userId = $record['userId'];
         $this->user = $this->em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
-        $records = $this->em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->user->getOrganizations()->getId(), $record['uniqueId']);
-        if (count($records) > 0) {
-            $this->get('uniqueId')->addError(new FormError('The unique ID must be unique'));
-            echo 'error here';
-        }
+//        $records = $this->em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->user->getOrganizations()->getId(), $record['uniqueId']);
+//        if (count($records) > 0) {
+//            $this->get('uniqueId')->addError(new FormError('The unique ID must be unique'));
+//            echo 'error here';
+//        }
     }
 
     public function onPostSubmitData(FormEvent $event) {

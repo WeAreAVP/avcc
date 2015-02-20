@@ -57,6 +57,12 @@ class AudioRecordsController extends Controller {
         $form = $this->createCreateForm($entity, $em, $data);
         $form->handleRequest($request);
         $error = '';
+        // function
+        // condition
+        // $error = new FormError("The unique ID must be unique.");
+//                    $recordForm = $form->get('record');
+//                    $recordForm->get('uniqueId')->addError($error);
+        
         if ($form->isValid()) {
             $em->persist($entity);
             try {
