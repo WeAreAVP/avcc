@@ -338,27 +338,5 @@ class VideoRecordsController extends Controller {
         return $this->container->getParameter('sphinx_param');
     }
 
-    /**
-     * check unique id of record
-     * 
-     * @param Request $request
-     * 
-     * @Route("/checkUniqueId", name="check_id")
-     * @Method("POST")
-     */
-    public function checkUniqueIdAction(Request $request) {
-        if ($request->getMethod() == 'POST') {
-            $unique = $request->request->get('unique_id');
-            $em = $this->getDoctrine()->getManager();
-            $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
-            if (count($records) == 0) {
-                $result = array('success' => 'true');
-            } else {
-                $result = array('success' => 'false');
-            }
-            echo json_encode($result);
-            exit;
-        }
-    }
 
 }

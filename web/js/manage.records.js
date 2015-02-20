@@ -23,7 +23,6 @@ function initialize_records_form() {
     showUpdateFields();
     saveBulkEdit();
     closeBtn();
-    //uniqueIdCheck();
     $("input,textarea,select").keypress(function () {
         changes = true;
     });
@@ -47,25 +46,6 @@ function initialize_records_form() {
     });
 }
 
-//function uniqueIdCheck() {
-//    $('#uniqueId').blur(function () {
-//        var id = $('#uniqueId').val();
-//        $.ajax({
-//            type: "POST",
-//            url: baseUrl + 'checkUniqueId',
-//            data: {unique_id: id},
-//            dataType: 'json',
-//            success: function (response) {
-//                if (response.success == 'false') {
-//                    $('#uniqueId_lbl .has-error').text('The unique ID must be unique.');
-//                    $('#uniqueId').val('');
-//                }else{
-//                    $('#uniqueId_lbl .has-error').text('');
-//                }
-//            }
-//        });
-//    });
-//}
 
 function updateFormat() {
     var selfObj = this;

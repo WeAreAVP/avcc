@@ -911,7 +911,7 @@ class Records {
         $em = $this->getDoctrine()->getManager();
         $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
         if (count($records) > 0) {
-            $context->addViolation('unique id must be unique', array(), null);
+//            $context->addViolation('unique id must be unique', array(), null);
         }
     }
 
