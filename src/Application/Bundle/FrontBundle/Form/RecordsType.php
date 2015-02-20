@@ -138,7 +138,6 @@ class RecordsType extends AbstractType {
             $this->mediaTyp = $this->em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $mediaTypeId));
             $record['mediaType'] = $this->mediaTyp;
         }
-
         $userId = $record['userId'];
 
 //		if ($projectId)
@@ -146,10 +145,11 @@ class RecordsType extends AbstractType {
 //			$this->proj = $this->em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
 //		}
         $this->user = $this->em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
-        $records = $this->em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->user->getUser()->getOrganizations()->getId(), $record['uniqueId']);
+        $records = $this->em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->user->getOrganizations()->getId(), $record['uniqueId']);
         if (count($records) == 0) {
             echo 'no error here';
         } else {
+            $this->get('uniqueId')->addError(new FormError('the unique id must b unique'));
             echo 'error here';
         }
         exit;
