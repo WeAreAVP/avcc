@@ -132,7 +132,7 @@ class Records {
     private $collectionName;
 
     /**
-     * @ORM\Column(name="description", type="string")
+     * @ORM\Column(name="description", type="string", nullable=true)
      * @var string
      */
     private $description;
@@ -909,7 +909,6 @@ class Records {
     public function checkUniqueId(ExecutionContext $context) {
         $unique = $this->getUniqueId();
         $em = $this->getDoctrine()->getManager();
-       // $records = 2;
         $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
         if (count($records) > 0) {
             $context->addViolation('unique id must be unique', array(), null);
