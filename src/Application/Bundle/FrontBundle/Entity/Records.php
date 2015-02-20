@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @ORM\Table(name="records")
  * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\RecordsRepository")
  * @ORM\HasLifecycleCallbacks
- * 
+ * @Assert\Callback(methods={"checkUniqueId"})
  */
 class Records {
 
@@ -912,7 +912,7 @@ class Records {
         $em = $this->getDoctrine()->getManager();
         $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
         if (count($records) > 0) {
-            $context->addViolation('uniqueId', 'unique id must be unique');
+            $context->addViolationAt('uniqueId', 'unique id must be unique');
         }
     }
 
