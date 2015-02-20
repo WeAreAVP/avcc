@@ -573,9 +573,9 @@ class AudioRecordsController extends Controller {
                 $records = '';
             } else {
                 $em = $this->getDoctrine()->getManager();
-                $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecords($this->getUser()->getOrganizations()->getId(), $unique, $id);
+                $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecordsEdit($this->getUser()->getOrganizations()->getId(), $unique, $id);
             }
-            echo '<pre>';
+            echo 'HERERE :  <pre>';
             print_r($records);
             exit;
             if (count($records) == 0) {
