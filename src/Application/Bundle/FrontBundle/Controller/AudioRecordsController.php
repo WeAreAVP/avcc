@@ -55,15 +55,16 @@ class AudioRecordsController extends Controller {
         $data = $fieldsObj->getData(1, $em, $this->getUser(), null);
         $entity = new AudioRecords();
         echo '<pre>';
-        print_r($request);
+      //  print_r($request);
         $unique = $request->request->get('uniqueId');
-        echo 'checkk === ' . $unique;
-        exit;
+      //  echo 'checkk === ' . $unique;
+       // exit;
         $form = $this->createCreateForm($entity, $em, $data);
         $form->handleRequest($request);
         $error = '';
         $result = $this->checkUniqueId($request);
-        echo $result;
+        print_r($form->getData());
+     //   echo $result;
         exit;
         if ($form->isValid()) {
             $em->persist($entity);
@@ -565,7 +566,9 @@ class AudioRecordsController extends Controller {
         echo '1 === ' . $unique;
         echo '<br>';
         echo $this->getUser()->getOrganizations()->getId();
-        exit;
+       
+        $role = $this->getUser()->getRoles();
+      //   if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
         $em = $this->getDoctrine()->getManager();
         $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
         if (count($records) == 0) {
