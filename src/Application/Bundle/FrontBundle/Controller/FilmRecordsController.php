@@ -19,8 +19,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
  *
  * @Route("/record")
  */
-class FilmRecordsController extends Controller
-{
+class FilmRecordsController extends Controller {
 
     /**
      * Lists all FilmRecords entities.
@@ -29,8 +28,7 @@ class FilmRecordsController extends Controller
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('ApplicationFrontBundle:FilmRecords')->findAll();
@@ -49,12 +47,18 @@ class FilmRecordsController extends Controller
      * @Method("POST")
      * @Template("ApplicationFrontBundle:FilmRecords:new.html.php")
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $entity = new FilmRecords();
         $form = $this->createCreateForm($entity, $em);
         $form->handleRequest($request);
+        $error = '';
+        $result = $this->checkUniqueId($request);
+        if ($result != '') {
+            $error = new FormError("The unique ID must be unique.");
+            $recordForm = $form->get('record');
+            $recordForm->get('uniqueId')->addError($error);
+        }
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(2, $em, $this->getUser(), null);
         if ($form->isValid()) {
@@ -111,8 +115,7 @@ class FilmRecordsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(FilmRecords $entity, $em, $data = null)
-    {
+    private function createCreateForm(FilmRecords $entity, $em, $data = null) {
         $form = $this->createForm(new FilmRecordsType($em, $data), $entity, array(
             'action' => $this->generateUrl('record_film_create'),
             'method' => 'POST',
@@ -135,8 +138,7 @@ class FilmRecordsController extends Controller
      * @Template()
      * @return template
      */
-    public function newAction($projectId = null, $filmRecId = null)
-    {
+    public function newAction($projectId = null, $filmRecId = null) {
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
         }
@@ -191,8 +193,7 @@ class FilmRecordsController extends Controller
      * @Template()
      * @return template
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
         }
@@ -225,8 +226,7 @@ class FilmRecordsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(FilmRecords $entity, $em, $data = null)
-    {
+    private function createEditForm(FilmRecords $entity, $em, $data = null) {
         $form = $this->createForm(new FilmRecordsType($em, $data), $entity, array(
             'action' => $this->generateUrl('record_film_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -250,8 +250,7 @@ class FilmRecordsController extends Controller
      * @Template("ApplicationFrontBundle:FilmRecords:edit.html.php")
      * @return template
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:FilmRecords')->find($id);
@@ -264,7 +263,12 @@ class FilmRecordsController extends Controller
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity, $em, $data);
         $editForm->handleRequest($request);
-
+        $result = $this->checkUniqueId($request, $id);
+        if ($result != '') {
+            $error = new FormError("The unique ID must be unique.");
+            $recordForm = $form->get('record');
+            $recordForm->get('uniqueId')->addError($error);
+        }
         if ($editForm->isValid()) {
             try {
                 $em->flush();
@@ -279,7 +283,7 @@ class FilmRecordsController extends Controller
                     return $this->redirect($this->generateUrl('record_film_new'));
                 }
                 $this->get('session')->getFlashBag()->add('success', 'Film record updated succesfully.');
-                
+
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
                 if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))) {
@@ -320,8 +324,7 @@ class FilmRecordsController extends Controller
      * @Method("DELETE")
      * @return Redirect
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -347,8 +350,7 @@ class FilmRecordsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
                         ->setAction($this->generateUrl('record_film_delete', array('id' => $id)))
                         ->setMethod('DELETE')
@@ -361,10 +363,44 @@ class FilmRecordsController extends Controller
      *
      * @return array
      */
-    protected function getSphinxInfo()
-    {
+    protected function getSphinxInfo() {
         return $this->container->getParameter('sphinx_param');
     }
-    
+
+    public function checkUniqueId(Request $request, $id = 0) {
+        if ($id) {
+            $record = $request->request->get('application_bundle_frontbundle_audiorecords');
+            $unique = $record['record']['uniqueId'];
+            $user = $this->getUser;
+            if (in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
+                //to do.....
+                $records = '';
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecords($this->getUser()->getOrganizations()->getId(), $unique, $id);
+            }
+            if (count($records) == 0) {
+                return '';
+            } else {
+                return 'unique id not unique';
+            }
+        } else {
+            $record = $request->request->get('application_bundle_frontbundle_audiorecords');
+            $unique = $record['record']['uniqueId'];
+            $user = $this->getUser;
+            if (in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
+                //to do.....
+                $records = '';
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
+            }
+            if (count($records) == 0) {
+                return '';
+            } else {
+                return 'unique id not unique';
+            }
+        }
+    }
 
 }

@@ -50,6 +50,13 @@ class VideoRecordsController extends Controller {
         $entity = new VideoRecords();
         $form = $this->createCreateForm($entity, $em);
         $form->handleRequest($request);
+        $error = '';
+        $result = $this->checkUniqueId($request);
+        if ($result != '') {
+            $error = new FormError("The unique ID must be unique.");
+            $recordForm = $form->get('record');
+            $recordForm->get('uniqueId')->addError($error);
+        }
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(3, $em, $this->getUser(), null);
         if ($form->isValid()) {
@@ -242,7 +249,12 @@ class VideoRecordsController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity, $em, $data);
         $editForm->handleRequest($request);
-
+        $result = $this->checkUniqueId($request, $id);
+        if ($result != '') {
+            $error = new FormError("The unique ID must be unique.");
+            $recordForm = $form->get('record');
+            $recordForm->get('uniqueId')->addError($error);
+        }
         if ($editForm->isValid()) {
             try {
                 $em->flush();
@@ -338,5 +350,40 @@ class VideoRecordsController extends Controller {
         return $this->container->getParameter('sphinx_param');
     }
 
+    public function checkUniqueId(Request $request, $id = 0) {
+        if ($id) {
+            $record = $request->request->get('application_bundle_frontbundle_audiorecords');
+            $unique = $record['record']['uniqueId'];
+            $user = $this->getUser;
+            if (in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
+                //to do.....
+                $records = '';
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecords($this->getUser()->getOrganizations()->getId(), $unique, $id);
+            }
+            if (count($records) == 0) {
+                return '';
+            } else {
+                return 'unique id not unique';
+            }
+        } else {
+            $record = $request->request->get('application_bundle_frontbundle_audiorecords');
+            $unique = $record['record']['uniqueId'];
+            $user = $this->getUser;
+            if (in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
+                //to do.....
+                $records = '';
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
+            }
+            if (count($records) == 0) {
+                return '';
+            } else {
+                return 'unique id not unique';
+            }
+        }
+    }
 
 }
