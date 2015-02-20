@@ -56,7 +56,7 @@ class AudioRecordsController extends Controller {
         $entity = new AudioRecords();
         echo '<pre>';
         //  print_r($request);
-        $unique = $request->request;
+        $unique = $request->request->get('application_bundle_frontbundle_audiorecords');
         //  echo 'checkk === ' . $unique;
         // exit;
         $form = $this->createCreateForm($entity, $em, $data);
