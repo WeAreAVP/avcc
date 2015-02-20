@@ -903,7 +903,9 @@ class Records {
 
     public function checkUniqueId(ExecutionContextInterface $context) {
         $unique = $this->getUniqueId();
-        $records = 2;
+        echo 'bue';
+        exit;
+       // $records = 2;
      //   $em = $this->getDoctrine()->getManager();
       //  $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
         if (count($records) > 0) {
