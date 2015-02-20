@@ -57,6 +57,8 @@ class AudioRecordsController extends Controller {
         $form = $this->createCreateForm($entity, $em, $data);
         $form->handleRequest($request);
         $error = '';
+        $unique = $request->request->get('uniqueId');
+        echo 'checkk === ' . $unique;
         $result = $this->checkUniqueId($request);
         echo $result;
         exit;
@@ -557,9 +559,7 @@ class AudioRecordsController extends Controller {
         echo 'here<pre>';
         echo $request->getMethod();
         $unique = $request->request->get('uniqueId');
-        $unique1 = $request->query->get('uniqueId');
         echo '1 === ' . $unique;
-        echo '<br>2 === ' . $unique1;
         echo '<br>';
         echo $this->getUser()->getOrganizations()->getId();
         exit;
