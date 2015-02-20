@@ -145,7 +145,12 @@ class RecordsType extends AbstractType {
 //			$this->proj = $this->em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
 //		}
         $this->user = $this->em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
+        echo $this->user->getOrganizations()->getId();
+        echo '<br>' . $record['uniqueId'];
         $records = $this->em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->user->getOrganizations()->getId(), $record['uniqueId']);
+
+        echo count($records);
+
         if (count($records) == 0) {
             echo 'no error here';
         } else {
