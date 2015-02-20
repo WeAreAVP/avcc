@@ -57,7 +57,7 @@ class AudioRecordsController extends Controller {
         $form = $this->createCreateForm($entity, $em, $data);
         $form->handleRequest($request);
         $error = '';
-        
+        //$error = $this->checkUniqueId($request);
         if ($form->isValid()) {
             $em->persist($entity);
             try {
@@ -549,6 +549,21 @@ class AudioRecordsController extends Controller {
                     'projects' => $projects,
                     'selectedProjectId' => $selectedProjectId
         ));
+    }
+    
+    public function checkUniqueId(Request $request) {
+       if ($request->getMethod() == 'POST') {
+            $unique = $request->request->get('unique_id');
+            $em = $this->getDoctrine()->getManager();
+            $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
+            if (count($records) == 0) {
+                $result = array('success' => 'true');
+            } else {
+                $result = array('success' => 'false');
+            }
+            echo json_encode($result);
+            exit;
+        }
     }
 
 

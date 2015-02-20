@@ -901,12 +901,6 @@ class Records {
         $this->editor = $editor;
     }
 
-//    public static function loadValidatorMetadata(ClassMetadata $metadata) {
-//        $metadata->addConstraint(new Assert\Callback(array(
-//            'methods' => array('checkUniqueId'),
-//        )));
-//    }
-
     public function checkUniqueId(ExecutionContextInterface $context) {
         $unique = $this->getUniqueId();
         $em = $this->getDoctrine()->getManager();
