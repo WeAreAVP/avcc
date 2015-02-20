@@ -58,7 +58,11 @@ class AudioRecordsController extends Controller {
         $form->handleRequest($request);
         $error = '';
         $result = $this->checkUniqueId($request);
-        exit;
+        if ($result != '') {
+            $error = new FormError("The unique ID must be unique.");
+            $recordForm = $form->get('record');
+            $recordForm->get('uniqueId')->addError($error);
+        }
         if ($form->isValid()) {
 
             $em->persist($entity);
@@ -82,11 +86,11 @@ class AudioRecordsController extends Controller {
                     $recordForm = $form->get('record');
                     $recordForm->get('project')->addError($error);
                 }
-                if (is_int(strpos($e->getPrevious()->getMessage(), 'Duplicate entry'))) {
-                    $error = new FormError("The unique ID must be unique.");
-                    $recordForm = $form->get('record');
-                    $recordForm->get('uniqueId')->addError($error);
-                }
+//                if (is_int(strpos($e->getPrevious()->getMessage(), 'Duplicate entry'))) {
+//                    $error = new FormError("The unique ID must be unique.");
+//                    $recordForm = $form->get('record');
+//                    $recordForm->get('uniqueId')->addError($error);
+//                }
                 if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'format_id' cannot be null"))) {
                     $error = new FormError("Format is required field.");
                     $recordForm = $form->get('record');
@@ -556,11 +560,8 @@ class AudioRecordsController extends Controller {
     public function checkUniqueId(Request $request) {
         echo 'here<pre>';
         echo $request->getMethod();
-        $unique = $request->request->get('application_bundle_frontbundle_audiorecords');
-        echo '1 === ' . $unique['record']['uniqueId'];
-        echo '<br>';
-        echo $this->getUser()->getOrganizations()->getId();
-        exit;
+        $record = $request->request->get('application_bundle_frontbundle_audiorecords');
+        $unique = $record['record']['uniqueId'];
         $role = $this->getUser()->getRoles();
         //   if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
         $em = $this->getDoctrine()->getManager();
