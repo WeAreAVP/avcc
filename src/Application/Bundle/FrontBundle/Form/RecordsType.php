@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+//use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -147,9 +148,16 @@ class RecordsType extends AbstractType {
 
     public function onPostSubmitData(FormEvent $event) {
         $record = $event->getData();
-   //     echo $record->getId();
-        //  print_r($record->getId());
-   //     exit;
+     //   $this->get('uniqueId')->addError(new FormError('error message'));
+        $userId = $record['userId'];
+        $this->user = $this->em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
+        $records = $this->em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $record['uniqueId']);
+        if (count($records) == 0) {
+            echo 'no error here';
+        } else {
+            echo 'error here';
+        }
+        exit;
         if ($record->getId()) {
             $record->setEditor($this->user);
             $record->setUpdatedOnValue();

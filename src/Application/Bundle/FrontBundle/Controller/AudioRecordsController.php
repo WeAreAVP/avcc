@@ -59,7 +59,6 @@ class AudioRecordsController extends Controller {
         $error = '';
         if ($form->isValid()) {
             $em->persist($entity);
-
             try {
                 $em->flush();
                 $shpinxInfo = $this->getSphinxInfo();
@@ -73,7 +72,6 @@ class AudioRecordsController extends Controller {
                 if ($form->get('save_and_new')->isClicked()) {
                     return $this->redirect($this->generateUrl('record_new', array('audioRecId' => $entity->getId())));
                 }
-
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
                 if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))) {
