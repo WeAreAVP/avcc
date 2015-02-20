@@ -146,13 +146,20 @@ class RecordsType extends AbstractType {
 //			$this->proj = $this->em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
 //		}
         $this->user = $this->em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
+        $records = $this->em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->user->getUser()->getOrganizations()->getId(), $record['uniqueId']);
+        if (count($records) == 0) {
+            echo 'no error here';
+        } else {
+            echo 'error here';
+        }
+        exit;
     }
 
     public function onPostSubmitData(FormEvent $event) {
         echo '<br>hererererer........';
         $record = $event->getData();
         echo $record['uniqueId'];
-     //   $this->get('uniqueId')->addError(new FormError('error message'));
+        //   $this->get('uniqueId')->addError(new FormError('error message'));
         $records = $this->em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->user->getUser()->getOrganizations()->getId(), $record['uniqueId']);
         if (count($records) == 0) {
             echo 'no error here';
