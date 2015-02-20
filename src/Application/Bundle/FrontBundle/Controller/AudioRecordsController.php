@@ -54,6 +54,8 @@ class AudioRecordsController extends Controller {
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(1, $em, $this->getUser(), null);
         $entity = new AudioRecords();
+        echo '<pre>';
+        print_r($request);
         $unique = $request->request->get('uniqueId');
         echo 'checkk === ' . $unique;
         exit;
