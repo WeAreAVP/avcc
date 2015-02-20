@@ -299,7 +299,7 @@ class AudioRecordsController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity, $em, $data);
         $editForm->handleRequest($request);
-        $result = $this->checkUniqueId($request, $id);
+        $result = $this->checkUniqueId($request, $entity->getRecord()->getId());
         if ($result != '') {
             $error = new FormError("The unique ID must be unique.");
             $recordForm = $form->get('record');
@@ -565,8 +565,6 @@ class AudioRecordsController extends Controller {
     public function checkUniqueId(Request $request, $id = 0) {
 
         if ($id) {
-            echo $id;
-            exit;
             $record = $request->request->get('application_bundle_frontbundle_audiorecords');
             $unique = $record['record']['uniqueId'];
             $user = $this->getUser();
