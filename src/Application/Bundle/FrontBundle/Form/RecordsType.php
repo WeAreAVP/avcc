@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-//use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 
@@ -129,51 +129,24 @@ class RecordsType extends AbstractType {
     }
 
     public function onPreSubmitData(FormEvent $event) {
-        $record = $event->getData();
-        echo '<pre>';
-        print_r($record);
-//		$projectId = $record['projectHidden'];
+        $record = $event->getData();      
         if (isset($record['mediaTypeHidden'])) {
             $mediaTypeId = $record['mediaTypeHidden'];
             $this->mediaTyp = $this->em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('id' => $mediaTypeId));
             $record['mediaType'] = $this->mediaTyp;
         }
         $userId = $record['userId'];
-
-//		if ($projectId)
-//		{
-//			$this->proj = $this->em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
-//		}
         $this->user = $this->em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('id' => $userId));
-        echo $this->user->getOrganizations()->getId();
-        echo '<br>' . $record['uniqueId'];
-       
-       // $em = $this->getDoctrine()->getManager();
         $records = $this->em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->user->getOrganizations()->getId(), $record['uniqueId']);
-        
-        echo count($records);
-
-        if (count($records) == 0) {
-            echo 'no error here';
-        } else {
-            $this->get('uniqueId')->addError(new FormError('the unique id must b unique'));
+        if (count($records) > 0) {
+            $this->get('uniqueId')->addError(new FormError('The unique ID must be unique'));
             echo 'error here';
         }
-        exit;
     }
 
     public function onPostSubmitData(FormEvent $event) {
-        echo '<br>hererererer........';
         $record = $event->getData();
-        echo $record['uniqueId'];
-        //   $this->get('uniqueId')->addError(new FormError('error message'));
-        $records = $this->em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->user->getUser()->getOrganizations()->getId(), $record['uniqueId']);
-        if (count($records) == 0) {
-            echo 'no error here';
-        } else {
-            echo 'error here';
-        }
-        exit;
+       
         if ($record->getId()) {
             $record->setEditor($this->user);
             $record->setUpdatedOnValue();
@@ -181,10 +154,6 @@ class RecordsType extends AbstractType {
         } else {
             $record->setUser($this->user);
         }
-//		if ($this->proj)
-//		{
-//			$record->setProject($this->proj);
-//		}
     }
 
     /**
