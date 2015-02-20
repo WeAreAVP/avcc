@@ -15,6 +15,7 @@ use Application\Bundle\FrontBundle\Entity\FilmRecords as FilmRecords;
 use Application\Bundle\FrontBundle\Entity\ReelDiameters as ReelDiameters;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\ExecutionContext;
 
 /**
  * Records
