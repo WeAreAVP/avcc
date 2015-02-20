@@ -552,20 +552,20 @@ class AudioRecordsController extends Controller {
                     'selectedProjectId' => $selectedProjectId
         ));
     }
-    
-    public function checkUniqueId(Request $request) {
-       if ($request->getMethod() == 'POST') {
-            $unique = $request->request->get('unique_id');
-            $em = $this->getDoctrine()->getManager();
-            $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
-            if (count($records) == 0) {
-                return '';
-            } else {
-                return 'unique id not unique';
-            }
-            
-        }
-    }
 
+    public function checkUniqueId(Request $request) {
+        echo 'here';
+//       if ($request->getMethod() == 'POST') {
+        $unique = $request->request->get('unique_id');
+        $em = $this->getDoctrine()->getManager();
+        $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
+        if (count($records) == 0) {
+            return '';
+        } else {
+            return 'unique id not unique';
+        }
+
+        //  }
+    }
 
 }
