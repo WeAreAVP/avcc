@@ -149,7 +149,7 @@ class RecordsType extends AbstractType {
         echo '<br>' . $record['uniqueId'];
         $em = $this->getDoctrine()->getManager();
         $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->user->getOrganizations()->getId(), $record['uniqueId']);
-
+        
         echo count($records);
 
         if (count($records) == 0) {
