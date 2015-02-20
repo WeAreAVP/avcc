@@ -64,7 +64,7 @@ class AudioRecordsController extends Controller {
         $error = '';
         $result = $this->checkUniqueId($request);
         $recordForm = $form->get('record');
-      echo  $recordForm->get('uniqueId');
+       print_r($recordForm->get('uniqueId'));
         //   echo $result;
         exit;
         if ($form->isValid()) {
