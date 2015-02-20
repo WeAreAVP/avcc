@@ -371,7 +371,7 @@ class FilmRecordsController extends Controller {
         if ($id) {
             $record = $request->request->get('application_bundle_frontbundle_audiorecords');
             $unique = $record['record']['uniqueId'];
-            $user = $this->getUser;
+            $user = $this->getUser();
             if (in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
                 //to do.....
                 $records = '';
@@ -387,7 +387,7 @@ class FilmRecordsController extends Controller {
         } else {
             $record = $request->request->get('application_bundle_frontbundle_audiorecords');
             $unique = $record['record']['uniqueId'];
-            $user = $this->getUser;
+            $user = $this->getUser();
             if (in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
                 //to do.....
                 $records = '';
