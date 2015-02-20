@@ -60,7 +60,7 @@ class AudioRecordsController extends Controller {
         $data =  $form->getData();
               
         echo '<pre>';
-        print_r($data['record']);
+        print_r($data->record);
         exit;
         $unique = $request->request->get('uniqueId');
         echo 'checkk === ' . $unique;
