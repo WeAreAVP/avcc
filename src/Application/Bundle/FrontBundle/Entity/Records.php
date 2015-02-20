@@ -902,15 +902,15 @@ class Records {
 
     public static function loadValidatorMetadata(ClassMetadata $metadata) {
         $metadata->addConstraint(new Assert\Callback(array(
-            'methods' => array('isAuthorValid'),
+            'methods' => array('checkUniqueId'),
         )));
     }
 
-    public function isAuthorValid(ExecutionContext $context) {
+    public function checkUniqueId(ExecutionContext $context) {
         $unique = $this->getUniqueId();
-       // $em = $this->getDoctrine()->getManager();
-        $records = 2;
-       // $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
+        $em = $this->getDoctrine()->getManager();
+       // $records = 2;
+        $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
         if (count($records) > 0) {
             $context->addViolation('unique id must be unique', array(), null);
         }
