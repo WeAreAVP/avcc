@@ -557,6 +557,10 @@ class AudioRecordsController extends Controller {
         echo 'here';
 //       if ($request->getMethod() == 'POST') {
         $unique = $request->request->get('unique_id');
+        echo $unique;
+        echo '<br>';
+        echo $this->getUser()->getOrganizations()->getId();
+        exit;
         $em = $this->getDoctrine()->getManager();
         $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
         if (count($records) == 0) {
