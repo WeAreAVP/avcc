@@ -556,8 +556,8 @@ class AudioRecordsController extends Controller {
     public function checkUniqueId(Request $request) {
         echo 'here<pre>';
         echo $request->getMethod();
-        $unique = $request->request->get('application_bundle_frontbundle_audiorecords')['record']['uniqueId'];
-        echo '1 === ' . $unique;
+        $unique = $request->request->get('application_bundle_frontbundle_audiorecords');
+        echo '1 === ' . $unique['record']['uniqueId'];
         echo '<br>';
         echo $this->getUser()->getOrganizations()->getId();
         exit;
