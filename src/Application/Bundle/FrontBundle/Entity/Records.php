@@ -904,10 +904,11 @@ class Records {
     public function checkUniqueId(ExecutionContext $context) {
         $uniqueID = $this->getUniqueId();
         echo $uniqueID.'<br/>';
-		echo $this->getProject()->getOrganization();
-        exit;
+		echo $this->getProject()->getOrganization()->getId();
+        
        // $records = 2;
-     //   $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
+		exit;
       //  $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
         if (count($records) > 0) {
             $context->addViolationAt('uniqueId', 'unique id must be unique');
