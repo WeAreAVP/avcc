@@ -40,7 +40,8 @@ class VideoRecordsType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Application\Bundle\FrontBundle\Entity\VideoRecords'
+            'data_class' => 'Application\Bundle\FrontBundle\Entity\VideoRecords',
+			 'cascade_validation' => true
         ));
     }
 

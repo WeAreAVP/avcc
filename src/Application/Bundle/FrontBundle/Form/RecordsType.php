@@ -162,7 +162,8 @@ class RecordsType extends AbstractType {
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'Application\Bundle\FrontBundle\Entity\Records',
-            'intention' => 'records'
+            'intention' => 'records',
+			 'cascade_validation' => true
         ));
     }
 

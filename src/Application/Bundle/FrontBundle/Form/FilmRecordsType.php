@@ -46,7 +46,8 @@ class FilmRecordsType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Application\Bundle\FrontBundle\Entity\FilmRecords'
+            'data_class' => 'Application\Bundle\FrontBundle\Entity\FilmRecords',
+			 'cascade_validation' => true
         ));
     }
 
