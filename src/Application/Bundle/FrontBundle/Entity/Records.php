@@ -901,7 +901,7 @@ class Records {
         $this->editor = $editor;
     }
 
-    public function checkUniqueId(ExecutionContextInterface $context) {
+    public function checkUniqueId(ExecutionContext $context) {
         $unique = $this->getUniqueId();
         echo 'bue';
         exit;
