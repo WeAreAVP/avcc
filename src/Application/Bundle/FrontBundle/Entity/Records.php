@@ -13,10 +13,8 @@ use Application\Bundle\FrontBundle\Entity\AudioRecords as AudioRecords;
 use Application\Bundle\FrontBundle\Entity\VideoRecords as VideoRecords;
 use Application\Bundle\FrontBundle\Entity\FilmRecords as FilmRecords;
 use Application\Bundle\FrontBundle\Entity\ReelDiameters as ReelDiameters;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\ExecutionContext;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
+
 /**
  * Records
  *
@@ -907,7 +905,7 @@ class Records {
 		echo $this->getProject()->getOrganization()->getId();
         
        // $records = 2;
-		$em = $context->getEntityManager();
+		$em = $this->getModelManager();
 //        $em = $this->getDoctrine()->getManager();
 		exit;
       //  $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
