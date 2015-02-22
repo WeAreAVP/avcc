@@ -905,7 +905,7 @@ class Records {
 		echo $this->getProject()->getOrganization()->getId();
         
        // $records = 2;
-		$em = $this->getModelManager();
+		$em = $this->findOrganizationUniqueRecordsEdit(1,1,1);
 //        $em = $this->getDoctrine()->getManager();
 		exit;
       //  $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
