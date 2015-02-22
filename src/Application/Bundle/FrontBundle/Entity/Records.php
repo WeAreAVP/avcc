@@ -25,12 +25,7 @@ use Symfony\Component\Validator\ExecutionContext;
  */
 class Records {
 
-	var $entityManager;
-	function setEntityManager($entityManager){
-		$this->entityManager=$entityManager;
-	}
-
-	/**
+    /**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -905,18 +900,18 @@ class Records {
     }
 
     public function checkUniqueId(ExecutionContext $context) {
-        $uniqueID = $this->getUniqueId();
-        echo $uniqueID.'<br/>';
-		echo $this->getProject()->getOrganization()->getId();
-        
-       // $records = 2;
-		$em = $this->entityManager->findOrganizationUniqueRecordsEdit(1,1,1);
-//        $em = $this->getDoctrine()->getManager();
-		exit;
-      //  $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
-        if (count($records) > 0) {
-            $context->addViolationAt('uniqueId', 'unique id must be unique');
-        }
+//        $uniqueID = $this->getUniqueId();
+//        echo $uniqueID.'<br/>';
+//		echo $this->getProject()->getOrganization()->getId();
+//        
+//       // $records = 2;
+//		$em = $context->getEntityManager();
+////        $em = $this->getDoctrine()->getManager();
+//		exit;
+//      //  $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
+//        if (count($records) > 0) {
+//            $context->addViolationAt('uniqueId', 'unique id must be unique');
+//        }
     }
 
 }
