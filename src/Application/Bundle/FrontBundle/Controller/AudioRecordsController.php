@@ -54,16 +54,15 @@ class AudioRecordsController extends Controller {
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(1, $em, $this->getUser(), null);
         $entity = new AudioRecords();
-        $entity = $entity->getRecord()->setEntityManager($em);
         $form = $this->createCreateForm($entity, $em, $data);
         $form->handleRequest($request);
         $error = '';
-        $result = $this->checkUniqueId($request);
-        if ($result != '') {
-            $error = new FormError("The unique ID must be unique.");
-            $recordForm = $form->get('record');
-            $recordForm->get('uniqueId')->addError($error);
-        }
+////        $result = $this->checkUniqueId($request);
+//        if ($result != '') {
+//            $error = new FormError("The unique ID must be unique.");
+//            $recordForm = $form->get('record');
+//            $recordForm->get('uniqueId')->addError($error);
+//        }
         if ($form->isValid()) {
 
             $em->persist($entity);
