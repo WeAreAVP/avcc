@@ -907,7 +907,8 @@ class Records {
 		echo $this->getProject()->getOrganization()->getId();
         
        // $records = 2;
-        $em = $this->getDoctrine()->getManager();
+		$em = $context->getEntityManager();
+//        $em = $this->getDoctrine()->getManager();
 		exit;
       //  $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
         if (count($records) > 0) {
