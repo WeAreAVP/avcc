@@ -902,8 +902,9 @@ class Records {
     }
 
     public function checkUniqueId(ExecutionContext $context) {
-        $unique = $this->getUniqueId();
-        echo $unique;
+        $uniqueID = $this->getUniqueId();
+        echo $unique.'<br/>';
+		echo $this->getProject()->getOrganization();
         exit;
        // $records = 2;
      //   $em = $this->getDoctrine()->getManager();
