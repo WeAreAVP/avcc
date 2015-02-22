@@ -903,7 +903,7 @@ class Records {
 
     public function checkUniqueId(ExecutionContext $context) {
         $uniqueID = $this->getUniqueId();
-        echo $unique.'<br/>';
+        echo $uniqueID.'<br/>';
 		echo $this->getProject()->getOrganization();
         exit;
        // $records = 2;
