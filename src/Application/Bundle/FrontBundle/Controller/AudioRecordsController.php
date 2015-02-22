@@ -54,6 +54,7 @@ class AudioRecordsController extends Controller {
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(1, $em, $this->getUser(), null);
         $entity = new AudioRecords();
+        $entity = $entity->getRecord()->setEntityManager($em);
         $form = $this->createCreateForm($entity, $em, $data);
         $form->handleRequest($request);
         $error = '';

@@ -23,9 +23,14 @@ use Symfony\Component\Validator\ExecutionContext;
  * @ORM\HasLifecycleCallbacks
  * @Assert\Callback(methods={"checkUniqueId"})
  */
-class Records extends RecordsRepository{
+class Records {
 
-    /**
+	var $entityManager;
+	function setEntityManager($entityManager){
+		$this->entityManager=$entityManager;
+	}
+
+	/**
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -905,7 +910,7 @@ class Records extends RecordsRepository{
 		echo $this->getProject()->getOrganization()->getId();
         
        // $records = 2;
-		$em = $this->findOrganizationUniqueRecordsEdit(1,1,1);
+		$em = $this->entityManager->findOrganizationUniqueRecordsEdit(1,1,1);
 //        $em = $this->getDoctrine()->getManager();
 		exit;
       //  $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
