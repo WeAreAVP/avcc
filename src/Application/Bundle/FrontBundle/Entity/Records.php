@@ -23,7 +23,7 @@ use Symfony\Component\Validator\ExecutionContext;
  * @ORM\HasLifecycleCallbacks
  * @Assert\Callback(methods={"checkUniqueId"})
  */
-class Records {
+class Records extends RecordsRepository{
 
     /**
      * @var integer
