@@ -41,7 +41,7 @@ class Records {
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="project_id", referencedColumnName="id", nullable = false)
      * })
-     * @Assert\NotBlank(message="Projects is required")
+     * @Assert\NotBlank(message="Project is required.")
      */
     private $project;
 
@@ -112,7 +112,7 @@ class Records {
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="format_id", referencedColumnName="id", nullable = false)
      * })
-     * @Assert\NotBlank(message="Formats is required")
+     * @Assert\NotBlank(message="Format is required.")
      */
     private $format;
 
