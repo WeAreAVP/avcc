@@ -7,10 +7,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Form as Form;
+
 class RecordsType extends AbstractType
 {
 
@@ -128,16 +127,7 @@ class RecordsType extends AbstractType
 			->addEventListener(
 			FormEvents::POST_SUBMIT, array($this, 'onPostSubmitData'));
 		}
-		$em=$this->em;
-		$builder->addValidator(new Form\CallbackValidator(function($form) use($em)
-		{
-			$em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecordsEdit(1,1,1);
-			echo 'here';exit;
-			if ( ! $form['has_subalbums']->getData())
-			{
-				$form->addError(new Form\FormError('Please indicate sub albums'));
-			}
-		}));
+		
 	}
 
 	public function onPreSetData(FormEvent $event)
