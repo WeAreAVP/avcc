@@ -903,7 +903,7 @@ class Records {
 
     public function checkUniqueId(ExecutionContext $context) {
         $unique = $this->getUniqueId();
-        echo 'bue';
+        echo $unique;
         exit;
        // $records = 2;
      //   $em = $this->getDoctrine()->getManager();
