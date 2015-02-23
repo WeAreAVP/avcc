@@ -145,12 +145,14 @@ function Records() {
                     });
             $('#records tbody').on('click', 'tr', function () {
                 var id = this.id;
-                var index = $.inArray(id, selected);
+                var rowid = id.split('-');
+                var index = $.inArray(rowid[1], selected);
                 if (index === -1) {
                     selected.push(id);
                 } else {
                     selected.splice(index, 1);
                 }
+                console.log(rowid);
                 $(this).toggleClass('selected', function () {
                     var input = $("#" + id + " td:first").html();
                     if ($(this).hasClass('selected') === true) {
@@ -161,7 +163,6 @@ function Records() {
                         $("#" + $(input).attr('id')).prop("checked", false);
                         $(this).removeClass('selected');
                     }
-                     selfObj.saveState($(input).attr('value'));
                     console.log($(input).attr('value'));
                     if ($("#" + $(input).attr('id')).attr("checked")=="checked" || $("#" + $(input).attr('id')).prop("checked", true)) {
                         selfObj.saveState($(input).attr('value'));
