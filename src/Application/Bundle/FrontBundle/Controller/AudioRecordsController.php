@@ -56,6 +56,9 @@ class AudioRecordsController extends Controller {
         $entity = new AudioRecords();
         $form = $this->createCreateForm($entity, $em, $data);
         $form->handleRequest($request);
+        echo '<pre>';
+        print_r($entity);
+        exit;
         $error = '';
         $result = $this->checkUniqueId($request);
         if ($result != '') {
@@ -567,15 +570,15 @@ class AudioRecordsController extends Controller {
         $record = $request->request->get('application_bundle_frontbundle_audiorecords');
         $unique = $record['record']['uniqueId'];
         $project_id = $record['record']['project'];
-        if (empty($project_id) || $project_id == '') {
+        if(empty($project_id) || $project_id == ''){
             return '';
         }
         $user = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('project' => $project_id));
-//        if ($id) {
-//            $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecordsEdit($user->getUser()->getOrganizations()->getId(), $unique, $id);
-//        } else {
-        $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecordsEdit($user->getUser()->getOrganizations()->getId(), $unique, id);
-        //  }
+        if ($id) {
+            $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecordsEdit($user->getUser()->getOrganizations()->getId(), $unique, $id);
+        } else {
+            $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($user->getUser()->getOrganizations()->getId(), $unique);
+        }
         if (count($records) == 0) {
             return '';
         } else {
