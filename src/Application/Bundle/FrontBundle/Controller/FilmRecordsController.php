@@ -376,11 +376,7 @@ class FilmRecordsController extends Controller {
             return '';
         }
         $user = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('project' => $project_id));
-        if ($id) {
-            $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecordsEdit($user->getUser()->getOrganizations()->getId(), $unique, $id);
-        } else {
-            $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($user->getUser()->getOrganizations()->getId(), $unique);
-        }
+       $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecords($user->getUser()->getOrganizations()->getId(), $unique, $id);
         if (count($records) == 0) {
             return '';
         } else {

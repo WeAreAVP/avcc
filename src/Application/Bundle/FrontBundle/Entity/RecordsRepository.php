@@ -91,18 +91,7 @@ class RecordsRepository extends EntityRepository {
         return $query;
     }
 
-    public function findOrganizationUniqueidRecords($organizationID, $unique_id) {
-        $query = $this->getEntityManager()
-                ->createQuery("SELECT r from ApplicationFrontBundle:Records r "
-                . "JOIN r.user u "
-                . "JOIN u.organizations o "
-                . "WHERE o.id =  :organization AND r.uniqueId = :unique");
-        $query->setParameter('organization', $organizationID);
-        $query->setParameter('unique', $unique_id);
-        return $query->getResult();
-    }
-
-    public function findOrganizationUniqueRecordsEdit($organizationID, $unique_id, $id) {
+    public function findOrganizationUniqueRecords($organizationID, $unique_id, $id) {
         if ($id == 0) {
             $where = 'WHERE o.id =  :organization AND r.uniqueId = :unique';
         } else {
