@@ -148,7 +148,7 @@ function Records() {
                 var rowid = id.split('-');
                 var index = $.inArray(rowid[1], selected);
                 if (index === -1) {
-                    selected.push(id);
+                    selected.push(rowid[1]);
                 } else {
                     selected.splice(index, 1);
                 }
