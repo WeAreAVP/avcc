@@ -563,9 +563,9 @@ class AudioRecordsController extends Controller {
     }
 
     public function checkUniqueId(Request $request, $id = 0) {
-
+        $em = $this->getDoctrine()->getManager();
         if ($id) {
-            echo '<pre>';            
+            echo '<pre>';
             $record = $request->request->get('application_bundle_frontbundle_audiorecords');
             print_r($record);
             $unique = $record['record']['uniqueId'];
@@ -577,9 +577,9 @@ class AudioRecordsController extends Controller {
 //                //to do.....
 //                $records = '';
 //            } else {
-                $em = $this->getDoctrine()->getManager();
-                $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecordsEdit($user->getUser()->getOrganizations()->getId(), $unique, $id);
-         //   }
+
+            $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecordsEdit($user->getUser()->getOrganizations()->getId(), $unique, $id);
+            //   }
             if (count($records) == 0) {
                 return '';
             } else {
@@ -593,7 +593,7 @@ class AudioRecordsController extends Controller {
                 //to do.....
                 $records = '';
             } else {
-                $em = $this->getDoctrine()->getManager();
+              //  $em = $this->getDoctrine()->getManager();
                 $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
             }
             if (count($records) == 0) {
