@@ -73,7 +73,7 @@
                         <div class="pull-right">
                             <?php if ($view['security']->isGranted('ROLE_SUPER_ADMIN')) { ?>
                                 <div>
-                                    <select id='organization' name="organization" required="required">
+                                    <select id='organization' name="organization">
                                         <option value=''>select organization</option>
                                         <?php
                                         foreach ($organizations as $organization) {
