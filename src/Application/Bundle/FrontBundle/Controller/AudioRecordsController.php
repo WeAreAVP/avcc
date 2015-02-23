@@ -57,12 +57,12 @@ class AudioRecordsController extends Controller {
         $form = $this->createCreateForm($entity, $em, $data);
         $form->handleRequest($request);
         $error = '';
-////        $result = $this->checkUniqueId($request);
-//        if ($result != '') {
-//            $error = new FormError("The unique ID must be unique.");
-//            $recordForm = $form->get('record');
-//            $recordForm->get('uniqueId')->addError($error);
-//        }
+        $result = $this->checkUniqueId($entity);
+        if ($result != '') {
+            $error = new FormError("The unique ID must be unique.");
+            $recordForm = $form->get('record');
+            $recordForm->get('uniqueId')->addError($error);
+        }
         if ($form->isValid()) {
 
             $em->persist($entity);
@@ -299,7 +299,7 @@ class AudioRecordsController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity, $em, $data);
         $editForm->handleRequest($request);
-        $result = $this->checkUniqueId($request, $entity->getRecord()->getId());
+        $result = $this->checkUniqueId($entity, $entity->getRecord()->getId());
         if ($result != '') {
             $error = new FormError("The unique ID must be unique.");
             $recordForm = $form->get('record');
@@ -562,11 +562,17 @@ class AudioRecordsController extends Controller {
         ));
     }
 
-    public function checkUniqueId(Request $request, $id = 0) {
+    public function checkUniqueId(AudioRecords $entity, $id = 0) {
+        echo '<pre>';
+        print_r($entity);
+        exit;
         $em = $this->getDoctrine()->getManager();
         $record = $request->request->get('application_bundle_frontbundle_audiorecords');
         $unique = $record['record']['uniqueId'];
         $project_id = $record['record']['project'];
+        if(empty($project_id) || $project_id == ''){
+            return 'unique id not unique';
+        }
         $user = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('project' => $project_id));
         if ($id) {
             $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecordsEdit($user->getUser()->getOrganizations()->getId(), $unique, $id);
