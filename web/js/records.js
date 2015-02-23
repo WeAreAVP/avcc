@@ -144,15 +144,15 @@ function Records() {
                         }
                     });
             $('#records tbody').on('click', 'tr', function () {
-                var id = this.id;
-                var rowid = id.split('-');
-                var index = $.inArray(rowid[1], selected);
-                if (index === -1) {
-                    selected.push(id);
-                } else {
-                    selected.splice(index, 1);
-                }
-                console.log(rowid);
+//                var id = this.id;
+//                var rowid = id.split('-');
+//                var index = $.inArray(rowid[1], selected);
+//                if (index === -1) {
+//                    selected.push(rowid[1]);
+//                } else {
+//                    selected.splice(index, 1);
+//                }
+//                console.log(rowid);
 //                $(this).toggleClass('selected', function () {
 //                    var input = $("#" + id + " td:first").html();
 //                    if ($(this).hasClass('selected') === true) {
@@ -478,13 +478,15 @@ function Records() {
         }
         else {
             id = elementID;
-            if ($('#row_' + elementID).attr('checked')) {
+            if ($('#row_' + elementID).attr('checked')=='checked' || $('#row_' + elementID).prop("checked", true)) {
                 checked = 1;
                 if (selectedrecords) {
                     selectedrecords = selectedrecords + ',' + id;
                 } else {
                     selectedrecords = id;
                 }
+            }else{
+                checked = 0;
             }
         }
         $("#selectedrecords").val(selectedrecords);
