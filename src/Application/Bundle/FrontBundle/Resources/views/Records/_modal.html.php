@@ -71,23 +71,28 @@
                     <div id="beforeExportMerge">
                         <p><span style="font-size:13px;">Are you sure you want to import the record(s)?</span></p>
                         <div class="pull-right">
-                            <?php if ($view['security']->isGranted('ROLE_SUPER_ADMIN')) { ?>
-                                <div>
-                                    <select id='organization' name="organization">
-                                        <option value=''>select organization</option>
-                                        <?php
-                                        foreach ($organizations as $organization) {
-                                            ?>
-                                            <option value="<?php echo $organization->getId(); ?>"><?php echo ucwords($organization->getName()); ?></option>
-                                            <?php
-                                        }
-                                        ?>   
-                                    </select>
-                                    <span class='error' id='error_span' style='display:none'>organization is required</span>
-                                    <br>
-                                    <br>
-                                </div>
-                            <?php } ?>
+							<?php
+							if ($view['security']->isGranted('ROLE_SUPER_ADMIN'))
+							{
+								?>
+								<div>
+									<select id='organization' name="organization">
+										<option value=''>select organization</option>
+										<?php
+										foreach ($organizations as $organization)
+										{
+											?>
+											<option value="<?php echo $organization->getId(); ?>"><?php echo ucwords($organization->getName()); ?></option>
+											<?php
+										}
+										?>   
+									</select>
+									<br/>
+									<span class="has-error text-danger" id="error_span" style='display:none'>Organization is required.</span>
+									<br>
+									<br>
+								</div>
+							<?php } ?>
 
                             <input type="file" name="importfile" class="required" required="required" /><br /><br />
                             <input type="hidden" name="impfiletype"  id="impfiletype" value="" />
@@ -97,11 +102,18 @@
             </div>
             <div class="modal-footer" id="modal-footer">
                 <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">No</button> &nbsp;
-                <?php if ($view['security']->isGranted('ROLE_SUPER_ADMIN')) { ?>
-                <button type="button" name="submit" id="submit" class="button primary" onclick="checkOrganization();">Submit</button>
-             <?php }else{ ?>
-                <button type="button" name="submit" id="submit" class="button primary" onclick="$('#importModal form').submit();">Submit</button>
-             <?php } ?>
+				<?php
+				if ($view['security']->isGranted('ROLE_SUPER_ADMIN'))
+				{
+					?>
+					<button type="button" name="submit" id="submit" class="button primary" onclick="checkOrganization();">Submit</button>
+					<?php
+				}
+				else
+				{
+					?>
+					<button type="button" name="submit" id="submit" class="button primary" onclick="$('#importModal form').submit();">Submit</button>
+				<?php } ?>
             </div>
 
         </div>
@@ -147,11 +159,11 @@
     </div>
 </div>
 <script>
-    function checkOrganization() {
-        if ($('#organization').val() == '') {
-            $('#error_span').show();
-        } else {
-            $('#importModal form').submit();
-        }
-    }
+	function checkOrganization() {
+		if ($('#organization').val() == '') {
+			$('#error_span').show();
+		} else {
+			$('#importModal form').submit();
+		}
+	}
 </script>
