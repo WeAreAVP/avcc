@@ -107,7 +107,7 @@ class RecordsRepository extends EntityRepository {
         if ($id != 0) {
             $query->setParameter('id', $id);
         }
-        return $query->getArrayResult();
+        return $query->getResult();
     }
 
 }

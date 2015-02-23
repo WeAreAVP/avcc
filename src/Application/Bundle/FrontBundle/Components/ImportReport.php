@@ -96,7 +96,7 @@ class ImportReport extends ContainerAware {
                             $invalidValues['missing_fields'][] = 'Media type missing at row ' . $row;
                         }
 
-                        if ($uniqueId->getValue() && in_array($uniqueId->getValue(), $uniqueids)) {
+                        if ($uniqueId->getValue() && $uniqueids != 0) {
 
                             $invalidValues['unique_ids'][] = $uniqueId->getValue() . ' at row ' . $row . ' already exist in db';
                         }
@@ -409,13 +409,8 @@ class ImportReport extends ContainerAware {
 
     protected function checkUniqueId($orgId, $uniqueId, $id = 0) {
         $em = $this->container->get('doctrine')->getEntityManager();
-        $user = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('project' => $projectId));
         $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecords($orgId, $uniqueId, $id);
-        if (count($records) == 0) {
-            return '';
-        } else {
-            return 'unique id not unique';
-        }
+        return count($records);
     }
 
 }

@@ -572,18 +572,6 @@ class AudioRecordsController extends Controller {
         }
         $user = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('project' => $project_id));
         $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecords($user->getUser()->getOrganizations()->getId(), $unique, $id);
-        echo count($records);
-        echo '<pre>';
-            print_r($records);
-        foreach($record as $value){
-            $new[] = $value['uniqueId'];
-        }
-        if (in_array('unique_a0013', $new)) {
-            echo 'herere';
-        }
-        echo 'outtt';
-        exit;
-
         if (count($records) == 0) {
             return '';
         } else {
