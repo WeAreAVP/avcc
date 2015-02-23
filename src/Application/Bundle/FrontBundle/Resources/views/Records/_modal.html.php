@@ -65,36 +65,37 @@
             <div class="modal-header">
                 <h4>Import Records</h4>
             </div>
-            <div class="modal-body">
-                <form action="<?php echo $view['router']->generate('import_records') ?>" method="post" enctype="multipart/form-data" name="frmExportMerge">
+            <form action="<?php echo $view['router']->generate('import_records') ?>" method="post" enctype="multipart/form-data" name="frmExportMerge">
+                <div class="modal-body">
                     <div id="beforeExportMerge">
                         <p><span style="font-size:13px;">Are you sure you want to import the record(s)?</span></p>
                         <div class="pull-right">
-                            <?php if ($view['security']->isGranted('ROLE_SUPER_ADMIN')){ ?>
-                            <select id='organization' name="organization" required="required">
-                                <option value=''>select organization</option>
-                                <?php
-                                foreach ($organizations as $organization) {
-                                    ?>
-                                    <option value="<?php echo $organization->getId(); ?>"><?php echo ucwords($organization->getName()); ?></option>
+                            <?php if ($view['security']->isGranted('ROLE_SUPER_ADMIN')) { ?>
+                                <select id='organization' name="organization" required="required">
+                                    <option value=''>select organization</option>
                                     <?php
-                                }
-                                ?>   
-                            </select>
-                            <br>
-                            <br>
-                            <?php }?>
-                            
+                                    foreach ($organizations as $organization) {
+                                        ?>
+                                        <option value="<?php echo $organization->getId(); ?>"><?php echo ucwords($organization->getName()); ?></option>
+                                        <?php
+                                    }
+                                    ?>   
+                                </select>
+                                <br>
+                                <br>
+                            <?php } ?>
+
                             <input type="file" name="importfile" class="required" required="required" /><br /><br />
                             <input type="hidden" name="impfiletype"  id="impfiletype" value="" />
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer" id="modal-footer">
-                <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">No</button> &nbsp;
-                <button type="button" name="submit" id="submit" class="button primary" onclick="$('#importModal form').submit();">Submit</button>
-            </div>
+
+                </div>
+                <div class="modal-footer" id="modal-footer">
+                    <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">No</button> &nbsp;
+                    <button type="button" name="submit" id="submit" class="button primary" onclick="$('#importModal form').submit();">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
