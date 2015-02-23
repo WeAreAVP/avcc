@@ -71,7 +71,7 @@
                         <p><span style="font-size:13px;">Are you sure you want to import the record(s)?</span></p>
                         <div class="pull-right">
                             <?php if ($view['security']->isGranted('ROLE_SUPER_ADMIN')){ ?>
-                            <select id='organization' name="organization" required>
+                            <select id='organization' name="organization" required="required">
                                 <option value=''>select organization</option>
                                 <?php
                                 foreach ($organizations as $organization) {
