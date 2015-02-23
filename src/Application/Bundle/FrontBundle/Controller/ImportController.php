@@ -96,7 +96,7 @@ class ImportController extends Controller
                         echo 'file uploaded';
                     }
                     if (in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles())) {
-                        $organizationId = $data['organization_id'];
+                        $organizationId = $data['organization'];
                     }else{
                         $organizationId = $this->getUser()->getOrganizations()->getId();
                     }
