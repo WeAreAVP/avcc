@@ -576,7 +576,7 @@ class AudioRecordsController extends Controller {
         echo '<pre>';
             print_r($records);
         foreach($record as $value){
-            $new[] = $value->getUniqueId();
+            $new[] = $value['uniqueId'];
         }
         if (in_array('unique_a0013', $new)) {
             echo 'herere';
