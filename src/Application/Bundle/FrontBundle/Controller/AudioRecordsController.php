@@ -568,7 +568,7 @@ class AudioRecordsController extends Controller {
         $unique = $record['record']['uniqueId'];
         $project_id = $record['record']['project'];
         if(empty($project_id) || $project_id == ''){
-            return 'unique id not unique';
+            return '';
         }
         $user = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('project' => $project_id));
         if ($id) {
