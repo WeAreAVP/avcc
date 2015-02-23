@@ -89,11 +89,10 @@
                             <input type="hidden" name="impfiletype"  id="impfiletype" value="" />
                         </div>
                     </div>
-
                 </div>
                 <div class="modal-footer" id="modal-footer">
                     <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">No</button> &nbsp;
-                    <button type="button" name="submit" id="submit" class="button primary" onclick="$('#importModal form').submit();">Submit</button>
+                    <button type="submit" name="submit" id="submit" class="button primary">Submit</button>
                 </div>
             </form>
         </div>
