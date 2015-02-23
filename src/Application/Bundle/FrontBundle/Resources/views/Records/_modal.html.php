@@ -53,7 +53,7 @@
             </div>
             <div class="modal-footer" id="modal-footer">
                 <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">No</button> &nbsp;
-                <button type="button" name="submit" id="submit" class="button primary" onclick="checkOrganization();">Submit</button>
+                <button type="button" name="submit" id="submit" class="button primary" onclick="$('#exportMergeModal form').submit();">Submit</button>
             </div>
         </div>
     </div>
@@ -83,10 +83,9 @@
                                         }
                                         ?>   
                                     </select>
-                                    <span class='error'>organization is required</span>
+                                    <span class='error' id='error_span' style='display:none'>organization is required</span>
                                     <br>
                                     <br>
-                                    
                                 </div>
                             <?php } ?>
 
@@ -98,7 +97,11 @@
             </div>
             <div class="modal-footer" id="modal-footer">
                 <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">No</button> &nbsp;
-                <button type="submit" name="submit" id="submit" class="button primary" onclick="$('#importModal form').submit();">Submit</button>
+                <?php if ($view['security']->isGranted('ROLE_SUPER_ADMIN')) { ?>
+                <button type="button" name="submit" id="submit" class="button primary" onclick="checkOrganization();">Submit</button>
+             <?php }else{ ?>
+                <button type="button" name="submit" id="submit" class="button primary" onclick="$('#importModal form').submit();">Submit</button>
+             <?php } ?>
             </div>
 
         </div>
@@ -146,9 +149,9 @@
 <script>
     function checkOrganization() {
         if ($('#organization').val() == '') {
-
+            $('#error_span').hide();
         } else {
-            $('#exportMergeModal form').submit();
+            $('#importModal form').submit();
         }
     }
 </script>
