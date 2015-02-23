@@ -339,7 +339,7 @@ class ImportReport extends ContainerAware {
             if ($row['mediaType'] == 'Film') {
                 $filmRecord = new FilmRecords();
                 if ($row['printType']) {
-                    $printType = $em->getRepository('ApplicationFrontBundle:PrintType')->findOneBy(array('name' => $row['printType']));
+                    $printType = $em->getRepository('ApplicationFrontBundle:PrintTypes')->findOneBy(array('name' => $row['printType']));
                     $filmRecord->setPrintType($printType);
                 }
                 $filmRecord->setFootage($row['footage']);
