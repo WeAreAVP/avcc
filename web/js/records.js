@@ -478,7 +478,7 @@ function Records() {
         }
         else {
             id = elementID;
-            if ($('#row_' + elementID).attr('checked')) {
+            if ($('#row_' + elementID).attr('checked')=='checked' || $('#row_' + elementID).prop("checked", true)) {
                 checked = 1;
                 if (selectedrecords) {
                     selectedrecords = selectedrecords + ',' + id;
