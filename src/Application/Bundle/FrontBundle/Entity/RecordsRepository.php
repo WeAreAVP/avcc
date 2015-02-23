@@ -104,9 +104,9 @@ class RecordsRepository extends EntityRepository {
 
     public function findOrganizationUniqueRecordsEdit($organizationID, $unique_id, $id) {
         if ($id == 0) {
-            $where = 'o.id =  :organization AND r.uniqueId = :unique';
+            $where = 'WHERE o.id =  :organization AND r.uniqueId = :unique';
         } else {
-            $where = 'o.id =  :organization AND r.uniqueId = :unique AND r.id != :id';
+            $where = 'WHERE o.id =  :organization AND r.uniqueId = :unique AND r.id != :id';
         }
         $query = $this->getEntityManager()
                 ->createQuery("SELECT r from ApplicationFrontBundle:Records r "
