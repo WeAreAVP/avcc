@@ -153,14 +153,14 @@ function Records() {
                 }
                 $(this).toggleClass('selected', function () {
                     var input = $("#" + id + " td:first").html();
-//                    if ($(this).hasClass('selected') === true) {
-//                        $("#" + $(input).attr('id')).attr("checked", "checked");
-//                        $("#" + $(input).attr('id')).prop("checked", true);
-//                    } else {
-//                        $("#" + $(input).attr('id')).removeAttr("checked");
-//                        $("#" + $(input).attr('id')).prop("checked", false);
-//                        $(this).removeClass('selected');
-//                    }
+                    if ($(this).hasClass('selected') === true) {
+                        $("#" + $(input).attr('id')).attr("checked", "checked");
+                        $("#" + $(input).attr('id')).prop("checked", true);
+                    } else {
+                        $("#" + $(input).attr('id')).removeAttr("checked");
+                        $("#" + $(input).attr('id')).prop("checked", false);
+                        $(this).removeClass('selected');
+                    }
                      selfObj.saveState($(input).attr('value'));
                     console.log($(input).attr('value'));
                     if ($("#" + $(input).attr('id')).attr("checked")=="checked" || $("#" + $(input).attr('id')).prop("checked", true)) {
