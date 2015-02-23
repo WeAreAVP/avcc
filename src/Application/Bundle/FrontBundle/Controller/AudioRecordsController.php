@@ -302,7 +302,7 @@ class AudioRecordsController extends Controller {
         $result = $this->checkUniqueId($request, $entity->getRecord()->getId());
         if ($result != '') {
             $error = new FormError("The unique ID must be unique.");
-            $recordForm = $form->get('record');
+            $recordForm = $editForm->get('record');
             $recordForm->get('uniqueId')->addError($error);
         }
         if ($editForm->isValid()) {
