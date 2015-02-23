@@ -485,10 +485,7 @@ function Records() {
                 } else {
                     selectedrecords = id;
                 }
-                console.log("true");
-                console.log(selectedrecords);
             }else{
-                console.log("false");
                 checked = 0;
             }
         }
