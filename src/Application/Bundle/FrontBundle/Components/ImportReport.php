@@ -21,7 +21,7 @@ class ImportReport extends ContainerAware {
         $this->container = $container;
     }
 
-    public function validateVocabulary($fileName) {
+    public function validateVocabulary($fileName, $organizationId = 0) {
         $fileCompletePath = $this->container->getParameter('webUrl') . 'import/' . date('Y') . '/' . date('m') . '/' . $fileName;
 //        $fileCompletePath = '/Applications/XAMPP/xamppfiles/htdocs/avcc/web/' . $fileName;
         if (file_exists($fileCompletePath)) {
@@ -70,7 +70,7 @@ class ImportReport extends ContainerAware {
                         $acidDetectionStrip = $worksheet->getCellByColumnAndRow(32, $row);
                         // do something
                         //   $uniqueids = $em->getRepository('ApplicationFrontBundle:Records')->findAllUniqueIds();
-                        $uniqueids = $this->checkUniqueId($project->getValue(), $uniqueId->getValue());
+                        $uniqueids = $this->checkUniqueId($organizationId, $uniqueId->getValue());
                         if (trim($location->getValue()) == '') {
                             $invalidValues['missing_fields'][] = 'Location missing at row ' . $row;
                         }
@@ -407,13 +407,10 @@ class ImportReport extends ContainerAware {
         return $this->container->getParameter('sphinx_param');
     }
 
-    protected function checkUniqueId($projectId, $uniqueId, $id = 0) {
+    protected function checkUniqueId($orgId, $uniqueId, $id = 0) {
         $em = $this->container->get('doctrine')->getEntityManager();
-        if (empty($projectId) || $projectId == '') {
-            return '';
-        }
         $user = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('project' => $projectId));
-        $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecords($user->getUser()->getOrganizations()->getId(), $uniqueId, $id);
+        $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecords($orgId, $uniqueId, $id);
         if (count($records) == 0) {
             return '';
         } else {
