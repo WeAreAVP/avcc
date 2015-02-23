@@ -564,43 +564,19 @@ class AudioRecordsController extends Controller {
 
     public function checkUniqueId(Request $request, $id = 0) {
         $em = $this->getDoctrine()->getManager();
+        $record = $request->request->get('application_bundle_frontbundle_audiorecords');
+        $unique = $record['record']['uniqueId'];
+        $project_id = $record['record']['project'];
+        $user = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('project' => $project_id));
         if ($id) {
-            echo '<pre>';
-            $record = $request->request->get('application_bundle_frontbundle_audiorecords');
-            print_r($record);
-            $unique = $record['record']['uniqueId'];
-            $project_id = $record['record']['project'];
-            $user = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('project' => $project_id));
-            echo $user->getUser()->getId();
-            exit;
-//            if (in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
-//                //to do.....
-//                $records = '';
-//            } else {
-
             $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecordsEdit($user->getUser()->getOrganizations()->getId(), $unique, $id);
-            //   }
-            if (count($records) == 0) {
-                return '';
-            } else {
-                return 'unique id not unique';
-            }
         } else {
-            $record = $request->request->get('application_bundle_frontbundle_audiorecords');
-            $unique = $record['record']['uniqueId'];
-            $user = $this->getUser();
-            if (in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
-                //to do.....
-                $records = '';
-            } else {
-              //  $em = $this->getDoctrine()->getManager();
-                $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
-            }
-            if (count($records) == 0) {
-                return '';
-            } else {
-                return 'unique id not unique';
-            }
+            $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($user->getUser()->getOrganizations()->getId(), $unique);
+        }
+        if (count($records) == 0) {
+            return '';
+        } else {
+            return 'unique id not unique';
         }
     }
 
