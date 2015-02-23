@@ -57,7 +57,7 @@ class AudioRecordsController extends Controller {
         $form = $this->createCreateForm($entity, $em, $data);
         $form->handleRequest($request);
         $error = '';
-        $result = $this->checkUniqueId($entity);
+        $result = $this->checkUniqueId($request);
         if ($result != '') {
             $error = new FormError("The unique ID must be unique.");
             $recordForm = $form->get('record');
@@ -562,10 +562,7 @@ class AudioRecordsController extends Controller {
         ));
     }
 
-    public function checkUniqueId(AudioRecords $entity, $id = 0) {
-        echo '<pre>';
-        print_r($entity);
-        exit;
+    public function checkUniqueId(Request $request, $id = 0) {
         $em = $this->getDoctrine()->getManager();
         $record = $request->request->get('application_bundle_frontbundle_audiorecords');
         $unique = $record['record']['uniqueId'];
