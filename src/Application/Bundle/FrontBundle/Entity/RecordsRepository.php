@@ -103,31 +103,21 @@ class RecordsRepository extends EntityRepository {
     }
 
     public function findOrganizationUniqueRecordsEdit($organizationID, $unique_id, $id) {
-
-        $repository = $this->getDoctrine()
-                ->getRepository('ApplicationFrontBundle:Records');
-
-        $query = $repository->createQueryBuilder('r')
-                ->select('r')
-                ->join('r.user u')
-                ->join('u.organizations o');
-//    ->where('p.price > :price')
-//    ->setParameter('price', '19.99')
-//    ->orderBy('p.price', 'ASC')
-//    ->getQuery();
-//        $query = $this->getEntityManager()
-//        ->createQuery("SELECT r from  r "
-//        . "JOIN r.user u "
-//        . "JOIN u.organizations o ");
         if ($id == 0) {
-            $query->where('o.id =  :organization AND r.uniqueId = :unique');
+            $where = 'o.id =  :organization AND r.uniqueId = :unique';
         } else {
-            $query->where('o.id =  :organization AND r.uniqueId = :unique AND r.id != :id');
-            $query->setParameter('id', $id);
+            $where = 'o.id =  :organization AND r.uniqueId = :unique AND r.id != :id';
         }
+        $query = $this->getEntityManager()
+                ->createQuery("SELECT r from ApplicationFrontBundle:Records r "
+                . "JOIN r.user u "
+                . "JOIN u.organizations o "
+                . $where);
         $query->setParameter('organization', $organizationID);
         $query->setParameter('unique', $unique_id);
-        $query->getQuery();
+        if ($id != 0) {
+            $query->setParameter('id', $id);
+        }
         return $query->getResult();
     }
 
