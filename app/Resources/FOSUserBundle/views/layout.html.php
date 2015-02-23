@@ -99,17 +99,18 @@
                                 </li>
                             </ul>
                         <?php endif ?>
-                        <a class="element1 pull-menu" href="#"></a>
-                        <ul class="element-menu place-right" style="">
-                            <li>
-                                <a class="" href="<?php echo $view['router']->generate('report') ?>">Reports</a>
-
-                            </li>
-                        </ul>
+                        
                         <a class="element1 pull-menu" href="#"></a>
                         <ul class="element-menu place-right" style="">
                             <li>
                                 <a class="" href="<?php echo $view['router']->generate('projects') ?>">Projects</a>
+
+                            </li>
+                        </ul>
+						<a class="element1 pull-menu" href="#"></a>
+                        <ul class="element-menu place-right" style="">
+                            <li>
+                                <a class="" href="<?php echo $view['router']->generate('report') ?>">Reports</a>
 
                             </li>
                         </ul>

@@ -7242,6 +7242,7 @@ body.error .wrapper .buttons {
     float: left;
     margin-top: 5px;
     margin-left: 1px;
+	width: 50%;
 }
 .login .wrapper .login-body .submit .remember [class*=icheckbox], .login .wrapper .login-body .submit .remember label {
     float: left;
