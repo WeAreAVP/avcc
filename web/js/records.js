@@ -152,7 +152,7 @@ function Records() {
                     selected.splice(index, 1);
                 }
                 $(this).toggleClass('selected', function () {
-//                    var input = $("#" + id + " td:first").html();
+                    var input = $("#" + id + " td:first").html();
 //                    if ($(this).hasClass('selected') === true) {
 //                        $("#" + $(input).attr('id')).attr("checked", "checked");
 //                        $("#" + $(input).attr('id')).prop("checked", true);
@@ -161,13 +161,13 @@ function Records() {
 //                        $("#" + $(input).attr('id')).prop("checked", false);
 //                        $(this).removeClass('selected');
 //                    }
-//                     selfObj.saveState($(input).attr('value'));
-//                    console.log($(input).attr('value'));
-//                    if ($("#" + $(input).attr('id')).attr("checked")=="checked" || $("#" + $(input).attr('id')).prop("checked", true)) {
-//                        selfObj.saveState($(input).attr('value'));
-//                    }else if ($("#" + $(input).attr('id')).attr("checked")=="" || $("#" + $(input).attr('id')).prop("checked", false)){
-//                        selfObj.saveState($(input).attr('value'));
-//                    }
+                     selfObj.saveState($(input).attr('value'));
+                    console.log($(input).attr('value'));
+                    if ($("#" + $(input).attr('id')).attr("checked")=="checked" || $("#" + $(input).attr('id')).prop("checked", true)) {
+                        selfObj.saveState($(input).attr('value'));
+                    }else if ($("#" + $(input).attr('id')).attr("checked")=="" || $("#" + $(input).attr('id')).prop("checked", false)){
+                        selfObj.saveState($(input).attr('value'));
+                    }
                 });
 
             });
@@ -665,6 +665,7 @@ function Records() {
         $('.import').click(function () {
             var importType = $(this).attr('data-type');
             $("#importModal").modal('show');
+            $('#organization').chosen();
             $("#importModal #impfiletype").val(importType);
             $("#importModal").show();
         });
