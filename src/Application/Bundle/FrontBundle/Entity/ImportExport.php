@@ -75,6 +75,11 @@ class ImportExport
     private $fileName;
 
     /**
+     * @ORM\Column(name="organization_id", type="integer", nullable=true)
+     * @var integer
+     */
+    private $organizationId;
+    /**
      * @var boolean
      *
      * @ORM\Column(name="status", type="boolean", nullable=true, options={"default" = 0}) )
@@ -207,5 +212,25 @@ class ImportExport
     public function getFileName()
     {
         return $this->fileName;
+    }
+    
+    /**
+     * Set organization Id field     *
+     *
+     * @param integer $organizationId
+     */
+    public function setOrganizationId($organizationId)
+    {
+        $this->organizationId = $organizationId;
+    }
+
+    /**
+     * Return  organization Id
+     *
+     * @return integer
+     */
+    public function getOrganizationId()
+    {
+        return $this->organizationId;
     }
 }

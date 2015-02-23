@@ -12,19 +12,16 @@ use Application\Bundle\FrontBundle\Entity\FilmRecords;
 use Application\Bundle\FrontBundle\Entity\VideoRecords;
 use PHPExcel_Style_NumberFormat as NumberFormat;
 
-class ImportReport extends ContainerAware
-{
+class ImportReport extends ContainerAware {
 
     public $columns;
     public $container;
 
-    public function __construct($container)
-    {
+    public function __construct($container) {
         $this->container = $container;
     }
 
-    public function validateVocabulary($fileName)
-    {
+    public function validateVocabulary($fileName) {
         $fileCompletePath = $this->container->getParameter('webUrl') . 'import/' . date('Y') . '/' . date('m') . '/' . $fileName;
 //        $fileCompletePath = '/Applications/XAMPP/xamppfiles/htdocs/avcc/web/' . $fileName;
         if (file_exists($fileCompletePath)) {
@@ -33,7 +30,7 @@ class ImportReport extends ContainerAware
             $fields = new DefaultFields();
             $em = $this->container->get('doctrine')->getEntityManager();
             $vocabularies = $fields->getAllVocabularies($em);
-            $uniqueids = $em->getRepository('ApplicationFrontBundle:Records')->findAllUniqueIds();
+
             $projects = $em->getRepository('ApplicationFrontBundle:Projects')->getAllAsArray();
             $requiredMissing = false;
             foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
@@ -71,7 +68,9 @@ class ImportReport extends ContainerAware
                         $sound = $worksheet->getCellByColumnAndRow(30, $row);
                         $frameRate = $worksheet->getCellByColumnAndRow(31, $row);
                         $acidDetectionStrip = $worksheet->getCellByColumnAndRow(32, $row);
-
+                        // do something
+                        //   $uniqueids = $em->getRepository('ApplicationFrontBundle:Records')->findAllUniqueIds();
+                        $uniqueids = $this->checkUniqueId($project->getValue(), $uniqueId->getValue());
                         if (trim($location->getValue()) == '') {
                             $invalidValues['missing_fields'][] = 'Location missing at row ' . $row;
                         }
@@ -98,6 +97,7 @@ class ImportReport extends ContainerAware
                         }
 
                         if ($uniqueId->getValue() && in_array($uniqueId->getValue(), $uniqueids)) {
+
                             $invalidValues['unique_ids'][] = $uniqueId->getValue() . ' at row ' . $row . ' already exist in db';
                         }
                         if (trim($uniqueId->getValue()) == '') {
@@ -181,8 +181,7 @@ class ImportReport extends ContainerAware
         }
     }
 
-    public function getRecordsFromFile($fileName, $user)
-    {
+    public function getRecordsFromFile($fileName, $user) {
         $fileCompletePath = $this->container->getParameter('webUrl') . 'import/' . date('Y') . '/' . date('m') . '/' . $fileName;
 //        $fileCompletePath = '/Applications/XAMPP/xamppfiles/htdocs/avcc/web/' . $fileName;
         if (file_exists($fileCompletePath)) {
@@ -256,8 +255,7 @@ class ImportReport extends ContainerAware
         }
     }
 
-    public function importRecords($rows, $user, $em)
-    {
+    public function importRecords($rows, $user, $em) {
         foreach ($rows as $row) {
             $record = new Records();
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('name' => $row['project']));
@@ -405,9 +403,22 @@ class ImportReport extends ContainerAware
      *
      * @return array
      */
-    protected function getSphinxInfo()
-    {
+    protected function getSphinxInfo() {
         return $this->container->getParameter('sphinx_param');
+    }
+
+    protected function checkUniqueId($projectId, $uniqueId, $id = 0) {
+        $em = $this->container->get('doctrine')->getEntityManager();
+        if (empty($projectId) || $projectId == '') {
+            return '';
+        }
+        $user = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('project' => $projectId));
+        $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecords($user->getUser()->getOrganizations()->getId(), $uniqueId, $id);
+        if (count($records) == 0) {
+            return '';
+        } else {
+            return 'unique id not unique';
+        }
     }
 
 }

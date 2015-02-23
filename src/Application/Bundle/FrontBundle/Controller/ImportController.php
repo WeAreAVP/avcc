@@ -49,7 +49,6 @@ class ImportController extends Controller
         $fileName = 'allFormat_1417781547.csv';
         $import = new ImportReport($this->container);
         $validation = $import->validateVocabulary($fileName);
-
         if ($validation) {
             echo '<pre>';
             foreach ($validation as $key => $value) {
@@ -96,8 +95,14 @@ class ImportController extends Controller
                     if (!$request->files->get('importfile')->isValid()) {
                         echo 'file uploaded';
                     }
+                    if (in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles())) {
+                        $organizationId = $data['organization_id'];
+                    }else{
+                        $organizationId = $this->getUser()->getOrganizations()->getId();
+                    }
                     $import = new ImportExport();
                     $import->setUser($this->getUser());
+                    $import->setOrganizationId($organizationId);
                     $import->setFormat($type);
                     $import->setType("import");
                     $import->setQueryOrId(0);

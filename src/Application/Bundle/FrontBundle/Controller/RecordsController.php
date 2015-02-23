@@ -24,8 +24,7 @@ use PHPExcel_Cell;
  * @Route("/records")
  *
  */
-class RecordsController extends Controller
-{
+class RecordsController extends Controller {
 
     /**
      * Object of DefaultFields
@@ -48,8 +47,7 @@ class RecordsController extends Controller
     /**
      * Constructor of RecordsController
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->columns = array(
             'checkbox_Col' => 'checkboxCol',
             'Project_Name' => 'projectName',
@@ -77,8 +75,7 @@ class RecordsController extends Controller
      * @Template("ApplicationFrontBundle:Records:index.html.php")
      * @return array
      */
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
 
         $shpinxInfo = $this->getSphinxInfo();
@@ -106,11 +103,12 @@ class RecordsController extends Controller
         $facet['discDiameters'] = $this->removeEmpty($sphinxSearch->facetSelect('disk_diameter', $this->getUser(), $criteria, $parentFacet), 'disk_diameter');
         $facet['acidDetection'] = $this->removeEmpty($sphinxSearch->facetSelect('acid_detection', $this->getUser(), $criteria, $parentFacet), 'acid_detection');
         $facet['collectionNames'] = $this->removeEmpty($sphinxSearch->facetSelect('collection_name', $this->getUser(), $criteria, $parentFacet), 'collection_name');
-
+        $organizations = $em->getRepository('ApplicationFrontBundle:Organizations')->findAll();
         $view = array(
             'facets' => $facet,
             'columns' => $this->columns,
-            'isAjax' => $isAjax
+            'isAjax' => $isAjax,
+            'organizations' => $organizations
         );
         if ($request->isXmlHttpRequest()) {
             $html = $this->render('ApplicationFrontBundle:Records:index.html.php', $view);
@@ -131,8 +129,7 @@ class RecordsController extends Controller
      * @Template("ApplicationFrontBundle:AudioRecords:dataTable.html.php")
      * @return json
      */
-    public function dataTableAction(Request $request)
-    {
+    public function dataTableAction(Request $request) {
         $columns = array(0 => '',
             1 => 'title',
             2 => 'format',
@@ -176,8 +173,7 @@ class RecordsController extends Controller
      *
      * @return array
      */
-    protected function getSphinxInfo()
-    {
+    protected function getSphinxInfo() {
         return $this->container->getParameter('sphinx_param');
     }
 
@@ -189,8 +185,7 @@ class RecordsController extends Controller
      * @Route("/facets", name="record_facets")
      * @Method("POST")
      */
-    public function facetsAction(Request $request)
-    {
+    public function facetsAction(Request $request) {
         $data = $request->request->all();
         $session = $this->getRequest()->getSession();
         if ($data) {
@@ -208,8 +203,7 @@ class RecordsController extends Controller
      *
      * @return array
      */
-    protected function criteria()
-    {
+    protected function criteria() {
         $facetData = $this->getFacetFromSession();
         $makeCriteria = new SphinxHelper();
         $criteria = $makeCriteria->makeSphinxCriteria($facetData);
@@ -223,8 +217,7 @@ class RecordsController extends Controller
      * @param Request $request
      *
      */
-    protected function getFacetRequest(Request $request)
-    {
+    protected function getFacetRequest(Request $request) {
         $data = $request->query->all();
         $session = $this->getRequest()->getSession();
         if ($data) {
@@ -243,8 +236,7 @@ class RecordsController extends Controller
      *
      * @return array
      */
-    protected function removeEmpty($facet, $index)
-    {
+    protected function removeEmpty($facet, $index) {
         $result = array();
         foreach ($facet as $key => $value) {
             foreach ($value as $column => $row) {
@@ -261,8 +253,7 @@ class RecordsController extends Controller
      *
      * @return array
      */
-    protected function getFacetFromSession()
-    {
+    protected function getFacetFromSession() {
         $session = $this->getRequest()->getSession();
         $facetData = $session->get('facetData');
 
@@ -279,8 +270,7 @@ class RecordsController extends Controller
      * @Template("ApplicationFrontBundle:Records:saveState.html.php")
      * @return json
      */
-    public function saveStateAction(Request $request)
-    {
+    public function saveStateAction(Request $request) {
         $data = $request->request->all();
         $session = $this->getRequest()->getSession();
         $checked = array();
@@ -326,8 +316,7 @@ class RecordsController extends Controller
      * @Template("ApplicationFrontBundle:Records:default.html.php")
      * @return json
      */
-    public function exportAction(Request $request)
-    {
+    public function exportAction(Request $request) {
         if ($request->isXmlHttpRequest()) {
             $em = $this->getDoctrine()->getManager();
             $data = $request->request->all();
@@ -376,8 +365,7 @@ class RecordsController extends Controller
      * @Route("/sphinx", name="record_sphinx")
      * @Template("ApplicationFrontBundle:Records:default.html.php")
      */
-    public function allInSphinx()
-    {
+    public function allInSphinx() {
         $em = $this->getDoctrine()->getManager();
         $records = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
         $shpinxInfo = $this->getSphinxInfo();
@@ -402,8 +390,7 @@ class RecordsController extends Controller
      * @Template("ApplicationFrontBundle:Records:default.html.php")
      * @return json
      */
-    public function exportMergeAction(Request $request)
-    {
+    public function exportMergeAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $data = $request->request->all();
         $session = $this->getRequest()->getSession();
@@ -484,8 +471,7 @@ class RecordsController extends Controller
      * @Template()
      * @return array
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('id' => $id));
@@ -568,8 +554,7 @@ class RecordsController extends Controller
      * @Template("ApplicationFrontBundle:Records:updateScore.html.php")
      * @return array
      */
-    public function uploapScoreAction(Request $request)
-    {
+    public function uploapScoreAction(Request $request) {
 //        return array();
     }
 
@@ -583,8 +568,7 @@ class RecordsController extends Controller
      * @Template("ApplicationFrontBundle:Records:updateScore.html.php")
      * @return array
      */
-    public function saveScoreAction(Request $request)
-    {
+    public function saveScoreAction(Request $request) {
         if ($request->files->get('uploadfile')) {
             $originalFileName = $request->files->get('uploadfile')->getClientOriginalName();
             $uploadedFileSize = $request->files->get('uploadfile')->getClientSize();
@@ -657,6 +641,5 @@ class RecordsController extends Controller
             return array('updated' => isset($updated) ? $updated : null);
         }
     }
-    
-    
+
 }

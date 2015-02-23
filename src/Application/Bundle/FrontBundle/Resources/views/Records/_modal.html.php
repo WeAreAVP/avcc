@@ -70,6 +70,18 @@
                     <div id="beforeExportMerge">
                         <p><span style="font-size:13px;">Are you sure you want to import the record(s)?</span></p>
                         <div class="pull-right">
+                            <?php if (isGranted('ROLE_SUPER_ADMIN')){ ?>
+                            <select name="organization">
+                                <option value=''>select organization</option>
+                                <?php
+                                foreach ($organizations as $organization) {
+                                    ?>
+                                    <option <?php echo $selected; ?> value="<?php echo $organization->id; ?>"><?php echo ucwords($organization->name); ?></option>
+                                    <?php
+                                }
+                                ?>   
+                            </select>
+                            <?php }?>
                             <input type="file" name="importfile" class="required" required="required" /><br /><br />
                             <input type="hidden" name="impfiletype"  id="impfiletype" value="" />
                         </div>
