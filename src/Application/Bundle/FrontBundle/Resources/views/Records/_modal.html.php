@@ -82,6 +82,7 @@
                                 ?>   
                             </select>
                             <br>
+                            <br>
                             <?php }?>
                             
                             <input type="file" name="importfile" class="required" required="required" /><br /><br />
