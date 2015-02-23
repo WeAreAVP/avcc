@@ -11,9 +11,9 @@
             <div id="div-select-all-records" style="display:none;"></div>
             <div class="clearfix"></div>
             <?php if ($view['security']->isGranted('ROLE_CATALOGER')): ?>
-            <div class="button-dropdown place-left">
-                <button class="dropdown-toggle">Operations</button>
-                <ul class="dropdown-menu" data-role="dropdown">
+                <div class="button-dropdown place-left">
+                    <button class="dropdown-toggle">Operations</button>
+                    <ul class="dropdown-menu" data-role="dropdown">
 
                         <li>
                             <a href="<?php echo $view['router']->generate('record_new') ?>">Add Record</a>
@@ -42,10 +42,10 @@
                         <li>
                             <a href="javascript://" id="bulkEdit">Bulk Edit</a>
                         </li>
-                </ul>
-            </div>
+                    </ul>
+                </div>
             <?php endif; ?>
-            <?php echo $view->render('ApplicationFrontBundle::Records/_modal.html.php') ?>
+            <?php echo $view->render('ApplicationFrontBundle::Records/_modal.html.php', array("organizations" => $organizations)) ?>
             <div class="table-responsive">
                 <table class="table hovered bordered" id="records">
                     <thead>
@@ -78,17 +78,20 @@
             <input type="hidden" name="selectedrecords" id="selectedrecords" value="<?php echo $recordsIds; ?>" />
             <input type="hidden" name="exportType" id="exportType" value="" />
         </div>
-        <?php $heading = null; $successPopupMsg = null; ?>
+        <?php $heading = null;
+        $successPopupMsg = null; ?>
         <?php foreach ($view['session']->getFlash("report_success") as $message): ?>
-            <?php $successPopupMsg = $message['message']; $heading = $message['heading'];?>
-        <?php
+            <?php $successPopupMsg = $message['message'];
+            $heading = $message['heading']; ?>
+            <?php
         endforeach;
         $app->getSession()->remove('report_success');
         ?>
         <?php $errorPopupMsg = null; ?>
         <?php foreach ($view['session']->getFlash("report_error") as $message): ?>
-            <?php $errorPopupMsg = $message['message']; $heading = $message['heading']; ?>
-        <?php
+            <?php $errorPopupMsg = $message['message'];
+            $heading = $message['heading']; ?>
+            <?php
         endforeach;
         $app->getSession()->remove('report_error');
         ?>
@@ -111,9 +114,9 @@
                 record.setPopupHeading('<?php echo $heading; ?>');
                 record.bindEvents();
             </script>
-            <?php
-            $view['slots']->stop();
-            ?>
+    <?php
+    $view['slots']->stop();
+    ?>
         </div>
     </div>
     <?php
