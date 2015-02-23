@@ -666,7 +666,7 @@ function Records() {
         $('.import').click(function () {
             var importType = $(this).attr('data-type');
             $("#importModal").modal('show');
-            $('#organization').chosen();
+            //$('#organization').chosen();
             $("#importModal #impfiletype").val(importType);
             $("#importModal").show();
         });
