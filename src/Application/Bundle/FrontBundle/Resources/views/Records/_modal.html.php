@@ -149,7 +149,7 @@
 <script>
     function checkOrganization() {
         if ($('#organization').val() == '') {
-            $('#error_span').hide();
+            $('#error_span').show();
         } else {
             $('#importModal form').submit();
         }
