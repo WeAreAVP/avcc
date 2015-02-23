@@ -57,7 +57,7 @@ class AudioRecordsController extends Controller {
         $form = $this->createCreateForm($entity, $em, $data);
         $form->handleRequest($request);
         echo '<pre>';
-        print_r($entity);
+        print_r($entity->getProject());
         exit;
         $error = '';
         $result = $this->checkUniqueId($request);
