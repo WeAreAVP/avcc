@@ -53,7 +53,7 @@
             </div>
             <div class="modal-footer" id="modal-footer">
                 <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">No</button> &nbsp;
-                <button type="button" name="submit" id="submit" class="button primary" onclick="$('#exportMergeModal form').submit();">Submit</button>
+                <button type="button" name="submit" id="submit" class="button primary" onclick="checkOrganization();">Submit</button>
             </div>
         </div>
     </div>
@@ -65,36 +65,42 @@
             <div class="modal-header">
                 <h4>Import Records</h4>
             </div>
-            <form action="<?php echo $view['router']->generate('import_records') ?>" method="post" enctype="multipart/form-data" name="frmExportMerge">
-                <div class="modal-body">
+
+            <div class="modal-body">
+                <form action="<?php echo $view['router']->generate('import_records') ?>" method="post" enctype="multipart/form-data" name="frmExportMerge">
                     <div id="beforeExportMerge">
                         <p><span style="font-size:13px;">Are you sure you want to import the record(s)?</span></p>
                         <div class="pull-right">
                             <?php if ($view['security']->isGranted('ROLE_SUPER_ADMIN')) { ?>
-                                <select id='organization' name="organization" required="required">
-                                    <option value=''>select organization</option>
-                                    <?php
-                                    foreach ($organizations as $organization) {
-                                        ?>
-                                        <option value="<?php echo $organization->getId(); ?>"><?php echo ucwords($organization->getName()); ?></option>
+                                <div>
+                                    <select id='organization' name="organization" required="required">
+                                        <option value=''>select organization</option>
                                         <?php
-                                    }
-                                    ?>   
-                                </select>
-                                <br>
-                                <br>
+                                        foreach ($organizations as $organization) {
+                                            ?>
+                                            <option value="<?php echo $organization->getId(); ?>"><?php echo ucwords($organization->getName()); ?></option>
+                                            <?php
+                                        }
+                                        ?>   
+                                    </select>
+                                    <span class='error'>organization is required</span>
+                                    <br>
+                                    <br>
+                                    
+                                </div>
                             <?php } ?>
 
                             <input type="file" name="importfile" class="required" required="required" /><br /><br />
                             <input type="hidden" name="impfiletype"  id="impfiletype" value="" />
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer" id="modal-footer">
-                    <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">No</button> &nbsp;
-                    <button type="submit" name="submit" id="submit" class="button primary">Submit</button>
-                </div>
-            </form>
+                </form>
+            </div>
+            <div class="modal-footer" id="modal-footer">
+                <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">No</button> &nbsp;
+                <button type="submit" name="submit" id="submit" class="button primary" onclick="$('#importModal form').submit();">Submit</button>
+            </div>
+
         </div>
     </div>
 </div>
@@ -137,3 +143,12 @@
         </div>
     </div>
 </div>
+<script>
+    function checkOrganization() {
+        if ($('#organization').val() == '') {
+
+        } else {
+            $('#exportMergeModal form').submit();
+        }
+    }
+</script>
