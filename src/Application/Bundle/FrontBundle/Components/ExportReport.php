@@ -898,23 +898,23 @@ class ExportReport extends ContainerAware {
             $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, "");
-            $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, number_format($totalUncompress1, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, $this->correctDecimal($totalUncompress1));
             $activeSheet->getStyleByColumnAndRow(5, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, number_format($totalUncompress2, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $this->correctDecimal($totalUncompress2));
             $activeSheet->getStyleByColumnAndRow(6, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, number_format($totalUncompress3, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $this->correctDecimal($totalUncompress3));
             $activeSheet->getStyleByColumnAndRow(7, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, number_format($totalUncompress4, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, $this->correctDecimal($totalUncompress4));
             $activeSheet->getStyleByColumnAndRow(8, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, number_format($totalUncompress5, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $this->correctDecimal($totalUncompress5));
             $activeSheet->getStyleByColumnAndRow(9, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, number_format($totalUncompress6, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, $this->correctDecimal($totalUncompress6));
             $activeSheet->getStyleByColumnAndRow(10, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, number_format($totalUncompress7, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $this->correctDecimal($totalUncompress7));
             $activeSheet->getStyleByColumnAndRow(11, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, number_format($totalUncompress8, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $this->correctDecimal($totalUncompress8));
             $activeSheet->getStyleByColumnAndRow(12, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, number_format($totalKbps, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $this->correctDecimal($totalKbps, 5));
             $activeSheet->getStyleByColumnAndRow(13, $row)->getFont()->setBold(true);
             $row ++;
         }
@@ -923,6 +923,12 @@ class ExportReport extends ContainerAware {
     }
 
     private function calculateFileSize($totalDuration, $value) {
+        $totalSize = ($totalDuration * $value) / 1024 / 1024;
+        return $this->correctDecimal($totalSize);
+     //   return number_format(($totalDuration * $value) / 1024 / 1024, 1);
+    }
+
+    private function correctDecimal($totalDuration) {
         $depth = 0;
         $totalSize = ($totalDuration * $value) / 1024 / 1024;
         $size = $totalSize;
@@ -940,7 +946,7 @@ class ExportReport extends ContainerAware {
         return number_format($size, $depth);
      //   return number_format(($totalDuration * $value) / 1024 / 1024, 1);
     }
-
+    
     private function prepareFileSizeCalculatorVideoRecords($activeSheet, $row, $records) {
         $i = 1;
         $totalVUncompress1 = 0.00;
@@ -996,23 +1002,23 @@ class ExportReport extends ContainerAware {
             $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, "");
-            $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, number_format($totalVUncompress1, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, $this->correctDecimal($totalVUncompress1));
             $activeSheet->getStyleByColumnAndRow(5, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, number_format($totalVUncompress2, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $this->correctDecimal($totalVUncompress2));
             $activeSheet->getStyleByColumnAndRow(6, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, number_format($totalLossless, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $this->correctDecimal($totalLossless));
             $activeSheet->getStyleByColumnAndRow(7, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, number_format($totalFFV1, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, $this->correctDecimal($totalFFV1));
             $activeSheet->getStyleByColumnAndRow(8, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, number_format($totalMPEG2, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $this->correctDecimal($totalMPEG2));
             $activeSheet->getStyleByColumnAndRow(9, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, number_format($totalProRes, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, $this->correctDecimal($totalProRes));
             $activeSheet->getStyleByColumnAndRow(10, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, number_format($totalDV25, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $this->correctDecimal($totalDV25));
             $activeSheet->getStyleByColumnAndRow(11, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, number_format($totalMPEG45, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $this->correctDecimal($totalMPEG45));
             $activeSheet->getStyleByColumnAndRow(12, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, number_format($totalMPEG42, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $this->correctDecimal($totalMPEG42));
             $activeSheet->getStyleByColumnAndRow(13, $row)->getFont()->setBold(true);
             $row ++;
         }
@@ -1075,19 +1081,19 @@ class ExportReport extends ContainerAware {
             $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "");
             $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, "");
-            $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, number_format($total4kUnCommpressed, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, $this->correctDecimal($total4kUnCommpressed));
             $activeSheet->getStyleByColumnAndRow(5, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, number_format($total4kLossLess, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, $this->correctDecimal($total4kLossLess));
             $activeSheet->getStyleByColumnAndRow(6, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, number_format($total2kUnCommpressed, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $this->correctDecimal($total2kUnCommpressed));
             $activeSheet->getStyleByColumnAndRow(7, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, number_format($total2KLossless, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, $this->correctDecimal($total2KLossless));
             $activeSheet->getStyleByColumnAndRow(8, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, number_format($totalAVCIntra100, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, $this->correctDecimal($totalAVCIntra100));
             $activeSheet->getStyleByColumnAndRow(9, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, number_format($totalMPEG45, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, $this->correctDecimal($totalMPEG45));
             $activeSheet->getStyleByColumnAndRow(10, $row)->getFont()->setBold(true);
-            $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, number_format($totalMPEG42, 5));
+            $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $this->correctDecimal($totalMPEG42));
             $activeSheet->getStyleByColumnAndRow(11, $row)->getFont()->setBold(true);
             $row ++;
         }
