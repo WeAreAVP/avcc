@@ -143,6 +143,7 @@ function Records() {
                             }
                         }
                     });
+                    oTable.fnPageChange("first",true);
             $('#records tbody').on('click', 'tr', function () {
 //                var id = this.id;
 //                var rowid = id.split('-');
@@ -320,8 +321,8 @@ function Records() {
                 script.src = source;
                 script.id = "metro-js";
                 $("#recordsContainer").append(script);
-                var table = selfObj.initDataTable();
-                table.fnPageChange("first",true);
+                selfObj.initDataTable();
+               // table.fnPageChange("first",true);
                 selfObj.bindEvents();
                 $('body').scrollTop(0);
                 $.unblockUI();
