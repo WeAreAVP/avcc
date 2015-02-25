@@ -930,7 +930,7 @@ class ExportReport extends ContainerAware {
 
     private function correctDecimal($totalDuration) {
         $depth = 0;
-        $totalSize = ($totalDuration * $value) / 1024 / 1024;
+        $totalSize = $totalDuration;
         $size = $totalSize;
         if ($totalSize < 1 && $totalSize > 0) {
             while ($totalSize < 10) {
