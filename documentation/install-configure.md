@@ -51,9 +51,9 @@ Application is build in PHP Framework **[Symfony2] (http://symfony.com)**
         locale:            en
         secret:            ThisTokenIsNotSoSecretChangeIt
         sphinx:
-        --host: 127.0.0.1
-        --port: 9306
-        --indexName: records
+        ...host: 127.0.0.1
+        ...port: 9306
+        ...indexName: records
         baseUrl: 'http://avccqa.avpreserve.com/' 
         webUrl : '/home/avccqa/avcc/web/' 
             
