@@ -324,7 +324,6 @@ function Records() {
                 script.id = "metro-js";
                 $("#recordsContainer").append(script);
                 selfObj.initDataTable(1);
-               // table.fnPageChange("first",true);
                 selfObj.bindEvents();
                 $('body').scrollTop(0);
                 $.unblockUI();
