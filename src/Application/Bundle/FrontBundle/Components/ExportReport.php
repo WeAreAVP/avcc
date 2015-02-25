@@ -7,19 +7,16 @@ use Application\Bundle\FrontBundle\Helper\ExportFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use PHPExcel_Cell;
 
-class ExportReport extends ContainerAware
-{
+class ExportReport extends ContainerAware {
 
     public $columns;
     public $container;
 
-    public function __construct($container)
-    {
+    public function __construct($container) {
         $this->container = $container;
     }
 
-    public function prepareManifestReport($activeSheet, $records)
-    {
+    public function prepareManifestReport($activeSheet, $records) {
         $row = 1;
         $columns = new ExportFields();
         $this->columns = $columns->getManifestColumns();
@@ -65,8 +62,7 @@ class ExportReport extends ContainerAware
         }
     }
 
-    public function generateReport($records)
-    {
+    public function generateReport($records) {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
                 ->setTitle("AVCC - Report")
@@ -86,8 +82,7 @@ class ExportReport extends ContainerAware
         return $phpExcelObject;
     }
 
-    public function outputReport($type, $phpExcelObject, $fileStartName = 'allFormat')
-    {
+    public function outputReport($type, $phpExcelObject, $fileStartName = 'allFormat') {
         $format = ($type == 'csv') ? 'CSV' : 'Excel2007';
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, $format);
         $filename = $fileStartName . '_' . time() . '.' . $type;
@@ -106,8 +101,7 @@ class ExportReport extends ContainerAware
      * @param  type   $phpExcelObject
      * @return string
      */
-    public function saveReport($type, $phpExcelObject)
-    {
+    public function saveReport($type, $phpExcelObject) {
         $format = ($type == 'csv') ? 'CSV' : 'Excel2007';
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, $format);
         $filename = 'allFormat_' . time() . '.' . $type;
@@ -129,8 +123,7 @@ class ExportReport extends ContainerAware
      * @param  Integer            $row
      * @return boolean
      */
-    private function prepareHeader($activeSheet, $row)
-    {
+    private function prepareHeader($activeSheet, $row) {
         $columns = new ExportFields();
         $this->columns = $columns->getExportColumns();
         foreach ($this->columns as $column => $columnName) {
@@ -149,8 +142,7 @@ class ExportReport extends ContainerAware
      * @param  Integer            $row
      * @return boolean
      */
-    private function prepareRecords($activeSheet, $row, $records)
-    {
+    private function prepareRecords($activeSheet, $row, $records) {
 
         foreach ($records as $record) {
             $this->makeExcelRows($activeSheet, $record, false, $row);
@@ -160,8 +152,7 @@ class ExportReport extends ContainerAware
         return true;
     }
 
-    public function initReport()
-    {
+    public function initReport() {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
                 ->setTitle("AVCC - Report")
@@ -186,8 +177,7 @@ class ExportReport extends ContainerAware
      *
      * @return type
      */
-    public function fetchFromSphinx($user, $sphinxInfo, $sphinxCriteria, $em)
-    {
+    public function fetchFromSphinx($user, $sphinxInfo, $sphinxCriteria, $em) {
         $phpExcelObject = $this->initReport();
         $row = 2;
         $count = 0;
@@ -217,16 +207,14 @@ class ExportReport extends ContainerAware
      * @param  Integer            $row
      * @return boolean
      */
-    private function prepareRecordsFromSphinx($activeSheet, $row, $records)
-    {
+    private function prepareRecordsFromSphinx($activeSheet, $row, $records) {
         foreach ($records as $record) {
             $this->makeExcelRowsByArray($activeSheet, $record, false, $row);
             $row ++;
         }
     }
 
-    public function mergeRecords($records, $mergeToFile, $newphpExcelObject = null)
-    {
+    public function mergeRecords($records, $mergeToFile, $newphpExcelObject = null) {
         $mergeFileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $mergeToFile;
         if (file_exists($mergeFileCompletePath)) {
             $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($mergeFileCompletePath);
@@ -299,8 +287,7 @@ class ExportReport extends ContainerAware
         }
     }
 
-    public function makeExcelRows($activeSheet, $record, $mergRow, $row)
-    {
+    public function makeExcelRows($activeSheet, $record, $mergRow, $row) {
         if ($record) {
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record->getProject());
             $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record->getCollectionName());
@@ -360,8 +347,7 @@ class ExportReport extends ContainerAware
         }
     }
 
-    public function appendCellValuesByObject($record, $row)
-    {
+    public function appendCellValuesByObject($record, $row) {
         $newRow = null;
         $newRow['project'] = $record->getProject() ? $record->getProject()->getName() : '';
         $newRow['collection_name'] = $record->getCollectionName();
@@ -480,8 +466,7 @@ class ExportReport extends ContainerAware
      *
      * @return type
      */
-    public function fetchFromSphinxToMerge($user, $sphinxInfo, $sphinxCriteria, $em, $mergeToFile)
-    {
+    public function fetchFromSphinxToMerge($user, $sphinxInfo, $sphinxCriteria, $em, $mergeToFile) {
         $phpExcelObject = $this->initMergeReport();
         $row = 2;
         $count = 0;
@@ -503,8 +488,7 @@ class ExportReport extends ContainerAware
         return $phpExcelObject;
     }
 
-    public function makeExcelRowsByArray($activeSheet, $record, $mergRow, $row)
-    {
+    public function makeExcelRowsByArray($activeSheet, $record, $mergRow, $row) {
         if ($record) {
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record['project']);
             $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record['collection_name']);
@@ -564,8 +548,7 @@ class ExportReport extends ContainerAware
         }
     }
 
-    public function appendCellValuesByArray($record, $row)
-    {
+    public function appendCellValuesByArray($record, $row) {
         $newRow = null;
         $newRow['project'] = $row['project_name'] ? $record['project'] . ' ' . $row['project_name'] : $record['project'];
         $newRow['collection_name'] = $row['collection_name'] ? $record['collection_name'] . ' ' . $row['collection_name'] : $record['collection_name'];
@@ -623,8 +606,7 @@ class ExportReport extends ContainerAware
         return $newRow;
     }
 
-    public function generatePrioritizationReport($records)
-    {
+    public function generatePrioritizationReport($records) {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
                 ->setTitle("AVCC - Report")
@@ -651,8 +633,7 @@ class ExportReport extends ContainerAware
      * @param  Integer            $row
      * @return boolean
      */
-    private function preparePrioritizationHeader($activeSheet, $row)
-    {
+    private function preparePrioritizationHeader($activeSheet, $row) {
         $columns = new ExportFields();
         $this->columns = $columns->getPrioritizationColumns();
         foreach ($this->columns as $column => $columnName) {
@@ -671,8 +652,7 @@ class ExportReport extends ContainerAware
      * @param  Integer            $row
      * @return boolean
      */
-    private function preparePrioritizationRecords($activeSheet, $row, $records)
-    {
+    private function preparePrioritizationRecords($activeSheet, $row, $records) {
         foreach ($records as $record) {
             $score = 0;
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record->getProject());
@@ -719,8 +699,7 @@ class ExportReport extends ContainerAware
         return true;
     }
 
-    protected function mergeRow($activeSheet, $mergRow, $row)
-    {
+    protected function mergeRow($activeSheet, $mergRow, $row) {
         $activeSheet->setCellValueExplicitByColumnAndRow(45, $row, $mergRow['project_name']);
         $activeSheet->setCellValueExplicitByColumnAndRow(46, $row, $mergRow['collection_name']);
         $activeSheet->setCellValueExplicitByColumnAndRow(47, $row, $mergRow['media_type']);
@@ -775,8 +754,7 @@ class ExportReport extends ContainerAware
         }
     }
 
-    public function initMergeReport()
-    {
+    public function initMergeReport() {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
                 ->setTitle("AVCC - Report")
@@ -798,8 +776,7 @@ class ExportReport extends ContainerAware
      * @param  Integer            $row
      * @return boolean
      */
-    private function prepareHeaderMerge($activeSheet, $row)
-    {
+    private function prepareHeaderMerge($activeSheet, $row) {
         $columns = new ExportFields();
         $this->columns = array_merge($columns->getExportColumns(), $columns->getExportMergeColumns());
         foreach ($this->columns as $column => $columnName) {
@@ -811,8 +788,7 @@ class ExportReport extends ContainerAware
         return TRUE;
     }
 
-    public function generateFileSizeAssetsReport($records)
-    {
+    public function generateFileSizeAssetsReport($records) {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
                 ->setTitle("AVCC - Report")
@@ -857,8 +833,7 @@ class ExportReport extends ContainerAware
      * @param  Integer            $row
      * @return boolean
      */
-    private function prepareHeaderFileSizeCalculator($activeSheet, $row, $columns)
-    {
+    private function prepareHeaderFileSizeCalculator($activeSheet, $row, $columns) {
         foreach ($columns as $column => $columnName) {
             $activeSheet->setCellValueExplicitByColumnAndRow($column, $row, $columnName);
             $activeSheet->getColumnDimensionByColumn($column)->setWidth(20);
@@ -868,8 +843,7 @@ class ExportReport extends ContainerAware
         return TRUE;
     }
 
-    private function prepareFileSizeCalculatorAudioRecords($activeSheet, $row, $records)
-    {
+    private function prepareFileSizeCalculatorAudioRecords($activeSheet, $row, $records) {
         $i = 1;
         $totalUncompress1 = 0.00;
         $totalUncompress2 = 0.00;
@@ -948,13 +922,26 @@ class ExportReport extends ContainerAware
         return $row;
     }
 
-    private function calculateFileSize($totalDuration, $value)
-    {
-        return number_format(($totalDuration * $value) / 1024 / 1024, 1);
+    private function calculateFileSize($totalDuration, $value) {
+        $depth = 0;
+        $totalSize = ($totalDuration * $value) / 1024 / 1024;
+        $size = $totalSize;
+        if ($totalSize < 1 && $totalSize > 0) {
+            while ($totalSize < 10) {
+                $totalSize = $totalSize * 10;
+                $depth += 1;
+            }
+        } else if(is_float($totalSize)){
+            $depth = 2;
+        }else{
+            $depth = 1;
+        }
+        $depth = $depth - 1;
+        return number_format($size, $depth);
+     //   return number_format(($totalDuration * $value) / 1024 / 1024, 1);
     }
 
-    private function prepareFileSizeCalculatorVideoRecords($activeSheet, $row, $records)
-    {
+    private function prepareFileSizeCalculatorVideoRecords($activeSheet, $row, $records) {
         $i = 1;
         $totalVUncompress1 = 0.00;
         $totalVUncompress2 = 0.00;
@@ -1033,8 +1020,7 @@ class ExportReport extends ContainerAware
         return $row;
     }
 
-    private function prepareFileSizeCalculatorFilmRecords($activeSheet, $row, $records)
-    {
+    private function prepareFileSizeCalculatorFilmRecords($activeSheet, $row, $records) {
         $i = 1;
         $total4kUnCommpressed = 0.00;
         $total4kLossLess = 0.00;
@@ -1109,8 +1095,7 @@ class ExportReport extends ContainerAware
         return $row;
     }
 
-    public function generateLinearFootReport($records)
-    {
+    public function generateLinearFootReport($records) {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
                 ->setTitle("AVCC - Report")
@@ -1143,8 +1128,7 @@ class ExportReport extends ContainerAware
      * @param  Integer            $row
      * @return boolean
      */
-    private function prepareHeaderLinearFootCalculator($activeSheet, $row, $columns)
-    {
+    private function prepareHeaderLinearFootCalculator($activeSheet, $row, $columns) {
         foreach ($columns as $column => $columnName) {
             $activeSheet->setCellValueExplicitByColumnAndRow($column, $row, $columnName);
             $activeSheet->getColumnDimensionByColumn($column)->setWidth(20);
@@ -1154,8 +1138,7 @@ class ExportReport extends ContainerAware
         return TRUE;
     }
 
-    private function prepareLinearFootCalculatorRecords($activeSheet, $row, $records)
-    {
+    private function prepareLinearFootCalculatorRecords($activeSheet, $row, $records) {
         $totalLinearAudioCount = 0.00;
         $totalLinearVideoCount = 0.00;
         $totalLinearCount = 0.00;
@@ -1215,8 +1198,7 @@ class ExportReport extends ContainerAware
         return $row;
     }
 
-    private function calculateLinearFeet($totalCount, $width)
-    {
+    private function calculateLinearFeet($totalCount, $width) {
         return number_format(($totalCount * $width) / 12, 1);
     }
 
