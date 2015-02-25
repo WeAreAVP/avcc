@@ -93,7 +93,7 @@ function Records() {
      * Initialize the datatable.
      * 
      */
-    this.initDataTable = function () {
+    this.initDataTable = function (filter) {
         // check the existence of table on which we are going to apply datatable.
         if ($('#records').length > 0)
         {
@@ -143,7 +143,9 @@ function Records() {
                             }
                         }
                     });
+                    if(filter == 1){
                     oTable.fnPageChange("first",true);
+                }
             $('#records tbody').on('click', 'tr', function () {
 //                var id = this.id;
 //                var rowid = id.split('-');
@@ -321,7 +323,7 @@ function Records() {
                 script.src = source;
                 script.id = "metro-js";
                 $("#recordsContainer").append(script);
-                selfObj.initDataTable();
+                selfObj.initDataTable(1);
                // table.fnPageChange("first",true);
                 selfObj.bindEvents();
                 $('body').scrollTop(0);
