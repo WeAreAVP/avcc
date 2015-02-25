@@ -1,12 +1,11 @@
 Libraries
 ===
 
-[Back: Installation and Configuration](install-configure.md)	
+[Back: Cron jobs](crons.md)
 
 PHP Libraries used.
 
-* Sphinx API
-* Sphinx RT
+* phpexcel
 
 Javascript Libraries used.
 
@@ -25,4 +24,4 @@ Javascript Libraries used.
 * Custom Scrollbar Plugin
 * Metro
 
-[Next: License](license.md)	
+[Next: Roles and Permissions](roles-permissions.md)

@@ -20,6 +20,12 @@ SCM (Source Control Management)
 * **Git**
  * Version 1.7.x
 
+Framework
+---------
+
+* **Symfony2**
+ * Version 2.3
+
 Language
 ---------
 	
@@ -43,7 +49,7 @@ Build Tool
 Search Server
 ---------
 **Sphinx**
-* Version 2.1.2
+* Version 2.2.5
 * Default Port 9312
 * Default Port 9306:mysql41
 

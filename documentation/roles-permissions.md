@@ -1,7 +1,7 @@
 Roles and Permissions
 ===
 
-[Back: Prerequisite](prerequisite.md)
+[Back: Libraries](libraries.md)
 
 User Roles
 
@@ -17,20 +17,16 @@ Permission Per Roles
 
 Super Admin
 
-* Manage Users
-* Manage Carriers
-* Manage Organizations
-* Manage Shipments
-* Manage Batches
+* Manage Users of all organizations
+* Manage Records of all organizations
+* Manage all Organizations
 * Import/Export
 
 Admin
 
-* Manage Users
-* Manage Carriers
-* Manage Organizations
-* Manage Shipments
-* Manage Batches
+* Manage Users of his organizations
+* Manage Records of his organizations
+* Manage his Organizations
 * Import/Export
 
 Manager
@@ -47,12 +43,5 @@ Cataloger
 * Update only their organization info
 * Update only their user info 
 
-Service Provider
 
-* See all organizations
-* Their organization shipments
-* Batches list
-* See all users
-* Update their user info
-
-[Back: Introduction](../README.md)
+[Back: Prerequisite](prerequisite.md)

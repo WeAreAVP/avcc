@@ -1,6 +1,6 @@
 Installation and Configuration
 ===
-[Back: Cron Jobs](crons.md)
+[Back: Prerequisite](prerequisite.md)
 
 **Assumptions**
 
@@ -36,29 +36,29 @@ Application is build in PHP Framework **[Symfony2] (http://symfony.com)**
 **4) Application configuration variable (app/config/parameter.yml.dist)**
   
   Rename file config.php.dist to config.php
-
-database_driver:   pdo_mysql
-    database_host:     127.0.0.1
-    database_port:     ~
-    database_name:     symfony
-    database_user:     root
-    database_password: ~
-    mailer_transport:  smtp
-    mailer_host:       127.0.0.1
-    mailer_user:       ~
-    mailer_password:   ~
-    mail_from_email:   noreply@domain.com
-    locale:            en
-    secret:            ThisTokenIsNotSoSecretChangeIt
-    sphinx:
-        host: 127.0.0.1
-        port: 9306
-        indexName: records
-    baseUrl: 'http://avccqa.avpreserve.com/' 
-    webUrl : '/home/avccqa/avcc/web/' 
+        $config['base_url'] = 'http://domain.com/';                  Base url for website. 
+        database_driver:   pdo_mysql
+        database_host:     127.0.0.1
+        database_port:     ~
+        database_name:     symfony
+        database_user:     root
+        database_password: ~
+        mailer_transport:  smtp
+        mailer_host:       127.0.0.1
+        mailer_user:       ~
+        mailer_password:   ~
+        mail_from_email:   noreply@domain.com
+        locale:            en
+        secret:            ThisTokenIsNotSoSecretChangeIt
+        sphinx:
+                 host: 127.0.0.1
+                 port: 9306
+                 indexName: records
+        baseUrl: 'http://avccqa.avpreserve.com/' 
+        webUrl : '/home/avccqa/avcc/web/' 
             
 
-[Next: Libraries](libraries.md)	
+[Next: Sphinx Configuration](sphinx.md)
 
 
 

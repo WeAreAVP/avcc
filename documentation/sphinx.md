@@ -1,6 +1,6 @@
 Sphinx
 ===
-[Back: Cron jobs](crons.md)
+[Back: Installation and Configuration](install-configure.md)
 
 **Sphinx Configuration Detail**
 
@@ -37,4 +37,4 @@ Go in project directory and insert records data.
 
 Visit http://sphinxsearch.com/ for more detail
 
-[Back: Introduction](../README.md)
+[Next: Cron jobs](crons.md)
