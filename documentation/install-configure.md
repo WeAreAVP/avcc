@@ -36,7 +36,7 @@ Application is build in PHP Framework **[Symfony2] (http://symfony.com)**
 **4) Application configuration variable (app/config/parameter.yml.dist)**
   
   Rename file config.php.dist to config.php
-        $config['base_url'] = 'http://domain.com/';                  Base url for website. 
+
         database_driver:   pdo_mysql
         database_host:     127.0.0.1
         database_port:     ~
@@ -51,9 +51,9 @@ Application is build in PHP Framework **[Symfony2] (http://symfony.com)**
         locale:            en
         secret:            ThisTokenIsNotSoSecretChangeIt
         sphinx:
-                 host: 127.0.0.1
-                 port: 9306
-                 indexName: records
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;host: 127.0.0.1
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;port: 9306
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;indexName: records
         baseUrl: 'http://avccqa.avpreserve.com/' 
         webUrl : '/home/avccqa/avcc/web/' 
             
