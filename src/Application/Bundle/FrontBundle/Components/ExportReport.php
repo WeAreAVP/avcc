@@ -937,12 +937,11 @@ class ExportReport extends ContainerAware {
                 $totalSize = $totalSize * 10;
                 $depth += 1;
             }
+            $depth = $depth - 1;
         } else if(is_float($totalSize)){
-            $depth = 2;
-        }else{
             $depth = 1;
         }
-        $depth = $depth - 1;
+        
         return number_format($size, $depth);
      //   return number_format(($totalDuration * $value) / 1024 / 1024, 1);
     }
