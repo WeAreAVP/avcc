@@ -37,14 +37,7 @@ Database
 
 * **mySQL**
  * Version  5.1.69
- * Default Port 3306
-	
-Build Tool
----------
-
-* **Apache Maven**
-* Version 3.1.0
-	 
+ * Default Port 3306	 
 
 Search Server
 ---------
