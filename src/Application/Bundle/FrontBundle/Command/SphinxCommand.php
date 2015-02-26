@@ -22,17 +22,16 @@ class SphinxCommand extends ContainerAwareCommand {
         $shpinxInfo = $this->getSphinxInfo();
         foreach ($records as $record) {
             $recordId = $record->getId();
-            $output->writeln("record -- ". $recordId.'-- mediatype--' . $record->getMediaType()->getId());
             $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId);
             $result = $sphinxSearch->search();
             if (count($result) == 0) {
                 $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId , $record->getMediaType()->getId());
                 $sphinxSearch->insert();
-                $output->writeln("Inserted record -- ". $recordId.'-- mediatype--' . $record->getMediaType()->getId());
+                $output->writeln("Inserted record -- ". $recordId);
             } else {
                 $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId,  $record->getMediaType()->getId());
                 $sphinxSearch->replace();
-                $output->writeln("Updated record -- ". $recordId.'-- mediatype--' . $record->getMediaType()->getId());
+                $output->writeln("Updated record -- ". $recordId);
             }
         }
         exit;
