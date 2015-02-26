@@ -65,7 +65,7 @@ class SphinxFields
             $this->prepareAudioFields();
         } elseif ($this->record->getFilmRecord()) {
             $this->prepareFilmFields();
-        } else {
+        } elseif ($this->record->getVideoRecord()) {
             $this->prepareVideoFields();
         }
 
