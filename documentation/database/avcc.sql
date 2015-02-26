@@ -22,18 +22,7 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `acid_detection_strips`
---
 
-CREATE TABLE IF NOT EXISTS `acid_detection_strips` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_DAB1064232C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=39 ;
 
 --
 -- Dumping data for table `acid_detection_strips`
@@ -56,20 +45,6 @@ INSERT INTO `acid_detection_strips` (`id`, `organization_id`, `name`, `score`) V
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `bases`
---
-
-CREATE TABLE IF NOT EXISTS `bases` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `format_id` int(11) DEFAULT NULL,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_217B2A3BD629F605` (`format_id`),
-  KEY `IDX_217B2A3B32C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=61 ;
 
 --
 -- Dumping data for table `bases`
@@ -130,18 +105,6 @@ INSERT INTO `bases` (`id`, `format_id`, `organization_id`, `name`, `score`) VALU
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `cassette_sizes`
---
-
-CREATE TABLE IF NOT EXISTS `cassette_sizes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_2007DC8B32C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `cassette_sizes`
@@ -154,19 +117,6 @@ INSERT INTO `cassette_sizes` (`id`, `organization_id`, `name`, `score`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `colors`
---
-
-CREATE TABLE IF NOT EXISTS `colors` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_C2BEC39F32C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
-
---
 -- Dumping data for table `colors`
 --
 
@@ -175,19 +125,6 @@ INSERT INTO `colors` (`id`, `organization_id`, `name`, `score`) VALUES
 (2, NULL, 'Black&White', 2);
 
 -- --------------------------------------------------------
-
---
--- Table structure for table `commercial_unique`
---
-
-CREATE TABLE IF NOT EXISTS `commercial_unique` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_FCE4382B32C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `commercial_unique`
@@ -200,19 +137,6 @@ INSERT INTO `commercial_unique` (`id`, `organization_id`, `name`, `score`) VALUE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `disk_diameters`
---
-
-CREATE TABLE IF NOT EXISTS `disk_diameters` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_DD84FBDC32C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
-
---
 -- Dumping data for table `disk_diameters`
 --
 
@@ -223,20 +147,6 @@ INSERT INTO `disk_diameters` (`id`, `organization_id`, `name`, `score`) VALUES
 (4, NULL, '16 Inch', 0);
 
 -- --------------------------------------------------------
-
---
--- Table structure for table `formats`
---
-
-CREATE TABLE IF NOT EXISTS `formats` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `media_format_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  `width` double DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_DBCBA3CF349458B` (`media_format_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=73 ;
 
 --
 -- Dumping data for table `formats`
@@ -319,21 +229,6 @@ INSERT INTO `formats` (`id`, `media_format_id`, `name`, `score`, `width`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `format_versions`
---
-
-CREATE TABLE IF NOT EXISTS `format_versions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `format_id` int(11) DEFAULT NULL,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_BEE67006D629F605` (`format_id`),
-  KEY `IDX_BEE6700632C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=12 ;
-
---
 -- Dumping data for table `format_versions`
 --
 
@@ -352,18 +247,6 @@ INSERT INTO `format_versions` (`id`, `format_id`, `organization_id`, `name`, `sc
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `frame_rates`
---
-
-CREATE TABLE IF NOT EXISTS `frame_rates` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_870C1DFE32C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `frame_rates`
@@ -376,18 +259,6 @@ INSERT INTO `frame_rates` (`id`, `organization_id`, `name`, `score`) VALUES
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `media_diameters`
---
-
-CREATE TABLE IF NOT EXISTS `media_diameters` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_BB7F6A0232C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=9 ;
 
 --
 -- Dumping data for table `media_diameters`
@@ -406,17 +277,6 @@ INSERT INTO `media_diameters` (`id`, `organization_id`, `name`, `score`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `media_types`
---
-
-CREATE TABLE IF NOT EXISTS `media_types` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
-
---
 -- Dumping data for table `media_types`
 --
 
@@ -428,19 +288,6 @@ INSERT INTO `media_types` (`id`, `name`, `score`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mono_stereo`
---
-
-CREATE TABLE IF NOT EXISTS `mono_stereo` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_8732251532C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
-
---
 -- Dumping data for table `mono_stereo`
 --
 
@@ -450,18 +297,6 @@ INSERT INTO `mono_stereo` (`id`, `organization_id`, `name`, `score`) VALUES
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `noice_reduction`
---
-
-CREATE TABLE IF NOT EXISTS `noice_reduction` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_4A0FAC9932C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `noice_reduction`
@@ -478,18 +313,6 @@ INSERT INTO `noice_reduction` (`id`, `organization_id`, `name`, `score`) VALUES
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `print_types`
---
-
-CREATE TABLE IF NOT EXISTS `print_types` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_285503FB32C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `print_types`
@@ -503,20 +326,6 @@ INSERT INTO `print_types` (`id`, `organization_id`, `name`, `score`) VALUES
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `recording_speed`
---
-
-CREATE TABLE IF NOT EXISTS `recording_speed` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `format_id` int(11) DEFAULT NULL,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_A9A6C79BD629F605` (`format_id`),
-  KEY `IDX_A9A6C79B32C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=52 ;
 
 --
 -- Dumping data for table `recording_speed`
@@ -577,18 +386,6 @@ INSERT INTO `recording_speed` (`id`, `format_id`, `organization_id`, `name`, `sc
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `recording_standards`
---
-
-CREATE TABLE IF NOT EXISTS `recording_standards` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_8E02410832C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `recording_standards`
@@ -601,18 +398,6 @@ INSERT INTO `recording_standards` (`id`, `organization_id`, `name`, `score`) VAL
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `reel_core`
---
-
-CREATE TABLE IF NOT EXISTS `reel_core` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_F665FF0832C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `reel_core`
@@ -625,20 +410,6 @@ INSERT INTO `reel_core` (`id`, `organization_id`, `name`, `score`) VALUES
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `reel_diameters`
---
-
-CREATE TABLE IF NOT EXISTS `reel_diameters` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `format_id` int(11) DEFAULT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_1350686232C8A3DE` (`organization_id`),
-  KEY `IDX_13506862D629F605` (`format_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=74 ;
 
 --
 -- Dumping data for table `reel_diameters`
@@ -721,18 +492,6 @@ INSERT INTO `reel_diameters` (`id`, `organization_id`, `name`, `format_id`, `sco
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `slides`
---
-
-CREATE TABLE IF NOT EXISTS `slides` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_B8C0209132C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `slides`
@@ -744,18 +503,6 @@ INSERT INTO `slides` (`id`, `organization_id`, `name`, `score`) VALUES
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `sounds`
---
-
-CREATE TABLE IF NOT EXISTS `sounds` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_F12306F132C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `sounds`
@@ -770,18 +517,6 @@ INSERT INTO `sounds` (`id`, `organization_id`, `name`, `score`) VALUES
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `tape_thickness`
---
-
-CREATE TABLE IF NOT EXISTS `tape_thickness` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_34DDB80832C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `tape_thickness`
@@ -795,18 +530,6 @@ INSERT INTO `tape_thickness` (`id`, `organization_id`, `name`, `score`) VALUES
 
 -- --------------------------------------------------------
 
---
--- Table structure for table `track_types`
---
-
-CREATE TABLE IF NOT EXISTS `track_types` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organization_id` int(11) DEFAULT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `score` double NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `IDX_29C72B9732C8A3DE` (`organization_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `track_types`
@@ -821,139 +544,6 @@ INSERT INTO `track_types` (`id`, `organization_id`, `name`, `score`) VALUES
 (6, NULL, '24-Track', 0),
 (7, NULL, 'Other Multi-track', 0);
 
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `acid_detection_strips`
---
-ALTER TABLE `acid_detection_strips`
-  ADD CONSTRAINT `FK_DAB1064232C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `bases`
---
-ALTER TABLE `bases`
-  ADD CONSTRAINT `FK_217B2A3B32C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `FK_217B2A3BD629F605` FOREIGN KEY (`format_id`) REFERENCES `formats` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `cassette_sizes`
---
-ALTER TABLE `cassette_sizes`
-  ADD CONSTRAINT `FK_2007DC8B32C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `colors`
---
-ALTER TABLE `colors`
-  ADD CONSTRAINT `FK_C2BEC39F32C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `commercial_unique`
---
-ALTER TABLE `commercial_unique`
-  ADD CONSTRAINT `FK_FCE4382B32C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `disk_diameters`
---
-ALTER TABLE `disk_diameters`
-  ADD CONSTRAINT `FK_DD84FBDC32C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `formats`
---
-ALTER TABLE `formats`
-  ADD CONSTRAINT `FK_DBCBA3CF349458B` FOREIGN KEY (`media_format_id`) REFERENCES `media_types` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `format_versions`
---
-ALTER TABLE `format_versions`
-  ADD CONSTRAINT `FK_BEE6700632C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `FK_BEE67006D629F605` FOREIGN KEY (`format_id`) REFERENCES `formats` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `frame_rates`
---
-ALTER TABLE `frame_rates`
-  ADD CONSTRAINT `FK_870C1DFE32C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `media_diameters`
---
-ALTER TABLE `media_diameters`
-  ADD CONSTRAINT `FK_BB7F6A0232C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `mono_stereo`
---
-ALTER TABLE `mono_stereo`
-  ADD CONSTRAINT `FK_8732251532C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `noice_reduction`
---
-ALTER TABLE `noice_reduction`
-  ADD CONSTRAINT `FK_4A0FAC9932C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `print_types`
---
-ALTER TABLE `print_types`
-  ADD CONSTRAINT `FK_285503FB32C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `recording_speed`
---
-ALTER TABLE `recording_speed`
-  ADD CONSTRAINT `FK_A9A6C79B32C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `FK_A9A6C79BD629F605` FOREIGN KEY (`format_id`) REFERENCES `formats` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `recording_standards`
---
-ALTER TABLE `recording_standards`
-  ADD CONSTRAINT `FK_8E02410832C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `reel_core`
---
-ALTER TABLE `reel_core`
-  ADD CONSTRAINT `FK_F665FF0832C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `reel_diameters`
---
-ALTER TABLE `reel_diameters`
-  ADD CONSTRAINT `FK_1350686232C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `FK_13506862D629F605` FOREIGN KEY (`format_id`) REFERENCES `formats` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `slides`
---
-ALTER TABLE `slides`
-  ADD CONSTRAINT `FK_B8C0209132C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `sounds`
---
-ALTER TABLE `sounds`
-  ADD CONSTRAINT `FK_F12306F132C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `tape_thickness`
---
-ALTER TABLE `tape_thickness`
-  ADD CONSTRAINT `FK_34DDB80832C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL;
-
---
--- Constraints for table `track_types`
---
-ALTER TABLE `track_types`
-  ADD CONSTRAINT `FK_29C72B9732C8A3DE` FOREIGN KEY (`organization_id`) REFERENCES `organizations` (`id`) ON DELETE SET NULL;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
