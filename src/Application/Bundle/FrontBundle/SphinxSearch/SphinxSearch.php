@@ -299,6 +299,7 @@ class SphinxSearch extends ContainerAware {
         $sq->select()
                 ->from($this->indexName);
         $sq->where('id', "=", $this->recordId);
+        $sq->where('media_type', "=", $this->recordTypeId);
         return $sq->execute();
     }
 
