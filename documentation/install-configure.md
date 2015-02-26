@@ -17,21 +17,19 @@ Application is build in PHP Framework **[Symfony2] (http://symfony.com)**
 
 	$ git clone git@github.com:avpreserve/avcc.git .
 
-**3) Use mySQL dump file to initialize database with default schema.**
-   
-  **Steps to use schema in mySQL**
+**3) Composer**
 
-**Connection with mysql**
+Composer is a tool for dependency management in PHP. It allows to declare the dependent libraries and install them for you.
 
-	mysql -h host -u username -password
+  **Steps to install dependent libraries**
 
-**Select database**
+**Get Composer**
 
-	use database_name
+	download composer from https://getcomposer.org/
 
-**Use default schema**
+**Install Composer**
 
-	source documentation/database/schema.sql
+	$ php composer.phar install
 
 **4) Application configuration variable (app/config/parameter.yml.dist)**
 
@@ -54,7 +52,12 @@ Application is build in PHP Framework **[Symfony2] (http://symfony.com)**
         ...indexName: records
         baseUrl: 'http://avccqa.avpreserve.com/' 
         webUrl : '/home/avccqa/avcc/web/' 
-            
+
+**5) Database**
+
+        $ php app/console doctrine:schema:update --force --dump-sql
+
+
 
 [Next: Sphinx Configuration](sphinx.md)
 

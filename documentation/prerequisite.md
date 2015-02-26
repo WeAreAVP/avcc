@@ -24,7 +24,7 @@ Framework
 ---------
 
 * **Symfony2**
- * Version 2.3
+ * Version 2.3.22
 
 Language
 ---------
