@@ -18,8 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerAware;
  * It uses SphinxQL.
  *
  */
-class SphinxSearch extends ContainerAware
-{
+class SphinxSearch extends ContainerAware {
 
     /**
      * Connection for sphinxQL.
@@ -61,8 +60,7 @@ class SphinxSearch extends ContainerAware
      * @param integer       $recordId
      * @param integer       $recordTypeId
      */
-    public function __construct(EntityManager $entityManager, array $sphinxInfo, $recordId = null, $recordTypeId = null)
-    {
+    public function __construct(EntityManager $entityManager, array $sphinxInfo, $recordId = null, $recordTypeId = null) {
         $this->entityManager = $entityManager;
         $this->recordId = $recordId;
         $this->recordTypeId = $recordTypeId;
@@ -78,8 +76,7 @@ class SphinxSearch extends ContainerAware
      *
      * @return array on count of records.
      */
-    public function insert()
-    {
+    public function insert() {
         $sphinxFields = new SphinxFields();
         $data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
         $sq = SphinxQL::create($this->conn)->insert()->into($this->indexName);
@@ -93,8 +90,7 @@ class SphinxSearch extends ContainerAware
      *
      * @return array on count of records.
      */
-    public function replace()
-    {
+    public function replace() {
         $sphinxFields = new SphinxFields();
         $data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
         $sq = SphinxQL::create($this->conn)->replace()->into($this->indexName);
@@ -115,8 +111,7 @@ class SphinxSearch extends ContainerAware
      *
      * @return array
      */
-    public function select($user, $offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null)
-    {
+    public function select($user, $offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null) {
         $sq = SphinxQL::create($this->conn);
         $sq->select()
                 ->from($this->indexName);
@@ -142,8 +137,7 @@ class SphinxSearch extends ContainerAware
      *
      * @return array
      */
-    public function facetSelect($facetColumn, $user, $criteria = null, $parentFacet = false, $orderByColumnName = null, $groupByColumnName = null)
-    {
+    public function facetSelect($facetColumn, $user, $criteria = null, $parentFacet = false, $orderByColumnName = null, $groupByColumnName = null) {
         $sq = SphinxQL::create($this->conn)
                 ->select($facetColumn, SphinxQL::expr('count(*) AS total'))
                 ->from($this->indexName);
@@ -178,8 +172,7 @@ class SphinxSearch extends ContainerAware
      *
      * @return void
      */
-    public function whereClause($criteria, $sq)
-    {
+    public function whereClause($criteria, $sq) {
         foreach ($criteria as $key => $value) {
             if ($key == 'is_review') {
                 if ($value == 1) {
@@ -198,8 +191,7 @@ class SphinxSearch extends ContainerAware
         }
     }
 
-    public function removeEmpty($facet, $index)
-    {
+    public function removeEmpty($facet, $index) {
         $result = array();
         foreach ($facet as $key => $value) {
             foreach ($value as $column => $row) {
@@ -219,8 +211,7 @@ class SphinxSearch extends ContainerAware
      *
      * @return array
      */
-    public function getMeta($user, $criteria = null)
-    {
+    public function getMeta($user, $criteria = null) {
         $sq = SphinxQL::create($this->conn);
         $sq->select('*')
                 ->from($this->indexName);
@@ -236,8 +227,7 @@ class SphinxSearch extends ContainerAware
         return $result;
     }
 
-    protected function roleCriteria($user, $sq)
-    {
+    protected function roleCriteria($user, $sq) {
         if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
             if (!in_array("ROLE_MANAGER", $user->getRoles()) && $user->getUserProjects()) {
                 $projectIdArr = null;
@@ -263,8 +253,7 @@ class SphinxSearch extends ContainerAware
      *
      * @return array
      */
-    public function facetDurationSumSelect($facetColumn, $user, $criteria = null, $parentFacet = false)
-    {
+    public function facetDurationSumSelect($facetColumn, $user, $criteria = null, $parentFacet = false) {
         $sq = SphinxQL::create($this->conn)
                 ->select($facetColumn, SphinxQL::expr('count(*) AS total'), SphinxQL::expr('sum(content_duration) AS sum_content_duration'), SphinxQL::expr('width'))
                 ->from($this->indexName);
@@ -289,8 +278,7 @@ class SphinxSearch extends ContainerAware
      *
      * @return array
      */
-    public function facetWidthSelect($facetColumn, $user, $criteria = null, $parentFacet = false)
-    {
+    public function facetWidthSelect($facetColumn, $user, $criteria = null, $parentFacet = false) {
         $sq = SphinxQL::create($this->conn)
                 ->select($facetColumn, SphinxQL::expr('count(*) AS total'), SphinxQL::expr('width'))
                 ->from($this->indexName);
@@ -303,6 +291,14 @@ class SphinxSearch extends ContainerAware
                 ->orderBy($facetColumn, 'asc');
         $sq->limit(0, 1000);
 
+        return $sq->execute();
+    }
+
+    public function search() {
+        $sq = SphinxQL::create($this->conn);
+        $sq->select()
+                ->from($this->indexName);
+        $sq->where('id', "=", $this->recordId);
         return $sq->execute();
     }
 

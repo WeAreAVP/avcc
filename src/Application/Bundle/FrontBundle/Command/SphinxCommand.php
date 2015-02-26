@@ -22,25 +22,19 @@ class SphinxCommand extends ContainerAwareCommand {
         $shpinxInfo = $this->getSphinxInfo();
 
         foreach ($records as $record) {
-
-//            $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-//            $searchOn = $this->criteria();
-//            $criteria = $searchOn['criteriaArr'];
-//            $result = $sphinxSearch->select($this->getUser(), $offset, $limit, $sortIndex, $sortOrder, $criteria);
-
-
-            $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $record->getId(), 1);
-            $output->writeln($sphinxSearch);
-            exit;
-            $sphinxSearch->insert();
-
-            $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $record->getId(), 1);
-            $sphinxSearch->replace();
-
             $recordId = $record->getId();
-            $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId, $record->getMediaType()->getId());
-            $row = $sphinxSearch->insert();
-            $output->writeln("Inserted record -- " . $recordId . '<br />');
+            $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId);
+            $result = $sphinxSearch->search();
+            $output->writeln("record -- " . count($result) . '<br />');
+//            if (count($result) == 0) {
+//                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId , $record->getMediaType()->getId());
+//                $sphinxSearch->insert();
+//                $output->writeln("Inserted record -- " . $recordId . '<br />');
+//            } else {
+//                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId,  $record->getMediaType()->getId());
+//                $sphinxSearch->replace();
+//                $output->writeln("Updated record -- " . $recordId . '<br />');
+//            }
         }
         exit;
     }
