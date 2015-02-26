@@ -19,7 +19,7 @@ Application is build in PHP Framework **[Symfony2] (http://symfony.com)**
 
 **3) Composer**
 
-Composer is a tool for dependency management in PHP. It allows to declare the dependent libraries and install them for you.
+Composer is a tool for dependency management in php. It allows to declare the dependent libraries and install them.
 
   **Steps to install dependent libraries**
 
