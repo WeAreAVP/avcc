@@ -7,7 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 
-class BackupCommand extends ContainerAwareCommand {
+class SphinxCommand extends ContainerAwareCommand {
 
     protected function configure() {
         $this
