@@ -20,26 +20,19 @@ class SphinxCommand extends ContainerAwareCommand {
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $records = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
         $shpinxInfo = $this->getSphinxInfo();
-
         foreach ($records as $record) {
             $recordId = $record->getId();
             $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId);
             $result = $sphinxSearch->search();
-            $output->writeln("record -- " . $recordId . ' count == '. count($result));
-             if ($result) {
-                 $output->writeln("record found");
-             }else{
-                 $output->writeln("record not found ");
-             }
-//            if (count($result) == 0) {
-//                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId , $record->getMediaType()->getId());
-//                $sphinxSearch->insert();
-//                $output->writeln("Inserted record -- " . $recordId . '<br />');
-//            } else {
-//                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId,  $record->getMediaType()->getId());
-//                $sphinxSearch->replace();
-//                $output->writeln("Updated record -- " . $recordId . '<br />');
-//            }
+            if (count($result) == 0) {
+                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId , $record->getMediaType()->getId());
+                $sphinxSearch->insert();
+                $output->writeln("Inserted record -- " . $recordId);
+            } else {
+                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId,  $record->getMediaType()->getId());
+                $sphinxSearch->replace();
+                $output->writeln("Updated record -- " . $recordId);
+            }
         }
         exit;
     }
