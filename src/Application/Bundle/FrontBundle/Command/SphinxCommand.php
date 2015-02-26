@@ -25,7 +25,12 @@ class SphinxCommand extends ContainerAwareCommand {
             $recordId = $record->getId();
             $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId);
             $result = $sphinxSearch->search();
-            $output->writeln("record -- " . count($result) . '<br />');
+            $output->writeln("record -- " . $recordId . ' count == '. count($result));
+             if ($result) {
+                 $output->writeln("record found");
+             }else{
+                 $output->writeln("record not found ");
+             }
 //            if (count($result) == 0) {
 //                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId , $record->getMediaType()->getId());
 //                $sphinxSearch->insert();
