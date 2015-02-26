@@ -33,7 +33,7 @@ Restart sphinx service.
 
 Go in project directory and insert records data.
 
-	$ php index.php sphinx carriers_insert
+	$ php app/console avcc:sphinx
 
 Visit http://sphinxsearch.com/ for more detail
 

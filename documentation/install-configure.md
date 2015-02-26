@@ -34,8 +34,6 @@ Application is build in PHP Framework **[Symfony2] (http://symfony.com)**
 	source documentation/database/schema.sql
 
 **4) Application configuration variable (app/config/parameter.yml.dist)**
-  
-  Rename file parameter.yml.dist to parameter.yml
 
         database_driver:   pdo_mysql
         database_host:     127.0.0.1

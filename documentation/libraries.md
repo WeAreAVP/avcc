@@ -6,6 +6,8 @@ Libraries
 PHP Libraries used.
 
 * phpexcel
+* Sphinx RT
+* JMSQueueJobBundle
 
 Javascript Libraries used.
 

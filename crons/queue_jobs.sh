@@ -15,8 +15,8 @@
 #source /root/.bash_profile
 
 #HOST=`/bin/hostname`
-PID_FILE="PIDs/export_csv.pid"
-OUTPUT_FILE="cronlogs/export_csv.log"
+PID_FILE="PIDs/queue_jobs.pid"
+OUTPUT_FILE="cronlogs/queue_jobs.log"
 BASEDIR="/home/avccqa/avcc/"
 DATE=`date`
 
