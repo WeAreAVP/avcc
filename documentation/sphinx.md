@@ -19,19 +19,7 @@ Sphinx
 
 ###Re-index Sphinx
 
-First you need to remove old index files. Path of files is `/var/lib/sphinx/`.
-
-You should be in data directory.
-
-If you want to re-index records index.
-	
-	$ rm -rf records.*
-
-Restart sphinx service.
-
-	$ sudo /etc/init.d/sphinxsearch restart
-
-Go in project directory and insert records data.
+If you want to re-index records index run command
 
 	$ php app/console avcc:sphinx
 
