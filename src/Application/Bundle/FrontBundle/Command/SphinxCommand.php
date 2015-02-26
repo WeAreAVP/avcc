@@ -23,7 +23,7 @@ class SphinxCommand extends ContainerAwareCommand {
         foreach ($records as $record) {
             $recordId = $record->getId();
             $output->writeln("record -- ". $recordId.'-- mediatype--' . $record->getMediaType()->getId());
-            $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId);
+            $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId, $record->getMediaType()->getId());
             $result = $sphinxSearch->search();
             if (count($result) == 0) {
                 $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId , $record->getMediaType()->getId());
