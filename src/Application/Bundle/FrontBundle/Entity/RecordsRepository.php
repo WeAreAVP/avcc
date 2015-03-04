@@ -92,11 +92,9 @@ class RecordsRepository extends EntityRepository {
     }
 
     public function findOrganizationUniqueRecords($organizationID, $unique_id, $id) {
-        echo '<br> id of record query == '.$id;
         if ($id == 0) {
             $where = 'WHERE o.id =  :organization AND r.uniqueId = :unique';
         } else {
-            echo 'rimi';
             $where = 'WHERE o.id =  :organization AND r.uniqueId = :unique AND r.id != :id';
         }
         $query = $this->getEntityManager()
@@ -107,7 +105,6 @@ class RecordsRepository extends EntityRepository {
         $query->setParameter('organization', $organizationID);
         $query->setParameter('unique', $unique_id);
         if ($id != 0) {
-            echo ' dying';
             $query->setParameter('id', $id);
         }
         return $query->getResult();
