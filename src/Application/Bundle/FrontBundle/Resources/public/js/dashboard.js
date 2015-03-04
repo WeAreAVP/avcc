@@ -222,7 +222,7 @@ function Dashboard() {
                         $('#audiolinear').html(response[0].Audio.linearFeet);
                         $('#audiofile').html(response[0].Audio.fileSize);
                     }
-                    if (typeof response[1] !== "undefined") {
+                    if (typeof response[1] !== "undefined" && response[1].Video) {
                         $('#videoTotal').html(response[1].Video.totalRecords);
                         $('#videolinear').html(response[1].Video.linearFeet);
                         $('#videofile').html(response[1].Video.fileSize);
