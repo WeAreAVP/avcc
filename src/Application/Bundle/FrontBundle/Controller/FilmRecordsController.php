@@ -372,11 +372,11 @@ class FilmRecordsController extends Controller {
         $record = $request->request->get('application_bundle_frontbundle_filmrecords');
         $unique = $record['record']['uniqueId'];
         $project_id = $record['record']['project'];
-        if(empty($project_id) || $project_id == ''){
+        if (empty($project_id) || $project_id == '') {
             return '';
         }
         $user = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('project' => $project_id));
-        if ($user) {
+        if (count($user) != 0) {
             $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecords($user->getProject()->getOrganization()->getId(), $unique, $id);
             if (count($records) == 0) {
                 return '';

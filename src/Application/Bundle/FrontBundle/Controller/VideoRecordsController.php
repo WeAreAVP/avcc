@@ -359,7 +359,7 @@ class VideoRecordsController extends Controller {
             return '';
         }
         $user = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('project' => $project_id));
-        if ($user) {
+        if (count($user) != 0) {
             $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecords($user->getProject()->getOrganization()->getId(), $unique, $id);
             if (count($records) == 0) {
                 return '';
