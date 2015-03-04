@@ -92,6 +92,7 @@ class RecordsRepository extends EntityRepository {
     }
 
     public function findOrganizationUniqueRecords($organizationID, $unique_id, $id) {
+        
         if ($id == 0) {
             $where = 'WHERE o.id =  :organization AND r.uniqueId = :unique';
         } else {

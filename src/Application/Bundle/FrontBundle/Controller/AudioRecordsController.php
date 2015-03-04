@@ -563,6 +563,7 @@ class AudioRecordsController extends Controller {
     }
 
     public function checkUniqueId(Request $request, $id = 0) {
+        echo '<br> id of record == '.$id;
         $em = $this->getDoctrine()->getManager();
         $record = $request->request->get('application_bundle_frontbundle_audiorecords');
         $unique = $record['record']['uniqueId'];
@@ -571,14 +572,17 @@ class AudioRecordsController extends Controller {
             return '';
         }
         $user = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('project' => $project_id));
+        echo '<br> count == '.count($user);
         if (count($user) != 0) {
             $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecords($user->getProject()->getOrganization()->getId(), $unique, $id);
+            echo '<br> count2 == '.count($records);
             if (count($records) == 0) {
                 return '';
             } else {
                 return 'unique id not unique';
             }
         }
+        exit;
         return '';
     }
 
