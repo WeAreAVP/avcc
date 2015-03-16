@@ -114,6 +114,7 @@
                 record.setAjaxExportUrl('<?php echo $view['router']->generate('record_export') ?>');
                 record.setPageUrl('<?php echo $view['router']->generate('record_list') ?>');
                 record.setSuccessMsg('<?php echo $successPopupMsg; ?>');
+                record.setBulkUrl('<?php echo $view['router']->generate('bulkedit_validation') ?>');
                 record.setErrorMsg('<?php echo $errorPopupMsg; ?>');
                 record.setPopupHeading('<?php echo $heading; ?>');
                 record.bindEvents();

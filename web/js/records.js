@@ -26,6 +26,7 @@ function Records() {
     var successMsg = null;
     var errorMsg = null;
     var popupHeading = null;
+    var bulkUrl = null;
     /**
      * Set the ajax URL of datatable.
      * @param {string} source
@@ -62,6 +63,16 @@ function Records() {
         pageUrl = url;
 
     }
+    /**
+     * Set the bulk url.
+     * @param {string} url
+     * 
+     */
+    this.setBulkUrl = function (url) {
+        bulkUrl = url;
+
+    }
+    
     /**
      * Set the popup message.
      * @param {string} success_msg
@@ -686,7 +697,7 @@ function Records() {
                 $('#bulk_edit_body').html('<img src="/images/ajax-loader.gif" /> <span><b>Processing please wait...</b></span>');
                 $.ajax({
                     type: 'POST',
-                    url: pageUrl + 'bulkedit/validation',
+                    url: bulkUrl,
                     data: {records: selectedrecords},
                     dataType: 'json',
                     success: function (response)
