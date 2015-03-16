@@ -44,7 +44,7 @@
                         </li>
                     </ul>
                 </div>
-            <div style="font-size: 4.8rem; font-weight: 300;   margin-left: 5px;"><a href="<?php echo $view['router']->generate('record_new') ?>"><i class="icon-plus"></i> New</a></div>
+                <div style="font-size: 20px; margin-left: 111px;"><a href="<?php echo $view['router']->generate('record_new') ?>"><i class="icon-plus"></i> New</a></div>
             <?php endif; ?>
             <?php echo $view->render('ApplicationFrontBundle::Records/_modal.html.php', array("organizations" => $organizations)) ?>
             <div class="table-responsive">
@@ -80,10 +80,12 @@
             <input type="hidden" name="exportType" id="exportType" value="" />
         </div>
         <?php $heading = null;
-        $successPopupMsg = null; ?>
+        $successPopupMsg = null;
+        ?>
         <?php foreach ($view['session']->getFlash("report_success") as $message): ?>
             <?php $successPopupMsg = $message['message'];
-            $heading = $message['heading']; ?>
+            $heading = $message['heading'];
+            ?>
             <?php
         endforeach;
         $app->getSession()->remove('report_success');
@@ -91,7 +93,8 @@
         <?php $errorPopupMsg = null; ?>
         <?php foreach ($view['session']->getFlash("report_error") as $message): ?>
             <?php $errorPopupMsg = $message['message'];
-            $heading = $message['heading']; ?>
+            $heading = $message['heading'];
+            ?>
             <?php
         endforeach;
         $app->getSession()->remove('report_error');

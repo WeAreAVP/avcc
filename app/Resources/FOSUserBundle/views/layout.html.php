@@ -62,6 +62,7 @@
                                         <li><a href="<?php echo $view['router']->generate('organizations') ?>">Organization</a></li>
                                         <li><a href="<?php echo $view['router']->generate('field_settings') ?>">Field Settings</a></li>
                                         <li><a href="<?php echo $view['router']->generate('field_settings_backup') ?>">Enable Backup</a></li>
+                                         <li><a class="" href="<?php echo $view['router']->generate('projects') ?>">Projects</a></li>
                                     </ul>
                                 </li>
                             </ul>
