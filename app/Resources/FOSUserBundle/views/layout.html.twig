@@ -24,7 +24,7 @@
             <link rel="stylesheet" href="{{ asset('css/tableSorter.css') }}" />
             <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
         {% endblock %}
-        
+
         <base href="{{ app.request.getSchemeAndHttpHost() }}"/>
     </head>
 
@@ -148,6 +148,23 @@
             <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
             <script src="{{ asset('js/jquery.simplemodal.1.4.4.min.js') }}"></script>
             <script src="{{ asset('js/jquery.tablesorter.js') }}"></script>
+            {% if ga_tracking %}
+                <script>
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r;
+                        i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date();
+                        a = s.createElement(o),
+                                m = s.getElementsByTagName(o)[0];
+                        a.async = 1;
+                        a.src = g;
+                        m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+                    ga('create', {{ga_tracking}}, 'auto');
+                    ga('send', 'pageview');
+                </script>
+            {%endif%}
             <script type="text/javascript">
                 setTimeout(function () {
                     $('.text-success').hide();

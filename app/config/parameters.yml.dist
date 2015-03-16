@@ -18,3 +18,4 @@ parameters:
         indexName: records
     baseUrl: 'http://avccqa.avpreserve.com/' 
     webUrl : '/home/avccqa/avcc/web/'
+    ga_tracking: UA-xxxxx-x
