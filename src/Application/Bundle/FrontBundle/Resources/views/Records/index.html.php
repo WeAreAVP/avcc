@@ -44,7 +44,7 @@
                         </li>
                     </ul>
                 </div>
-            <div><a href="<?php echo $view['router']->generate('record_new') ?>"><i class="icon-plus"></i> New</a></div>
+            <div style="font-size: 4.8rem; font-weight: 300;   margin-left: 5px;"><a href="<?php echo $view['router']->generate('record_new') ?>"><i class="icon-plus"></i> New</a></div>
             <?php endif; ?>
             <?php echo $view->render('ApplicationFrontBundle::Records/_modal.html.php', array("organizations" => $organizations)) ?>
             <div class="table-responsive">
