@@ -62,7 +62,7 @@
                                         <li><a href="<?php echo $view['router']->generate('organizations') ?>">Organization</a></li>
                                         <li><a href="<?php echo $view['router']->generate('field_settings') ?>">Field Settings</a></li>
                                         <li><a href="<?php echo $view['router']->generate('field_settings_backup') ?>">Enable Backup</a></li>
-                                         <li><a class="" href="<?php echo $view['router']->generate('projects') ?>">Projects</a></li>
+                                        <li><a class="" href="<?php echo $view['router']->generate('projects') ?>">Projects</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -100,15 +100,8 @@
                                 </li>
                             </ul>
                         <?php endif ?>
-                        
-                        <a class="element1 pull-menu" href="#"></a>
-                        <ul class="element-menu place-right" style="">
-                            <li>
-                                <a class="" href="<?php echo $view['router']->generate('projects') ?>">Projects</a>
 
-                            </li>
-                        </ul>
-						<a class="element1 pull-menu" href="#"></a>
+                        <a class="element1 pull-menu" href="#"></a>
                         <ul class="element-menu place-right" style="">
                             <li>
                                 <a class="" href="<?php echo $view['router']->generate('report') ?>">Reports</a>
@@ -148,16 +141,23 @@
         <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/chosen.jquery.js') ?>"></script>
         <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/jquery.mCustomScrollbar.concat.min.js') ?>"></script>
         <script type="text/javascript" src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-       <?php if($view->container->parameters['ga_tracking']){ ?>
+        <?php if ($view->container->parameters['ga_tracking']) { ?>
             <script>
-                (function(i, s, o, g, r, a, m){i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function(){
-                (i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date(); a = s.createElement(o),
-                        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+                (function (i, s, o, g, r, a, m) {
+                    i['GoogleAnalyticsObject'] = r;
+                    i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+                    a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0];
+                    a.async = 1;
+                    a.src = g;
+                    m.parentNode.insertBefore(a, m)
                 })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-                        ga('create', '<?php echo $view->container->parameters['ga_tracking']; ?>' , 'auto');
-                        ga('send', 'pageview');
+                ga('create', '<?php echo $view->container->parameters['ga_tracking']; ?>', 'auto');
+                ga('send', 'pageview');
             </script>
-        <?php } ?>
+<?php } ?>
         <script type="text/javascript">
             setTimeout(function () {
                 $('.text-success').hide();
@@ -167,8 +167,8 @@
             });
 
         </script>
-        <?php $view['slots']->stop() ?>
-        <?php $view['slots']->output('javascripts') ?>
-        <?php $view['slots']->output('view_javascripts') ?>
+<?php $view['slots']->stop() ?>
+<?php $view['slots']->output('javascripts') ?>
+<?php $view['slots']->output('view_javascripts') ?>
     </body>
 </html>

@@ -14,10 +14,6 @@
                 <div class="button-dropdown place-left">
                     <button class="dropdown-toggle">Operations</button>
                     <ul class="dropdown-menu" data-role="dropdown">
-
-                        <li>
-                            <a href="<?php echo $view['router']->generate('record_new') ?>">Add Record</a>
-                        </li>
                         <li>
                             <a class="dropdown-toggle" href="#">Export</a>
                             <ul class="dropdown-menu" data-role="dropdown">
@@ -44,7 +40,7 @@
                         </li>
                     </ul>
                 </div>
-                <div style="font-size: 20px; margin-left: 111px;"><a href="<?php echo $view['router']->generate('record_new') ?>"><i class="icon-plus"></i> New</a></div>
+                <div style="font-size: 20px; margin-left: 11px; float: left;"><a href="<?php echo $view['router']->generate('record_new') ?>"><i class="icon-plus"></i> New</a></div>
             <?php endif; ?>
             <?php echo $view->render('ApplicationFrontBundle::Records/_modal.html.php', array("organizations" => $organizations)) ?>
             <div class="table-responsive">

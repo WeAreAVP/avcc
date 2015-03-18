@@ -20,8 +20,7 @@ use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
  * Default controller.
  *
  */
-class DefaultController extends Controller
-{
+class DefaultController extends Controller {
 
     /**
      *
@@ -34,8 +33,7 @@ class DefaultController extends Controller
      *
      * @return string
      */
-    public function getParent()
-    {
+    public function getParent() {
         return 'FOSUserBundle';
     }
 
@@ -48,9 +46,7 @@ class DefaultController extends Controller
      *
      * @return type renders index.html.twig template
      */
-    public function indexAction()
-    {
-
+    public function indexAction() {
         $user = $this->container->get('security.context')->getToken()->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
@@ -62,16 +58,16 @@ class DefaultController extends Controller
         } else {
             $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $this->getUser()->getOrganizations()));
         }
-        
+
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
         $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('format', $this->getUser(), null, false, 'media_type', 'media_type'), 'format');
-        
+
         $formatsChart = array();
         foreach ($result as $index => $format) {
             $formatsChart[] = array($format['format'], (int) $format['total']);
         }
-        
+
         return $this->render('ApplicationFrontBundle:Default:index.html.twig', array(
                     'name' => $user->getUsername(),
                     'projects' => $projects,
@@ -87,8 +83,7 @@ class DefaultController extends Controller
      *
      * @return type
      */
-    public function loginAction(Request $request)
-    {
+    public function loginAction(Request $request) {
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();
         // get the error if any (works with forward and redirect -- see below)
@@ -129,8 +124,7 @@ class DefaultController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function renderLogin(array $data)
-    {
+    protected function renderLogin(array $data) {
         $template = sprintf('ApplicationFrontBundle:Default:login.html.twig');
 
         return $this->container->get('templating')->renderResponse($template, $data);
@@ -139,8 +133,7 @@ class DefaultController extends Controller
     /**
      * @throws \RuntimeException
      */
-    public function checkAction()
-    {
+    public function checkAction() {
         throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
     }
 
@@ -151,8 +144,7 @@ class DefaultController extends Controller
      *
      * @return type
      */
-    public function signupAction(Request $request)
-    {
+    public function signupAction(Request $request) {
         $csrfToken = $this->container->has('form.csrf_provider') ? $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate') : null;
         $entity = new Users();
         $form = $this->createForm(new RegistrationFormType(), $entity, array(
@@ -210,8 +202,7 @@ class DefaultController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function renderSignup(array $data)
-    {
+    protected function renderSignup(array $data) {
         $template = sprintf('ApplicationFrontBundle:Default:signup.html.twig');
 
         return $this->container->get('templating')->renderResponse($template, $data);
@@ -226,8 +217,7 @@ class DefaultController extends Controller
      *
      * @return void
      */
-    protected function sendEmailMessage($renderedTemplate, $fromEmail, $toEmail)
-    {
+    protected function sendEmailMessage($renderedTemplate, $fromEmail, $toEmail) {
         // Render the email, use the first line as the subject, and the rest as the body
         $renderedLines = explode("\n", trim($renderedTemplate));
         $subject = $renderedLines[0];

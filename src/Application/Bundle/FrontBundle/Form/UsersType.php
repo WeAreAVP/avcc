@@ -106,9 +106,19 @@ class UsersType extends AbstractType
         } else {
             unset($this->roles[self::$DEFAULT_SUPER_ADMIN_ROLE]);
         }
-
+        
+        $array = $this->user->getRoles();
+        
+        foreach($this->roles as $key => $value){
+            if($key == $array[0]){
+                $newRoles[$key] = $value;
+                break;
+            }else{
+                $newRoles[$key] = $value;
+            }
+        }
         $form->add('roles', 'choice', array(
-            'choices' => $this->roles,
+            'choices' => $newRoles,
             'multiple' => false,
             'mapped' => false,
             'data' => $role

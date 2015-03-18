@@ -19,8 +19,7 @@ use Application\Bundle\FrontBundle\Entity\UserSettings as UserSettings;
  *
  * @Route("/users")
  */
-class UsersController extends Controller
-{
+class UsersController extends Controller {
 
     /**
      * Lists all Users entities.
@@ -30,8 +29,7 @@ class UsersController extends Controller
      * @Template()
      * @return array
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
         $currentUserId = $this->getUser()->getId();
         if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
@@ -39,9 +37,28 @@ class UsersController extends Controller
         } else {
             $entities = $em->getRepository('ApplicationFrontBundle:Users')->getUsersWithoutCurentLoggedIn($currentUserId, $this->getUser()->getOrganizations()->getId());
         }
-
+        $all = array();
+        $currentUserRole = $this->getUser()->getRoles();
+        if ($currentUserRole[0] == 'ROLE_MANAGER') {
+            foreach ($entities as $key => $entity) {
+                $role = $entity->getRoles();
+                if ($role[0] != 'ROLE_SUPER_ADMIN' && $role[0] != 'ROLE_ADMIN') {
+                    $all[$key] = $entity;
+                }
+            }
+        }else if ($currentUserRole[0] == 'ROLE_ADMIN') {
+            foreach ($entities as $key => $entity) {
+                $role = $entity->getRoles();
+                if ($role[0] != 'ROLE_SUPER_ADMIN') {
+                    $all[$key] = $entity;
+                }
+            }
+        }else{
+            $all = $entities;
+        }
+        
         return array(
-            'entities' => $entities,
+            'entities' => $all,
         );
     }
 
@@ -56,8 +73,7 @@ class UsersController extends Controller
      *
      * @return array/redirect to list page
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
 
         $entity = new Users();
         $user = $this->container->get('security.context')->getToken()->getUser();
@@ -97,8 +113,7 @@ class UsersController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Users $entity)
-    {
+    private function createCreateForm(Users $entity) {
         $formOptions = $this->getRoleHierarchy();
         $formOptions['currentUser'] = $this->getUser();
         $form = $this->createForm(new UsersType($formOptions), $entity, array(
@@ -120,8 +135,7 @@ class UsersController extends Controller
      *
      * @return array
      */
-    public function newAction()
-    {
+    public function newAction() {
 
         $entity = new Users();
         $form = $this->createCreateForm($entity);
@@ -148,8 +162,7 @@ class UsersController extends Controller
      * @return array
      *
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Users')->find($id);
@@ -177,8 +190,7 @@ class UsersController extends Controller
      *
      * @return array
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $user = $this->container->get('security.context')->getToken()->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
@@ -208,8 +220,7 @@ class UsersController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(Users $entity)
-    {
+    private function createEditForm(Users $entity) {
         $formOptions = $this->getRoleHierarchy();
         $formOptions['userRole'] = $entity->getRoles();
         $formOptions['currentUser'] = $this->getUser();
@@ -235,8 +246,7 @@ class UsersController extends Controller
      *
      * @return type
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('ApplicationFrontBundle:Users')->find($id);
@@ -277,8 +287,7 @@ class UsersController extends Controller
      *
      * @return redirect to user list page
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -305,8 +314,7 @@ class UsersController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
                         ->setAction($this->generateUrl('users_delete', array('id' => $id)))
                         ->setMethod('DELETE')
@@ -319,11 +327,11 @@ class UsersController extends Controller
      *
      * @return roles array
      */
-    private function getRoleHierarchy()
-    {
+    private function getRoleHierarchy() {
         $rolesChoices = array();
 
         $roles = $this->container->getParameter('security.role_hierarchy.roles');
+
         foreach ($roles as $role => $inheritedRoles) {
             foreach ($inheritedRoles as $id => $inheritedRole) {
                 if (!array_key_exists($inheritedRole, $rolesChoices)) {
@@ -344,7 +352,9 @@ class UsersController extends Controller
         }
         $roleOptions['role'] = $role;
         $roleOptions['roles'] = $rolesChoices;
-
+//         echo '<pre>';
+//        print_r($roleOptions);
+//        exit;
         return $roleOptions;
     }
 
@@ -358,8 +368,7 @@ class UsersController extends Controller
      * @Template()
      * @return template
      */
-    public function getOrganizationProjectsAction($orgId)
-    {
+    public function getOrganizationProjectsAction($orgId) {
         $em = $this->getDoctrine()->getManager();
         $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $orgId));
 
@@ -379,17 +388,16 @@ class UsersController extends Controller
      * @Template()
      * @return redirection
      */
-    public function changeStatusAction($id, $status)
-    {
+    public function changeStatusAction($id, $status) {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('ApplicationFrontBundle:Users')->find($id);
-        if($status == 1){
+        if ($status == 1) {
             $user->setEnabled(0);
             $this->get('session')->getFlashBag()->add('success', 'User disabled succesfully.');
-        }else{
+        } else {
             $user->setEnabled(1);
             $this->get('session')->getFlashBag()->add('success', 'User activated succesfully.');
-        }        
+        }
         $em->flush();
         return $this->redirect($this->generateUrl('users'));
     }
