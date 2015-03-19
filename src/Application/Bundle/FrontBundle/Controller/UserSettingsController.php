@@ -8,9 +8,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\UserSettings;
+use Application\Bundle\FrontBundle\Entity\FieldSettings;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\Form\UserSettingsType;
 use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
+use Application\Bundle\FrontBundle\Entity\Records;
+use Application\Bundle\FrontBundle\Entity\Projects;
 use JMS\JobQueueBundle\Entity\Job;
 use DateInterval;
 use DateTime;
@@ -20,8 +23,7 @@ use DateTime;
  *
  * @Route("/fieldsettings")
  */
-class UserSettingsController extends Controller
-{
+class UserSettingsController extends Controller {
 
     /**
      * User settings
@@ -31,8 +33,7 @@ class UserSettingsController extends Controller
      * @Template()
      * @return array
      */
-    public function setupCronAction()
-    {
+    public function setupCronAction() {
         $job = new Job('avcc:backup-report');
         $date = new DateTime();
         $date->add(new DateInterval('PT1M'));
@@ -43,18 +44,34 @@ class UserSettingsController extends Controller
 
     /**
      * User settings
-     *
+     *  
+     * @param Request $request
+     * 
      * @Route("/", name="field_settings")
      * @Method("GET")
      * @Template()
      * @return array
      */
-    public function indexAction()
-    {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-
+        $id = '';
         $entities = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $this->getUser()->getId()));
 
+        if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
+            $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $this->getUser()->getOrganizations()->getId()));
+        } else {
+            $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
+        }
+        foreach ($projects as $project) {
+            $proj[$project->getId()] = $project->getName();
+        }
+
+        if ($request->getMethod() == 'GET' && $request->query->get('project_id')) {
+            $id = $request->query->get('project_id');
+            echo $id;
+            exit;
+        }
+        
         if (!$entities) {
             $fObj = new DefaultFields();
             $viewSettings = $fObj->getDefaultOrder();
@@ -65,6 +82,8 @@ class UserSettingsController extends Controller
 
         return array(
             'entities' => $userViewSettings,
+            'project' => $proj,
+            'proj_id' => $id,
         );
     }
 
@@ -78,8 +97,7 @@ class UserSettingsController extends Controller
      * @Template()
      * @return array
      */
-    public function updateAction(Request $request)
-    {
+    public function updateAction(Request $request) {
         $success = FALSE;
         $reload = FALSE;
         if ($request->getMethod() == 'POST') {
@@ -121,8 +139,7 @@ class UserSettingsController extends Controller
      * @Template()
      * @return array
      */
-    public function backupAction(Request $request)
-    {
+    public function backupAction(Request $request) {
         $session = $request->getSession();
         if ($session->get('error')) {
             $error = $session->get('error');
@@ -159,8 +176,7 @@ class UserSettingsController extends Controller
      *
      * @return type
      */
-    public function createNewForm(UserSettings $entity)
-    {
+    public function createNewForm(UserSettings $entity) {
         $form = $this->createForm(new UserSettingsType(), $entity, array(
             'action' => $this->generateUrl('new_backup'),
             'method' => 'POST',
@@ -177,8 +193,7 @@ class UserSettingsController extends Controller
      *
      * @return type
      */
-    public function createEditForm(UserSettings $userEntity)
-    {
+    public function createEditForm(UserSettings $userEntity) {
         $form = $this->createForm(new UserSettingsType(), $userEntity, array(
             'action' => $this->generateUrl('edit_backup', array('id' => $userEntity->getId())),
             'method' => 'POST',
@@ -197,8 +212,7 @@ class UserSettingsController extends Controller
      * @Template()
      * @return array
      */
-    public function updateFormAction(Request $request, $id)
-    {
+    public function updateFormAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('ApplicationFrontBundle:UserSettings')->find($id);
         if (!$entity) {
@@ -241,8 +255,7 @@ class UserSettingsController extends Controller
      * @Template()
      * @return array
      */
-    public function newFormAction(Request $request)
-    {
+    public function newFormAction(Request $request) {
         $entity = new UserSettings();
         $form = $this->createNewForm($entity);
         $form->handleRequest($request);
@@ -279,8 +292,7 @@ class UserSettingsController extends Controller
      * @Route("/addBackup", name="backup_record")
      * @Template("ApplicationFrontBundle:UserSettings:default.html.php")
      */
-    public function addBackupRecordInJobAction()
-    {
+    public function addBackupRecordInJobAction() {
         $em = $this->getDoctrine()->getManager();
         $job = new Job('avcc:backup-report');
         $date = new DateTime();

@@ -88,3 +88,22 @@ function saveEnableBackup()
         console.log('done done done :) :P');
     }
 }
+
+function updateView(){
+    var project_id = $('#project_list').val();
+    $.ajax({
+        type: 'GET',
+        url: site_url + '/fieldsettings/',
+        async: false,
+        data: {
+            project_id: project_id
+        },
+        dataType: 'json',
+        success: function(response) {
+            console.log(response);
+            if (response.reload) {
+               // window.location.reload();
+            }
+        }
+    });
+}

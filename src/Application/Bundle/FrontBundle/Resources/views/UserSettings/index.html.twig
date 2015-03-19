@@ -1,8 +1,16 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block body %}
-    <h1>Field Settings
-    </h1><br />
+    <h1>Field Settings</h1>
+    <div class="pull-right">
+        <select id="project_list" name="project_list" onChange="updateView()">
+            <option value="">Select Project</option>
+            {% for key,value in project %}
+                <option value="{{ key }}">{{ value }}</option>
+            {% endfor %} 
+        </select>
+    </div>
+    <br />
     <div data-role="tab-control" class="tab-control">
         <ul class="tabs">
             <li class="active"><a href="#_audio">Audio</a></li>
@@ -51,46 +59,46 @@
                                             <td class="text-center">{% if video.is_required==false %}
                                                 <input type="checkbox" name="video{{loop.index}}" id="video{{loop.index}}" {% if video.hidden==1 %} checked='checked' {% endif%} onclick="hideIt(this)" vlaue="1" />
                                                 {% endif %}
-                                            </td>
-
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                            </p>
-                        </div>
-                        <div id="_film" class="frame" style="display: none;">
-                            <p>
-                            <table class="table bordered sortable" id="sortableFilm">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th style="width:30px;">Show/Hide</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for film in entities.film %}
-                                        <tr id="{{ film.field }}" class="sortTr" data-sort="{{ film.field }}" data-hide_it="{{film.hidden}}" data-title="{{ film.title }}"  data-is_required="{{film.is_required}}">
-                                            <td><i class="icon-menu on-left"></i>&nbsp;
-{{ film.title }}
-                                            </td>
-                                            <td class="text-center">
-                                                {% if film.is_required==false %}
-                                                    <input type="checkbox" name="film{{loop.index}}" id="film{{loop.index}}" {% if film.hidden==1 %} checked='checked' {% endif%} onclick="hideIt(this)" vlaue="1" />
-                                                {% endif %}
                                                 </td>
-                                        </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                            </p>
-                        </div>
-                    </div><br />
-                    <p><input type="button" id="updatesettings" class="button primary" onclick="updateSettings();" value="Update" /></p>
 
-                </div>
-                <script type="text/javascript">
-                    var site_url = "{{ app.request.baseUrl }}";
-                </script>
-                <script src="{{ asset('js/user-settings.js') }}"></script>
-                {% endblock %}
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        </p>
+                                    </div>
+                                    <div id="_film" class="frame" style="display: none;">
+                                        <p>
+                                        <table class="table bordered sortable" id="sortableFilm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Name</th>
+                                                    <th style="width:30px;">Show/Hide</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for film in entities.film %}
+                                                    <tr id="{{ film.field }}" class="sortTr" data-sort="{{ film.field }}" data-hide_it="{{film.hidden}}" data-title="{{ film.title }}"  data-is_required="{{film.is_required}}">
+                                                        <td><i class="icon-menu on-left"></i>&nbsp;
+                                                            {{ film.title }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {% if film.is_required==false %}
+                                                                <input type="checkbox" name="film{{loop.index}}" id="film{{loop.index}}" {% if film.hidden==1 %} checked='checked' {% endif%} onclick="hideIt(this)" vlaue="1" />
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        </p>
+                                    </div>
+                                </div><br />
+                                <p><input type="button" id="updatesettings" class="button primary" onclick="updateSettings();" value="Update" /></p>
+
+                            </div>
+                            <script type="text/javascript">
+                                var site_url = "{{ app.request.baseUrl }}";
+                            </script>
+                            <script src="{{ asset('js/user-settings.js') }}"></script>
+                            {% endblock %}
