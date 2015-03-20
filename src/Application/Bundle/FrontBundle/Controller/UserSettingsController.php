@@ -48,14 +48,15 @@ class UserSettingsController extends Controller {
      * @param Request $request
      * 
      * @Route("/", name="field_settings")
+     * @Route("/{projectId}", name="field_settings")
      * @Method("GET")
      * @Template()
      * @return array
      */
-    public function indexAction(Request $request) {
+    public function indexAction($projectId = null) {
         $em = $this->getDoctrine()->getManager();
         $id = '';
-        $entities = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $this->getUser()->getId()));
+
 
         if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
             $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $this->getUser()->getOrganizations()->getId()));
@@ -66,18 +67,31 @@ class UserSettingsController extends Controller {
             $proj[$project->getId()] = $project->getName();
         }
 
-        if ($request->getMethod() == 'GET' && $request->query->get('project_id')) {
-            $id = $request->query->get('project_id');
-            echo $id;
-            exit;
+        if ($projectId) {
+            $entities = $em->getRepository('ApplicationFrontBundle:FieldSettings')->findOneBy(array('user' => $this->getUser()->getId(), 'project' => $projectId));
+            if (!$entities) {
+                $entity = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $this->getUser()->getId()));
+                echo count($entity);
+                exit;
+                if (!$entity) {
+                    $fObj = new DefaultFields();
+                    $viewSettings = $fObj->getDefaultOrder();
+                } else {
+                    $viewSettings = $entity->getViewSetting();
+                }
+            } else {
+                $viewSettings = $entities->getViewSetting();
+            }
+        } else {
+            $entities = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $this->getUser()->getId()));
+            if (!$entities) {
+                $fObj = new DefaultFields();
+                $viewSettings = $fObj->getDefaultOrder();
+            } else {
+                $viewSettings = $entities->getViewSetting();
+            }
         }
         
-        if (!$entities) {
-            $fObj = new DefaultFields();
-            $viewSettings = $fObj->getDefaultOrder();
-        } else {
-            $viewSettings = $entities->getViewSetting();
-        }
         $userViewSettings = json_decode($viewSettings, true);
 
         return array(

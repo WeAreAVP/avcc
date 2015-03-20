@@ -2,13 +2,18 @@
 
 {% block body %}
     <h1>Field Settings</h1>
-    <div class="pull-right">
-        <select id="project_list" name="project_list" onChange="updateView()">
-            <option value="">Select Project</option>
-            {% for key,value in project %}
-                <option value="{{ key }}">{{ value }}</option>
-            {% endfor %} 
-        </select>
+    <div class="pull-left">        
+        <ul class="element-menu place-right" style="list-style-type: none">
+            <li>
+                <a class="dropdown-toggle" href="{{ path('field_settings') }}"><span class="icon-cog"></span> Projects
+                </a>
+                <ul class="dropdown-menu" data-role="dropdown">
+                    {% for key,value in project %}
+                    <li><a href="{{ path('field_settings') }}/{{key}}">{{value}}</a></li>
+                    {% endfor %} 
+                </ul>
+            </li>
+        </ul>
     </div>
     <br />
     <div data-role="tab-control" class="tab-control">

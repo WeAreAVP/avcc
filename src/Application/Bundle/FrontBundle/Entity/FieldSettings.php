@@ -22,7 +22,7 @@ class FieldSettings
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Users", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="fieldSetting")
+     * @ORM\ManyToOne(targetEntity="Users", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="FieldSettings")
      * @ORM\JoinColumn(
      *     name="user_id",
      *     referencedColumnName="id",
@@ -38,9 +38,8 @@ class FieldSettings
      *
      * @ORM\OneToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Projects")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="project_id", referencedColumnName="id", nullable = false)
+     *   @ORM\JoinColumn(name="project_id", referencedColumnName="id", nullable = false, onDelete="CASCADE")
      * })
-     * @Assert\NotBlank(message="Project is required.")
      */
     private $project;
 
