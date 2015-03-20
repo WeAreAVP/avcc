@@ -22,14 +22,12 @@ class FieldSettings
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Users", cascade={"all","merge","persist","refresh","remove"}, fetch="EAGER", inversedBy="FieldSettings")
-     * @ORM\JoinColumn(
-     *     name="user_id",
-     *     referencedColumnName="id",
-     *     nullable=true,
-     *     onDelete="CASCADE"
-     * )
-     * @var integer
+     * @var \Application\Bundle\FrontBundle\Entity\Users
+     * 
+     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable = false)
+     * })
      */
     private $user;
     
@@ -38,7 +36,7 @@ class FieldSettings
      *
      * @ORM\OneToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Projects")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="project_id", referencedColumnName="id", nullable = false, onDelete="CASCADE")
+     *   @ORM\JoinColumn(name="project_id", referencedColumnName="id", nullable = false)
      * })
      */
     private $project;

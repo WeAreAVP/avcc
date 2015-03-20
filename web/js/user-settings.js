@@ -4,6 +4,14 @@ function updateSettings() {
     var video = new Array();
     var film = new Array();
     var i = 0;
+    var project_id = 0;
+    var path = window.location.href;
+    var split_path = path.split('/');
+    console.log(split_path[5]);
+    if(split_path.length == 6){
+        project_id = split_path[5];
+         console.log('inside');
+    }
     $('#sortableAudio tbody tr').each(function(index, id)
     {
         columnAnchorID = $(this).attr('data-sort');
@@ -57,12 +65,15 @@ function updateSettings() {
         url: site_url + '/fieldsettings/update',
         async: false,
         data: {
-            settings: userSettings
+            settings: userSettings,
+            project_id: project_id
         },
         dataType: 'json',
         success: function(response) {
             console.log(response);
+            
             if (response.reload) {
+                
                 window.location.reload();
             }
         }

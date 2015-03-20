@@ -55,9 +55,8 @@ class UserSettingsController extends Controller {
      */
     public function indexAction($projectId = null) {
         $em = $this->getDoctrine()->getManager();
-        $id = '';
-
-
+        $entities = '';
+        $name = '';
         if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
             $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $this->getUser()->getOrganizations()->getId()));
         } else {
@@ -69,35 +68,28 @@ class UserSettingsController extends Controller {
 
         if ($projectId) {
             $entities = $em->getRepository('ApplicationFrontBundle:FieldSettings')->findOneBy(array('user' => $this->getUser()->getId(), 'project' => $projectId));
-            if (!$entities) {
-                $entity = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $this->getUser()->getId()));
-                echo count($entity);
-                exit;
-                if (!$entity) {
-                    $fObj = new DefaultFields();
-                    $viewSettings = $fObj->getDefaultOrder();
-                } else {
-                    $viewSettings = $entity->getViewSetting();
-                }
-            } else {
-                $viewSettings = $entities->getViewSetting();
-            }
-        } else {
-            $entities = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $this->getUser()->getId()));
-            if (!$entities) {
+            $proj_name = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
+            $name = $proj_name->getName();
+        }
+
+        if (!$entities) {
+            $entity = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $this->getUser()->getId()));
+            if (!$entity) {
                 $fObj = new DefaultFields();
                 $viewSettings = $fObj->getDefaultOrder();
             } else {
-                $viewSettings = $entities->getViewSetting();
+                $viewSettings = $entity->getViewSetting();
             }
+        } else {
+            $viewSettings = $entities->getViewSetting();
         }
-        
+
         $userViewSettings = json_decode($viewSettings, true);
 
         return array(
             'entities' => $userViewSettings,
             'project' => $proj,
-            'proj_id' => $id,
+            'project_name' => ucwords($name),
         );
     }
 
@@ -116,28 +108,55 @@ class UserSettingsController extends Controller {
         $reload = FALSE;
         if ($request->getMethod() == 'POST') {
             $settings = $this->get('request')->request->get('settings');
+            $projectId = $this->get('request')->request->get('project_id');
+            
             $userSetting = json_encode($settings);
             $em = $this->getDoctrine()->getManager();
-            $userEntity = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $this->getUser()->getId()));
-            if ($userEntity) {
-                $userEntity->setViewSetting($userSetting);
-                $userEntity->setUpdatedOnValue(date('Y-m-d h:i:s'));
-                $em->persist($userEntity);
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'Settings updated succesfully.');
-                $success = TRUE;
-                $reload = TRUE;
+            if ($projectId == 0) {
+                $userEntity = $em->getRepository('ApplicationFrontBundle:UserSettings')->findOneBy(array('user' => $this->getUser()->getId()));
+                if ($userEntity) {
+                    $userEntity->setViewSetting($userSetting);
+                    $userEntity->setUpdatedOnValue(date('Y-m-d h:i:s'));
+                    $em->persist($userEntity);
+                    $em->flush();
+                    $this->get('session')->getFlashBag()->add('success', 'Settings updated succesfully.');
+                    $success = TRUE;
+                    $reload = TRUE;
+                } else {
+                    $userEntity = new UserSettings();
+                    $userEntity->setUser($this->getUser());
+                    $userEntity->setViewSetting($userSetting);
+                    $userEntity->setEnableBackup(0);
+                    $userEntity->setCreatedOnValue(date('Y-m-d h:i:s'));
+                    $em->persist($userEntity);
+                    $em->flush();
+                    $this->get('session')->getFlashBag()->add('success', 'Settings added succesfully.');
+                    $success = TRUE;
+                    $reload = TRUE;
+                }
             } else {
-                $userEntity = new UserSettings();
-                $userEntity->setUser($this->getUser());
-                $userEntity->setViewSetting($userSetting);
-                $userEntity->setEnableBackup(0);
-                $userEntity->setCreatedOnValue(date('Y-m-d h:i:s'));
-                $em->persist($userEntity);
-                $em->flush();
-                $this->get('session')->getFlashBag()->add('success', 'Settings added succesfully.');
-                $success = TRUE;
-                $reload = TRUE;
+                $userEntity = $em->getRepository('ApplicationFrontBundle:FieldSettings')->findOneBy(array('user' => $this->getUser()->getId(), 'project' => $projectId));
+                if ($userEntity) {
+                    $userEntity->setViewSetting($userSetting);
+                    $userEntity->setUpdatedOnValue(date('Y-m-d h:i:s'));
+                    $em->persist($userEntity);
+                    $em->flush();
+                    $this->get('session')->getFlashBag()->add('success', 'Settings updated succesfully.');
+                    $success = TRUE;
+                    $reload = TRUE;
+                } else {
+                    $userEntity = new FieldSettings();
+                    $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
+                    $userEntity->setUser($this->getUser());
+                    $userEntity->setProject($project);
+                    $userEntity->setViewSetting($userSetting);
+                    $userEntity->setCreatedOnValue(date('Y-m-d h:i:s'));
+                    $em->persist($userEntity);
+                    $em->flush();
+                    $this->get('session')->getFlashBag()->add('success', 'Settings added succesfully.');
+                    $success = TRUE;
+                    $reload = TRUE;
+                }
             }
         }
         echo json_encode(array('success' => $success, 'reload' => $reload));
