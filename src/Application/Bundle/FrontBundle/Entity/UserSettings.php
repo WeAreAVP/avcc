@@ -36,13 +36,6 @@ class UserSettings
     /**
      * @var string
      *
-     * @ORM\Column(name="view_setting", type="text")
-     */
-    private $viewSetting;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="backup_email", type="text", nullable=true)
      */
     private $backupEmail = null;
@@ -88,30 +81,6 @@ class UserSettings
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Get view setting.
-     *
-     * @return string
-     */
-    public function getViewSetting()
-    {
-        return $this->viewSetting;
-    }
-
-    /**
-     * Set name.
-     *
-     * @param string $viewSetting
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\UserSettings
-     */
-    public function setViewSetting($viewSetting)
-    {
-        $this->viewSetting = $viewSetting;
-
-        return $this;
     }
 
     /**

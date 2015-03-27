@@ -12,8 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
  * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\ProjectsRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Projects
-{
+class Projects {
 
     /**
      * @var integer
@@ -30,6 +29,13 @@ class Projects
      * @ORM\Column(name="name", type="string", length=50)
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="view_setting", type="text", nullable=true)
+     */
+    private $viewSetting;
 
     /**
      * @var \DateTime $createdOn
@@ -80,17 +86,15 @@ class Projects
      */
     private $projectUsers;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->projectUsers = new ArrayCollection();
     }
 
     /**
      * @ORM\PrePersist
      */
-    public function setCreatedOnValue()
-    {
-        if ( ! $this->getCreatedOn()) {
+    public function setCreatedOnValue() {
+        if (!$this->getCreatedOn()) {
             $this->createdOn = new \DateTime();
         }
     }
@@ -98,8 +102,7 @@ class Projects
     /**
      * @ORM\PreUpdate
      */
-    public function setUpdatedOnValue()
-    {
+    public function setUpdatedOnValue() {
         $this->updatedOn = new \DateTime();
     }
 
@@ -108,8 +111,7 @@ class Projects
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->getName();
     }
 
@@ -118,8 +120,7 @@ class Projects
      *
      * @return string
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -128,8 +129,7 @@ class Projects
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -138,8 +138,7 @@ class Projects
      *
      * @return \Datetime
      */
-    public function getCreatedOn()
-    {
+    public function getCreatedOn() {
         return $this->createdOn;
     }
 
@@ -148,8 +147,7 @@ class Projects
      *
      * @return \Datetime
      */
-    public function getUpdatedOn()
-    {
+    public function getUpdatedOn() {
         return $this->updatedOn;
     }
 
@@ -158,8 +156,7 @@ class Projects
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function getOrganization()
-    {
+    public function getOrganization() {
         return $this->organization;
     }
 
@@ -168,8 +165,7 @@ class Projects
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function getUsersCreated()
-    {
+    public function getUsersCreated() {
         return $this->usersCreated;
     }
 
@@ -178,8 +174,7 @@ class Projects
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function getUsersUpdated()
-    {
+    public function getUsersUpdated() {
         return $this->usersUpdated;
     }
 
@@ -190,8 +185,7 @@ class Projects
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -204,8 +198,7 @@ class Projects
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function setCreatedOn(\DateTime $createdOn)
-    {
+    public function setCreatedOn(\DateTime $createdOn) {
         $this->createdOn = $createdOn;
 
         return $this;
@@ -218,8 +211,7 @@ class Projects
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function setUpdatedOn(\DateTime $updatedOn)
-    {
+    public function setUpdatedOn(\DateTime $updatedOn) {
         $this->updatedOn = $updatedOn;
 
         return $this;
@@ -232,8 +224,7 @@ class Projects
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function setOrganization(\Application\Bundle\FrontBundle\Entity\Organizations $organization)
-    {
+    public function setOrganization(\Application\Bundle\FrontBundle\Entity\Organizations $organization) {
         $this->organization = $organization;
 
         return $this;
@@ -246,8 +237,7 @@ class Projects
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated)
-    {
+    public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated) {
         $this->usersCreated = $usersCreated;
 
         return $this;
@@ -260,8 +250,7 @@ class Projects
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated)
-    {
+    public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated) {
         $this->usersUpdated = $usersUpdated;
 
         return $this;
@@ -272,12 +261,11 @@ class Projects
      * @param \Application\Bundle\FrontBundle\Entity\Users $user
      *
      */
-    public function addProjectUsers(\Application\Bundle\FrontBundle\Entity\Users $user)
-    {
-         if (!$this->projectUsers->contains($user)) {
-             $this->projectUsers[] = $user;
-             $user->setUser($this);
-         }
+    public function addProjectUsers(\Application\Bundle\FrontBundle\Entity\Users $user) {
+        if (!$this->projectUsers->contains($user)) {
+            $this->projectUsers[] = $user;
+            $user->setUser($this);
+        }
     }
 
     /**
@@ -285,17 +273,16 @@ class Projects
      * @param \Application\Bundle\FrontBundle\Entity\Users $user
      *
      */
-    public function removeProjectUsers(\Application\Bundle\FrontBundle\Entity\Users $user)
-    {
-         $this->projectUsers->remove($user);
+    public function removeProjectUsers(\Application\Bundle\FrontBundle\Entity\Users $user) {
+        $this->projectUsers->remove($user);
     }
+
     /**
      *
      * @param  \Application\Bundle\FrontBundle\Entity\Users    $u
      * @return \Application\Bundle\FrontBundle\Entity\Projects
      */
-    public function setProjectUsers(\Application\Bundle\FrontBundle\Entity\Users $u)
-    {
+    public function setProjectUsers(\Application\Bundle\FrontBundle\Entity\Users $u) {
         $this->projectUsers = $u;
 
         return $this;
@@ -305,8 +292,30 @@ class Projects
      *
      * @return type
      */
-    public function getProjectUsers()
-    {
+    public function getProjectUsers() {
         return $this->projectUsers;
     }
+
+    /**
+     * Get view setting.
+     *
+     * @return string
+     */
+    public function getViewSetting() {
+        return $this->viewSetting;
+    }
+
+    /**
+     * Set name.
+     *
+     * @param string $viewSetting
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\UserSettings
+     */
+    public function setViewSetting($viewSetting) {
+        $this->viewSetting = $viewSetting;
+
+        return $this;
+    }
+
 }

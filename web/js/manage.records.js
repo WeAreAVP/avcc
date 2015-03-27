@@ -44,6 +44,7 @@ function initialize_records_form() {
         changes = false;
         return true; // return false to cancel form action
     });
+    updateViewSetting();
 }
 
 
@@ -294,7 +295,37 @@ function updateProjects() {
         success: function (response) {
             if (response != "") {
                 $("#project").html(response);
+                var project_id = 0;
+                var path = window.location.href;
+                console.log(path);
+                var split_path = path.split('/');
+                console.log(split_path[split_path.length - 1]);
+                if ($.isNumeric(split_path[split_path.length - 1])) {
+                    project_id = split_path[split_path.length - 1];
+                }
+                console.log(project_id);
+                if(project_id){
+                   $('#project').val(project_id).prop('selected', true); 
+                }
             }
         }
     }); // Ajax Call     
+}
+
+function updateViewSetting() {
+    $('#project').change(function () {
+        var proj_id = $('#project').val();
+        //  console.log(audio);
+        if (proj_id) {
+            var newUrl = viewUrl + proj_id;
+//            $.ajax({
+//                type: "GET",
+//                url: newUrl,
+//                success: function (response) {
+            window.location = newUrl;
+            
+//                }
+//            });
+        }
+    })
 }

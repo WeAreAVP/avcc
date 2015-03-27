@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\Projects;
 use Application\Bundle\FrontBundle\Form\ProjectsType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 
 /**
  * Projects controller.
@@ -61,7 +62,10 @@ class ProjectsController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $fieldsObj = new DefaultFields();
+            $view_settings = $fieldsObj->getDefaultOrder();
             $entity->setUsersCreated($user);
+            $entity->setViewSetting($view_settings);
             $em->persist($entity);
             $em->flush();
 

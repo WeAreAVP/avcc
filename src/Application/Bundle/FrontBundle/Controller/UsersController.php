@@ -85,13 +85,8 @@ class UsersController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
-            $fieldsObj = new DefaultFields();
-            $view_settings = $fieldsObj->getDefaultOrder();
-
             $user_entity = new UserSettings();
             $user_entity->setUser($entity);
-            $user_entity->setViewSetting($view_settings);
             $user_entity->setCreatedOnValue(date('Y-m-d h:i:s'));
             $em->persist($user_entity);
             $em->flush();

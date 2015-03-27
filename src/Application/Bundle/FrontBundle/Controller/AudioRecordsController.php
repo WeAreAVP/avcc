@@ -13,6 +13,7 @@ use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Application\Bundle\FrontBundle\Entity\Projects;
 
 /**
  * AudioRecords controller.
@@ -176,8 +177,18 @@ class AudioRecordsController extends Controller {
             $entity = new AudioRecords();
         }
         $form = $this->createCreateForm($entity, $em, $data);
-        $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
-
+        if($projectId){ 
+            $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
+            if($project->getViewSetting() != null){
+                $userViewSettings = $project->getViewSetting();
+            }else{
+                $userViewSettings = $fieldsObj->getDefaultOrder();
+            }
+        }else{
+            $userViewSettings = $fieldsObj->getDefaultOrder();
+        }
+        
+        $userViewSettings= json_decode($userViewSettings, true);
         return $this->render('ApplicationFrontBundle:AudioRecords:new.html.php', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
@@ -240,7 +251,7 @@ class AudioRecordsController extends Controller {
         $data = $fieldsObj->getData(1, $em, $this->getUser(), null, $entity->getRecord()->getId());
         $editForm = $this->createEditForm($entity, $em, $data);
         $deleteForm = $this->createDeleteForm($id);
-
+        
         $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
 
         return $this->render('ApplicationFrontBundle:AudioRecords:edit.html.php', array(

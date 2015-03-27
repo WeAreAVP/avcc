@@ -7,10 +7,8 @@ function updateSettings() {
     var project_id = 0;
     var path = window.location.href;
     var split_path = path.split('/');
-    console.log(split_path[5]);
-    if(split_path.length == 6){
-        project_id = split_path[5];
-         console.log('inside');
+    if($.isNumeric(split_path[split_path.length - 1])){
+        project_id = split_path[split_path.length - 1];
     }
     $('#sortableAudio tbody tr').each(function(index, id)
     {
