@@ -17,6 +17,7 @@ function initialize_records_form() {
     $.mask.definitions['d'] = '[0-3,x]';
     $.mask.definitions['g'] = '[0-9,x]';
     $("#creationDate, #contentDate").mask("yggg-mg-dg", {optional: true});
+    updateViewSetting();
     updateProjects();
     updateFormat();
     onChangeMediaType();
@@ -44,7 +45,7 @@ function initialize_records_form() {
         changes = false;
         return true; // return false to cancel form action
     });
-    updateViewSetting();
+
 }
 
 
@@ -284,6 +285,14 @@ function closeBtn() {
 }
 
 function updateProjects() {
+    if (projectId) {
+        selectedProject = projectId;
+    }
+    var path = window.location.href;
+    var split_path = path.split('/');
+    if ($.isNumeric(split_path[split_path.length - 1])) {
+        selectedProject = split_path[split_path.length - 1];
+    }
     if (selectedProject) {
         urlProjects = baseUrl + 'getAllProjects/' + selectedProject;
     } else {
@@ -295,21 +304,9 @@ function updateProjects() {
         success: function (response) {
             if (response != "") {
                 $("#project").html(response);
-                var project_id = 0;
-                var path = window.location.href;
-                console.log(path);
-                var split_path = path.split('/');
-                console.log(split_path[split_path.length - 1]);
-                if ($.isNumeric(split_path[split_path.length - 1])) {
-                    project_id = split_path[split_path.length - 1];
-                }
-                console.log(project_id);
-                if(project_id){
-                   $('#project').val(project_id).prop('selected', true); 
-                }
             }
         }
-    }); // Ajax Call     
+    }); // Ajax Call    
 }
 
 function updateViewSetting() {
@@ -317,13 +314,16 @@ function updateViewSetting() {
         var proj_id = $('#project').val();
         //  console.log(audio);
         if (proj_id) {
+            // selectedProject = proj_id;
+            console.log('here');
             var newUrl = viewUrl + proj_id;
+            console.log(newUrl);
 //            $.ajax({
 //                type: "GET",
 //                url: newUrl,
 //                success: function (response) {
             window.location = newUrl;
-            
+
 //                }
 //            });
         }

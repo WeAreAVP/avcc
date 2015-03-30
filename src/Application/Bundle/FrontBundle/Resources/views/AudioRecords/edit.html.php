@@ -42,12 +42,16 @@
 <script type="text/javascript">
     var changes = false;
     var baseUrl = '<?php echo $view['router']->generate('record') ?>';
+    console.log(baseUrl);
     var selectedFormat = '<?php echo ($entity->getRecord() && $entity->getRecord()->getFormat()) ? $entity->getRecord()->getFormat()->getId() : ''; ?>';
     var selectedMediaType = '<?php echo $entity->getRecord()->getMediaType()->getId(); ?>';
     var selectedFormatVersion = '';
     var selectedRS = '<?php echo ($entity->getRecordingSpeed()) ? $entity->getRecordingSpeed()->getId() :'';?>';
     var selectedRD = '<?php echo ($entity->getRecord() && $entity->getRecord()->getReelDiameters()) ? $entity->getRecord()->getReelDiameters()->getId() : ''; ?>';
     var selectedProject = '<?php echo ($entity->getRecord() && $entity->getRecord()->getProject()) ? $entity->getRecord()->getProject()->getId() : ''; ?>';
+
+    var viewUrl = baseUrl + '<?php echo $entity->getId();?>/edit/';
+    var projectId = 0;
     $(document).ready(function () {
         initialize_records_form();
     });

@@ -50,6 +50,8 @@
     var selectedRS = '<?php echo ($entity->getRecordingSpeed()) ? $entity->getRecordingSpeed()->getId() :'';?>';
     var selectedRD = '<?php echo ($entity->getRecord() && $entity->getRecord()->getReelDiameters()) ? $entity->getRecord()->getReelDiameters()->getId() : ''; ?>';
     var selectedProject = '<?php echo ($entity->getRecord() && $entity->getRecord()->getProject()) ? $entity->getRecord()->getProject()->getId() : ''; ?>';
+    var viewUrl = baseUrl + 'video/new/';
+    var projectId = <?php echo ($app->getSession()->get('project_id')) ? $app->getSession()->get('project_id') : 0 ?>;
     $(document).ready(function () {
         initialize_records_form();
     });

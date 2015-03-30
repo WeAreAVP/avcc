@@ -74,6 +74,7 @@ class VideoRecordsController extends Controller {
                     return $this->redirect($this->generateUrl('record_video_new'));
                 }
                 $this->get('session')->getFlashBag()->add('success', 'Video record added succesfully.');
+                $this->get('session')->set('project_id', $entity->getRecord()->getProject()->getId());
 
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {

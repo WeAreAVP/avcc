@@ -531,12 +531,14 @@ class RecordsController extends Controller {
             $entityArray['recordingStandard'] = ($entity->getVideoRecord()->getRecordingStandard()) ? $entity->getVideoRecord()->getRecordingStandard()->getName() : "";
         }
 
-//        echo "<pre>";
-//        print_r($entityArray);
-//        die;
         $fieldsObj = new DefaultFields();
-        $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+        if ($entity->getProject()->getViewSetting()) {
+            $userViewSettings = $entity->getProject()->getViewSetting();
+        } else {
+            $userViewSettings = $fieldsObj->getDefaultOrder();
+        }
 
+        $userViewSettings = json_decode($userViewSettings, true);
         return $this->render('ApplicationFrontBundle:Records:show.html.php', array(
                     'entity' => $entity,
                     'entityArray' => $entityArray,

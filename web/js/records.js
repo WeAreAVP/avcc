@@ -209,7 +209,7 @@ function Records() {
         });
         $('input[name="recordingStandard[]"]').click(function () {
             checkParentFacet('recordingStandard', $(this).prop('checked'));
-        });
+        }); 
         $('input[name="printType[]"]').click(function () {
             checkParentFacet('printType', $(this).prop('checked'));
         });

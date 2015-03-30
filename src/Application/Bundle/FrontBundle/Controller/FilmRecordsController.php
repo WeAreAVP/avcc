@@ -13,6 +13,7 @@ use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Application\Bundle\FrontBundle\Entity\Projects;
 
 /**
  * FilmRecords controller.
@@ -68,6 +69,7 @@ class FilmRecordsController extends Controller {
                 $shpinxInfo = $this->getSphinxInfo();
                 $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 2);
                 $sphinxSearch->insert();
+
                 // the save_and_dupplicate button was clicked
                 if ($form->get('save_and_duplicate')->isClicked()) {
                     return $this->redirect($this->generateUrl('record_film_duplicate', array('filmRecId' => $entity->getId())));
@@ -76,7 +78,7 @@ class FilmRecordsController extends Controller {
                     return $this->redirect($this->generateUrl('record_film_new'));
                 }
                 $this->get('session')->getFlashBag()->add('success', 'Film record added succesfully.');
-
+                $this->get('session')->set('project_id', $entity->getRecord()->getProject()->getId());
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
 //                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))) {
@@ -96,7 +98,18 @@ class FilmRecordsController extends Controller {
 //                }
             }
         }
-        $user_view_settings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+        if ($this->get('session')->get('project_id')) {
+            $projectId = $this->get('session')->get('project_id');
+            $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
+            if ($project->getViewSetting() != null) {
+                $userViewSettings = $project->getViewSetting();
+            } else {
+                $userViewSettings = $fieldsObj->getDefaultOrder();
+            }
+        } else {
+            $userViewSettings = $fieldsObj->getDefaultOrder();
+        }
+        $userViewSettings = json_decode($userViewSettings, true);
 
         return array(
             'entity' => $entity,
@@ -173,7 +186,26 @@ class FilmRecordsController extends Controller {
             $entity = new FilmRecords();
         }
         $form = $this->createCreateForm($entity, $em, $data);
-        $user_view_settings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+        if ($projectId) {
+            $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
+            if ($project->getViewSetting() != null) {
+                $userViewSettings = $project->getViewSetting();
+                //    $this->get('session')->getFlashBag()->add('project_id', $projectId);
+            } else {
+                $userViewSettings = $fieldsObj->getDefaultOrder();
+            }
+        } else if ($this->get('session')->get('project_id')) {
+            $projectId = $this->get('session')->get('project_id');
+            $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
+            if ($project->getViewSetting() != null) {
+                $userViewSettings = $project->getViewSetting();
+            } else {
+                $userViewSettings = $fieldsObj->getDefaultOrder();
+            }
+        } else {
+            $userViewSettings = $fieldsObj->getDefaultOrder();
+        }
+        $userViewSettings = json_decode($userViewSettings, true);
 
         return $this->render('ApplicationFrontBundle:FilmRecords:new.html.php', array(
                     'entity' => $entity,
@@ -187,13 +219,15 @@ class FilmRecordsController extends Controller {
      * Displays a form to edit an existing FilmRecords entity.
      *
      * @param integer $id
+     * @param integer $projectId
      *
      * @Route("/film/{id}/edit", name="record_film_edit")
+     * @Route("/film/{id}/edit/{projectId}", name="record_film_edit_againt_project")
      * @Method("GET")
      * @Template()
      * @return template
      */
-    public function editAction($id) {
+    public function editAction($id, $projectId = null) {
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
         }
@@ -208,7 +242,20 @@ class FilmRecordsController extends Controller {
         $data = $fieldsObj->getData(2, $em, $this->getUser(), null, $entity->getRecord()->getId());
         $editForm = $this->createEditForm($entity, $em, $data);
         $deleteForm = $this->createDeleteForm($id);
-        $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+        if ($projectId) {
+            $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
+            if ($project->getViewSetting() != null) {
+                $userViewSettings = $project->getViewSetting();
+            } else {
+                $userViewSettings = $fieldsObj->getDefaultOrder();
+            }
+        } else if ($entity->getRecord()->getProject()->getViewSetting()) {
+            $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
+        } else {
+            $userViewSettings = $fieldsObj->getDefaultOrder();
+        }
+
+        $userViewSettings = json_decode($userViewSettings, true);
 
         return $this->render('ApplicationFrontBundle:FilmRecords:edit.html.php', array(
                     'entity' => $entity,
@@ -259,6 +306,7 @@ class FilmRecordsController extends Controller {
             throw $this->createNotFoundException('Unable to find FilmRecords entity.');
         }
         $fieldsObj = new DefaultFields();
+        $userViewSettings = $fieldsObj->getDefaultOrder();
         $data = $fieldsObj->getData(2, $em, $this->getUser(), null, $entity->getRecord()->getId());
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity, $em, $data);
@@ -303,7 +351,10 @@ class FilmRecordsController extends Controller {
 //                }
             }
         }
-        $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+        if ($entity->getRecord()->getProject()->getViewSetting()) {
+            $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
+        }
+        $userViewSettings = json_decode($userViewSettings, true);
 
         return array(
             'entity' => $entity,

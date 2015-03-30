@@ -73,6 +73,7 @@ class AudioRecordsController extends Controller {
                 $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 1);
                 $sphinxSearch->insert();
                 $this->get('session')->getFlashBag()->add('success', 'Audio record added succesfully.');
+                $this->get('session')->set('project_id', $entity->getRecord()->getProject()->getId());
                 // the save_and_dupplicate button was clicked
                 if ($form->get('save_and_duplicate')->isClicked()) {
                     return $this->redirect($this->generateUrl('record_audio_duplicate', array('audioRecId' => $entity->getId())));
@@ -99,8 +100,19 @@ class AudioRecordsController extends Controller {
 //                }
             }
         }
-        $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
-
+        //   $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+        if ($this->get('session')->get('project_id')) {
+            $projectId = $this->get('session')->get('project_id');
+            $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
+            if ($project->getViewSetting() != null) {
+                $userViewSettings = $project->getViewSetting();
+            } else {
+                $userViewSettings = $fieldsObj->getDefaultOrder();
+            }
+        } else {
+            $userViewSettings = $fieldsObj->getDefaultOrder();
+        }
+        $userViewSettings = json_decode($userViewSettings, true);
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
@@ -177,18 +189,26 @@ class AudioRecordsController extends Controller {
             $entity = new AudioRecords();
         }
         $form = $this->createCreateForm($entity, $em, $data);
-        if($projectId){ 
+        if ($projectId) {
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
-            if($project->getViewSetting() != null){
+            if ($project->getViewSetting() != null) {
                 $userViewSettings = $project->getViewSetting();
-            }else{
+                //    $this->get('session')->getFlashBag()->add('project_id', $projectId);
+            } else {
                 $userViewSettings = $fieldsObj->getDefaultOrder();
             }
-        }else{
+        } else if ($this->get('session')->get('project_id')) {
+            $projectId = $this->get('session')->get('project_id');
+            $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
+            if ($project->getViewSetting() != null) {
+                $userViewSettings = $project->getViewSetting();
+            } else {
+                $userViewSettings = $fieldsObj->getDefaultOrder();
+            }
+        } else {
             $userViewSettings = $fieldsObj->getDefaultOrder();
         }
-        
-        $userViewSettings= json_decode($userViewSettings, true);
+        $userViewSettings = json_decode($userViewSettings, true);
         return $this->render('ApplicationFrontBundle:AudioRecords:new.html.php', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
@@ -231,13 +251,15 @@ class AudioRecordsController extends Controller {
      * Displays a form to edit an existing AudioRecords entity.
      *
      * @param integer $id
+     * @param integer $projectId
      *
      * @Route("/{id}/edit", name="record_edit")
+     * @Route("/{id}/edit/{projectId}", name="record_edit_againt_project")
      * @Method("GET")
      * @Template()
      * @return array
      */
-    public function editAction($id) {
+    public function editAction($id, $projectId = null) {
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
         }
@@ -251,8 +273,21 @@ class AudioRecordsController extends Controller {
         $data = $fieldsObj->getData(1, $em, $this->getUser(), null, $entity->getRecord()->getId());
         $editForm = $this->createEditForm($entity, $em, $data);
         $deleteForm = $this->createDeleteForm($id);
-        
-        $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+        if ($projectId) {
+            $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
+            if ($project->getViewSetting() != null) {
+                $userViewSettings = $project->getViewSetting();
+            } else {
+                $userViewSettings = $fieldsObj->getDefaultOrder();
+            }
+        } else if ($entity->getRecord()->getProject()->getViewSetting()) {
+            $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
+        } else {
+            $userViewSettings = $fieldsObj->getDefaultOrder();
+        }
+
+        $userViewSettings = json_decode($userViewSettings, true);
+        //  $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
 
         return $this->render('ApplicationFrontBundle:AudioRecords:edit.html.php', array(
                     'entity' => $entity,
@@ -306,6 +341,7 @@ class AudioRecordsController extends Controller {
         }
         $user = $this->getUser();
         $fieldsObj = new DefaultFields();
+        $userViewSettings = $fieldsObj->getDefaultOrder();
         $data = $fieldsObj->getData(1, $em, $user, null, $entity->getRecord()->getId());
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity, $em, $data);
@@ -351,7 +387,10 @@ class AudioRecordsController extends Controller {
 //                }
             }
         }
-        $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+        if ($entity->getRecord()->getProject()->getViewSetting()) {
+            $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
+        }
+        $userViewSettings = json_decode($userViewSettings, true);
 
         return array(
             'entity' => $entity,
