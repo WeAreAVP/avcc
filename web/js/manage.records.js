@@ -317,13 +317,15 @@ function updateProjects() {
 
 function updateViewSetting() {
 	$('#project').change(function () {
-		var proj_id = $('#project').val();
+		if ($('#project').parents('form').attr('id') != 'frmBulkEdit') {
+			var proj_id = $('#project').val();
 
-		if (proj_id) {
-			var newUrl = viewUrl + proj_id;
+			if (proj_id) {
+				var newUrl = viewUrl + proj_id;
 
-			window.location = newUrl;
+				window.location = newUrl;
 
+			}
 		}
-	})
+	});
 }
