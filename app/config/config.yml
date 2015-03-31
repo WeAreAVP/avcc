@@ -94,4 +94,4 @@ doctrine_migrations:
 parameters:
     from_email: "%mail_from_email%"
     sphinx_param: "%sphinx%"
-    ga_tracking: "%ga_tracking%"
+    ga_tracking_code: "%ga_tracking%"
