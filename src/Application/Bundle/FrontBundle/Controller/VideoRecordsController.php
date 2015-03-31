@@ -13,6 +13,7 @@ use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Application\Bundle\FrontBundle\Entity\Projects;
 
 /**
  * VideoRecords controller.
@@ -74,7 +75,7 @@ class VideoRecordsController extends Controller {
                     return $this->redirect($this->generateUrl('record_video_new'));
                 }
                 $this->get('session')->getFlashBag()->add('success', 'Video record added succesfully.');
-                $this->get('session')->set('project_id', $entity->getRecord()->getProject()->getId());
+                $this->get('session')->set('vedioProjectId', $entity->getRecord()->getProject()->getId());
 
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
@@ -95,7 +96,18 @@ class VideoRecordsController extends Controller {
 //                }
             }
         }
-        $user_view_settings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+        if ($this->get('session')->get('vedioProjectId')) {
+            $projectId = $this->get('session')->get('vedioProjectId');
+            $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
+            if ($project->getViewSetting() != null) {
+                $userViewSettings = $project->getViewSetting();
+            } else {
+                $userViewSettings = $fieldsObj->getDefaultOrder();
+            }
+        } else {
+            $userViewSettings = $fieldsObj->getDefaultOrder();
+        }
+        $userViewSettings = json_decode($userViewSettings, true);
 
         return array(
             'entity' => $entity,
@@ -165,7 +177,26 @@ class VideoRecordsController extends Controller {
             $entity = new VideoRecords();
         }
         $form = $this->createCreateForm($entity, $em, $data);
-        $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+        if ($projectId) {
+            $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
+            if ($project->getViewSetting() != null) {
+                $userViewSettings = $project->getViewSetting();
+                //    $this->get('session')->getFlashBag()->add('project_id', $projectId);
+            } else {
+                $userViewSettings = $fieldsObj->getDefaultOrder();
+            }
+        } else if ($this->get('session')->get('vedioProjectId')) {
+            $projectId = $this->get('session')->get('vedioProjectId');
+            $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
+            if ($project->getViewSetting() != null) {
+                $userViewSettings = $project->getViewSetting();
+            } else {
+                $userViewSettings = $fieldsObj->getDefaultOrder();
+            }
+        } else {
+            $userViewSettings = $fieldsObj->getDefaultOrder();
+        }
+        $userViewSettings = json_decode($userViewSettings, true);
 
         return $this->render('ApplicationFrontBundle:VideoRecords:new.html.php', array(
                     'entity' => $entity,
@@ -179,11 +210,12 @@ class VideoRecordsController extends Controller {
      * Displays a form to edit an existing VideoRecords entity.
      *
      * @Route("/video/{id}/edit", name="record_video_edit")
+     * @Route("/video/{id}/edit/{projectId}", name="record_video_edit_against_project")
      * @Method("GET")
      * @Template()
      * @return template
      */
-    public function editAction($id) {
+    public function editAction($id, $projectId = null) {
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
         }
@@ -198,7 +230,20 @@ class VideoRecordsController extends Controller {
         $editForm = $this->createEditForm($entity, $em, $data);
         $deleteForm = $this->createDeleteForm($id);
 
-        $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+        if ($projectId) {
+            $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
+            if ($project->getViewSetting() != null) {
+                $userViewSettings = $project->getViewSetting();
+            } else {
+                $userViewSettings = $fieldsObj->getDefaultOrder();
+            }
+        } else if ($entity->getRecord()->getProject()->getViewSetting()) {
+            $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
+        } else {
+            $userViewSettings = $fieldsObj->getDefaultOrder();
+        }
+
+        $userViewSettings = json_decode($userViewSettings, true);
 
         return $this->render('ApplicationFrontBundle:VideoRecords:edit.html.php', array(
                     'entity' => $entity,
@@ -270,7 +315,7 @@ class VideoRecordsController extends Controller {
                     return $this->redirect($this->generateUrl('record_video_new'));
                 }
                 $this->get('session')->getFlashBag()->add('success', 'Video record updated succesfully.');
-
+                
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
 //                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))) {
@@ -290,7 +335,11 @@ class VideoRecordsController extends Controller {
 //                }
             }
         }
-        $userViewSettings = $fieldsObj->getFieldSettings($this->getUser(), $em);
+        
+        if ($entity->getRecord()->getProject()->getViewSetting()) {
+            $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
+        }
+        $userViewSettings = json_decode($userViewSettings, true);
 
         return array(
             'entity' => $entity,

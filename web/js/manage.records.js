@@ -24,14 +24,17 @@ function initialize_records_form() {
     showUpdateFields();
     saveBulkEdit();
     closeBtn();
+    var check = 0;
     $("input,textarea,select").keypress(function () {
-        changes = true;
+        if ($(this).attr('id') != 'mediaType') {
+           check = 1;
+        }
     });
     $("select").click(function () {
-        if ($(this).attr('id') != 'mediaType') {
+        if (check == 1 && $(this).attr('id') == 'mediaType') {
             changes = true;
-        } else {
-            chages = false;
+        }else if ($(this).attr('id') == 'mediaType' || $(this).attr('id') == 'project') {
+            changes = false;
         }
     });
 
@@ -41,6 +44,7 @@ function initialize_records_form() {
             return 'The changes are not saved and will be lost.';
         }
     }
+
     $('form').submit(function () {
         changes = false;
         return true; // return false to cancel form action

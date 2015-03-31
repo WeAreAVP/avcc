@@ -35,9 +35,11 @@
                                 <li><a href="javascript://" class="import" data-type="xlsx">XLSX</a></li>
                             </ul>
                         </li>
+                        <?php if ($view['security']->isGranted('ROLE_MANAGER')): ?>
                         <li>
                             <a href="javascript://" id="bulkEdit">Bulk Edit</a>
                         </li>
+                        <?php endif ?>
                     </ul>
                 </div>
                 <div style="font-size: 20px; margin-left: 11px; float: left;"><a href="<?php echo $view['router']->generate('record_new') ?>"><i class="icon-plus"></i> New</a></div>

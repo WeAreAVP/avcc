@@ -78,7 +78,7 @@ class FilmRecordsController extends Controller {
                     return $this->redirect($this->generateUrl('record_film_new'));
                 }
                 $this->get('session')->getFlashBag()->add('success', 'Film record added succesfully.');
-                $this->get('session')->set('project_id', $entity->getRecord()->getProject()->getId());
+                $this->get('session')->set('filmProjectId', $entity->getRecord()->getProject()->getId());
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
 //                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))) {
@@ -98,8 +98,8 @@ class FilmRecordsController extends Controller {
 //                }
             }
         }
-        if ($this->get('session')->get('project_id')) {
-            $projectId = $this->get('session')->get('project_id');
+        if ($this->get('session')->get('filmProjectId')) {
+            $projectId = $this->get('session')->get('filmProjectId');
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project->getViewSetting() != null) {
                 $userViewSettings = $project->getViewSetting();
@@ -188,14 +188,14 @@ class FilmRecordsController extends Controller {
         $form = $this->createCreateForm($entity, $em, $data);
         if ($projectId) {
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
-            if ($project->getViewSetting() != null) {
+            if ($project->getViewSetting()) {
                 $userViewSettings = $project->getViewSetting();
                 //    $this->get('session')->getFlashBag()->add('project_id', $projectId);
             } else {
                 $userViewSettings = $fieldsObj->getDefaultOrder();
             }
-        } else if ($this->get('session')->get('project_id')) {
-            $projectId = $this->get('session')->get('project_id');
+        } else if ($this->get('session')->get('filmProjectId')) {
+            $projectId = $this->get('session')->get('filmProjectId');
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project->getViewSetting() != null) {
                 $userViewSettings = $project->getViewSetting();
@@ -210,7 +210,7 @@ class FilmRecordsController extends Controller {
         return $this->render('ApplicationFrontBundle:FilmRecords:new.html.php', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
-                    'fieldSettings' => $user_view_settings,
+                    'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
         ));
     }
@@ -222,7 +222,7 @@ class FilmRecordsController extends Controller {
      * @param integer $projectId
      *
      * @Route("/film/{id}/edit", name="record_film_edit")
-     * @Route("/film/{id}/edit/{projectId}", name="record_film_edit_againt_project")
+     * @Route("/film/{id}/edit/{projectId}", name="record_film_edit_against_project")
      * @Method("GET")
      * @Template()
      * @return template

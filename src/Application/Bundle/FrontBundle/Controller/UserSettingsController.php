@@ -57,6 +57,7 @@ class UserSettingsController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $entities = '';
         $name = '';
+        $viewSettings = json_encode(array('audio' =>'', 'video' =>'', 'film' => ''));
         if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
             $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $this->getUser()->getOrganizations()->getId()));
         } else {
@@ -69,18 +70,16 @@ class UserSettingsController extends Controller {
         if ($projectId) {
             $entities = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             $name = $entities->getName();
+            if (!$entities || !$entities->getViewSetting()) {
+                $fObj = new DefaultFields();
+                $viewSettings = $fObj->getDefaultOrder();
+            } else {
+                $viewSettings = $entities->getViewSetting();
+            }
         }
-
-        if (!$entities || !$entities->getViewSetting()) {
-            $fObj = new DefaultFields();
-            $viewSettings = $fObj->getDefaultOrder();
-        } else {
-            $viewSettings = $entities->getViewSetting();
-        }
-
         $userViewSettings = json_decode($viewSettings, true);
 
-        return array( 
+        return array(
             'entities' => $userViewSettings,
             'project' => $proj,
             'project_name' => ucwords($name),

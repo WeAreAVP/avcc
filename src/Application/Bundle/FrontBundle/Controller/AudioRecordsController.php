@@ -254,7 +254,7 @@ class AudioRecordsController extends Controller {
      * @param integer $projectId
      *
      * @Route("/{id}/edit", name="record_edit")
-     * @Route("/{id}/edit/{projectId}", name="record_edit_againt_project")
+     * @Route("/{id}/edit/{projectId}", name="record_edit_against_project")
      * @Method("GET")
      * @Template()
      * @return array
