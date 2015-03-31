@@ -289,7 +289,7 @@ function closeBtn() {
 }
 
 function updateProjects() {
-    if (projectId) {
+    if (typeof projectId !=undefined && projectId) {
         selectedProject = projectId;
     }
     var path = window.location.href;
