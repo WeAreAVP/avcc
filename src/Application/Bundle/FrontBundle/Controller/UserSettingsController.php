@@ -48,7 +48,7 @@ class UserSettingsController extends Controller {
      * @param Request $request
      * 
      * @Route("/", name="field_settings")
-     * @Route("/{projectId}", name="field_settings")
+     * @Route("/{projectId}", name="field_settings_against_project")
      * @Method("GET")
      * @Template()
      * @return array
@@ -57,7 +57,7 @@ class UserSettingsController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $entities = '';
         $name = '';
-        $viewSettings = json_encode(array('audio' =>'', 'video' =>'', 'film' => ''));
+        $viewSettings = json_encode(array('audio' => '', 'video' => '', 'film' => ''));
         if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
             $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $this->getUser()->getOrganizations()->getId()));
         } else {
@@ -69,12 +69,13 @@ class UserSettingsController extends Controller {
 
         if ($projectId) {
             $entities = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
-            $name = $entities->getName();
+
             if (!$entities || !$entities->getViewSetting()) {
                 $fObj = new DefaultFields();
                 $viewSettings = $fObj->getDefaultOrder();
             } else {
                 $viewSettings = $entities->getViewSetting();
+                $name = $entities->getName();
             }
         }
         $userViewSettings = json_decode($viewSettings, true);
@@ -135,38 +136,51 @@ class UserSettingsController extends Controller {
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @Route("/backup", name="field_settings_backup")
+     * @Route("/backup/", name="field_settings_backup")
+     * @Method("GET")
      * @Template()
      * @return array
      */
     public function backupAction(Request $request) {
+
         $session = $request->getSession();
         if ($session->get('error')) {
             $error = $session->get('error');
         } else {
             $error = '';
         }
+
         $session->remove('error');
         $userEntity = $this->getDoctrine()
                 ->getRepository('ApplicationFrontBundle:UserSettings')
                 ->findOneBy(array('user' => $this->getUser()->getId()));
-        if ($userEntity) {
-            $form = $this->createEditForm($userEntity);
 
-            return array(
-                'entity' => $userEntity,
-                'form' => $form->createView(),
-                'error' => $error,
-            );
-        } else {
-            $entity = new UserSettings();
-            $form = $this->createNewForm($entity);
-
-            return array(
-                'form' => $form->createView(),
-                'error' => $error,
-            );
+        if (!$userEntity) {
+            $userEntity = new UserSettings();
+            $userEntity->setUser($this->getUser());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($userEntity);
+            $em->flush();
         }
+//        else {
+//            
+//            $entity = new UserSettings();
+//            $entity->setEnableBackup(0);
+////            echo 'fadfd';exit;
+//            $form = $this->createNewForm($entity);
+//            
+//            return array(
+//                 'entity' => $entity,
+//                'form' => $form->createView(),
+//                'error' => $error,
+//            );
+//        }
+        $form = $this->createEditForm($userEntity);
+        return array(
+            'entity' => $userEntity,
+            'form' => $form->createView(),
+            'error' => $error,
+        );
     }
 
     /**
@@ -274,11 +288,8 @@ class UserSettingsController extends Controller {
             }
         }
         $em = $this->getDoctrine()->getManager();
-        $fObj = new DefaultFields();
-        $settings = $fObj->getFieldSettings($this->getUser(), $em);
         if ($form->isValid()) {
             $entity->setUser($this->getUser());
-            $entity->setViewSetting(json_encode($settings));
             $em->persist($entity);
             $em->flush();
         }

@@ -14,6 +14,7 @@ class UserSettingsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        
         $builder
 //            ->add('viewSetting')
 //            ->add('createdOn')
@@ -30,8 +31,9 @@ class UserSettingsType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        
         $resolver->setDefaults(array(
-            'data_class' => 'Application\Bundle\FrontBundle\Entity\UserSettings'
+            'data_class' => 'Application\Bundle\FrontBundle\Entity\UserSettings',
         ));
     }
 
