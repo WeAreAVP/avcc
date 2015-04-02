@@ -148,6 +148,7 @@ class UserSettingsController extends Controller {
 		if ( ! $userEntity) {
 			$userEntity = new UserSettings();
 			$userEntity->setUser($this->getUser());
+			$userEntity->setEnableBackup(0);
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($userEntity);
 			$em->flush();
