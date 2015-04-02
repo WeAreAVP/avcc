@@ -1,65 +1,89 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block body %}
-	<h1>Users
-		{% if is_granted('ROLE_MANAGER') %}
-			<small class="on-right">
-				<a href="{{ path('users_new') }}"><i class="icon-plus"></i> New</a>
-			</small>
-		{% endif %}
-	</h1>
+    <h1>Users
+        {% if is_granted('ROLE_MANAGER') %}
+            <small class="on-right">
+                <a href="{{ path('users_new') }}"><i class="icon-plus"></i> New</a>
+            </small>
+        {% endif %}
+    </h1>
 
-	<div class="table-responsive">
-		<table class="table bordered">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Email</th>
-					<th>Roles</th>
-					<th>Organizations</th>
-						{% if is_granted('ROLE_MANAGER') %}
-						<th>Action</th>
-						{% endif %}
-				</tr>
-			</thead>
-			<tbody>
-				{% for entity in entities %}
-					<tr>
+    <div class="table-responsive">
+        <table class="table bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th>Organizations</th>
+                        {% if is_granted('ROLE_MANAGER') %}
+                        <th>Action</th>
+                        {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, entity in entities %}
+                    <tr>
 
-						<td><a href="{{ path('users_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
-						<td><a href="{{ path('users_show', { 'id': entity.id }) }}">{{ entity.email }}</a></td>
-						<td>
-							{#							{% set user_role = entity.roles[0]|lower|replace({'_': ' ', 'role': ""})|capitalize %}#}
-							{# {{user_role}}#}
-							{{entity.roles[0]|replace({'_': ' ', 'ROLE': " "})|trim(" ")|capitalize}}
-						</td>
-						<td>
-							{{entity.organizations }}
-						</td>
-						{% if is_granted('ROLE_MANAGER') %}
-							<td class="text-center">
-                                                                {% if entity.enabled == true %}
-                                                                        {% set status = "Active" %}
-                                                                        {% set statusId = "1" %}
-                                                                        {% set class = "icon-checkmark" %}
-                                                                        {% set title = "Active" %}
-                                                                    {% else %}    
-                                                                        {% set status = "Inactive" %}
-                                                                        {% set statusId = "0" %}
-                                                                        {% set class = "icon-blocked" %}
-                                                                        {% set title = "Inactive" %}
-                                                                    {% endif %}
-								{# <a class="glyphicon glyphicon-list-alt" title="View detail" href="{{ path('users_show', { 'id': entity.id }) }}"></a>&nbsp;#}
-								<a class="{{class}} small-size" title="{{title}}" href="{{ path('user_changestatus', { 'id': entity.id, 'status': statusId }) }}">
-{#                                                                    {{status}}#}
-                                                                </a> | 
-                                                                <a class="icon-pencil" title="Edit" href="{{ path('users_edit', { 'id': entity.id }) }}"></a> |
-								<a class="icon-remove" title="Delete" href="{{ path('users_delete', { 'id': entity.id }) }}"></a>
-							</td>
-						{% endif %}
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
+                        <td><a href="{{ path('users_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+                        <td><a href="{{ path('users_show', { 'id': entity.id }) }}">{{ entity.email }}</a></td>
+                        <td>
+                            {#							{% set user_role = entity.roles[0]|lower|replace({'_': ' ', 'role': ""})|capitalize %}#}
+                            {# {{user_role}}#}
+                            {{entity.roles[0]|replace({'_': ' ', 'ROLE': " "})|trim(" ")|capitalize}}
+                        </td>
+                        <td>
+                            {{entity.organizations }}
+                        </td>
+                        {% if is_granted('ROLE_MANAGER') %}
+                            {% if role == 'ROLE_MANAGER' and (entity.roles[0] != 'ROLE_ADMIN') %}
+                                <td class="text-center">
+                                    {% if entity.enabled == true %}
+                                        {% set status = "Active" %}
+                                        {% set statusId = "1" %}
+                                        {% set class = "icon-checkmark" %}
+                                        {% set title = "Active" %}
+                                    {% else %}    
+                                        {% set status = "Inactive" %}
+                                        {% set statusId = "0" %}
+                                        {% set class = "icon-blocked" %}
+                                        {% set title = "Inactive" %}
+                                    {% endif %}
+                                    {# <a class="glyphicon glyphicon-list-alt" title="View detail" href="{{ path('users_show', { 'id': entity.id }) }}"></a>&nbsp;#}
+                                    <a class="{{class}} small-size" title="{{title}}" href="{{ path('user_changestatus', { 'id': entity.id, 'status': statusId }) }}">
+                                        {#                                                                    {{status}}#}
+                                    </a> | 
+                                    <a class="icon-pencil" title="Edit" href="{{ path('users_edit', { 'id': entity.id }) }}"></a> |
+                                    <a class="icon-remove" title="Delete" href="{{ path('users_delete', { 'id': entity.id }) }}"></a>
+                                </td>
+                                {% elseif role != 'ROLE_MANAGER' %}
+                                    <td class="text-center">
+                                    {% if entity.enabled == true %}
+                                        {% set status = "Active" %}
+                                        {% set statusId = "1" %}
+                                        {% set class = "icon-checkmark" %}
+                                        {% set title = "Active" %}
+                                    {% else %}    
+                                        {% set status = "Inactive" %}
+                                        {% set statusId = "0" %}
+                                        {% set class = "icon-blocked" %}
+                                        {% set title = "Inactive" %}
+                                    {% endif %}
+                                    {# <a class="glyphicon glyphicon-list-alt" title="View detail" href="{{ path('users_show', { 'id': entity.id }) }}"></a>&nbsp;#}
+                                    <a class="{{class}} small-size" title="{{title}}" href="{{ path('user_changestatus', { 'id': entity.id, 'status': statusId }) }}">
+                                        {#                                                                    {{status}}#}
+                                    </a> | 
+                                    <a class="icon-pencil" title="Edit" href="{{ path('users_edit', { 'id': entity.id }) }}"></a> |
+                                    <a class="icon-remove" title="Delete" href="{{ path('users_delete', { 'id': entity.id }) }}"></a>
+                                </td>
+                                {% else %}
+                                    <td class="text-center"></td>
+                            {% endif %}
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock body %}

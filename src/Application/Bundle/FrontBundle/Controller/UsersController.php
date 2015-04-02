@@ -39,14 +39,7 @@ class UsersController extends Controller {
         }
         $all = array();
         $currentUserRole = $this->getUser()->getRoles();
-        if ($currentUserRole[0] == 'ROLE_MANAGER') {
-            foreach ($entities as $key => $entity) {
-                $role = $entity->getRoles();
-                if ($role[0] != 'ROLE_SUPER_ADMIN' && $role[0] != 'ROLE_ADMIN') {
-                    $all[$key] = $entity;
-                }
-            }
-        }else if ($currentUserRole[0] == 'ROLE_ADMIN') {
+        if ($currentUserRole[0] == 'ROLE_MANAGER' || $currentUserRole[0] == 'ROLE_ADMIN') {
             foreach ($entities as $key => $entity) {
                 $role = $entity->getRoles();
                 if ($role[0] != 'ROLE_SUPER_ADMIN') {
@@ -56,9 +49,9 @@ class UsersController extends Controller {
         }else{
             $all = $entities;
         }
-        
         return array(
             'entities' => $all,
+            'role' => $currentUserRole[0]
         );
     }
 

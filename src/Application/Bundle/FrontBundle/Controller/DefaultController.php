@@ -165,17 +165,6 @@ class DefaultController extends Controller {
                 $data->setRoles(array(DefaultController::$DEFAULT_ROLE));
                 $data->getOrganizations()->setUsersCreated($data);
                 $em->flush();
-
-                $fieldsObj = new DefaultFields();
-                $viewSettings = $fieldsObj->getDefaultOrder();
-
-                $userSetting = new UserSettings();
-                $userSetting->setUser($entity);
-                $userSetting->setViewSetting($viewSettings);
-                $userSetting->setCreatedOnValue(date('Y-m-d h:i:s'));
-                $em->persist($userSetting);
-                $em->flush();
-
                 $url = $this->get('router')->generate('fos_user_registration_confirm', array('token' => $entity->getConfirmationToken()), true);
                 $rendered = $this->renderView('FOSUserBundle:Registration:email.txt.twig', array(
                     'user' => $entity,

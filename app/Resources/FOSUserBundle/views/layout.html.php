@@ -86,7 +86,7 @@
                                         <li><a href="<?php echo $view['router']->generate('vocabularies_framerates') ?>">Frame Rates</a></li>
                                         <li><a href="<?php echo $view['router']->generate('vocabularies_mediadiameters') ?>">Media diameters</a></li>
                                         <li><a href="<?php echo $view['router']->generate('vocabularies_monostereo') ?>">Mono Stereo</a></li>
-                                        <li><a href="<?php echo $view['router']->generate('vocabularies_noicereduction') ?>">Noice Reduction</a></li>
+                                        <li><a href="<?php echo $view['router']->generate('vocabularies_noicereduction') ?>">Noise Reduction</a></li>
                                         <li><a href="<?php echo $view['router']->generate('vocabularies_printtypes') ?>">Print Types</a></li>
                                         <li><a href="<?php echo $view['router']->generate('vocabularies_recordingspeed') ?>">Recording Speed</a></li>
                                         <li><a href="<?php echo $view['router']->generate('vocabularies_recordingstandards') ?>">Recording Standards</a></li>

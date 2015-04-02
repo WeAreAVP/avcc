@@ -10,7 +10,7 @@
                 {% if is_granted('ROLE_MANAGER') %}
                     <li id="xlsTab" class="active"><a href="#_xls">XLS/CSV</a></li>
                     {% endif %} 
-                <li id="graphsTab" class=""><a href="#_quantitaive">Graphs</a></li>
+                <li id="graphsTab" class=""><a href="#_quantitative">Graphs</a></li>
 
             </ul>
 
@@ -113,7 +113,7 @@
                         </div>
                     </div>
                 {% endif %}
-                <div id="_quantitaive" class="frame" style="display: block;">
+                <div id="_quantitative" class="frame" style="display: block;">
                     <div class="row">
                         <div class="span4">
                             <div class="listview small">
@@ -269,7 +269,7 @@
     <script>
         $(document).ready(function () {
             var href = $(location).attr('href');
-            if (href.indexOf("#_quantitaive") > 0) {
+            if (href.indexOf("#_quantitative") > 0) {
                 $("#xlsTab").removeClass('active');
                 $("#graphsTab").addClass('active');
             } else {

@@ -1,47 +1,53 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block body %}
-	<h1>Organizations
-		{% if is_granted('ROLE_SUPER_ADMIN') %}
-			<small class="on-right">
-				<a href="{{ path('organizations_new') }}"><i class="icon-plus"></i> New</a>
-			</small>
-		{% endif %}
-	</h1>
+    <h1>Organizations
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <small class="on-right">
+                <a href="{{ path('organizations_new') }}"><i class="icon-plus"></i> New</a>
+            </small>
+        {% endif %}
+    </h1>
 
-	<div class="table-responsive">
-		<table class="table bordered">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Department name</th>
-					<th>Address</th>
-					<th>Contact person name</th>
-					<th>Contact person email</th>
-					<th>Contact person phone</th>
-						{% if is_granted('ROLE_MANAGER') %}
-						<th>Action</th>
-						{% endif %}
-				</tr>
-			</thead>
-			<tbody>
-				{% for entity in entities %}
-					<tr>
-						<td><a href="{{ path('organizations_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
-						<td>{{ entity.departmentname }}</td>
-						<td>{{ entity.address }}</td>
-						<td>{{ entity.contactpersonname }}</td>
-						<td>{{ entity.contactpersonemail }}</td>
-						<td>{{ entity.contactpersonphone }}</td>
-						{% if is_granted('ROLE_MANAGER') %}
-							<td>
-								<a title="Edit" href="{{ path('organizations_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i></a>
+    <div class="table-responsive">
+        <table class="table bordered">
+            <thead>
+                <tr>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <th>id</th>
+                        {% endif %}
+                    <th>Name</th>
+                    <th>Department name</th>
+                    <th>Address</th>
+                    <th>Contact person name</th>
+                    <th>Contact person email</th>
+                    <th>Contact person phone</th>
+                        {% if is_granted('ROLE_MANAGER') %}
+                        <th>Action</th>
+                        {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for entity in entities %}
+                    <tr>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <th>{{entity.id}}</th>
+                            {% endif %}
+                        <td><a href="{{ path('organizations_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+                        <td>{{ entity.departmentname }}</td>
+                        <td>{{ entity.address }}</td>
+                        <td>{{ entity.contactpersonname }}</td>
+                        <td>{{ entity.contactpersonemail }}</td>
+                        <td>{{ entity.contactpersonphone }}</td>
+                        {% if is_granted('ROLE_MANAGER') %}
+                            <td>
+                                <a title="Edit" href="{{ path('organizations_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i></a>
 
-							</td>
-						{% endif %}
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock body %}

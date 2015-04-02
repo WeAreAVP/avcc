@@ -107,6 +107,7 @@ class UsersType extends AbstractType
             unset($this->roles[self::$DEFAULT_SUPER_ADMIN_ROLE]);
         }
         
+        
         $array = $this->user->getRoles();
         
         foreach($this->roles as $key => $value){
