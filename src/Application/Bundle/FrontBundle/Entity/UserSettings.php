@@ -176,7 +176,7 @@ class UserSettings
      */
     public function getEnableBackup()
     {
-        return $this->enableBackup;
+        return (bool) $this->enableBackup;
     }
 
     /**
