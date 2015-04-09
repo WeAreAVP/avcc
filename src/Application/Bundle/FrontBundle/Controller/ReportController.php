@@ -49,7 +49,8 @@ class ReportController extends Controller {
 
         $exportComponent = new ExportReport($this->container);
         $phpExcelObject = $exportComponent->generateReport($records);
-        $response = $exportComponent->outputReport($type, $phpExcelObject);
+        $file_name = 'all_records_report';
+        $response = $exportComponent->outputReport($type, $phpExcelObject, $file_name);
 
         // create the response
         return $response;

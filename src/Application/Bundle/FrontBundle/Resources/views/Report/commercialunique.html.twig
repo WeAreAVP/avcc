@@ -2,10 +2,10 @@
 
 {% block body %}
     <h1><a href="{{ path('report') }}#_quantitative"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>Commercial/Unique Report
-	</h1>
-	<br/>
-	<div id="commercial_container">
-	</div>
+    </h1>
+    <br/>
+    <div id="commercial_container">
+    </div>
 
 
 
@@ -13,58 +13,63 @@
 {% endblock %}
 {% block view_javascripts %}
 
-	<script type="text/javascript" src="{{ asset('js/highcharts.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('js/exporting.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/highcharts.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/exporting.js') }}"></script>
 
-	<script type="text/javascript">
-		var commercialUnique ={{ commercialUnique | raw }} ;
-		$(window).load(function () {
-			$('#commercial_container').highcharts({
-				chart: {
-					type: 'column'
-				},
-				title: {
-					text: ''
-				},
-				subtitle: {
-					text: ''
-				},
-				credits: {
-					enabled: false
-				},
-				xAxis: {
-					type: 'category'
-				},
-				yAxis: {
-					title: {
-						text: 'Total count per commercial/unique'
-					}
-				},
-				legend: {
-					enabled: false
-				},
-				plotOptions: {
-					series: {
-						borderWidth: 0,
-						dataLabels: {
-							enabled: true,
-							format: '{point.y}'
-						}
-					}
-				},
-				tooltip: {
-					headerFormat: '<span><b>{series.name}: </b></span>',
-					pointFormat: '<span style="color:{point.color}">{point.name}</span><br/><b>Total:</b>{point.y}<br/>'
-				},
-				series: [{
-						name: 'Commercial/Unique',
-						colorByPoint: true,
-						data: commercialUnique
-					}]
-			});
+    <script type="text/javascript">
+        var date = new Date();
+        var time = date.getTime();
+        var commercialUnique ={{ commercialUnique | raw }} ;
+                $(window).load(function () {
+            $('#commercial_container').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                credits: {
+                    enabled: false
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total count per commercial/unique'
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y}'
+                        }
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span><b>{series.name}: </b></span>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span><br/><b>Total:</b>{point.y}<br/>'
+                },
+                series: [{
+                        name: 'Commercial/Unique',
+                        colorByPoint: true,
+                        data: commercialUnique
+                    }],
+                exporting: {
+                    filename: 'commercial_unique_report_' + time
+                }
+            });
 
-		});
+        });
 
 
-	</script>
+    </script>
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block body %}
-    <h1><a href="{{ path('report') }}#_quantitative"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+    <h1><a href="{{ path('report') }}#_quantitative"><i class="icon-arrow-left-3 smaller"></i> </a>
         Film Acid Detection Strip Report
     </h1>
     <br/>
@@ -19,6 +19,8 @@
 
     <script type="text/javascript">
         var acid ={{ acid | raw }} ;
+        var date = new Date();
+        var time = date.getTime();
                 $(window).load(function () {
             $('#report_container').highcharts({
                 chart: {
@@ -61,7 +63,10 @@
                         name: 'Film Acid Detection Strip',
                         colorByPoint: true,
                         data: acid
-                    }]
+                    }],
+                exporting: {
+                    filename: 'acid_detection_strip_report_' + time
+                }
             });
 
         });

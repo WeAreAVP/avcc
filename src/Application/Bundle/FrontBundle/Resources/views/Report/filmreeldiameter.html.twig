@@ -2,10 +2,10 @@
 
 {% block body %}
     <h1><a href="{{ path('report') }}#_quantitative"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>Film Reel Diameter Report
-	</h1>
-	<br/>
-	<div id="report_container">
-	</div>
+    </h1>
+    <br/>
+    <div id="report_container">
+    </div>
 
 
 
@@ -13,58 +13,64 @@
 {% endblock %}
 {% block view_javascripts %}
 
-	<script type="text/javascript" src="{{ asset('js/highcharts.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('js/exporting.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/highcharts.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/exporting.js') }}"></script>
 
-	<script type="text/javascript">
-		var reelDiameter ={{ reelDiameter | raw }} ;
-		$(window).load(function () {
-			$('#report_container').highcharts({
-				chart: {
-					type: 'column'
-				},
-				title: {
-					text: ''
-				},
-				subtitle: {
-					text: ''
-				},
-				credits: {
-					enabled: false
-				},
-				xAxis: {
-					type: 'category'
-				},
-				yAxis: {
-					title: {
-						text: 'Total count per film reel diameter'
-					}
-				},
-				legend: {
-					enabled: false
-				},
-				plotOptions: {
-					series: {
-						borderWidth: 0,
-						dataLabels: {
-							enabled: true,
-							format: '{point.y}'
-						}
-					}
-				},
-				tooltip: {
-					headerFormat: '<span><b>{series.name}: </b></span>',
-					pointFormat: '<span style="color:{point.color}">{point.name}</span><br/><b>Total:</b>{point.y}<br/>'
-				},
-				series: [{
-						name: 'Film Reel Diameter',
-						colorByPoint: true,
-						data: reelDiameter
-					}]
-			});
+    <script type="text/javascript">
+        var reelDiameter ={{ reelDiameter | raw }} ;
+        var date = new Date();
+        var time = date.getTime();
+                $(window).load(function () {
+            
+            $('#report_container').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: ''
+                },
+                subtitle: {
+                    text: ''
+                },
+                credits: {
+                    enabled: false
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Total count per film reel diameter'
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y}'
+                        }
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span><b>{series.name}: </b></span>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span><br/><b>Total:</b>{point.y}<br/>'
+                },
+                series: [{
+                        name: 'Film Reel Diameter',
+                        colorByPoint: true,
+                        data: reelDiameter
+                    }],
+                exporting: {
+                    filename: 'film_reel_diameter_report_' + time
+                }
+            });
 
-		});
+        });
 
 
-	</script>
+    </script>
 {% endblock %}

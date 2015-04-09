@@ -163,7 +163,7 @@
                     if (isset($facetData['discDiameter']) && $facetData['discDiameter'] != '') {
                         ?>
                         <div id="mediaType_main" class="chekBoxFacet">
-                            <div class="filter-fileds"><b>Disc Diameter</b></div>
+                            <div class="filter-fileds"><b>Disk Diameter</b></div>
                             <?php
                             foreach ($facetData['discDiameter'] as $value) {
                                 $id = time() . rand(0, 1000);
@@ -203,7 +203,7 @@
                             <li><a href="javascript://;" class="customToken" data-fieldName="Title"  data-columnName="title" style="font-size: 12px!important;">Title</a></li>
                             <li><a href="javascript://;" class="customToken" data-fieldName="Description"  data-columnName="description" style="font-size: 12px!important;">Description</a></li>
                             <li><a href="javascript://;" class="customToken" data-fieldName="Collection Name"  data-columnName="collection_name" style="font-size: 12px!important;">Collection Name</a></li>
-                            <li><a href="javascript://;" class="customToken" data-fieldName="Creation Date"  data-columnName="creation_date" style="font-size: 12px!important;">Creation Data</a></li>
+                            <li><a href="javascript://;" class="customToken" data-fieldName="Creation Date"  data-columnName="creation_date" style="font-size: 12px!important;">Creation Date</a></li>
                             <li><a href="javascript://;" class="customToken" data-fieldName="Content Date"  data-columnName="content_date" style="font-size: 12px!important;">Content Date</a></li>
                             <li><a href="javascript://;" class="customToken" data-fieldName="Genre Terms"  data-columnName="genre_terms" style="font-size: 12px!important;">Genre Terms</a></li>
                             <li><a href="javascript://;" class="customToken" data-fieldName="Contributor"  data-columnName="contributor" style="font-size: 12px!important;">Contributor</a></li>
@@ -320,7 +320,7 @@
             <?php endif; ?>
             <?php if (count($facets['discDiameters']) > 0): ?>
                 <li>
-                    <a class="dropdown-toggle" href="#">Disc Diameter</a>
+                    <a class="dropdown-toggle" href="#">Disk Diameter</a>
                     <ul  data-role="dropdown" <?php if (isset($facetData['discDiameter'])): ?> style="display:block" <?php endif ?>>
                         <?php foreach ($facets['discDiameters'] as $discDiameter): ?>
                             <?php if ($discDiameter['disk_diameter'] != ''): ?>

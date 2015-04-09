@@ -54,7 +54,7 @@ function initialize_records_form() {
         var reel = $('#reelCore').val();
         if (media == 2 && reel == 1) {
             $('#reelDiameters_lbl').show();
-        } else {
+        } else if (media == 2  && reel != 1) {
             $('#reelDiameters_lbl').hide();
         }
     });
