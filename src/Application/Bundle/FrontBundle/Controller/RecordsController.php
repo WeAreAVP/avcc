@@ -131,7 +131,7 @@ class RecordsController extends Controller {
      */
     public function dataTableAction(Request $request) {
         $columns = array(0 => '',
-            1 => 'title',
+            1 => 'project',
             2 => 'format',
             3 => 'unique_id',
             4 => 'title',

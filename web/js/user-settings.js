@@ -102,7 +102,7 @@ function updateView(){
     var project_id = $('#project_list').val();
     $.ajax({
         type: 'GET',
-        url: site_url + '/fieldsettings/',
+        url: site_url + '/fieldsettings',
         async: false,
         data: {
             project_id: project_id

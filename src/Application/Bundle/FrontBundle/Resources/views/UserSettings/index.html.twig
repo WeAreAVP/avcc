@@ -10,7 +10,7 @@
                 <a class="dropdown-toggle" href="#"><span class="icon-list"></span> Projects </a>
                 <ul class="dropdown-menu" data-role="dropdown">
                     {% for key,value in project %}
-                        <li><a href="{{ path('field_settings') }}/{{key}}">{{value}}</a></li>
+                        <li><a href="{{ path('field_settings') }}{{key}}">{{value}}</a></li>
                         {% endfor %} 
                 </ul>
             </li>

@@ -14,8 +14,7 @@ use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
  *
  * @Route("/report")
  */
-class ReportController extends Controller
-{
+class ReportController extends Controller {
 
     /**
      * Show Reports view.
@@ -25,8 +24,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         return array();
     }
 
@@ -38,8 +36,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function allFormatsAction($type)
-    {
+    public function allFormatsAction($type) {
         if (!in_array($type, array('csv', 'xlsx'))) {
             throw $this->createNotFoundException('Invalid report type');
         }
@@ -67,8 +64,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function quantitativeAction()
-    {
+    public function quantitativeAction() {
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
@@ -89,8 +85,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function manifestAction($type)
-    {
+    public function manifestAction($type) {
         if (!in_array($type, array('csv', 'xlsx'))) {
             throw $this->createNotFoundException('Invalid report type');
         }
@@ -124,8 +119,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function prioritizationReportAction($type)
-    {
+    public function prioritizationReportAction($type) {
         if (!in_array($type, array('csv', 'xlsx'))) {
             throw $this->createNotFoundException('Invalid report type');
         }
@@ -153,8 +147,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function commercialuniqueAction()
-    {
+    public function commercialuniqueAction() {
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
@@ -175,8 +168,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function audiobaseAction()
-    {
+    public function audiobaseAction() {
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
@@ -198,8 +190,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function filmbaseAction()
-    {
+    public function filmbaseAction() {
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
@@ -221,8 +212,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function filmreeldiameterAction()
-    {
+    public function filmreeldiameterAction() {
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
@@ -244,14 +234,13 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function openreelaudioAction()
-    {
+    public function openreelaudioAction() {
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        $criteria = array('s_format' => array('"1/4 Inch Open Reel Audio"', '"1/2 Inch Open Reel Audio"', '"1/2 Inch Open Reel Audio - Digital"', '"1 Inch Open Reel Audio"', '"2 Inch Open Reel Audio"'));
+        $criteria = array('s_format' => array('1/4 Inch Open Reel Audio', '1/2 Inch Open Reel Audio', '1/2 Inch Open Reel Audio - Digital', '1 Inch Open Reel Audio', '2 Inch Open Reel Audio'));
         $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('reel_diameter', $this->getUser(), $criteria), 'reel_diameter');
-
+       
         $highChart = array();
         foreach ($result as $index => $reelDiameter) {
             $highChart[] = array($reelDiameter['reel_diameter'], (int) $reelDiameter['total']);
@@ -268,8 +257,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function reelcorefilmAction()
-    {
+    public function reelcorefilmAction() {
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
@@ -291,8 +279,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function printtypeAction()
-    {
+    public function printtypeAction() {
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
@@ -314,8 +301,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function filmcolorAction()
-    {
+    public function filmcolorAction() {
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
@@ -337,8 +323,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function filmsoundAction()
-    {
+    public function filmsoundAction() {
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
@@ -360,8 +345,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function aciddetectionAction()
-    {
+    public function aciddetectionAction() {
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
@@ -383,12 +367,11 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function diskdiameteraudioAction()
-    {
+    public function diskdiameteraudioAction() {
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        $criteria = array('s_format' => array('"LP"', '"45"', '"78"', '"Lacquer Disc"', '"Transcription Disc"'));
+        $criteria = array('s_format' => array('LP', '45', '78', 'Lacquer Disc', 'Transcription Disc'));
         $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('disk_diameter', $this->getUser(), $criteria), 'disk_diameter');
 
         $highChart = array();
@@ -409,8 +392,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function fileSizeCalculatorAction($type)
-    {
+    public function fileSizeCalculatorAction($type) {
         if (!in_array($type, array('xlsx', 'csv'))) {
             throw $this->createNotFoundException('Invalid report type');
         }
@@ -437,8 +419,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function linearFootCalculatorAction($type)
-    {
+    public function linearFootCalculatorAction($type) {
         if (!in_array($type, array('xlsx', 'csv'))) {
             throw $this->createNotFoundException('Invalid report type');
         }
@@ -461,8 +442,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function getFormatCountAction($projectid)
-    {
+    public function getFormatCountAction($projectid) {
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
@@ -492,8 +472,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function getCommercialUniqueCountAction($projectid)
-    {
+    public function getCommercialUniqueCountAction($projectid) {
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
@@ -513,8 +492,7 @@ class ReportController extends Controller
         exit;
     }
 
-    private function getLinearFeet()
-    {
+    private function getLinearFeet() {
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
@@ -545,8 +523,7 @@ class ReportController extends Controller
      * @Template()
      * @return array
      */
-    public function getTotalRecordsAction($projectid)
-    {
+    public function getTotalRecordsAction($projectid) {
         $records = $this->getFileSizeAndLinearFootageInfo($projectid);
 
         $totalLinearAudioCount = 0.00;
@@ -672,8 +649,7 @@ class ReportController extends Controller
      * 
      * @return number
      */
-    private function calculateLinearFeet($totalCount, $width)
-    {
+    private function calculateLinearFeet($totalCount, $width) {
         return number_format(($totalCount * $width) / 12, 5);
     }
 
@@ -684,8 +660,7 @@ class ReportController extends Controller
      * 
      * @return array
      */
-    private function getFileSizeAndLinearFootageInfo($projectid = null)
-    {
+    private function getFileSizeAndLinearFootageInfo($projectid = null) {
         $formatInfo = null;
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
@@ -732,8 +707,7 @@ class ReportController extends Controller
         return $formatInfo;
     }
 
-    private function calculateFileSize($totalDuration, $value)
-    {
+    private function calculateFileSize($totalDuration, $value) {
         return number_format(($totalDuration * $value) / 1024 / 1024, 5);
     }
 
