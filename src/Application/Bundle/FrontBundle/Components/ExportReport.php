@@ -94,7 +94,6 @@ class ExportReport extends ContainerAware {
 
         return $response;
     }
-
     /**
      * Save report on server.
      * @param  type   $type

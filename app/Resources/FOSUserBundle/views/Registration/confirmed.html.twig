@@ -12,7 +12,7 @@
 		<div class="forget">
 			{% if app.session is not empty %}
 				{% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
-				{% if targetUrl is not empty %}<p><a class="button primary" href="{{ targetUrl }}">Back to Home</a></p>{% endif %}
+				{% if targetUrl is not empty %}<p><a class="button primary" href="{{ targetUrl }}">Dashboard</a></p>{% endif %}
 			{% endif %}
 
 		</div>

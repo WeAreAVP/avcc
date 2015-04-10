@@ -36,6 +36,8 @@ class DefaultController extends Controller {
     public function getParent() {
         return 'FOSUserBundle';
     }
+    
+   
 
     /**
      * Dashboard 

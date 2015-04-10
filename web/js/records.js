@@ -72,7 +72,7 @@ function Records() {
         bulkUrl = url;
 
     }
-    
+
     /**
      * Set the popup message.
      * @param {string} success_msg
@@ -154,9 +154,9 @@ function Records() {
                             }
                         }
                     });
-                    if(filter == 1){
-                    oTable.fnPageChange("first",true);
-                }
+            if (filter == 1) {
+                oTable.fnPageChange("first", true);
+            }
             $('#records tbody').on('click', 'tr', function () {
 //                var id = this.id;
 //                var rowid = id.split('-');
@@ -209,7 +209,7 @@ function Records() {
         });
         $('input[name="recordingStandard[]"]').click(function () {
             checkParentFacet('recordingStandard', $(this).prop('checked'));
-        }); 
+        });
         $('input[name="printType[]"]').click(function () {
             checkParentFacet('printType', $(this).prop('checked'));
         });
@@ -351,6 +351,20 @@ function Records() {
         $('.customToken').click(function () {
             customFieldName = $(this).attr('data-fieldName');
             customColumnName = $(this).attr('data-columnName');
+            html = '<li><a href="javascript://;" id="reset_keyword_field" class="resetToken" data-fieldName="Reset"  data-columnName="reset" style="font-size: 12px!important;">Reset</a></li>';
+            if ($("#reset_keyword_field").length == 0 && customColumnName != "reset") {
+                $("#keyword_menu").prepend(html);
+            }
+            $('#limit_field_text').html(customFieldName);
+        });
+        
+        $("#keyword_menu").on('click', 'li a.resetToken', function () {
+            customFieldName = $(this).attr('data-fieldName');
+            customColumnName = $(this).attr('data-columnName');
+            if (customColumnName == "reset") {
+                $("#reset_keyword_field").remove();
+                customFieldName = "Search";
+            }
             $('#limit_field_text').html(customFieldName);
         });
     }
@@ -492,14 +506,14 @@ function Records() {
         }
         else {
             id = elementID;
-            if ($('#row_' + elementID).attr('checked')=='checked' || $('#row_' + elementID).prop("checked")==true) {
+            if ($('#row_' + elementID).attr('checked') == 'checked' || $('#row_' + elementID).prop("checked") == true) {
                 checked = 1;
                 if (selectedrecords) {
                     selectedrecords = selectedrecords + ',' + id;
                 } else {
                     selectedrecords = id;
                 }
-            }else{
+            } else {
                 checked = 0;
             }
         }
@@ -515,13 +529,13 @@ function Records() {
             }
         });
     };
-    
-    this.checkBoxes = function(){
-         $(document).on ('click','.checkboxes',function(){
-           selfObj.saveState($(this).val());
-         });  
+
+    this.checkBoxes = function () {
+        $(document).on('click', '.checkboxes', function () {
+            selfObj.saveState($(this).val());
+        });
     };
-    
+
     this.exportRequest = function () {
         $('.export').click(function () {
             var checked = false;

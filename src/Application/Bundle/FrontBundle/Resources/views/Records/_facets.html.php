@@ -199,7 +199,7 @@
                     </div>
                     <div class="button-dropdown place-left">
                         <button class="dropdown-toggle" type="button" id="limit_field_text">Search</button>
-                        <ul class="dropdown-menu" data-role="dropdown">
+                        <ul class="dropdown-menu" data-role="dropdown" id="keyword_menu">
                             <li><a href="javascript://;" class="customToken" data-fieldName="Title"  data-columnName="title" style="font-size: 12px!important;">Title</a></li>
                             <li><a href="javascript://;" class="customToken" data-fieldName="Description"  data-columnName="description" style="font-size: 12px!important;">Description</a></li>
                             <li><a href="javascript://;" class="customToken" data-fieldName="Collection Name"  data-columnName="collection_name" style="font-size: 12px!important;">Collection Name</a></li>

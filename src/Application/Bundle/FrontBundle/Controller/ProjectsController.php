@@ -8,6 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\Projects;
+use Application\Bundle\FrontBundle\Entity\Users;
+use Application\Bundle\FrontBundle\Entity\UsersRepository;
 use Application\Bundle\FrontBundle\Form\ProjectsType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
@@ -187,12 +189,22 @@ class ProjectsController extends Controller
      */
     private function createEditForm(Projects $entity)
     {
+        $em = $this->getDoctrine()->getManager();
         $formOptions['currentUser'] = $this->getUser();
         $form = $this->createForm(new ProjectsType($formOptions), $entity, array(
             'action' => $this->generateUrl('projects_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-
+    //    $user = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $entity->getOrganization()->getId()));
+//        echo '<pre>';
+//        print_r($user);
+//        exit;
+//         $form->add('users', 'choice', array(
+//            'label' => 'Users',
+//            'choices' => $user,
+//            'multiple' => true,
+//        ));
+        //$form->add('users');
         $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;

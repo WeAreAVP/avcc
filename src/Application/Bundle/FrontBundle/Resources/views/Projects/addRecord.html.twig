@@ -4,7 +4,7 @@
 
     <div class="grid fluid">
         <h1>
-            <a href="{{ path('projects') }}"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a>
+            <a href="{{ path('projects') }}"><i class="icon-arrow-left-3 smaller"></i> </a>
             Projects
         </h1>
         <form action="{{ path('project_add_rec')}}" method="post">
@@ -31,7 +31,7 @@
                 <div class="input-control">
                     <button class="button primary" name="submit" id="submit" type="submit">Next</button>
                     or
-                    <a href="{{ path('record') }}" class="button">Cancel</a>
+                    <a href="{{ path('projects') }}" class="button">Cancel</a>
                 </div>
             </fieldset>
         </form>

@@ -711,5 +711,20 @@ class ReportController extends Controller {
     private function calculateFileSize($totalDuration, $value) {
         return number_format(($totalDuration * $value) / 1024 / 1024, 5);
     }
+    /**
+     * Download All reports
+     * @param type $format
+     * 
+     * @Route("/downloadAll/{format}", name="download_all_reports")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     * 
+     */
+//    public function downloadAll($format){
+//        $this->allFormatsAction($format);
+//        $this->prioritizationReportAction($format);
+//        $this->manifestAction($format);
+//    }
 
 }

@@ -3,7 +3,7 @@
 
 <div class="grid fluid">
     <h1>
-        <a href="<?php echo $view['router']->generate('record_list') ?>"><i class="icon-arrow-left-3 fg-darker smaller"></i> </a> Record Detail
+        <a href="<?php echo $view['router']->generate('record_list') ?>"><i class="icon-arrow-left-3 smaller"></i> </a> Record Detail
 
     </h1>
     <?php
