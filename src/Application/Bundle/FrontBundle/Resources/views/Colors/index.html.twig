@@ -7,7 +7,7 @@
         </small>
     </h1>
     <div class="table-responsive">
-        <table class="table bordered">
+        <table class="table bordered sortable hovered">
             <thead>
                 <tr>
                     <th>Id</th>
@@ -18,8 +18,8 @@
             </thead>
             <tbody>
                 {% for entity in entities %}
-                    <tr>
-                        <td><a href="{{ path('vocabularies_colors_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <tr class="sortTr">
+                        <td><i class="icon-menu on-left"></i>&nbsp;<a href="{{ path('vocabularies_colors_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                         <td>{{ entity.name }}</td>
                         <td>{{ entity.score }}</td>
                         <td class="text-center">
@@ -30,5 +30,12 @@
                 {% endfor %}
             </tbody>
         </table>
+        <p><input type="button" id="updatesettings" class="button primary" onclick="updateVocabSettings();" value="Update" /></p>
     </div>
+    <script type="text/javascript">
+        var site_url = "{{ app.request.baseUrl }}";
+        function updateVocabSettings(){
+            // function to update fields order
+        }
+    </script>
 {% endblock %}

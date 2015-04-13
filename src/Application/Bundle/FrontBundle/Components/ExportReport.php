@@ -83,9 +83,10 @@ class ExportReport extends ContainerAware {
     }
 
     public function outputReport($type, $phpExcelObject, $fileStartName = 'allFormat') {
+        $date = new \DateTime();
         $format = ($type == 'csv') ? 'CSV' : 'Excel2007';
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, $format);
-        $filename = $fileStartName . '_' . time() . '.' . $type;
+        $filename = $fileStartName . '_' . $date->format('Ymdhis') . '.' . $type;
         $response = $this->container->get('phpexcel')->createStreamedResponse($writer);
         $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
         $response->headers->set('Content-Disposition', "attachment;filename={$filename}");

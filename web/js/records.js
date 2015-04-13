@@ -351,20 +351,18 @@ function Records() {
         $('.customToken').click(function () {
             customFieldName = $(this).attr('data-fieldName');
             customColumnName = $(this).attr('data-columnName');
-            html = '<li><a href="javascript://;" id="reset_keyword_field" class="resetToken" data-fieldName="Reset"  data-columnName="reset" style="font-size: 12px!important;">Reset</a></li>';
-            if ($("#reset_keyword_field").length == 0 && customColumnName != "reset") {
+            html = '<li><a href="javascript://;" id="reset_keyword_field" class="resetToken" data-fieldName="Reset"  data-columnName="" style="font-size: 12px!important;">Reset</a></li>';
+            if ($("#reset_keyword_field").length == 0 && customColumnName != "") {
                 $("#keyword_menu").prepend(html);
             }
             $('#limit_field_text').html(customFieldName);
         });
-        
+
         $("#keyword_menu").on('click', 'li a.resetToken', function () {
             customFieldName = $(this).attr('data-fieldName');
-            customColumnName = $(this).attr('data-columnName');
-            if (customColumnName == "reset") {
-                $("#reset_keyword_field").remove();
-                customFieldName = "Search";
-            }
+            customColumnName = 'all';
+            $("#reset_keyword_field").remove();
+            customFieldName = "Search";
             $('#limit_field_text').html(customFieldName);
         });
     }

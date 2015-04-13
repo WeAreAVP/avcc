@@ -91,7 +91,7 @@ class Organizations
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="created_by", referencedColumnName="id",nullable=true, onDelete="SET NULL")
      * })
      */
     private $usersCreated;
@@ -101,7 +101,7 @@ class Organizations
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="updated_by", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="updated_by", referencedColumnName="id",nullable=true, onDelete="SET NULL")
      * })
      */
     private $usersUpdated;

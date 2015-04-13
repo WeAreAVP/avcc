@@ -3,21 +3,29 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block body %}
-	<div class="login-body">
-		<h2><b>Account Activated</b>
-			<hr/>
-			{{ 'registration.confirmed'|trans({'%username%': user.username}) }}
-		</h2>
+    <div class="login-body">
+        <h2><b>Account Activated</b>
+            <hr/>
+            {{ 'registration.confirmed'|trans({'%username%': user.username}) }}
+        </h2>
 
-		<div class="forget">
-			{% if app.session is not empty %}
-				{% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
-				{% if targetUrl is not empty %}<p><a class="button primary" href="{{ targetUrl }}">Dashboard</a></p>{% endif %}
-			{% endif %}
+        <div class="forget">
+            {% if app.session is not empty %}
+                {% set targetUrl = app.session.get('_security.' ~ app.security.token.providerKey ~ '.target_path') %}
+                {% if targetUrl is not empty %}<p><a class="button primary" href="{{ targetUrl }}">Back to Home</a></p>
+                {% else %}
+                    <a href="{{ path('_welcome') }}" class="btn btn-primary">
+                        <span>Back to Home</span>
+                    </a>
+                {% endif %}
+            {% else %}
+                <a href="{{ path('_welcome') }}" class="btn btn-primary">
+                    <span>Back to Home</span>
+                </a>
+            {% endif %}
+        </div>
 
-		</div>
-
-	</div>
+    </div>
     <h2></h2>
 
 {% endblock body %}
