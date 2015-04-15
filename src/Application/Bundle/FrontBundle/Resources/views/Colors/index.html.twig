@@ -18,7 +18,7 @@
             </thead>
             <tbody>
                 {% for entity in entities %}
-                    <tr class="sortTr">
+                    <tr class="sortTr" id="{{entity.id}}">
                         <td><i class="icon-menu on-left"></i>&nbsp;<a href="{{ path('vocabularies_colors_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                         <td>{{ entity.name }}</td>
                         <td>{{ entity.score }}</td>
@@ -34,8 +34,30 @@
     </div>
     <script type="text/javascript">
         var site_url = "{{ app.request.baseUrl }}";
-        function updateVocabSettings(){
-            // function to update fields order
-        }
+        var path = "{{ path('colors_update_order') }}";
+                function updateVocabSettings() {
+                    // each loop to get ids
+                    i = 0;
+                    ids = [];
+                    $('.table tbody tr').each(function (index, id)
+                    {
+                        ids[i] = parseInt($(this).attr('id'));
+                        console.log(ids[i]);
+                        i++;
+
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        url: path,
+                        data: {
+                            color_ids : ids
+                        },
+                        dataType: 'json',
+                        success: function (response) {
+                            console.log('here');
+
+                        }
+                    });
+                }
     </script>
 {% endblock %}

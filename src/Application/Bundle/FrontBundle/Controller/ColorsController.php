@@ -30,7 +30,7 @@ class ColorsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ApplicationFrontBundle:Colors')->findAll();
+        $entities = $em->getRepository('ApplicationFrontBundle:Colors')->findBy(array(), array('order' => 'ASC'));
 
         return array(
             'entities' => $entities,
@@ -266,6 +266,35 @@ class ColorsController extends Controller
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
                         ->getForm();
+    }
+    
+    /**
+     * update field order
+     *
+     * @param Request $request
+     *
+     * @Route("/fieldOrder", name="colors_update_order")
+     * @Method("POST")
+     * @return array
+     */
+    public function updateFieldOrder(Request $request)
+    {
+        // code to update
+        $colorIds = $this->get('request')->request->get('color_ids');
+        $count = 0;
+        foreach($colorIds as $color){
+            echo $color;
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('ApplicationFrontBundle:Colors')->find($color);
+            echo $entity->getOrder();
+            $entity->setOrder($count);
+            $em->persist($entity);
+            $em->flush();
+            $count = $count + 1;
+        }
+        //$this->get('session')->getFlashBag()->add('success', 'Order updated succesfully.');
+        echo json_encode(array('success' => 'true'));
+	exit;
     }
 
 }

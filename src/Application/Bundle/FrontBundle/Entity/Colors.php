@@ -38,6 +38,13 @@ class Colors
      * @Assert\NotBlank(message="Score is required")
      */
     private $score = 0;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="order", type="integer", options={"default" = 9999})
+     */
+    private $order = 9999;
 
     /**
      * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="colorOrg")
@@ -140,5 +147,28 @@ class Colors
     {
         $this->score = $score;
     }
+    
+    /**
+     * Get order
+     *
+     * @return integer
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * Set order
+     *
+     * @param integer $order
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Colors
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+    }
+    
 
 }
