@@ -6,6 +6,9 @@
             <a href="{{ path('vocabularies_colors_new') }}"><i class="icon-plus"></i> New</a>
         </small>
     </h1>
+    <div class="flash-success text-success" id="message">
+                        Order updated succesfully.
+    </div>
     <div class="table-responsive">
         <table class="table bordered sortable hovered">
             <thead>
@@ -33,31 +36,31 @@
         <p><input type="button" id="updatesettings" class="button primary" onclick="updateVocabSettings();" value="Update" /></p>
     </div>
     <script type="text/javascript">
-        var site_url = "{{ app.request.baseUrl }}";
         var path = "{{ path('colors_update_order') }}";
-                function updateVocabSettings() {
-                    // each loop to get ids
-                    i = 0;
-                    ids = [];
-                    $('.table tbody tr').each(function (index, id)
-                    {
-                        ids[i] = parseInt($(this).attr('id'));
-                        console.log(ids[i]);
-                        i++;
+         $('#message').hide();
+        function updateVocabSettings() {
+            // each loop to get ids
+            i = 0;
+            ids = [];
+            $('.table tbody tr').each(function (index, id)
+            {
+                ids[i] = parseInt($(this).attr('id'));
+                console.log(ids[i]);
+                i++;
 
-                    });
-                    $.ajax({
-                        type: 'POST',
-                        url: path,
-                        data: {
-                            color_ids : ids
-                        },
-                        dataType: 'json',
-                        success: function (response) {
-                            console.log('here');
-
-                        }
-                    });
+            });
+            $.ajax({
+                type: 'POST',
+                url: path,
+                data: {
+                    color_ids: ids
+                },
+                dataType: 'json',
+                success: function (response) {
+                    console.log('here');
+                    $('#message').show();
                 }
+            });
+        }
     </script>
 {% endblock %}

@@ -475,7 +475,7 @@ class AudioRecordsController extends Controller {
      */
     public function getBaseAction($formatId) {
         $em = $this->getDoctrine()->getManager();
-        $bases = $em->getRepository('ApplicationFrontBundle:Bases')->findBy(array('baseFormat' => $formatId));
+        $bases = $em->getRepository('ApplicationFrontBundle:Bases')->findBy(array('baseFormat' => $formatId), array('order' =>'asc'));
 
         return $this->render('ApplicationFrontBundle:AudioRecords:getBase.html.php', array(
                     'bases' => $bases
@@ -497,9 +497,9 @@ class AudioRecordsController extends Controller {
     public function getRecordingSpeedAction($formatId, $mediaTypeId, $selectedrs = null) {
         $em = $this->getDoctrine()->getManager();
         if ($mediaTypeId == 3) {
-            $speeds = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findBy(array('recSpeedFormat' => NULL));
+            $speeds = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findBy(array('recSpeedFormat' => NULL), array('order' => 'asc'));
         } else {
-            $speeds = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findBy(array('recSpeedFormat' => $formatId));
+            $speeds = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findBy(array('recSpeedFormat' => $formatId), array('order' => 'asc'));
         }
 
         return $this->render('ApplicationFrontBundle:AudioRecords:getRecordingSpeed.html.php', array(
@@ -522,7 +522,7 @@ class AudioRecordsController extends Controller {
      */
     public function getFormatAction($mediaTypeId, $formatId = null) {
         $em = $this->getDoctrine()->getManager();
-        $formats = $em->getRepository('ApplicationFrontBundle:Formats')->findBy(array('mediaType' => $mediaTypeId));
+        $formats = $em->getRepository('ApplicationFrontBundle:Formats')->findBy(array('mediaType' => $mediaTypeId), array('order' => 'asc'));
 
         return $this->render('ApplicationFrontBundle:AudioRecords:getFormat.html.php', array(
                     'formats' => $formats,
@@ -543,7 +543,7 @@ class AudioRecordsController extends Controller {
      */
     public function getFormatVersionAction($formatId, $versionId = null) {
         $em = $this->getDoctrine()->getManager();
-        $formatVersions = $em->getRepository('ApplicationFrontBundle:FormatVersions')->findBy(array('formatVersionFormat' => $formatId));
+        $formatVersions = $em->getRepository('ApplicationFrontBundle:FormatVersions')->findBy(array('formatVersionFormat' => $formatId), array('order' => 'asc'));
 
         return $this->render('ApplicationFrontBundle:AudioRecords:getFormatVersion.html.php', array(
                     'formatVersions' => $formatVersions,
@@ -566,9 +566,9 @@ class AudioRecordsController extends Controller {
     public function getReelDiameterAction($formatId, $mediaTypeId, $selectedRD = Null) {
         $em = $this->getDoctrine()->getManager();
         if ($mediaTypeId == 2) {
-            $reeldiameters = $em->getRepository('ApplicationFrontBundle:ReelDiameters')->findBy(array('reelFormat' => NULL));
+            $reeldiameters = $em->getRepository('ApplicationFrontBundle:ReelDiameters')->findBy(array('reelFormat' => NULL), array('order' => 'asc'));
         } else {
-            $reeldiameters = $em->getRepository('ApplicationFrontBundle:ReelDiameters')->findBy(array('reelFormat' => $formatId));
+            $reeldiameters = $em->getRepository('ApplicationFrontBundle:ReelDiameters')->findBy(array('reelFormat' => $formatId), array('order' => 'asc'));
         }
 
         return $this->render('ApplicationFrontBundle:AudioRecords:getReelDiameter.html.php', array(

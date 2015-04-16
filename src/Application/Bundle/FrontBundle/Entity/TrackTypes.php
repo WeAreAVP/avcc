@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="track_types")
  * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\TrackTypesRepository")
  */
-class TrackTypes
-{
+class TrackTypes {
+
     /**
      * @var integer
      *
@@ -39,6 +39,13 @@ class TrackTypes
     private $score = 0;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="sort_order", type="integer", options={"default" = 9999})
+     */
+    private $order = 9999;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="trackTypeOrg")
      * @ORM\JoinColumn(
      *     name="organization_id",
@@ -55,8 +62,7 @@ class TrackTypes
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->getName();
     }
 
@@ -65,8 +71,7 @@ class TrackTypes
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -75,8 +80,7 @@ class TrackTypes
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -87,8 +91,7 @@ class TrackTypes
      *
      * @return \Application\Bundle\FrontBundle\Entity\TrackTypes
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -101,8 +104,7 @@ class TrackTypes
      *
      * @return \Application\Bundle\FrontBundle\Entity\TrackTypes
      */
-    public function setOrganization(\Application\Bundle\FrontBundle\Entity\Organizations $organization)
-    {
+    public function setOrganization(\Application\Bundle\FrontBundle\Entity\Organizations $organization) {
         $this->organization = $organization;
 
         return $this;
@@ -113,8 +115,7 @@ class TrackTypes
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function getOrganization()
-    {
+    public function getOrganization() {
         return $this->organization;
     }
 
@@ -123,8 +124,7 @@ class TrackTypes
      *
      * @return real number
      */
-    public function getScore()
-    {
+    public function getScore() {
         return $this->score;
     }
 
@@ -135,9 +135,28 @@ class TrackTypes
      *
      * @return \Application\Bundle\FrontBundle\Entity\Colors
      */
-    public function setScore($score)
-    {
+    public function setScore($score) {
         $this->score = $score;
+    }
+
+    /**
+     * Get order
+     *
+     * @return integer
+     */
+    public function getOrder() {
+        return $this->order;
+    }
+
+    /**
+     * Set order
+     *
+     * @param integer $order
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Colors
+     */
+    public function setOrder($order) {
+        $this->order = $order;
     }
 
 }

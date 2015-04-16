@@ -30,7 +30,7 @@ class BasesController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ApplicationFrontBundle:Bases')->findAll();
+        $entities = $em->getRepository('ApplicationFrontBundle:Bases')->findBy(array(), array('order' => 'ASC'));
 
         return array(
             'entities' => $entities,
@@ -275,6 +275,34 @@ class BasesController extends Controller
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
                         ->getForm();
+    }
+    
+    /**
+     * update field order
+     *
+     * @param Request $request
+     *
+     * @Route("/fieldOrder", name="bases_update_order")
+     * @Method("POST")
+     * @return array
+     */
+    public function updateFieldOrder(Request $request) {
+        // code to update
+        $colorIds = $this->get('request')->request->get('bases_ids');
+        $count = 0;
+        
+        foreach ($colorIds as $color) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('ApplicationFrontBundle:Bases')->find($color);
+            if ($entity) {
+                $entity->setOrder($count);
+               // $em->persist($entity);
+                $em->flush();
+                $count = $count + 1;
+            }
+        }
+        echo json_encode(array('success' => 'true'));
+        exit;
     }
 
 }

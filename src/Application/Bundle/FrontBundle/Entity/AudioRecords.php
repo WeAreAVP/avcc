@@ -36,7 +36,9 @@ class AudioRecords
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\DiskDiameters")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="disk_diameter_id", referencedColumnName="id")
+     *   
      * })
+     * 
      */
     private $diskDiameters = null;
 

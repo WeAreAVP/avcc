@@ -30,7 +30,7 @@ class TrackTypesController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ApplicationFrontBundle:TrackTypes')->findAll();
+        $entities = $em->getRepository('ApplicationFrontBundle:TrackTypes')->findBy(array(), array('order' => 'ASC'));
 
         return array(
             'entities' => $entities,
@@ -268,5 +268,30 @@ class TrackTypesController extends Controller
                         ->add('submit', 'submit', array('label' => 'Delete'))
                         ->getForm();
     }
-
+/**
+     * update field order
+     *
+     * @param Request $request
+     *
+     * @Route("/fieldOrder", name="track_update_order")
+     * @Method("POST")
+     * @return array
+     */
+    public function updateFieldOrder(Request $request) {
+        // code to update
+        $adsIds = $this->get('request')->request->get('track_ids');
+        $count = 0;
+        foreach ($adsIds as $ads) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('ApplicationFrontBundle:TrackTypes')->find($ads);
+            if ($entity) {
+                $entity->setOrder($count);
+               // $em->persist($entity);
+                $em->flush();
+                $count = $count + 1;
+            }
+        }
+        echo json_encode(array('success' => 'true'));
+        exit;
+    }
 }

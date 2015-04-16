@@ -39,6 +39,12 @@ class AcidDetectionStrips
      */
     private $score;
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="sort_order", type="integer", options={"default" = 9999})
+     */
+    private $order = 9999;
+    /**
      * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="acidDetectionStripOrg")
      * @ORM\JoinColumn(
      *     name="organization_id",
@@ -138,5 +144,27 @@ class AcidDetectionStrips
     public function setScore($score)
     {
         $this->score = $score;
+    }
+    
+     /**
+     * Get order
+     *
+     * @return integer
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * Set order
+     *
+     * @param integer $order
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Colors
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
     }
 }

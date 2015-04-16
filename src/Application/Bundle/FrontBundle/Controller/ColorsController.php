@@ -15,8 +15,7 @@ use Application\Bundle\FrontBundle\Form\ColorsType;
  *
  * @Route("/vocabularies/colors")
  */
-class ColorsController extends Controller
-{
+class ColorsController extends Controller {
 
     /**
      * Lists all Colors entities.
@@ -26,8 +25,7 @@ class ColorsController extends Controller
      * @Template()
      * @return array
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('ApplicationFrontBundle:Colors')->findBy(array(), array('order' => 'ASC'));
@@ -47,8 +45,7 @@ class ColorsController extends Controller
      * @Template("ApplicationFrontBundle:Colors:new.html.twig")
      * @return array
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $entity = new Colors();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -75,8 +72,7 @@ class ColorsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Colors $entity)
-    {
+    private function createCreateForm(Colors $entity) {
         $form = $this->createForm(new ColorsType(), $entity, array(
             'action' => $this->generateUrl('vocabularies_colors_create'),
             'method' => 'POST',
@@ -95,8 +91,7 @@ class ColorsController extends Controller
      * @Template()
      * @return array
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new Colors();
         $form = $this->createCreateForm($entity);
 
@@ -116,8 +111,7 @@ class ColorsController extends Controller
      * @Template()
      * @return array
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Colors')->find($id);
@@ -144,8 +138,7 @@ class ColorsController extends Controller
      * @Template()
      * @return array
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Colors')->find($id);
@@ -171,8 +164,7 @@ class ColorsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(Colors $entity)
-    {
+    private function createEditForm(Colors $entity) {
         $form = $this->createForm(new ColorsType(), $entity, array(
             'action' => $this->generateUrl('vocabularies_colors_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -194,8 +186,7 @@ class ColorsController extends Controller
      * @Template("ApplicationFrontBundle:Colors:edit.html.twig")
      * @return array
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Colors')->find($id);
@@ -232,8 +223,7 @@ class ColorsController extends Controller
      * @Method("DELETE")
      * @return redirect
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -259,15 +249,14 @@ class ColorsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
                         ->setAction($this->generateUrl('vocabularies_colors_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
                         ->getForm();
     }
-    
+
     /**
      * update field order
      *
@@ -277,24 +266,23 @@ class ColorsController extends Controller
      * @Method("POST")
      * @return array
      */
-    public function updateFieldOrder(Request $request)
-    {
+    public function updateFieldOrder(Request $request) {
         // code to update
         $colorIds = $this->get('request')->request->get('color_ids');
         $count = 0;
-        foreach($colorIds as $color){
-            echo $color;
+        
+        foreach ($colorIds as $color) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('ApplicationFrontBundle:Colors')->find($color);
-            echo $entity->getOrder();
-            $entity->setOrder($count);
-            $em->persist($entity);
-            $em->flush();
-            $count = $count + 1;
+            if ($entity) {
+                $entity->setOrder($count);
+               // $em->persist($entity);
+                $em->flush();
+                $count = $count + 1;
+            }
         }
-        //$this->get('session')->getFlashBag()->add('success', 'Order updated succesfully.');
         echo json_encode(array('success' => 'true'));
-	exit;
+        exit;
     }
 
 }

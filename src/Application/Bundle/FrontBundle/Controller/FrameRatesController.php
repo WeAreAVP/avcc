@@ -30,7 +30,7 @@ class FrameRatesController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ApplicationFrontBundle:FrameRates')->findAll();
+        $entities = $em->getRepository('ApplicationFrontBundle:FrameRates')->findBy(array(), array('order' => 'ASC'));
 
         return array(
             'entities' => $entities,
@@ -266,6 +266,33 @@ class FrameRatesController extends Controller
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
                         ->getForm();
+    }
+    
+    /**
+     * update field order
+     *
+     * @param Request $request
+     *
+     * @Route("/fieldOrder", name="fr_update_order")
+     * @Method("POST")
+     * @return array
+     */
+    public function updateFieldOrder(Request $request) {
+        // code to update
+        $adsIds = $this->get('request')->request->get('fr_ids');
+        $count = 0;
+        foreach ($adsIds as $ads) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('ApplicationFrontBundle:FrameRates')->find($ads);
+            if ($entity) {
+                $entity->setOrder($count);
+               // $em->persist($entity);
+                $em->flush();
+                $count = $count + 1;
+            }
+        }
+        echo json_encode(array('success' => 'true'));
+        exit;
     }
 
 }

@@ -30,7 +30,7 @@ class DiskDiametersController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ApplicationFrontBundle:DiskDiameters')->findAll();
+        $entities = $em->getRepository('ApplicationFrontBundle:DiskDiameters')->findBy(array(), array('order' => 'ASC'));
 
         return array(
             'entities' => $entities,
@@ -266,6 +266,33 @@ class DiskDiametersController extends Controller
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
                         ->getForm();
+    }
+    
+    /**
+     * update field order
+     *
+     * @param Request $request
+     *
+     * @Route("/fieldOrder", name="disk_update_order")
+     * @Method("POST")
+     * @return array
+     */
+    public function updateFieldOrder(Request $request) {
+        // code to update
+        $adsIds = $this->get('request')->request->get('disk_ids');
+        $count = 0;
+        foreach ($adsIds as $ads) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('ApplicationFrontBundle:DiskDiameters')->find($ads);
+            if ($entity) {
+                $entity->setOrder($count);
+               // $em->persist($entity);
+                $em->flush();
+                $count = $count + 1;
+            }
+        }
+        echo json_encode(array('success' => 'true'));
+        exit;
     }
 
 }

@@ -42,7 +42,7 @@ class Colors
     /**
      * @var integer
      *
-     * @ORM\Column(name="order", type="integer", options={"default" = 9999})
+     * @ORM\Column(name="sort_order", type="integer", options={"default" = 9999})
      */
     private $order = 9999;
 

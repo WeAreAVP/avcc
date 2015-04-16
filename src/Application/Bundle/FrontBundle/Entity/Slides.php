@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="slides")
  * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\SlidesRepository")
  */
-class Slides
-{
+class Slides {
+
     /**
      * @var integer
      *
@@ -39,6 +39,13 @@ class Slides
     private $score = 0;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="sort_order", type="integer", options={"default" = 9999})
+     */
+    private $order = 9999;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Organizations", fetch="EAGER", inversedBy="slidesOrg")
      * @ORM\JoinColumn(
      *     name="organization_id",
@@ -55,8 +62,7 @@ class Slides
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->getName();
     }
 
@@ -65,8 +71,7 @@ class Slides
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -75,8 +80,7 @@ class Slides
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -87,8 +91,7 @@ class Slides
      *
      * @return \Application\Bundle\FrontBundle\Entity\Slides
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -101,8 +104,7 @@ class Slides
      *
      * @return \Application\Bundle\FrontBundle\Entity\Slides
      */
-    public function setOrganization(\Application\Bundle\FrontBundle\Entity\Organizations $organization)
-    {
+    public function setOrganization(\Application\Bundle\FrontBundle\Entity\Organizations $organization) {
         $this->organization = $organization;
 
         return $this;
@@ -113,8 +115,7 @@ class Slides
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function getOrganization()
-    {
+    public function getOrganization() {
         return $this->organization;
     }
 
@@ -123,8 +124,7 @@ class Slides
      *
      * @return real number
      */
-    public function getScore()
-    {
+    public function getScore() {
         return $this->score;
     }
 
@@ -135,9 +135,28 @@ class Slides
      *
      * @return \Application\Bundle\FrontBundle\Entity\Colors
      */
-    public function setScore($score)
-    {
+    public function setScore($score) {
         $this->score = $score;
+    }
+
+    /**
+     * Get order
+     *
+     * @return integer
+     */
+    public function getOrder() {
+        return $this->order;
+    }
+
+    /**
+     * Set order
+     *
+     * @param integer $order
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Colors
+     */
+    public function setOrder($order) {
+        $this->order = $order;
     }
 
 }

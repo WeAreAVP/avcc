@@ -11,8 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="format_versions")
  * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\FormatVersionsRepository")
  */
-class FormatVersions
-{
+class FormatVersions {
+
     /**
      * @var integer
      *
@@ -37,6 +37,13 @@ class FormatVersions
      * @Assert\NotBlank(message="Score is required")
      */
     private $score = 0;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="sort_order", type="integer", options={"default" = 9999})
+     */
+    private $order = 9999;
 
     /**
      * @ORM\ManyToOne(targetEntity="Formats" , fetch="EAGER", inversedBy="formatVersion")
@@ -68,8 +75,7 @@ class FormatVersions
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->getName();
     }
 
@@ -78,8 +84,7 @@ class FormatVersions
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -88,8 +93,7 @@ class FormatVersions
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -100,8 +104,7 @@ class FormatVersions
      *
      * @return \Application\Bundle\FrontBundle\Entity\FormatVersions
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -114,8 +117,7 @@ class FormatVersions
      *
      * @return \Application\Bundle\FrontBundle\Entity\FormatVersions
      */
-    public function setFormatVersionFormat(\Application\Bundle\FrontBundle\Entity\Formats $formatVersionFormat)
-    {
+    public function setFormatVersionFormat(\Application\Bundle\FrontBundle\Entity\Formats $formatVersionFormat) {
         $this->formatVersionFormat = $formatVersionFormat;
 
         return $this;
@@ -126,8 +128,7 @@ class FormatVersions
      *
      * @return \Application\Bundle\FrontBundle\Entity\Formats
      */
-    public function getFormatVersionFormat()
-    {
+    public function getFormatVersionFormat() {
         return $this->formatVersionFormat;
     }
 
@@ -138,8 +139,7 @@ class FormatVersions
      *
      * @return \Application\Bundle\FrontBundle\Entity\FormatVersions
      */
-    public function setOrganization(\Application\Bundle\FrontBundle\Entity\Organizations $organization)
-    {
+    public function setOrganization(\Application\Bundle\FrontBundle\Entity\Organizations $organization) {
         $this->organization = $organization;
 
         return $this;
@@ -150,8 +150,7 @@ class FormatVersions
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function getOrganization()
-    {
+    public function getOrganization() {
         return $this->organization;
     }
 
@@ -160,8 +159,7 @@ class FormatVersions
      *
      * @return real number
      */
-    public function getScore()
-    {
+    public function getScore() {
         return $this->score;
     }
 
@@ -172,9 +170,28 @@ class FormatVersions
      *
      * @return \Application\Bundle\FrontBundle\Entity\Colors
      */
-    public function setScore($score)
-    {
+    public function setScore($score) {
         $this->score = $score;
+    }
+
+    /**
+     * Get order
+     *
+     * @return integer
+     */
+    public function getOrder() {
+        return $this->order;
+    }
+
+    /**
+     * Set order
+     *
+     * @param integer $order
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Colors
+     */
+    public function setOrder($order) {
+        $this->order = $order;
     }
 
 }

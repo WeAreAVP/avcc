@@ -6,8 +6,11 @@
             <a href="{{ path('vocabularies_framerates_new') }}"><i class="icon-plus"></i> New</a>
         </small>
     </h1>
+    <div class="flash-success text-success" id="message">
+        Order updated succesfully.
+    </div>
     <div class="table-responsive">
-        <table class="table bordered">
+        <table class="table bordered sortable hovered">
             <thead>
                 <tr>
                     <th>Id</th>
@@ -18,8 +21,8 @@
             </thead>
             <tbody>
                 {% for entity in entities %}
-                    <tr>
-                        <td><a href="{{ path('vocabularies_framerates_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <tr class="sortTr" id="{{entity.id}}">
+                        <td><i class="icon-menu on-left"></i>&nbsp;<a href="{{ path('vocabularies_framerates_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                         <td>{{ entity.name }}</td>
                         <td>{{ entity.score }}</td>
                         <td class="text-center">
@@ -30,5 +33,33 @@
                 {% endfor %}
             </tbody>
         </table>
+    <p><input type="button" id="updatesettings" class="button primary" onclick="updateVocabSettings();" value="Update" /></p>
     </div>
+    <script type="text/javascript">
+        var path = "{{ path('fr_update_order') }}";
+        $('#message').hide();
+        function updateVocabSettings() {
+            // each loop to get ids
+            i = 0;
+            ids = [];
+            $('.sortTr').each(function (index, id)
+            {
+                ids[i] = parseInt($(this).attr('id'));
+                i++;
+
+            });
+            $.ajax({
+                type: 'POST',
+                url: path,
+                data: {
+                    fr_ids: ids
+                },
+                dataType: 'json',
+                success: function (response) {
+                    console.log('here');
+                    $('#message').show();
+                }
+            });
+        }
+    </script>
 {% endblock %}

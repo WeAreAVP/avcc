@@ -30,7 +30,7 @@ class CommercialController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ApplicationFrontBundle:Commercial')->findAll();
+        $entities = $em->getRepository('ApplicationFrontBundle:Commercial')->findBy(array(), array('order' => 'ASC'));
 
         return array(
             'entities' => $entities,
@@ -267,6 +267,33 @@ class CommercialController extends Controller
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
                         ->getForm();
+    }
+    
+    /**
+     * update field order
+     *
+     * @param Request $request
+     *
+     * @Route("/fieldOrder", name="commercial_update_order")
+     * @Method("POST")
+     * @return array
+     */
+    public function updateFieldOrder(Request $request) {
+        // code to update
+        $adsIds = $this->get('request')->request->get('commercial_ids');
+        $count = 0;
+        foreach ($adsIds as $ads) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('ApplicationFrontBundle:Commercial')->find($ads);
+            if ($entity) {
+                $entity->setOrder($count);
+               // $em->persist($entity);
+                $em->flush();
+                $count = $count + 1;
+            }
+        }
+        echo json_encode(array('success' => 'true'));
+        exit;
     }
 
 }
