@@ -15,7 +15,7 @@ class DiskDiametersRepository extends EntityRepository
     public function getAllAsArray()
     {
         $names = $this->getEntityManager()->createQuery('SELECT distinct(diskDiameters.name)'
-                . ' from ApplicationFrontBundle:DiskDiameters diskDiameters ORDER BY diskDiameters.order ASC'
+                . ' from ApplicationFrontBundle:DiskDiameters'
                 )->getScalarResult();
         $dd = array_map("current",$names);
 

@@ -7,13 +7,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityManager;
 
-class FilmRecordsType extends AbstractType
-{
+class FilmRecordsType extends AbstractType {
+
     private $data;
     private $em;
 
-    public function __construct(EntityManager $em, $data = null)
-    {
+    public function __construct(EntityManager $em, $data = null) {
         $this->data = $data;
         $this->em = $em;
     }
@@ -22,40 +21,101 @@ class FilmRecordsType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('record', new RecordsType($this->em, $this->data), array(
-                        'data_class' => 'Application\Bundle\FrontBundle\Entity\Records'))
-            ->add('footage')
-            ->add('mediaDiameter')
-            ->add('shrinkage')
-            ->add('printType')
-            ->add('reelCore')
-            ->add('bases')
-            ->add('colors')
-            ->add('sound')
-            ->add('frameRate')
-            ->add('acidDetectionStrip')
+                ->add('record', new RecordsType($this->em, $this->data), array(
+                    'data_class' => 'Application\Bundle\FrontBundle\Entity\Records'))
+                ->add('footage')
+                ->add('mediaDiameter', 'entity', array(
+                    'class' => 'ApplicationFrontBundle:MediaDiameters',
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('u')
+                                ->orderBy('u.order', 'ASC');
+                    },
+                    'empty_value' => '',
+                    'empty_data' => null,
+                    'required' => false
+                ))
+                ->add('shrinkage')
+                ->add('printType', 'entity', array(
+                    'class' => 'ApplicationFrontBundle:PrintTypes',
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('u')
+                                ->orderBy('u.order', 'ASC');
+                    },
+                    'empty_value' => '',
+                    'empty_data' => null,
+                    'required' => false
+                ))
+                ->add('reelCore', 'entity', array(
+                    'class' => 'ApplicationFrontBundle:ReelCore',
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('u')
+                                ->orderBy('u.order', 'ASC');
+                    },
+                    'empty_value' => '',
+                    'empty_data' => null,
+                    'required' => false
+                ))
+                ->add('bases')
+                ->add('colors', 'entity', array(
+                    'class' => 'ApplicationFrontBundle:Colors',
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('u')
+                                ->orderBy('u.order', 'ASC');
+                    },
+                    'empty_value' => '',
+                    'empty_data' => null,
+                    'required' => false
+                ))
+                ->add('sound', 'entity', array(
+                    'class' => 'ApplicationFrontBundle:Sounds',
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('u')
+                                ->orderBy('u.order', 'ASC');
+                    },
+                    'empty_value' => '',
+                    'empty_data' => null,
+                    'required' => false
+                ))
+                ->add('frameRate', 'entity', array(
+                    'class' => 'ApplicationFrontBundle:FrameRates',
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('u')
+                                ->orderBy('u.order', 'ASC');
+                    },
+                    'empty_value' => '',
+                    'empty_data' => null,
+                    'required' => false
+                ))
+                ->add('acidDetectionStrip', 'entity', array(
+                    'class' => 'ApplicationFrontBundle:AcidDetectionStrips',
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('u')
+                                ->orderBy('u.order', 'ASC');
+                    },
+                    'empty_value' => '',
+                    'empty_data' => null,
+                    'required' => false
+                ))
         ;
     }
 
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'Application\Bundle\FrontBundle\Entity\FilmRecords',
-			 'cascade_validation' => true
+            'cascade_validation' => true
         ));
     }
 
     /**
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return 'application_bundle_frontbundle_filmrecords';
     }
+
 }

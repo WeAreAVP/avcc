@@ -148,7 +148,7 @@ class DefaultFields
         $data['mediaTypeId'] = $mediaType;
         $data['projectId'] = $projectId;
         $data['userId'] = $user->getId();
-        $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
+        $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findBy(array(), array('order' => 'ASC'));
 
         foreach ($mediaTypes as $media) {
             $data['mediaTypesArr'][$media->getId()] = $media->getName();

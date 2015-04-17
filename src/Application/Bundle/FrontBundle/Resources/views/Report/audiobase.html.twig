@@ -17,10 +17,13 @@
     <script type="text/javascript" src="{{ asset('js/exporting.js') }}"></script>
 
     <script type="text/javascript">
-        var date = new Date();
-        var time =  date.getFullYear()  + '' + (date.getMonth()+1) + '' + date.getDate()  + '' +  date.getHours() + '' + date.getMinutes() +''+date.getSeconds();
         var audiobase ={{ audiobase | raw }} ;
-                $(window).load(function () {
+        var date = new Date();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var time = date.getFullYear() + '' + datePadding(month) + '' + datePadding(day) + '' + datePadding(date.getHours()) + '' + datePadding(date.getMinutes()) + '' + datePadding(date.getSeconds());
+
+        $(window).load(function () {
             $('#audiobase_container').highcharts({
                 chart: {
                     type: 'column'
@@ -69,7 +72,9 @@
             });
 
         });
-
+function datePadding(data){
+         return (data <= 9 ? "0" : "") + data;
+     }
 
     </script>
 {% endblock %}
