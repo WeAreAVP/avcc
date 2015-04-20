@@ -42,7 +42,7 @@ class RecordsType extends AbstractType {
                         'empty_data' => ''
                     ))
                     ->add('title')
-                    ->add('collectionName')
+                    ->add('collectionName') 
                     ->add('description')
                     ->add('commercial', 'entity', array(
                         'class' => 'ApplicationFrontBundle:Commercial',
@@ -50,8 +50,7 @@ class RecordsType extends AbstractType {
                             return $er->createQueryBuilder('u')
                                     ->orderBy('u.order', 'ASC');
                         },
-                        'empty_value' => '',
-                        'empty_data' => null,
+                        'empty_data' => '',
                         'required' => false
                     ))
                     ->add('contentDuration', 'text', array('required' => false))
@@ -108,8 +107,7 @@ class RecordsType extends AbstractType {
                             return $er->createQueryBuilder('u')
                                     ->orderBy('u.order', 'ASC');
                         },
-                        'empty_value' => '',
-                        'empty_data' => null,
+                        'empty_data' => '',
                         'required' => false
                     ))
                     ->add('contentDuration', 'text', array('required' => false))
@@ -136,7 +134,7 @@ class RecordsType extends AbstractType {
                                     ->orderBy('u.order', 'ASC');
                         },
                         'empty_value' => '',
-                        'empty_data' => null,
+                        'empty_data' => '',
                         'required' => false
                     ))
                     ->add('reelDiameters')

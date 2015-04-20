@@ -27,7 +27,7 @@
                         <td>{{ entity.score }}</td>
                         <td class="text-center">
                             <a class="icon-pencil" title="Edit" href="{{ path('vocabularies_colors_edit', { 'id': entity.id }) }}"></a> |
-                            <a class="icon-remove" title="Delete" href="{{ path('vocabularies_colors_delete', { 'id': entity.id }) }}"></a>
+                            <a class="icon-remove" onclick="return confirm('Are you sure you want to delete selected term?')" title="Delete" href="{{ path('vocabularies_colors_delete', { 'id': entity.id }) }}"></a>
                         </td>
                     </tr>
                 {% endfor %}

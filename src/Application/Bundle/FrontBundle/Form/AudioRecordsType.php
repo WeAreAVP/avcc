@@ -24,6 +24,7 @@ class AudioRecordsType extends AbstractType {
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
+
         $builder
                 ->add('record', new RecordsType($this->em, $this->data), array(
                     'data_class' => 'Application\Bundle\FrontBundle\Entity\Records'))
@@ -34,8 +35,7 @@ class AudioRecordsType extends AbstractType {
                         return $er->createQueryBuilder('u')
                                 ->orderBy('u.order', 'ASC');
                     },
-                    'empty_value' => '',
-                    'empty_data' => null,
+                    'empty_data' => '',
                     'required' => false,
                 ))
                 ->add('mediaDiameters', 'entity', array(
@@ -44,8 +44,7 @@ class AudioRecordsType extends AbstractType {
                         return $er->createQueryBuilder('u')
                                 ->orderBy('u.order', 'ASC');
                     },
-                    'empty_value' => '',
-                    'empty_data' => null,
+                    'empty_data' => '',
                     'required' => false
                 ))
                 ->add('bases')
@@ -56,8 +55,7 @@ class AudioRecordsType extends AbstractType {
                         return $er->createQueryBuilder('u')
                                 ->orderBy('u.order', 'ASC');
                     },
-                    'empty_value' => '',
-                    'empty_data' => null,
+                    'empty_data' => '',
                     'required' => false
                 ))
                 ->add('slides', 'entity', array(
@@ -66,8 +64,7 @@ class AudioRecordsType extends AbstractType {
                         return $er->createQueryBuilder('u')
                                 ->orderBy('u.order', 'ASC');
                     },
-                    'empty_value' => '',
-                    'empty_data' => null,
+                    'empty_data' => '',
                     'required' => false,
                 ))
                 ->add('trackTypes', 'entity', array(
@@ -76,8 +73,7 @@ class AudioRecordsType extends AbstractType {
                         return $er->createQueryBuilder('u')
                                 ->orderBy('u.order', 'ASC');
                     },
-                    'empty_value' => '',
-                    'empty_data' => null,
+                    'empty_data' => '',
                     'required' => false,))
                 ->add('monoStereo', 'entity', array(
                     'class' => 'ApplicationFrontBundle:MonoStereo',
@@ -85,9 +81,8 @@ class AudioRecordsType extends AbstractType {
                         return $er->createQueryBuilder('u')
                                 ->orderBy('u.order', 'ASC');
                     },
-                    'empty_value' => '',
-                    'empty_data' => null,
-                    'mapped' => false,
+                    'empty_data' => '',
+                    'required' => false,
                 ))
                 ->add('noiceReduction', 'entity', array(
                     'class' => 'ApplicationFrontBundle:NoiceReduction',
@@ -95,8 +90,7 @@ class AudioRecordsType extends AbstractType {
                         return $er->createQueryBuilder('u')
                                 ->orderBy('u.order', 'ASC');
                     },
-                    'empty_value' => '',
-                    'empty_data' => null,
+                    'empty_data' => '',
                     'required' => false,
         ));
     }

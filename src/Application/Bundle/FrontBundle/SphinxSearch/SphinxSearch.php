@@ -98,6 +98,18 @@ class SphinxSearch extends ContainerAware {
 
         return $sq->execute();
     }
+    
+    /**
+     * delete the record.
+     *
+     * @return array on count of records.
+     */
+    public function delete() {
+        $sq = SphinxQL::create($this->conn)->delete();
+        $sq->from($this->indexName);
+        $sq->where('id', '=', $this->recordId);
+        $sq->execute();
+    }
 
     /**
      * Select record for listing from sphinx.

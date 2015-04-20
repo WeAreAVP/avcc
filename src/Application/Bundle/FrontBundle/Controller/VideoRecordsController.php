@@ -228,7 +228,7 @@ class VideoRecordsController extends Controller {
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(3, $em, $this->getUser(), null, $entity->getRecord()->getId());
         $editForm = $this->createEditForm($entity, $em, $data);
-        $deleteForm = $this->createDeleteForm($id);
+        //   $deleteForm = $this->createDeleteForm($id);
 
         if ($projectId) {
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
@@ -248,7 +248,7 @@ class VideoRecordsController extends Controller {
         return $this->render('ApplicationFrontBundle:VideoRecords:edit.html.php', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
-                    'delete_form' => $deleteForm->createView(),
+                    //        'delete_form' => $deleteForm->createView(),
                     'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
         ));
@@ -270,7 +270,7 @@ class VideoRecordsController extends Controller {
         $form->add('submit', 'submit', array('label' => 'Save'));
         $form->add('save_and_new', 'submit', array('label' => 'Save & New'));
         $form->add('save_and_duplicate', 'submit', array('label' => 'Save & Duplicate'));
-
+        $form->add('delete', 'submit', array('label' => 'Delete', 'attr' => array('class' => 'button danger', 'onclick' => 'return confirm("Are you sure?")')));
         return $form;
     }
 
@@ -292,7 +292,7 @@ class VideoRecordsController extends Controller {
         }
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(3, $em, $this->getUser(), null, $entity->getRecord()->getId());
-        $deleteForm = $this->createDeleteForm($id);
+        //  $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity, $em, $data);
         $editForm->handleRequest($request);
         $result = $this->checkUniqueId($request, $entity->getRecord()->getId());
@@ -300,6 +300,9 @@ class VideoRecordsController extends Controller {
             $error = new FormError("The unique ID must be unique.");
             $recordForm = $editForm->get('record');
             $recordForm->get('uniqueId')->addError($error);
+        }
+        if ($editForm->get('delete')->isClicked()) {
+            return $this->redirect($this->generateUrl('record_video_delete', array('id' => $id)));
         }
         if ($editForm->isValid()) {
             try {
@@ -315,7 +318,7 @@ class VideoRecordsController extends Controller {
                     return $this->redirect($this->generateUrl('record_video_new'));
                 }
                 $this->get('session')->getFlashBag()->add('success', 'Video record updated succesfully.');
-                
+
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
 //                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))) {
@@ -335,7 +338,7 @@ class VideoRecordsController extends Controller {
 //                }
             }
         }
-        
+
         if ($entity->getRecord()->getProject()->getViewSetting()) {
             $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
         }
@@ -344,36 +347,34 @@ class VideoRecordsController extends Controller {
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            //     'delete_form' => $deleteForm->createView(),
             'fieldSettings' => $userViewSettings,
             'type' => $data['mediaType']->getName(),
         );
     }
 
     /**
-     * Deletes a VideoRecords entity.
+     * Deletes a AudioRecords entity.
      *
-     * @Route("/video/{id}", name="record_video_delete")
-     * @Method("DELETE")
-     * @return redorect
+     * @param integer $id
+     * @param Request $request
+     *
+     * @route("/{id}", name = "record_video_delete")
+     * @return redirect
      */
-    public function deleteAction(Request $request, $id) {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
+    public function delete($id) {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ApplicationFrontBundle:VideoRecords')->find($id);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ApplicationFrontBundle:VideoRecords')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find VideoRecords entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find VideoRecords entity.');
         }
-
-        return $this->redirect($this->generateUrl('record_video'));
+        $shpinxInfo = $this->getSphinxInfo();
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 3);
+        $sphinxSearch->delete();
+        $em->remove($entity);
+        $em->flush();
+        return $this->redirect($this->generateUrl('record_list'));
     }
 
     /**

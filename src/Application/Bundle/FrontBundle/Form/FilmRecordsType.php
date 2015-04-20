@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 class FilmRecordsType extends AbstractType {
 
@@ -32,8 +33,7 @@ class FilmRecordsType extends AbstractType {
                         return $er->createQueryBuilder('u')
                                 ->orderBy('u.order', 'ASC');
                     },
-                    'empty_value' => '',
-                    'empty_data' => null,
+                    'empty_data' => '',
                     'required' => false
                 ))
                 ->add('shrinkage')
@@ -43,8 +43,7 @@ class FilmRecordsType extends AbstractType {
                         return $er->createQueryBuilder('u')
                                 ->orderBy('u.order', 'ASC');
                     },
-                    'empty_value' => '',
-                    'empty_data' => null,
+                    'empty_data' => '',
                     'required' => false
                 ))
                 ->add('reelCore', 'entity', array(
@@ -53,8 +52,7 @@ class FilmRecordsType extends AbstractType {
                         return $er->createQueryBuilder('u')
                                 ->orderBy('u.order', 'ASC');
                     },
-                    'empty_value' => '',
-                    'empty_data' => null,
+                    'empty_data' => '',
                     'required' => false
                 ))
                 ->add('bases')
@@ -64,8 +62,7 @@ class FilmRecordsType extends AbstractType {
                         return $er->createQueryBuilder('u')
                                 ->orderBy('u.order', 'ASC');
                     },
-                    'empty_value' => '',
-                    'empty_data' => null,
+                    'empty_data' => '',
                     'required' => false
                 ))
                 ->add('sound', 'entity', array(
@@ -74,8 +71,7 @@ class FilmRecordsType extends AbstractType {
                         return $er->createQueryBuilder('u')
                                 ->orderBy('u.order', 'ASC');
                     },
-                    'empty_value' => '',
-                    'empty_data' => null,
+                    'empty_data' => '',
                     'required' => false
                 ))
                 ->add('frameRate', 'entity', array(
@@ -84,8 +80,7 @@ class FilmRecordsType extends AbstractType {
                         return $er->createQueryBuilder('u')
                                 ->orderBy('u.order', 'ASC');
                     },
-                    'empty_value' => '',
-                    'empty_data' => null,
+                    'empty_data' => '',
                     'required' => false
                 ))
                 ->add('acidDetectionStrip', 'entity', array(
@@ -94,8 +89,7 @@ class FilmRecordsType extends AbstractType {
                         return $er->createQueryBuilder('u')
                                 ->orderBy('u.order', 'ASC');
                     },
-                    'empty_value' => '',
-                    'empty_data' => null,
+                    'empty_data' => '',
                     'required' => false
                 ))
         ;

@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 class VideoRecordsType extends AbstractType {
 
@@ -32,8 +33,7 @@ class VideoRecordsType extends AbstractType {
                         return $er->createQueryBuilder('u')
                                 ->orderBy('u.order', 'ASC');
                     },
-                    'empty_value' => '',
-                    'empty_data' => null,
+                    'empty_data' => '',
                     'required' => false
                 ))
                 ->add('formatVersion')
@@ -44,8 +44,7 @@ class VideoRecordsType extends AbstractType {
                         return $er->createQueryBuilder('u')
                                 ->orderBy('u.order', 'ASC');
                     },
-                    'empty_value' => '',
-                    'empty_data' => null,
+                    'empty_data' => '',
                     'required' => false
                 ))
         ;
