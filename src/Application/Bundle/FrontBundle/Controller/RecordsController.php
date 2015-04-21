@@ -660,9 +660,7 @@ class RecordsController extends Controller {
         if ($request->isXmlHttpRequest()) {
             $posted = $request->request->all();
             $recordIds = $posted['records'];
-            $em = $this->getDoctrine()->getManager();
-            echo $recordIds;
-            exit;
+
             if ($recordIds) {
                 if ($recordIds == 'all') {
                     $sphinxInfo = $this->getSphinxInfo();
@@ -675,10 +673,10 @@ class RecordsController extends Controller {
                     $recordIdsArray = explode(',', $recordIds);
                 }
                 foreach ($recordIdsArray as $recId) {
+                    $em = $this->getDoctrine()->getManager();
                     $record = $em->getRepository('ApplicationFrontBundle:Records')->find($recId);
                     if ($record->getMediaType()->getId() == 1) {
-                        $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->findby(array('record' => $record->getId()));
-
+                        $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->findOneBy(array('record' => $record->getId()));
                         if (!$entity) {
                             throw $this->createNotFoundException('Unable to find AudioRecords entity.');
                         }
@@ -686,8 +684,9 @@ class RecordsController extends Controller {
                         $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 1);
                         $sphinxSearch->delete();
                         $em->remove($entity);
+                        $em->flush();
                     } else if ($record->getMediaType()->getId() == 2) {
-                        $entity = $em->getRepository('ApplicationFrontBundle:FilmRecords')->findby(array('record' => $record->getId()));
+                        $entity = $em->getRepository('ApplicationFrontBundle:FilmRecords')->findOneBy(array('record' => $record->getId()));
 
                         if (!$entity) {
                             throw $this->createNotFoundException('Unable to find FilmRecords entity.');
@@ -696,8 +695,9 @@ class RecordsController extends Controller {
                         $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 2);
                         $sphinxSearch->delete();
                         $em->remove($entity);
+                        $em->flush();
                     } else if ($record->getMediaType()->getId() == 3) {
-                        $entity = $em->getRepository('ApplicationFrontBundle:VideoRecords')->findby(array('record' => $record->getId()));
+                        $entity = $em->getRepository('ApplicationFrontBundle:VideoRecords')->findOneBy(array('record' => $record->getId()));
 
                         if (!$entity) {
                             throw $this->createNotFoundException('Unable to find VideoRecords entity.');
@@ -706,10 +706,9 @@ class RecordsController extends Controller {
                         $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 3);
                         $sphinxSearch->delete();
                         $em->remove($entity);
+                        $em->flush();
                     }
                 }
-
-
                 echo json_encode(array('success' => 'deleted'));
             }
             exit;

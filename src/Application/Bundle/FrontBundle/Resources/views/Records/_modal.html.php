@@ -164,7 +164,7 @@
         <div class='modal-content'>
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">Delete Records</h3>
+                <h3 id="myModalLabel">Deleting Records</h3>
             </div>
             <div id="delete_process">
                 <div class="modal-body" id="delete_body" style="font-size: 12px;">

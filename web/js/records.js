@@ -756,14 +756,13 @@ function Records() {
                 $('#delete_footer').hide();
                 $.ajax({
                     type: 'POST',
-                    url: bulkUrl,
+                    url: deleteUrl,
                     data: {records: selectedrecords},
                     dataType: 'json',
                     success: function (response)
                     {
-                        console.log(response.success);
-                      //  $("#deleteModal").modal('show');
-                        //window.location.reload();
+                        $('#selectedrecords').val('');
+                        window.location.reload();
                     }
                 });
             }
