@@ -282,7 +282,7 @@ class FilmRecordsController extends Controller {
         $form->add('submit', 'submit', array('label' => 'Save'));
         $form->add('save_and_new', 'submit', array('label' => 'Save & New'));
         $form->add('save_and_duplicate', 'submit', array('label' => 'Save & Duplicate'));
-        $form->add('delete', 'submit', array('label' => 'Delete','attr' => array('class' => 'button danger', 'onclick' => 'return confirm("Are you sure?")')));
+        $form->add('delete', 'submit', array('label' => 'Delete','attr' => array('class' => 'button danger', 'onclick' => 'return confirm("Are you sure you want to delete selected record?")')));
         return $form;
     }
 
@@ -318,16 +318,17 @@ class FilmRecordsController extends Controller {
             $recordForm->get('uniqueId')->addError($error);
         }
         if ($editForm->get('delete')->isClicked()) {
+           // return $this->deleteFilm($id);
             return $this->redirect($this->generateUrl('record_film_delete', array('id' => $id)));
         }
-        if ($editForm->isValid()) {
+        if ($editForm->isValid()) {   
             try {
                 $em->flush();
                 $shpinxInfo = $this->getSphinxInfo();
                 $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 2);
                 $sphinxSearch->replace();
                 // the save_and_dupplicate button was clicked
-                if ($editForm->get('save_and_duplicate')->isClicked()) {
+                if ($editForm->get('save_and_duplicate')->isClicked()) { 
                     return $this->redirect($this->generateUrl('record_film_duplicate', array('filmRecId' => $id)));
                 }
                 if ($editForm->get('save_and_new')->isClicked()) {
@@ -372,12 +373,11 @@ class FilmRecordsController extends Controller {
      * Deletes a FilmRecords entity.
      *
      * @param integer $id
-     * @param Request $request
      *
      * @route("/{id}", name = "record_film_delete")
      * @return redirect
      */
-    public function delete($id) {
+    public function deleteFilm($id) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('ApplicationFrontBundle:FilmRecords')->find($id);
 

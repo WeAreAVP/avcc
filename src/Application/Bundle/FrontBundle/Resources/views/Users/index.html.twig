@@ -55,7 +55,7 @@
                                         {#                                                                    {{status}}#}
                                     </a> | 
                                     <a class="icon-pencil" title="Edit" href="{{ path('users_edit', { 'id': entity.id }) }}"></a> |
-                                    <a class="icon-remove"  onclick="return confirm('Are you sure you want to delete selected user?')" title="Delete" href="{{ path('users_delete', { 'id': entity.id }) }}"></a>
+                                    <a class="icon-remove" title="Delete" href="{{ path('users_delete', { 'id': entity.id }) }}"></a>
                                 </td>
                                 {% elseif role != 'ROLE_MANAGER' %}
                                     <td class="text-center">
@@ -75,7 +75,7 @@
                                         {#                                                                    {{status}}#}
                                     </a> | 
                                     <a class="icon-pencil" title="Edit" href="{{ path('users_edit', { 'id': entity.id }) }}"></a> |
-                                    <a class="icon-remove"  onclick="return confirm('Are you sure you want to delete selected user?')" title="Delete" href="{{ path('users_delete', { 'id': entity.id }) }}"></a>
+                                    <a class="icon-remove" title="Delete" href="{{ path('users_delete', { 'id': entity.id }) }}"></a>
                                 </td>
                                 {% else %}
                                     <td class="text-center"></td>

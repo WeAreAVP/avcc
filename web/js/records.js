@@ -27,6 +27,7 @@ function Records() {
     var errorMsg = null;
     var popupHeading = null;
     var bulkUrl = null;
+    var deleteUrl = null;
     /**
      * Set the ajax URL of datatable.
      * @param {string} source
@@ -73,6 +74,15 @@ function Records() {
 
     }
 
+/**
+     * Set the bulk url.
+     * @param {string} url
+     * 
+     */
+    this.setDeleteUrl = function (url) {
+        deleteUrl = url;
+
+    }
     /**
      * Set the popup message.
      * @param {string} success_msg
@@ -274,6 +284,7 @@ function Records() {
         selfObj.showMsg();
         selfObj.validateRecords();
         selfObj.checkBoxes();
+        selfObj.deleteRecords();
         return true;
     }
     /**
@@ -731,6 +742,30 @@ function Records() {
                 $('#bulk_edit_body').css('color', '#b94a48');
                 $("#bulk_edit_body").html('<b>Select records to edit.</b>');
                 $("#bulkEditModal").modal('show');
+            }
+        });
+    }
+    
+    this.deleteRecords = function () {
+        $('#deleteRecord').click(function () {
+            var selectedrecords = $("#selectedrecords").val();
+            if (selectedrecords) {
+                $("#deleteModal").modal('show');
+                $('#delete_body').css('color', 'black');
+                $('#delete_body').html('<img src="/images/ajax-loader.gif" /> <span><b>Processing please wait...</b></span>');
+                $('#delete_footer').hide();
+                $.ajax({
+                    type: 'POST',
+                    url: bulkUrl,
+                    data: {records: selectedrecords},
+                    dataType: 'json',
+                    success: function (response)
+                    {
+                        console.log(response.success);
+                      //  $("#deleteModal").modal('show');
+                        //window.location.reload();
+                    }
+                });
             }
         });
     }

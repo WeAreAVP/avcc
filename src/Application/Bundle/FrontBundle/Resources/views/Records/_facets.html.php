@@ -351,7 +351,7 @@
                      endif; ?>
                     <input type="hidden" id="is_review_check_state" name="is_review_check" value="<?php echo $review_check ?>"  />
                 </span>
-                Review
+                Manager Review
             </li>
         </ul>
     </nav>

@@ -9,6 +9,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Helper\DefaultFields;
 use Application\Bundle\FrontBundle\Entity\Records;
+use Application\Bundle\FrontBundle\Entity\AudioRecords;
+use Application\Bundle\FrontBundle\Entity\FilmRecords;
+use Application\Bundle\FrontBundle\Entity\VideoRecords;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Application\Bundle\FrontBundle\Entity\ImportExport;
@@ -641,6 +644,75 @@ class RecordsController extends Controller {
             }
 
             return array('updated' => isset($updated) ? $updated : null);
+        }
+    }
+
+    /**
+     * delete records
+     *
+     * @param Request $request
+     *
+     * @Route("/delete_records", name="delete_reocrds")
+     * @Method("POST")
+     * @return array
+     */
+    public function deleteRecords(Request $request) {
+        if ($request->isXmlHttpRequest()) {
+            $posted = $request->request->all();
+            $recordIds = $posted['records'];
+            $em = $this->getDoctrine()->getManager();
+            echo $recordIds;
+            exit;
+            if ($recordIds) {
+                if ($recordIds == 'all') {
+                    $sphinxInfo = $this->getSphinxInfo();
+                    $shpinxRecordIds = $this->fetchFromSphinx($this->getUser(), $sphinxInfo, $em);
+                    $recordIdsArray = array();
+                    foreach ($shpinxRecordIds as $recIds) {
+                        $recordIdsArray[] = $recIds;
+                    }
+                } else {
+                    $recordIdsArray = explode(',', $recordIds);
+                }
+                foreach ($recordIdsArray as $recId) {
+                    $record = $em->getRepository('ApplicationFrontBundle:Records')->find($recId);
+                    if ($record->getMediaType()->getId() == 1) {
+                        $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->findby(array('record' => $record->getId()));
+
+                        if (!$entity) {
+                            throw $this->createNotFoundException('Unable to find AudioRecords entity.');
+                        }
+                        $shpinxInfo = $this->getSphinxInfo();
+                        $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 1);
+                        $sphinxSearch->delete();
+                        $em->remove($entity);
+                    } else if ($record->getMediaType()->getId() == 2) {
+                        $entity = $em->getRepository('ApplicationFrontBundle:FilmRecords')->findby(array('record' => $record->getId()));
+
+                        if (!$entity) {
+                            throw $this->createNotFoundException('Unable to find FilmRecords entity.');
+                        }
+                        $shpinxInfo = $this->getSphinxInfo();
+                        $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 2);
+                        $sphinxSearch->delete();
+                        $em->remove($entity);
+                    } else if ($record->getMediaType()->getId() == 3) {
+                        $entity = $em->getRepository('ApplicationFrontBundle:VideoRecords')->findby(array('record' => $record->getId()));
+
+                        if (!$entity) {
+                            throw $this->createNotFoundException('Unable to find VideoRecords entity.');
+                        }
+                        $shpinxInfo = $this->getSphinxInfo();
+                        $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 3);
+                        $sphinxSearch->delete();
+                        $em->remove($entity);
+                    }
+                }
+
+
+                echo json_encode(array('success' => 'deleted'));
+            }
+            exit;
         }
     }
 

@@ -158,6 +158,24 @@
         </div>
     </div>
 </div>
+
+<div id="deleteModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true" style="display:none;">
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Delete Records</h3>
+            </div>
+            <div id="delete_process">
+                <div class="modal-body" id="delete_body" style="font-size: 12px;">
+                </div>
+                <div class="modal-footer" id="delete_footer">
+                    <button type="button" name="close" id="" class="button" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 	function checkOrganization() {
 		if ($('#organization').val() == '') {

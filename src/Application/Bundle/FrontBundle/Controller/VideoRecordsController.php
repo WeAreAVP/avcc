@@ -270,7 +270,7 @@ class VideoRecordsController extends Controller {
         $form->add('submit', 'submit', array('label' => 'Save'));
         $form->add('save_and_new', 'submit', array('label' => 'Save & New'));
         $form->add('save_and_duplicate', 'submit', array('label' => 'Save & Duplicate'));
-        $form->add('delete', 'submit', array('label' => 'Delete', 'attr' => array('class' => 'button danger', 'onclick' => 'return confirm("Are you sure?")')));
+        $form->add('delete', 'submit', array('label' => 'Delete', 'attr' => array('class' => 'button danger', 'onclick' => 'return confirm("Are you sure you want to delete selected record?")')));
         return $form;
     }
 
@@ -354,10 +354,9 @@ class VideoRecordsController extends Controller {
     }
 
     /**
-     * Deletes a AudioRecords entity.
+     * Deletes a VideoRecords entity.
      *
      * @param integer $id
-     * @param Request $request
      *
      * @route("/{id}", name = "record_video_delete")
      * @return redirect

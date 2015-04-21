@@ -41,7 +41,7 @@
                             <td>
                                 <a title="Edit" class="icon-pencil" href="{{ path('projects_edit', { 'id': entity.id }) }}"></a>
                                 {% if is_granted('ROLE_SUPER_ADMIN') %} | 
-                                    <a class="icon-remove"  onclick="return confirm('Are you sure you want to delete selected project?')" title="Delete" href="{{ path('projects_delete', { 'id': entity.id }) }}"></a>
+                                    <a class="icon-remove" title="Delete" href="{{ path('projects_delete', { 'id': entity.id }) }}"></a>
                                 {% endif %}
                             </td>
                         {% endif %}

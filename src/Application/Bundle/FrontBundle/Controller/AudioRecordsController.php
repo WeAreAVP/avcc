@@ -316,7 +316,7 @@ class AudioRecordsController extends Controller {
         $form->add('submit', 'submit', array('label' => 'Save'));
         $form->add('save_and_new', 'submit', array('label' => 'Save & New'));
         $form->add('save_and_duplicate', 'submit', array('label' => 'Save & Duplicate'));
-        $form->add('delete', 'submit', array('label' => 'Delete','attr' => array('class' => 'button danger', 'onclick' => 'return confirm("Are you sure?")')));
+        $form->add('delete', 'submit', array('label' => 'Delete','attr' => array('class' => 'button danger', 'onclick' => 'return confirm("Are you sure you want to delete selected record?")')));
 
         return $form;
     }

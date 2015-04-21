@@ -40,6 +40,9 @@
                             <a href="javascript://" id="bulkEdit">Bulk Edit</a>
                         </li>
                         <?php endif ?>
+                        <li>
+                            <a href="javascript://" id="deleteRecord">Delete</a>
+                        </li>
                     </ul>
                 </div>
                 <div style="font-size: 20px; margin-left: 11px; float: left;"><a href="<?php echo $view['router']->generate('record_new') ?>"><i class="icon-plus"></i> New</a></div>
@@ -114,6 +117,7 @@
                 record.setSuccessMsg('<?php echo $successPopupMsg; ?>');
                 record.setBulkUrl('<?php echo $view['router']->generate('bulkedit_validation') ?>');
                 record.setErrorMsg('<?php echo $errorPopupMsg; ?>');
+                record.setDeleteUrl('<?php echo $view['router']->generate('delete_reocrds') ?>');
                 record.setPopupHeading('<?php echo $heading; ?>');
                 record.bindEvents();
             </script>

@@ -41,6 +41,7 @@ class SphinxFields
         $this->indexFields['s_contributor'] = ($this->record->getContributor()) ? $this->record->getContributor() : "";
         $this->indexFields['contributor'] = ($this->record->getContributor()) ? $this->record->getContributor() : "";
         $this->indexFields['location'] = ($this->record->getLocation()) ? $this->record->getLocation() : "";
+        $this->indexFields['s_location'] = ($this->record->getLocation()) ? $this->record->getLocation() : "";
         $this->indexFields['s_format'] = ($this->record->getFormat()->getName()) ? $this->record->getFormat()->getName() : "";
         $this->indexFields['format'] = ($this->record->getFormat()->getName()) ? $this->record->getFormat()->getName() : "";
         $this->indexFields['is_review'] = ($this->record->getIsReview()) ? $this->record->getIsReview() : "";
@@ -50,7 +51,7 @@ class SphinxFields
         $this->indexFields['part'] = ($this->record->getPart()) ? $this->record->getPart() : "";
         $this->indexFields['generation'] = ($this->record->getGeneration()) ? $this->record->getGeneration() : "";
         $this->indexFields['project'] = $this->indexFields['s_project'] = ($this->record->getProject()) ? $this->record->getProject()->getName() : "";
-        $this->indexFields['organization_id'] = ($this->record->getProject()->getOrganization()) ? $this->record->getProject()->getOrganization()->getId() : "";
+        $this->indexFields['organization_id'] = ($this->record->getProject()) ? $this->record->getProject()->getOrganization()->getId() : "";
         $this->indexFields['user_id'] = ($this->record->getUser()) ? $this->record->getUser()->getId() : "";
         $this->indexFields['user_name'] = ($this->record->getUser()) ? $this->record->getUser()->getName() : "";
         $this->indexFields['copyright_restrictions'] = ($this->record->getCopyrightRestrictions()) ? $this->record->getCopyrightRestrictions() : "";
