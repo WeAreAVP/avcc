@@ -41,6 +41,21 @@
                         <td>{{ entity.contactpersonphone }}</td>
                         {% if is_granted('ROLE_MANAGER') %}
                             <td>
+                                 {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                   {% if entity.status == true %}
+                                        {% set status = "Active" %}
+                                        {% set statusId = "1" %}
+                                        {% set class = "icon-checkmark" %}
+                                        {% set title = "Active" %}
+                                    {% else %}    
+                                        {% set status = "Inactive" %}
+                                        {% set statusId = "0" %}
+                                        {% set class = "icon-blocked" %}
+                                        {% set title = "Inactive" %}
+                                    {% endif %}
+                                    <a class="{{class}} small-size" title="{{title}}" href="{{ path('organization_changestatus', { 'id': entity.id, 'status': statusId }) }}">      
+                                    </a> |
+                                {% endif %}
                                 <a title="Edit" href="{{ path('organizations_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i></a>
                                 {% if is_granted('ROLE_SUPER_ADMIN') %} | 
                                     <a class="icon-remove" title="Delete" href="{{ path('organizations_delete', { 'id': entity.id }) }}"></a>

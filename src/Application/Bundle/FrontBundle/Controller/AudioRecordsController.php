@@ -14,6 +14,7 @@ use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Bundle\FrontBundle\Entity\Projects;
+use Application\Bundle\FrontBundle\Entity\Records;
 
 /**
  * AudioRecords controller.
@@ -200,9 +201,12 @@ class AudioRecordsController extends Controller {
         } else if ($this->get('session')->get('project_id')) {
             $projectId = $this->get('session')->get('project_id');
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
-            if ($project->getViewSetting() != null) {
-                $userViewSettings = $project->getViewSetting();
+            if ($project) {
+                if ($project->getViewSetting() != null) {
+                    $userViewSettings = $project->getViewSetting();
+                }
             } else {
+                $this->get('session')->remove('project_id');
                 $userViewSettings = $fieldsObj->getDefaultOrder();
             }
         } else {
@@ -242,7 +246,7 @@ class AudioRecordsController extends Controller {
 
         return $this->render('ApplicationFrontBundle:AudioRecords:show.html.php', array(
                     'entity' => $entity,
-                 //   'delete_form' => $deleteForm->createView(),
+                    //   'delete_form' => $deleteForm->createView(),
                     'fieldSettings' => $userViewSettings
         ));
     }
@@ -272,7 +276,7 @@ class AudioRecordsController extends Controller {
         $data = $fieldsObj->getData(1, $em, $this->getUser(), null, $entity->getRecord()->getId());
 
         $editForm = $this->createEditForm($entity, $em, $data);
-      //  $deleteForm = $this->createDeleteForm($id);
+        //  $deleteForm = $this->createDeleteForm($id);
         if ($projectId) {
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project->getViewSetting() != null) {
@@ -292,7 +296,7 @@ class AudioRecordsController extends Controller {
         return $this->render('ApplicationFrontBundle:AudioRecords:edit.html.php', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
-                 //   'delete_form' => $deleteForm->createView(),
+                    //   'delete_form' => $deleteForm->createView(),
                     'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
         ));
@@ -316,7 +320,7 @@ class AudioRecordsController extends Controller {
         $form->add('submit', 'submit', array('label' => 'Save'));
         $form->add('save_and_new', 'submit', array('label' => 'Save & New'));
         $form->add('save_and_duplicate', 'submit', array('label' => 'Save & Duplicate'));
-        $form->add('delete', 'submit', array('label' => 'Delete','attr' => array('class' => 'button danger', 'onclick' => 'return confirm("Are you sure you want to delete selected record?")')));
+        $form->add('delete', 'submit', array('label' => 'Delete', 'attr' => array('class' => 'button danger', 'onclick' => 'return confirm("Are you sure you want to delete selected record?")')));
 
         return $form;
     }
@@ -344,7 +348,7 @@ class AudioRecordsController extends Controller {
         $fieldsObj = new DefaultFields();
         $userViewSettings = $fieldsObj->getDefaultOrder();
         $data = $fieldsObj->getData(1, $em, $user, null, $entity->getRecord()->getId());
-     //  $deleteForm = $this->createDeleteForm($id);
+        //  $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity, $em, $data);
         $editForm->handleRequest($request);
         $result = $this->checkUniqueId($request, $entity->getRecord()->getId());
@@ -399,7 +403,7 @@ class AudioRecordsController extends Controller {
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
-         //   'delete_form' => $deleteForm->createView(),
+            //   'delete_form' => $deleteForm->createView(),
             'fieldSettings' => $userViewSettings,
             'type' => $data['mediaType']->getName(),
         );
@@ -415,21 +419,19 @@ class AudioRecordsController extends Controller {
      * @return redirect
      */
     public function delete($id) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->find($id);
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find AudioRecords entity.');
-            }
-            $shpinxInfo = $this->getSphinxInfo();
-            $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 1);
-            $sphinxSearch->delete();
-            $em->remove($entity);
-            $em->flush();
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find AudioRecords entity.');
+        }
+        $shpinxInfo = $this->getSphinxInfo();
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 1);
+        $sphinxSearch->delete();
+        $em->remove($entity);
+        $em->flush();
         return $this->redirect($this->generateUrl('record_list'));
     }
-    
-    
 
     /**
      * Creates a form to delete a AudioRecords entity by id.
@@ -442,7 +444,7 @@ class AudioRecordsController extends Controller {
         return $this->createFormBuilder()
                         ->setAction($this->generateUrl('record_delete', array('id' => $id)))
                         ->setMethod('DELETE')
-                        ->add('submit', 'submit', array('label' => 'Delete','attr' => array('class' => 'button danger', 'onclick' => 'return confirm("Are you sure?")')))
+                        ->add('submit', 'submit', array('label' => 'Delete', 'attr' => array('class' => 'button danger', 'onclick' => 'return confirm("Are you sure?")')))
                         ->getForm();
     }
 
@@ -470,16 +472,22 @@ class AudioRecordsController extends Controller {
      * @param integer $formatId Format id
      *
      * @Route("/getBase/{formatId}", name="record_get_base")
+     * * @Route("/getBase/{id}/{formatId}", name="record_getselected_base")
      * @Method("GET")
      * @Template()
      * @return template
      */
-    public function getBaseAction($formatId) {
+    public function getBaseAction($formatId, $id = null) {
         $em = $this->getDoctrine()->getManager();
+        $selectedBaseId = '';
         $bases = $em->getRepository('ApplicationFrontBundle:Bases')->findBy(array('baseFormat' => $formatId), array('order' => 'asc'));
-
+        $record = $em->getRepository('ApplicationFrontBundle:Records')->find($id);
+        if ($record && $record->getBases()->getId()) {
+            $selectedBaseId = $record->getBases()->getId();
+        }
         return $this->render('ApplicationFrontBundle:AudioRecords:getBase.html.php', array(
-                    'bases' => $bases
+                    'bases' => $bases,
+                    'selectedBaseId' => $selectedBaseId,
         ));
     }
 
@@ -592,7 +600,7 @@ class AudioRecordsController extends Controller {
      *
      * @param int $selectedProjectId
      *
-     * @Route("/getAllProjects", name="record_projects")
+     * @Route("/getAllProjects/", name="record_projects")
      * @Route("/getAllProjects/{selectedProjectId}", name="record_user_projects")
      * @Method("GET")
      * @Template()

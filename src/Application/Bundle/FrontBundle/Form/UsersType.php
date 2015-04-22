@@ -9,9 +9,9 @@ use Symfony\Component\Security\Core\Validator\Constraint\UserPassword as OldUser
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Doctrine\ORM\EntityRepository;
 
-class UsersType extends AbstractType
-{
+class UsersType extends AbstractType {
 
     /**
      * List of roles.
@@ -44,8 +44,7 @@ class UsersType extends AbstractType
     static $DEFAULT_SUPER_ADMIN_ROLE = 'ROLE_SUPER_ADMIN';
     static $DEFAULT_ROLE_INDEX = 0;
 
-    public function __construct($options = array())
-    {
+    public function __construct($options = array()) {
         $this->roles = $options['roles'];
         $this->userRole = isset($options['userRole']) ? $options['userRole'] : null;
         $this->user = $options['currentUser'];
@@ -55,8 +54,7 @@ class UsersType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         if (class_exists('Symfony\Component\Security\Core\Validator\Constraints\UserPassword')) {
             $constraint = new UserPassword();
         } else {
@@ -91,8 +89,7 @@ class UsersType extends AbstractType
      *
      * @param FormEvent $event
      */
-    public function onPreSetData(FormEvent $event)
-    {
+    public function onPreSetData(FormEvent $event) {
         $userInfo = $event->getData();
         $form = $event->getForm();
         $role = self::$DEFAULT_ROLE;
@@ -102,19 +99,27 @@ class UsersType extends AbstractType
         $loggedInUserRole = $this->user->getRoles();
 
         if ($loggedInUserRole[self::$DEFAULT_ROLE_INDEX] == self::$DEFAULT_SUPER_ADMIN_ROLE) {
-            $form->add('organizations');
+            $form->add('organizations', 'entity', array(
+                'class' => 'ApplicationFrontBundle:Organizations',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                                    ->where('u.status = 1');
+                },
+                'empty_data' => '',
+                'required' => false,
+            ));
         } else {
             unset($this->roles[self::$DEFAULT_SUPER_ADMIN_ROLE]);
         }
-        
-        
+
+
         $array = $this->user->getRoles();
-        
-        foreach($this->roles as $key => $value){
-            if($key == $array[0]){
+
+        foreach ($this->roles as $key => $value) {
+            if ($key == $array[0]) {
                 $newRoles[$key] = $value;
                 break;
-            }else{
+            } else {
                 $newRoles[$key] = $value;
             }
         }
@@ -132,15 +137,13 @@ class UsersType extends AbstractType
      *
      * @param FormEvent $event
      */
-    public function onPreSubmitData(FormEvent $event)
-    {
+    public function onPreSubmitData(FormEvent $event) {
         $form = $event->getForm();
         $userInfo = $event->getData();
         $this->formRole = $userInfo['roles'];
     }
 
-    public function onPostSubmitData(FormEvent $event)
-    {
+    public function onPostSubmitData(FormEvent $event) {
         $userInfo = $event->getData();
 
         $loggedInUserRole = $this->user->getRoles();
@@ -156,8 +159,7 @@ class UsersType extends AbstractType
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'Application\Bundle\FrontBundle\Entity\Users'
         ));
@@ -166,8 +168,7 @@ class UsersType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return 'application_bundle_frontbundle_users';
     }
 

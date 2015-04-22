@@ -9,10 +9,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\Users;
 use Application\Bundle\FrontBundle\Form\UsersType;
+use Application\Bundle\FrontBundle\Entity\Records;
 use FOS\UserBundle\Model\UserInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\Entity\UserSettings as UserSettings;
+use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 
 /**
  * Users controller.
@@ -46,7 +48,7 @@ class UsersController extends Controller {
                     $all[$key] = $entity;
                 }
             }
-        }else{
+        } else {
             $all = $entities;
         }
         return array(
@@ -87,10 +89,14 @@ class UsersController extends Controller {
 
             return $this->redirect($this->generateUrl('users'));
         }
-
+        $organizationId = '';
+        if (false === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+            $organizationId = $this->getUser()->getOrganizations()->getId();
+        }
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
+            'organizationId' => $organizationId
         );
     }
 
@@ -256,11 +262,13 @@ class UsersController extends Controller {
 
             return $this->redirect($this->generateUrl('users'));
         }
+        $organizationId = ($user->getOrganizations()) ? $user->getOrganizations()->getId() : "";
 
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'organizationId' => $organizationId,
         );
     }
 
@@ -286,7 +294,13 @@ class UsersController extends Controller {
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Users entity.');
             }
-
+            
+            $records = $em->getRepository('ApplicationFrontBundle:Records')->findBy(array('user' =>  $id));
+            foreach ($records as $record) {                
+                $shpinxInfo = $this->container->getParameter('sphinx_param');
+                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $record->getId(), $record->getMediaType()->getId());
+                $sphinxSearch->delete();
+            }
             $em->remove($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'User deleted succesfully.');

@@ -5,7 +5,7 @@
 <?php
 foreach ($bases as $base) {
 ?>
-<option value="<?php echo $base->getId() ?>"><?php echo $base->getName() ?></option>
+<option value="<?php echo $base->getId() ?>" <?php echo ($base->getId() == $selectedBaseId) ? "selected = 'selected'" : ""; ?>><?php echo $base->getName() ?></option>
 <?php
 }
 ?>

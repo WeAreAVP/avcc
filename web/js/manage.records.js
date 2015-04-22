@@ -149,10 +149,14 @@ function showUpdateFields() {
             if (jQuery.inArray(parseInt($(this).val()), hideBaseIfFormat) >= 0) {
                 $("#bases_lbl").hide();
             } else {
+                var _url = baseUrl + 'getBase/' + $(this).val();
+                if(_base){
+                    _url = baseUrl + 'getBase/'+ _base + '/' + $(this).val();
+                }
                 /// call to get base dropdown options
                 $.ajax({
                     type: "GET",
-                    url: baseUrl + 'getBase/' + $(this).val(),
+                    url: _url,
                     success: function (response) {
                         if (response != "") {
                             $("#bases_lbl").show();
@@ -310,7 +314,7 @@ function updateProjects() {
     if (selectedProject) {
         urlProjects = baseUrl + 'getAllProjects/' + selectedProject;
     } else {
-        urlProjects = baseUrl + 'getAllProjects';
+        urlProjects = baseUrl + 'getAllProjects/';
     }
     $.ajax({
         type: "GET",

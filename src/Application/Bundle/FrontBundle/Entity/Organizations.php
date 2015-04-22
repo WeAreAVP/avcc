@@ -34,11 +34,11 @@ class Organizations
     private $name;
 
     /**
-     * @var boolean
+     * @var int
      * 
-     * @ORM\Column(name="status", type="boolean", options={"default" = 0}, nullable=true)
+     * @ORM\Column(name="status", type="boolean", options={"default" = 1}, nullable=true)
      */
-    protected $status = 0;
+    private $status = 1;
     
     /**
      * @var string
@@ -1174,13 +1174,13 @@ class Organizations
     
     public function setStatus($boolean)
     {
-        $this->status = (Boolean) $boolean;
+        $this->status = $boolean;
 
         return $this;
     }
     
     public function getStatus()
     {
-        return (Boolean) $this->status;
+        return (bool) $this->status;
     }
 }

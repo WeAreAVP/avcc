@@ -56,7 +56,7 @@ class Projects {
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Organizations")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="organization_id", referencedColumnName="id", nullable=true)
+     *   @ORM\JoinColumn(name="organization_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      * })
      */
     private $organization;
@@ -66,7 +66,7 @@ class Projects {
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="created_by", referencedColumnName="id" , nullable=true)
+     *   @ORM\JoinColumn(name="created_by", referencedColumnName="id" , nullable=true, onDelete="SET NULL")
      * })
      */
     private $usersCreated;
@@ -76,7 +76,7 @@ class Projects {
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="updated_by", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="updated_by", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      * })
      */
     private $usersUpdated;

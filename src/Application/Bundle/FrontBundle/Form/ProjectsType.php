@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvent;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormEvents;
 
 class ProjectsType extends AbstractType
@@ -46,7 +47,15 @@ class ProjectsType extends AbstractType
         $loggedInUserRole = $this->user->getRoles();
 
         if ($loggedInUserRole[self::$DEFAULT_ROLE_INDEX] == self::$DEFAULT_SUPER_ADMIN_ROLE) {
-            $form->add('organization');
+            $form->add('organization', 'entity', array(
+                'class' => 'ApplicationFrontBundle:Organizations',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                                    ->where('u.status = 1');
+                },
+                'empty_data' => '',
+                'required' => false,
+            ));
         }
     }
 

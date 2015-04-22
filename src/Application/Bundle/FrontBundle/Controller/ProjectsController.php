@@ -9,18 +9,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\Projects;
 use Application\Bundle\FrontBundle\Entity\Users;
+use Application\Bundle\FrontBundle\Entity\Records;
 use Application\Bundle\FrontBundle\Entity\UsersRepository;
 use Application\Bundle\FrontBundle\Form\ProjectsType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
-
+use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 /**
  * Projects controller.
  *
  * @Route("/projects")
  */
-class ProjectsController extends Controller
-{
+class ProjectsController extends Controller {
 
     /**
      * Lists all Projects entities.
@@ -30,8 +30,7 @@ class ProjectsController extends Controller
      * @Template()
      * @return stdObject
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
         if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
             $entities = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
@@ -55,8 +54,7 @@ class ProjectsController extends Controller
      *
      * @return array entity and form
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $user = $this->getUser();
         $entity = new Projects();
         $form = $this->createCreateForm($entity);
@@ -89,8 +87,7 @@ class ProjectsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Projects $entity)
-    {
+    private function createCreateForm(Projects $entity) {
         $formOptions['currentUser'] = $this->getUser();
         $form = $this->createForm(new ProjectsType($formOptions), $entity, array(
             'action' => $this->generateUrl('projects_create'),
@@ -110,8 +107,7 @@ class ProjectsController extends Controller
      * @Template()
      * @return array project entity and form
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new Projects();
         $form = $this->createCreateForm($entity);
 
@@ -132,8 +128,7 @@ class ProjectsController extends Controller
      *
      * @return array
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Projects')->find($id);
@@ -160,8 +155,7 @@ class ProjectsController extends Controller
      * @Template()
      * @return array
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Projects')->find($id);
@@ -187,15 +181,14 @@ class ProjectsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(Projects $entity)
-    {
+    private function createEditForm(Projects $entity) {
         $em = $this->getDoctrine()->getManager();
         $formOptions['currentUser'] = $this->getUser();
         $form = $this->createForm(new ProjectsType($formOptions), $entity, array(
             'action' => $this->generateUrl('projects_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-    //    $user = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $entity->getOrganization()->getId()));
+        //    $user = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $entity->getOrganization()->getId()));
 //        echo '<pre>';
 //        print_r($user);
 //        exit;
@@ -221,8 +214,7 @@ class ProjectsController extends Controller
      * @Template("ApplicationFrontBundle:Projects:edit.html.twig")
      * @return array
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $entity = $em->getRepository('ApplicationFrontBundle:Projects')->find($id);
@@ -261,8 +253,7 @@ class ProjectsController extends Controller
      * @Method("DELETE")
      * @return Redirect
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -274,6 +265,12 @@ class ProjectsController extends Controller
                 throw $this->createNotFoundException('Unable to find Projects entity.');
             }
 
+            $records = $em->getRepository('ApplicationFrontBundle:Records')->findBy(array('project' => $id));
+            foreach ($records as $record) {
+                $shpinxInfo = $this->container->getParameter('sphinx_param');
+                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $record->getId(), $record->getMediaType()->getId());
+                $sphinxSearch->delete();
+            }
             $em->remove($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Project deleted succesfully.');
@@ -289,12 +286,11 @@ class ProjectsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
                         ->setAction($this->generateUrl('projects_delete', array('id' => $id)))
                         ->setMethod('DELETE')
-                        ->add('submit', 'submit', array('label' => 'Delete',  'attr' => array('onclick' => "return confirm('Are you sure you want to delete selected project?')")))
+                        ->add('submit', 'submit', array('label' => 'Delete', 'attr' => array('onclick' => "return confirm('Are you sure you want to delete selected project?')")))
                         ->getForm();
     }
 
@@ -308,8 +304,7 @@ class ProjectsController extends Controller
      * @Template()
      * @return template
      */
-    public function addRecordProjectAction($id)
-    {
+    public function addRecordProjectAction($id) {
         $em = $this->getDoctrine()->getManager();
         $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
         $mediaTypes = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
@@ -331,8 +326,7 @@ class ProjectsController extends Controller
      * @Template()
      * @return redirect
      */
-    public function addRecordAction(Request $request)
-    {
+    public function addRecordAction(Request $request) {
         $id = $request->request->get('project');
         $mediaTypeId = $request->request->get('mediaType');
 

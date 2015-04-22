@@ -4,7 +4,7 @@
 <div class="grid fluid">
     <h1>
         <a href="<?php echo $view['router']->generate('record_list') ?>"><i class="icon-arrow-left-3 smaller"></i> </a>
-        Edit Record<?php // echo ucwords($type)  ?>
+        Edit Record<?php // echo ucwords($type)   ?>
     </h1>
     <?php // echo $view['form']->widget($edit_form); exit;?>
     <?php echo $view['form']->start($edit_form) ?>
@@ -18,17 +18,17 @@
             ?>
             <div style="<?php echo ($audioField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>">
                 <?php
-                $attr = ($audioField['is_required']) ? array('class' => 'size4', 'required'=> 'required') : array('class' => 'size4');
+                $attr = ($audioField['is_required']) ? array('class' => 'size4', 'required' => 'required') : array('class' => 'size4');
                 echo $view['form']->label((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]], ' ');
                 echo $audioField['title'];
                 echo ($audioField['is_required']) ? "&nbsp;<span>*</span>" : "";
                 ?>
                 <div class="input-control <?php echo (count($field) == 2 && $field[1] == 'isReview') ? '' : 'text'; ?>" data-role="input-control">
-    <?php echo $view['form']->widget((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => $attr)) ?>
+                    <?php echo $view['form']->widget((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => $attr)) ?>
                     <span class="has-error text-danger"><?php echo $view['form']->errors((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]]) ?></span>
                 </div>
             </div>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
     </fieldset>
     <?php echo $view['form']->widget($edit_form['record']['userId']) ?>
     <?php echo $view['form']->widget($edit_form['record']['mediaTypeHidden']) ?>
@@ -37,7 +37,7 @@
     <?php echo $view['form']->widget($edit_form['save_and_new']) ?>
     <?php echo $view['form']->widget($edit_form['save_and_duplicate']) ?>
     <?php echo $view['form']->widget($edit_form['delete']) ?>
-<?php echo $view['form']->end($edit_form) ?>
+    <?php echo $view['form']->end($edit_form) ?>
 </div>
 <script src="<?php echo $view['assets']->getUrl('js/manage.records.js') ?>"></script>
 <script type="text/javascript">
@@ -47,12 +47,14 @@
     var selectedFormat = '<?php echo ($entity->getRecord() && $entity->getRecord()->getFormat()) ? $entity->getRecord()->getFormat()->getId() : ''; ?>';
     var selectedMediaType = '<?php echo $entity->getRecord()->getMediaType()->getId(); ?>';
     var selectedFormatVersion = '';
-    var selectedRS = '<?php echo ($entity->getRecordingSpeed()) ? $entity->getRecordingSpeed()->getId() :'';?>';
+    var selectedRS = '<?php echo ($entity->getRecordingSpeed()) ? $entity->getRecordingSpeed()->getId() : ''; ?>';
     var selectedRD = '<?php echo ($entity->getRecord() && $entity->getRecord()->getReelDiameters()) ? $entity->getRecord()->getReelDiameters()->getId() : ''; ?>';
     var selectedProject = '<?php echo ($entity->getRecord() && $entity->getRecord()->getProject()) ? $entity->getRecord()->getProject()->getId() : ''; ?>';
 
-    var viewUrl = baseUrl + '<?php echo $entity->getId();?>/edit/';
+    var viewUrl = baseUrl + '<?php echo $entity->getId(); ?>/edit/';
     var projectId = 0;
+    var _base = <?php if ($entity->getId()) echo $entity->getId();
+    else echo '' ?>;
     $(document).ready(function () {
         initialize_records_form();
     });

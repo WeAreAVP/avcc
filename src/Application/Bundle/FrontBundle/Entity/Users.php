@@ -54,7 +54,7 @@ class Users extends BaseUser
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Organizations")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="organization_id", referencedColumnName="id",nullable=true, onDelete="SET NULL")
+     *   @ORM\JoinColumn(name="organization_id", referencedColumnName="id",nullable=true, onDelete="CASCADE")
      * })
      */
     private $organizations;
@@ -62,9 +62,9 @@ class Users extends BaseUser
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Users $usersCreated
      *
-     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users",cascade={"refresh"})
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="created_by", referencedColumnName="id",nullable=true, onDelete="SET NULL")
      * })
      */
     private $usersCreated;
@@ -72,9 +72,9 @@ class Users extends BaseUser
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
      *
-     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users",cascade={"refresh"})
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="updated_by", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="updated_by", referencedColumnName="id",nullable=true, onDelete="SET NULL")
      * })
      */
     private $usersUpdated;
@@ -102,7 +102,7 @@ class Users extends BaseUser
      *             nullable=false,
      *         )
      *     },
-     *     inverseJoinColumns={@ORM\JoinColumn(name="projectId", referencedColumnName="id", nullable=true)}
+     *     inverseJoinColumns={@ORM\JoinColumn(name="projectId", referencedColumnName="id", nullable=true, onDelete="CASCADE")}
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */

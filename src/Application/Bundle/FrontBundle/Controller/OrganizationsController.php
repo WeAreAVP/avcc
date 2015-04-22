@@ -10,14 +10,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\Organizations;
 use Application\Bundle\FrontBundle\Entity\Users;
 use Application\Bundle\FrontBundle\Form\OrganizationsType;
+use Application\Bundle\FrontBundle\Entity\Records;
+use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 
 /**
  * Organizations controller.
  *
  * @Route("/organizations")
  */
-class OrganizationsController extends Controller
-{
+class OrganizationsController extends Controller {
 
     /**
      * Lists all Organizations entities.
@@ -27,8 +28,7 @@ class OrganizationsController extends Controller
      * @Template()
      * @return array
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
         if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
             $entities = $em->getRepository('ApplicationFrontBundle:Organizations')->findAll();
@@ -51,8 +51,7 @@ class OrganizationsController extends Controller
      * @Template("ApplicationFrontBundle:Organizations:new.html.twig")
      * @return array
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $user = $this->getUser();
         $entity = new Organizations();
         $form = $this->createCreateForm($entity);
@@ -81,8 +80,7 @@ class OrganizationsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Organizations $entity)
-    {
+    private function createCreateForm(Organizations $entity) {
         $form = $this->createForm(new OrganizationsType(), $entity, array(
             'action' => $this->generateUrl('organizations_create'),
             'method' => 'POST',
@@ -101,8 +99,7 @@ class OrganizationsController extends Controller
      * @Template()
      * @return array
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new Organizations();
         $form = $this->createCreateForm($entity);
 
@@ -123,8 +120,7 @@ class OrganizationsController extends Controller
      *
      * @return array
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Organizations')->find($id);
@@ -151,8 +147,7 @@ class OrganizationsController extends Controller
      * @Template()
      * @return array
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Organizations')->find($id);
@@ -178,8 +173,7 @@ class OrganizationsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(Organizations $entity)
-    {
+    private function createEditForm(Organizations $entity) {
         $form = $this->createForm(new OrganizationsType(), $entity, array(
             'action' => $this->generateUrl('organizations_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -202,8 +196,7 @@ class OrganizationsController extends Controller
      *
      * @return array
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $entity = $em->getRepository('ApplicationFrontBundle:Organizations')->find($id);
@@ -243,8 +236,7 @@ class OrganizationsController extends Controller
      *
      * @return redirect to organization list page
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -255,7 +247,13 @@ class OrganizationsController extends Controller
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Organizations entity.');
             }
-
+            $records = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organization'=> $id));
+            foreach ($records as $user) {
+                $record = $em->getRepository('ApplicationFrontBundle:Records')->findBy(array('user'=> $user->getId()));
+                $shpinxInfo = $this->container->getParameter('sphinx_param');
+                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $record->getId(), $record->getMediaType()->getId());
+                $sphinxSearch->delete();
+            }
             $em->remove($entity);
             $em->flush();
         }
@@ -270,15 +268,14 @@ class OrganizationsController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
                         ->setAction($this->generateUrl('organizations_delete', array('id' => $id)))
                         ->setMethod('DELETE')
-                        ->add('submit', 'submit', array('label' => 'Delete', 'attr' => array('onclick' =>"return confirm('Are you sure you want to delete selected organization?')")))
+                        ->add('submit', 'submit', array('label' => 'Delete', 'attr' => array('onclick' => "return confirm('Are you sure you want to delete selected organization?')")))
                         ->getForm();
     }
-    
+
     /**
      * Active/Inactive organization.
      *
@@ -296,7 +293,8 @@ class OrganizationsController extends Controller
         if ($status == 1) {
             $organization->setStatus(0);
             $users = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $id));
-            foreach($users as $user){
+
+            foreach ($users as $user) {
                 $_user = $em->getRepository('ApplicationFrontBundle:Users')->find($user->getId());
                 $_user->setEnabled(0);
             }
@@ -304,7 +302,7 @@ class OrganizationsController extends Controller
         } else {
             $organization->setStatus(1);
             $users = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $id));
-            foreach($users as $user){
+            foreach ($users as $user) {
                 $_user = $em->getRepository('ApplicationFrontBundle:Users')->find($user->getId());
                 $_user->setEnabled(1);
             }

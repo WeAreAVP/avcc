@@ -39,7 +39,7 @@ class Records {
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Projects")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="project_id", referencedColumnName="id",nullable = false)
+     *   @ORM\JoinColumn(name="project_id", referencedColumnName="id",nullable = false, onDelete="CASCADE")
      * })
      * @Assert\NotBlank(message="Project is required.")
      */
@@ -64,7 +64,7 @@ class Records {
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id",nullable = false, onDelete="CASCADE")
      * })
      */
     private $user;
