@@ -34,6 +34,13 @@ class Organizations
     private $name;
 
     /**
+     * @var boolean
+     * 
+     * @ORM\Column(name="status", type="boolean", options={"default" = 0}, nullable=true)
+     */
+    protected $status = 0;
+    
+    /**
      * @var string
      *
      * @ORM\Column(name="department_name", type="string", nullable=true)
@@ -1163,5 +1170,17 @@ class Organizations
     public function removeTrackTypeOrg(TrackTypes $tts)
     {
         $this->trackTypeOrg->remove($tts);
+    }
+    
+    public function setStatus($boolean)
+    {
+        $this->status = (Boolean) $boolean;
+
+        return $this;
+    }
+    
+    public function getStatus()
+    {
+        return (Boolean) $this->status;
     }
 }

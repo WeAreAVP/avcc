@@ -658,6 +658,7 @@ class RecordsController extends Controller {
      */
     public function deleteRecords(Request $request) {
         if ($request->isXmlHttpRequest()) {
+            $session = $this->getRequest()->getSession();
             $posted = $request->request->all();
             $recordIds = $posted['records'];
 
@@ -709,6 +710,7 @@ class RecordsController extends Controller {
                         $em->flush();
                     }
                 }
+                $session->remove("saveRecords");
                 echo json_encode(array('success' => 'deleted'));
             }
             exit;

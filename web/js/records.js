@@ -74,7 +74,7 @@ function Records() {
 
     }
 
-/**
+    /**
      * Set the bulk url.
      * @param {string} url
      * 
@@ -745,7 +745,7 @@ function Records() {
             }
         });
     }
-    
+
     this.deleteRecords = function () {
         $('#deleteRecord').click(function () {
             var selectedrecords = $("#selectedrecords").val();
@@ -761,7 +761,6 @@ function Records() {
                     dataType: 'json',
                     success: function (response)
                     {
-                        $('#selectedrecords').val('');
                         window.location.reload();
                     }
                 });

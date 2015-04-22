@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\Organizations;
+use Application\Bundle\FrontBundle\Entity\Users;
 use Application\Bundle\FrontBundle\Form\OrganizationsType;
 
 /**
@@ -276,6 +277,41 @@ class OrganizationsController extends Controller
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete', 'attr' => array('onclick' =>"return confirm('Are you sure you want to delete selected organization?')")))
                         ->getForm();
+    }
+    
+    /**
+     * Active/Inactive organization.
+     *
+     * @param integer $id User id
+     * @param integer $status User status id
+     * 
+     * @Route("/changestatus/{id}/{status}", name="organization_changestatus")
+     * @Method("GET")
+     * @Template()
+     * @return redirection
+     */
+    public function changeStatusAction($id, $status) {
+        $em = $this->getDoctrine()->getManager();
+        $organization = $em->getRepository('ApplicationFrontBundle:Organizations')->find($id);
+        if ($status == 1) {
+            $organization->setStatus(0);
+            $users = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $id));
+            foreach($users as $user){
+                $_user = $em->getRepository('ApplicationFrontBundle:Users')->find($user->getId());
+                $_user->setEnabled(0);
+            }
+            $this->get('session')->getFlashBag()->add('success', 'Organization disabled succesfully.');
+        } else {
+            $organization->setStatus(1);
+            $users = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $id));
+            foreach($users as $user){
+                $_user = $em->getRepository('ApplicationFrontBundle:Users')->find($user->getId());
+                $_user->setEnabled(1);
+            }
+            $this->get('session')->getFlashBag()->add('success', 'Organization activated succesfully.');
+        }
+        $em->flush();
+        return $this->redirect($this->generateUrl('organizations'));
     }
 
 }
