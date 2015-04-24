@@ -151,7 +151,7 @@ function showUpdateFields() {
             } else {
                 var _url = baseUrl + 'getBase/' + $(this).val();
                 if(_base){
-                    _url = baseUrl + 'getBase/'+ _base + '/' + type + '/' + $(this).val();
+                    _url = baseUrl + 'getBase/'+ type + '/' + _base + '/' + $(this).val();
                 } 
                 /// call to get base dropdown options
                 $.ajax({
