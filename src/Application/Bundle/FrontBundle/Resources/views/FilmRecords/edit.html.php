@@ -4,7 +4,7 @@
 <div class="grid fluid">
     <h1>
         <a href="<?php echo $view['router']->generate('record_list') ?>"><i class="icon-arrow-left-3 smaller"></i> </a>
-        Edit Record<?php // echo ucwords($type) ?>
+        Edit Record<?php // echo ucwords($type)   ?>
     </h1>
     <?php echo $view['form']->start($edit_form) ?>
     <?php echo $view['form']->errors($edit_form) ?>
@@ -14,11 +14,11 @@
             <?php
             $field = explode('.', $filmField['field']);
             ?>
-            <div style="<?php echo ($filmField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1].'_lbl' : $field[0].'_lbl' ?>">
+            <div style="<?php echo ($filmField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>">
                 <?php
                 $attr = ($filmField['is_required']) ? array('class' => 'size4') : array('class' => 'size4');
-                echo $view['form']->label((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]],' ');
-                echo $filmField['title']; 
+                echo $view['form']->label((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]], ' ');
+                echo $filmField['title'];
                 echo ($filmField['is_required']) ? "&nbsp;<span>*</span>" : "";
                 ?>
                 <div class="input-control <?php echo (count($field) == 2 && $field[1] == 'isReview') ? '' : 'text'; ?> edit" data-role="input-control">
@@ -40,15 +40,22 @@
 <script src="<?php echo $view['assets']->getUrl('js/manage.records.js') ?>"></script>
 <script type="text/javascript">
     var changes = false;
-    var baseUrl = '<?php echo $view['router']->generate('record')?>';
+    var baseUrl = '<?php echo $view['router']->generate('record') ?>';
     var selectedFormat = '<?php echo ($entity->getRecord() && $entity->getRecord()->getFormat()) ? $entity->getRecord()->getFormat()->getId() : ''; ?>';
-    var selectedMediaType = '<?php echo $entity->getRecord()->getMediaType()->getId();?>';
+    var selectedMediaType = '<?php echo $entity->getRecord()->getMediaType()->getId(); ?>';
     var selectedFormatVersion = '';
     var selectedRS = '';
     var selectedRD = '<?php echo ($entity->getRecord() && $entity->getRecord()->getReelDiameters()) ? $entity->getRecord()->getReelDiameters()->getId() : ''; ?>';
     var selectedProject = '<?php echo ($entity->getRecord() && $entity->getRecord()->getProject()) ? $entity->getRecord()->getProject()->getId() : ''; ?>';
-    var viewUrl = baseUrl + 'film/<?php echo $entity->getId();?>/edit/';
+    var viewUrl = baseUrl + 'film/<?php echo $entity->getId(); ?>/edit/';
     var projectId = 0;
+    var _base = <?php
+    if ($entity->getId())
+        echo $entity->getRecord()->getId();
+    else
+        echo '';
+    ?>;
+    var type = 'film';
     $(document).ready(function () {
         initialize_records_form();
     });

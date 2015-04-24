@@ -472,16 +472,17 @@ class AudioRecordsController extends Controller {
      * @param integer $formatId Format id
      *
      * @Route("/getBase/{formatId}", name="record_get_base")
-     * * @Route("/getBase/{id}/{formatId}", name="record_getselected_base")
+     * * @Route("/getBase/{type}/{id}/{formatId}", name="record_getselected_base")
      * @Method("GET")
      * @Template()
      * @return template
      */
-    public function getBaseAction($formatId, $id = null) {
+    public function getBaseAction($formatId, $id = null, $type = null) {
         $em = $this->getDoctrine()->getManager();
         $selectedBaseId = '';
         $bases = $em->getRepository('ApplicationFrontBundle:Bases')->findBy(array('baseFormat' => $formatId), array('order' => 'asc'));
         $record = $em->getRepository('ApplicationFrontBundle:Records')->find($id);
+        echo $record->getId();
         if ($record && $record->getBases()->getId()) {
             $selectedBaseId = $record->getBases()->getId();
         }
@@ -503,7 +504,7 @@ class AudioRecordsController extends Controller {
      * @Template()
      * @return template
      */
-    public function getRecordingSpeedAction($formatId, $mediaTypeId, $selectedrs = null) {
+    public function getRecordingSpeedAction($formatId, $mediaTypeId, $selectedrs = null) { 
         $em = $this->getDoctrine()->getManager();
         if ($mediaTypeId == 3) {
             $speeds = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findBy(array('recSpeedFormat' => NULL), array('order' => 'asc'));

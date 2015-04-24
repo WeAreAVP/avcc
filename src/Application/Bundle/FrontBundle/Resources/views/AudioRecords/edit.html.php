@@ -4,7 +4,7 @@
 <div class="grid fluid">
     <h1>
         <a href="<?php echo $view['router']->generate('record_list') ?>"><i class="icon-arrow-left-3 smaller"></i> </a>
-        Edit Record<?php // echo ucwords($type)   ?>
+        Edit Record<?php // echo ucwords($type)    ?>
     </h1>
     <?php // echo $view['form']->widget($edit_form); exit;?>
     <?php echo $view['form']->start($edit_form) ?>
@@ -53,8 +53,13 @@
 
     var viewUrl = baseUrl + '<?php echo $entity->getId(); ?>/edit/';
     var projectId = 0;
-    var _base = <?php if ($entity->getId()) echo $entity->getId();
-    else echo '' ?>;
+    var _base = <?php
+    if ($entity->getId())
+        echo $entity->getRecord()->getId();
+    else
+        echo '';
+        ?>;
+    var type = 'audio';
     $(document).ready(function () {
         initialize_records_form();
     });
