@@ -55,7 +55,7 @@
     var projectId = 0;
     var _base = <?php
     if ($entity->getId())
-        echo $entity->getRecord()->getId();
+        echo $entity->getBases()->getId();
     else
         echo '';
         ?>;
