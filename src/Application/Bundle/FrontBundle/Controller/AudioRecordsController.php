@@ -337,6 +337,7 @@ class AudioRecordsController extends Controller {
      * @return array
      */
     public function updateAction(Request $request, $id) {
+      
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->find($id);
@@ -399,7 +400,7 @@ class AudioRecordsController extends Controller {
             $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
         }
         $userViewSettings = json_decode($userViewSettings, true);
-
+       
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
@@ -481,7 +482,7 @@ class AudioRecordsController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $selectedBaseId = '';
         $bases = $em->getRepository('ApplicationFrontBundle:Bases')->findBy(array('baseFormat' => $formatId), array('order' => 'asc'));
-         if ($selected) {
+        if ($selected) {
             $selectedBaseId = $selected;
         }
         return $this->render('ApplicationFrontBundle:AudioRecords:getBase.html.php', array(
@@ -502,7 +503,7 @@ class AudioRecordsController extends Controller {
      * @Template()
      * @return template
      */
-    public function getRecordingSpeedAction($formatId, $mediaTypeId, $selectedrs = null) { 
+    public function getRecordingSpeedAction($formatId, $mediaTypeId, $selectedrs = null) {
         $em = $this->getDoctrine()->getManager();
         if ($mediaTypeId == 3) {
             $speeds = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findBy(array('recSpeedFormat' => NULL), array('order' => 'asc'));

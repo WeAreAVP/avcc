@@ -241,7 +241,7 @@ class FilmRecordsController extends Controller {
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(2, $em, $this->getUser(), null, $entity->getRecord()->getId());
         $editForm = $this->createEditForm($entity, $em, $data);
-      //  $deleteForm = $this->createDeleteForm($id);
+        //  $deleteForm = $this->createDeleteForm($id);
         if ($projectId) {
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project->getViewSetting() != null) {
@@ -260,7 +260,7 @@ class FilmRecordsController extends Controller {
         return $this->render('ApplicationFrontBundle:FilmRecords:edit.html.php', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
-              //      'delete_form' => $deleteForm->createView(),
+                    //      'delete_form' => $deleteForm->createView(),
                     'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
         ));
@@ -282,7 +282,7 @@ class FilmRecordsController extends Controller {
         $form->add('submit', 'submit', array('label' => 'Save'));
         $form->add('save_and_new', 'submit', array('label' => 'Save & New'));
         $form->add('save_and_duplicate', 'submit', array('label' => 'Save & Duplicate'));
-        $form->add('delete', 'submit', array('label' => 'Delete','attr' => array('class' => 'button danger', 'onclick' => 'return confirm("Are you sure you want to delete selected record?")')));
+        $form->add('delete', 'submit', array('label' => 'Delete', 'attr' => array('class' => 'button danger', 'onclick' => 'return confirm("Are you sure you want to delete selected record?")')));
         return $form;
     }
 
@@ -308,7 +308,7 @@ class FilmRecordsController extends Controller {
         $fieldsObj = new DefaultFields();
         $userViewSettings = $fieldsObj->getDefaultOrder();
         $data = $fieldsObj->getData(2, $em, $this->getUser(), null, $entity->getRecord()->getId());
-       // $deleteForm = $this->createDeleteForm($id);
+        // $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity, $em, $data);
         $editForm->handleRequest($request);
         $result = $this->checkUniqueId($request, $entity->getRecord()->getId());
@@ -318,17 +318,16 @@ class FilmRecordsController extends Controller {
             $recordForm->get('uniqueId')->addError($error);
         }
         if ($editForm->get('delete')->isClicked()) {
-           // return $this->deleteFilm($id);
             return $this->redirect($this->generateUrl('record_film_delete', array('id' => $id)));
         }
-        if ($editForm->isValid()) {   
+        if ($editForm->isValid()) {
             try {
                 $em->flush();
                 $shpinxInfo = $this->getSphinxInfo();
                 $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 2);
                 $sphinxSearch->replace();
                 // the save_and_dupplicate button was clicked
-                if ($editForm->get('save_and_duplicate')->isClicked()) { 
+                if ($editForm->get('save_and_duplicate')->isClicked()) {
                     return $this->redirect($this->generateUrl('record_film_duplicate', array('filmRecId' => $id)));
                 }
                 if ($editForm->get('save_and_new')->isClicked()) {
@@ -359,11 +358,10 @@ class FilmRecordsController extends Controller {
             $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
         }
         $userViewSettings = json_decode($userViewSettings, true);
-
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
-       //     'delete_form' => $deleteForm->createView(),
+            //     'delete_form' => $deleteForm->createView(),
             'fieldSettings' => $userViewSettings,
             'type' => $data['mediaType']->getName(),
         );
@@ -378,17 +376,17 @@ class FilmRecordsController extends Controller {
      * @return redirect
      */
     public function deleteFilm($id) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ApplicationFrontBundle:FilmRecords')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ApplicationFrontBundle:FilmRecords')->find($id);
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find FilmRecords entity.');
-            }
-            $shpinxInfo = $this->getSphinxInfo();
-            $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 2);
-            $sphinxSearch->delete();
-            $em->remove($entity);
-            $em->flush();
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find FilmRecords entity.');
+        }
+        $shpinxInfo = $this->getSphinxInfo();
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 2);
+        $sphinxSearch->delete();
+        $em->remove($entity);
+        $em->flush();
         return $this->redirect($this->generateUrl('record_list'));
     }
 

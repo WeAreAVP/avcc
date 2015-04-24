@@ -27,15 +27,7 @@ class FilmRecordsType extends AbstractType {
                 ->add('record', new RecordsType($this->em, $this->data), array(
                     'data_class' => 'Application\Bundle\FrontBundle\Entity\Records'))
                 ->add('footage')
-                ->add('mediaDiameter', 'entity', array(
-                    'class' => 'ApplicationFrontBundle:MediaDiameters',
-                    'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('u')
-                                ->orderBy('u.order', 'ASC');
-                    },
-                    'empty_data' => '',
-                    'required' => false
-                ))
+                ->add('mediaDiameter')  
                 ->add('shrinkage')
                 ->add('printType', 'entity', array(
                     'class' => 'ApplicationFrontBundle:PrintTypes',

@@ -29,6 +29,7 @@ class RecordsType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         if ($this->selectedOptions['recordId']) {
+        //    echo $this->selectedOptions['mediaTypeId'];exit;
             $builder
                     ->add('uniqueId')
                     ->add('location')
@@ -88,6 +89,7 @@ class RecordsType extends AbstractType {
                     ->addEventListener(
                             FormEvents::POST_SUBMIT, array($this, 'onPostSubmitData'));
         } else {
+            
             $builder
                     ->add('uniqueId')
                     ->add('location')
