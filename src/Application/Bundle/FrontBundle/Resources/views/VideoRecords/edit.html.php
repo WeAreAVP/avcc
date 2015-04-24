@@ -52,12 +52,7 @@
     var selectedProject = '<?php echo ($entity->getRecord() && $entity->getRecord()->getProject()) ? $entity->getRecord()->getProject()->getId() : ''; ?>';
     var viewUrl = baseUrl + 'video/<?php echo $entity->getId(); ?>/edit/';
     var projectId = 0;
-    var selectedbase = <?php
-    if ($entity->getId() && $entity->getBases())
-        echo $entity->getBases()->getId();
-    else
-        echo '';
-        ?>;
+    var selectedbase = '';
     $(document).ready(function () {
         initialize_records_form();
     });
