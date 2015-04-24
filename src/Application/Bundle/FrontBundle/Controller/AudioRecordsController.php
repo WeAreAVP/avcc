@@ -472,22 +472,17 @@ class AudioRecordsController extends Controller {
      * @param integer $formatId Format id
      *
      * @Route("/getBase/{formatId}", name="record_get_base")
-     * * @Route("/getBase/{type}/{id}/{formatId}", name="record_getselected_base")
+     * * @Route("/getBase/{selected}/{formatId}", name="record_getselected_base")
      * @Method("GET")
      * @Template()
      * @return template
      */
-    public function getBaseAction($formatId, $id = null, $type = null) {
+    public function getBaseAction($formatId, $selected = null) {
         $em = $this->getDoctrine()->getManager();
         $selectedBaseId = '';
         $bases = $em->getRepository('ApplicationFrontBundle:Bases')->findBy(array('baseFormat' => $formatId), array('order' => 'asc'));
-//        $record = $em->getRepository('ApplicationFrontBundle:Records')->find($id);
-//      
-//        if ($record && $record->getBases()->getId()) {
-//            $selectedBaseId = $record->getBases()->getId();
-//        }
-         if ($id) {
-            $selectedBaseId = $id;
+         if ($selected) {
+            $selectedBaseId = $selected;
         }
         return $this->render('ApplicationFrontBundle:AudioRecords:getBase.html.php', array(
                     'bases' => $bases,

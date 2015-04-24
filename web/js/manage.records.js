@@ -150,8 +150,8 @@ function showUpdateFields() {
                 $("#bases_lbl").hide();
             } else {
                 var _url = baseUrl + 'getBase/' + $(this).val();
-                if(_base){
-                    _url = baseUrl + 'getBase/'+ type + '/' + _base + '/' + $(this).val();
+                if(selectedbase){
+                    _url = baseUrl + 'getBase/'+ selectedbase + '/' + $(this).val();
                 } 
                 /// call to get base dropdown options
                 $.ajax({

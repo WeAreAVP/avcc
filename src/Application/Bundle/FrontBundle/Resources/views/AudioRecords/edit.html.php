@@ -53,13 +53,12 @@
 
     var viewUrl = baseUrl + '<?php echo $entity->getId(); ?>/edit/';
     var projectId = 0;
-    var _base = <?php
-    if ($entity->getId())
+    var selectedbase = <?php
+    if ($entity->getId() && $entity->getBases())
         echo $entity->getBases()->getId();
     else
         echo '';
         ?>;
-    var type = 'audio';
     $(document).ready(function () {
         initialize_records_form();
     });

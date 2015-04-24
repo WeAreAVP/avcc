@@ -49,13 +49,12 @@
     var selectedProject = '<?php echo ($entity->getRecord() && $entity->getRecord()->getProject()) ? $entity->getRecord()->getProject()->getId() : ''; ?>';
     var viewUrl = baseUrl + 'film/<?php echo $entity->getId(); ?>/edit/';
     var projectId = 0;
-    var _base = <?php
-    if ($entity->getId())
-        echo $entity->getRecord()->getId();
+    var selectedbase = <?php
+    if ($entity->getId() && $entity->getBases())
+        echo $entity->getBases()->getId();
     else
         echo '';
-    ?>;
-    var type = 'film';
+        ?>;
     $(document).ready(function () {
         initialize_records_form();
     });
