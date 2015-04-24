@@ -29,7 +29,7 @@ class RecordsType extends AbstractType {
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
         if ($this->selectedOptions['recordId']) {
-        //    echo $this->selectedOptions['mediaTypeId'];exit;
+//            echo '<pre>';print_r($this->selectedOptions['mediaTypesArr'][$this->selectedOptions['mediaTypeId']]);exit;
             $builder
                     ->add('uniqueId')
                     ->add('location')
@@ -73,9 +73,9 @@ class RecordsType extends AbstractType {
                         'required' => false,
                     ))
                     ->add('mediaType', 'choice', array(
-                        'choices' => $this->selectedOptions['mediaTypesArr'],
+                        'choices' => array($this->selectedOptions['mediaTypeId']=>$this->selectedOptions['mediaTypesArr'][$this->selectedOptions['mediaTypeId']]),
                         'data' => $this->selectedOptions['mediaTypeId'],
-                        'attr' => array('disabled' => 'disabled'),
+//                        'attr' => array('disabled' => 'disabled'),
                         'mapped' => false,
                     ))
                     ->add('reelDiameters')

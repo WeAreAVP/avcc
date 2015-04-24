@@ -11,7 +11,7 @@ function initialize_records_form() {
     $('#recordingSpeed_lbl').hide();
 
     if (selectedMediaType)
-        $('.new #mediaType option[value="' + selectedMediaType + '"]').attr("selected", "selected");
+        $('#mediaType option[value="' + selectedMediaType + '"]').attr("selected", "selected");
     $.mask.definitions['y'] = '[1-2,x]';
     $.mask.definitions['m'] = '[0-1,x]';
     $.mask.definitions['d'] = '[0-3,x]';
@@ -150,7 +150,7 @@ function showUpdateFields() {
                 $("#bases_lbl").hide();
             } else {
                 var _url = baseUrl + 'getBase/' + $(this).val();
-                if(selectedbase){
+                if(typeof selectedbase != 'undefined'  && selectedbase){ 
                     _url = baseUrl + 'getBase/'+ selectedbase + '/' + $(this).val();
                 } 
                 /// call to get base dropdown options
@@ -306,6 +306,7 @@ function updateProjects() {
             selectedProject = projectId;
         }
     }
+	proj=$("#project").val();
     var path = window.location.href;
     var split_path = path.split('/');
     if ($.isNumeric(split_path[split_path.length - 1])) {
@@ -322,6 +323,7 @@ function updateProjects() {
         success: function (response) {
             if (response != "") {
                 $("#project").html(response);
+				$("#project").val(proj);
             }
         }
     }); // Ajax Call    

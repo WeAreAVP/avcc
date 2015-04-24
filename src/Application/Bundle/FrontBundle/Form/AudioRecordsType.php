@@ -101,7 +101,8 @@ class AudioRecordsType extends AbstractType {
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'Application\Bundle\FrontBundle\Entity\AudioRecords',
-            'cascade_validation' => true
+			'intention' => 'audioRecords',
+            'cascade_validation' => true 
         ));
     }
 

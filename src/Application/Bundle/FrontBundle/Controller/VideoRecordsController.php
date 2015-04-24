@@ -55,8 +55,7 @@ class VideoRecordsController extends Controller {
         $result = $this->checkUniqueId($request);
         if ($result != '') {
             $error = new FormError("The unique ID must be unique.");
-            $recordForm = $form->get('record');
-            $recordForm->get('uniqueId')->addError($error);
+            $form->get('record')->get('uniqueId')->addError($error);
         }
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(3, $em, $this->getUser(), null);
@@ -79,21 +78,7 @@ class VideoRecordsController extends Controller {
 
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
-//                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))) {
-//                    $error = new FormError("Project is required field.");
-//                    $recordForm = $form->get('record');
-//                    $recordForm->get('project')->addError($error);
-//                }
-//                if (is_int(strpos($e->getPrevious()->getMessage(), 'Duplicate entry'))) {
-//                    $error = new FormError("The unique ID must be unique.");
-//                    $recordForm = $form->get('record');
-//                    $recordForm->get('uniqueId')->addError($error);
-//                }
-//                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'format_id' cannot be null"))) {
-//                    $error = new FormError("Format is required field.");
-//                    $recordForm = $form->get('record');
-//                    $recordForm->get('format')->addError($error);
-//                }
+
             }
         }
         if ($this->get('session')->get('vedioProjectId')) {
@@ -291,15 +276,16 @@ class VideoRecordsController extends Controller {
             throw $this->createNotFoundException('Unable to find VideoRecords entity.');
         }
         $fieldsObj = new DefaultFields();
+		$userViewSettings = $fieldsObj->getDefaultOrder();
         $data = $fieldsObj->getData(3, $em, $this->getUser(), null, $entity->getRecord()->getId());
+		
         //  $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity, $em, $data);
         $editForm->handleRequest($request);
         $result = $this->checkUniqueId($request, $entity->getRecord()->getId());
         if ($result != '') {
             $error = new FormError("The unique ID must be unique.");
-            $recordForm = $editForm->get('record');
-            $recordForm->get('uniqueId')->addError($error);
+             $editForm->get('record')->get('uniqueId')->addError($error);
         }
         if ($editForm->get('delete')->isClicked()) {
             return $this->redirect($this->generateUrl('record_video_delete', array('id' => $id)));
@@ -321,24 +307,11 @@ class VideoRecordsController extends Controller {
 
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
-//                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))) {
-//                    $error = new FormError("Project is required field.");
-//                    $recordForm = $form->get('record');
-//                    $recordForm->get('project')->addError($error);
-//                }
-//                if (is_int(strpos($e->getPrevious()->getMessage(), 'Duplicate entry'))) {
-//                    $error = new FormError("The unique ID must be unique.");
-//                    $recordForm = $editForm->get('record');
-//                    $recordForm->get('uniqueId')->addError($error);
-//                }
-//                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'format_id' cannot be null"))) {
-//                    $error = new FormError("Format is required field.");
-//                    $recordForm = $form->get('record');
-//                    $recordForm->get('format')->addError($error);
-//                }
+
             }
         }
-
+		
+		
         if ($entity->getRecord()->getProject()->getViewSetting()) {
             $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
         }

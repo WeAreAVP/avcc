@@ -10,8 +10,9 @@
     <?php echo $view['form']->start($edit_form) ?>
     <?php echo $view['form']->errors($edit_form) ?>
     <fieldset>
-        <?php echo $view['form']->errors($edit_form) ?>
+        
         <?php // echo $view['form']->widget($edit_form)
+		
         ?>
         <?php foreach ($fieldSettings['video'] as $viedoField): ?>
             <?php

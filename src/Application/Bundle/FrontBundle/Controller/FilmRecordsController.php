@@ -57,8 +57,8 @@ class FilmRecordsController extends Controller {
         $result = $this->checkUniqueId($request);
         if ($result != '') {
             $error = new FormError("The unique ID must be unique.");
-            $recordForm = $form->get('record');
-            $recordForm->get('uniqueId')->addError($error);
+            $form->get('record')->get('uniqueId')->addError($error);
+            
         }
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(2, $em, $this->getUser(), null);
@@ -81,21 +81,7 @@ class FilmRecordsController extends Controller {
                 $this->get('session')->set('filmProjectId', $entity->getRecord()->getProject()->getId());
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
-//                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))) {
-//                    $error = new FormError("Project is required field.");
-//                    $recordForm = $form->get('record');
-//                    $recordForm->get('project')->addError($error);
-//                }
-//                if (is_int(strpos($e->getPrevious()->getMessage(), 'Duplicate entry'))) {
-//                    $error = new FormError("The unique ID must be unique.");
-//                    $recordForm = $form->get('record');
-//                    $recordForm->get('uniqueId')->addError($error);
-//                }
-//                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'format_id' cannot be null"))) {
-//                    $error = new FormError("Format is required field.");
-//                    $recordForm = $form->get('record');
-//                    $recordForm->get('format')->addError($error);
-//                }
+
             }
         }
         if ($this->get('session')->get('filmProjectId')) {
@@ -314,8 +300,7 @@ class FilmRecordsController extends Controller {
         $result = $this->checkUniqueId($request, $entity->getRecord()->getId());
         if ($result != '') {
             $error = new FormError("The unique ID must be unique.");
-            $recordForm = $editForm->get('record');
-            $recordForm->get('uniqueId')->addError($error);
+            $editForm->get('record')->get('uniqueId')->addError($error);
         }
         if ($editForm->get('delete')->isClicked()) {
             return $this->redirect($this->generateUrl('record_film_delete', array('id' => $id)));
@@ -337,21 +322,7 @@ class FilmRecordsController extends Controller {
 
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
-//                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'project_id' cannot be null"))) {
-//                    $error = new FormError("Project is required field.");
-//                    $recordForm = $form->get('record');
-//                    $recordForm->get('project')->addError($error);
-//                }
-//                if (is_int(strpos($e->getPrevious()->getMessage(), 'Duplicate entry'))) {
-//                    $error = new FormError("The unique ID must be unique.");
-//                    $recordForm = $editForm->get('record');
-//                    $recordForm->get('uniqueId')->addError($error);
-//                }
-//                if (is_int(strpos($e->getPrevious()->getMessage(), "Column 'format_id' cannot be null"))) {
-//                    $error = new FormError("Format is required field.");
-//                    $recordForm = $form->get('record');
-//                    $recordForm->get('format')->addError($error);
-//                }
+
             }
         }
         if ($entity->getRecord()->getProject()->getViewSetting()) {
