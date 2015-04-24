@@ -482,10 +482,10 @@ class AudioRecordsController extends Controller {
         $selectedBaseId = '';
         $bases = $em->getRepository('ApplicationFrontBundle:Bases')->findBy(array('baseFormat' => $formatId), array('order' => 'asc'));
         $record = $em->getRepository('ApplicationFrontBundle:Records')->find($id);
-        echo $record->getId();
-        if ($record && $record->getBases()->getId()) {
-            $selectedBaseId = $record->getBases()->getId();
-        }
+        echo 'old id== '.$id .' new id =='.$record->getId();exit;
+//        if ($record && $record->getBases()->getId()) {
+//            $selectedBaseId = $record->getBases()->getId();
+//        }
         return $this->render('ApplicationFrontBundle:AudioRecords:getBase.html.php', array(
                     'bases' => $bases,
                     'selectedBaseId' => $selectedBaseId,
