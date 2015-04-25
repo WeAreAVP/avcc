@@ -16,4 +16,15 @@ Documentation
 
 6-  [Roles and Permissions](documentation/roles-permissions.md)
 
+Credits
+=======
+
+This software was created by AudioVisual Preservation Solutions, Inc.
+
+List of contributors 
+
+** Nouman Tayyab nouman@avpreserve.com
+** Rubab Rafique rubab@avpreserve.com
+** Rimsha Khalid rimsha@avpreserve.com
+
 

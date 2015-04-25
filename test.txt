@@ -1,3 +1,0 @@
-testing jira integration with github commits
-checking can I resolve issue using git commit
-testing 
