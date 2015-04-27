@@ -7,21 +7,19 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
 
-class BasesType extends AbstractType
-{
+class BasesType extends AbstractType {
 
     public $formats;
 
-    public function __construct()
-    {
+    public function __construct() {
+        
     }
 
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $isNew = true;
         if ($options['data']->getId())
             $isNew = false;
@@ -36,7 +34,8 @@ class BasesType extends AbstractType
                                     ->orderBy('f.name', 'ASC');
                         },
                         'multiple' => true,
-                        'mapped' => false
+                        'mapped' => false,
+                        'required' => false
                     ))
             ;
         } else {
@@ -51,8 +50,7 @@ class BasesType extends AbstractType
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'Application\Bundle\FrontBundle\Entity\Bases'
         ));
@@ -61,8 +59,7 @@ class BasesType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return 'application_bundle_frontbundle_bases';
     }
 

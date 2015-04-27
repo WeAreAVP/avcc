@@ -751,19 +751,6 @@ function Records() {
             var selectedrecords = $("#selectedrecords").val();
             if (selectedrecords) {
                 $("#deleteModal").modal('show');
-                $('#delete_body').css('color', 'black');
-                $('#delete_body').html('<img src="/images/ajax-loader.gif" /> <span><b>Processing please wait...</b></span>');
-                $('#delete_footer').hide();
-                $.ajax({
-                    type: 'POST',
-                    url: deleteUrl,
-                    data: {records: selectedrecords},
-                    dataType: 'json',
-                    success: function (response)
-                    {
-                        window.location.reload();
-                    }
-                });
             }
         });
     }

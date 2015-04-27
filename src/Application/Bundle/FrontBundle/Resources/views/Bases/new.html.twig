@@ -18,14 +18,14 @@
                     <span class="has-error text-danger" for="{{ form.name.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
             </div>
-            <label>Formats</label>
+            <label>Formats *</label>
             <div class="input-control select" data-role="input-control">
-                {{ form_widget(form.baseFormat, {attr: {class:'size4 formats_dd',id:'formats',required:'required',multiple:'multiple',name:'formats[]'} }) }}
+                {{ form_widget(form.baseFormat, {attr: {class:'size4 formats_dd',id:'formats',multiple:'multiple',name:'formats[]'} }) }}
                 {% for errorItem in form.baseFormat.vars.errors %}
-                    <span class="has-error text-danger" for="{{ form.baseFormat.vars.id }}">{{ errorItem.message }}</span>
+                    <span id='formt_error' class="has-error text-danger" for="{{ form.baseFormat.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
             </div>
-             <label>Score</label>
+            <label>Score</label>
             <div class="input-control text" data-role="input-control">
                 {{ form_widget(form.score, {attr: {class:'size4'} }) }}
                 {% for errorItem in form.score.vars.errors %}

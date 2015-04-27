@@ -661,7 +661,7 @@ class RecordsController extends Controller {
             $session = $this->getRequest()->getSession();
             $posted = $request->request->all();
             $recordIds = $posted['records'];
-
+            $session->remove("saveRecords");
             if ($recordIds) {
                 if ($recordIds == 'all') {
                     $sphinxInfo = $this->getSphinxInfo();
@@ -710,7 +710,6 @@ class RecordsController extends Controller {
                         $em->flush();
                     }
                 }
-                $session->remove("saveRecords");
                 echo json_encode(array('success' => 'deleted'));
             }
             exit;

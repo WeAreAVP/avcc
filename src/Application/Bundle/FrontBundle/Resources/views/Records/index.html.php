@@ -120,6 +120,8 @@
                 record.setDeleteUrl('<?php echo $view['router']->generate('delete_reocrds') ?>');
                 record.setPopupHeading('<?php echo $heading; ?>');
                 record.bindEvents();
+                
+                var delUrl = '<?php echo $view['router']->generate('delete_reocrds') ?>';
             </script>
     <?php
     $view['slots']->stop();

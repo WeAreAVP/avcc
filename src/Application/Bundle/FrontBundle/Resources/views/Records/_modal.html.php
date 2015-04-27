@@ -71,28 +71,26 @@
                     <div id="beforeExportMerge">
                         <p><span style="font-size:13px;">Are you sure you want to import the record(s)?</span></p>
                         <div class="pull-right">
-							<?php
-							if ($view['security']->isGranted('ROLE_SUPER_ADMIN'))
-							{
-								?>
-								<div>
-									<select id='organization' name="organization">
-										<option value=''>select organization</option>
-										<?php
-										foreach ($organizations as $organization)
-										{
-											?>
-											<option value="<?php echo $organization->getId(); ?>"><?php echo ucwords($organization->getName()); ?></option>
-											<?php
-										}
-										?>   
-									</select>
-									<br/>
-									<span class="has-error text-danger" id="error_span" style='display:none'>Organization is required.</span>
-									<br>
-									<br>
-								</div>
-							<?php } ?>
+                            <?php
+                            if ($view['security']->isGranted('ROLE_SUPER_ADMIN')) {
+                                ?>
+                                <div>
+                                    <select id='organization' name="organization">
+                                        <option value=''>select organization</option>
+                                        <?php
+                                        foreach ($organizations as $organization) {
+                                            ?>
+                                            <option value="<?php echo $organization->getId(); ?>"><?php echo ucwords($organization->getName()); ?></option>
+                                            <?php
+                                        }
+                                        ?>   
+                                    </select>
+                                    <br/>
+                                    <span class="has-error text-danger" id="error_span" style='display:none'>Organization is required.</span>
+                                    <br>
+                                    <br>
+                                </div>
+<?php } ?>
 
                             <input type="file" name="importfile" class="required" required="required" /><br /><br />
                             <input type="hidden" name="impfiletype"  id="impfiletype" value="" />
@@ -102,18 +100,15 @@
             </div>
             <div class="modal-footer" id="modal-footer">
                 <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">No</button> &nbsp;
-				<?php
-				if ($view['security']->isGranted('ROLE_SUPER_ADMIN'))
-				{
-					?>
-					<button type="button" name="submit" id="submit" class="button primary" onclick="checkOrganization();">Submit</button>
-					<?php
-				}
-				else
-				{
-					?>
-					<button type="button" name="submit" id="submit" class="button primary" onclick="$('#importModal form').submit();">Submit</button>
-				<?php } ?>
+<?php
+if ($view['security']->isGranted('ROLE_SUPER_ADMIN')) {
+    ?>
+                    <button type="button" name="submit" id="submit" class="button primary" onclick="checkOrganization();">Submit</button>
+                    <?php
+                } else {
+                    ?>
+                    <button type="button" name="submit" id="submit" class="button primary" onclick="$('#importModal form').submit();">Submit</button>
+                <?php } ?>
             </div>
 
         </div>
@@ -164,24 +159,45 @@
         <div class='modal-content'>
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 id="myModalLabel">Deleting Records</h3>
+                <h3 id="myModalLabel">Delete Records</h3>
             </div>
             <div id="delete_process">
                 <div class="modal-body" id="delete_body" style="font-size: 12px;">
+                    Are you sure you want to delete selected records?
                 </div>
                 <div class="modal-footer" id="delete_footer">
-                    <button type="button" name="close" id="" class="button" data-dismiss="modal">Close</button>
+                    <button type="button" name="close" id="" class="button" data-dismiss="modal">No</button>
+                    <button type="submit" id="delete_button" class="button primary" onclick="confirmDelete()">Yes</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script>
-	function checkOrganization() {
-		if ($('#organization').val() == '') {
-			$('#error_span').show();
-		} else {
-			$('#importModal form').submit();
-		}
-	}
+    function checkOrganization() {
+        if ($('#organization').val() == '') {
+            $('#error_span').show();
+        } else {
+            $('#importModal form').submit();
+        }
+    }
+
+    function confirmDelete() {
+        var selected = $("#selectedrecords").val();
+        if (selected) {
+            $("#deleteModal").hide('show');
+            $.blockUI();
+		$.ajax({
+                    type: 'POST',
+                    url: delUrl,
+                    data: {records: selected},
+                    dataType: 'json',
+                    success: function (response)
+                    {
+                        //$.unblockUI();
+                        window.location.reload();
+                    }
+                });
+        }
+    }
 </script>
