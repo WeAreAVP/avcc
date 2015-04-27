@@ -280,9 +280,12 @@ class RecordsController extends Controller {
         $recordsIds = null;
         if ($data['is_all']) {
             $session->set("allRecords", $data['checked']);
-            if (!$data['checked'])
-                $session->remove("saveRecords");
             $recordsIds = 'all';
+            if (!$data['checked']){
+                $session->remove("saveRecords");
+                $recordsIds = '';
+            }
+            
         } else {
             if (!$data['checked']) {
                 $session->remove("saveRecords");
