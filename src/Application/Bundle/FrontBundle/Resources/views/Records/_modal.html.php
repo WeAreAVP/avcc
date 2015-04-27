@@ -163,7 +163,7 @@ if ($view['security']->isGranted('ROLE_SUPER_ADMIN')) {
             </div>
             <div id="delete_process">
                 <div class="modal-body" id="delete_body" style="font-size: 12px;">
-                    Are you sure you want to delete selected records?
+                    
                 </div>
                 <div class="modal-footer" id="delete_footer">
                     <button type="button" name="close" id="" class="button" data-dismiss="modal">No</button>

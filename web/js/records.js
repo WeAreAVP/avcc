@@ -750,7 +750,9 @@ function Records() {
         $('#deleteRecord').click(function () {
             var selectedrecords = $("#selectedrecords").val();
             if (selectedrecords) {
+                var records = selectedrecords.split(',');
                 $("#deleteModal").modal('show');
+                $("#delete_body").html('Are you sure you want to delete ' + records.length + ' selected records?')
             }
         });
     }
