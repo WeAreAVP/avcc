@@ -9,8 +9,8 @@ use Symfony\Component\Form\FormEvent;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormEvents;
 
-class ProjectsType extends AbstractType
-{
+class ProjectsType extends AbstractType {
+
     /**
      * Current logged in user data.
      *
@@ -21,27 +21,25 @@ class ProjectsType extends AbstractType
     static $DEFAULT_SUPER_ADMIN_ROLE = 'ROLE_SUPER_ADMIN';
     static $DEFAULT_ROLE_INDEX = 0;
 
-    public function __construct($options = array())
-    {
+    public function __construct($options = array()) {
         $this->user = $options['currentUser'];
     }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
-            ->add('name')
-            ->addEventListener(
+                ->add('name')
+                ->add('projectUsers')
+                ->addEventListener(
                         FormEvents::POST_SET_DATA, array($this, 'onPreSetData'))
-            ->addEventListener(
+                ->addEventListener(
                         FormEvents::POST_SUBMIT, array($this, 'onPostSubmitData'));
-        ;
     }
 
-        public function onPreSetData(FormEvent $event)
-    {
+    public function onPreSetData(FormEvent $event) {
         $form = $event->getForm();
 
         $loggedInUserRole = $this->user->getRoles();
@@ -59,8 +57,7 @@ class ProjectsType extends AbstractType
         }
     }
 
-    public function onPostSubmitData(FormEvent $event)
-    {
+    public function onPostSubmitData(FormEvent $event) {
         $projectInfo = $event->getData();
 
         $loggedInUserRole = $this->user->getRoles();
@@ -70,11 +67,11 @@ class ProjectsType extends AbstractType
                 $projectInfo->setOrganization($this->user->getOrganizations());
         }
     }
+
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
             'data_class' => 'Application\Bundle\FrontBundle\Entity\Projects'
         ));
@@ -83,8 +80,8 @@ class ProjectsType extends AbstractType
     /**
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return 'application_bundle_frontbundle_projects';
     }
+
 }

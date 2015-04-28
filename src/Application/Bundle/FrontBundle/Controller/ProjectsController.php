@@ -15,6 +15,7 @@ use Application\Bundle\FrontBundle\Form\ProjectsType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
+
 /**
  * Projects controller.
  *
@@ -73,10 +74,14 @@ class ProjectsController extends Controller {
 
             return $this->redirect($this->generateUrl('projects', array('id' => $entity->getId())));
         }
-
+        $org_id = '';
+        if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
+            $org_id = $this->getUser()->getOrganizations()->getId();
+        }
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
+            'organization' => $org_id
         );
     }
 
@@ -110,10 +115,14 @@ class ProjectsController extends Controller {
     public function newAction() {
         $entity = new Projects();
         $form = $this->createCreateForm($entity);
-
+        $org_id = '';
+        if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
+            $org_id = $this->getUser()->getOrganizations()->getId();
+        }
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
+            'organization' => $org_id
         );
     }
 
@@ -166,11 +175,16 @@ class ProjectsController extends Controller {
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
+        $org_id = '';
+        if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
+            $org_id = $this->getUser()->getOrganizations()->getId();
+        }
 
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'organization' => $org_id
         );
     }
 
@@ -188,16 +202,6 @@ class ProjectsController extends Controller {
             'action' => $this->generateUrl('projects_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
-        //    $user = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $entity->getOrganization()->getId()));
-//        echo '<pre>';
-//        print_r($user);
-//        exit;
-//         $form->add('users', 'choice', array(
-//            'label' => 'Users',
-//            'choices' => $user,
-//            'multiple' => true,
-//        ));
-        //$form->add('users');
         $form->add('submit', 'submit', array('label' => 'Update'));
 
         return $form;
@@ -236,10 +240,15 @@ class ProjectsController extends Controller {
             return $this->redirect($this->generateUrl('projects'));
         }
 
+        $org_id = '';
+        if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
+            $org_id = $this->getUser()->getOrganizations()->getId();
+        }
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'organization' => $org_id
         );
     }
 
@@ -342,6 +351,27 @@ class ProjectsController extends Controller {
         } else {
             throw new AccessDeniedException();
         }
+    }
+
+    /**
+     * Get users
+     *
+     * @param Request $request
+     *
+     * @Route("/get_user", name="get_users_of_org")
+     * @Method("POST")
+     * @Template()
+     * @return template
+     */
+    public function getUsersAction(Request $request) {
+        $id = $request->request->get('organizationId');
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $id));
+        $selectedUserId = array();
+        return $this->render('ApplicationFrontBundle:Projects:getUsers.html.php', array(
+                    'users' => $users,
+                    'selectedUserId' => $selectedUserId,
+        ));
     }
 
 }

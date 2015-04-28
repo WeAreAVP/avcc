@@ -1,49 +1,94 @@
 {% extends 'FOSUserBundle::layout.html.twig' %}
 
 {% block body -%}
-	<div class="grid fluid">
-		<h1>
-			<a href="{{ path('projects') }}"><i class="icon-arrow-left-3 smaller"></i> </a>
-			New Project
-		</h1>
-		{{ form_start(form) }}
-		<fieldset>
-			{{ form_errors(form) }}
-			<br />
-			<label>Name</label>
-			<div class="input-control text" data-role="input-control">
-				{{ form_widget(form.name, {attr: {class:'size4'} }) }}
-				{% for errorItem in form.name.vars.errors %}
-					<span class="has-error text-danger" for="{{ form.name.vars.id }}">{{ errorItem.message }}</span>
-				{% endfor %}
+    <div class="grid fluid">
+        <h1>
+            <a href="{{ path('projects') }}"><i class="icon-arrow-left-3 smaller"></i> </a>
+            New Project
+        </h1>
+        {{ form_start(form) }}
+        <fieldset>
+            {{ form_errors(form) }}
+            <br />
+            <label>Name</label>
+            <div class="input-control text" data-role="input-control">
+                {{ form_widget(form.name, {attr: {class:'size4'} }) }}
+                {% for errorItem in form.name.vars.errors %}
+                    <span class="has-error text-danger" for="{{ form.name.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
 
-			</div>
-			{% if is_granted('ROLE_SUPER_ADMIN') %}
-				<label>Organization</label>
-				<div class="input-control select" data-role="input-control">
-					{{ form_widget(form.organization, {attr: {class:'size4'} }) }}
-					{% for errorItem in form.organization.vars.errors %}
-						<span class="has-error text-danger" for="{{ form.organization.vars.id }}">{{ errorItem.message }}</span>
-					{% endfor %}
-				</div>
-			{% endif %}
-			<div class="input-control">
-				{{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
-				or
-				<a class="button"   href="{{ path('projects') }}">Cancel</a>
-			</div>
-
-
-		</fieldset>
-		{{ form_end(form) }}
-
-	</div>
-
-
-
+            </div>
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <label>Organization</label>
+                <div class="input-control select" data-role="input-control" id="organization" onchange="getUsers()">
+                    {{ form_widget(form.organization, {attr: {class:'size4'} }) }}
+                    {% for errorItem in form.organization.vars.errors %}
+                        <span class="has-error text-danger" for="{{ form.organization.vars.id }}">{{ errorItem.message }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <label>Users</label>
+            <div class="input-control select" data-role="input-control" id="user_list">
+                {{ form_widget(form.projectUsers, {attr: {class:'size4'} }) }}
+                {% for errorItem in form.projectUsers.vars.errors %}
+                    <span class="has-error text-danger" for="{{ form.projectUsers.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            <div class="input-control">
+                {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
+                or
+                <a class="button"   href="{{ path('projects') }}">Cancel</a>
+            </div>
 
 
+        </fieldset>
+        {{ form_end(form) }}
 
+    </div>
+
+    {% block view_javascripts %}
+        <script type="text/javascript">
+                    $(document).ready(function () {
+            var baseUrl = '{{ path('get_users_of_org') }}';
+                    // $('#application_bundle_frontbundle_projects_projectUsers').chosen();
+            {% if organization %}
+                        console.log('sidghfu8ertfse8rtg');
+                        $.ajax({
+                        type: 'POST',
+                                url: baseUrl,
+                                data: {
+                                organizationId:{{organization}}
+                                },
+                                success: function (response) {
+                                console.log('reidrtertertreuteiu');
+                                        $('#user_list').html(response); //
+                                        $('#application_bundle_frontbundle_projects_projectUsers').chosen();
+                                }
+                        });            {% endif %}
+                            }
+
+
+
+            {#function getUsers() {
+                if ($('#organization').val()) {
+                    $.ajax({
+                        type: 'GET',
+                        url: baseUrl,
+                        data: {
+                            organizationId: $('#organization').val()
+                        },
+                        success: function (response) {
+                            console.log('reidrtertertreuteiu');
+                            $('#user_list').html(response);//
+                            $('#application_bundle_frontbundle_projects_projectUsers').chosen();
+
+                        }
+                    });
+                }
+            }#}
+
+        </script>
+    {% endblock %}
 
 
 
