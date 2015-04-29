@@ -18,6 +18,7 @@
 
     <script type="text/javascript">
         var sound ={{ sound | raw }} ;
+        var date = new Date();
         var month = date.getMonth() + 1;
         var day = date.getDate();
         var time =  date.getFullYear()  + '' + datePadding(month) + '' + datePadding(day)  + '' + datePadding(date.getHours()) + '' + datePadding(date.getMinutes()) +''+ datePadding(date.getSeconds());
