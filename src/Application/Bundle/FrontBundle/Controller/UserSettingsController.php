@@ -59,9 +59,9 @@ class UserSettingsController extends Controller {
 		$name = '';
 		$viewSettings = json_encode(array('audio' => '', 'video' => '', 'film' => ''));
 		if ( ! in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
-			$projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $this->getUser()->getOrganizations()->getId()));
+			$projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $this->getUser()->getOrganizations()->getId(), 'status' => 1));
 		} else {
-			$projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
+			$projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('status' => 1));
 		}
 		foreach ($projects as $project) {
 			$proj[$project->getId()] = $project->getName();

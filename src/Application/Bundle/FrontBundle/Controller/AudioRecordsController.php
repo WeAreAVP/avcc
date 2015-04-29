@@ -580,9 +580,9 @@ class AudioRecordsController extends Controller {
 		$em = $this->getDoctrine()->getManager();
 		$user = $this->getUser();
 		if ( ! in_array("ROLE_SUPER_ADMIN", $user->getRoles()) && $user->getOrganizations()) {
-			$projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $user->getOrganizations()->getId()));
+			$projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $user->getOrganizations()->getId(), 'status' => 1));
 		} else {
-			$projects = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
+			$projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('status' => 1));
 		}
 
 		return $this->render('ApplicationFrontBundle:AudioRecords:getProjects.html.php', array(

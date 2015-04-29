@@ -370,9 +370,9 @@ class UsersController extends Controller {
      * @Template()
      * @return template
      */
-    public function getOrganizationProjectsAction($orgId) {
+    public function getOrganizationProjectsAction($orgId) { 
         $em = $this->getDoctrine()->getManager();
-        $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $orgId));
+        $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $orgId, 'status' => 1));
 
         return $this->render('ApplicationFrontBundle:Users:getProjects.html.php', array(
                     'projects' => $projects

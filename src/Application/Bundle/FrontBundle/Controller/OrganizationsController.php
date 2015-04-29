@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\Organizations;
 use Application\Bundle\FrontBundle\Entity\Users;
+use Application\Bundle\FrontBundle\Entity\Projects;
 use Application\Bundle\FrontBundle\Form\OrganizationsType;
 use Application\Bundle\FrontBundle\Entity\Records;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
@@ -298,6 +299,12 @@ class OrganizationsController extends Controller {
                 $_user = $em->getRepository('ApplicationFrontBundle:Users')->find($user->getId());
                 $_user->setEnabled(0);
             }
+            
+            $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $id));
+            foreach ($projects as $project) {
+                $_user = $em->getRepository('ApplicationFrontBundle:Projects')->find($project->getId());
+                $_user->setStatus(0);
+            }
             $this->get('session')->getFlashBag()->add('success', 'Organization disabled succesfully.');
         } else {
             $organization->setStatus(1);
@@ -305,6 +312,11 @@ class OrganizationsController extends Controller {
             foreach ($users as $user) {
                 $_user = $em->getRepository('ApplicationFrontBundle:Users')->find($user->getId());
                 $_user->setEnabled(1);
+            }
+            $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $id));
+            foreach ($projects as $project) {
+                $_user = $em->getRepository('ApplicationFrontBundle:Projects')->find($project->getId());
+                $_user->setStatus(1);
             }
             $this->get('session')->getFlashBag()->add('success', 'Organization activated succesfully.');
         }

@@ -67,9 +67,12 @@ class ProjectsController extends Controller {
             $view_settings = $fieldsObj->getDefaultOrder();
             $entity->setUsersCreated($user);
             $entity->setViewSetting($view_settings);
+            if ($entity->getOrganization()->getStatus() == 0) {
+                $entity->setStatus(0);
+            }
             $em->persist($entity);
             $em->flush();
-
+            
             $this->get('session')->getFlashBag()->add('success', 'Project added succesfully.');
 
             return $this->redirect($this->generateUrl('projects', array('id' => $entity->getId())));
@@ -230,11 +233,14 @@ class ProjectsController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
-
         if ($editForm->isValid()) {
             $entity->setUsersUpdated($user);
+            if ($entity->getOrganization()->getStatus() == 0) {
+                $entity->setStatus(0);
+            }else{
+                $entity->setStatus(1);
+            }
             $em->flush();
-
             $this->get('session')->getFlashBag()->add('success', 'Project updated succesfully.');
 
             return $this->redirect($this->generateUrl('projects'));
@@ -365,13 +371,45 @@ class ProjectsController extends Controller {
      */
     public function getUsersAction(Request $request) {
         $id = $request->request->get('organizationId');
+        $selectedIds = $request->request->get('selectedIds');
+        $users = '';
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $id));
         $selectedUserId = array();
+        if ($selectedIds) {
+            $selectedUserId = $selectedIds;
+        }
         return $this->render('ApplicationFrontBundle:Projects:getUsers.html.php', array(
                     'users' => $users,
                     'selectedUserId' => $selectedUserId,
         ));
+    }
+
+    /**
+     * Active/Inactive projects.
+     *
+     * @param integer $id User id
+     * @param integer $status User status id
+     * 
+     * @Route("/changeprojectstatus/{id}/{status}", name="project_changestatus")
+     * @Method("GET")
+     * @Template()
+     * @return redirection
+     */
+    public function changeStatusAction($id, $status) {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ApplicationFrontBundle:Projects')->find($id);
+        if ($status == 1) {
+            $entity->setStatus(0);
+            $users = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $id));
+
+            $this->get('session')->getFlashBag()->add('success', 'Project disabled succesfully.');
+        } else {
+            $entity->setStatus(1);
+            $this->get('session')->getFlashBag()->add('success', 'Project activated succesfully.');
+        }
+        $em->flush();
+        return $this->redirect($this->generateUrl('projects'));
     }
 
 }

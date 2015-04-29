@@ -39,6 +39,21 @@
                         <td>{% if entity.updatedOn %}{{ entity.updatedOn|date('Y-m-d H:i:s') }}{% endif %}</td>
                         {% if is_granted('ROLE_MANAGER') %}
                             <td>
+                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                   {% if entity.status == true %}
+                                        {% set status = "Active" %}
+                                        {% set statusId = "1" %}
+                                        {% set class = "icon-checkmark" %}
+                                        {% set title = "Active" %}
+                                    {% else %}    
+                                        {% set status = "Inactive" %}
+                                        {% set statusId = "0" %}
+                                        {% set class = "icon-blocked" %}
+                                        {% set title = "Inactive" %}
+                                    {% endif %}
+                                    <a class="{{class}} small-size" title="{{title}}" href="{{ path('project_changestatus', { 'id': entity.id, 'status': statusId }) }}">      
+                                    </a> |
+                                {% endif %}
                                 <a title="Edit" class="icon-pencil" href="{{ path('projects_edit', { 'id': entity.id }) }}"></a>
                                 {% if is_granted('ROLE_SUPER_ADMIN') %} | 
                                     <a class="icon-remove" title="Delete" href="{{ path('projects_delete', { 'id': entity.id }) }}"></a>

@@ -92,7 +92,7 @@ class Users extends BaseUser
     private $userSetting;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Application\Bundle\FrontBundle\Entity\Projects", inversedBy="projectUsers", cascade={"remove","refresh"})
+     * @ORM\ManyToMany(targetEntity="Application\Bundle\FrontBundle\Entity\Projects", inversedBy="projectUsers", cascade={"refresh", "persist"})
      * @ORM\JoinTable(
      *     name="users_projects",
      *     joinColumns={
@@ -102,7 +102,7 @@ class Users extends BaseUser
      *             nullable=false,
      *         )
      *     },
-     *     inverseJoinColumns={@ORM\JoinColumn(name="projectId", referencedColumnName="id", nullable=true, onDelete="CASCADE")}
+     *     inverseJoinColumns={@ORM\JoinColumn(name="projectId", referencedColumnName="id", nullable=false, onDelete="CASCADE")}
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */

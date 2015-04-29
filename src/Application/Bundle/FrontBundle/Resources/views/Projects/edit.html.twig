@@ -1,46 +1,144 @@
 {% extends 'FOSUserBundle::layout.html.twig' %}
 
 {% block body -%}
-	<div class="grid fluid">
-		<h1>
-			<a href="{{ path('projects') }}"><i class="icon-arrow-left-3 smaller"></i> </a>
-			Edit Project
-		</h1>
-		{{ form_start(edit_form) }}
-		<fieldset>
-			{{ form_errors(edit_form) }}
-			<br />
-			<label>Name</label>
-			<div class="input-control text" data-role="input-control">
-				{{ form_widget(edit_form.name, {attr: {class:'size4'} }) }}
-				{% for errorItem in edit_form.name.vars.errors %}
-					<span class="has-error text-danger" for="{{ edit_form.name.vars.id }}">{{ errorItem.message }}</span>
-				{% endfor %}
+    <div class="grid fluid">
+        <h1>
+            <a href="{{ path('projects') }}"><i class="icon-arrow-left-3 smaller"></i> </a>
+            Edit Project
+        </h1>
+        {{ form_start(edit_form) }}
+        <fieldset>
+            {{ form_errors(edit_form) }}
+            <br />
+            <label>Name</label>
+            <div class="input-control text" data-role="input-control">
+                {{ form_widget(edit_form.name, {attr: {class:'size4'} }) }}
+                {% for errorItem in edit_form.name.vars.errors %}
+                    <span class="has-error text-danger" for="{{ edit_form.name.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
 
-			</div>
-			{% if is_granted('ROLE_SUPER_ADMIN') %}
-				<label>Organization</label>
-				<div class="input-control select" data-role="input-control">
-					{{ form_widget(edit_form.organization, {attr: {class:'size4'} }) }}
-					{% for errorItem in edit_form.organization.vars.errors %}
-						<span class="has-error text-danger" for="{{ edit_form.organization.vars.id }}">{{ errorItem.message }}</span>
-					{% endfor %}
-				</div>
-			{% endif %}
-			<div class="input-control">
-				{{ form_widget(edit_form.submit, {attr: {class:'button primary'} }) }}
-				or
-				<a class="button"   href="{{ path('projects') }}">Cancel</a>
-			</div>
+            </div>
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <label>Organization</label>
+                <div class="input-control select" data-role="input-control">
+                    {{ form_widget(edit_form.organization, {attr: {class:'size4'} }) }}
+                    {% for errorItem in edit_form.organization.vars.errors %}
+                        <span class="has-error text-danger" for="{{ edit_form.organization.vars.id }}">{{ errorItem.message }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <label id="user_label">Users</label>
+            <div class="input-control select" data-role="input-control" id="user_list">
+                {{ form_widget(edit_form.projectUsers, {attr: {class:'size4'} }) }}
+                {% for errorItem in edit_form.projectUsers.vars.errors %}
+                    <span class="has-error text-danger" for="{{ edit_form.projectUsers.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            <div class="input-control">
+                {{ form_widget(edit_form.submit, {attr: {class:'button primary'} }) }}
+                or
+                <a class="button"   href="{{ path('projects') }}">Cancel</a>
+            </div>
 
 
-		</fieldset>
-		{{ form_end(edit_form) }}
+        </fieldset>
+        {{ form_end(edit_form) }}
 
-	</div>
+    </div>
 
 
+    {% block view_javascripts %}
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#user_label').hide();
+                $('#user_list').hide();
+                $('#application_bundle_frontbundle_projects_projectUsers').chosen();
+                var baseUrl = '{{ path('get_users_of_org') }}';
+                var org_id = 0;
+                var seletedusers = 0;
+                if ('{{organization}}') {
+                    org_id = parseInt('{{organization}}');
+                    seletedusers = $('#application_bundle_frontbundle_projects_projectUsers').val();
+                    getUsers(org_id, seletedusers);
+                } else if ($('#application_bundle_frontbundle_projects_organization').val()) {
+                    org_id = $('#application_bundle_frontbundle_projects_organization').val();
+                    seletedusers = $('#application_bundle_frontbundle_projects_projectUsers').val();
+                    getUsers(org_id, seletedusers);
+                }
 
+            {% if not organization %}
+                    $('#application_bundle_frontbundle_projects_organization').change(function () {
+                        org_id = $('#application_bundle_frontbundle_projects_organization').val();
+                        seletedusers = 0;
+                        getUsers(org_id, seletedusers);
+                    });
+            {% endif %}
+
+                });
+                function getUsers(id, seletedusers) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ path('get_users_of_org') }}',
+                        data: {
+                            organizationId: id, selectedIds: seletedusers
+                        },
+                        success: function (response) {
+                            if (response) {
+                                $('#user_label').show();
+                                $('#user_list').show();
+                                $('#user_list').html(response);
+                                $('#application_bundle_frontbundle_projects_projectUsers').chosen();
+                            } else {
+                                $('#user_label').hide();
+                                $('#user_list').hide();
+                            }
+                        }
+                    });
+                }
+            {# $(document).ready(function () {
+             var baseUrl = '{{ path('get_users_of_org') }}';{% if organization %}
+                     $.ajax({
+                     type: 'POST',
+                             url: baseUrl,
+                             data: {
+                             organizationId:{{organization}}
+                             },
+                             success: function (response) {
+                             $('#user_list').html(response);
+                                     $('#application_bundle_frontbundle_projects_projectUsers').chosen();
+                             }
+                     });{% else %}
+                     $('#user_label').hide();
+                     $('#user_list').hide();{% endif %}
+             });
+                     function getUsers() {
+                     if ($('#application_bundle_frontbundle_projects_organization').val()) {
+                     $.ajax({
+                     type: 'POST',
+                             url: '{{ path('get_users_of_org') }}',
+                             data: {
+                             organizationId: $('#application_bundle_frontbundle_projects_organization').val()
+                             },
+                             success: function (response) {
+                             if (response){
+                             $('#user_label').show();
+                                     $('#user_list').show();
+                                     $('#user_list').html(response);
+                                     $('#application_bundle_frontbundle_projects_projectUsers').chosen();
+                             } else{
+                             $('#user_label').hide();
+                                     $('#user_list').hide();
+                             }
+                             }
+                     });
+                     } else {
+                     $('#user_label').hide();
+                             $('#user_list').hide();
+                     }
+                     }#}
+
+        </script>
+    {% endblock %}
 
 
 

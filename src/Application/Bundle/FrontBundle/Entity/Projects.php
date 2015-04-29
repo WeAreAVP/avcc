@@ -82,7 +82,14 @@ class Projects {
     private $usersUpdated;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Application\Bundle\FrontBundle\Entity\Users", mappedBy="userProjects")
+     * @var int
+     * 
+     * @ORM\Column(name="status", type="boolean", options={"default" = 1}, nullable=true)
+     */
+    private $status = 1;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Application\Bundle\FrontBundle\Entity\Users", mappedBy="userProjects", cascade={"persist"})
      */
     private $projectUsers;
 
@@ -316,6 +323,16 @@ class Projects {
         $this->viewSetting = $viewSetting;
 
         return $this;
+    }
+
+    public function setStatus($boolean) {
+        $this->status = $boolean;
+
+        return $this;
+    }
+
+    public function getStatus() {
+        return (bool) $this->status;
     }
 
 }
