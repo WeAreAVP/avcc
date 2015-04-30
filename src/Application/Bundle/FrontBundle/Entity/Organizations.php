@@ -13,8 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
  * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\OrganizationRepository")
  * @ORM\HasLifecycleCallbacks
  */
-class Organizations
-{
+class Organizations {
 
     /**
      * @var integer
@@ -39,7 +38,7 @@ class Organizations
      * @ORM\Column(name="status", type="boolean", options={"default" = 1}, nullable=true)
      */
     private $status = 1;
-    
+
     /**
      * @var string
      *
@@ -334,10 +333,16 @@ class Organizations
     private $trackTypeOrg;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="is_paid", type="boolean", options={"default" = 0}, nullable=true)
+     */
+    private $isPaid = 0;
+
+    /**
      * Organization construct
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->acidDetectionStripOrg = new ArrayCollection();
         $this->baseOrg = new ArrayCollection();
         $this->cassetteOrg = new ArrayCollection();
@@ -363,8 +368,7 @@ class Organizations
     /**
      * @ORM\PrePersist
      */
-    public function setCreatedOnValue()
-    {
+    public function setCreatedOnValue() {
         if (!$this->getCreatedOn()) {
             $this->createdOn = new \DateTime();
         }
@@ -373,8 +377,7 @@ class Organizations
     /**
      * @ORM\PreUpdate
      */
-    public function setUpdatedOnValue()
-    {
+    public function setUpdatedOnValue() {
         $this->updatedOn = new \DateTime();
     }
 
@@ -383,8 +386,7 @@ class Organizations
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->getName();
     }
 
@@ -393,8 +395,7 @@ class Organizations
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -403,8 +404,7 @@ class Organizations
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -413,8 +413,7 @@ class Organizations
      *
      * @return string
      */
-    public function getDepartmentName()
-    {
+    public function getDepartmentName() {
         return $this->departmentName;
     }
 
@@ -423,8 +422,7 @@ class Organizations
      *
      * @return string
      */
-    public function getAddress()
-    {
+    public function getAddress() {
         return $this->address;
     }
 
@@ -433,8 +431,7 @@ class Organizations
      *
      * @return string
      */
-    public function getContactPersonName()
-    {
+    public function getContactPersonName() {
         return $this->contactPersonName;
     }
 
@@ -443,8 +440,7 @@ class Organizations
      *
      * @return string
      */
-    public function getContactPersonEmail()
-    {
+    public function getContactPersonEmail() {
         return $this->contactPersonEmail;
     }
 
@@ -453,8 +449,7 @@ class Organizations
      *
      * @return string
      */
-    public function getContactPersonPhone()
-    {
+    public function getContactPersonPhone() {
         return $this->contactPersonPhone;
     }
 
@@ -463,8 +458,7 @@ class Organizations
      *
      * @return \Datetime
      */
-    public function getCreatedOn()
-    {
+    public function getCreatedOn() {
         return $this->createdOn;
     }
 
@@ -473,8 +467,7 @@ class Organizations
      *
      * @return \Datetime
      */
-    public function getUpdatedOn()
-    {
+    public function getUpdatedOn() {
         return $this->updatedOn;
     }
 
@@ -483,8 +476,7 @@ class Organizations
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function getUsersCreated()
-    {
+    public function getUsersCreated() {
         return $this->usersCreated;
     }
 
@@ -493,8 +485,7 @@ class Organizations
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function getUsersUpdated()
-    {
+    public function getUsersUpdated() {
         return $this->usersUpdated;
     }
 
@@ -505,8 +496,7 @@ class Organizations
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function setId($id)
-    {
+    public function setId($id) {
         $this->id = $id;
 
         return $this;
@@ -519,8 +509,7 @@ class Organizations
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -533,8 +522,7 @@ class Organizations
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function setDepartmentName($departmentName)
-    {
+    public function setDepartmentName($departmentName) {
         $this->departmentName = $departmentName;
 
         return $this;
@@ -547,8 +535,7 @@ class Organizations
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function setAddress($address)
-    {
+    public function setAddress($address) {
         $this->address = $address;
 
         return $this;
@@ -561,8 +548,7 @@ class Organizations
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function setContactPersonName($contactPersonName)
-    {
+    public function setContactPersonName($contactPersonName) {
         $this->contactPersonName = $contactPersonName;
 
         return $this;
@@ -575,8 +561,7 @@ class Organizations
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function setContactPersonEmail($contactPersonEmail)
-    {
+    public function setContactPersonEmail($contactPersonEmail) {
         $this->contactPersonEmail = $contactPersonEmail;
 
         return $this;
@@ -589,8 +574,7 @@ class Organizations
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function setContactPersonPhone($contactPersonPhone)
-    {
+    public function setContactPersonPhone($contactPersonPhone) {
         $this->contactPersonPhone = $contactPersonPhone;
 
         return $this;
@@ -603,8 +587,7 @@ class Organizations
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function setCreatedOn(\DateTime $createdOn)
-    {
+    public function setCreatedOn(\DateTime $createdOn) {
         $this->createdOn = $createdOn;
 
         return $this;
@@ -617,8 +600,7 @@ class Organizations
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function setUpdatedOn(\DateTime $updatedOn)
-    {
+    public function setUpdatedOn(\DateTime $updatedOn) {
         $this->updatedOn = $updatedOn;
 
         return $this;
@@ -631,8 +613,7 @@ class Organizations
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated)
-    {
+    public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated) {
         $this->usersCreated = $usersCreated;
 
         return $this;
@@ -645,8 +626,7 @@ class Organizations
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated)
-    {
+    public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated) {
         $this->usersUpdated = $usersUpdated;
 
         return $this;
@@ -658,8 +638,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\AcidDetectionStrips $ads
      *
      */
-    public function addAcidDetectionStripOrg(AcidDetectionStrips $ads)
-    {
+    public function addAcidDetectionStripOrg(AcidDetectionStrips $ads) {
         if (!$this->acidDetectionStripOrg->contains($ads)) {
 
             $this->acidDetectionStripOrg[] = $ads;
@@ -673,8 +652,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\AcidDetectionStrips $ads
      *
      */
-    public function removeAcidDetectionStripOrg(AcidDetectionStrips $ads)
-    {
+    public function removeAcidDetectionStripOrg(AcidDetectionStrips $ads) {
         $this->acidDetectionStripOrg->remove($ads);
     }
 
@@ -684,8 +662,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\Bases $base
      *
      */
-    public function addBaseOrg(Bases $base)
-    {
+    public function addBaseOrg(Bases $base) {
         if (!$this->baseOrg->contains($base)) {
 
             $this->baseOrg[] = $base;
@@ -699,8 +676,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\Bases $base
      *
      */
-    public function removeBaseOrg(Bases $base)
-    {
+    public function removeBaseOrg(Bases $base) {
         $this->baseOrg->remove($base);
     }
 
@@ -710,8 +686,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\CassetteSizes $cs
      *
      */
-    public function addCassetteOrg(CassetteSizes $cs)
-    {
+    public function addCassetteOrg(CassetteSizes $cs) {
         if (!$this->cassetteOrg->contains($cs)) {
 
             $this->cassetteOrg[] = $cs;
@@ -725,8 +700,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\CassetteSizes $cs
      *
      */
-    public function removeCassetteOrg(CassetteSizes $cs)
-    {
+    public function removeCassetteOrg(CassetteSizes $cs) {
         $this->cassetteOrg->remove($cs);
     }
 
@@ -736,8 +710,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\Colors $color
      *
      */
-    public function addColorOrg(Colors $color)
-    {
+    public function addColorOrg(Colors $color) {
         if (!$this->colorOrg->contains($color)) {
 
             $this->colorOrg[] = $color;
@@ -751,8 +724,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\Colors $color
      *
      */
-    public function removeColorOrg(Colors $color)
-    {
+    public function removeColorOrg(Colors $color) {
         $this->colorOrg->remove($color);
     }
 
@@ -762,8 +734,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\Commercial $commercial
      *
      */
-    public function addCommercialOrg(Colors $commercial)
-    {
+    public function addCommercialOrg(Colors $commercial) {
         if (!$this->commercialOrg->contains($commercial)) {
 
             $this->commercialOrg[] = $commercial;
@@ -777,8 +748,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\Commercial $commercial
      *
      */
-    public function removeCommercialOrg(Commercial $commercial)
-    {
+    public function removeCommercialOrg(Commercial $commercial) {
         $this->commercialOrg->remove($commercial);
     }
 
@@ -788,8 +758,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\DiskDiameters $dd
      *
      */
-    public function addDiskDiamaeterOrg(DiskDiameters $dd)
-    {
+    public function addDiskDiamaeterOrg(DiskDiameters $dd) {
         if (!$this->diskDiamaeterOrg->contains($dd)) {
 
             $this->diskDiamaeterOrg[] = $dd;
@@ -803,8 +772,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\DiskDiameters $dd
      *
      */
-    public function removeDiskDiamaeterOrg(DiskDiameters $dd)
-    {
+    public function removeDiskDiamaeterOrg(DiskDiameters $dd) {
         $this->diskDiamaeterOrg->remove($dd);
     }
 
@@ -814,8 +782,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\FormatVersions $f
      *
      */
-    public function addFormatOrg(FormatVersions $f)
-    {
+    public function addFormatOrg(FormatVersions $f) {
         if (!$this->formatOrg->contains($f)) {
 
             $this->formatOrg[] = $f;
@@ -829,8 +796,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\FormatVersions $f
      *
      */
-    public function removeFormatOrg(FormatVersions $f)
-    {
+    public function removeFormatOrg(FormatVersions $f) {
         $this->formatOrg->remove($f);
     }
 
@@ -840,8 +806,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\FrameRates $fr
      *
      */
-    public function addFrameRateOrg(FrameRates $fr)
-    {
+    public function addFrameRateOrg(FrameRates $fr) {
         if (!$this->frameRateOrg->contains($fr)) {
 
             $this->frameRateOrg[] = $fr;
@@ -855,8 +820,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\FrameRates $fr
      *
      */
-    public function removeFrameRateOrg(FrameRates $fr)
-    {
+    public function removeFrameRateOrg(FrameRates $fr) {
         $this->frameRateOrg->remove($fr);
     }
 
@@ -866,8 +830,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\MediaDiameters $md
      *
      */
-    public function addMediaDiameterOrg(MediaDiameters $md)
-    {
+    public function addMediaDiameterOrg(MediaDiameters $md) {
         if (!$this->mediaDiameterOrg->contains($md)) {
 
             $this->mediaDiameterOrg[] = $md;
@@ -881,8 +844,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\MediaDiameters $md
      *
      */
-    public function removeMediaDiameterOrg(MediaDiameters $md)
-    {
+    public function removeMediaDiameterOrg(MediaDiameters $md) {
         $this->mediaDiameterOrg->remove($md);
     }
 
@@ -892,8 +854,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\MonoStereo $ms
      *
      */
-    public function addMonoOrg(MonoStereo $ms)
-    {
+    public function addMonoOrg(MonoStereo $ms) {
         if (!$this->monoOrg->contains($ms)) {
 
             $this->monoOrg[] = $ms;
@@ -907,8 +868,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\MonoStereo $ms
      *
      */
-    public function removeMonoOrg(MonoStereo $ms)
-    {
+    public function removeMonoOrg(MonoStereo $ms) {
         $this->monoOrg->remove($ms);
     }
 
@@ -918,8 +878,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\NoiceReduction $nr
      *
      */
-    public function addNoiceReductionOrg(NoiceReduction $nr)
-    {
+    public function addNoiceReductionOrg(NoiceReduction $nr) {
         if (!$this->noiceReductionOrg->contains($nr)) {
 
             $this->noiceReductionOrg[] = $nr;
@@ -933,8 +892,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\NoiceReduction $nr
      *
      */
-    public function removeNoiceReductionOrg(NoiceReduction $nr)
-    {
+    public function removeNoiceReductionOrg(NoiceReduction $nr) {
         $this->noiceReductionOrg->remove($nr);
     }
 
@@ -944,8 +902,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\PrintTypes $pt
      *
      */
-    public function addPrintTypeOrg(PrintTypes $pt)
-    {
+    public function addPrintTypeOrg(PrintTypes $pt) {
         if (!$this->printTypeOrg->contains($pt)) {
 
             $this->printTypeOrg[] = $pt;
@@ -959,8 +916,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\PrintTypes $pt
      *
      */
-    public function removePrintTypeOrg(PrintTypes $pt)
-    {
+    public function removePrintTypeOrg(PrintTypes $pt) {
         $this->printTypeOrg->remove($pt);
     }
 
@@ -970,8 +926,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\RecordingSpeed $rs
      *
      */
-    public function addRecordingSpeedOrg(RecordingSpeed $rs)
-    {
+    public function addRecordingSpeedOrg(RecordingSpeed $rs) {
         if (!$this->recordingSpeedOrg->contains($rs)) {
 
             $this->recordingSpeedOrg[] = $rs;
@@ -985,8 +940,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\RecordingSpeed $rs
      *
      */
-    public function removeRecordingSpeedOrg(RecordingSpeed $rs)
-    {
+    public function removeRecordingSpeedOrg(RecordingSpeed $rs) {
         $this->recordingSpeedOrg->remove($rs);
     }
 
@@ -996,8 +950,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\RecordingStandards $rst
      *
      */
-    public function addRecordingStandardOrg(RecordingStandards $rst)
-    {
+    public function addRecordingStandardOrg(RecordingStandards $rst) {
         if (!$this->recordingStandardOrg->contains($rst)) {
 
             $this->recordingStandardOrg[] = $rst;
@@ -1011,8 +964,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\RecordingStandards $rst
      *
      */
-    public function removeRecordingStandardOrg(RecordingStandards $rst)
-    {
+    public function removeRecordingStandardOrg(RecordingStandards $rst) {
         $this->recordingStandardOrg->remove($rst);
     }
 
@@ -1022,8 +974,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\ReelCore $rc
      *
      */
-    public function addReelCoreOrg(ReelCore $rc)
-    {
+    public function addReelCoreOrg(ReelCore $rc) {
         if (!$this->reelCoreOrg->contains($rc)) {
 
             $this->reelCoreOrg[] = $rc;
@@ -1037,8 +988,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\ReelCore $rc
      *
      */
-    public function removeReelCoreOrg(ReelCore $rc)
-    {
+    public function removeReelCoreOrg(ReelCore $rc) {
         $this->reelCoreOrg->remove($rc);
     }
 
@@ -1048,8 +998,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\ReelDiameters $rd
      *
      */
-    public function addReelDiameterOrg(ReelDiameters $rd)
-    {
+    public function addReelDiameterOrg(ReelDiameters $rd) {
         if (!$this->reelDiameterOrg->contains($rd)) {
 
             $this->reelDiameterOrg[] = $rd;
@@ -1063,8 +1012,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\ReelDiameters $rd
      *
      */
-    public function removeReelDiameterOrg(ReelDiameters $rd)
-    {
+    public function removeReelDiameterOrg(ReelDiameters $rd) {
         $this->reelDiameterOrg->remove($rd);
     }
 
@@ -1074,8 +1022,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\Slides $s
      *
      */
-    public function addSlidesOrg(Slides $s)
-    {
+    public function addSlidesOrg(Slides $s) {
         if (!$this->slidesOrg->contains($s)) {
 
             $this->slidesOrg[] = $s;
@@ -1089,8 +1036,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\Slides $s
      *
      */
-    public function removeSlidesOrg(Slides $s)
-    {
+    public function removeSlidesOrg(Slides $s) {
         $this->slidesOrg->remove($s);
     }
 
@@ -1100,8 +1046,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\Sounds $sound
      *
      */
-    public function addSoundsOrg(Sounds $sound)
-    {
+    public function addSoundsOrg(Sounds $sound) {
         if (!$this->soundsOrg->contains($sound)) {
 
             $this->soundsOrg[] = $sound;
@@ -1115,8 +1060,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\Sounds $sound
      *
      */
-    public function removeSoundsOrg(Sounds $sound)
-    {
+    public function removeSoundsOrg(Sounds $sound) {
         $this->soundsOrg->remove($sound);
     }
 
@@ -1126,8 +1070,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\TapeThickness $tt
      *
      */
-    public function addTapeThicknessOrg(TapeThickness $tt)
-    {
+    public function addTapeThicknessOrg(TapeThickness $tt) {
         if (!$this->tapeThicknessOrg->contains($tt)) {
 
             $this->tapeThicknessOrg[] = $tt;
@@ -1141,8 +1084,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\TapeThickness $tt
      *
      */
-    public function removeTapeThicknessOrg(TapeThickness $tt)
-    {
+    public function removeTapeThicknessOrg(TapeThickness $tt) {
         $this->tapeThicknessOrg->remove($tt);
     }
 
@@ -1152,8 +1094,7 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\TrackTypes $tts
      *
      */
-    public function addTrackTypeOrg(TrackTypes $tts)
-    {
+    public function addTrackTypeOrg(TrackTypes $tts) {
         if (!$this->trackTypeOrg->contains($tts)) {
 
             $this->trackTypeOrg[] = $tts;
@@ -1167,20 +1108,36 @@ class Organizations
      * @param \Application\Bundle\FrontBundle\Entity\TrackTypes $tts
      *
      */
-    public function removeTrackTypeOrg(TrackTypes $tts)
-    {
+    public function removeTrackTypeOrg(TrackTypes $tts) {
         $this->trackTypeOrg->remove($tts);
     }
-    
-    public function setStatus($boolean)
-    {
+
+    public function setStatus($boolean) {
         $this->status = $boolean;
 
         return $this;
     }
-    
-    public function getStatus()
-    {
+
+    public function getStatus() {
         return (bool) $this->status;
     }
+
+    /**
+     * Get is paid org
+     *
+     * @return int
+     */
+    public function getIsPaid() {
+        return (bool) $this->isPaid;
+    }
+
+    /**
+     * Set  Enable Backup
+     *
+     * @param int $isPaid
+     */
+    public function setEnableBackup($isPaid) {
+        $this->isPaid = $isPaid;
+    }
+
 }

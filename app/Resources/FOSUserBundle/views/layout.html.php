@@ -122,6 +122,11 @@
         </header>
 
         <div class="container" id="container" style="margin-top:20px;margin-bottom:20px;">
+            <?php if ($app->getUser()): ?>
+                <?php if ($app->getUser()->getOrganizations()->getIsPaid() == 0): ?>
+                    <p>Want more than 2500 records? Upgrade now by contacting avcc@avpreserve.com</p>
+                <?php endif ?>
+            <?php endif ?>
             <?php foreach ($app->getSession()->getFlashBag()->all() as $type => $messages): ?>
                 <?php foreach ($messages as $message): ?>
                     <div class="flash-<?php echo $type; ?> text-success">
@@ -157,7 +162,7 @@
                 ga('create', '<?php echo $view->container->getParameter('ga_tracking'); ?>', 'auto');
                 ga('send', 'pageview');
             </script>
-<?php } ?>
+        <?php } ?>
         <script type="text/javascript">
             setTimeout(function () {
                 $('.text-success').hide();
@@ -167,8 +172,8 @@
             });
 
         </script>
-<?php $view['slots']->stop() ?>
-<?php $view['slots']->output('javascripts') ?>
-<?php $view['slots']->output('view_javascripts') ?>
+        <?php $view['slots']->stop() ?>
+        <?php $view['slots']->output('javascripts') ?>
+        <?php $view['slots']->output('view_javascripts') ?>
     </body>
 </html>

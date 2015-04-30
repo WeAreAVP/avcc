@@ -117,7 +117,12 @@
             </div>
         </header>
 
-        <div class="container" id="container" style="margin-top:20px;margin-bottom:20px;">
+        <div class="container" id="container" style="margin-top:20px;margin-bottom:20px;">            
+            {% if app.user %}
+                {% if app.user.organizations.isPaid == 0 %}
+                    <p>Want more than 2500 records? Upgrade now by contacting avcc@avpreserve.com</p>
+                {% endif %}
+            {% endif %}
             {% for type, messages in app.session.flashbag.all() %}
                 {% for message in messages %}
                     {#                                     {% if type == 'success' %}#}
