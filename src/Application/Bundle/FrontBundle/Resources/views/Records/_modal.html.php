@@ -90,7 +90,7 @@
                                     <br>
                                     <br>
                                 </div>
-<?php } ?>
+                            <?php } ?>
 
                             <input type="file" name="importfile" class="required" required="required" /><br /><br />
                             <input type="hidden" name="impfiletype"  id="impfiletype" value="" />
@@ -100,9 +100,9 @@
             </div>
             <div class="modal-footer" id="modal-footer">
                 <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">No</button> &nbsp;
-<?php
-if ($view['security']->isGranted('ROLE_SUPER_ADMIN')) {
-    ?>
+                <?php
+                if ($view['security']->isGranted('ROLE_SUPER_ADMIN')) {
+                    ?>
                     <button type="button" name="submit" id="submit" class="button primary" onclick="checkOrganization();">Submit</button>
                     <?php
                 } else {
@@ -163,7 +163,7 @@ if ($view['security']->isGranted('ROLE_SUPER_ADMIN')) {
             </div>
             <div id="delete_process">
                 <div class="modal-body" id="delete_body" style="font-size: 12px;">
-                    
+
                 </div>
                 <div class="modal-footer" id="delete_footer">
                     <button type="button" name="close" id="" class="button" data-dismiss="modal">No</button>
@@ -173,7 +173,34 @@ if ($view['security']->isGranted('ROLE_SUPER_ADMIN')) {
         </div>
     </div>
 </div>
+<?php if ($notification) { ?>
+    <div id="notificationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true" style="display:none;">
+        <div class='modal-dialog'>
+            <div class='modal-content'>
+                <div class="modal-header">
+                    <h3 id="myModalLabel">Notification</h3>
+                </div>
+                <div id="notification_process">
+                    <div class="modal-body" id="notification_body" style="font-size: 12px;">
+                        Free accounts allow up to 2500 records. Upgrade now by contacting avcc@avpreserve.com
+                    </div>
+                    <div class="modal-footer" id="notification_footer">
+                        <a class="" href="<?php echo $view['router']->generate('record_list') ?>"><input type="button" value="close"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php } ?>
 <script>
+<?php if ($notification) { ?>
+        $('#notificationModal').show();
+        $('#notificationModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+<?php } ?>
+
     function checkOrganization() {
         if ($('#organization').val() == '') {
             $('#error_span').show();
@@ -187,17 +214,17 @@ if ($view['security']->isGranted('ROLE_SUPER_ADMIN')) {
         if (selected) {
             $("#deleteModal").hide('show');
             $.blockUI();
-		$.ajax({
-                    type: 'POST',
-                    url: delUrl,
-                    data: {records: selected},
-                    dataType: 'json',
-                    success: function (response)
-                    {
-                        //$.unblockUI();
-                        window.location.reload();
-                    }
-                });
+            $.ajax({
+                type: 'POST',
+                url: delUrl,
+                data: {records: selected},
+                dataType: 'json',
+                success: function (response)
+                {
+                    //$.unblockUI();
+                    window.location.reload();
+                }
+            });
         }
     }
 </script>

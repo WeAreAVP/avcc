@@ -58,7 +58,6 @@ class FilmRecordsController extends Controller {
         if ($result != '') {
             $error = new FormError("The unique ID must be unique.");
             $form->get('record')->get('uniqueId')->addError($error);
-            
         }
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(2, $em, $this->getUser(), null);
@@ -81,7 +80,7 @@ class FilmRecordsController extends Controller {
                 $this->get('session')->set('filmProjectId', $entity->getRecord()->getProject()->getId());
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
-
+                
             }
         }
         if ($this->get('session')->get('filmProjectId')) {
@@ -311,7 +310,15 @@ class FilmRecordsController extends Controller {
                 $shpinxInfo = $this->getSphinxInfo();
                 $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 2);
                 $sphinxSearch->replace();
+                if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
+                    $org_records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($this->getUser()->getOrganizations()->getId());
+                    $counter = count($org_records);
+                    if ($counter == 2500 && $this->getUser()->getOrganizations()->getIsPaid() == 0) {
+                        return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
+                    }
+                }
                 // the save_and_dupplicate button was clicked
+
                 if ($editForm->get('save_and_duplicate')->isClicked()) {
                     return $this->redirect($this->generateUrl('record_film_duplicate', array('filmRecId' => $id)));
                 }
@@ -322,7 +329,7 @@ class FilmRecordsController extends Controller {
 
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
-
+                
             }
         }
         if ($entity->getRecord()->getProject()->getViewSetting()) {

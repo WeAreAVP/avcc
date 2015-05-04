@@ -16,8 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
  * @UniqueEntity(fields="username", message="Username already in use.")
  * @UniqueEntity(fields="email", message="Email already in use.")
  */
-class Users extends BaseUser
-{
+class Users extends BaseUser {
 
     /**
      * @var integer
@@ -107,11 +106,11 @@ class Users extends BaseUser
      * @ORM\OrderBy({"id"="ASC"})
      */
     private $userProjects;
+
     /**
      * Users constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->userSetting = new ArrayCollection();
         $this->userProjects = new ArrayCollection();
         parent::__construct();
@@ -120,9 +119,8 @@ class Users extends BaseUser
     /**
      * @ORM\PrePersist
      */
-    public function setCreatedOnValue()
-    {
-        if ( ! $this->getCreatedOn()) {
+    public function setCreatedOnValue() {
+        if (!$this->getCreatedOn()) {
             $this->createdOn = new \DateTime();
         }
     }
@@ -130,8 +128,7 @@ class Users extends BaseUser
     /**
      * @ORM\PreUpdate
      */
-    public function setUpdatedOnValue()
-    {
+    public function setUpdatedOnValue() {
         $this->updatedOn = new \DateTime();
     }
 
@@ -140,8 +137,7 @@ class Users extends BaseUser
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->getName();
     }
 
@@ -150,8 +146,7 @@ class Users extends BaseUser
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
@@ -160,8 +155,7 @@ class Users extends BaseUser
      *
      * @return \Datetime
      */
-    public function getCreatedOn()
-    {
+    public function getCreatedOn() {
         return $this->createdOn;
     }
 
@@ -170,8 +164,7 @@ class Users extends BaseUser
      *
      * @return \Datetime
      */
-    public function getUpdatedOn()
-    {
+    public function getUpdatedOn() {
         return $this->updatedOn;
     }
 
@@ -180,8 +173,7 @@ class Users extends BaseUser
      *
      * @return \Application\Bundle\FrontBundle\Entity\Organizations
      */
-    public function getOrganizations()
-    {
+    public function getOrganizations() {
         return $this->organizations;
     }
 
@@ -190,8 +182,7 @@ class Users extends BaseUser
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function getUsersCreated()
-    {
+    public function getUsersCreated() {
         return $this->usersCreated;
     }
 
@@ -200,8 +191,7 @@ class Users extends BaseUser
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function getUsersUpdated()
-    {
+    public function getUsersUpdated() {
         return $this->usersUpdated;
     }
 
@@ -212,8 +202,7 @@ class Users extends BaseUser
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
 
         return $this;
@@ -226,8 +215,7 @@ class Users extends BaseUser
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function setCreatedOn(\DateTime $createdOn)
-    {
+    public function setCreatedOn(\DateTime $createdOn) {
         $this->createdOn = $createdOn;
 
         return $this;
@@ -240,8 +228,7 @@ class Users extends BaseUser
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function setUpdatedOn(\DateTime $updatedOn)
-    {
+    public function setUpdatedOn(\DateTime $updatedOn) {
         $this->updatedOn = $updatedOn;
 
         return $this;
@@ -254,8 +241,7 @@ class Users extends BaseUser
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function setOrganizations(\Application\Bundle\FrontBundle\Entity\Organizations $organizations)
-    {
+    public function setOrganizations(\Application\Bundle\FrontBundle\Entity\Organizations $organizations) {
         $this->organizations = $organizations;
 
         return $this;
@@ -268,8 +254,7 @@ class Users extends BaseUser
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated)
-    {
+    public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated) {
         $this->usersCreated = $usersCreated;
 
         return $this;
@@ -282,8 +267,7 @@ class Users extends BaseUser
      *
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated)
-    {
+    public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated) {
         $this->usersUpdated = $usersUpdated;
 
         return $this;
@@ -294,13 +278,12 @@ class Users extends BaseUser
      * @param \Application\Bundle\FrontBundle\Entity\UserSettings $us
      *
      */
-    public function addUserSetting(UserSettings $us)
-    {
-         if (!$this->userSetting->contains($us)) {
+    public function addUserSetting(UserSettings $us) {
+        if (!$this->userSetting->contains($us)) {
 
-             $this->userSetting[] = $us;
-             $us->setUser($this);
-         }
+            $this->userSetting[] = $us;
+            $us->setUser($this);
+        }
     }
 
     /**
@@ -308,9 +291,8 @@ class Users extends BaseUser
      * @param \Application\Bundle\FrontBundle\Entity\UserSettings $us
      *
      */
-    public function removeUserSetting(UserSettings $us)
-    {
-         $this->userSetting->remove($us);
+    public function removeUserSetting(UserSettings $us) {
+        $this->userSetting->remove($us);
     }
 
     /**
@@ -318,13 +300,12 @@ class Users extends BaseUser
      * @param \Application\Bundle\FrontBundle\Entity\Projects $project
      *
      */
-    public function addUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $project)
-    {
-         if (!$this->userProjects->contains($project)) {
+    public function addUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $project) {
+        if (!$this->userProjects->contains($project)) {
 
-             $this->userProjects[] = $project;
-             $project->setProjectUser($this);
-         }
+            $this->userProjects[] = $project;
+            $project->setProjectUsers($this);
+        }
     }
 
     /**
@@ -332,9 +313,8 @@ class Users extends BaseUser
      * @param \Application\Bundle\FrontBundle\Entity\Projects $project
      *
      */
-    public function removeUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $project)
-    {
-         $this->userProjects->remove($project);
+    public function removeUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $project) {
+        $this->userProjects->remove($project);
     }
 
     /**
@@ -342,10 +322,8 @@ class Users extends BaseUser
      * @param  \Application\Bundle\FrontBundle\Entity\Projects $p
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
-    public function setUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $p)
-    {
+    public function setUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $p) {
         $this->userProjects = $p;
-
         return $this;
     }
 
@@ -353,8 +331,7 @@ class Users extends BaseUser
      *
      * @return type
      */
-    public function getUserProjects()
-    {
+    public function getUserProjects() {
         return $this->userProjects;
     }
 

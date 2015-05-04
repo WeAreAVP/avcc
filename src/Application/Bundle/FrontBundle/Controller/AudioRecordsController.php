@@ -144,18 +144,19 @@ class AudioRecordsController extends Controller {
      * @return array
      */
     public function newAction($projectId = null, $audioRecId = null) {
+//        return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
         }
         $em = $this->getDoctrine()->getManager();
-        
-//        if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
-//            $org_records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($this->getUser()->getOrganizations()->getId());
-//            $counter = count($org_records);
-//            if ($counter > 2500) {
-//                // do somethng to show msg
-//            }
-//        }
+
+        if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
+            $org_records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($this->getUser()->getOrganizations()->getId());
+            $counter = count($org_records);
+            if ($counter == 2500 && $this->getUser()->getOrganizations()->getIsPaid() == 0) {
+                return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
+            }
+        }
 
         $fieldsObj = new DefaultFields();
         $userViewSettings = $fieldsObj->getDefaultOrder();
@@ -359,7 +360,13 @@ class AudioRecordsController extends Controller {
                 $shpinxInfo = $this->getSphinxInfo();
                 $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 1);
                 $sphinxSearch->replace();
-
+                if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
+                    $org_records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($this->getUser()->getOrganizations()->getId());
+                    $counter = count($org_records);
+                    if ($counter == 2500 && $this->getUser()->getOrganizations()->getIsPaid() == 0) {
+                        return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
+                    }
+                }
                 // the save_and_dupplicate button was clicked
                 if ($editForm->get('save_and_duplicate')->isClicked()) {
                     return $this->redirect($this->generateUrl('record_audio_duplicate', array('audioRecId' => $id)));

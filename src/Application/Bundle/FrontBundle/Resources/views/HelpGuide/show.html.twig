@@ -1,0 +1,15 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+    <div class="grid fluid">
+        <h1>
+            {{ entity[0].title }}
+        </h1>
+        <dl class="horizontal">
+            <dt>Description</dt>
+            <dd>
+                {{ entity[0].description }}
+            </dd>
+        </dl>
+    </div>
+{% endblock %}

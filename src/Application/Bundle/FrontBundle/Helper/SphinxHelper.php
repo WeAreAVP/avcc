@@ -44,7 +44,7 @@ class SphinxHelper
             }
         }
 
-        if ($facetData['facet_keyword_search']) {
+        if (isset($facetData['facet_keyword_search'])) {
             $keywords = json_decode($facetData['facet_keyword_search'], true);
             foreach ($keywords as $keyword) {
                 if ($keyword['type'] == 'all') {
@@ -56,7 +56,7 @@ class SphinxHelper
                 }
             }
         }
-        if ($facetData['parent_facet']) {
+        if (isset($facetData['parent_facet'])) {
             $criteria['parent_facet'] = $facetData['parent_facet'];
         }
 

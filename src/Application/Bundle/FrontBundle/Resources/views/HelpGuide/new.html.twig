@@ -1,0 +1,49 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+    <div class="grid fluid">
+        <h1>
+            <a href="{{ path('help_guide') }}"><i class="icon-arrow-left-3 smaller"></i> </a>
+            New Help Guide
+        </h1>
+
+        {{ form_start(form, {attr: {class:'form-horizontal'} }) }}
+        <fieldset>
+            {{ form_errors(form) }}
+            <br />
+            <label>Title</label>
+            <div class="input-control text" data-role="input-control">
+                {{ form_widget(form.title, {attr: {class:'size4'} }) }}
+                {% for errorItem in form.title.vars.errors %}
+                    <span class="has-error text-danger" for="{{ form.title.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            <label>Slug</label>
+            <div class="input-control select" data-role="input-control">
+                /help/{{ form_widget(form.slug, {attr: {class:'size4'} }) }}
+                {% for errorItem in form.slug.vars.errors %}
+                    <span id='formt_error' class="has-error text-danger" for="{{ form.slug.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            <label>Description</label>
+            <div class="input-control text" data-role="input-control">
+                {{ form_widget(form.description, {attr: {class:'size4'} }) }}
+                {% for errorItem in form.description.vars.errors %}
+                    <span class="has-error text-danger" for="{{ form.description.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
+            or
+            <a class="button"   href="{{ path('help_guide') }}">Cancel</a>
+        </fieldset>
+        {{ form_end(form) }}
+    </div>
+    {#<script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+    <script>tinymce.init({selector: 'textarea'});</script>#}
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('.formats_dd').chosen();
+        });
+    </script>
+{% endblock %}

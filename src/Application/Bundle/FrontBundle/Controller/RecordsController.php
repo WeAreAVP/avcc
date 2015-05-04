@@ -74,11 +74,13 @@ class RecordsController extends Controller {
      * @param Request $request
      *
      * @Route("/", name="record_list")
+     * @Route("/notification/{dialog}/", name="record_list_withdialog")
      * @Method("GET")
      * @Template("ApplicationFrontBundle:Records:index.html.php")
      * @return array
      */
-    public function indexAction(Request $request) {
+    public function indexAction(Request $request, $dialog = null) {
+
         $em = $this->getDoctrine()->getManager();
 
         $shpinxInfo = $this->getSphinxInfo();
@@ -111,7 +113,8 @@ class RecordsController extends Controller {
             'facets' => $facet,
             'columns' => $this->columns,
             'isAjax' => $isAjax,
-            'organizations' => $organizations
+            'organizations' => $organizations,
+            'notification' => $dialog
         );
         if ($request->isXmlHttpRequest()) {
             $html = $this->render('ApplicationFrontBundle:Records:index.html.php', $view);
@@ -281,11 +284,10 @@ class RecordsController extends Controller {
         if ($data['is_all']) {
             $session->set("allRecords", $data['checked']);
             $recordsIds = 'all';
-            if (!$data['checked']){
+            if (!$data['checked']) {
                 $session->remove("saveRecords");
                 $recordsIds = '';
             }
-            
         } else {
             if (!$data['checked']) {
                 $session->remove("saveRecords");

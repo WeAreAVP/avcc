@@ -1,0 +1,34 @@
+{% extends 'FOSUserBundle::layout.html.twig' %}
+
+{% block body -%}
+
+
+    <h1>Help Guide
+        {% if is_granted('ROLE_MANAGER') %}
+            <small class="on-right">
+                <a href="{{ path('help_guide_new') }}"><i class="icon-plus"></i> New</a>
+            </small>
+        {% endif %}
+    </h1>
+    <div class="table-responsive">
+        <table class="table bordered">
+            <thead>
+                <tr>
+                    <th>title</th>
+                    <th>Slug</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.title }}</td>
+                        <td>{{ entity.slug }}</td>
+                        <td>{{ entity.description }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

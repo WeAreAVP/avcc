@@ -89,7 +89,7 @@ class Projects {
     private $status = 1;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Application\Bundle\FrontBundle\Entity\Users", mappedBy="userProjects", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Application\Bundle\FrontBundle\Entity\Users", mappedBy="userProjects")
      */
     private $projectUsers;
 
@@ -271,7 +271,7 @@ class Projects {
     public function addProjectUsers(\Application\Bundle\FrontBundle\Entity\Users $user) {
         if (!$this->projectUsers->contains($user)) {
             $this->projectUsers[] = $user;
-            $user->setUser($this);
+            $user->setUserProjects($this);
         }
     }
 

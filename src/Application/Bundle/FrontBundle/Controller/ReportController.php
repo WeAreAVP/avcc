@@ -725,6 +725,8 @@ class ReportController extends Controller {
 //        $this->allFormatsAction($format);
 //        $this->prioritizationReportAction($format);
 //        $this->manifestAction($format);
+//        $this->fileSizeCalculatorAction($format);
+//        $this->linearFootCalculatorAction($format);
 //    }
 
 }

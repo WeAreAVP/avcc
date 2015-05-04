@@ -72,7 +72,7 @@ class ProjectsController extends Controller {
             }
             $em->persist($entity);
             $em->flush();
-            
+
             $this->get('session')->getFlashBag()->add('success', 'Project added succesfully.');
 
             return $this->redirect($this->generateUrl('projects', array('id' => $entity->getId())));
@@ -233,13 +233,22 @@ class ProjectsController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
+        $usersList = $request->request->get('application_bundle_frontbundle_projects');
+        
         if ($editForm->isValid()) {
             $entity->setUsersUpdated($user);
             if ($entity->getOrganization()->getStatus() == 0) {
                 $entity->setStatus(0);
-            }else{
+            } else {
                 $entity->setStatus(1);
             }
+            if (isset($usersList['projectUsers'])) {
+                foreach ($usersList['projectUsers'] as $users) {
+                    $_user = $em->getRepository('ApplicationFrontBundle:Users')->find($users);
+                    $entity->addProjectUsers($_user);
+                }
+            }
+            $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Project updated succesfully.');
 

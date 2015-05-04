@@ -78,7 +78,7 @@ class VideoRecordsController extends Controller {
 
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
-
+                
             }
         }
         if ($this->get('session')->get('vedioProjectId')) {
@@ -276,16 +276,16 @@ class VideoRecordsController extends Controller {
             throw $this->createNotFoundException('Unable to find VideoRecords entity.');
         }
         $fieldsObj = new DefaultFields();
-		$userViewSettings = $fieldsObj->getDefaultOrder();
+        $userViewSettings = $fieldsObj->getDefaultOrder();
         $data = $fieldsObj->getData(3, $em, $this->getUser(), null, $entity->getRecord()->getId());
-		
+
         //  $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity, $em, $data);
         $editForm->handleRequest($request);
         $result = $this->checkUniqueId($request, $entity->getRecord()->getId());
         if ($result != '') {
             $error = new FormError("The unique ID must be unique.");
-             $editForm->get('record')->get('uniqueId')->addError($error);
+            $editForm->get('record')->get('uniqueId')->addError($error);
         }
         if ($editForm->get('delete')->isClicked()) {
             return $this->redirect($this->generateUrl('record_video_delete', array('id' => $id)));
@@ -296,6 +296,13 @@ class VideoRecordsController extends Controller {
                 $sphinxInfo = $this->getSphinxInfo();
                 $sphinxSearch = new SphinxSearch($em, $sphinxInfo, $entity->getRecord()->getId(), 3);
                 $sphinxSearch->replace();
+                if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
+                    $org_records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($this->getUser()->getOrganizations()->getId());
+                    $counter = count($org_records);
+                    if ($counter == 2500 && $this->getUser()->getOrganizations()->getIsPaid() == 0) {
+                        return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
+                    }
+                }
                 // the save_and_dupplicate button was clicked
                 if ($editForm->get('save_and_duplicate')->isClicked()) {
                     return $this->redirect($this->generateUrl('record_video_duplicate', array('videoRecId' => $id)));
@@ -307,11 +314,11 @@ class VideoRecordsController extends Controller {
 
                 return $this->redirect($this->generateUrl('record_list'));
             } catch (\Doctrine\DBAL\DBALException $e) {
-
+                
             }
         }
-		
-		
+
+
         if ($entity->getRecord()->getProject()->getViewSetting()) {
             $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
         }
