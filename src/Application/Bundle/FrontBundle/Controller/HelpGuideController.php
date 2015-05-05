@@ -133,7 +133,7 @@ class HelpGuideController extends Controller {
     public function showAction($slug) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ApplicationFrontBundle:HelpGuide')->findBy(array('slug' => $slug));
+        $entity = $em->getRepository('ApplicationFrontBundle:HelpGuide')->findOneBy(array('slug' => $slug));
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Help Guide.');
@@ -142,5 +142,113 @@ class HelpGuideController extends Controller {
             'entity' => $entity,
         );
     }
+
+    /**
+     * Deletes a Help Guide.
+     *
+     * @param Request $request
+     * @param type    $id
+     *
+     * @Route("/delete/{id}", name="help_guide_delete")
+     * @Method("GET")
+     * @return redirect
+     */
+    public function deleteAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ApplicationFrontBundle:HelpGuide')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Help Guide entity.');
+        }
+
+        $em->remove($entity);
+        $em->flush();
+        return $this->redirect($this->generateUrl('help_guide'));
+    }
+    
+     /**
+     * Displays a form to edit an existing Bases entity.
+     *
+     * @param integer $id
+     *
+     * @Route("/{id}/edit", name="help_guide_edit")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function editAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('ApplicationFrontBundle:HelpGuide')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Help Guide entity.');
+        }
+
+        $editForm = $this->createEditForm($entity);
+
+        return array(
+            'entity' => $entity,
+            'edit_form' => $editForm->createView()
+        );
+    }
+
+    /**
+     * Creates a form to edit a Bases entity.
+     *
+     * @param Bases $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(HelpGuide $entity)
+    {
+        $form = $this->createForm(new HelpGuideType(), $entity, array(
+            'action' => $this->generateUrl('help_guide_update', array('id' => $entity->getId())),
+            'method' => 'PUT',
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Update'));
+
+        return $form;
+    }
+
+    /**
+     * Edits an existing Bases entity.
+     *
+     * @param Request $request
+     * @param type    $id
+     *
+     * @Route("/{id}", name="help_guide_update")
+     * @Method("PUT")
+     * @Template("ApplicationFrontBundle:HelpGuide:edit.html.twig")
+     * @return array
+     */
+    public function updateAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('ApplicationFrontBundle:HelpGuide')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Help Guide entity.');
+        }
+
+        $editForm = $this->createEditForm($entity);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'Help Guide updated succesfully.');
+
+            return $this->redirect($this->generateUrl('help_guide'));
+        }
+
+        return array(
+            'entity' => $entity,
+            'edit_form' => $editForm->createView()
+        );
+    }
+
 
 }

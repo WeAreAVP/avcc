@@ -18,31 +18,26 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  * @author rimsha
  */
 class HelpGuideType extends AbstractType {
-     /**
+
+    /**
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        
+    public function buildForm(FormBuilderInterface $builder, array $options) {
+
         $builder
-            ->add('title')
-            ->add('slug')
-            ->add('description', 'textarea', array(
-            'attr' => array(
-                'label' => 'Description:',
-                'class' => 'tinymce',
-                'data-theme' => 'advanced' // simple, advanced, bbcode
-            )
-        ));
+                ->add('title')
+                ->add('slug')
+                ->add('description', 'textarea', array(
+                    'required' => false)
+        );
     }
 
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        
+    public function setDefaultOptions(OptionsResolverInterface $resolver) {
+
         $resolver->setDefaults(array(
             'data_class' => 'Application\Bundle\FrontBundle\Entity\HelpGuide',
         ));
@@ -51,8 +46,8 @@ class HelpGuideType extends AbstractType {
     /**
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return 'application_bundle_frontbundle_helpguide';
     }
+
 }

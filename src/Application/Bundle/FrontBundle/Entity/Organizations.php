@@ -1136,7 +1136,7 @@ class Organizations {
      *
      * @param int $isPaid
      */
-    public function setEnableBackup($isPaid) {
+    public function setIsPaid($isPaid) {
         $this->isPaid = $isPaid;
     }
 

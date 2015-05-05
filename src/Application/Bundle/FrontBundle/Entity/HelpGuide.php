@@ -55,7 +55,7 @@ class HelpGuide {
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string")
+     * @ORM\Column(name="description", type="text")
      * @Assert\NotBlank(message="Description is required")
      */
     private $description;

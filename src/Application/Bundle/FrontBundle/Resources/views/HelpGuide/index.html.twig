@@ -14,17 +14,18 @@
         <table class="table bordered">
             <thead>
                 <tr>
-                    <th>title</th>
+                    <th>Title</th>
                     <th>Slug</th>
-                    <th>Description</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for entity in entities %}
                     <tr>
-                        <td>{{ entity.title }}</td>
-                        <td>{{ entity.slug }}</td>
-                        <td>{{ entity.description }}</td>
+                        <td><a href="{{ path('help_guide_show', { 'slug': entity.slug }) }}">{{ entity.title }}</a></td>
+                        <td>/help/{{ entity.slug }}</td>
+                        <td><a class="icon-pencil" title="Edit" href="{{ path('help_guide_edit', { 'id': entity.id }) }}"></a> |
+                            <a class="icon-remove" onclick="return confirm('Are you sure you want to delete selected term?')" title="Delete" href="{{ path('help_guide_delete', { 'id': entity.id }) }}"></a></td>
                     </tr>
                 {% endfor %}
             </tbody>

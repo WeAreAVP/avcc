@@ -1,0 +1,52 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+    <div class="grid fluid">
+        <h1>
+            <a href="{{ path('help_guide') }}"><i class="icon-arrow-left-3 smaller"></i> </a>
+            Edit Help Guide
+        </h1>
+        {{ form_start(edit_form, {attr: {class:'form-horizontal'} }) }}
+        <fieldset>
+            {{ form_errors(edit_form) }}
+            <br />
+            <label>Title</label>
+            <div class="input-control text" data-role="input-control">
+                {{ form_widget(edit_form.title, {attr: {class:'size4'} }) }}
+                {% for errorItem in edit_form.title.vars.errors %}
+                    <span class="has-error text-danger" for="{{ edit_form.title.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            <label>Slug</label>
+            <div class="input-control select" data-role="input-control">
+                {{ form_widget(edit_form.slug, {attr: {class:'size4'} }) }}
+                {% for errorItem in edit_form.slug.vars.errors %}
+                    <span class="has-error text-danger" for="{{ edit_form.slug.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            <label>Description</label>
+            <div class="input-control text" data-role="input-control">
+                {{ form_widget(edit_form.description, {attr: {class:'size4'} }) }}
+                {% for errorItem in edit_form.description.vars.errors %}
+                    <span class="has-error text-danger" for="{{ edit_form.description.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            <div class="clearfix"></div>
+            <br/>
+            {{ form_widget(edit_form.submit, {attr: {class:'button primary'} }) }}
+            or
+            <a class="button"   href="{{ path('help_guide') }}">Cancel</a>
+         
+        </fieldset>
+        {{ form_end(edit_form) }}
+    </div>
+
+    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+    <script>tinymce.init({
+            theme: 'modern',
+            width: 500,
+            height: 300,
+            menubar: false,
+            statusbar: false,
+            selector: 'textarea'});</script>
+    {% endblock %}

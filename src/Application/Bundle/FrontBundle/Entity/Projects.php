@@ -270,7 +270,7 @@ class Projects {
      */
     public function addProjectUsers(\Application\Bundle\FrontBundle\Entity\Users $user) {
         if (!$this->projectUsers->contains($user)) {
-            $this->projectUsers[] = $user;
+            $this->projectUsers->add($user);
             $user->setUserProjects($this);
         }
     }
@@ -290,7 +290,7 @@ class Projects {
      * @return \Application\Bundle\FrontBundle\Entity\Projects
      */
     public function setProjectUsers(\Application\Bundle\FrontBundle\Entity\Users $u) {
-        $this->projectUsers = $u;
+        $this->projectUsers->add($u);
 
         return $this;
     }

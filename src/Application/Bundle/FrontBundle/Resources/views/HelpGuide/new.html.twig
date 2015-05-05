@@ -32,14 +32,23 @@
                     <span class="has-error text-danger" for="{{ form.description.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
             </div>
+            <div class="clearfix"></div>
+            <br/>
             {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
             or
-            <a class="button"   href="{{ path('help_guide') }}">Cancel</a>
+            <a class="button" href="{{ path('help_guide') }}">Cancel</a>
+          
         </fieldset>
         {{ form_end(form) }}
     </div>
-    {#<script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
-    <script>tinymce.init({selector: 'textarea'});</script>#}
+    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
+    <script>tinymce.init({
+            theme: 'modern',
+            width: 500,
+            height: 300,
+            menubar: false,
+            statusbar: false,
+            selector: 'textarea'});</script>
     <script type="text/javascript">
 
         $(document).ready(function () {

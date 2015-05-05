@@ -123,7 +123,7 @@
         </header>
 
         <div class="container" id="container" style="margin-top:20px;margin-bottom:20px;">
-            <?php if ($app->getUser()): ?>
+            <?php if ($app->getUser() && $app->getUser()->getOrganizations()): ?>
                 <?php if ($app->getUser()->getOrganizations()->getIsPaid() == 0): ?>
                     <p>Want more than 2500 records? Upgrade now by contacting avcc@avpreserve.com</p>
                 <?php endif ?>
