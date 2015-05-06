@@ -238,6 +238,7 @@ class ProjectsController extends Controller {
 //        print_r($entity->getProjectUsers());
 //        exit;
         if ($editForm->isValid()) {
+			
             $entity->setUsersUpdated($user);
             if ($entity->getOrganization()->getStatus() == 0) {
                 $entity->setStatus(0);
