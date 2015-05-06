@@ -236,6 +236,7 @@ class ProjectsController extends Controller {
         $usersList = $request->request->get('application_bundle_frontbundle_projects');
 
         if ($editForm->isValid()) {
+			
             $entity->setUsersUpdated($user);
             if ($entity->getOrganization()->getStatus() == 0) {
                 $entity->setStatus(0);
