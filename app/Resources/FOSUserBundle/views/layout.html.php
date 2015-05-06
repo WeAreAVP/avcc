@@ -116,7 +116,7 @@
                         <a class="element1 pull-menu" href="#"></a>
                         <ul class="element-menu place-right" style="">
                             <li>
-                                <a class="" href="<?php echo $view['router']->generate('help_guide_list') ?>">Reports</a>
+                                <a class="" href="<?php echo $view['router']->generate('report') ?>">Reports</a>
 
                             </li>
                         </ul>

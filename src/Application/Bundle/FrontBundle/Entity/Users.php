@@ -314,7 +314,7 @@ class Users extends BaseUser {
      *
      */
     public function removeUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $project) {
-        $this->userProjects->remove($project);
+        $this->userProjects->removeElement($project);
     }
 
     /**
@@ -323,7 +323,7 @@ class Users extends BaseUser {
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
     public function setUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $p) {
-        $this->userProjects = $p;
+        $this->userProjects->add($p);
         return $this;
     }
 

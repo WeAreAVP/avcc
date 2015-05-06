@@ -39,9 +39,14 @@ class ProjectsType extends AbstractType {
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('u');
                     },
-                    'empty_data' => '',
-                    'required' => false
-                            ))
+                    'required' => false,
+                    'multiple' => true,
+                    'empty_data' => ''
+                ))
+                ->add('hidden_projectUsers', 'hidden', array(
+                    'mapped' => false,
+                    'required' => false,
+                ))
                 ->addEventListener(
                         FormEvents::POST_SET_DATA, array($this, 'onPreSetData'))
                 ->addEventListener(

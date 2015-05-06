@@ -291,7 +291,7 @@ class Projects {
      * @param  \Application\Bundle\FrontBundle\Entity\Users    $u
      * @return \Application\Bundle\FrontBundle\Entity\Projects
      */
-    public function setProjectUsers(\Application\Bundle\FrontBundle\Entity\Users $u) {
+    public function setProjectUsers(ArrayCollection $u) {
         $this->projectUsers = $u;
 
         return $this;

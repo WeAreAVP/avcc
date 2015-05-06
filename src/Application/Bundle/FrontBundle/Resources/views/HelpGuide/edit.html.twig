@@ -34,32 +34,22 @@
             <div class="clearfix"></div>
             <br/>
             <div>
-            {{ form_widget(edit_form.submit, {attr: {class:'button primary'} }) }}
-            or
-            <a class="button"   href="{{ path('help_guide') }}">Cancel</a>
-         </div>
+                {{ form_widget(edit_form.submit, {attr: {class:'button primary'} }) }}
+                or
+                <a class="button"   href="{{ path('help_guide') }}">Cancel</a>
+            </div>
         </fieldset>
         {{ form_end(edit_form) }}
     </div>
- 
-{#    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>#}
+
     <script>
-        {#tinymce.init({
-            theme: 'modern',
-            width: 650,
-            height: 150,
+        tinyMCE.init({
+            selector: "textarea",
             menubar: false,
-            statusbar: false,
-            selector: 'textarea'});#}
-    
-tinyMCE.init({
-selector: "textarea",
-menubar: false,
-height: 250,
-toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
-theme: "modern",
-skin: 'light',
-statusbar: false
-});
+            height: 250,
+            theme: "modern",
+            skin: 'light',
+            statusbar: false
+        });
     </script>
-    {% endblock %}
+{% endblock %}
