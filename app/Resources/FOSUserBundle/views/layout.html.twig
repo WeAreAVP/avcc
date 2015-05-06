@@ -10,6 +10,7 @@
 
         <title>{% block title %}AVCC - AVPreserve{% endblock %}</title>
         <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
         <!-- Bootstrap core CSS -->
         {% block stylesheets %}
             {#						<link href="{{ asset('css/bootstrap.css') }}" type="text/css" rel="stylesheet" />#}
@@ -60,9 +61,9 @@
                                         <li><a href="{{ path('field_settings') }}">Field Settings</a></li>
                                         <li><a href="{{ path('field_settings_backup') }}">Enable Backup</a></li>
                                         <li><a class="" href="{{ path('projects') }}">Projects</a></li>
-                                        {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                        <li><a class="" href="{{ path('help_guide') }}">Help Guide</a></li>
-                                        {% endif %}
+                                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                            <li><a class="" href="{{ path('help_guide') }}">Help Guide</a></li>
+                                            {% endif %}
                                     </ul>
                                 </li>
                             </ul>
@@ -97,6 +98,15 @@
                                         <li><a href="{{path('vocabularies_tapethickness')}}">Tape Thickness</a></li>
                                         <li><a href="{{path('vocabularies_tracktypes')}}">Track Types</a></li>
                                     </ul>
+                                </li>
+                            </ul>
+                        {% endif %}
+                        <a class="element1 pull-menu" href="#"></a>
+                        {% if not is_granted('ROLE_SUPER_ADMIN') %}
+                            <ul class="element-menu place-right" style="">
+                                <li>
+                                    <a class="" href="{{ path('help_guide_list') }}">Help Guide</a>
+
                                 </li>
                             </ul>
                         {% endif %}

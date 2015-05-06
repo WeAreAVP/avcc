@@ -51,6 +51,25 @@ class HelpGuideController extends Controller {
             'entities' => $entities,
         );
     }
+    
+    /**
+     * Lists all AudioRecords entities.
+     *
+     * @Route("/list", name="help_guide_list")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function listAction() {
+        $entities = '';
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('ApplicationFrontBundle:HelpGuide')->findAll();
+
+        return array(
+            'entities' => $entities,
+        );
+    }
 
     /**
      * Creates a new Bases entity.

@@ -26,7 +26,7 @@
                 {% endfor %}
             </div>
             <label>Description</label>
-            <div class="input-control text" data-role="input-control">
+            <div>
                 {{ form_widget(form.description, {attr: {class:'size4'} }) }}
                 {% for errorItem in form.description.vars.errors %}
                     <span class="has-error text-danger" for="{{ form.description.vars.id }}">{{ errorItem.message }}</span>
@@ -34,10 +34,11 @@
             </div>
             <div class="clearfix"></div>
             <br/>
+            <div>
             {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
             or
             <a class="button" href="{{ path('help_guide') }}">Cancel</a>
-          
+          </div>
         </fieldset>
         {{ form_end(form) }}
     </div>

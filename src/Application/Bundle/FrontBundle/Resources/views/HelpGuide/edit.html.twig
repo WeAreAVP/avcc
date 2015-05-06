@@ -25,7 +25,7 @@
                 {% endfor %}
             </div>
             <label>Description</label>
-            <div class="input-control text" data-role="input-control">
+            <div>
                 {{ form_widget(edit_form.description, {attr: {class:'size4'} }) }}
                 {% for errorItem in edit_form.description.vars.errors %}
                     <span class="has-error text-danger" for="{{ edit_form.description.vars.id }}">{{ errorItem.message }}</span>
@@ -33,20 +33,33 @@
             </div>
             <div class="clearfix"></div>
             <br/>
+            <div>
             {{ form_widget(edit_form.submit, {attr: {class:'button primary'} }) }}
             or
             <a class="button"   href="{{ path('help_guide') }}">Cancel</a>
-         
+         </div>
         </fieldset>
         {{ form_end(edit_form) }}
     </div>
-
-    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>
-    <script>tinymce.init({
+ 
+{#    <script src="//tinymce.cachefly.net/4.1/tinymce.min.js"></script>#}
+    <script>
+        {#tinymce.init({
             theme: 'modern',
-            width: 500,
-            height: 300,
+            width: 650,
+            height: 150,
             menubar: false,
             statusbar: false,
-            selector: 'textarea'});</script>
+            selector: 'textarea'});#}
+    
+tinyMCE.init({
+selector: "textarea",
+menubar: false,
+height: 250,
+toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent",
+theme: "modern",
+skin: 'light',
+statusbar: false
+});
+    </script>
     {% endblock %}

@@ -10,6 +10,7 @@
 
         <title><?php $view['slots']->output('title', 'AVCC - AVPreserve') ?></title>
         <script src="<?php echo $view['assets']->getUrl('js/jquery.min.js') ?>"></script>
+        <script src="<?php echo $view['assets']->getUrl('js/tinymce/tinymce.min.js') ?>"></script>
         <!-- Bootstrap core CSS -->
         <?php $view['slots']->start('stylesheets') ?>
         <!--{#						<link href="{{ asset('css/bootstrap.css') }}" type="text/css" rel="stylesheet" />#}-->
@@ -64,7 +65,7 @@
                                         <li><a href="<?php echo $view['router']->generate('field_settings_backup') ?>">Enable Backup</a></li>
                                         <li><a class="" href="<?php echo $view['router']->generate('projects') ?>">Projects</a></li>
                                         <?php if ($view['security']->isGranted('ROLE_SUPER_ADMIN')): ?>
-                                        <li><a class="" href="<?php echo $view['router']->generate('help_guide') ?>">Help Guide</a></li>
+                                            <li><a class="" href="<?php echo $view['router']->generate('help_guide') ?>">Help Guide</a></li>
                                         <?php endif ?>
                                     </ul>
                                 </li>
@@ -103,7 +104,15 @@
                                 </li>
                             </ul>
                         <?php endif ?>
+                        <a class="element1 pull-menu" href="#"></a>
+                        <?php if (!$view['security']->isGranted('ROLE_SUPER_ADMIN')): ?>
+                            <ul class="element-menu place-right" style="">
+                                <li>
+                                    <a class="" href="<?php echo $view['router']->generate('help_guide_list') ?>">Help Guide</a>
 
+                                </li>
+                            </ul>
+                        <?php endif ?>
                         <a class="element1 pull-menu" href="#"></a>
                         <ul class="element-menu place-right" style="">
                             <li>
@@ -118,14 +127,7 @@
 
                             </li>
                         </ul>
-                        <?php if (!$view['security']->isGranted('ROLE_SUPER_ADMIN')): ?>
-                        <ul class="element-menu place-right" style="">
-                            <li>
-                                <a class="" href="<?php echo $view['router']->generate('record_list') ?>">Help Guide</a>
 
-                            </li>
-                        </ul>
-                        <?php endif ?>
 
                     <?php endif ?>
                 </div>

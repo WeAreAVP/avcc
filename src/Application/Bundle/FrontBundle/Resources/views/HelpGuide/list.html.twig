@@ -1,0 +1,15 @@
+{% extends 'FOSUserBundle::layout.html.twig' %}
+
+{% block body -%}
+
+
+    <h1>Help Guide</h1>
+    <div>
+        <ul>
+            {% for entity in entities %}
+                <li><a href="{{ path('help_guide_show', { 'slug': entity.slug }) }}">{{ entity.title }}</a></li>
+                {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}
