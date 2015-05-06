@@ -303,7 +303,7 @@ class Users extends BaseUser {
     public function addUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $project) {
         if (!$this->userProjects->contains($project)) {
 
-            $this->userProjects->add($project);
+            $this->userProjects[] = $project;
             $project->setProjectUsers($this);
         }
     }
@@ -323,7 +323,7 @@ class Users extends BaseUser {
      * @return \Application\Bundle\FrontBundle\Entity\Users
      */
     public function setUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $p) {
-        $this->userProjects->add($p);
+        $this->userProjects = $p;
         return $this;
     }
 

@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormEvent;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\FormEvents;
+use Doctrine\ORM\EntityManager;
 
 class ProjectsType extends AbstractType {
 
@@ -32,7 +33,15 @@ class ProjectsType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('name')
-                ->add('projectUsers')
+                ->add('projectUsers', 'entity', array(
+                    'by_reference' => false,
+                    'class' => 'ApplicationFrontBundle:Users',
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('u');
+                    },
+                    'empty_data' => '',
+                    'required' => false
+                            ))
                 ->addEventListener(
                         FormEvents::POST_SET_DATA, array($this, 'onPreSetData'))
                 ->addEventListener(

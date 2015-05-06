@@ -234,7 +234,9 @@ class ProjectsController extends Controller {
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
         $usersList = $request->request->get('application_bundle_frontbundle_projects');
-
+//        echo '<pre>';
+//        print_r($entity->getProjectUsers());
+//        exit;
         if ($editForm->isValid()) {
             $entity->setUsersUpdated($user);
             if ($entity->getOrganization()->getStatus() == 0) {
@@ -242,15 +244,16 @@ class ProjectsController extends Controller {
             } else {
                 $entity->setStatus(1);
             }
-            if (isset($usersList['projectUsers'])) {
+
+//            if (isset($usersList['projectUsers'])) {
 //                foreach ($usersList['projectUsers'] as $key => $users) {
 //                        $_user = $em->getRepository('ApplicationFrontBundle:Users')->find($users);
-//                        $entity->setProjectUsers($_user);
-//                        $_user->setUserProjects($entity);
+//                        $entity->addProjectUsers($_user);
+//                       // $_user->setUserProjects($entity);
 //                        $em->persist($_user);
 //                        $em->flush();
 //                }
-            }
+//            }
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'Project updated succesfully.');

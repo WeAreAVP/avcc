@@ -19,7 +19,7 @@
             </div>
             <label>Slug</label>
             <div class="input-control select" data-role="input-control">
-                {{ form_widget(edit_form.slug, {attr: {class:'size4'} }) }}
+                /help/{{ form_widget(edit_form.slug, {attr: {class:'size4'} }) }}
                 {% for errorItem in edit_form.slug.vars.errors %}
                     <span class="has-error text-danger" for="{{ edit_form.slug.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}

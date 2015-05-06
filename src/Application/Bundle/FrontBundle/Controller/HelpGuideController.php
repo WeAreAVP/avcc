@@ -111,6 +111,9 @@ class HelpGuideController extends Controller {
      * @return array
      */
     public function newAction() {
+        if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles())) {
+            throw new AccessDeniedException('Access Denied.');
+        }
         $entity = new HelpGuide();
         $form = $this->createCreateForm($entity);
 
@@ -154,6 +157,9 @@ class HelpGuideController extends Controller {
      * @return redirect
      */
     public function deleteAction(Request $request, $id) {
+        if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles())) {
+            throw new AccessDeniedException('Access Denied.');
+        }
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('ApplicationFrontBundle:HelpGuide')->find($id);
 
@@ -178,6 +184,9 @@ class HelpGuideController extends Controller {
      */
     public function editAction($id)
     {
+        if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles())) {
+            throw new AccessDeniedException('Access Denied.');
+        }
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:HelpGuide')->find($id);

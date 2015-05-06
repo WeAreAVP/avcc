@@ -60,7 +60,9 @@
                                         <li><a href="{{ path('field_settings') }}">Field Settings</a></li>
                                         <li><a href="{{ path('field_settings_backup') }}">Enable Backup</a></li>
                                         <li><a class="" href="{{ path('projects') }}">Projects</a></li>
+                                        {% if is_granted('ROLE_SUPER_ADMIN') %}
                                         <li><a class="" href="{{ path('help_guide') }}">Help Guide</a></li>
+                                        {% endif %}
                                     </ul>
                                 </li>
                             </ul>

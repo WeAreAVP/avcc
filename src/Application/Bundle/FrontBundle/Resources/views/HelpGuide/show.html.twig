@@ -3,6 +3,9 @@
 {% block body %}
     <div class="grid fluid">
         <h1>
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <a href="{{ path('help_guide') }}"><i class="icon-arrow-left-3 smaller"></i> </a>
+            {% endif %}
             {{ entity.title }}
         </h1>
         <div class="horizontal">

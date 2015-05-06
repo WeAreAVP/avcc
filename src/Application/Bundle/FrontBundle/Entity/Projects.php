@@ -270,8 +270,8 @@ class Projects {
      */
     public function addProjectUsers(\Application\Bundle\FrontBundle\Entity\Users $user) {
         if (!$this->projectUsers->contains($user)) {
-            $this->projectUsers->add($user);
-            $user->setUserProjects($this);
+            $this->projectUsers[] = $user;
+            $user->addUserProjects($this);
         }
     }
 
@@ -281,7 +281,9 @@ class Projects {
      *
      */
     public function removeProjectUsers(\Application\Bundle\FrontBundle\Entity\Users $user) {
-        $this->projectUsers->remove($user);
+        $this->projectUsers->removeElement($user);
+        $user->removeUserProjects($this);
+        
     }
 
     /**
@@ -290,7 +292,7 @@ class Projects {
      * @return \Application\Bundle\FrontBundle\Entity\Projects
      */
     public function setProjectUsers(\Application\Bundle\FrontBundle\Entity\Users $u) {
-        $this->projectUsers->add($u);
+        $this->projectUsers = $u;
 
         return $this;
     }

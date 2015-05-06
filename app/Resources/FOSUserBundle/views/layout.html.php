@@ -63,7 +63,9 @@
                                         <li><a href="<?php echo $view['router']->generate('field_settings') ?>">Field Settings</a></li>
                                         <li><a href="<?php echo $view['router']->generate('field_settings_backup') ?>">Enable Backup</a></li>
                                         <li><a class="" href="<?php echo $view['router']->generate('projects') ?>">Projects</a></li>
+                                        <?php if ($view['security']->isGranted('ROLE_SUPER_ADMIN')): ?>
                                         <li><a class="" href="<?php echo $view['router']->generate('help_guide') ?>">Help Guide</a></li>
+                                        <?php endif ?>
                                     </ul>
                                 </li>
                             </ul>
@@ -105,7 +107,7 @@
                         <a class="element1 pull-menu" href="#"></a>
                         <ul class="element-menu place-right" style="">
                             <li>
-                                <a class="" href="<?php echo $view['router']->generate('report') ?>">Reports</a>
+                                <a class="" href="<?php echo $view['router']->generate('help_guide_list') ?>">Reports</a>
 
                             </li>
                         </ul>
@@ -116,6 +118,14 @@
 
                             </li>
                         </ul>
+                        <?php if (!$view['security']->isGranted('ROLE_SUPER_ADMIN')): ?>
+                        <ul class="element-menu place-right" style="">
+                            <li>
+                                <a class="" href="<?php echo $view['router']->generate('record_list') ?>">Help Guide</a>
+
+                            </li>
+                        </ul>
+                        <?php endif ?>
 
                     <?php endif ?>
                 </div>
