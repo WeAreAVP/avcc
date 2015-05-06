@@ -255,6 +255,10 @@ class UsersController extends Controller {
 
         if ($editForm->isValid()) {
             $entity->setUsersUpdated($user);
+            
+//            if (in_array("ROLE_SUPER_ADMIN", $entity->getRoles())) {
+//                    $entity->setOrganizations(NULL);
+//                }
 
             $em->persist($entity);
             $em->flush();
