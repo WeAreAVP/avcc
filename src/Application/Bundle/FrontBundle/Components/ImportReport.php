@@ -30,7 +30,6 @@ class ImportReport extends ContainerAware {
             $fields = new DefaultFields();
             $em = $this->container->get('doctrine')->getEntityManager();
             $vocabularies = $fields->getAllVocabularies($em);
-
             $projects = $em->getRepository('ApplicationFrontBundle:Projects')->getAllAsArray();
             $requiredMissing = false;
             foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {

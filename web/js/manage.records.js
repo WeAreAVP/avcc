@@ -308,6 +308,7 @@ function updateProjects() {
     }
 	proj=$("#project").val();
     var path = window.location.href;
+    console.log(path);
     var split_path = path.split('/');
     if ($.isNumeric(split_path[split_path.length - 1])) {
         selectedProject = split_path[split_path.length - 1];
@@ -323,7 +324,7 @@ function updateProjects() {
         success: function (response) {
             if (response != "") {
                 $("#project").html(response);
-				$("#project").val(proj);
+				//$("#project").val(proj);
             }
         }
     }); // Ajax Call    

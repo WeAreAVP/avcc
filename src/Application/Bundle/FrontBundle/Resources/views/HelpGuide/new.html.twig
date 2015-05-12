@@ -48,10 +48,23 @@
             menubar: false,
             height: 250,
             theme: "modern",
-            skin: 'light',
-            statusbar: false
+{#            skin: 'light',#}
+            statusbar: false,
+            plugins: [
+                "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+                "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                "moxiemanager save table contextmenu directionality emoticons template paste"
+            ],
+            toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | image | preview",
+            image_advtab: true,
+            moxiemanager_image_settings: {
+                /* Scope to different folder, show thumbnails of selected extensions */
+                moxiemanager_title: 'Images',
+                moxiemanager_extensions: 'jpg,png,gif',
+                moxiemanager_rootpath: '../../uploads',
+                moxiemanager_view: 'thumbs'
+            }
         });
-
         $(document).ready(function () {
             $('.formats_dd').chosen();
         });

@@ -54,6 +54,50 @@
     var projectId = <?php echo ($app->getSession()->get('vedioProjectId')) ? $app->getSession()->get('vedioProjectId') : 0 ?>;
     $(document).ready(function () {
         initialize_records_form();
+        $('#mediaType,#project,#format').change(function(){
+        if ($('#mediaType').val() == '' || $('#project').val() == '' || $('#format').val() == '') {
+            $('#collectionName_lbl').hide();
+            $('#description_lbl').hide();
+            $('#commercial_lbl').hide();
+            $('#cassetteSize_lbl').hide();
+            $('#reelDiameters_lbl').hide();
+            $('#formatVersion_lbl').hide();
+            $('#recordingStandard_lbl').hide();
+            $('#contentDuration_lbl').hide();
+            $('#mediaDuration_lbl').hide();
+            $('#creationDate_lbl').hide();
+            $('#contentDate_lbl').hide();
+            $('#isReview_lbl').hide();
+            $('#recordingSpeed_lbl').hide();
+            $('#genreTerms_lbl').hide();
+            $('#contributor_lbl').hide();
+            $('#generation_lbl').hide();
+            $('#part_lbl').hide();
+            $('#copyrightRestrictions_lbl').hide();
+            $('#duplicatesDerivatives_lbl').hide();
+            $('#relatedMaterial_lbl').hide();
+            $('#conditionNote_lbl').hide();
+        }else{
+            showUpdateFields();
+            $('#collectionName_lbl').show();
+            $('#description_lbl').show();
+            $('#commercial_lbl').show();
+            $('#recordingStandard_lbl').show();
+            $('#contentDuration_lbl').show();
+            $('#mediaDuration_lbl').show();
+            $('#creationDate_lbl').show();
+            $('#contentDate_lbl').show();
+            $('#isReview_lbl').show();
+            $('#genreTerms_lbl').show();
+            $('#contributor_lbl').show();
+            $('#generation_lbl').show();
+            $('#part_lbl').show();
+            $('#copyrightRestrictions_lbl').show();
+            $('#duplicatesDerivatives_lbl').show();
+            $('#relatedMaterial_lbl').show();
+            $('#conditionNote_lbl').show();
+        }
+    });
     });
 </script>
 <?php

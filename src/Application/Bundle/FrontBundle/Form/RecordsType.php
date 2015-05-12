@@ -43,7 +43,7 @@ class RecordsType extends AbstractType {
                         'empty_data' => ''
                     ))
                     ->add('title')
-                    ->add('collectionName') 
+                    ->add('collectionName','text', array('required' => false)) 
                     ->add('description')
                     ->add('commercial', 'entity', array(
                         'class' => 'ApplicationFrontBundle:Commercial',

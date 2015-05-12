@@ -126,7 +126,6 @@ class Records {
     /**
      * @ORM\Column(name="collection_name", type="string")
      * @var string
-     * @Assert\NotBlank(message="Title is required")
      */
     private $collectionName;
 
