@@ -1,0 +1,245 @@
+
+/*-------------------------
+        Constrains Element
+--------------------------*/
+
+input#constrains_1{
+    color: #FFF;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    margin-top: 22px;
+    margin-left: 18px;
+    background: url('../img/constrains_1.png') no-repeat center center rgba(255,255,255,0.5);
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+    outline: 0 none;
+}
+
+input#constrains_0{
+    color: #FFF;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    margin-top: 22px;
+    margin-left: 18px;
+    background: url('../img/constrains_0.png') no-repeat center center rgba(255,255,255,0.5);
+    border-color: rgba(82, 168, 236, 0.2);
+    outline: 0 none;
+}
+
+
+/*-------------------------
+        Dropbox Element
+--------------------------*/
+
+
+
+#dropbox{
+    border-radius:3px;
+    position: relative;
+    margin:10px auto 90px;
+    min-height: 90px;
+    overflow: hidden;
+    width: 100%;
+    box-shadow:0 0 4px rgba(0,0,0,0.3) inset,0 -3px 2px rgba(0,0,0,0.1);
+}
+
+
+#dropbox .message{
+    font-size: 11px;
+    text-align: center;
+    padding-top:15px;
+    display: block;
+}
+
+#dropbox .message i{
+    color:#ccc;
+    font-size:10px;
+}
+
+#dropbox:before{
+    border-radius:3px 3px 0 0;
+}
+
+
+
+/*-------------------------
+        Image Previews
+--------------------------*/
+
+
+
+#dropbox .preview{
+    float: left;
+    height: 155px;
+    width: 150px;
+    margin: 10px 0 0 10px;
+    position: relative;
+    text-align: center;
+}
+
+#dropbox .preview img{
+    max-width: 140px;
+    max-height:145px;
+    border:3px solid #fff;
+    display: block;
+    box-shadow:0 0 2px #000;
+}
+
+#dropbox .imageHolder{
+    display: inline-block;
+    position:relative;
+    height: 155px;
+    width: 150px;
+}
+
+#dropbox .uploaded{
+    position: absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    background: url('../img/done.png') no-repeat center center rgba(255,255,255,0.5);
+    display: none;
+}
+
+#dropbox .preview.done .uploaded{
+    display: block;
+}
+
+
+
+/*-------------------------
+        Progress Bars
+--------------------------*/
+
+
+
+#dropbox .progressHolder{
+    position: absolute;
+    background-color:#252f38;
+    height:12px;
+    width:100%;
+    left:0;
+    bottom: 0;
+
+    box-shadow:0 0 2px #000;
+}
+
+#dropbox .progress{
+    background-color:#2586d0;
+    position: absolute;
+    height:100%;
+    left:0;
+    width:0;
+
+    box-shadow: 0 0 1px rgba(255, 255, 255, 0.4) inset;
+
+    -moz-transition:0.25s;
+    -webkit-transition:0.25s;
+    -o-transition:0.25s;
+    transition:0.25s;
+}
+
+#dropbox .preview.done .progress{
+    width:100% !important;
+}
+
+
+/*-------------------------
+        Uploadify
+--------------------------*/
+.uploadifyQueueItem {
+	background-color: #F5F5F5;
+	border: 2px solid #E5E5E5;
+	font: 11px Verdana, Geneva, sans-serif;
+	margin-top: 5px;
+	padding: 10px;
+	width: 350px;
+}
+.uploadifyError {
+	background-color: #FDE5DD !important;
+	border: 2px solid #FBCBBC !important;
+}
+.uploadifyQueueItem .cancel {
+	float: right;
+}
+.uploadifyQueue .completed {
+	background-color: #E5E5E5;
+}
+.uploadifyProgress {
+	background-color: #E5E5E5;
+	margin-top: 10px;
+	width: 100%;
+}
+.uploadifyProgressBar {
+	background-color: #0099FF;
+	height: 3px;
+	width: 1px;
+}
+
+/*-------------------------
+        Jcrop
+--------------------------*/
+#cropImgThubContainer img{
+    height: none;
+    max-height: none;
+    max-width: none;
+}
+
+#cropImgThubContainer .thumbnail > img{
+    max-height: none;
+    max-width: none;
+    margin: none;
+}
+.jcrop-holder { text-align: left; }
+
+.jcrop-vline, .jcrop-hline
+{
+	font-size: 0px;
+	position: absolute;
+	background: white url('../img/Jcrop.gif') top left repeat;
+}
+.jcrop-vline { height: 100%; width: 1px !important; }
+.jcrop-hline { width: 100%; height: 1px !important; }
+.jcrop-vline.right { right: 0px; }
+.jcrop-hline.bottom { bottom: 0px; }
+.jcrop-handle {
+	font-size: 1px;
+	width: 7px !important;
+	height: 7px !important;
+	border: 1px #eee solid;
+	background-color: #333;
+}
+
+.jcrop-tracker { width: 100%; height: 100%; }
+
+.custom .jcrop-vline,
+.custom .jcrop-hline
+{
+	background: yellow;
+}
+.custom .jcrop-handle
+{
+	border-color: black;
+	background-color: #C7BB00;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+.jcropper-holder { border: 1px black solid; }
+
+
+.jcExample
+{
+	text-align: left;
+	background: white;
+	width: 700px;
+	font-size: 80%;
+	margin: 1.5em auto 2em auto;
+	border: 1px #999 solid;
+	padding: 1em 2em 2em;
+}
+
+.jcExample .article { width: 565px; }
+  
