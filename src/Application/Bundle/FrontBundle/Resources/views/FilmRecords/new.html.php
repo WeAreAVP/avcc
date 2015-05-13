@@ -66,7 +66,6 @@
             $('#diskDiameters_lbl').hide();
             $('#colors_lbl').hide();
             $('#sound_lbl').hide();
-            $('#mediaDiameters_lbl').hide();
             $('#frameRate_lbl').hide();
             $('#acidDetectionStrip_lbl').hide();
             $('#shrinkage_lbl').hide();

@@ -51,7 +51,11 @@
                 if ($entityArray[$arrayIndex]) {
                     ?>
                     <tr style="<?php echo ($typeField['hidden']) ? 'display:none;' : ''; ?>">
-                        <th class="text-right" width="20%"><?php echo $typeField['title']; ?></th>
+                        <th class="text-right" width="20%">
+                            <p class="label_class" data-toggle="popover" data-content="<?php echo $tooltip[$arrayIndex]; ?>">
+                            <?php echo $typeField['title']; ?>
+                            </p>
+                        </th>
                         <td width="80%"><?php echo $entityArray[$arrayIndex] ?></td>
                     </tr> 
                 <?php } ?>  
@@ -59,6 +63,15 @@
         </tbody>
     </table>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+            $('[data-toggle="popover"]').popover({
+                placement:'bottom',
+            });
+        });
+    });
 
+</script>
 <?php
 $view['slots']->stop();

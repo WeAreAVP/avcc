@@ -486,6 +486,7 @@ class RecordsController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Records entity.');
         }
+        $fieldsObj = new DefaultFields();
         $entityArray = array();
         $entityArray["mediaType"] = $entity->getMediaType()->getName();
         $entityArray["uniqueId"] = $entity->getUniqueId();
@@ -510,6 +511,7 @@ class RecordsController extends Controller {
         $entityArray["commercial"] = $entity->getCommercial() ? $entity->getCommercial()->getName() : '';
         $entityArray["reelDiameters"] = $entity->getReelDiameters() ? $entity->getReelDiameters()->getName() : '';
         if ($entity->getMediaType()->getId() == 1) {
+            $tooltip = $fieldsObj->getToolTip(1);
             $entityArray['diskDiameters'] = ($entity->getAudioRecord()->getDiskDiameters()) ? $entity->getAudioRecord()->getDiskDiameters()->getName() : "";
             $entityArray['bases'] = ($entity->getAudioRecord()->getBases()) ? $entity->getAudioRecord()->getBases()->getName() : "";
             $entityArray['mediaDiameters'] = ($entity->getAudioRecord()->getMediaDiameters()) ? $entity->getAudioRecord()->getMediaDiameters()->getName() : "";
@@ -521,6 +523,7 @@ class RecordsController extends Controller {
             $entityArray['monoStereo'] = ($entity->getAudioRecord()->getMonoStereo()) ? $entity->getAudioRecord()->getMonoStereo()->getName() : "";
             $entityArray['noiceReduction'] = ($entity->getAudioRecord()->getNoiceReduction()) ? $entity->getAudioRecord()->getNoiceReduction()->getName() : "";
         } elseif ($entity->getMediaType()->getId() == 2) {
+            $tooltip = $fieldsObj->getToolTip(2);
             $entityArray['printType'] = ($entity->getFilmRecord()->getPrintType()) ? $entity->getFilmRecord()->getPrintType()->getName() : "";
             $entityArray['reelCore'] = ($entity->getFilmRecord()->getReelCore()) ? $entity->getFilmRecord()->getReelCore()->getName() : "";
             $entityArray['footage'] = ($entity->getFilmRecord()->getFootage()) ? $entity->getFilmRecord()->getFootage() : "";
@@ -532,6 +535,7 @@ class RecordsController extends Controller {
             $entityArray['acidDetectionStrip'] = ($entity->getFilmRecord()->getAcidDetectionStrip()) ? $entity->getFilmRecord()->getAcidDetectionStrip()->getName() : "";
             $entityArray['shrinkage'] = ($entity->getFilmRecord()->getShrinkage()) ? $entity->getFilmRecord()->getShrinkage() : "";
         } else {
+            $tooltip = $fieldsObj->getToolTip(3);
             $entityArray['cassetteSize'] = ($entity->getVideoRecord()->getCassetteSize()) ? $entity->getVideoRecord()->getCassetteSize()->getName() : "";
             $entityArray['mediaDuration'] = ($entity->getVideoRecord()->getMediaDuration()) ? $entity->getVideoRecord()->getMediaDuration() : "";
             $entityArray['formatVersion'] = ($entity->getVideoRecord()->getFormatVersion()) ? $entity->getVideoRecord()->getFormatVersion()->getName() : "";
@@ -539,18 +543,20 @@ class RecordsController extends Controller {
             $entityArray['recordingStandard'] = ($entity->getVideoRecord()->getRecordingStandard()) ? $entity->getVideoRecord()->getRecordingStandard()->getName() : "";
         }
 
-        $fieldsObj = new DefaultFields();
+        
         if ($entity->getProject()->getViewSetting()) {
             $userViewSettings = $entity->getProject()->getViewSetting();
         } else {
             $userViewSettings = $fieldsObj->getDefaultOrder();
         }
 
+        
         $userViewSettings = json_decode($userViewSettings, true);
         return $this->render('ApplicationFrontBundle:Records:show.html.php', array(
                     'entity' => $entity,
                     'entityArray' => $entityArray,
-                    'fieldSettings' => $userViewSettings
+                    'fieldSettings' => $userViewSettings,
+                    'tooltip' => $tooltip
         ));
     }
 
