@@ -10,8 +10,8 @@
 
         <title><?php $view['slots']->output('title', 'AVCC - AVPreserve') ?></title>
         <script src="<?php echo $view['assets']->getUrl('js/jquery.min.js') ?>"></script>
-        <script src="<?php echo $view['assets']->getUrl('js/bootstrap-wysiwyg/bootstrap-wysiwyg.js') ?>"></script>
-        <script src="<?php echo $view['assets']->getUrl('js/bootstrap-wysihtml5.js') ?>"></script>
+        <script src="<?php // echo $view['assets']->getUrl('js/bootstrap-wysiwyg/bootstrap-wysiwyg.js') ?>"></script>
+        <script src="<?php // echo $view['assets']->getUrl('js/bootstrap-wysihtml5.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/tooltip.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/popover.js') ?>"></script>
         <!-- Bootstrap core CSS -->
@@ -22,7 +22,7 @@
         <link href="<?php echo $view['assets']->getUrl('css/iconFont.min.css') ?>" type="text/css" rel="stylesheet" />
         <link href="<?php echo $view['assets']->getUrl('css/chosen.css') ?>" type="text/css" rel="stylesheet" />
         <link href="<?php echo $view['assets']->getUrl('css/modal.css') ?>" type="text/css" rel="stylesheet" />
-        <link href="<?php echo $view['assets']->getUrl('css/bootstrap-wysihtml5.css') ?>" type="text/css" rel="stylesheet" />
+        <link href="<?php // echo $view['assets']->getUrl('css/bootstrap-wysihtml5.css') ?>" type="text/css" rel="stylesheet" />
         <!-- Custom styles for this template -->
         <link href="<?php echo $view['assets']->getUrl('bundles/applicationfront/css/style.css') ?>" rel="stylesheet">
         <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('css/jquery.mCustomScrollbar.css') ?>" />
