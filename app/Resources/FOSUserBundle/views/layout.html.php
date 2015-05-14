@@ -10,7 +10,7 @@
 
         <title><?php $view['slots']->output('title', 'AVCC - AVPreserve') ?></title>
         <script src="<?php echo $view['assets']->getUrl('js/jquery.min.js') ?>"></script>
-        <script src="<?php // echo $view['assets']->getUrl('js/bootstrap-wysiwyg/bootstrap-wysiwyg.js') ?>"></script>
+        <script src="<?php echo $view['assets']->getUrl('js/bootstrap-wysiwyg/bootstrap-wysiwyg.js') ?>"></script>
         <script src="<?php // echo $view['assets']->getUrl('js/bootstrap-wysihtml5.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/tooltip.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/popover.js') ?>"></script>
