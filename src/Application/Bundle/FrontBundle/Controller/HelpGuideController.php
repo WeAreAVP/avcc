@@ -130,6 +130,10 @@ class HelpGuideController extends Controller {
      * @return array
      */
     public function newAction() {
+//        $config['img_path'] = '/tinymceImages'; // Relative to domain name
+//	$config['upload_path'] = $_SERVER['DOCUMENT_ROOT'] . $config['img_path'];
+//        
+//        echo $config['upload_path'];exit;
         if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles())) {
             throw new AccessDeniedException('Access Denied.');
         }
