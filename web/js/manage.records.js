@@ -21,7 +21,9 @@ function initialize_records_form() {
     updateProjects();
     updateFormat();
     onChangeMediaType();
+
     showUpdateFields();
+
     saveBulkEdit();
     closeBtn();
     var check = 0;
@@ -54,7 +56,7 @@ function initialize_records_form() {
         var reel = $('#reelCore').val();
         if (media == 2 && reel == 1) {
             $('#reelDiameters_lbl').show();
-        } else if (media == 2  && reel != 1) {
+        } else if (media == 2 && reel != 1) {
             $('#reelDiameters_lbl').hide();
         }
     });
@@ -66,25 +68,32 @@ function updateFormat() {
     selfObj.ajaxCall = false;
     /// call to get base dropdown options
 //    $('#processing').html('<img src="/images/ajax-loader.gif" /> <span><b>Processing please wait...</b></span>');
-    if (selectedFormat) {
-        url = baseUrl + 'getFormat/' + $("#mediaType").val() + '/' + selectedFormat;
-    } else {
-        url = baseUrl + 'getFormat/' + $("#mediaType").val();
-    }
-    $.ajax({
-        type: "GET",
-        url: url,
-        success: function (response) {
-            if (response != "") {
-                $('#format_lbl').show();
-                $("#format").html(response);
-                $("#format").change();
-                $('#processing').hide();
-                $('#fieldsPanel').show();
-            }
+    if ($("#mediaType").val()) {
+        $("#format_lbl").show();
+        if (selectedFormat) {
+            url = baseUrl + 'getFormat/' + $("#mediaType").val() + '/' + selectedFormat;
+        } else {
+            url = baseUrl + 'getFormat/' + $("#mediaType").val();
         }
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (response) {
+                if (response != "") {
+                    $('#format_lbl').show();
+                    $("#format").html(response);
+                    $("#format").change();
+                    $('#processing').hide();
+                    $('#fieldsPanel').show();
+                }
+            }
 
-    }); // Ajax Call 
+        }); // Ajax Call 
+    } else {
+        $('#processing').hide();
+        $('#fieldsPanel').show();
+        $("#format_lbl").hide();        
+    }
 }
 
 function showUpdateFields() {
@@ -150,9 +159,9 @@ function showUpdateFields() {
                 $("#bases_lbl").hide();
             } else {
                 var _url = baseUrl + 'getBase/' + $(this).val();
-                if(typeof selectedbase != 'undefined'  && selectedbase){ 
-                    _url = baseUrl + 'getBase/'+ selectedbase + '/' + $(this).val();
-                } 
+                if (typeof selectedbase != 'undefined' && selectedbase) {
+                    _url = baseUrl + 'getBase/' + selectedbase + '/' + $(this).val();
+                }
                 /// call to get base dropdown options
                 $.ajax({
                     type: "GET",
@@ -258,6 +267,10 @@ function onChangeMediaType() {
             $('#fieldsPanel').hide();
             $('#processing').show();
             window.location.href = baseUrl + 'audio/new';
+        } else {
+            window.location.href = baseUrl + 'new/';
+//            $('#processing').hide();
+//            $('#fieldsPanel').show();
         }
     });
 }
@@ -306,7 +319,7 @@ function updateProjects() {
             selectedProject = projectId;
         }
     }
-	proj=$("#project").val();
+    proj = $("#project").val();
     var path = window.location.href;
     console.log(path);
     var split_path = path.split('/');
@@ -324,7 +337,7 @@ function updateProjects() {
         success: function (response) {
             if (response != "") {
                 $("#project").html(response);
-				//$("#project").val(proj);
+                //$("#project").val(proj);
             }
         }
     }); // Ajax Call    

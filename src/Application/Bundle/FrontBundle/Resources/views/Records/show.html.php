@@ -52,7 +52,7 @@
                     ?>
                     <tr style="<?php echo ($typeField['hidden']) ? 'display:none;' : ''; ?>">
                         <th class="text-right" width="20%">
-                            <p class="label_class" data-role="popover" data-popover-mode="click" data-popover-position="bottom" data-popover-text="<?php echo $tooltip[$arrayIndex]; ?>" data-popover-background="bg-cyan" data-popover-color="fg-white">
+                            <p class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo $tooltip[$arrayIndex]; ?>">
                             <?php echo $typeField['title']; ?>
                             </p>
                         </th>
@@ -63,11 +63,12 @@
         </tbody>
     </table>
 </div>
+
 <script type="text/javascript">
     $(document).ready(function () {
-//        $(function () {
-//            $('[data-role="popover"]').popover('show');
-//        });
+        $(function () {
+            $('[data-toggle="popover"]').popover();
+        });
     });
 
 </script>

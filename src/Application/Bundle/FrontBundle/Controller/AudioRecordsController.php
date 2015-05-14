@@ -634,5 +634,18 @@ class AudioRecordsController extends Controller {
         }
         return '';
     }
+    
+    /**
+     * new record
+     *
+     * @param Request $request
+     * 
+     * @Route("/new/", name="new_record")
+     * @Template()
+     */
+    public function newRecordAction(Request $request) {
+        // echo 'here';exit;
+        return $this->render('ApplicationFrontBundle:AudioRecords:newRecord.html.php');
+    }
 
 }

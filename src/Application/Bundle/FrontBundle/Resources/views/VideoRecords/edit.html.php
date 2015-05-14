@@ -30,6 +30,7 @@
                     <span class="has-error text-danger"><?php echo $view['form']->errors((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]]) ?></span>
                 </div>
             </div>
+        
         <?php endforeach; ?>
     </fieldset>
     <?php echo $view['form']->widget($edit_form['record']['userId']) ?>

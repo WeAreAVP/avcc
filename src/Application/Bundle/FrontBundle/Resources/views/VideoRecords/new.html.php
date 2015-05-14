@@ -30,6 +30,7 @@
                         <span class="has-error text-danger"><?php echo $view['form']->errors((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]]) ?></span>
                     </div>
                 </div>
+            
             <?php endforeach; ?>
         </fieldset><br />
         <?php echo $view['form']->widget($form['record']['userId']) ?>
@@ -54,8 +55,11 @@
     var projectId = <?php echo ($app->getSession()->get('vedioProjectId')) ? $app->getSession()->get('vedioProjectId') : 0 ?>;
     $(document).ready(function () {
         initialize_records_form();
-        $('#mediaType,#project,#format').change(function(){
+        $('#mediaType,#format').change(function(){
         if ($('#mediaType').val() == '' || $('#project').val() == '' || $('#format').val() == '') {
+            $('#uniqueId_lbl').hide();
+            $('#location_lbl').hide();
+            $('#title_lbl').hide();
             $('#collectionName_lbl').hide();
             $('#description_lbl').hide();
             $('#commercial_lbl').hide();
@@ -79,6 +83,9 @@
             $('#conditionNote_lbl').hide();
         }else{
             showUpdateFields();
+            $('#uniqueId_lbl').show();
+            $('#location_lbl').show();
+            $('#title_lbl').show();
             $('#collectionName_lbl').show();
             $('#description_lbl').show();
             $('#commercial_lbl').show();
