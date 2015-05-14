@@ -99,7 +99,7 @@ class FilmRecordsController extends Controller {
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
-            'fieldSettings' => $user_view_settings,
+            'fieldSettings' => $userViewSettings,
             'type' => $data['mediaType']->getName(),
         );
     }

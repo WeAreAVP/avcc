@@ -92,12 +92,13 @@ class VideoRecordsController extends Controller {
         } else {
             $userViewSettings = $fieldsObj->getDefaultOrder();
         }
+        
         $userViewSettings = json_decode($userViewSettings, true);
 
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
-            'fieldSettings' => $user_view_settings,
+            'fieldSettings' => $userViewSettings,
             'type' => $data['mediaType']->getName(),
         );
     }

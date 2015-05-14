@@ -124,7 +124,7 @@ class Records {
     private $title;
 
     /**
-     * @ORM\Column(name="collection_name", type="string")
+     * @ORM\Column(name="collection_name", type="string", nullable=true)
      * @var string
      */
     private $collectionName;
