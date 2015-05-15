@@ -1,10 +1,59 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
-    "hash": "18104f9a30e96988a2689c49022f88c2",
+    "hash": "41376312e9f16299eae53c56540a2a92",
     "packages": [
+        {
+            "name": "bugsnag/bugsnag",
+            "version": "v2.5.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bugsnag/bugsnag-php.git",
+                "reference": "f013ca96b359a9675358710a52ba1aee6c508925"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bugsnag/bugsnag-php/zipball/f013ca96b359a9675358710a52ba1aee6c508925",
+                "reference": "f013ca96b359a9675358710a52ba1aee6c508925",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Bugsnag_": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "James Smith",
+                    "email": "notifiers@bugsnag.com",
+                    "homepage": "https://bugsnag.com"
+                }
+            ],
+            "description": "Official Bugsnag notifier for PHP applications.",
+            "homepage": "https://github.com/bugsnag/bugsnag-php",
+            "keywords": [
+                "bugsnag",
+                "errors",
+                "exceptions",
+                "logging",
+                "tracking"
+            ],
+            "time": "2015-04-13 19:09:41"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.2.1",
@@ -550,7 +599,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineMigrationsBundle/zipball/81575a4316951125ce408c70f30547c77d98f78a",
+                "url": "https://api.github.com/repos/doctrine/DoctrineMigrationsBundle/zipball/6a1bd731dbdd4ad952a3b246a8f38c9c12f52e62",
                 "reference": "81575a4316951125ce408c70f30547c77d98f78a",
                 "shasum": ""
             },
@@ -724,7 +773,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/f4fe9d9cc21a711d89d91d29c4a4e7945289cdd0",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/a4f14d3a3d397104e557ec65d1a4e43bb86e4ddf",
                 "reference": "f4fe9d9cc21a711d89d91d29c4a4e7945289cdd0",
                 "shasum": ""
             },
@@ -855,7 +904,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FoolCode/SphinxQL-Query-Builder/zipball/b5c1c60f5101fd2278099e639bcdffbdbc388680",
+                "url": "https://api.github.com/repos/FoolCode/SphinxQL-Query-Builder/zipball/e09569519eee0e9d1aeb7bcdcd9e24ad6f9f41be",
                 "reference": "b5c1c60f5101fd2278099e639bcdffbdbc388680",
                 "shasum": ""
             },
@@ -903,7 +952,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/3565dfb22df2b0791137d5244d34d528d887f73e",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/92d5624f2a29e74d8fd9d2a94d7ed7998a8c2809",
                 "reference": "3565dfb22df2b0791137d5244d34d528d887f73e",
                 "shasum": ""
             },
@@ -1228,7 +1277,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSJobQueueBundle/zipball/f82b90c32c474bb8ce827ccbeaf5297b40469abe",
+                "url": "https://api.github.com/repos/schmittjoh/JMSJobQueueBundle/zipball/41fd2c839c004ca3e58a615f19181ccac2eafc7a",
                 "reference": "f82b90c32c474bb8ce827ccbeaf5297b40469abe",
                 "shasum": ""
             },
@@ -2295,6 +2344,55 @@
                 "templating"
             ],
             "time": "2014-10-17 12:53:44"
+        },
+        {
+            "name": "wrep/bugsnag-php-symfony",
+            "version": "1.0.1",
+            "target-dir": "Wrep/Bundle/BugsnagBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wrep/bugsnag-php-symfony.git",
+                "reference": "799d3d34d7b06614bd4a30a4766c77e48d63ba7d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wrep/bugsnag-php-symfony/zipball/799d3d34d7b06614bd4a30a4766c77e48d63ba7d",
+                "reference": "799d3d34d7b06614bd4a30a4766c77e48d63ba7d",
+                "shasum": ""
+            },
+            "require": {
+                "bugsnag/bugsnag": "2.*",
+                "php": ">=5.3.1"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Wrep\\Bundle\\BugsnagBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rick Pastoor",
+                    "email": "rick@wrep.nl",
+                    "homepage": "http://wrep.nl/"
+                },
+                {
+                    "name": "Mathijs Kadijk",
+                    "email": "mathijs@wrep.nl"
+                }
+            ],
+            "description": "An integration bundle for the bugsnag-php module into the Symfony2 framework.",
+            "homepage": "https://github.com/wrep/bugsnag-php-symfony",
+            "keywords": [
+                "bugsnag",
+                "exceptions",
+                "logging"
+            ],
+            "time": "2013-10-21 12:32:32"
         }
     ],
     "packages-dev": [],
@@ -2308,6 +2406,8 @@
         "jms/job-queue-bundle": 20,
         "pagerfanta/pagerfanta": 20
     },
+    "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": {
         "php": ">=5.3.3"
     },

@@ -19,15 +19,21 @@
             <?php foreach ($fieldSettings[strtolower($type)] as $audioField): ?>
                 <?php
                 $field = explode('.', $audioField['field']);
+                if (count($field) == 2) {
+                    $index = $field[1];
+                } else {
+                    $index = $field[0];
+                }
                 ?>
-                <div style="<?php echo ($audioField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>">
-
-                    <?php
-                    $attr = ($audioField['is_required']) ? array('class' => 'size4') : array('class' => 'size4');
-                    echo $view['form']->label((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], ' ');
-                    echo $audioField['title'];
-                    echo ($audioField['is_required']) ? "&nbsp;<span>*</span>" : "";
-                    ?>
+                <div style="<?php echo ($audioField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6 " id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>">
+                    <div class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo $tooltip[$index]; ?>" style="width: 200px">
+                        <?php
+                        $attr = ($audioField['is_required']) ? array('class' => 'size4') : array('class' => 'size4');
+                        echo $view['form']->label((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], ' ');
+                        echo $audioField['title'];
+                        echo ($audioField['is_required']) ? "&nbsp;<span>*</span>" : "";
+                        ?>
+                    </div>
                     <div class="input-control new" data-role="input-control">
                         <?php echo $view['form']->widget((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => $attr)) ?>
                         <span class="has-error text-danger"><?php echo $view['form']->errors((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]]) ?></span>
@@ -58,20 +64,19 @@
 
     $(document).ready(function () {
         initialize_records_form();
+        $(function () {
+            $('[data-toggle="popover"]').popover();
+        });
         hideFields();
         $('#mediaType, #format').change(function () {
-            console.log('hguyrgrier');
             hideFields();
         });
-        
-        function hideFields(){
-           if ($('#mediaType').val() == '' || $('#project').val() == '' || $('#format').val() == '') {
-                console.log('hguyrgrier1212');
+
+        function hideFields() {
+            if ($('#mediaType').val() == '' || $('#project').val() == '' || $('#format').val() == '') {
                 $('#uniqueId_lbl').hide();
                 $('#location_lbl').hide();
                 $('#title_lbl').hide();
-
-
                 $('#collectionName_lbl').hide();
                 $('#description_lbl').hide();
                 $('#commercial_lbl').hide();
@@ -99,7 +104,6 @@
                 $('#relatedMaterial_lbl').hide();
                 $('#conditionNote_lbl').hide();
             } else {
-                console.log('hguyrgrier978978');
                 if ($('#format').val()) {
                     showUpdateFields();
                     $('#uniqueId_lbl').show();
@@ -124,7 +128,7 @@
                 }
             }
         }
-        
+
     });
 </script>
 <?php

@@ -92,14 +92,15 @@ class VideoRecordsController extends Controller {
         } else {
             $userViewSettings = $fieldsObj->getDefaultOrder();
         }
-        
-        $userViewSettings = json_decode($userViewSettings, true);
 
+        $userViewSettings = json_decode($userViewSettings, true);
+        $tooltip = $fieldsObj->getToolTip(3);
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
             'fieldSettings' => $userViewSettings,
             'type' => $data['mediaType']->getName(),
+            'tooltip' => $tooltip
         );
     }
 
@@ -183,12 +184,16 @@ class VideoRecordsController extends Controller {
             $userViewSettings = $fieldsObj->getDefaultOrder();
         }
         $userViewSettings = json_decode($userViewSettings, true);
-
+//        echo '<pre>';
+//        print_r($userViewSettings);
+//        exit;
+        $tooltip = $fieldsObj->getToolTip(3);
         return $this->render('ApplicationFrontBundle:VideoRecords:new.html.php', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
                     'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
+                    'tooltip' => $tooltip
         ));
     }
 
@@ -230,13 +235,14 @@ class VideoRecordsController extends Controller {
         }
 
         $userViewSettings = json_decode($userViewSettings, true);
-
+        $tooltip = $fieldsObj->getToolTip(3);
         return $this->render('ApplicationFrontBundle:VideoRecords:edit.html.php', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     //        'delete_form' => $deleteForm->createView(),
                     'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
+                    'tooltip' => $tooltip
         ));
     }
 
@@ -324,13 +330,14 @@ class VideoRecordsController extends Controller {
             $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
         }
         $userViewSettings = json_decode($userViewSettings, true);
-
+        $tooltip = $fieldsObj->getToolTip(3);
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             //     'delete_form' => $deleteForm->createView(),
             'fieldSettings' => $userViewSettings,
             'type' => $data['mediaType']->getName(),
+            'tooltip' => $tooltip
         );
     }
 

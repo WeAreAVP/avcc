@@ -10,8 +10,8 @@
 
         <title><?php $view['slots']->output('title', 'AVCC - AVPreserve') ?></title>
         <script src="<?php echo $view['assets']->getUrl('js/jquery.min.js') ?>"></script>
-        
-        <script src="<?php  echo $view['assets']->getUrl('js/tinymce/tinymce.min.js') ?>"></script>
+
+        <script src="<?php echo $view['assets']->getUrl('js/tinymce/tinymce.min.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/tooltip.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/popover.js') ?>"></script>
         <!-- Bootstrap core CSS -->
@@ -21,7 +21,7 @@
         <link href="<?php echo $view['assets']->getUrl('css/metro-bootstrap-responsive.min.css') ?>" type="text/css" rel="stylesheet" />
         <link href="<?php echo $view['assets']->getUrl('css/iconFont.min.css') ?>" type="text/css" rel="stylesheet" />
         <link href="<?php echo $view['assets']->getUrl('css/chosen.css') ?>" type="text/css" rel="stylesheet" />
-        <!--<link href="<?php // echo $view['assets']->getUrl('css/bootstrap.css') ?>" type="text/css" rel="stylesheet" />-->
+        <!--<link href="<?php // echo $view['assets']->getUrl('css/bootstrap.css')  ?>" type="text/css" rel="stylesheet" />-->
         <link href="<?php echo $view['assets']->getUrl('css/modal.css') ?>" type="text/css" rel="stylesheet" />
         <!-- Custom styles for this template -->
         <link href="<?php echo $view['assets']->getUrl('bundles/applicationfront/css/style.css') ?>" rel="stylesheet">
@@ -34,6 +34,10 @@
 
         <script src="<?php echo $view['assets']->getUrl('js/jquery.maskedinput.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/modal.js') ?>"></script>
+        <script
+            src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-2.min.js"
+            data-apikey="278dc8db47730e343f681cc0df041c33">
+        </script>
     </head>
 
     <body class="metro">
@@ -141,7 +145,7 @@
         <div class="container" id="container" style="margin-top:20px;margin-bottom:20px;">
             <?php if ($app->getUser() && $app->getUser()->getOrganizations()): ?>
                 <?php if ($app->getUser()->getOrganizations()->getIsPaid() == 0): ?>
-                    <!--<p>Want more than 2500 records? Upgrade now by contacting avcc@avpreserve.com</p>-->
+                            <!--<p>Want more than 2500 records? Upgrade now by contacting avcc@avpreserve.com</p>-->
                 <?php endif ?>
             <?php endif ?>
             <?php foreach ($app->getSession()->getFlashBag()->all() as $type => $messages): ?>
@@ -189,6 +193,7 @@
             });
 
         </script>
+        
         <?php $view['slots']->stop() ?>
         <?php $view['slots']->output('javascripts') ?>
         <?php $view['slots']->output('view_javascripts') ?>

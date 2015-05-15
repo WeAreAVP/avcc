@@ -100,11 +100,13 @@ class AudioRecordsController extends Controller {
             $userViewSettings = $fieldsObj->getDefaultOrder();
         }
         $userViewSettings = json_decode($userViewSettings, true);
+        $tooltip = $fieldsObj->getToolTip(1);
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
             'type' => $data['mediaType']->getName(),
-            'fieldSettings' => $userViewSettings
+            'fieldSettings' => $userViewSettings,
+            'tooltip' => $tooltip
         );
     }
 
@@ -208,11 +210,16 @@ class AudioRecordsController extends Controller {
             }
         }
         $userViewSettings = json_decode($userViewSettings, true);
+        $tooltip = $fieldsObj->getToolTip(1);
+//        echo '<pre>';
+//        print_r($userViewSettings);
+//        exit;
         return $this->render('ApplicationFrontBundle:AudioRecords:new.html.php', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
                     'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
+                    'tooltip' => $tooltip
         ));
     }
 
@@ -634,7 +641,7 @@ class AudioRecordsController extends Controller {
         }
         return '';
     }
-    
+
     /**
      * new record
      *

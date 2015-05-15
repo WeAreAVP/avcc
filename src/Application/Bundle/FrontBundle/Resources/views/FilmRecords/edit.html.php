@@ -4,7 +4,7 @@
 <div class="grid fluid">
     <h1>
         <a href="<?php echo $view['router']->generate('record_list') ?>"><i class="icon-arrow-left-3 smaller"></i> </a>
-        Edit Record<?php // echo ucwords($type)   ?>
+        Edit Record<?php // echo ucwords($type)    ?>
     </h1>
     <?php echo $view['form']->start($edit_form) ?>
     <?php echo $view['form']->errors($edit_form) ?>
@@ -13,14 +13,21 @@
         <?php foreach ($fieldSettings['film'] as $filmField): ?>
             <?php
             $field = explode('.', $filmField['field']);
+            if (count($field) == 2) {
+                $index = $field[1];
+            } else {
+                $index = $field[0];
+            }
             ?>
             <div style="<?php echo ($filmField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>">
-                <?php
-                $attr = ($filmField['is_required']) ? array('class' => 'size4') : array('class' => 'size4');
-                echo $view['form']->label((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]], ' ');
-                echo $filmField['title'];
-                echo ($filmField['is_required']) ? "&nbsp;<span>*</span>" : "";
-                ?>
+                <div class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo $tooltip[$index]; ?>">
+                    <?php
+                    $attr = ($filmField['is_required']) ? array('class' => 'size4') : array('class' => 'size4');
+                    echo $view['form']->label((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]], ' ');
+                    echo $filmField['title'];
+                    echo ($filmField['is_required']) ? "&nbsp;<span>*</span>" : "";
+                    ?>
+                </div>
                 <div class="input-control <?php echo (count($field) == 2 && $field[1] == 'isReview') ? '' : 'text'; ?> edit" data-role="input-control">
                     <?php echo $view['form']->widget((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => $attr)) ?>
                     <span class="has-error text-danger"><?php echo $view['form']->errors((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]]) ?></span>
@@ -54,7 +61,7 @@
         echo $entity->getBases()->getId();
     else
         echo '';
-        ?>;
+    ?>;
     $(document).ready(function () {
         initialize_records_form();
     });

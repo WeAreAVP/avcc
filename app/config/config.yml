@@ -94,3 +94,7 @@ doctrine_migrations:
 parameters:
     from_email: "%mail_from_email%"
     sphinx_param: "%sphinx%"
+    
+bugsnag:
+    api_key: 0cbb25f7dc748ed279d3dbeafbace9ab
+    notify_stages: [ production ]

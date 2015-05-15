@@ -95,12 +95,13 @@ class FilmRecordsController extends Controller {
             $userViewSettings = $fieldsObj->getDefaultOrder();
         }
         $userViewSettings = json_decode($userViewSettings, true);
-
+        $tooltip = $fieldsObj->getToolTip(2);
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
             'fieldSettings' => $userViewSettings,
             'type' => $data['mediaType']->getName(),
+            'tooltip' => $tooltip
         );
     }
 
@@ -191,12 +192,13 @@ class FilmRecordsController extends Controller {
             $userViewSettings = $fieldsObj->getDefaultOrder();
         }
         $userViewSettings = json_decode($userViewSettings, true);
-
+        $tooltip = $fieldsObj->getToolTip(2);
         return $this->render('ApplicationFrontBundle:FilmRecords:new.html.php', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
                     'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
+                    'tooltip' => $tooltip
         ));
     }
 
@@ -241,13 +243,14 @@ class FilmRecordsController extends Controller {
         }
 
         $userViewSettings = json_decode($userViewSettings, true);
-
+        $tooltip = $fieldsObj->getToolTip(2);
         return $this->render('ApplicationFrontBundle:FilmRecords:edit.html.php', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     //      'delete_form' => $deleteForm->createView(),
                     'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
+                    'tooltip' => $tooltip
         ));
     }
 
@@ -336,12 +339,14 @@ class FilmRecordsController extends Controller {
             $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
         }
         $userViewSettings = json_decode($userViewSettings, true);
+        $tooltip = $fieldsObj->getToolTip(2);
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             //     'delete_form' => $deleteForm->createView(),
             'fieldSettings' => $userViewSettings,
             'type' => $data['mediaType']->getName(),
+            'tooltip' => $tooltip
         );
     }
 
