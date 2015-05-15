@@ -9,7 +9,7 @@
 
     <div>
         <div style="" class="col-lg-6" id="mediaType_lbl">
-            <label>Media Type&nbsp;<span>*</span></label>
+            <label  class="label_class" data-toggle="popover" data-placement="bottom" data-content="Automatically entered based on template selection. Used for reporting purposes and to help differentiate formats like VHS and A-DAT that can use the same physical media but be totally different recording types. This field is required." style="width: 200px">Media Type&nbsp;<span>*</span></label>
             <div class="input-control new" data-role="input-control">
                 <select id="mediaType" class="size4">
                     <option value=""></option>        
@@ -39,6 +39,9 @@
     var projectId = 0;
     $(document).ready(function () {
         initialize_records_form();
+        $(function () {
+            $('[data-toggle="popover"]').popover();
+        });
     });
 </script>
 <?php

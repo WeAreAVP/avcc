@@ -277,6 +277,7 @@ class DefaultFields {
             $tooltip['acidDetectionStrip'] = 'A drop-down field that indicates the acid detection rating for acetate film if any has been taken. High A/D ratings should be prioritized for cold storage and/or reformatting.';
             $tooltip['shrinkage'] = 'A free text field to note the shrinkage percentage of the film if measurements have been taken. At certain shrinkage level films cannot be projected and may or may not be able to be reformatted.';
         } else {
+            $tooltip['reelDiameters'] = '';
             $tooltip['cassetteSize'] = 'A drop-down field to note if a cassette format that comes in two sizes (ex., U-matic, DigiBeta, Betacam, etc.) is large or small.';
             $tooltip['formatVersion'] = 'A drop-down field providing further information about the format version on a given format. Only applicable to certain formats. This may impact the type of deck required to reformat a video or the ability of a vendor to do that work. Values include: High Band, Low Band, Type A, Type B, Type C.';
             $tooltip['recordingSpeed'] = 'A drop-down field specifying at what speed the object was recorded. Only applies to specific formats that have variable recording speeds, such as VHS. Values include SP, LP, EP, SLP.';

@@ -22,10 +22,9 @@
                 } else {
                     $index = $field[0];
                 }
-                echo $index;
                 ?>
                 <div style="<?php echo ($viedoField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>">
-                    <div class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo $tooltip[$index]; ?>">                   
+                    <div class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo isset($tooltip[$index]) ? $tooltip[$index] : ''; ?>" style="width: 200px">                   
                         <?php
                         $attr = ($viedoField['is_required']) ? array('class' => 'size4') : array('class' => 'size4');
                         echo $view['form']->label((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], ' ');
@@ -33,7 +32,7 @@
                         echo ($viedoField['is_required']) ? "&nbsp;<span>*</span>" : "";
                         ?>
                     </div>
-                    <div class="input-control new" data-role="input-control">
+                    <div class="input-control text new" data-role="input-control">
                         <?php echo $view['form']->widget((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => $attr)) ?>
                         <span class="has-error text-danger"><?php echo $view['form']->errors((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]]) ?></span>
                     </div>
@@ -63,6 +62,9 @@
     var projectId = <?php echo ($app->getSession()->get('vedioProjectId')) ? $app->getSession()->get('vedioProjectId') : 0 ?>;
     $(document).ready(function () {
         initialize_records_form();
+        $(function () {
+            $('[data-toggle="popover"]').popover();
+        });
         $('#mediaType,#format').change(function () {
             if ($('#mediaType').val() == '' || $('#project').val() == '' || $('#format').val() == '') {
                 $('#uniqueId_lbl').hide();

@@ -20,7 +20,7 @@
             }
             ?>
             <div style="<?php echo ($filmField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>">
-                <div class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo $tooltip[$index]; ?>">
+                <div class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo isset($tooltip[$index]) ? $tooltip[$index] : ''; ?>" style="width: 200px">
                     <?php
                     $attr = ($filmField['is_required']) ? array('class' => 'size4') : array('class' => 'size4');
                     echo $view['form']->label((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]], ' ');
@@ -64,6 +64,9 @@
     ?>;
     $(document).ready(function () {
         initialize_records_form();
+        $(function () {
+            $('[data-toggle="popover"]').popover();
+        });
     });
 </script>
 <?php

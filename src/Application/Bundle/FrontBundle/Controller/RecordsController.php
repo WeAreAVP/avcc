@@ -88,15 +88,15 @@ class RecordsController extends Controller {
 
         $isAjax = FALSE;
         $searchOn = $this->criteria();
-        $parentFacet = isset($searchOn['parent_facet']) ? $searchOn['parent_facet'] : null;
+        
         $criteria = $searchOn['criteriaArr'];
         if ($request->isXmlHttpRequest()) {
             $isAjax = TRUE;
             $this->getFacetRequest($request);
             $searchOn = $this->criteria();
             $criteria = $searchOn['criteriaArr'];
-            $parentFacet = isset($searchOn['parent_facet']) ? $searchOn['parent_facet'] : null;
         }
+        $parentFacet = isset($searchOn['parent_facet']) ? $searchOn['parent_facet'] : null;
         $facet['mediaType'] = $this->removeEmpty($sphinxSearch->facetSelect('media_type', $this->getUser(), $criteria, $parentFacet), 'media_type');
         $facet['formats'] = $this->removeEmpty($sphinxSearch->facetSelect('format', $this->getUser(), $criteria, $parentFacet), 'format');
         $facet['commercialUnique'] = $this->removeEmpty($sphinxSearch->facetSelect('commercial', $this->getUser(), $criteria, $parentFacet), 'commercial');
@@ -262,7 +262,6 @@ class RecordsController extends Controller {
     protected function getFacetFromSession() {
         $session = $this->getRequest()->getSession();
         $facetData = $session->get('facetData');
-
         return $facetData;
     }
 

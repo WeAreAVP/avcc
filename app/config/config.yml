@@ -97,4 +97,3 @@ parameters:
     
 bugsnag:
     api_key: 0cbb25f7dc748ed279d3dbeafbace9ab
-    notify_stages: [ production ]

@@ -52,7 +52,7 @@
                     ?>
                     <tr style="<?php echo ($typeField['hidden']) ? 'display:none;' : ''; ?>">
                         <th class="text-right" width="20%">
-                            <p class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo $tooltip[$arrayIndex]; ?>">
+                            <p class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo isset($tooltip[$arrayIndex]) ? $tooltip[$arrayIndex] : ''; ?>">
                             <?php echo $typeField['title']; ?>
                             </p>
                         </th>

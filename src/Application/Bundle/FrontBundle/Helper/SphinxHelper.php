@@ -2,21 +2,18 @@
 
 namespace Application\Bundle\FrontBundle\Helper;
 
-class SphinxHelper
-{
+class SphinxHelper {
 
     private $keywords;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->keywords = array('title',
             'description', 'collection_name',
             'creation_date', 'content_date', 'genre_terms', 'contributor',
         );
     }
 
-    public function makeSphinxCriteria($facetData)
-    {
+    public function makeSphinxCriteria($facetData) {
         $criteria = null;
         $criteriaArr = null;
 
@@ -46,13 +43,15 @@ class SphinxHelper
 
         if (isset($facetData['facet_keyword_search'])) {
             $keywords = json_decode($facetData['facet_keyword_search'], true);
-            foreach ($keywords as $keyword) {
-                if ($keyword['type'] == 'all') {
-                    foreach ($this->keywords as $key) {
-                        $criteriaArr['*'] = $keyword['value'];
+            if (count($keywords) > 0) {
+                foreach ($keywords as $keyword) {
+                    if ($keyword['type'] == 'all') {
+                        foreach ($this->keywords as $key) {
+                            $criteriaArr['*'] = $keyword['value'];
+                        }
+                    } else {
+                        $criteriaArr['s_' . $keyword['type']] = $keyword['value'];
                     }
-                } else {
-                    $criteriaArr['s_' . $keyword['type']] = $keyword['value'];
                 }
             }
         }
