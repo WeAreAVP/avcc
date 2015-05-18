@@ -32,6 +32,7 @@ function initialize_records_form() {
             check = 1;
         }
     });
+    var changes = false;
     $("select").click(function () {
         if (check == 1 && $(this).attr('id') == 'mediaType') {
             changes = true;
@@ -300,7 +301,6 @@ function saveBulkEdit() {
 
 function closeBtn() {
     $(".bulkEditCloseBtn").on('click', function () {
-        $.modal.close();
         $('#selectAll').prop("checked", false);
         $('input[name=record_checkbox]').each(function () {
             $(this).prop("checked", false);
