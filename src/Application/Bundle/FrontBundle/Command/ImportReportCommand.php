@@ -35,8 +35,6 @@ class ImportReportCommand extends ContainerAwareCommand
             $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id, 'type' => 'import', 'status' => 0));
             if ($entity) {
                 $user = $entity->getUser();
-//                 echo $entity->getUser()->getName();
-//        exit;
                 $fileName = $entity->getFileName();
                 $import = new ImportReport($this->getContainer());
                 $validateFields = $import->validateVocabulary($fileName, $entity->getOrganizationId());

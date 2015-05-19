@@ -38,7 +38,10 @@ class ExportReportCommand extends ContainerAwareCommand
         if ($id) {
             $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id,'type'=>'export', 'status' => 0));
             if ($entity) {
+                
+                $completePath = '';
                 $user = $entity->getUser();
+                
                 if ($entity->getQueryOrId() != 'all') {
                     $criteria = json_decode($entity->getQueryOrId(), true);
                 } else {
