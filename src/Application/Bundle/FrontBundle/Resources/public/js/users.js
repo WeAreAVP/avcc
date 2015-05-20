@@ -52,13 +52,11 @@ function Users() {
             }
             if (selectedRole == 'ROLE_CATALOGER' || selectedRole == 'ROLE_USER') {
                 $('.projectsDiv').show();
-                $('#userProjects').attr('required', 'required');
                 $("#userProjects").chosen({
                     placeholder_text_multiple: "Select Projects"
                 });
                 $('#orgDiv').show();
             } else {
-                $('#userProjects').removeAttr('required');
                 $('.projectsDiv').hide();
             }
         }).change();
@@ -69,35 +67,49 @@ function Users() {
      */
     this.applyChosen = function () {
         $("#userProjects").chosen({
-                    placeholder_text_multiple: "Select Projects"
-                });
+            placeholder_text_multiple: "Select Projects"
+        });
     }
 
     this.getOrganizationProjects = function () {
-        var orgId;
+        var orgId = 0;
         if (organizationId) {
             orgId = organizationId;
         } else {
             $('#userOrganization').change(function () {
                 orgId = $(this).val();
+                if (orgId) {
+                    selfObj.getProjects(orgId);
+                } else {
+                    $("#userProjects").html("");
+                    $("#userProjects").trigger("chosen:updated");
+                }
             });
         }
-        if (orgId) {
-            url = baseUrl + 'getOrganizationProjects/' + orgId;
-            $.ajax({
-                type: "GET",
-                url: url,
-                success: function (response) {
-                    if (response != "") {
-                        $("#userProjects").html(response);
-                        $("#userProjects").trigger("chosen:updated");
-                    } else {
-                        $("#userProjects").html("");
-                        $("#userProjects").trigger("chosen:updated");
-                    }
-                }
 
-            }); // Ajax Call 
+        if (orgId) {
+            selfObj.getProjects(orgId);
+        } else {
+            $("#userProjects").html("");
+            $("#userProjects").trigger("chosen:updated");
         }
+    }
+
+    this.getProjects = function (id) {
+        url = baseUrl + 'getOrganizationProjects/' + id;
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (response) {
+                if (response != "") {
+                    $("#userProjects").html(response);
+                    $("#userProjects").trigger("chosen:updated");
+                } else {
+                    $("#userProjects").html("");
+                    $("#userProjects").trigger("chosen:updated");
+                }
+            }
+
+        }); // Ajax Call 
     }
 }

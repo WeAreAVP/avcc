@@ -7,7 +7,7 @@
             New User
         </h1>
 
-        {{ form_start(form, {attr: {class:'form-horizontal'} }) }}
+        {{ form_start(form, {attr: {class:'form-horizontal', id:'new_form'} }) }}
         <fieldset>
             {{ form_errors(form) }}
             <br />
@@ -71,7 +71,9 @@
                     {% for errorItem in form.userProjects.vars.errors %}
                         <span class="has-error text-danger" for="{{ form.userProjects.vars.id }}">{{ errorItem.message }}</span>
                     {% endfor %}
+                    <span id="proj_error" class="has-error text-danger">please fill this field</span>
                 </div>
+
             </div>
             {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
             or
@@ -85,14 +87,41 @@
 {% endblock body %}
 {% block view_javascripts %}
     <script src="{{ asset('bundles/applicationfront/js/users.js') }}"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.js"></script>
     <script type="text/javascript">
+        $('#proj_error').hide();
+        $("form").submit(function (event) {
+            var role = $('#roles').val();
+            if (role == 'ROLE_CATALOGER' || role == 'ROLE_USER') {
+                if ($("#userProjects").val()) {
+                    $('#proj_error').hide();
+                    return true;
+                } else {
+                    $('#proj_error').show();
+                    return false;
+                }
+            } else {
+                $('#proj_error').hide();
+                return true;
+            }
+        });
         $(document).ready(function () {
             var baseUrl = '{{ path('users') }}';
             var organizationId = '{{ organizationId }}';
             var obj = new Users();
             obj.setBaseUrl(baseUrl);
+            //if (organizationId) {
+            //   console.log('here');
             obj.setOrganizationId(organizationId);
+            // }
             obj.bindAll();
-        });
+        {# if (organizationId == null || organizationId == '') {
+             $('#userOrganization').change(function () {
+                 organizationId = $('#userOrganization').val();
+                 obj.setOrganizationId(organizationId);
+                 obj.bindAll();
+             });
+         }#}
+                });
     </script>
 {% endblock view_javascripts %}

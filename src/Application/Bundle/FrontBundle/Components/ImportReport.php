@@ -267,7 +267,7 @@ class ImportReport extends ContainerAware {
             $record->setUniqueId($row['uniqueId']);
             $record->setLocation($row['location']);
 
-            $format = $em->getRepository('ApplicationFrontBundle:Formats')->findOneBy(array('name' => $row['format']));
+            $format = $em->getRepository('ApplicationFrontBundle:Formats')->findOneBy(array('name' => $row['format'], 'mediaType'=> $mediaType->getId()));
             $record->setFormat($format);
 
             $record->setTitle($row['title']);
