@@ -89,7 +89,7 @@ class UsersController extends Controller {
             $this->get('session')->getFlashBag()->add('success', 'User added succesfully.');
            // $rendered = 'username: ' . $entity->getUsername(); 
             
-            $parameters = array('user' => $entity, 'url'=> $this->container->getParameter('baseUrl'));
+            $parameters = array('user' => $entity, 'url'=> $this->container->getParameter('baseUrl'), 'admin' => $this->getUser()->getName(), 'admin_email' => $this->getUser()->getEmail());
             $rendered = $this->container->get('templating')->render('ApplicationFrontBundle:Users:email.html.php', $parameters);
             $email = new EmailHelper($this->container);
             $subject = 'Confirmation Email';

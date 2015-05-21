@@ -1,7 +1,7 @@
 <div>Hi <b><?php echo $user->getName(); ?></b>,</div>
 <br/>
 
-Your account has been created by admin. <br />
+Your AVCC account has been created by <?php echo $admin; ?> (<?php echo $admin_email; ?>). <br />
 
 Your Account Info:
 <br />
