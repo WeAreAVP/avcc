@@ -6,7 +6,7 @@ Your AVCC account has been created by <?php echo $admin; ?> (<?php echo $admin_e
 Your Account Info:
 <br />
 <b>Username: </b><?php echo $user->getUsername(); ?><br />
-<b>Password: </b>contact admin for password<br />
+<b>Password: </b><?php echo $password; ?><br />
 
 Login now <a href="<?php echo $url; ?>" target="_blank"><?php echo $url; ?></a>
 <br/><br/>

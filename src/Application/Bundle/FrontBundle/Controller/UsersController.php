@@ -75,6 +75,8 @@ class UsersController extends Controller {
         $user = $this->container->get('security.context')->getToken()->getUser();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
+        $record = $request->request->get('application_bundle_frontbundle_users');
+        $password = $record['plainPassword']['second'];
         if ($form->isValid()) {
             $entity->setEnabled(true);
             $entity->setUsersCreated($user);
@@ -89,7 +91,7 @@ class UsersController extends Controller {
             $this->get('session')->getFlashBag()->add('success', 'User added succesfully.');
            // $rendered = 'username: ' . $entity->getUsername(); 
             
-            $parameters = array('user' => $entity, 'url'=> $this->container->getParameter('baseUrl'), 'admin' => $this->getUser()->getName(), 'admin_email' => $this->getUser()->getEmail());
+            $parameters = array('user' => $entity, 'url'=> $this->container->getParameter('baseUrl'), 'admin' => $this->getUser()->getName(), 'admin_email' => $this->getUser()->getEmail(), 'password'=> $password);
             $rendered = $this->container->get('templating')->render('ApplicationFrontBundle:Users:email.html.php', $parameters);
             $email = new EmailHelper($this->container);
             $subject = 'Confirmation Email';
