@@ -351,7 +351,7 @@
                             </div>
                         </div>
                         <div id="copyrightRestrictions_lbl" class="col-lg-6" style="">
-                            <label for="copyrightRestrictions">Copyrights</label>
+                            <label for="copyrightRestrictions">Copyright</label>
                             <div data-role="input-control" class="input-control">
                                 <input type="text" class="size4" maxlength="250" name="copyrightRestrictions" id="copyrightRestrictions">
                             </div>
