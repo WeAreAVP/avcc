@@ -174,6 +174,10 @@ class BulkEditController extends Controller {
                         $record->setDescription($posted['description']);
                         $update = true;
                     }
+                    if ($posted['copyrightRestrictions']) {
+                        $record->setCopyrightRestrictions($posted['copyrightRestrictions']);
+                        $update = true;
+                    }
                     if ($posted['contentDuration']) {
                         $record->setContentDuration($posted['contentDuration']);
                         $update = true;

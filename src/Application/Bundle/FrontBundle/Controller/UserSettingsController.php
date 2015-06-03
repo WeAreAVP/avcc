@@ -75,11 +75,11 @@ class UserSettingsController extends Controller {
 				$viewSettings = $fObj->getDefaultOrder();
 			} else {
 				$viewSettings = $entities->getViewSetting();
-				$name = $entities->getName();
+//				$name = $entities->getName();
 			}
+			$name = $entities->getName();
 		}
 		$userViewSettings = json_decode($viewSettings, true);
-
 		return array(
 			'entities' => $userViewSettings,
 			'project' => $proj,
