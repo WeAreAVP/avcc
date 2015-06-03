@@ -820,6 +820,7 @@ class ExportReport extends ContainerAware {
             }
         }
     }
+    
 
     public function initMergeReport($merge_header = null) {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
