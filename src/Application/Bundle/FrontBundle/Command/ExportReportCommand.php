@@ -52,7 +52,7 @@ class ExportReportCommand extends ContainerAwareCommand
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($criteria['ids']);
                     if ($records) {
                         $phpExcelObject = $export->generateReport($records);
-                        $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+                        $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject, 2);
                         $text = $completePath;
                     } else {
                         $text = 'records not found';
@@ -69,7 +69,7 @@ class ExportReportCommand extends ContainerAwareCommand
                     }
                     $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');
                     $phpExcelObject = $export->fetchFromSphinx($user, $sphinxInfo, $sphinxCriteria, $em);
-                    $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+                    $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject, 2);
                     $text = $completePath;
                 }
                 if ($completePath) {

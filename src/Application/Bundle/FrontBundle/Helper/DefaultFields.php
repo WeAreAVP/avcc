@@ -94,7 +94,7 @@ class DefaultFields {
             "Reel_Core" => array("title" => 'Reel or Core', 'field' => "reelCore", "is_required" => 0, "hidden" => 0),
             "Reel_Diameter" => array("title" => 'Reel Diameter', 'field' => "record.reelDiameters", "is_required" => 0, "hidden" => 0),
             "Footage" => array("title" => 'Footage', 'field' => "footage", "is_required" => 0, "hidden" => 0),
-            "Media_Diameter" => array("title" => 'Media Diameter', 'field' => "mediaDiameter", "is_required" => 1, "hidden" => 0),
+            "Media_Diameter" => array("title" => 'Media Diameter (inches)', 'field' => "mediaDiameter", "is_required" => 0, "hidden" => 0),
             "Base" => array("title" => 'Base', 'field' => "bases", "is_required" => 0, "hidden" => 0),
             "Color" => array("title" => 'Color', 'field' => "colors", "is_required" => 0, "hidden" => 0),
             "Sound" => array("title" => 'Sound', 'field' => "sound", "is_required" => 0, "hidden" => 0),

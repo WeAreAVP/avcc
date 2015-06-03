@@ -44,7 +44,7 @@ class ExportMergeCommand extends ContainerAwareCommand
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($criteria['ids']);
                     if ($records) {
                         $phpExcelObject = $export->mergeRecords($records, $mergeToFile);
-                        $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+                        $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject, 1);
                         $text = $completePath;
                     } else {
                         $text = 'records not found';
@@ -61,7 +61,7 @@ class ExportMergeCommand extends ContainerAwareCommand
                     }
                     $sphinxInfo = $this->getContainer()->getParameter('sphinx_param');
                     $phpExcelObject = $export->fetchFromSphinxToMerge($user, $sphinxInfo, $sphinxCriteria, $em, $mergeToFile);
-                    $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject);
+                    $completePath = $export->saveReport($entity->getFormat(), $phpExcelObject, 1);
                     $text = $completePath;
                 }
                 if ($completePath) {

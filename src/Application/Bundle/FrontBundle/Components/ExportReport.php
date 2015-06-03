@@ -95,16 +95,23 @@ class ExportReport extends ContainerAware {
 
         return $response;
     }
+
     /**
      * Save report on server.
      * @param  type   $type
      * @param  type   $phpExcelObject
      * @return string
      */
-    public function saveReport($type, $phpExcelObject) {
+    public function saveReport($type, $phpExcelObject, $export_merge) {
+        $date = new \DateTime();
         $format = ($type == 'csv') ? 'CSV' : 'Excel2007';
         $writer = $this->container->get('phpexcel')->createWriter($phpExcelObject, $format);
-        $filename = 'allFormat_' . time() . '.' . $type;
+        if ($export_merge == 1) {
+            $filename = 'merge_' . $date->format('Ymdhis') . '.' . $type;
+        } else if ($export_merge == 2) {
+            $filename = 'export_' . $date->format('Ymdhis') . '.' . $type;
+        }
+
         $folderPath = $this->container->getParameter('webUrl') . 'exports/' . date('Y') . '/' . date('m') . '/';
         $completePath = $folderPath . $filename;
         $downloadPath = 'exports/' . date('Y') . '/' . date('m') . '/' . $filename;
@@ -218,14 +225,34 @@ class ExportReport extends ContainerAware {
         $mergeFileCompletePath = $this->container->getParameter('webUrl') . 'merge/' . date('Y') . '/' . date('m') . '/' . $mergeToFile;
         if (file_exists($mergeFileCompletePath)) {
             $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($mergeFileCompletePath);
+
             if ($newphpExcelObject == null) {
-                $newphpExcelObject = $this->initMergeReport();
+                $new_header = array();
+                $header = $phpExcelObject->getWorksheetIterator();
+                foreach ($header as $sheet) {
+                    $highestRow = $sheet->getHighestRow();
+                    $highestColumn = $sheet->getHighestColumn();
+                    $excelCell = new PHPExcel_Cell(null, null, $sheet);
+                    $highestColumnIndex = $excelCell->columnIndexFromString($highestColumn);
+                    if ($highestRow > 0) {
+                        for ($col = 0; $col < $highestColumnIndex; ++$col) {
+                            $cell = str_replace(' ', '_', $sheet->getCellByColumnAndRow($col, 1));
+                            $check = $this->checkHeader($cell);
+                            if (!$check) {
+                                $new_header[] = $cell;
+                            }
+                        }
+                    }
+                }
+                $newphpExcelObject = $this->initMergeReport($new_header);
             }
             $activeSheet = $newphpExcelObject->setActiveSheetIndex(0);
 
             foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
                 $highestRow = $worksheet->getHighestRow();
                 $highestColumn = $worksheet->getHighestColumn();
+//                echo $highestColumn;
+//                exit;
                 $excelCell = new PHPExcel_Cell(null, null, $worksheet);
                 $highestColumnIndex = $excelCell->columnIndexFromString($highestColumn);
                 if ($highestRow > 0) {
@@ -242,41 +269,47 @@ class ExportReport extends ContainerAware {
                             }
                         }
                     }
+                    //  echo $highestColumnIndex;exit;
                     for ($row = 2; $row <= $highestRow; ++$row) {
                         for ($col = 0; $col < $highestColumnIndex; ++$col) {
                             $uniq = strtolower(str_replace(' ', '_', $worksheet->getCellByColumnAndRow($uniqueIdIndex, $row)));
                             $cell = $worksheet->getCellByColumnAndRow($col, $row);
+                            //    echo $worksheet->getCellByColumnAndRow($col, 1) . '<br>';
                             $columnName = strtolower(str_replace(' ', '_', $worksheet->getCellByColumnAndRow($col, 1)));
                             $rows[$uniq][$columnName] = $cell->getValue();
                         }
                     }
+                    //  exit;
                     foreach ($records as $rec) {
                         if (is_object($rec)) {
                             $recUniq = strtolower(str_replace(' ', '_', $rec->getUniqueId()));
                             if (array_key_exists($recUniq, $rows)) {
-                                $this->makeExcelRows($activeSheet, $rec, $rows[$recUniq], $newrow);
+                                $this->makeExcelRows($activeSheet, $rec, $rows[$recUniq], $newrow, $new_header);
                                 unset($rows[$recUniq]);
                             } else {
-                                $this->makeExcelRows($activeSheet, $rec, false, $newrow);
+                                $this->makeExcelRows($activeSheet, $rec, false, $newrow, $new_header);
                             }
                         } else {
                             $recUniq = strtolower(str_replace(' ', '_', $rec['unique_id']));
                             if (array_key_exists($recUniq, $rows)) {
-                                $this->makeExcelRowsByArray($activeSheet, $rec, $rows[$recUniq], $newrow);
+                                $this->makeExcelRowsByArray($activeSheet, $rec, $rows[$recUniq], $newrow, $new_header);
                                 unset($rows[$recUniq]);
                             } else {
-                                $this->makeExcelRowsByArray($activeSheet, $rec, false, $newrow);
+                                $this->makeExcelRowsByArray($activeSheet, $rec, false, $newrow, $new_header);
                             }
                         }
                         $newrow++;
                     }
                     if (count($rows) > 0) {
+                        echo '<pre>';
                         foreach ($rows as $row) {
-                            $this->makeExcelRowsByArray($activeSheet, false, $row, $newrow);
+
+                            print_r($row);
+                            $this->makeExcelRowsByArray($activeSheet, false, $row, $newrow, $new_header);
                             $newrow++;
                         }
                     }
-
+                    exit;
                     return $newphpExcelObject;
                 } else {
                     return "The file $mergeToFile is empty";
@@ -287,7 +320,7 @@ class ExportReport extends ContainerAware {
         }
     }
 
-    public function makeExcelRows($activeSheet, $record, $mergRow, $row) {
+    public function makeExcelRows($activeSheet, $record, $mergRow, $row, $new_header) {
         if ($record) {
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record->getProject());
             $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record->getCollectionName());
@@ -343,7 +376,7 @@ class ExportReport extends ContainerAware {
             }
         }
         if ($mergRow) {
-            $this->mergeRow($activeSheet, $mergRow, $row);
+            $this->mergeRow($activeSheet, $mergRow, $row, $new_header);
         }
     }
 
@@ -488,7 +521,7 @@ class ExportReport extends ContainerAware {
         return $phpExcelObject;
     }
 
-    public function makeExcelRowsByArray($activeSheet, $record, $mergRow, $row) {
+    public function makeExcelRowsByArray($activeSheet, $record, $mergRow, $row, $new_header = null) {
         if ($record) {
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record['project']);
             $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record['collection_name']);
@@ -544,7 +577,7 @@ class ExportReport extends ContainerAware {
             }
         }
         if ($mergRow) {
-            $this->mergeRow($activeSheet, $mergRow, $row);
+            $this->mergeRow($activeSheet, $mergRow, $row, $new_header);
         }
     }
 
@@ -699,62 +732,96 @@ class ExportReport extends ContainerAware {
         return true;
     }
 
-    protected function mergeRow($activeSheet, $mergRow, $row) {
-        $activeSheet->setCellValueExplicitByColumnAndRow(45, $row, $mergRow['project_name']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(46, $row, $mergRow['collection_name']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(47, $row, $mergRow['media_type']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(48, $row, $mergRow['unique_id']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(49, $row, $mergRow['location']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(50, $row, $mergRow['format']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(51, $row, $mergRow['title']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(52, $row, $mergRow['description']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(53, $row, $mergRow['commercial_or_unique']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(54, $row, $mergRow['content_duration']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(56, $row, $mergRow['creation_date']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(57, $row, $mergRow['content_date']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(61, $row, $mergRow['reel_diameter']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(79, $row, $mergRow['genre_terms']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(80, $row, $mergRow['contributor']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(81, $row, $mergRow['generation']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(82, $row, $mergRow['part']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(83, $row, $mergRow['copyright_/_restrictions']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(84, $row, $mergRow['duplicates_/_derivatives']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(85, $row, $mergRow['related_material']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(86, $row, $mergRow['condition_note']);
-        $activeSheet->setCellValueExplicitByColumnAndRow(87, $row, ($mergRow['time_stamp']) ? $mergRow['time_stamp'] : '');
-        $activeSheet->setCellValueExplicitByColumnAndRow(88, $row, ($mergRow['timestamp_-_last_change']) ? $mergRow['timestamp_-_last_change'] : '');
-        $activeSheet->setCellValueExplicitByColumnAndRow(89, $row, $mergRow['cataloger']);
+    protected function mergeRow($activeSheet, $mergRow, $row, $header) {
+        $counter = 45;
+        if(isset($mergRow['project_name']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, ($mergRow['project_name']) ? $mergRow['project_name']:'');
+        if(isset($mergRow['collection_name']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, ($mergRow['collection_name']) ? $mergRow['collection_name']:'');
+        if(isset($mergRow['media_type']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, ($mergRow['media_type']) ?$mergRow['media_type']:'');
+        if(isset($mergRow['unique_id']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, ($mergRow['unique_id']) ?$mergRow['unique_id']:'');
+        if(isset($mergRow['location']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, ($mergRow['location']) ?$mergRow['location']:'');
+        if(isset($mergRow['format']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(5, $row, ($mergRow['format']) ?$mergRow['format']:'');
+        if(isset($mergRow['title']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(6, $row, ($mergRow['title']) ?$mergRow['title']:'');
+        if(isset($mergRow['description']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, ($mergRow['description']) ?$mergRow['description']:'');
+        if(isset($mergRow['commercial_or_unique']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(8, $row, ($mergRow['commercial_or_unique']) ?$mergRow['commercial_or_unique']:'');
+        if(isset($mergRow['content_duration']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(9, $row, ($mergRow['content_duration']) ?$mergRow['content_duration']:'');
+        if(isset($mergRow['creation_date']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, ($mergRow['creation_date']) ?$mergRow['creation_date']:'');
+        if(isset($mergRow['content_date']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, ($mergRow['content_date']) ?$mergRow['content_date']:'');
+        if(isset($mergRow['reel_diameter']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(16, $row, ($mergRow['reel_diameter']) ?$mergRow['reel_diameter']:'');
+        if(isset($mergRow['genre_terms']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(34, $row, ($mergRow['genre_terms']) ?$mergRow['genre_terms']:'');
+        if(isset($mergRow['contributor']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(35, $row, ($mergRow['contributor']) ?$mergRow['contributor']:'');
+        if(isset($mergRow['generation']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(36, $row, ($mergRow['generation']) ?$mergRow['generation']:'');
+        if(isset($mergRow['part']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(37, $row, ($mergRow['part']) ?$mergRow['part']:'');
+        if(isset($mergRow['copyright_/_restrictions']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(38, $row, ($mergRow['copyright_/_restrictions']) ?$mergRow['copyright_/_restrictions']:'');
+        if(isset($mergRow['duplicates_/_derivatives']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(39, $row, ($mergRow['duplicates_/_derivatives']) ?$mergRow['duplicates_/_derivatives']:'');
+        if(isset($mergRow['related_material']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(40, $row, ($mergRow['related_material']) ?$mergRow['related_material']:'');
+        if(isset($mergRow['condition_note']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(41, $row, ($mergRow['condition_note']) ?$mergRow['condition_note']:'');
+        if(isset($mergRow['time_stamp']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(42, $row, ($mergRow['time_stamp']) ? $mergRow['time_stamp'] : '');
+        if(isset($mergRow['timestamp_-_last_change']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(43, $row, ($mergRow['timestamp_-_last_change']) ? $mergRow['timestamp_-_last_change'] : '');
+        if(isset($mergRow['cataloger']))
+        $activeSheet->setCellValueExplicitByColumnAndRow(44, $row, ($mergRow['cataloger']) ?$mergRow['cataloger']:'');
 
-        if ($mergRow['media_type'] == 'Audio') {
-            $activeSheet->setCellValueExplicitByColumnAndRow(55, $row, $mergRow['media_duration']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(58, $row, $mergRow['base']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(60, $row, $mergRow['disk_diameter']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(62, $row, $mergRow['media_diameter']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(66, $row, $mergRow['tape_thickness']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(67, $row, $mergRow['sides']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(68, $row, $mergRow['track_type']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(69, $row, $mergRow['mono_or_stereo']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(70, $row, $mergRow['noise_reduction']);
+        if (isset($mergRow['media_type']) && $mergRow['media_type'] == 'Audio') {
+            $activeSheet->setCellValueExplicitByColumnAndRow(10, $row, ($mergRow['media_duration']) ?$mergRow['media_duration']:'');
+            $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, ($mergRow['base']) ?$mergRow['base']:'');
+            $activeSheet->setCellValueExplicitByColumnAndRow(15, $row,($mergRow['disk_diameter']) ? $mergRow['disk_diameter']:'');
+            $activeSheet->setCellValueExplicitByColumnAndRow(17, $row,($mergRow['media_diameter']) ? $mergRow['media_diameter']:'');
+            $activeSheet->setCellValueExplicitByColumnAndRow(21, $row, ($mergRow['tape_thickness']) ?$mergRow['tape_thickness']:'');
+            $activeSheet->setCellValueExplicitByColumnAndRow(22, $row,($mergRow['sides']) ? $mergRow['sides']:'');
+            $activeSheet->setCellValueExplicitByColumnAndRow(23, $row, ($mergRow['track_type']) ?$mergRow['track_type']:'');
+            $activeSheet->setCellValueExplicitByColumnAndRow(24, $row, ($mergRow['mono_or_stereo']) ?$mergRow['mono_or_stereo']:'');
+            $activeSheet->setCellValueExplicitByColumnAndRow(25, $row, ($mergRow['noise_reduction']) ?$mergRow['noise_reduction']:'');
         }
-        if ($mergRow['media_type'] == 'Film') {
-            $activeSheet->setCellValueExplicitByColumnAndRow(59, $row, $mergRow['print_type']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(63, $row, $mergRow['footage']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(65, $row, $mergRow['color']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(74, $row, $mergRow['reel_core']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(75, $row, $mergRow['sound']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(76, $row, $mergRow['frame_rate']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(77, $row, $mergRow['acid_detection']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(78, $row, $mergRow['shrinkage']);
+        if (isset($mergRow['media_type']) && $mergRow['media_type'] == 'Film') {
+            $activeSheet->setCellValueExplicitByColumnAndRow(14, $row, ($mergRow['print_type']) ?$mergRow['print_type']:'');
+            $activeSheet->setCellValueExplicitByColumnAndRow(18, $row, ($mergRow['footage']) ?$mergRow['footage']:'');
+            $activeSheet->setCellValueExplicitByColumnAndRow(20, $row, ($mergRow['color']) ?$mergRow['color']:'');
+            $activeSheet->setCellValueExplicitByColumnAndRow(29, $row,($mergRow['reel_core']) ? $mergRow['reel_core']:'');
+            $activeSheet->setCellValueExplicitByColumnAndRow(30, $row, ($mergRow['sound']) ?$mergRow['sound']:'');
+            $activeSheet->setCellValueExplicitByColumnAndRow(31, $row,($mergRow['frame_rate']) ? $mergRow['frame_rate']:'');
+            $activeSheet->setCellValueExplicitByColumnAndRow(32, $row, ($mergRow['acid_detection']) ?$mergRow['acid_detection']:'');
+            $activeSheet->setCellValueExplicitByColumnAndRow(33, $row,($mergRow['shrinkage']) ? $mergRow['shrinkage']:'');
         }
-        if ($mergRow['media_type'] == 'Video') {
-            $activeSheet->setCellValueExplicitByColumnAndRow(64, $row, $mergRow['recording_speed']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(71, $row, $mergRow['cassette_size']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(72, $row, $mergRow['format_version']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(73, $row, $mergRow['media_duration']);
+        if (isset($mergRow['media_type']) && $mergRow['media_type'] == 'Video') {
+            $activeSheet->setCellValueExplicitByColumnAndRow(19, $row, ($mergRow['recording_speed']) ?$mergRow['recording_speed']:'');
+            $activeSheet->setCellValueExplicitByColumnAndRow(26, $row, ($mergRow['cassette_size']) ?$mergRow['cassette_size']:'');
+            $activeSheet->setCellValueExplicitByColumnAndRow(27, $row,($mergRow['format_version']) ? $mergRow['format_version']:'');
+            $activeSheet->setCellValueExplicitByColumnAndRow(28, $row,($mergRow['media_duration']) ? $mergRow['media_duration']:'');
+        }
+        
+        if (!empty($header)) {
+            foreach ($header as $key => $value) {
+                if(isset($mergRow[strtolower($value)])){
+                $activeSheet->setCellValueExplicitByColumnAndRow($counter, $row, $mergRow[strtolower($value)]);
+                $counter = $counter + 1;
+                }
+            }
         }
     }
 
-    public function initMergeReport() {
+    public function initMergeReport($merge_header = null) {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
                 ->setTitle("AVCC - Report")
@@ -764,7 +831,7 @@ class ExportReport extends ContainerAware {
         $phpExcelObject->getActiveSheet()->setTitle('All Formats');
         $row = 1;
 // Prepare header row for report
-        $this->prepareHeaderMerge($activeSheet, $row);
+        $this->prepareHeaderMerge($activeSheet, $row, $merge_header);
 
         return $phpExcelObject;
     }
@@ -776,9 +843,9 @@ class ExportReport extends ContainerAware {
      * @param  Integer            $row
      * @return boolean
      */
-    private function prepareHeaderMerge($activeSheet, $row) {
+    private function prepareHeaderMerge($activeSheet, $row, $merge_header) {
         $columns = new ExportFields();
-        $this->columns = array_merge($columns->getExportColumns(), $columns->getExportMergeColumns());
+        $this->columns = array_merge($columns->getExportColumns(), $merge_header);
         foreach ($this->columns as $column => $columnName) {
             $activeSheet->setCellValueExplicitByColumnAndRow($column, $row, str_replace('_', ' ', $columnName));
             $activeSheet->getColumnDimensionByColumn($column)->setWidth(20);
@@ -786,6 +853,17 @@ class ExportReport extends ContainerAware {
         }
 
         return TRUE;
+    }
+
+    private function checkHeader($cell) {
+        $columns = new ExportFields();
+        $export = array_map('strtolower', $columns->getExportColumns());
+        ;
+        if (in_array(strtolower($cell), $export)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function generateFileSizeAssetsReport($records) {
@@ -925,7 +1003,7 @@ class ExportReport extends ContainerAware {
     private function calculateFileSize($totalDuration, $value) {
         $totalSize = ($totalDuration * $value) / 1024 / 1024;
         return $this->correctDecimal($totalSize);
-     //   return number_format(($totalDuration * $value) / 1024 / 1024, 1);
+        //   return number_format(($totalDuration * $value) / 1024 / 1024, 1);
     }
 
     private function correctDecimal($totalDuration) {
@@ -938,14 +1016,14 @@ class ExportReport extends ContainerAware {
                 $depth += 1;
             }
             $depth = $depth - 1;
-        } else if(is_float($totalSize)){
+        } else if (is_float($totalSize)) {
             $depth = 1;
         }
-        
+
         return number_format($size, $depth);
-     //   return number_format(($totalDuration * $value) / 1024 / 1024, 1);
+        //   return number_format(($totalDuration * $value) / 1024 / 1024, 1);
     }
-    
+
     private function prepareFileSizeCalculatorVideoRecords($activeSheet, $row, $records) {
         $i = 1;
         $totalVUncompress1 = 0.00;

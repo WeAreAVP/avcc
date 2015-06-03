@@ -14,8 +14,7 @@ use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
  *
  * @Route("/bulkedit")
  */
-class BulkEditController extends Controller
-{
+class BulkEditController extends Controller {
 
     /**
      * Make records to display for dataTables.
@@ -27,8 +26,7 @@ class BulkEditController extends Controller
      * @Template("ApplicationFrontBundle:Records:default.html.php")
      * @return json
      */
-    public function validation(Request $request)
-    {
+    public function validation(Request $request) {
         if ($request->isXmlHttpRequest()) {
             $posted = $request->request->all();
             $recordIds = $posted['records'];
@@ -56,11 +54,10 @@ class BulkEditController extends Controller
                         $disable["format"] = 1;
                     }
                 }
-
-                $relatedFields = $this->getRelatedFields();
-                $templateParameters = array('selectedrecords' => $recordIds, 'disableFields' => $disable, 'mediaTypeId' => $mediaTypeId, 'relatedFields' => $relatedFields);
-                $html = $this->container->get('templating')->render('ApplicationFrontBundle:BulkEdit:bulkedit.html.php', $templateParameters);
-                $success = true;
+                    $relatedFields = $this->getRelatedFields();
+                    $templateParameters = array('selectedrecords' => $recordIds, 'disableFields' => $disable, 'mediaTypeId' => $mediaTypeId, 'relatedFields' => $relatedFields);
+                    $html = $this->container->get('templating')->render('ApplicationFrontBundle:BulkEdit:bulkedit.html.php', $templateParameters);
+                    $success = true;
             } else {
                 $success = false;
                 $errorMsg = 'Select records to edit.';
@@ -79,8 +76,7 @@ class BulkEditController extends Controller
      *
      * @return array
      */
-    protected function getSphinxInfo()
-    {
+    protected function getSphinxInfo() {
         return $this->container->getParameter('sphinx_param');
     }
 
@@ -89,8 +85,7 @@ class BulkEditController extends Controller
      *
      * @return array
      */
-    protected function getRelatedFields()
-    {
+    protected function getRelatedFields() {
         $data = array();
         $em = $this->getDoctrine()->getManager();
         $data['mediaTypes'] = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
@@ -131,8 +126,7 @@ class BulkEditController extends Controller
      * @Template("ApplicationFrontBundle:Records:default.html.php")
      * @return array
      */
-    public function bulkEditAction(Request $request)
-    {
+    public function bulkEditAction(Request $request) {
         if ($request->isXmlHttpRequest()) {
             $posted = $request->request->all();
             $session = $this->getRequest()->getSession();
@@ -233,8 +227,7 @@ class BulkEditController extends Controller
         exit;
     }
 
-    protected function updateAudioFields($audioRecord, $posted)
-    {
+    protected function updateAudioFields($audioRecord, $posted) {
         $em = $this->getDoctrine()->getManager();
         $update = false;
         if ($posted['diskDiameters']) {
@@ -293,8 +286,7 @@ class BulkEditController extends Controller
         return $update;
     }
 
-    protected function updateVideoFields($videoRecord, $posted)
-    {
+    protected function updateVideoFields($videoRecord, $posted) {
         $em = $this->getDoctrine()->getManager();
         $update = false;
         if ($posted['cassetteSize']) {
@@ -328,8 +320,7 @@ class BulkEditController extends Controller
         return $update;
     }
 
-    protected function updateFilmFields($filmRecord, $posted)
-    {
+    protected function updateFilmFields($filmRecord, $posted) {
         $em = $this->getDoctrine()->getManager();
         $update = false;
         if ($posted['reelCore']) {
@@ -392,8 +383,7 @@ class BulkEditController extends Controller
      *
      * @return array
      */
-    protected function fetchFromSphinx($user, $sphinxInfo, $em)
-    {
+    protected function fetchFromSphinx($user, $sphinxInfo, $em) {
         $count = 0;
         $offset = 0;
         $recordIds = array();
@@ -418,8 +408,7 @@ class BulkEditController extends Controller
      *
      * @return array
      */
-    protected function getRecordIds($sphinxRecords)
-    {
+    protected function getRecordIds($sphinxRecords) {
         $recordIds = array();
         foreach ($sphinxRecords as $record) {
             $recordIds[] = $record['id'];
