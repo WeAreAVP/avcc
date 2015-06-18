@@ -32,7 +32,15 @@
                     echo ($filmField['is_required']) ? "&nbsp;<span>*</span>" : "";
                     ?>
                 </div>
-                <div class="input-control <?php echo (count($field) == 2 && $field[1] == 'isReview') ? '' : 'text'; ?> edit" data-role="input-control">
+                <?php
+                    if (count($field) == 2 && $field[1] == 'isReview')
+                        $style = '';
+                    else if (count($field) == 2 && $field[1] == 'conditionNote' || count($field) == 2 && $field[1] == 'generalNote')
+                         $style = 'textarea';
+                    else
+                        $style = 'text';
+                    ?>
+                <div class="input-control <?php echo $style; ?> edit" data-role="input-control">
                     <?php
                     $_attr = (count($field) == 2 && $field[1] == 'isReview') ? array() : $attr;
                     ?>                    

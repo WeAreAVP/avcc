@@ -235,14 +235,14 @@ class Records {
     /**
      * @var string
      *
-     * @ORM\Column(name="condition_note", type="string",length=500, nullable=true)
+     * @ORM\Column(name="condition_note", type="text", nullable=true)
      */
     private $conditionNote;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="general_note", type="string",length=500, nullable=true)
+     * @ORM\Column(name="general_note", type="text", nullable=true)
      */
     private $generalNote;
 

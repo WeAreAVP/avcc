@@ -43,7 +43,7 @@ class RecordsType extends AbstractType {
                         'empty_data' => ''
                     ))
                     ->add('title')
-                    ->add('collectionName','text', array('required' => false)) 
+                    ->add('collectionName', 'text', array('required' => false))
                     ->add('description')
                     ->add('commercial', 'entity', array(
                         'class' => 'ApplicationFrontBundle:Commercial',
@@ -66,7 +66,7 @@ class RecordsType extends AbstractType {
                     ->add('duplicatesDerivatives')
                     ->add('relatedMaterial')
                     ->add('conditionNote')
-                                ->add('generalNote')
+                    ->add('generalNote')
                     ->add('project')
                     ->add('userId', 'hidden', array(
                         'data' => $this->selectedOptions['userId'],
@@ -74,7 +74,7 @@ class RecordsType extends AbstractType {
                         'required' => false,
                     ))
                     ->add('mediaType', 'choice', array(
-                        'choices' => array($this->selectedOptions['mediaTypeId']=>$this->selectedOptions['mediaTypesArr'][$this->selectedOptions['mediaTypeId']]),
+                        'choices' => array($this->selectedOptions['mediaTypeId'] => $this->selectedOptions['mediaTypesArr'][$this->selectedOptions['mediaTypeId']]),
                         'data' => $this->selectedOptions['mediaTypeId'],
 //                        'attr' => array('disabled' => 'disabled'),
                         'mapped' => false,
@@ -90,7 +90,7 @@ class RecordsType extends AbstractType {
                     ->addEventListener(
                             FormEvents::POST_SUBMIT, array($this, 'onPostSubmitData'));
         } else {
-            
+
             $builder
                     ->add('uniqueId')
                     ->add('location')
@@ -102,7 +102,7 @@ class RecordsType extends AbstractType {
                         }
                     ))
                     ->add('title')
-                    ->add('collectionName','text', array('required' => false))
+                    ->add('collectionName', 'text', array('required' => false))
                     ->add('description')
                     ->add('commercial', 'entity', array(
                         'class' => 'ApplicationFrontBundle:Commercial',
@@ -125,7 +125,7 @@ class RecordsType extends AbstractType {
                     ->add('duplicatesDerivatives')
                     ->add('relatedMaterial')
                     ->add('conditionNote')
-                                ->add('generalNote')
+                    ->add('generalNote')
                     ->add('project')
                     ->add('userId', 'hidden', array(
                         'data' => $this->selectedOptions['userId'],

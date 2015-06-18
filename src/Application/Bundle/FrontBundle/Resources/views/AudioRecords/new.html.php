@@ -24,12 +24,12 @@
                 } else {
                     $index = $field[0];
                 }
-                
+
                 $_style = (count($field) == 2 && $field[1] == 'isReview') ? 'width: 180px;float: left;margin-bottom: 15px;' : 'width: 200px';
                 ?>
-            
+
                 <div style="<?php echo ($audioField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6 " id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>">
-                    <div class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo isset($tooltip[$index]) ? $tooltip[$index] : ''; ?>" style="<?php echo  $_style ?>">
+                    <div class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo isset($tooltip[$index]) ? $tooltip[$index] : ''; ?>" style="<?php echo $_style ?>">
                         <?php
                         $attr = ($audioField['is_required']) ? array('class' => 'size4') : array('class' => 'size4');
                         echo $view['form']->label((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], ' ');
@@ -37,8 +37,16 @@
                         echo ($audioField['is_required']) ? "&nbsp;<span>*</span>" : "";
                         ?>
                     </div>
-                    <div class="input-control <?php echo (count($field) == 2 && $field[1] == 'isReview') ? '' : 'text'; ?> new" data-role="input-control">
-                        <?php 
+                    <?php
+                    if (count($field) == 2 && $field[1] == 'isReview')
+                        $style = '';
+                    else if (count($field) == 2 && $field[1] == 'conditionNote' || count($field) == 2 && $field[1] == 'generalNote')
+                         $style = 'textarea';
+                    else
+                        $style = 'text';
+                    ?>
+                    <div class="input-control <?php echo $style; ?> new" data-role="input-control">
+                        <?php
                         $_attr = (count($field) == 2 && $field[1] == 'isReview') ? array() : $attr;
                         ?>
                         <?php echo $view['form']->widget((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => $_attr)) ?>
