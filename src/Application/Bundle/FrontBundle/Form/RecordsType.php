@@ -66,6 +66,7 @@ class RecordsType extends AbstractType {
                     ->add('duplicatesDerivatives')
                     ->add('relatedMaterial')
                     ->add('conditionNote')
+                                ->add('generalNote')
                     ->add('project')
                     ->add('userId', 'hidden', array(
                         'data' => $this->selectedOptions['userId'],
@@ -124,6 +125,7 @@ class RecordsType extends AbstractType {
                     ->add('duplicatesDerivatives')
                     ->add('relatedMaterial')
                     ->add('conditionNote')
+                                ->add('generalNote')
                     ->add('project')
                     ->add('userId', 'hidden', array(
                         'data' => $this->selectedOptions['userId'],

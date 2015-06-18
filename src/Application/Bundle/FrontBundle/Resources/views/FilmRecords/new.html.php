@@ -101,6 +101,7 @@
                 $('#duplicatesDerivatives_lbl').hide();
                 $('#relatedMaterial_lbl').hide();
                 $('#conditionNote_lbl').hide();
+                $('#generalNote_lbl').hide();
             } else {
                 showUpdateFields();
                 $('#uniqueId_lbl').show();
@@ -131,6 +132,7 @@
                 $('#duplicatesDerivatives_lbl').show();
                 $('#relatedMaterial_lbl').show();
                 $('#conditionNote_lbl').show();
+                $('#generalNote_lbl').show();
             }
         });
     });

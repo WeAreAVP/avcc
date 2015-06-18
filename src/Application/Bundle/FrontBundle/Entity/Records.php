@@ -238,6 +238,13 @@ class Records {
      * @ORM\Column(name="condition_note", type="string",length=500, nullable=true)
      */
     private $conditionNote;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="general_note", type="string",length=500, nullable=true)
+     */
+    private $generalNote;
 
     /**
      * @ORM\OneToOne(
@@ -813,6 +820,28 @@ class Records {
      */
     public function getConditionNote() {
         return $this->conditionNote;
+    }
+    
+    /**
+     * Set condition note
+     *
+     * @param string $conditionNote
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Records
+     */
+    public function setGeneralNote($genNote) {
+        $this->generalNote = $genNote;
+
+        return $this;
+    }
+
+    /**
+     * Get condition note
+     *
+     * @return string
+     */
+    public function getGeneralNote() {
+        return $this->generalNote;
     }
 
     /**

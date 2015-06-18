@@ -507,6 +507,7 @@ class RecordsController extends Controller {
         $entityArray["duplicatesDerivatives"] = $entity->getDuplicatesDerivatives();
         $entityArray["relatedMaterial"] = $entity->getRelatedMaterial();
         $entityArray["conditionNote"] = $entity->getConditionNote();
+        $entityArray["generalNote"] = $entity->getGeneralNote();
         $entityArray["commercial"] = $entity->getCommercial() ? $entity->getCommercial()->getName() : '';
         $entityArray["reelDiameters"] = $entity->getReelDiameters() ? $entity->getReelDiameters()->getName() : '';
         if ($entity->getMediaType()->getId() == 1) {

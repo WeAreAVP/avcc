@@ -34,6 +34,7 @@ class DefaultFields {
             "Creation_Date" => array("title" => 'Creation Date', 'field' => "record.creationDate", "is_required" => 0, "hidden" => 0),
             "Content_Date" => array("title" => 'Content Date', 'field' => "record.contentDate", "is_required" => 0, "hidden" => 0),
             "Manager_Review" => array("title" => 'Manager Review', 'field' => "record.isReview", "is_required" => 0, "hidden" => 0),
+            "General_Notes" => array("title" => 'General Notes', 'field' => "record.generalNote", "is_required" => 0, "hidden" => 0),
             "Recording_Speed" => array("title" => 'Recording Speed', 'field' => "recordingSpeed", "is_required" => 0, "hidden" => 0),
             "Tape_Thickness" => array("title" => 'Tape Thickness', 'field' => "tapeThickness", "is_required" => 0, "hidden" => 0),
             "Slides" => array("title" => 'Sides', 'field' => "slides", "is_required" => 0, "hidden" => 0),
@@ -67,6 +68,7 @@ class DefaultFields {
             "Creation_Date" => array("title" => 'Creation Date', 'field' => "record.creationDate", "is_required" => 0, "hidden" => 0),
             "Content_Date" => array("title" => 'Content Date', 'field' => "record.contentDate", "is_required" => 0, "hidden" => 0),
             "Manager_Review" => array("title" => 'Manager Review', 'field' => "record.isReview", "is_required" => 0, "hidden" => 0),
+            "General_Notes" => array("title" => 'General Notes', 'field' => "record.generalNote", "is_required" => 0, "hidden" => 0),
             "Format_Version" => array("title" => 'Format Version', 'field' => "formatVersion", "is_required" => 0, "hidden" => 0),
             "Recording_Speed" => array("title" => 'Recording Speed', 'field' => "recordingSpeed", "is_required" => 0, "hidden" => 0),
             "Recording_Standard" => array("title" => 'Recording Standard', 'field' => "recordingStandard", "is_required" => 0, "hidden" => 0),
@@ -102,6 +104,7 @@ class DefaultFields {
             "Creation_Date" => array("title" => 'Creation Date', 'field' => "record.creationDate", "is_required" => 0, "hidden" => 0),
             "Content_Date" => array("title" => 'Content Date', 'field' => "record.contentDate", "is_required" => 0, "hidden" => 0),
             "Manager_Review" => array("title" => 'Manager Review', 'field' => "record.isReview", "is_required" => 0, "hidden" => 0),
+            "General_Notes" => array("title" => 'General Notes', 'field' => "record.generalNote", "is_required" => 0, "hidden" => 0),
             "Frame_Rate" => array("title" => 'Frame Rate', 'field' => "frameRate", "is_required" => 0, "hidden" => 0),
             "Acid_Detection_Strip" => array("title" => 'Acid Detection Strip', 'field' => "acidDetectionStrip", "is_required" => 0, "hidden" => 0),
             "Shrinkage" => array("title" => 'Shrinkage', 'field' => "shrinkage", "is_required" => 0, "hidden" => 0),
@@ -252,6 +255,7 @@ class DefaultFields {
         $tooltip['duplicatesDerivatives'] = 'A free text field that notes if the institution has multiple original copies of an object or if there are derivatives such as Service Copies. You may choose to include information about the location of these duplicates.';
         $tooltip['relatedMaterial'] = 'A free text field for notes on associated objects.';
         $tooltip['conditionNote'] = 'A free text field containing information identifying chemical or physical damage/degradation that may impact playback (mold, broken cassette, hydrolysis, brittleness, shrinkage, tape damage, etc.) The catalogers may also choose to note the date of the inspection in this field.';
+        $tooltip['generalNote'] = '';
         $tooltip['commercial'] = 'A drop down field to identify an object as commercial or unique in nature. Unique may also be used to mean rare.';
         if ($media == 1) {
             $tooltip['reelDiameters'] = 'A drop-down field noting the diameter of the audio object’s reel. Combined with Media Diameter, this field may help catalogers estimate Content Duration. Values include 10.5” NAB, 10.5”, 7”, 5”, 4”, 3”.';

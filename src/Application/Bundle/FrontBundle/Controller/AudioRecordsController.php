@@ -525,7 +525,7 @@ class AudioRecordsController extends Controller {
      */
     public function getFormatAction($mediaTypeId, $formatId = null) {
         $em = $this->getDoctrine()->getManager();
-        $formats = $em->getRepository('ApplicationFrontBundle:Formats')->findBy(array('mediaType' => $mediaTypeId), array('order' => 'asc'));
+        $formats = $em->getRepository('ApplicationFrontBundle:Formats')->findBy(array('mediaType' => $mediaTypeId), array('name' => 'asc'));
 
         return $this->render('ApplicationFrontBundle:AudioRecords:getFormat.html.php', array(
                     'formats' => $formats,
