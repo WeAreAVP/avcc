@@ -9,7 +9,7 @@ AVCC Integral Components and Licensing Information
 
 **URL:** http://symfony.com/doc/current/contributing/code/license.html
 
-**License:** "Symfony is released under the MIT license"
+**License:** MIT
 
 *********************
 
@@ -19,7 +19,7 @@ AVCC Integral Components and Licensing Information
 
 **URL:** http://foolcode.github.io/SphinxQL-Query-Builder/
 
-**License:** Open source under github
+**License:** none stated
 
 *********************
 
@@ -40,7 +40,7 @@ AVCC Integral Components and Licensing Information
 
 **URL:** http://jmsyst.com/bundles/JMSJobQueueBundle
 
-**License:** The code is released under the business-friendly Apache2 license.
+**License:** Apache2
 
 *********************
 
@@ -50,7 +50,7 @@ AVCC Integral Components and Licensing Information
 
 **URL:** https://github.com/FriendsOfSymfony/FOSUserBundle
 
-**License:** This bundle is under the MIT license.
+**License:** MIT
 
 *********************
 
@@ -82,7 +82,7 @@ AVCC Integral Components and Licensing Information
 
 **URL:** https://github.com/malsup/blockui/blob/master/README.md
 
-**License:** MIT and GPL
+**License:** MIT
 
 *********************
 
@@ -126,7 +126,7 @@ AVCC Integral Components and Licensing Information
 
 **URL:** http://metroui.org.ua/v2/
 
-**License:** open source and has MIT licensing model.
+**License:** MIT
 
 *********************
 
@@ -146,7 +146,7 @@ AVCC Integral Components and Licensing Information
 
 **URL:** http://jqueryui.com/about/	
 
-**License:** MIT License (http://en.wikipedia.org/wiki/JQuery_UI)
+**License:** MIT
 
 *********************
 
@@ -181,7 +181,7 @@ AVCC Integral Components and Licensing Information
 
 **License:** GPLv2
 
-**Notes:** We are not modifying, extending or distributing. Whoever installs AMS will need to download and install. We are simply using the API. Therefore GPL license does not impact our licensing of AMS.
+**Notes:** We are not modifying, extending or distributing. Whoever installs AVCC will need to download and install. We are simply using the API. Therefore GPL license does not impact our licensing of AVCC.
 
 
 *********************
@@ -195,7 +195,7 @@ AVCC Integral Components and Licensing Information
 
 **License:** GPLv2
 
-**Notes:** We are not modifying, extending or distributing. Whoever installs AMS will need to download and install. We are simply using the API. Therefore GPL license does not impact our licensing of AMS.
+**Notes:** We are not modifying, extending or distributing. Whoever installs AVCC will need to download and install. We are simply using the API. Therefore GPL license does not impact our licensing of AVCC.
 
 *********************
 
