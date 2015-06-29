@@ -87,13 +87,13 @@ AVCC Integral Components and Licensing Information
 *********************
 
 
-**Name:** Multiselect
+**Name:** Chosen
 
-**Role:** Used where we need multiple select option
+**Role:** Used to replace select box
 
-**URL:** https://github.com/ehynds/jquery-ui-multiselect-widget/blob/master/GPL-LICENSE
+**URL:** http://harvesthq.github.io/chosen/
 
-**License:** GPLv2
+**License:** MIT
 
 *********************
 
