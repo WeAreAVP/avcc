@@ -67,11 +67,11 @@ AVCC Integral Components and Licensing Information
 
 **Name:** TinyMce
 
-**Role:** Used in email templates	
+**Role:** Used in help guide
 
-**URL:** http://www.tinymce.com/wiki.php/TinyMCE3x:License
+**URL:** http://www.tinymce.com/js/tinymce4/js/tinymce/license.txt
 
-**License:** GPLv2
+**License:** LGPLv2.1
 
 *********************
 
