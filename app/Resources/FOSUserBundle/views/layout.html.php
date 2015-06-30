@@ -104,8 +104,8 @@
                                         <li><a href="<?php echo $view['router']->generate('vocabularies_recordingstandards') ?>">Recording Standards</a></li>
                                         <li><a href="<?php echo $view['router']->generate('vocabularies_reelcore') ?>">Reel Core</a></li>
                                         <li><a href="<?php echo $view['router']->generate('vocabularies_reeldiameters') ?>">Reel Diameters</a></li>
-                                        <li><a href="<?php echo $view['router']->generate('vocabularies_slides') ?>">Slides</a></li>
-                                        <li><a href="<?php echo $view['router']->generate('vocabularies_sounds') ?>">Sounds</a></li>
+                                        <li><a href="<?php echo $view['router']->generate('vocabularies_slides') ?>">Sides</a></li>
+                                        <li><a href="<?php echo $view['router']->generate('vocabularies_sounds') ?>">Sound</a></li>
                                         <li><a href="<?php echo $view['router']->generate('vocabularies_tapethickness') ?>">Tape Thickness</a></li>
                                         <li><a href="<?php echo $view['router']->generate('vocabularies_tracktypes') ?>">Track Types</a></li>
                                     </ul>

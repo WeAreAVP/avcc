@@ -130,7 +130,7 @@ class Records {
     private $collectionName;
 
     /**
-     * @ORM\Column(name="description", type="string", nullable=true)
+     * @ORM\Column(name="description", type="text", nullable=true)
      * @var string
      */
     private $description;
@@ -214,7 +214,7 @@ class Records {
     /**
      * @var string
      *
-     * @ORM\Column(name="copyright_restrictions", type="string",length=250, nullable=true)
+     * @ORM\Column(name="copyright_restrictions", type="text", nullable=true)
      */
     private $copyrightRestrictions;
 

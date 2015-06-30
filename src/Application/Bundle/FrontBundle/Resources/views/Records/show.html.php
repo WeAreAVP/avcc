@@ -26,14 +26,14 @@
         <div class="row">
             <div class="span4">Created by: <?php echo $entity->getUser()->getName(); ?></div>
             <?php if ($entity->getEditor()) : ?>
-                <div class="span4">Modified By: <?php echo $entity->getEditor()->getName(); ?></div>
+                <div class="span4">Last Modified by: <?php echo $entity->getEditor()->getName(); ?></div>
             <?php endif;
             ?>
         </div>
         <div class="row">
             <div class="span4">Created at: <?php echo $entity->getCreatedOn()->format('Y-m-d H:i:s'); ?></div>
             <?php if ($entity->getUpdatedOn()): ?>
-                <div class="span4">Modified at:  <?php echo $entity->getUpdatedOn()->format('Y-m-d H:i:s'); ?>
+                <div class="span4">Last Modified at:  <?php echo $entity->getUpdatedOn()->format('Y-m-d H:i:s'); ?>
                 </div>
                 <?php
             endif;
