@@ -338,6 +338,9 @@ function updateProjects() {
             if (response != "") {
                 $("#project").html(response);
                 //$("#project").val(proj);
+            }else{
+                 $("#project").html('');
+                 $('#project').after('&nbsp;&nbsp;Create a project');
             }
         }
     }); // Ajax Call    

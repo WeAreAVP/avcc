@@ -603,9 +603,10 @@ class AudioRecordsController extends Controller {
     public function getAllProjectsAction($selectedProjectId = null) {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $projects = array();
         if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles()) && $user->getOrganizations()) {
             $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $user->getOrganizations()->getId(), 'status' => 1));
-        } else {
+        } else if (in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
             $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('status' => 1));
         }
 
