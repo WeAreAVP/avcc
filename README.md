@@ -16,10 +16,12 @@ Documentation
 
 6-  [Roles and Permissions](documentation/roles-permissions.md)
 
+7-  [License and Copyright](documentation/license.md)
+
 Credits
 =======
 
-This software was created by AudioVisual Preservation Solutions, Inc.
+This software was created by Audio Visual Preservation Solutions, Inc.
 
 List of contributors 
 
