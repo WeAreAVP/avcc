@@ -4,7 +4,7 @@ AVCC AVPreserve
 Documentation
 ===============
 
-1-  [Prerequisite](documentation/prerequisite.md)
+1-  [Prerequisites](documentation/prerequisite.md)
 
 2-  [Installation and Configuration](documentation/install-configure.md)
 
