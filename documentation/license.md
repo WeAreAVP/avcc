@@ -1,9 +1,9 @@
+===
 AVCC License & Copyright
+===
 
-AVCC code licensed under the AGPLv3 license (http://www.gnu.org/licenses/agpl-3.0.txt).
-AVCC documentation licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
+AVCC code licensed under the AGPLv3 license (http://www.gnu.org/licenses/agpl-3.0.txt). AVCC documentation licensed under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License. All AVCC code and documentation copyright (c) Audio Visual Preservation Solutions, Inc. (http://www.avpreserve.com). All Rights Reserved.
 
-All AVCC code and documentation copyright (c) Audio Visual Preservation Solutions, Inc. (http://www.avpreserve.com). All Rights Reserved.
 ===
 AVCC Integral Components and Licensing Information
 ===
