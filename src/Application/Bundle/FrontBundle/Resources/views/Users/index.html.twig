@@ -15,8 +15,8 @@
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
-                    <th class="new_class">Roles</th>
-                    <th class="new_class">Organizations</th>
+                    <th {% if is_granted('ROLE_SUPER_ADMIN') %}class="new_class"{% endif %}>Roles</th>
+                    <th {% if is_granted('ROLE_SUPER_ADMIN') %}class="new_class"{% endif %}>Organizations</th>
                         {% if is_granted('ROLE_MANAGER') %}
                         <th>Action</th>
                         {% endif %}
@@ -89,9 +89,9 @@
     <script>
         $(document).ready(function ()
         {
-            $(".table").tablesorter(
-                    selectorHeaders: '> thead th.new_class'
-                    );
+            $(".table").tablesorter({
+                selectorHeaders: 'thead th.new_class',
+            });
         }
         );
     </script>
