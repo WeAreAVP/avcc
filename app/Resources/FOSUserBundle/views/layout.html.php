@@ -12,6 +12,7 @@
         <script src="<?php echo $view['assets']->getUrl('js/jquery.min.js') ?>"></script>
 
         <script src="<?php echo $view['assets']->getUrl('js/tinymce/tinymce.min.js') ?>"></script>
+        <script src="<?php echo $view['assets']->getUrl('js/table-sorter/jquery.tablesorter.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/tooltip.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/popover.js') ?>"></script>
         <!-- Bootstrap core CSS -->

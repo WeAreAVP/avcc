@@ -10,8 +10,11 @@
             </small>
         {% endif %}
     </h1>
+    <div class="flash-success text-success" id="message">
+        Order updated succesfully.
+    </div>
     <div class="table-responsive">
-        <table class="table bordered">
+        <table class="table bordered sortable hovered">
             <thead>
                 <tr>
                     <th>Title</th>
@@ -21,7 +24,7 @@
             </thead>
             <tbody>
                 {% for entity in entities %}
-                    <tr>
+                    <tr class="sortTr" id="{{entity.id}}">
                         <td><a href="{{ path('help_guide_show', { 'slug': entity.slug }) }}">{{ entity.title }}</a></td>
                         <td>/help/{{ entity.slug }}</td>
                         <td><a class="icon-pencil" title="Edit" href="{{ path('help_guide_edit', { 'id': entity.id }) }}"></a> |
@@ -30,6 +33,32 @@
                 {% endfor %}
             </tbody>
         </table>
+            <p><input type="button" id="updatesettings" class="button primary" onclick="updateVocabSettings();" value="Update" /></p>
     </div>
+<script type="text/javascript">
+        var path = "{{ path('hg_update_order') }}"; 
+        $('#message').hide();
+        function updateVocabSettings() {
+            // each loop to get ids
+            i = 0;
+            ids = [];
+            $('.sortTr').each(function (index, id)
+            {
+                ids[i] = parseInt($(this).attr('id'));
+                i++;
 
+            });
+            $.ajax({
+                type: 'POST',
+                url: path,
+                data: {
+                    help_ids: ids
+                },
+                dataType: 'json',
+                success: function (response) {
+                    $('#message').show();
+                }
+            });
+        }
+    </script>
 {% endblock %}

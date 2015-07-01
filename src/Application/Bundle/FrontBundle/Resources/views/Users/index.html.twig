@@ -10,13 +10,13 @@
     </h1>
 
     <div class="table-responsive">
-        <table class="table bordered">
+        <table class="table bordered tablesorter">
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Roles</th>
-                    <th>Organizations</th>
+                    <th class="new_class">Roles</th>
+                    <th class="new_class">Organizations</th>
                         {% if is_granted('ROLE_MANAGER') %}
                         <th>Action</th>
                         {% endif %}
@@ -57,8 +57,8 @@
                                     <a class="icon-pencil" title="Edit" href="{{ path('users_edit', { 'id': entity.id }) }}"></a> |
                                     <a class="icon-remove" title="Delete" href="{{ path('users_delete', { 'id': entity.id }) }}"></a>
                                 </td>
-                                {% elseif role != 'ROLE_MANAGER' %}
-                                    <td class="text-center">
+                            {% elseif role != 'ROLE_MANAGER' %}
+                                <td class="text-center">
                                     {% if entity.enabled == true %}
                                         {% set status = "Active" %}
                                         {% set statusId = "1" %}
@@ -77,8 +77,8 @@
                                     <a class="icon-pencil" title="Edit" href="{{ path('users_edit', { 'id': entity.id }) }}"></a> |
                                     <a class="icon-remove" title="Delete" href="{{ path('users_delete', { 'id': entity.id }) }}"></a>
                                 </td>
-                                {% else %}
-                                    <td class="text-center"></td>
+                            {% else %}
+                                <td class="text-center"></td>
                             {% endif %}
                         {% endif %}
                     </tr>
@@ -86,4 +86,13 @@
             </tbody>
         </table>
     </div>
+    <script>
+        $(document).ready(function ()
+        {
+            $(".table").tablesorter(
+                    selectorHeaders: '> thead th.new_class'
+                    );
+        }
+        );
+    </script>
 {% endblock body %}

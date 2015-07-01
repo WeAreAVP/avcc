@@ -55,7 +55,7 @@ class HelpGuideController extends Controller {
         $entities = '';
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ApplicationFrontBundle:HelpGuide')->findAll();
+        $entities = $em->getRepository('ApplicationFrontBundle:HelpGuide')->findBy(array(), array('order' => 'ASC'));
 
         return array(
             'entities' => $entities,
@@ -74,7 +74,7 @@ class HelpGuideController extends Controller {
         $entities = '';
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ApplicationFrontBundle:HelpGuide')->findAll();
+        $entities = $em->getRepository('ApplicationFrontBundle:HelpGuide')->findBy(array(), array('order' => 'ASC'));
 
         return array(
             'entities' => $entities,
@@ -291,6 +291,31 @@ class HelpGuideController extends Controller {
             'edit_form' => $editForm->createView()
         );
     }
-
+/**
+     * update field order
+     *
+     * @param Request $request
+     *
+     * @Route("/fieldOrder", name="hg_update_order")
+     * @Method("POST")
+     * @return array
+     */
+    public function updateFieldOrder(Request $request) {
+        // code to update
+        $adsIds = $this->get('request')->request->get('help_ids');
+        $count = 0;
+        foreach ($adsIds as $ads) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('ApplicationFrontBundle:HelpGuide')->find($ads);
+            if ($entity) {
+                $entity->setOrder($count);
+               // $em->persist($entity);
+                $em->flush();
+                $count = $count + 1;
+            }
+        }
+        echo json_encode(array('success' => 'true'));
+        exit;
+    } 
 
 }

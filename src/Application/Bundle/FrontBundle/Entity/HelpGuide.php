@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,11 +11,13 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -38,6 +41,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * )
  */
 class HelpGuide {
+
     /**
      * @var integer
      *
@@ -62,7 +66,7 @@ class HelpGuide {
      * @Assert\NotBlank(message="Slug is required")
      */
     private $slug;
-    
+
     /**
      * @var string
      *
@@ -70,25 +74,29 @@ class HelpGuide {
      * @Assert\NotBlank(message="Description is required")
      */
     private $description;
-    
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="sort_order", type="integer", options={"default" = 9999})
+     */
+    private $order = 9999;
+
     /**
      * Get Id.
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
-    
-    
+
     /**
      * Get title.
      *
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 
@@ -99,19 +107,17 @@ class HelpGuide {
      *
      * @return \Application\Bundle\FrontBundle\Entity\HelpGuide
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title) {
         $this->title = $title;
         return $this;
     }
-    
+
     /**
      * Get slug.
      *
      * @return string
      */
-    public function getSlug()
-    {
+    public function getSlug() {
         return $this->slug;
     }
 
@@ -122,19 +128,17 @@ class HelpGuide {
      *
      * @return \Application\Bundle\FrontBundle\Entity\HelpGuide
      */
-    public function setSlug($slug)
-    {
+    public function setSlug($slug) {
         $this->slug = $slug;
         return $this;
     }
-    
+
     /**
      * Get description.
      *
      * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription() {
         return $this->description;
     }
 
@@ -145,9 +149,28 @@ class HelpGuide {
      *
      * @return \Application\Bundle\FrontBundle\Entity\HelpGuide
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description) {
         $this->description = $description;
-        return $this;
     }
+    
+    /**
+     * Get order
+     *
+     * @return integer
+     */ 
+    public function getOrder() {
+        return $this->order;
+    }
+
+    /**
+     * Set order
+     *
+     * @param integer $order
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Colors
+     */
+    public function setOrder($order) {
+        $this->order = $order;
+    }
+
 }

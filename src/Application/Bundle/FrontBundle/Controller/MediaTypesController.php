@@ -271,8 +271,8 @@ class MediaTypesController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('vocabularies_mediatypes_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm();
+             ->add('submit', 'submit', array('label' => 'Delete','attr' => array('onclick' => "return confirm('Are you sure you want to delete selected term?')")))
+                        ->getForm();
     }
     /**
      * update field order

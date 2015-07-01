@@ -274,7 +274,7 @@ class MediaDiametersController extends Controller
         return $this->createFormBuilder()
                         ->setAction($this->generateUrl('vocabularies_mediadiameters_delete', array('id' => $id)))
                         ->setMethod('DELETE')
-                        ->add('submit', 'submit', array('label' => 'Delete'))
+                         ->add('submit', 'submit', array('label' => 'Delete','attr' => array('onclick' => "return confirm('Are you sure you want to delete selected term?')")))
                         ->getForm();
     }
     /**
