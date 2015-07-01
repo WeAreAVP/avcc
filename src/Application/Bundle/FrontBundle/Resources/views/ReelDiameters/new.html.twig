@@ -21,9 +21,7 @@
             <label>Formats</label>
             <div class="input-control select" data-role="input-control">
                 {{ form_widget(form.reelFormat, {attr: {class:'size4 formats_dd',id:'formats'} }) }}
-                {% for errorItem in form.reelFormat.vars.errors %}
-                    <span class="has-error text-danger" for="{{ form.reelFormat.vars.id }}">{{ errorItem.message }}</span>
-                {% endfor %}
+                 <span id='formt_error' class="has-error text-danger">Format is required</span>
             </div>
              <label>Score</label>
             <div class="input-control text" data-role="input-control">
@@ -38,4 +36,18 @@
         </fieldset>
         {{ form_end(form) }}
     </div>
+         <script type="text/javascript">
+        $(document).ready(function () {
+            $('#formt_error').hide();
+            $('.formats_dd').chosen();
+            $('.form-horizontal').submit(function (event) {
+                if ($('#application_bundle_frontbundle_reeldiameters_reelFormat').val() != null) {
+                    return true;
+                } else {
+                    $('#formt_error').show();
+                    return false;
+                }
+            });
+        });
+    </script>
 {% endblock %}

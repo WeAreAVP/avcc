@@ -340,7 +340,7 @@ function updateProjects() {
                 //$("#project").val(proj);
             }else{
                  $("#project").html('');
-                 $('#project').after('&nbsp;&nbsp;Create a project');
+                 $('#project').after('&nbsp;&nbsp;Create a project in the Settings menu');
             }
         }
     }); // Ajax Call    
