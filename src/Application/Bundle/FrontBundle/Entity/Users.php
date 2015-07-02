@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
@@ -28,327 +30,354 @@ use Doctrine\Common\Collections\ArrayCollection as ArrayCollection;
  */
 class Users extends BaseUser {
 
-	/**
-	 * @var integer
-	 *
-	 * @ORM\Column(name="id", type="integer")
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="IDENTITY")
-	 */
-	protected $id;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    protected $id;
 
-	/**
-	 * @var string $name
-	 *
-	 * @ORM\Column(name="name", type="string", length=50)
-	 */
-	private $name;
+    /**
+     * @var string $name
+     *
+     * @ORM\Column(name="name", type="string", length=50)
+     */
+    private $name;
 
-	/**
-	 * @var \DateTime $createdOn
-	 *
-	 * @ORM\Column(name="created_on", type="datetime")
-	 */
-	private $createdOn;
+    /**
+     * @var \DateTime $createdOn
+     *
+     * @ORM\Column(name="created_on", type="datetime")
+     */
+    private $createdOn;
 
-	/**
-	 * @var \DateTime $updatedOn
-	 *
-	 * @ORM\Column(name="updated_on", type="datetime", nullable=true)
-	 */
-	private $updatedOn;
+    /**
+     * @var \DateTime $updatedOn
+     *
+     * @ORM\Column(name="updated_on", type="datetime", nullable=true)
+     */
+    private $updatedOn;
 
-	/**
-	 * @var \Application\Bundle\FrontBundle\Entity\Organizations
-	 *
-	 * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Organizations")
-	 * @ORM\JoinColumns({
-	 *   @ORM\JoinColumn(name="organization_id", referencedColumnName="id",nullable=true, onDelete="CASCADE")
-	 * })
-	 */
-	private $organizations;
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Organizations
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Organizations")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="organization_id", referencedColumnName="id",nullable=true, onDelete="CASCADE")
+     * })
+     */
+    private $organizations;
 
-	/**
-	 * @var \Application\Bundle\FrontBundle\Entity\Users $usersCreated
-	 *
-	 * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users",cascade={"refresh"})
-	 * @ORM\JoinColumns({
-	 *   @ORM\JoinColumn(name="created_by", referencedColumnName="id",nullable=true, onDelete="SET NULL")
-	 * })
-	 */
-	private $usersCreated;
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Users $usersCreated
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users",cascade={"refresh"})
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="created_by", referencedColumnName="id",nullable=true, onDelete="SET NULL")
+     * })
+     */
+    private $usersCreated;
 
-	/**
-	 * @var \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
-	 *
-	 * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users",cascade={"refresh"})
-	 * @ORM\JoinColumns({
-	 *   @ORM\JoinColumn(name="updated_by", referencedColumnName="id",nullable=true, onDelete="SET NULL")
-	 * })
-	 */
-	private $usersUpdated;
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users",cascade={"refresh"})
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="updated_by", referencedColumnName="id",nullable=true, onDelete="SET NULL")
+     * })
+     */
+    private $usersUpdated;
 
-	/**
-	 * @ORM\OneToMany(
-	 *     targetEntity="UserSettings",
-	 *     mappedBy="user",
-	 *     fetch="EAGER",
-	 *     indexBy="user_id",
-	 *     cascade={"all","merge","persist","refresh","remove"}
-	 * )
-	 * @ORM\OrderBy({"id"="ASC"})
-	 */
-	private $userSetting;
+    /**
+     * @ORM\OneToMany(
+     *     targetEntity="UserSettings",
+     *     mappedBy="user",
+     *     fetch="EAGER",
+     *     indexBy="user_id",
+     *     cascade={"all","merge","persist","refresh","remove"}
+     * )
+     * @ORM\OrderBy({"id"="ASC"})
+     */
+    private $userSetting;
 
-	/**
-	 * @ORM\ManyToMany(targetEntity="Application\Bundle\FrontBundle\Entity\Projects", inversedBy="projectUsers", cascade={"refresh", "persist"})
-	 * @ORM\JoinTable(
-	 *     name="users_projects",
-	 *     joinColumns={
-	 *         @ORM\JoinColumn(
-	 *             name="userId",
-	 *             referencedColumnName="id",
-	 *             nullable=false,
-         *             onDelete="CASCADE"
-	 *         )
-	 *     },
-	 *     inverseJoinColumns={@ORM\JoinColumn(name="projectId", referencedColumnName="id", nullable=false)}
-	 * )
-	 * @ORM\OrderBy({"id"="ASC"})
-	 */
-	private $userProjects;
+    /**
+     * @ORM\ManyToMany(targetEntity="Application\Bundle\FrontBundle\Entity\Projects", inversedBy="projectUsers", cascade={"refresh", "persist"})
+     * @ORM\JoinTable(
+     *     name="users_projects",
+     *     joinColumns={
+     *         @ORM\JoinColumn(
+     *             name="userId",
+     *             referencedColumnName="id",
+     *             nullable=false,
+     *             onDelete="CASCADE"
+     *         )
+     *     },
+     *     inverseJoinColumns={@ORM\JoinColumn(name="projectId", referencedColumnName="id", nullable=false)}
+     * )
+     * @ORM\OrderBy({"id"="ASC"})
+     */
+    private $userProjects;
 
-	/**
-	 * Users constructor
-	 */
-	public function __construct() {
-		$this->userSetting = new ArrayCollection();
-		$this->userProjects = new ArrayCollection();
-		parent::__construct();
-	}
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="message_display", type="boolean", options={"default" = 1}, nullable=true)
+     */
+    private $messageDisplay = 1;
 
-	/**
-	 * @ORM\PrePersist
-	 */
-	public function setCreatedOnValue() {
-		if ( ! $this->getCreatedOn()) {
-			$this->createdOn = new \DateTime();
-		}
-	}
+    /**
+     * Users constructor
+     */
+    public function __construct() {
+        $this->userSetting = new ArrayCollection();
+        $this->userProjects = new ArrayCollection();
+        parent::__construct();
+    }
 
-	/**
-	 * @ORM\PreUpdate
-	 */
-	public function setUpdatedOnValue() {
-		$this->updatedOn = new \DateTime();
-	}
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedOnValue() {
+        if (!$this->getCreatedOn()) {
+            $this->createdOn = new \DateTime();
+        }
+    }
 
-	/**
-	 * Returns user name
-	 *
-	 * @return string
-	 */
-	public function __toString() {
-		return $this->getName();
-	}
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedOnValue() {
+        $this->updatedOn = new \DateTime();
+    }
 
-	/**
-	 * Get Name of user.
-	 *
-	 * @return string
-	 */
-	public function getName() {
-		return $this->name;
-	}
+    /**
+     * Returns user name
+     *
+     * @return string
+     */
+    public function __toString() {
+        return $this->getName();
+    }
 
-	/**
-	 * Get Created on time.
-	 *
-	 * @return \Datetime
-	 */
-	public function getCreatedOn() {
-		return $this->createdOn;
-	}
+    /**
+     * Get Name of user.
+     *
+     * @return string
+     */
+    public function getName() {
+        return $this->name;
+    }
 
-	/**
-	 * Get Update on time.
-	 *
-	 * @return \Datetime
-	 */
-	public function getUpdatedOn() {
-		return $this->updatedOn;
-	}
+    /**
+     * Get Created on time.
+     *
+     * @return \Datetime
+     */
+    public function getCreatedOn() {
+        return $this->createdOn;
+    }
 
-	/**
-	 * Get user organization.
-	 *
-	 * @return \Application\Bundle\FrontBundle\Entity\Organizations
-	 */
-	public function getOrganizations() {
-		return $this->organizations;
-	}
+    /**
+     * Get Update on time.
+     *
+     * @return \Datetime
+     */
+    public function getUpdatedOn() {
+        return $this->updatedOn;
+    }
 
-	/**
-	 * Get user created.
-	 *
-	 * @return \Application\Bundle\FrontBundle\Entity\Users
-	 */
-	public function getUsersCreated() {
-		return $this->usersCreated;
-	}
+    /**
+     * Get user organization.
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Organizations
+     */
+    public function getOrganizations() {
+        return $this->organizations;
+    }
 
-	/**
-	 * Get user updated.
-	 *
-	 * @return \Application\Bundle\FrontBundle\Entity\Users
-	 */
-	public function getUsersUpdated() {
-		return $this->usersUpdated;
-	}
+    /**
+     * Get user created.
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Users
+     */
+    public function getUsersCreated() {
+        return $this->usersCreated;
+    }
 
-	/**
-	 * Set name.
-	 *
-	 * @param string $name
-	 *
-	 * @return \Application\Bundle\FrontBundle\Entity\Users
-	 */
-	public function setName($name) {
-		$this->name = $name;
+    /**
+     * Get user updated.
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Users
+     */
+    public function getUsersUpdated() {
+        return $this->usersUpdated;
+    }
 
-		return $this;
-	}
+    /**
+     * Set name.
+     *
+     * @param string $name
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Users
+     */
+    public function setName($name) {
+        $this->name = $name;
 
-	/**
-	 * Set Created on.
-	 *
-	 * @param \DateTime $createdOn
-	 *
-	 * @return \Application\Bundle\FrontBundle\Entity\Users
-	 */
-	public function setCreatedOn(\DateTime $createdOn) {
-		$this->createdOn = $createdOn;
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * Set Created on.
+     *
+     * @param \DateTime $createdOn
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Users
+     */
+    public function setCreatedOn(\DateTime $createdOn) {
+        $this->createdOn = $createdOn;
 
-	/**
-	 * Set update on.
-	 *
-	 * @param \DateTime $updatedOn
-	 *
-	 * @return \Application\Bundle\FrontBundle\Entity\Users
-	 */
-	public function setUpdatedOn(\DateTime $updatedOn) {
-		$this->updatedOn = $updatedOn;
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * Set update on.
+     *
+     * @param \DateTime $updatedOn
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Users
+     */
+    public function setUpdatedOn(\DateTime $updatedOn) {
+        $this->updatedOn = $updatedOn;
 
-	/**
-	 * Set Organization.
-	 *
-	 * @param \Application\Bundle\FrontBundle\Entity\Organizations $organizations
-	 *
-	 * @return \Application\Bundle\FrontBundle\Entity\Users
-	 */
-	public function setOrganizations(\Application\Bundle\FrontBundle\Entity\Organizations $organizations) {
-		$this->organizations = $organizations;
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * Set Organization.
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Organizations $organizations
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Users
+     */
+    public function setOrganizations(\Application\Bundle\FrontBundle\Entity\Organizations $organizations) {
+        $this->organizations = $organizations;
 
-	public function removeOrganizations() {
-		$this->organizations = NULL;
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Set creator.
-	 *
-	 * @param \Application\Bundle\FrontBundle\Entity\Users $usersCreated
-	 *
-	 * @return \Application\Bundle\FrontBundle\Entity\Users
-	 */
-	public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated) {
-		$this->usersCreated = $usersCreated;
+    public function removeOrganizations() {
+        $this->organizations = NULL;
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * Set creator.
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $usersCreated
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Users
+     */
+    public function setUsersCreated(\Application\Bundle\FrontBundle\Entity\Users $usersCreated) {
+        $this->usersCreated = $usersCreated;
 
-	/**
-	 * Set modifier.
-	 *
-	 * @param \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
-	 *
-	 * @return \Application\Bundle\FrontBundle\Entity\Users
-	 */
-	public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated) {
-		$this->usersUpdated = $usersUpdated;
+        return $this;
+    }
 
-		return $this;
-	}
+    /**
+     * Set modifier.
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\Users $usersUpdated
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Users
+     */
+    public function setUsersUpdated(\Application\Bundle\FrontBundle\Entity\Users $usersUpdated) {
+        $this->usersUpdated = $usersUpdated;
 
-	/**
-	 * Add userSetting
-	 * @param \Application\Bundle\FrontBundle\Entity\UserSettings $us
-	 *
-	 */
-	public function addUserSetting(UserSettings $us) {
-		if ( ! $this->userSetting->contains($us)) {
+        return $this;
+    }
 
-			$this->userSetting[] = $us;
-			$us->setUser($this);
-		}
-	}
+    /**
+     * Add userSetting
+     * @param \Application\Bundle\FrontBundle\Entity\UserSettings $us
+     *
+     */
+    public function addUserSetting(UserSettings $us) {
+        if (!$this->userSetting->contains($us)) {
 
-	/**
-	 * Remove userSetting
-	 * @param \Application\Bundle\FrontBundle\Entity\UserSettings $us
-	 *
-	 */
-	public function removeUserSetting(UserSettings $us) {
-		$this->userSetting->remove($us);
-	}
+            $this->userSetting[] = $us;
+            $us->setUser($this);
+        }
+    }
 
-	/**
-	 * Add user project
-	 * @param \Application\Bundle\FrontBundle\Entity\Projects $project
-	 *
-	 */
-	public function addUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $project) {
-		if ( ! $this->userProjects->contains($project)) {
+    /**
+     * Remove userSetting
+     * @param \Application\Bundle\FrontBundle\Entity\UserSettings $us
+     *
+     */
+    public function removeUserSetting(UserSettings $us) {
+        $this->userSetting->remove($us);
+    }
 
-			$this->userProjects[] = $project;
-			$project->setProjectUsers($this);
-		}
-	}
+    /**
+     * Add user project
+     * @param \Application\Bundle\FrontBundle\Entity\Projects $project
+     *
+     */
+    public function addUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $project) {
+        if (!$this->userProjects->contains($project)) {
 
-	/**
-	 * Remove user project
-	 * @param \Application\Bundle\FrontBundle\Entity\Projects $project
-	 *
-	 */
-	public function removeUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $project) {
-		$this->userProjects->removeElement($project);
-	}
+            $this->userProjects[] = $project;
+            $project->setProjectUsers($this);
+        }
+    }
 
-	/**
-	 *
-	 * @param  \Application\Bundle\FrontBundle\Entity\Projects $p
-	 * @return \Application\Bundle\FrontBundle\Entity\Users
-	 */
-	public function setUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $p) {
-		$this->userProjects->add($p);
-		return $this;
-	}
+    /**
+     * Remove user project
+     * @param \Application\Bundle\FrontBundle\Entity\Projects $project
+     *
+     */
+    public function removeUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $project) {
+        $this->userProjects->removeElement($project);
+    }
 
-	/**
-	 *
-	 * @return type
-	 */
-	public function getUserProjects() {
-		return $this->userProjects;
-	}
+    /**
+     *
+     * @param  \Application\Bundle\FrontBundle\Entity\Projects $p
+     * @return \Application\Bundle\FrontBundle\Entity\Users
+     */
+    public function setUserProjects(\Application\Bundle\FrontBundle\Entity\Projects $p) {
+        $this->userProjects->add($p);
+        return $this;
+    }
+
+    /**
+     *
+     * @return type
+     */
+    public function getUserProjects() {
+        return $this->userProjects;
+    }
+    
+    /**
+     * Get  Enable Backup
+     *
+     * @return int
+     */
+    public function getMessageDisplay()
+    {
+        return (bool) $this->messageDisplay;
+    }
+
+    /**
+     * Set  Enable Backup
+     *
+     * @param int $enableBackup
+     */
+    public function setMessageDisplay($messageDisplay)
+    {
+        $this->messageDisplay = $messageDisplay;
+    }
 
 }

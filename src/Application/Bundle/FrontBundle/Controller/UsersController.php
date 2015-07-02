@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -37,16 +39,25 @@ class UsersController extends Controller {
     /**
      * Lists all Users entities.
      *
+     * @param integer $orgId
+     * @param integer $roleId
+     * 
      * @Route("/", name="users")
+     * @Route("/{orgId}/{roleId}", name="organization_filter")
      * @Method("GET")
      * @Template()
      * @return array
      */
-    public function indexAction() {
+    public function indexAction($orgId = null, $roleId = null) {
+        $organizations = array();
         $em = $this->getDoctrine()->getManager();
+        $org = array();
         $currentUserId = $this->getUser()->getId();
-        if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
-            $entities = $em->getRepository('ApplicationFrontBundle:Users')->getUsersWithoutCurentLoggedIn($currentUserId);
+        if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN') && $orgId) {
+            $entities = $em->getRepository('ApplicationFrontBundle:Users')->getUsersWithoutCurentLoggedIn($currentUserId, $orgId);
+            $organizations = $em->getRepository('ApplicationFrontBundle:Users')->getUsersWithoutCurentLoggedIn($currentUserId);
+        } else if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+            $entities = $organizations = $em->getRepository('ApplicationFrontBundle:Users')->getUsersWithoutCurentLoggedIn($currentUserId);
         } else {
             $entities = $em->getRepository('ApplicationFrontBundle:Users')->getUsersWithoutCurentLoggedIn($currentUserId, $this->getUser()->getOrganizations()->getId());
         }
@@ -59,12 +70,53 @@ class UsersController extends Controller {
                     $all[$key] = $entity;
                 }
             }
+        } else if ($roleId) {
+            foreach ($entities as $key => $entity) {
+                $role = $entity->getRoles();
+                if ($roleId == 1) {
+                    if ($role[0] == 'ROLE_SUPER_ADMIN') {
+                        $all[$key] = $entity;
+                    }
+                }else if ($roleId == 2) {
+                    if ($role[0] == 'ROLE_ADMIN') {
+                        $all[$key] = $entity;
+                    }
+                }else if ($roleId == 3) {
+                    if ($role[0] == 'ROLE_MANAGER') {
+                        $all[$key] = $entity;
+                    }
+                }else if ($roleId == 4) {
+                    if ($role[0] == 'ROLE_CATALOGER') {
+                        $all[$key] = $entity;
+                    }
+                }else if ($roleId == 5) {
+                    if ($role[0] == 'ROLE_USER') {
+                        $all[$key] = $entity;
+                    }
+                }
+            }
         } else {
             $all = $entities;
         }
+
+        foreach ($organizations as $entity) {
+            if ($entity->getOrganizations()) {
+                $org[$entity->getOrganizations()->getId()] = $entity->getOrganizations()->getName();
+            }
+        }
+
+        if($roleId == null){
+            $roleId = 0;
+        }
+        if($orgId == null){
+            $orgId = 0;
+        }
         return array(
             'entities' => $all,
-            'role' => $currentUserRole[0]
+            'role' => $currentUserRole[0],
+            'organization' => $org,
+            'org_id' => $orgId,
+            'role_id' =>$roleId
         );
     }
 
@@ -99,13 +151,13 @@ class UsersController extends Controller {
             $em->persist($user_entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'User added succesfully.');
-           // $rendered = 'username: ' . $entity->getUsername(); 
-            
-            $parameters = array('user' => $entity, 'url'=> $this->container->getParameter('baseUrl'), 'admin' => $this->getUser()->getName(), 'admin_email' => $this->getUser()->getEmail(), 'password'=> $password);
+            // $rendered = 'username: ' . $entity->getUsername(); 
+
+            $parameters = array('user' => $entity, 'url' => $this->container->getParameter('baseUrl'), 'admin' => $this->getUser()->getName(), 'admin_email' => $this->getUser()->getEmail(), 'password' => $password);
             $rendered = $this->container->get('templating')->render('ApplicationFrontBundle:Users:email.html.php', $parameters);
             $email = new EmailHelper($this->container);
             $subject = 'Confirmation Email';
-            $email->sendEmail($rendered, $subject, $this->container->getParameter('from_email') , $entity->getEmail());
+            $email->sendEmail($rendered, $subject, $this->container->getParameter('from_email'), $entity->getEmail());
             return $this->redirect($this->generateUrl('users'));
         }
         $organizationId = '';

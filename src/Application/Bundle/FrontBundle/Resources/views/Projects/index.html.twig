@@ -1,5 +1,4 @@
 {% extends 'FOSUserBundle::layout.html.twig' %}
-
 {% block body -%}
 
 
@@ -9,9 +8,19 @@
                 <a href="{{ path('projects_new') }}"><i class="icon-plus"></i> New</a>
             </small>
         {% endif %}
-    </h1>
 
-    <div class="table-responsive">
+    </h1>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <div class="button-dropdown place-right">
+            <button class="dropdown-toggle" id="org_text">Select Organization</button>
+            <ul class="dropdown-menu place-right" data-role="dropdown" id="org_list">
+                {% for key,value in organization %}
+                    <li><a href="{{ path('organization_filters') }}/{{key}}" id="org{{key}}" >{{value}}</a></li>
+                    {% endfor %} 
+            </ul>
+        </div>
+    {% endif %}
+    <div class="table-responsive"  style="padding-top: 25px;">
         <table class="table bordered tablesorter" id="projectsTable">
             <thead>
                 <tr>
@@ -40,7 +49,7 @@
                         {% if is_granted('ROLE_MANAGER') %}
                             <td>
                                 {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                   {% if entity.status == true %}
+                                    {% if entity.status == true %}
                                         {% set status = "Active" %}
                                         {% set statusId = "1" %}
                                         {% set class = "icon-checkmark" %}
@@ -77,6 +86,17 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#projectsTable").tablesorter();
+            var location = window.location.href;
+            var path = location.split('/');
+            if ($.isNumeric(path[path.length - 1])) {
+                var org_id = path[path.length - 1];
+                var html;
+                if (org_id != 0) {
+                    $('#org_text').text($('#org' + org_id).text());
+                    html = '<li><a href="{{ path('projects') }}">Reset</a></li>';
+                    $('#org_list').append(html);
+                }
+            }
         });
     </script>
 {% endblock %}

@@ -11,7 +11,6 @@
         <title>{% block title %}AVCC - AVPreserve{% endblock %}</title>
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
-        <script src="{{ asset('js/table-sorter/jquery.tablesorter.js') }}"></script>
 
         <script src="{{ asset('js/tooltip.js') }}"></script>
         <script src="{{ asset('js/popover.js') }}"></script>
@@ -22,7 +21,7 @@
             <link href="{{ asset('css/metro-bootstrap-responsive.min.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('css/iconFont.min.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('css/chosen.css') }}" type="text/css" rel="stylesheet" />
-            <!-- Custom styles for this template -->
+             <link href="{{ asset('css/modal.css') }}" type="text/css" rel="stylesheet" />
             <link href="{{ asset('bundles/applicationfront/css/style.css') }}" rel="stylesheet">
             <link rel="stylesheet" href="{{ asset('css/jquery.mCustomScrollbar.css') }}" />
             <link rel="stylesheet" href="{{ asset('css/basic.css') }}" />
@@ -165,10 +164,11 @@
             <script src="{{ asset('js/jquery.widget.min.js') }}"></script>
             <script src="{{ asset('js/jquery.mousewheel.js') }}"></script>
             <script src="{{ asset('js/metro.min.js') }}"></script>
+            <script src="{{ asset('js/modal.js') }}"></script>
             <script src="{{ asset('js/chosen.jquery.js') }}"></script>
             <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
             <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-            <script src="{{ asset('js/jquery.simplemodal.1.4.4.min.js') }}"></script>
+{#            <script src="{{ asset('js/jquery.simplemodal.1.4.4.min.js') }}"></script>#}
             <script src="{{ asset('js/jquery.tablesorter.js') }}"></script>
             {% if ga_tracking %}
                 <script>

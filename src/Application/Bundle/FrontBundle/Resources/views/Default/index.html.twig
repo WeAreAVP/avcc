@@ -1,5 +1,25 @@
 {% extends 'FOSUserBundle::layout.html.twig' %}
 {% block body %}
+    <div id="messageModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true" style="display:none;">
+        <div class='modal-dialog'>
+            <div class='modal-content'>
+                <div class="modal-header">
+                    <h4 id="heading">Message</h4>
+                </div>
+                <form  role="form" action="{{ path("message_settings") }}" method="post">
+                    <div class="modal-body">
+                        <div id="messageText" style="display:none;">
+                            <p><span style="font-size:13px;">How to get started:<br/>1. Create Projects in the Settings menu<br/>2. Create Users in the Settings menu<br/>3. Assign Users to Projects or Projects to Users<br/>4. Create new records in the Records menu<br/></span></p>                        
+                            <input type="checkbox" id="check_message" name="check_message" value="1"  class="icheck-me" data-skin="square" data-color="blue"> Do not show this message again
+                        </div>
+                    </div>
+                    <div class="modal-footer" id="modal-footer">                        
+                        <input type="submit" value="Ok" id="_submit" name="_submit" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <h1 class="place-left">Dashboard</h1> 
         <div class="place-left" style="margin-top: 35px; margin-left: 5px;">
@@ -68,6 +88,18 @@
             obj.setBaseUrl(baseUrl);
             obj.setFormats(formats);
             obj.bindAll();
-        });
+        {% if check %}
+                $('#messageModal').show();
+                $("#heading").html('Message');
+                $("#messageText").show();
+            {#                $("#messageModal").modal('show');#}
+            {#                $("#messageModal").show();#}                
+{#                    $('#messageText p span').html();#}
+                    $('#messageModal').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+        {% endif %} 
+                });
     </script>
 {% endblock view_javascripts %}

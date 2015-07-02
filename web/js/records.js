@@ -125,7 +125,7 @@ function Records() {
             oTable =
                     $('#records').dataTable(
                     {
-                        "dom": '<"top"p><"clear">tir<"bottom"p>',
+                        "dom": '<"top"ip><"clear">tir<"bottom"p>',
                         "bProcessing": true,
                         "bServerSide": true,
                         retrieve: true,
@@ -137,7 +137,7 @@ function Records() {
                         },
                         "aoColumnDefs": [
                             {"bSortable": false, "aTargets": [0]}
-                        ],
+                        ], 
                         "aaSorting": [],
                         "sAjaxSource": ajaxSource,
                         "bStateSave": true,
@@ -166,7 +166,7 @@ function Records() {
                     });
             if (filter == 1) {
                 oTable.fnPageChange("first", true);
-            }
+            } 
             $('#records tbody').on('click', 'tr', function () {
 //                var id = this.id;
 //                var rowid = id.split('-');

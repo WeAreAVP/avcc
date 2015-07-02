@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -35,22 +37,34 @@ class ProjectsController extends Controller {
 
     /**
      * Lists all Projects entities.
-     *
+     * 
+     * @param integer $orgId
+     * 
      * @Route("/", name="projects")
+     * @Route("/{orgId}", name="organization_filters")
      * @Method("GET")
      * @Template()
      * @return stdObject
      */
-    public function indexAction() {
+    public function indexAction($orgId = null) {
+        $organizations = array();
         $em = $this->getDoctrine()->getManager();
-        if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
-            $entities = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
+        $org = array();
+        if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN') && $orgId) {
+            $entities = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $orgId));
+            $organizations = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
+        } else if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+            $entities = $organizations = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
         } else {
             $entities = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $this->getUser()->getOrganizations()));
         }
-
+        foreach ($organizations as $entity) {
+            $org[$entity->getOrganization()->getId()] = $entity->getOrganization()->getName();
+        }
         return array(
             'entities' => $entities,
+            'organization' => $org,
+            'org_id' => $orgId
         );
     }
 
@@ -254,7 +268,7 @@ class ProjectsController extends Controller {
             throw $this->createNotFoundException('Unable to find Projects entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id); 
+        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
         $usersList = $request->request->get('application_bundle_frontbundle_projects');

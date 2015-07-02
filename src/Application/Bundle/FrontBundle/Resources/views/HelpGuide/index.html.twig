@@ -24,8 +24,8 @@
             </thead>
             <tbody>
                 {% for entity in entities %}
-                    <tr class="sortTr" id="{{entity.id}}">
-                        <td><a href="{{ path('help_guide_show', { 'slug': entity.slug }) }}">{{ entity.title }}</a></td>
+                    <tr class="sortTr" id="{{entity.id}}">                        
+                        <td><i class="icon-menu on-left"></i>&nbsp;<a href="{{ path('help_guide_show', { 'slug': entity.slug }) }}">{{ entity.title }}</a></td>
                         <td>/help/{{ entity.slug }}</td>
                         <td><a class="icon-pencil" title="Edit" href="{{ path('help_guide_edit', { 'id': entity.id }) }}"></a> |
                             <a class="icon-remove" onclick="return confirm('Are you sure you want to delete selected term?')" title="Delete" href="{{ path('help_guide_delete', { 'id': entity.id }) }}"></a></td>

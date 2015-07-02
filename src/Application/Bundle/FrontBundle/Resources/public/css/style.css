@@ -140,3 +140,7 @@ span.has-error ul li{
     margin-left:20px;
     position:relative;
 }
+
+#records_info{
+   margin-left: 360px;
+}

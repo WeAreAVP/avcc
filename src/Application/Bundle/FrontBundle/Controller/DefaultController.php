@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -46,8 +48,6 @@ class DefaultController extends Controller {
     public function getParent() {
         return 'FOSUserBundle';
     }
-    
-   
 
     /**
      * Dashboard 
@@ -59,6 +59,7 @@ class DefaultController extends Controller {
      * @return type renders index.html.twig template
      */
     public function indexAction() {
+        $check = 0;
         $user = $this->container->get('security.context')->getToken()->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');
@@ -79,11 +80,24 @@ class DefaultController extends Controller {
         foreach ($result as $index => $format) {
             $formatsChart[] = array($format['format'], (int) $format['total']);
         }
-
+        $session = $this->get('session');
+        if (!$session->has('display_message')) {
+            if (in_array("ROLE_MANAGER", $this->getUser()->getRoles()) || in_array("ROLE_ADMIN", $this->getUser()->getRoles())) {
+                $check = $this->getUser()->getMessageDisplay();
+                $session->set('display_message', 0);
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $entity = $em->getRepository('ApplicationFrontBundle:Users')->find($this->getUser()->getId());
+                $entity->setMessageDisplay(0);
+                $em->persist($entity);
+                $em->flush();
+            }
+        }
         return $this->render('ApplicationFrontBundle:Default:index.html.twig', array(
                     'name' => $user->getUsername(),
                     'projects' => $projects,
-                    'formats' => json_encode($formatsChart)
+                    'formats' => json_encode($formatsChart),
+                    'check' => $check
                         )
         );
     }
@@ -98,7 +112,7 @@ class DefaultController extends Controller {
     public function loginAction(Request $request) {
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();
-        // get the error if any (works with forward and redirect -- see below)
+// get the error if any (works with forward and redirect -- see below)
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
             $error = $request->attributes->get(SecurityContext::AUTHENTICATION_ERROR);
         } elseif (null !== $session && $session->has(SecurityContext::AUTHENTICATION_ERROR)) {
@@ -109,14 +123,14 @@ class DefaultController extends Controller {
         }
 
         if ($error) {
-            // TODO: this is a potential security risk (see http://trac.symfony-project.org/ticket/9523)
+// TODO: this is a potential security risk (see http://trac.symfony-project.org/ticket/9523)
             $error = $error->getMessage();
             if (strtolower($error) === 'bad credentials') {
                 $error = "Invalid username or password.";
             }
         }
 
-        // last username entered by the user
+// last username entered by the user
         $lastUsername = (null === $session) ? '' : $session->get(SecurityContext::LAST_USERNAME);
 
         $csrfToken = $this->container->has('form.csrf_provider') ? $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate') : null;
@@ -219,7 +233,7 @@ class DefaultController extends Controller {
      * @return void
      */
     protected function sendEmailMessage($renderedTemplate, $fromEmail, $toEmail) {
-        // Render the email, use the first line as the subject, and the rest as the body
+// Render the email, use the first line as the subject, and the rest as the body
         $renderedLines = explode("\n", trim($renderedTemplate));
         $subject = $renderedLines[0];
         $body = implode("\n", array_slice($renderedLines, 1));
@@ -230,6 +244,26 @@ class DefaultController extends Controller {
                 ->setTo($toEmail)
                 ->setBody($body);
         $this->get('mailer')->send($message);
+    }
+
+    /**
+     * update message display settings
+     *
+     * @param Request $request
+     *
+     * @Route("/message/", name="message_settings")
+     * @Method("POST")
+     * @Template()
+     */
+    public function updateMessageSettingAction(Request $request) {
+        if ($request->request->get('check_message')) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('ApplicationFrontBundle:Users')->find($this->getUser()->getId());
+            $entity->setMessageDisplay(0);
+            $em->persist($entity);
+            $em->flush();
+        }
+        return $this->redirect($this->generateUrl('dashboard'));
     }
 
 }
