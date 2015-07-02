@@ -43,7 +43,7 @@
                                 <tr id="{{ audio.field }}" class="sortTr" data-sort="{{ audio.field }}" data-hide_it="{{audio.hidden}}" data-title="{{ audio.title }}"  data-is_required="{{audio.is_required}}">
                                     <td><i class="icon-menu on-left"></i>&nbsp; {{ audio.title }}</td>
                                     <td class="text-center">{% if audio.is_required==false %}
-                                        <input type="checkbox" name="audio{{loop.index}}" id="audio{{loop.index}}" {% if audio.hidden==1 %} checked='checked' {% endif%}onclick="hideIt(this)" vlaue="1" />
+                                        <input type="checkbox" name="audio{{loop.index}}" id="audio{{loop.index}}" {% if audio.hidden==1 %} checked='checked' {% endif%}onclick="hideIt(this)" value="1" />
                                         {% endif %}
                                         </td>
                                     </tr>
