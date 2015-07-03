@@ -52,9 +52,8 @@ class ProjectsType extends AbstractType {
                         return $er->createQueryBuilder('u');
                     },
                     'required' => false,
-                    'multiple' => true,
-                    'empty_data' => '',
-                    'mapped' => false,
+                    'multiple' => true,                    
+//                    'mapped' => false,
                 ))
                 ->add('hidden_projectUsers', 'hidden', array(
                     'mapped' => false,

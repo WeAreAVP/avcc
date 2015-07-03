@@ -75,6 +75,9 @@ function Users() {
         var orgId = 0;
         if (organizationId) {
             orgId = organizationId;
+        }
+        if ($('#userOrganization').val()) {
+            orgId = $('#userOrganization').val();
         } else {
             $('#userOrganization').change(function () {
                 orgId = $(this).val();
@@ -96,7 +99,7 @@ function Users() {
     }
 
     this.getProjects = function (id) {
-        url = baseUrl + 'getOrganizationProjects/' + id;
+        url = baseUrl + 'getOrganizationProjects/' + id + '/';
         $.ajax({
             type: "GET",
             url: url,

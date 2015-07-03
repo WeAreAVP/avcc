@@ -33,7 +33,7 @@
                 {% for errorItem in form.projectUsers.vars.errors %}
                     <span class="has-error text-danger" for="{{ form.projectUsers.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
-            </div>
+            </div>  
             <div class="input-control">
                 {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
                 or
@@ -49,46 +49,46 @@
     {% block view_javascripts %}
         <script type="text/javascript">
             $(document).ready(function () {
-            var baseUrl = '{{ path('get_users_of_org') }}';{% if organization %}
-                    $.ajax({
+                var baseUrl = '{{ path('get_users_of_org') }}';{% if organization %}
+                $.ajax({
                     type: 'POST',
-                            url: baseUrl,
-                            data: {
-                            organizationId: {{organization}}, selectedIds: 0
-                            },
-                            success: function (response) {
-                            $('#user_list').html(response);
-                                    $('#application_bundle_frontbundle_projects_projectUsers').chosen();
-                            }
-                    });{% else %}
-                    $('#user_label').hide();
-                    $('#user_list').hide();{% endif %}
+                    url: baseUrl,
+                    data: {
+                        organizationId:{{organization}}, selectedIds: 0
+                    },
+                    success: function (response) {
+                        $('#user_list').html(response);
+                        $('#application_bundle_frontbundle_projects_projectUsers').chosen();
+                    }
+                });{% else %}
+                $('#user_label').hide();
+                $('#user_list').hide();{% endif %}
             });
-                    function getUsers() {
-                    if ($('#application_bundle_frontbundle_projects_organization').val()) {
+            function getUsers() {
+                if ($('#application_bundle_frontbundle_projects_organization').val()) {
                     $.ajax({
-                    type: 'POST',
-                            url: '{{ path('get_users_of_org') }}',
-                            data: {
+                        type: 'POST',
+                        url: '{{ path('get_users_of_org') }}',
+                        data: {
                             organizationId: $('#application_bundle_frontbundle_projects_organization').val(), selectedIds: 0
-                            },
-                            success: function (response) {
-                            if (response){
-                            $('#user_label').show();
-                                    $('#user_list').show();
-                                    $('#user_list').html(response);
-                                    $('#application_bundle_frontbundle_projects_projectUsers').chosen();
-                            } else{
-                            $('#user_label').hide();
-                                    $('#user_list').hide();
+                        },
+                        success: function (response) {
+                            if (response) {
+                                $('#user_label').show();
+                                $('#user_list').show();
+                                $('#user_list').html(response);
+                                $('#application_bundle_frontbundle_projects_projectUsers').chosen();
+                            } else {
+                                $('#user_label').hide();
+                                $('#user_list').hide();
                             }
-                            }
+                        }
                     });
-                    } else {
+                } else {
                     $('#user_label').hide();
-                            $('#user_list').hide();
-                    }
-                    }
+                    $('#user_list').hide();
+                }
+            }
 
         </script>
     {% endblock %}
