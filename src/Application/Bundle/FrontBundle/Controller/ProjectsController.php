@@ -459,7 +459,7 @@ class ProjectsController extends Controller {
      * @param integer $id User id
      * @param integer $status User status id
      * 
-     * @Route("/changeprojectstatus/{id}/{status}", name="project_changestatus")
+     * @Route("/changeprojectstatus/{id}/{status}/", name="project_changestatus")
      * @Method("GET")
      * @Template()
      * @return redirection

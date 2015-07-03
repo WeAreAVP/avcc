@@ -460,7 +460,7 @@ class UsersController extends Controller {
      * @param integer $id User id
      * @param integer $status User status id
      * 
-     * @Route("/changestatus/{id}/{status}", name="user_changestatus")
+     * @Route("/changestatus/{id}/{status}/", name="user_changestatus")
      * @Method("GET")
      * @Template()
      * @return redirection
