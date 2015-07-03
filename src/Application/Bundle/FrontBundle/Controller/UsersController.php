@@ -194,7 +194,7 @@ class UsersController extends Controller {
     /**
      * Displays a form to create a new Users entity.
      *
-     * @Route("/new", name="users_new")
+     * @Route("/new/", name="users_new")
      * @Method("GET")
      * @Template()
      *
@@ -220,7 +220,7 @@ class UsersController extends Controller {
      *
      * @param integer $id
      *
-     * @Route("/{id}", name="users_show")
+     * @Route("/{id}/", name="users_show")
      * @Method("GET")
      * @Template()
      *
@@ -249,7 +249,7 @@ class UsersController extends Controller {
      *
      * @param integer $id user id
      *
-     * @Route("/{id}/edit", name="users_edit")
+     * @Route("/{id}/edit/", name="users_edit")
      * @Method("GET")
      * @Template()
      *
@@ -353,7 +353,7 @@ class UsersController extends Controller {
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param integer                                   $id
      *
-     * @Route("/{id}", name="users_delete")
+     * @Route("/{id}/", name="users_delete")
      * @Method("DELETE")
      *
      * @return redirect to user list page
@@ -440,7 +440,7 @@ class UsersController extends Controller {
      *
      * @param integer $orgId Organization id
      *
-     * @Route("/getOrganizationProjects/{orgId}", name="record_get_project")
+     * @Route("/getOrganizationProjects/{orgId}/", name="record_get_project")
      * @Method("GET")
      * @Template()
      * @return template

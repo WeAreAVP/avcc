@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -51,7 +53,8 @@ class ProjectsType extends AbstractType {
                     },
                     'required' => false,
                     'multiple' => true,
-                    'empty_data' => ''
+                    'empty_data' => '',
+                    'mapped' => false,
                 ))
                 ->add('hidden_projectUsers', 'hidden', array(
                     'mapped' => false,

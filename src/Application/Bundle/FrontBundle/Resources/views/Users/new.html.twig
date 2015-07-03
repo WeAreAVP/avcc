@@ -90,7 +90,7 @@
     <script src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.js"></script>
     <script type="text/javascript">
         $('#proj_error').hide();
-        $("form").submit(function (event) {
+        {#$("form").submit(function (event) {
             var role = $('#roles').val();
             if (role == 'ROLE_CATALOGER' || role == 'ROLE_USER') {
                 if ($("#userProjects").val()) {
@@ -104,7 +104,7 @@
                 $('#proj_error').hide();
                 return true;
             }
-        });
+        });#}
         $(document).ready(function () {
             var baseUrl = '{{ path('users') }}';
             var organizationId = '{{ organizationId }}';

@@ -148,7 +148,7 @@ class ProjectsController extends Controller {
     /**
      * Displays a form to create a new Projects entity.
      *
-     * @Route("/new", name="projects_new")
+     * @Route("/new/", name="projects_new")
      * @Method("GET")
      * @Template()
      * @return array project entity and form
@@ -172,7 +172,7 @@ class ProjectsController extends Controller {
      *
      * @param integer $id project id
      *
-     * @Route("/{id}", name="projects_show")
+     * @Route("/{id}/", name="projects_show")
      * @Method("GET")
      * @Template()
      *
@@ -200,7 +200,7 @@ class ProjectsController extends Controller {
      *
      * @param integer $id project id
      *
-     * @Route("/{id}/edit", name="projects_edit")
+     * @Route("/{id}/edit/", name="projects_edit")
      * @Method("GET")
      * @Template()
      * @return array
@@ -332,7 +332,7 @@ class ProjectsController extends Controller {
      * @param Request $request
      * @param integer $id
      *
-     * @Route("/{id}", name="projects_delete")
+     * @Route("/{id}/", name="projects_delete")
      * @Method("DELETE")
      * @return Redirect
      */
@@ -404,7 +404,7 @@ class ProjectsController extends Controller {
      *
      * @param Request $request
      *
-     * @Route("/addRec", name="project_add_rec")
+     * @Route("/addRec/", name="project_add_rec")
      * @Method("POST")
      * @Template()
      * @return redirect
@@ -432,7 +432,7 @@ class ProjectsController extends Controller {
      *
      * @param Request $request
      *
-     * @Route("/get_user", name="get_users_of_org")
+     * @Route("/get_user/", name="get_users_of_org")
      * @Method("POST")
      * @Template()
      * @return template

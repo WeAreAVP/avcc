@@ -132,7 +132,7 @@ function Records() {
                         destroy: true,
                         "iDisplayLength": 100,
                         "language": {
-                            "info": "Showing _START_ - _END_ of _MAX_",
+                            "info": "Showing _START_ - _END_ of _TOTAL_",
                             "infoFiltered": ''
                         },
                         "aoColumnDefs": [
