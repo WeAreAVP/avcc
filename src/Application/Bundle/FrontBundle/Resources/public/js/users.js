@@ -73,6 +73,7 @@ function Users() {
 
     this.getOrganizationProjects = function () {
         var orgId = 0;
+        console.log(organizationId);
         if (organizationId) {
             orgId = organizationId;
         }

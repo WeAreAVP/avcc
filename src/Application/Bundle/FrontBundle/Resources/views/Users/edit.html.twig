@@ -65,7 +65,7 @@
                 {% endfor %}
             </div>
             <div class="projectsDiv">
-                <label>Projects</label>
+                <label>Assign Projects</label>
                 <div class="input-control select" data-role="input-control">
                     {{ form_widget(edit_form.userProjects, {id:'userProjects', attr: {class:'size4'} }) }}
                     {% for errorItem in edit_form.userProjects.vars.errors %}

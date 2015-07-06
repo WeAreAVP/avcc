@@ -52,7 +52,7 @@ class ProjectsController extends Controller {
         $org = array();
         if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN') && $orgId) {
             $entities = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $orgId));
-            $organizations = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
+            $organizations = $em->getRepository('ApplicationFrontBundle:Organizations')->findBy(array('status' => 1));
         } else if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
             $entities = $organizations = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
         } else {

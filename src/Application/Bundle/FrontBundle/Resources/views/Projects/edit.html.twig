@@ -27,7 +27,7 @@
                     {% endfor %}
                 </div>
             {% endif %}
-            <label id="user_label">Users</label>
+            <label id="user_label">Assign Users</label>
             <div class="input-control select" data-role="input-control" id="user_list">
                 {{ form_widget(edit_form.projectUsers, {attr: {class:'size4'} }) }}
                 {% for errorItem in edit_form.projectUsers.vars.errors %}
@@ -52,7 +52,7 @@
             $(document).ready(function () {
                 $('#user_label').hide();
                 $('#user_list').hide();
-                $('#application_bundle_frontbundle_projects_projectUsers').chosen();
+                $('#application_bundle_frontbundle_projects_projectUsers').chosen({placeholder_text_multiple: 'Select Users'});
                 var baseUrl = '{{ path('get_users_of_org') }}';
                 var org_id = 0;
                 var seletedusers = 0;
@@ -87,7 +87,7 @@
                                 $('#user_label').show();
                                 $('#user_list').show();
                                 $('#user_list').html(response);
-                                $('#application_bundle_frontbundle_projects_projectUsers').chosen();
+                                $('#application_bundle_frontbundle_projects_projectUsers').chosen({placeholder_text_multiple: 'Select Users'});
                                 $('#application_bundle_frontbundle_projects_hidden_projectUsers').val($('#application_bundle_frontbundle_projects_projectUsers').val())
                             } else {
                                 $('#user_label').hide();

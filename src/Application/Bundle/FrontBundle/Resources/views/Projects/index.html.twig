@@ -8,9 +8,8 @@
                 <a href="{{ path('projects_new') }}"><i class="icon-plus"></i> New</a>
             </small>
         {% endif %}
-
     </h1>
-    {% if is_granted('ROLE_SUPER_ADMIN') %}
+    {% if is_granted('ROLE_SUPER_ADMIN') %}     
         <div class="button-dropdown place-right">
             <button class="dropdown-toggle" id="org_text">Select Organization</button>
             <ul class="dropdown-menu place-right" data-role="dropdown" id="org_list">
@@ -48,7 +47,7 @@
                         <td>{% if entity.updatedOn %}{{ entity.updatedOn|date('Y-m-d H:i:s') }}{% endif %}</td>
                         {% if is_granted('ROLE_MANAGER') %}
                             <td>
-                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                {% if is_granted('ROLE_ADMIN') %}
                                     {% if entity.status == true %}
                                         {% set status = "Active" %}
                                         {% set statusId = "1" %}
@@ -64,7 +63,7 @@
                                     </a> |
                                 {% endif %}
                                 <a title="Edit" class="icon-pencil" href="{{ path('projects_edit', { 'id': entity.id }) }}"></a>
-                                {% if is_granted('ROLE_SUPER_ADMIN') %} | 
+                                {% if is_granted('ROLE_ADMIN') %} | 
                                     <a class="icon-remove" title="Delete" href="{{ path('projects_delete', { 'id': entity.id }) }}"></a>
                                 {% endif %}
                             </td>
@@ -75,17 +74,45 @@
         </table>
     </div>
 
-
-
-
-
-
-
-
-
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#projectsTable").tablesorter();
+            $('#projectsTable').dataTable({
+                "aoColumnDefs": [
+                    {"bSearchable": false, "aTargets": [0]},
+                    {"bSearchable": false, "aTargets": [2]},
+                    {"bSearchable": false, "aTargets": [3]},
+                    {"bSearchable": false, "aTargets": [4]}
+                ]});
+        {#            $("#projectsTable").tablesorter();#}
+            $(function () {
+                var availableTags = [
+                    "ActionScript",
+                    "AppleScript",
+                    "Asp",
+                    "BASIC",
+                    "C",
+                    "C++",
+                    "Clojure",
+                    "COBOL",
+                    "ColdFusion",
+                    "Erlang",
+                    "Fortran",
+                    "Groovy",
+                    "Haskell",
+                    "Java",
+                    "JavaScript",
+                    "Lisp",
+                    "Perl",
+                    "PHP",
+                    "Python",
+                    "Ruby",
+                    "Scala",
+                    "Scheme"
+                ];
+                $("#tags").autocomplete({
+                    source: availableTags
+                });
+            });
             var location = window.location.href;
             var path = location.split('/');
             if ($.isNumeric(path[path.length - 1])) {
@@ -96,7 +123,8 @@
                     html = '<li><a href="{{ path('projects') }}">Reset</a></li>';
                     $('#org_list').append(html);
                 }
+                }
             }
-        });
+            );
     </script>
 {% endblock %}

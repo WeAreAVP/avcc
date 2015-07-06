@@ -3,13 +3,13 @@
     <div id="messageModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true" style="display:none;">
         <div class='modal-dialog'>
             <div class='modal-content'>
-                <div class="modal-header">
-                    <h4 id="heading">Message</h4>
+                <div class="modal-header" style="background-color: black">
+                    <h4 id="heading" style="color: white">How to get started</h4>
                 </div>
                 <form  role="form" action="{{ path("message_settings") }}" method="post">
                     <div class="modal-body">
                         <div id="messageText" style="display:none;">
-                            <p><span style="font-size:13px;">How to get started:<br/>1. Create Projects in the Settings menu<br/>2. Create Users in the Settings menu<br/>3. Assign Users to Projects or Projects to Users<br/>4. Create new records in the Records menu<br/></span></p>                        
+                            <p><span style="font-size:13px;">1. Create Projects in the Settings menu<br/>2. Create Users in the Settings menu<br/>3. Assign Users to Projects or Projects to Users<br/>4. Create new records in the Records menu<br/></span></p>                        
                             <input type="checkbox" id="check_message" name="check_message" value="1"  class="icheck-me" data-skin="square" data-color="blue"> Do not show this message again
                         </div>
                     </div>
@@ -90,7 +90,6 @@
             obj.bindAll();
         {% if check %}
                 $('#messageModal').show();
-                $("#heading").html('Message');
                 $("#messageText").show();
             {#                $("#messageModal").modal('show');#}
             {#                $("#messageModal").show();#}                
