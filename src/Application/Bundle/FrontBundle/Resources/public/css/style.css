@@ -142,5 +142,20 @@ span.has-error ul li{
 }
 
 #records_info{
-   margin-left: 300px;
+    margin-left: 300px;
+}
+
+#projectsTable_filter{
+    float: left
+}
+
+#_roles_chosen{
+    float: right;
+    width: 128px;
+    margin-top: -34px;
+}
+
+#DataTables_Table_0_filter{
+    float: left;
+    width: 400px;
 }

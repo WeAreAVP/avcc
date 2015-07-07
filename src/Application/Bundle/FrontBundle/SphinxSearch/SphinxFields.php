@@ -62,6 +62,8 @@ class SphinxFields
         $this->indexFields['generation'] = ($this->record->getGeneration()) ? (string) $this->record->getGeneration() : "";
         $this->indexFields['project'] = $this->indexFields['s_project'] = ($this->record->getProject()) ? $this->record->getProject()->getName() : "";
         $this->indexFields['organization_id'] = ($this->record->getProject()) ? $this->record->getProject()->getOrganization()->getId() : "";
+        $this->indexFields['organization_name'] = ($this->record->getProject()) ? $this->record->getProject()->getOrganization()->getName() : "";
+        $this->indexFields['s_organization_name'] = ($this->record->getProject()) ? $this->record->getProject()->getOrganization()->getName() : "";
         $this->indexFields['user_id'] = ($this->record->getUser()) ? $this->record->getUser()->getId() : "";
         $this->indexFields['user_name'] = ($this->record->getUser()) ? (string) $this->record->getUser()->getName() : "";
         $this->indexFields['copyright_restrictions'] = ($this->record->getCopyrightRestrictions()) ? (string) $this->record->getCopyrightRestrictions() : "";

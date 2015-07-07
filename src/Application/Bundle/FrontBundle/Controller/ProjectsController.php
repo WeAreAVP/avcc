@@ -41,7 +41,6 @@ class ProjectsController extends Controller {
      * @param integer $orgId
      * 
      * @Route("/", name="projects")
-     * @Route("/{orgId}", name="organization_filters")
      * @Method("GET")
      * @Template()
      * @return stdObject
@@ -148,7 +147,7 @@ class ProjectsController extends Controller {
     /**
      * Displays a form to create a new Projects entity.
      *
-     * @Route("/new/", name="projects_new")
+     * @Route("/new", name="projects_new")
      * @Method("GET")
      * @Template()
      * @return array project entity and form
@@ -172,7 +171,7 @@ class ProjectsController extends Controller {
      *
      * @param integer $id project id
      *
-     * @Route("/{id}/", name="projects_show")
+     * @Route("/{id}", name="projects_show")
      * @Method("GET")
      * @Template()
      *
@@ -200,7 +199,7 @@ class ProjectsController extends Controller {
      *
      * @param integer $id project id
      *
-     * @Route("/{id}/edit/", name="projects_edit")
+     * @Route("/{id}/edit", name="projects_edit")
      * @Method("GET")
      * @Template()
      * @return array
@@ -332,7 +331,7 @@ class ProjectsController extends Controller {
      * @param Request $request
      * @param integer $id
      *
-     * @Route("/{id}/", name="projects_delete")
+     * @Route("/{id}", name="projects_delete")
      * @Method("DELETE")
      * @return Redirect
      */
@@ -404,7 +403,7 @@ class ProjectsController extends Controller {
      *
      * @param Request $request
      *
-     * @Route("/addRec/", name="project_add_rec")
+     * @Route("/addRec", name="project_add_rec")
      * @Method("POST")
      * @Template()
      * @return redirect
@@ -432,23 +431,29 @@ class ProjectsController extends Controller {
      *
      * @param Request $request
      *
-     * @Route("/get_user/", name="get_users_of_org")
+     * @Route("/get_user", name="get_users_of_org")
      * @Method("POST")
      * @Template()
      * @return template
      */
     public function getUsersAction(Request $request) {
+        $new_users = array();
         $id = $request->request->get('organizationId');
         $selectedIds = $request->request->get('selectedIds');
         $users = '';
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $id));
+        foreach ($users as $value) {
+            if (!in_array("ROLE_SUPER_ADMIN", $value->getRoles()) && !in_array("ROLE_ADMIN", $value->getRoles()) && !in_array("ROLE_MANAGER", $value->getRoles())) {
+                $new_users[] = $value;
+            }
+        }
         $selectedUserId = array();
         if ($selectedIds) {
             $selectedUserId = $selectedIds;
         }
         return $this->render('ApplicationFrontBundle:Projects:getUsers.html.php', array(
-                    'users' => $users,
+                    'users' => $new_users,
                     'selectedUserId' => $selectedUserId,
         ));
     }
@@ -459,7 +464,7 @@ class ProjectsController extends Controller {
      * @param integer $id User id
      * @param integer $status User status id
      * 
-     * @Route("/changeprojectstatus/{id}/{status}/", name="project_changestatus")
+     * @Route("/changeprojectstatus/{id}/{status}", name="project_changestatus")
      * @Method("GET")
      * @Template()
      * @return redirection

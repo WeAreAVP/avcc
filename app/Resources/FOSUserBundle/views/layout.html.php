@@ -34,6 +34,7 @@
 
         <script src="<?php echo $view['assets']->getUrl('js/jquery.maskedinput.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/modal.js') ?>"></script>
+        <script src="<?php echo $view['assets']->getUrl('js/jquery.dataTables.min.js') ?>"></script>
         <script
             src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-2.min.js"
             data-apikey="278dc8db47730e343f681cc0df041c33">

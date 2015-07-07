@@ -125,7 +125,7 @@ function Records() {
             oTable =
                     $('#records').dataTable(
                     {
-                        "dom": '<"top"ip><"clear">tir<"bottom"p>',
+                        "dom": '<"top"pi><"clear">tir<"bottom"p>',
                         "bProcessing": true,
                         "bServerSide": true,
                         retrieve: true,

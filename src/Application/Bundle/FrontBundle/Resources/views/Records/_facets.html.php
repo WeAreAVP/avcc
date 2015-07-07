@@ -64,6 +64,21 @@
                         <div class="clearfix"></div>
 
                     <?php } ?>
+                        <?php
+                    if (isset($facetData['organizationName']) && $facetData['organizationName'] != '') {
+                        ?>
+                        <div id="mediaType_main" class="chekBoxFacet">
+                            <div class="filter-fileds"><b>Media Type</b></div>
+                            <?php
+                            foreach ($facetData['organizationName'] as $value) {
+                                $id = time() . rand(0, 1000);
+                                ?>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'organizationName_' . name_slug($value); ?>" data-type="organizationName"></i></div>
+                            <?php } ?>
+                        </div>
+                        <div class="clearfix"></div>
+
+                    <?php } ?>
                     <?php
                     if (isset($facetData['format']) && $facetData['format'] != '') {
                         ?>
@@ -241,6 +256,18 @@
                     </ul> 
                 </li>
             <?php endif; ?>
+                <?php if ($view['security']->isGranted('ROLE_SUPER_ADMIN')): ?>
+                <?php if (count($facets['organizationNames']) > 0): ?>
+                <li>
+                    <a class="dropdown-toggle" href="#">Organizations</a>
+                    <ul data-role="dropdown" <?php echo isset($facetData['organizationNames']) ? 'style="display:block"' : 'style="display:none"'; ?>>
+                        <?php foreach ($facets['organizationNames'] as $mediaType): ?>
+                            <li><a href="javascript://"><label for="<?php echo 'organizationNames_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>"><input id='<?php echo 'organizationNames_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>' <?php echo (isset($facetData['organizationName']) && in_array($mediaType['organization_names'], $facetData['organizationName'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="organizationName[]" value="<?php echo $mediaType['organization_name'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;"><?php echo $mediaType['organization_name'] ?> (<?php echo $mediaType['total'] ?>)</div></label></a></li>
+                        <?php endforeach; ?>
+                    </ul> 
+                </li>
+            <?php endif; 
+            endif;?>
             <?php if (count($facets['formats']) > 0): ?>
                 <li>
                     <a class="dropdown-toggle" href="#">Format</a>
