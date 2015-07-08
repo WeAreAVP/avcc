@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\HelpGuide;
+use Application\Bundle\FrontBundle\Entity\HelpGuideRepository;
 use Application\Bundle\FrontBundle\Form\HelpGuideType;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
@@ -61,23 +64,37 @@ class HelpGuideController extends Controller {
             'entities' => $entities,
         );
     }
-    
+
     /**
      * Lists all AudioRecords entities.
      *
+     * @param Request $request
+     * 
      * @Route("/list", name="help_guide_list")
      * @Method("GET")
      * @Template()
      * @return array
      */
-    public function listAction() {
+    public function listAction(Request $request) {
+        $search = $request->query->get('search');
         $entities = '';
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('ApplicationFrontBundle:HelpGuide')->findBy(array(), array('order' => 'ASC'));
+        if ($search) {
+            $data = array();
+            $entities = $em->getRepository('ApplicationFrontBundle:HelpGuide')->searchHelpGuide($search);
+            foreach ($entities as $key => $entity) {
+                $data[$key]['slug'] = $entity->getSlug();
+                $data[$key]['title'] = $entity->getTitle();
+            }
+            echo json_encode(array('entities' => $data, 'search_val' => $search));
+            exit;
+        } else {
+            $entities = $em->getRepository('ApplicationFrontBundle:HelpGuide')->findBy(array(), array('order' => 'ASC'));
+        }
 
         return array(
             'entities' => $entities,
+            'search_val' => $search
         );
     }
 
@@ -204,8 +221,8 @@ class HelpGuideController extends Controller {
         $em->flush();
         return $this->redirect($this->generateUrl('help_guide'));
     }
-    
-     /**
+
+    /**
      * Displays a form to edit an existing Bases entity.
      *
      * @param integer $id
@@ -215,8 +232,7 @@ class HelpGuideController extends Controller {
      * @Template()
      * @return array
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles())) {
             throw new AccessDeniedException('Access Denied.');
         }
@@ -243,8 +259,7 @@ class HelpGuideController extends Controller {
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(HelpGuide $entity)
-    {
+    private function createEditForm(HelpGuide $entity) {
         $form = $this->createForm(new HelpGuideType(), $entity, array(
             'action' => $this->generateUrl('help_guide_update', array('id' => $entity->getId())),
             'method' => 'PUT',
@@ -266,8 +281,7 @@ class HelpGuideController extends Controller {
      * @Template("ApplicationFrontBundle:HelpGuide:edit.html.twig")
      * @return array
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:HelpGuide')->find($id);
@@ -291,7 +305,8 @@ class HelpGuideController extends Controller {
             'edit_form' => $editForm->createView()
         );
     }
-/**
+
+    /**
      * update field order
      *
      * @param Request $request
@@ -309,13 +324,13 @@ class HelpGuideController extends Controller {
             $entity = $em->getRepository('ApplicationFrontBundle:HelpGuide')->find($ads);
             if ($entity) {
                 $entity->setOrder($count);
-               // $em->persist($entity);
+                // $em->persist($entity);
                 $em->flush();
                 $count = $count + 1;
             }
         }
         echo json_encode(array('success' => 'true'));
         exit;
-    } 
+    }
 
 }

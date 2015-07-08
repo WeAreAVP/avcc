@@ -9,26 +9,6 @@
         {% endif %}
 
     </h1>
-    {% if is_granted('ROLE_SUPER_ADMIN') %}
-        {#<div class="button-dropdown place-right" style="margin-left: 12px;">
-            <button class="dropdown-toggle" id="org_text">Select Organization</button>
-            <ul class="dropdown-menu place-right" data-role="dropdown" id="org_list">
-                {% for key,value in organization %}
-                    <li><a href="{{ path('organization_filter') }}/{{key}}/{{role_id}}" id="org{{key}}" >{{value}}</a></li>
-                    {% endfor %} 
-            </ul>
-        </div>
-        <div class="button-dropdown place-right">
-            <button class="dropdown-toggle" id="role_text">Select Role</button>
-            <ul class="dropdown-menu place-right" data-role="dropdown" id="role_list">
-                <li><a href="{{ path('organization_filter') }}/{{ org_id }}/1" id="role1">Super Admin</a></li>
-                <li><a href="{{ path('organization_filter') }}/{{ org_id }}/2" id="role2">Admin</a></li>
-                <li><a href="{{ path('organization_filter') }}/{{ org_id }}/3" id="role3">Manager</a></li>
-                <li><a href="{{ path('organization_filter') }}/{{ org_id }}/4" id="role4">Cataloger</a></li>
-                <li><a href="{{ path('organization_filter') }}/{{ org_id }}/5" id="role5">User</a></li>
-            </ul>
-        </div>#}
-    {% endif %}
     <div class="table-responsive" style="padding-top: 25px;">
         <table class="table bordered tablesorter">
             <thead>
@@ -113,32 +93,30 @@
                 $('.table').dataTable({
                     "bPaginate": false,
                     "aoColumnDefs": [
-                        {"bSearchable": false, "aTargets": [0, 1, 4]},{#{"bSearchable": false, "aTargets": [1]},
-            {"bSearchable": false, "aTargets": [2]},
-            {"bSearchable": false, "aTargets": [4]}#}
+                        {"bSearchable": false, "aTargets": [0, 1, 4]},
                     ],
-                    "dom": '<"top"f><"clear">t<"bottom">',
-                    "order"
-                            : []
+                    "dom": '<"top"><"clear">t<"bottom">',
+                    "order": []
                 });
-                $('#DataTables_Table_0_filter label input').attr('placeholder', 'Organization');
-                var html = '<select id="_roles" multiple="multiple">' +
+                var field = '<input type="text" placeholder="Search organization" id="_organization" style="height: 29px;">';
+                $('.top').append(field);
+                var html = '<select id="_roles" multiple="multiple" style="min-width: 200px"> ' +
                         '<option value=""></option>' +
-                        '<option value="Super Admin">Super Admin</option>' +
+                        '<option value="Super admin">Super Admin</option>' +
                         '<option value="Admin">Admin</option>' +
                         '<option value="Manager">Manager</option>' +
                         '<option value="Cataloger">Cataloger</option>' +
                         '<option value="User">User</option>' +
                         '</select>';
-                $('#DataTables_Table_0_filter').append(html);
+                $('.top').append(html);
                 $('#_roles').chosen({placeholder_text_multiple: 'Select Roles'});
-
+                $('#_roles_chosen').removeAttr( "style" );
+                var table = $('.table').DataTable();
                 $('#_roles').change(function () {
-                    var table = $('.table').DataTable();
                     var str = '';
                     if ($('#_roles').val()) {
                         var roles = $('#_roles').val();
-                        for(i = 0; i < roles.length; i++){
+                        for (i = 0; i < roles.length; i++) {
                             if (str == '') {
                                 str = roles[i];
                             } else {
@@ -146,43 +124,19 @@
                             }
                         }
             {#                                table.fnFilter( $(this).val(), 2 );#}
-                            table.column(2).search(str, true, false).draw();
+                            table.column(2).search(str, true, false, false).draw();
 
                         } else {
-                            table.column(2).search('Super Admin|Admin|Manager|Cataloger|User', true, false).draw();
+                            table.column(2).search('Super admin|Admin|Manager|Cataloger|User', true, false).draw();
                         }
+                    });
+
+                    $("#_organization").keyup(function () {                        
+                        table.column(3).search($("#_organization").val(), true, false).draw();
                     });
         {% else %}   
                     $(".table").tablesorter();
         {% endif %}
-        {#            $(".table").tablesorter();#}
-        {#  var location = window.location.href;
-          var path = location.split('/');
-          if ($.isNumeric(path[path.length - 1])) {
-              var org_id = path[path.length - 2];
-              var role_id = path[path.length - 1];
-              var html;
-              if (org_id != 0) {
-                  $('#org_text').text($('#org' + org_id).text());
-                  if (role_id == 0) {
-                      html = '<li><a href="{{ path('users') }}">Reset</a></li>';
-                      $('#org_list').append(html);
-                  } else {
-                      html = '<li><a href="{{ path('organization_filter') }}/0/' + role_id + '">Reset</a></li>';
-                      $('#org_list').append(html);
-                  }
-              }
-              if (role_id != 0) {
-                  $('#role_text').text($('#role' + role_id).text());
-                  if (org_id == 0) {
-                      html = '<li><a href="{{ path('users') }}">Reset</a></li>';
-                      $('#role_list').append(html);
-                  } else {
-                      html = '<li><a href="{{ path('organization_filter') }}/' + org_id + '/0">Reset</a></li>';
-                      $('#role_list').append(html);
-                  }
-              }
-          }#}
               }
               );
     </script>

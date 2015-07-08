@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -92,20 +94,34 @@ class RecordsController extends Controller {
     public function indexAction(Request $request, $dialog = null) {
 
         $em = $this->getDoctrine()->getManager();
-
+        $session = $this->getRequest()->getSession();
         $shpinxInfo = $this->getSphinxInfo();
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
 
         $isAjax = FALSE;
         $searchOn = $this->criteria();
-        
+
         $criteria = $searchOn['criteriaArr'];
         if ($request->isXmlHttpRequest()) {
             $isAjax = TRUE;
             $this->getFacetRequest($request);
             $searchOn = $this->criteria();
             $criteria = $searchOn['criteriaArr'];
+            $facetData = $session->get('facetData');
+            foreach ($facetData as $key => $value) {
+                if ($key == 'organizationName') {
+                    foreach ($value as $count => $org) {
+                        $org_info = $em->getRepository('ApplicationFrontBundle:Organizations')->findOneBy(array('id' => $org));
+                        $new_data[$org] = $org_info->getName();
+                    }
+                    $session->remove('facetData');
+                    $session->set('organization', $new_data);
+                }
+            }
         }
+//        echo '<pre>';
+//        print_r($criteria);
+//        exit;
         $parentFacet = isset($searchOn['parent_facet']) ? $searchOn['parent_facet'] : null;
         $facet['mediaType'] = $this->removeEmpty($sphinxSearch->facetSelect('media_type', $this->getUser(), $criteria, $parentFacet), 'media_type');
         $facet['formats'] = $this->removeEmpty($sphinxSearch->facetSelect('format', $this->getUser(), $criteria, $parentFacet), 'format');
@@ -118,7 +134,8 @@ class RecordsController extends Controller {
         $facet['discDiameters'] = $this->removeEmpty($sphinxSearch->facetSelect('disk_diameter', $this->getUser(), $criteria, $parentFacet), 'disk_diameter');
         $facet['acidDetection'] = $this->removeEmpty($sphinxSearch->facetSelect('acid_detection', $this->getUser(), $criteria, $parentFacet), 'acid_detection');
         $facet['collectionNames'] = $this->removeEmpty($sphinxSearch->facetSelect('collection_name', $this->getUser(), $criteria, $parentFacet), 'collection_name');
-        $facet['organizationNames'] = $this->removeEmpty($sphinxSearch->facetSelect('organization_name', $this->getUser(), $criteria, $parentFacet), 'organization_name');
+        $facet['organizationNames'] = $this->removeEmpty($sphinxSearch->facetSelect('organization_name', $this->getUser(), $criteria, $parentFacet, null, 'organization_id', 1), 'organization_name');
+
         $organizations = $em->getRepository('ApplicationFrontBundle:Organizations')->findAll();
         $view = array(
             'facets' => $facet,
@@ -127,6 +144,7 @@ class RecordsController extends Controller {
             'organizations' => $organizations,
             'notification' => $dialog
         );
+
         if ($request->isXmlHttpRequest()) {
             $html = $this->render('ApplicationFrontBundle:Records:index.html.php', $view);
             echo json_encode(array('html' => $html->getContent()));
@@ -554,14 +572,14 @@ class RecordsController extends Controller {
             $entityArray['recordingStandard'] = ($entity->getVideoRecord()->getRecordingStandard()) ? $entity->getVideoRecord()->getRecordingStandard()->getName() : "";
         }
 
-        
+
         if ($entity->getProject()->getViewSetting()) {
             $userViewSettings = $entity->getProject()->getViewSetting();
         } else {
             $userViewSettings = $fieldsObj->getDefaultOrder();
         }
 
-        
+
         $userViewSettings = json_decode($userViewSettings, true);
         return $this->render('ApplicationFrontBundle:Records:show.html.php', array(
                     'entity' => $entity,

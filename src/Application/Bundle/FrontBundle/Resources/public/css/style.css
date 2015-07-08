@@ -142,7 +142,8 @@ span.has-error ul li{
 }
 
 #records_info{
-    margin-left: 300px;
+    float: right;
+    margin-right: 10px;
 }
 
 #projectsTable_filter{
@@ -150,12 +151,12 @@ span.has-error ul li{
 }
 
 #_roles_chosen{
-    float: right;
-    width: 128px;
-    margin-top: -34px;
+    min-width: 200px;
+    margin-left: 10px;
 }
 
 #DataTables_Table_0_filter{
     float: left;
     width: 400px;
 }
+

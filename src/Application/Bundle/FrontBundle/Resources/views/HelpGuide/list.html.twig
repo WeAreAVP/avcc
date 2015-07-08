@@ -4,12 +4,74 @@
 
 
     <h1>Help Guide</h1>
+    <div id="search_box" style="margin-top: 25px;">       
+        <input type="text" class="text" id="search" placeholder="Search" value="{{search_val}}" style="height: 35px;">
+    </div>
     <div>
-        <ul>
+        <ul id="listing">
             {% for entity in entities %}
                 <li><a href="{{ path('help_guide_show', { 'slug': entity.slug }) }}">{{ entity.title }}</a></li>
                 {% endfor %}
         </ul>
     </div>
+    <script>
+        $(document).ready(function () {
+            var check = '';
+            var count = 0;
+            var show_url = '{{ path('help_guide') }}';
+            $('#search').keypress(function (e) {
+                if (e.which == 13) {
+                    if (check != $('#search').val()) {
+                        $.ajax({
+                            type: 'GET',
+                            url: '{{ path('help_guide_list') }}',
+                            data: {search: $('#search').val()},
+                            dataType: 'json',
+                            success: function (response)
+                            {
+                                var html = '';
+                                if (response.entities.length != 0) {
+                                    for (i = 0; i < response.entities.length; i++) {
+                                        html = html + '<li><a href="' + show_url + response.entities[i].slug + '">' + response.entities[i].title + '</a></li>';
+                                    }
+                                } else {
+                                    html = 'No record found';
+                                }
+                                $('#listing').html(html);
+                                if (count == 0) {
+                                    $('#search_box').append('<a title="Reset" href="{{ path('help_guide_list') }}" style="color:black">X</a>')
+                                    count = 1;
+                                }
+                            }
+                        });
+                        check = $('#search').val();
+                    }
+                }
+            });
+            if ($('#search').val()) {
+                check = $('#search').val();
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ path('help_guide_list') }}',
+                    data: {search: $('#search').val()},
+                    dataType: 'json',
+                    success: function (response)
+                    {
+                        var html = '';
+                        if (response.entities.length != 0) {
+                            for (i = 0; i < response.entities.length; i++) {
+                                html = html + '<li><a href="' + show_url + response.entities[i].slug + '">' + response.entities[i].title + '</a></li>';
+                            }
+                        } else {
+                            html = 'No record found';
+                        }
+                        $('#listing').html(html);
+                        $('#search_box').append('<a title="Reset" href="{{ path('help_guide_list') }}" style="color:black">X</a>')
 
+                    }
+                });
+            }
+        });
+
+    </script>
 {% endblock %}

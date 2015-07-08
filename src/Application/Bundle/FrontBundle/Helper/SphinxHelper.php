@@ -43,15 +43,15 @@ class SphinxHelper {
             'creationDate' => 's_creation_date',
             'contentDate' => 's_content_date',
             'contentDate' => 's_content_date',
-            'organizationName' => 's_organization_name'
+            'organizationName' => 'organization_id'
         );
 
         foreach ($searchColumns as $key => $value) {
-            if (isset($facetData[$key])) {
+            if (isset($facetData[$key])) {                
                 $criteriaArr[$value] = $facetData[$key];
             }
         }
-
+ 
         if (isset($facetData['facet_keyword_search'])) {
             $keywords = json_decode($facetData['facet_keyword_search'], true);
             if (count($keywords) > 0) {

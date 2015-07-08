@@ -238,6 +238,9 @@ function Records() {
         $('input[name="collectionName[]"]').click(function () {
             checkParentFacet('collectionName', $(this).prop('checked'));
         });
+        $('input[name="organizationName[]"]').click(function () {
+            checkParentFacet('organizationName', $(this).prop('checked'));
+        });
         initTriStateCheckBox('is_review_check', 'is_review_check_state', true);
         $('#is_review_check').click(function () {
             var totalChecked = $('#total_checked').val();

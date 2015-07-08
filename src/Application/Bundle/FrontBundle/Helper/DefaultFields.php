@@ -207,6 +207,8 @@ class DefaultFields {
             $tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['title'] . '</a>';
 
             $tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['collection_name'] . '</a>';
+            
+            $tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['organization_name'] . '</a>';
 
             $tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['location'] . '</a>';
         }

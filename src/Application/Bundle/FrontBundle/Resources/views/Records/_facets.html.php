@@ -4,6 +4,7 @@
         <ul>
             <?php
             $facetData = $app->getSession()->get('facetData');
+            $orgData = $app->getSession()->get('organization');
 
             function name_slug($name) {
                 $random = rand(0, 1000365);
@@ -64,13 +65,13 @@
                         <div class="clearfix"></div>
 
                     <?php } ?>
-                        <?php
-                    if (isset($facetData['organizationName']) && $facetData['organizationName'] != '') {
+                    <?php
+                    if (isset($orgData) && $orgData != '') {
                         ?>
                         <div id="mediaType_main" class="chekBoxFacet">
-                            <div class="filter-fileds"><b>Media Type</b></div>
+                            <div class="filter-fileds"><b>Organization</b></div>
                             <?php
-                            foreach ($facetData['organizationName'] as $value) {
+                            foreach ($orgData as $value) {
                                 $id = time() . rand(0, 1000);
                                 ?>
                                 <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'organizationName_' . name_slug($value); ?>" data-type="organizationName"></i></div>
@@ -256,18 +257,45 @@
                     </ul> 
                 </li>
             <?php endif; ?>
-                <?php if ($view['security']->isGranted('ROLE_SUPER_ADMIN')): ?>
+            <?php if ($view['security']->isGranted('ROLE_SUPER_ADMIN')): ?>
                 <?php if (count($facets['organizationNames']) > 0): ?>
-                <li>
-                    <a class="dropdown-toggle" href="#">Organizations</a>
-                    <ul data-role="dropdown" <?php echo isset($facetData['organizationNames']) ? 'style="display:block"' : 'style="display:none"'; ?>>
-                        <?php foreach ($facets['organizationNames'] as $mediaType): ?>
-                            <li><a href="javascript://"><label for="<?php echo 'organizationNames_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>"><input id='<?php echo 'organizationNames_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>' <?php echo (isset($facetData['organizationName']) && in_array($mediaType['organization_names'], $facetData['organizationName'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="organizationName[]" value="<?php echo $mediaType['organization_name'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;"><?php echo $mediaType['organization_name'] ?> (<?php echo $mediaType['total'] ?>)</div></label></a></li>
-                        <?php endforeach; ?>
-                    </ul> 
-                </li>
-            <?php endif; 
-            endif;?>
+                    <li>
+                        <a class="dropdown-toggle" href="#">Organizations</a>
+                        <ul data-role="dropdown" <?php echo isset($facetData['organizationName']) ? 'style="display:block"' : 'style="display:none"'; ?>>
+                            <div class="controls">
+                                <div class="input-append">
+                                    <input style="  margin-left: 10px; height: 25px; width: 199px !important;" id="org_filter" name="org_filter" type="text" value="" >
+                                </div>
+                            </div>
+                            <?php foreach ($facets['organizationNames'] as $key => $mediaType): ?>
+                                <?php if ($key < 5) { ?>
+                                    <li><a href="javascript://"><label for="<?php echo 'organizationName_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>"><input id='<?php echo 'organizationName_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>' <?php echo (isset($facetData['organizationName']) && in_array($mediaType['organization_name'], $facetData['organizationName'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="organizationName[]" value="<?php echo $mediaType['organization_id'] ?>" style="float:left; width:20px"/><div class="orgs" style="margin-left: 25px;color: #696969;"><?php echo $mediaType['organization_name'] ?> (<?php echo $mediaType['total'] ?>)</div></label></a></li>
+                                <?php } else if ($key == 5) { ?>                        
+                                    <a class="org_ml" onclick="more_less('org_ml')" style="text-decoration: underline;">
+                                        More
+                                        <b class="caret"></b>
+                                    </a>
+                                    <div id="org_ml" style="display:none;">
+                                        <li><a href="javascript://"><label for="<?php echo 'organizationName_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>"><input id='<?php echo 'organizationName_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>' <?php echo (isset($facetData['organizationName']) && in_array($mediaType['organization_name'], $facetData['organizationName'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="organizationName[]" value="<?php echo $mediaType['organization_id'] ?>" style="float:left; width:20px"/><div class="orgs" style="margin-left: 25px;color: #696969;"><?php echo $mediaType['organization_name'] ?> (<?php echo $mediaType['total'] ?>)</div></label></a></li>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <li><a href="javascript://"><label for="<?php echo 'organizationName_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>"><input id='<?php echo 'organizationName_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>' <?php echo (isset($facetData['organizationName']) && in_array($mediaType['organization_name'], $facetData['organizationName'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="organizationName[]" value="<?php echo $mediaType['organization_id'] ?>" style="float:left; width:20px"/><div class="orgs" style="margin-left: 25px;color: #696969;"><?php echo $mediaType['organization_name'] ?> (<?php echo $mediaType['total'] ?>)</div></label></a></li>
+                                    <?php }
+                                    ?>                       
+                                    <?php
+                                endforeach;
+                                if (count($facets['organizationNames']) > 5) {
+                                    ?>
+                                    <a class="format_ml" onclick="more_less('org_ml')" style="display:none;text-decoration: underline;">Less</a>
+                                </div>
+                            <?php } ?>
+                        </ul> 
+                    </li>
+                    <?php
+                endif;
+            endif;
+            ?>
             <?php if (count($facets['formats']) > 0): ?>
                 <li>
                     <a class="dropdown-toggle" href="#">Format</a>
@@ -517,10 +545,10 @@
 
         //show only those matching user input:
         items.filter(function () {
-            return $(this).text().toLowerCase().indexOf(text) == 0;
+            return $(this).text().toLowerCase().indexOf(text) >= 0;
         }).parent().parent().show();
     });
-    
+
     $("#collection_filter").bind("keyup", function () {
         var text = $(this).val().toLowerCase();
         if (text == '') {
@@ -536,11 +564,11 @@
 
         //show only those matching user input:
         items.filter(function () {
-            return $(this).text().toLowerCase().indexOf(text) == 0;
+            return $(this).text().toLowerCase().indexOf(text) >= 0;
         }).parent().parent().show();
     });
-    
-     $("#project_filter").bind("keyup", function () {
+
+    $("#project_filter").bind("keyup", function () {
         var text = $(this).val().toLowerCase();
         if (text == '') {
             $('.project_ml').show();
@@ -555,7 +583,26 @@
 
         //show only those matching user input:
         items.filter(function () {
-            return $(this).text().toLowerCase().indexOf(text) == 0;
+            return $(this).text().toLowerCase().indexOf(text) >= 0;
+        }).parent().parent().show();
+    });
+
+    $("#org_filter").bind("keyup", function () {
+        var text = $(this).val().toLowerCase();
+        if (text == '') {
+            $('.org_ml').show();
+            $('#org_ml').hide();
+        } else {
+            $('.org_ml').hide();
+            $('#org_ml').show();
+        }
+        var items = $(".orgs");
+        //first, hide all:
+        items.parent().parent().hide();
+
+        //show only those matching user input:
+        items.filter(function () {
+            return $(this).text().toLowerCase().indexOf(text) >= 0;
         }).parent().parent().show();
     });
 </script>

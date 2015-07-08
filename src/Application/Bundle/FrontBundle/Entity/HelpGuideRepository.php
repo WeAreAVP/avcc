@@ -25,5 +25,13 @@ use Doctrine\ORM\EntityRepository;
  * @author rimsha
  */
 class HelpGuideRepository extends EntityRepository{
-    //put your code here
+    public function searchHelpGuide($search) {
+        $query = $this->getEntityManager()
+                ->createQuery("SELECT h from ApplicationFrontBundle:HelpGuide h "
+                . "WHERE h.title LIKE '%".$search."%' OR h.description LIKE '%".$search."%' ORDER BY h.order ASC");
+//        $query->setParameter('search', $search);
+//        $query->setParameter('search1', $search);
+
+        return $query->getResult();
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -108,7 +109,7 @@ class SphinxSearch extends ContainerAware {
 
         return $sq->execute();
     }
-    
+
     /**
      * delete the record.
      *
@@ -159,10 +160,16 @@ class SphinxSearch extends ContainerAware {
      *
      * @return array
      */
-    public function facetSelect($facetColumn, $user, $criteria = null, $parentFacet = false, $orderByColumnName = null, $groupByColumnName = null) {
-        $sq = SphinxQL::create($this->conn)
-                ->select($facetColumn, SphinxQL::expr('count(*) AS total'))
-                ->from($this->indexName);
+    public function facetSelect($facetColumn, $user, $criteria = null, $parentFacet = false, $orderByColumnName = null, $groupByColumnName = null, $org = null) {
+        if ($org) {
+            $sq = SphinxQL::create($this->conn)
+                    ->select($facetColumn, 'organization_id', SphinxQL::expr('count(*) AS total'))
+                    ->from($this->indexName);
+        } else {
+            $sq = SphinxQL::create($this->conn)
+                    ->select($facetColumn, SphinxQL::expr('count(*) AS total'))
+                    ->from($this->indexName);
+        }
         if ($criteria && $facetColumn != $parentFacet) {
             $this->whereClause($criteria, $sq);
         }
@@ -204,6 +211,9 @@ class SphinxSearch extends ContainerAware {
                 }
             } elseif ($key == 'project_id') {
                 $sq->where('project_id', "=", $value);
+            } else if ($key == 'organization_id') {
+                $new = array_map('intval', $value);
+                $sq->where('organization_id', 'IN', $new);
             } else {
 
                 $_value = (is_array($value)) ? '"' . implode('" | "', $value) . '"' : $value;
