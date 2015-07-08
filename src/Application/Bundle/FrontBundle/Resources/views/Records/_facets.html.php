@@ -68,13 +68,13 @@
                     <?php
                     if (isset($orgData) && $orgData != '') {
                         ?>
-                        <div id="mediaType_main" class="chekBoxFacet">
+                        <div id="organizationName_main" class="chekBoxFacet">
                             <div class="filter-fileds"><b>Organization</b></div>
                             <?php
-                            foreach ($orgData as $value) {
+                            foreach ($orgData as $index => $value) {
                                 $id = time() . rand(0, 1000);
-                                ?>
-                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'organization_name_' . name_slug($value); ?>" data-type="organization_name"></i></div>
+								?>
+                                <div class="btn-img" id="facet_organization_<?php echo $index; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo $index.'_organization_name_' . name_slug($value); ?>" data-type="organization_name"></i></div>
                             <?php } ?>
                         </div>
                         <div class="clearfix"></div>
@@ -269,18 +269,18 @@
                             </div>
                             <?php foreach ($facets['organizationNames'] as $key => $mediaType): ?>
                                 <?php if ($key < 5) { ?>
-                                    <li><a href="javascript://"><label for="<?php echo $key.'_organization_name_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>"><input id='<?php echo $key.'_organization_name_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>' <?php echo (isset($facetData['organization_name']) && in_array($mediaType['organization_id'], $facetData['organization_name'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="organization_name[]" value="<?php echo $mediaType['organization_id'] ?>" style="float:left; width:20px"/><div class="orgs" style="margin-left: 25px;color: #696969;"><?php echo $mediaType['organization_name'] ?> (<?php echo $mediaType['total'] ?>)</div></label></a></li>
+                                    <li><a href="javascript://"><label for="<?php echo $mediaType['organization_id'].'_organization_name_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>"><input id='<?php echo $mediaType['organization_id'].'_organization_name_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>' <?php echo (isset($facetData['organization_name']) && in_array($mediaType['organization_id'], $facetData['organization_name'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="organization_name[]" value="<?php echo $mediaType['organization_id'] ?>" style="float:left; width:20px"/><div class="orgs" style="margin-left: 25px;color: #696969;"><?php echo $mediaType['organization_name'] ?> (<?php echo $mediaType['total'] ?>)</div></label></a></li>
                                 <?php } else if ($key == 5) { ?>                        
                                     <a class="org_ml" onclick="more_less('org_ml')" style="text-decoration: underline;">
                                         More
                                         <b class="caret"></b>
                                     </a>
                                     <div id="org_ml" style="display:none;">
-                                        <li><a href="javascript://"><label for="<?php echo $key.'_organization_name_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>"><input id='<?php echo $key.'_organization_name_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>' <?php echo (isset($facetData['organization_name']) && in_array($mediaType['organization_id'], $facetData['organization_name'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="organization_name[]" value="<?php echo $mediaType['organization_id'] ?>" style="float:left; width:20px"/><div class="orgs" style="margin-left: 25px;color: #696969;"><?php echo $mediaType['organization_name'] ?> (<?php echo $mediaType['total'] ?>)</div></label></a></li>
+                                      <li><a href="javascript://"><label for="<?php echo $mediaType['organization_id'].'_organization_name_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>"><input id='<?php echo $mediaType['organization_id'].'_organization_name_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>' <?php echo (isset($facetData['organization_name']) && in_array($mediaType['organization_id'], $facetData['organization_name'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="organization_name[]" value="<?php echo $mediaType['organization_id'] ?>" style="float:left; width:20px"/><div class="orgs" style="margin-left: 25px;color: #696969;"><?php echo $mediaType['organization_name'] ?> (<?php echo $mediaType['total'] ?>)</div></label></a></li>
                                         <?php
                                     } else {
                                         ?>
-                                        <li><a href="javascript://"><label for="<?php echo $key.'_organization_name_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>"><input id='<?php echo $key.'_organization_name_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>' <?php echo (isset($facetData['organization_name']) && in_array($mediaType['organization_id'], $facetData['organization_name'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="organization_name[]" value="<?php echo $mediaType['organization_id'] ?>" style="float:left; width:20px"/><div class="orgs" style="margin-left: 25px;color: #696969;"><?php echo $mediaType['organization_name'] ?> (<?php echo $mediaType['total'] ?>)</div></label></a></li>
+                                      <li><a href="javascript://"><label for="<?php echo $mediaType['organization_id'].'_organization_name_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>"><input id='<?php echo $mediaType['organization_id'].'_organization_name_' . str_replace(' ', '_', strtolower($mediaType['organization_name'])) ?>' <?php echo (isset($facetData['organization_name']) && in_array($mediaType['organization_id'], $facetData['organization_name'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="organization_name[]" value="<?php echo $mediaType['organization_id'] ?>" style="float:left; width:20px"/><div class="orgs" style="margin-left: 25px;color: #696969;"><?php echo $mediaType['organization_name'] ?> (<?php echo $mediaType['total'] ?>)</div></label></a></li>
                                     <?php }
                                     ?>                       
                                     <?php

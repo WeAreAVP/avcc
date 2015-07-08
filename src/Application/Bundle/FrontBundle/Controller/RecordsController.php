@@ -95,9 +95,11 @@ class RecordsController extends Controller {
 
         $isAjax = FALSE;
         $searchOn = $this->criteria();
-
+		
         $criteria = $searchOn['criteriaArr'];
         if ($request->isXmlHttpRequest()) {
+			if($session->has('organization'))
+				$session->remove('organization');
             $isAjax = TRUE;
             $this->getFacetRequest($request);
             $searchOn = $this->criteria();
