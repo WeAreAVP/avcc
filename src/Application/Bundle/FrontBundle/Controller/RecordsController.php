@@ -20,11 +20,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Helper\DefaultFields;
-use Application\Bundle\FrontBundle\Entity\Records;
-use Application\Bundle\FrontBundle\Entity\AudioRecords;
-use Application\Bundle\FrontBundle\Entity\FilmRecords;
-use Application\Bundle\FrontBundle\Entity\VideoRecords;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Application\Bundle\FrontBundle\Entity\ImportExport;
 use Application\Bundle\FrontBundle\Helper\SphinxHelper;
@@ -109,19 +104,17 @@ class RecordsController extends Controller {
             $criteria = $searchOn['criteriaArr'];
             $facetData = $session->get('facetData');
             foreach ($facetData as $key => $value) {
-                if ($key == 'organizationName') {
+                if ($key == 'organization_name') {
                     foreach ($value as $count => $org) {
                         $org_info = $em->getRepository('ApplicationFrontBundle:Organizations')->findOneBy(array('id' => $org));
                         $new_data[$org] = $org_info->getName();
                     }
-                    $session->remove('facetData');
+//                    $session->remove('facetData');
                     $session->set('organization', $new_data);
                 }
             }
         }
-//        echo '<pre>';
-//        print_r($criteria);
-//        exit;
+
         $parentFacet = isset($searchOn['parent_facet']) ? $searchOn['parent_facet'] : null;
         $facet['mediaType'] = $this->removeEmpty($sphinxSearch->facetSelect('media_type', $this->getUser(), $criteria, $parentFacet), 'media_type');
         $facet['formats'] = $this->removeEmpty($sphinxSearch->facetSelect('format', $this->getUser(), $criteria, $parentFacet), 'format');
@@ -185,9 +178,9 @@ class RecordsController extends Controller {
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
         $searchOn = $this->criteria();
         $criteria = $searchOn['criteriaArr'];
+		
         $result = $sphinxSearch->select($this->getUser(), $offset, $limit, $sortIndex, $sortOrder, $criteria);
-
-        $records = $result[0];
+		$records = $result[0];
         $currentPageTotal = count($records);
         $totalRecords = $result[1][0]['Value'];
         $session = $this->getRequest()->getSession();

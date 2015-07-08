@@ -43,7 +43,7 @@ class SphinxHelper {
             'creationDate' => 's_creation_date',
             'contentDate' => 's_content_date',
             'contentDate' => 's_content_date',
-            'organizationName' => 'organization_id'
+            'organization_name' => 'organization_id'
         );
 
         foreach ($searchColumns as $key => $value) {
