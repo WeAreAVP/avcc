@@ -95,11 +95,13 @@ class RecordsController extends Controller {
 
         $isAjax = FALSE;
         $searchOn = $this->criteria();
-		
+
         $criteria = $searchOn['criteriaArr'];
         if ($request->isXmlHttpRequest()) {
-			if($session->has('organization'))
-				$session->remove('organization');
+            if ($session->has('organization'))
+                $session->remove('organization');
+            if ($session->has('projectFacet'))
+                $session->remove('projectFacet');
             $isAjax = TRUE;
             $this->getFacetRequest($request);
             $searchOn = $this->criteria();
@@ -111,8 +113,14 @@ class RecordsController extends Controller {
                         $org_info = $em->getRepository('ApplicationFrontBundle:Organizations')->findOneBy(array('id' => $org));
                         $new_data[$org] = $org_info->getName();
                     }
-//                    $session->remove('facetData');
                     $session->set('organization', $new_data);
+                }
+                if ($key == 'project') {
+                    foreach ($value as $count => $project_id) {
+                        $proj_info = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $project_id));
+                        $new_data[$project_id] = $proj_info->getName();
+                    }
+                    $session->set('projectFacet', $new_data);
                 }
             }
         }
@@ -124,12 +132,12 @@ class RecordsController extends Controller {
         $facet['bases'] = $this->removeEmpty($sphinxSearch->facetSelect('base', $this->getUser(), $criteria, $parentFacet), 'base');
         $facet['recordingStandards'] = $this->removeEmpty($sphinxSearch->facetSelect('recording_standard', $this->getUser(), $criteria, $parentFacet), 'recording_standard');
         $facet['printTypes'] = $this->removeEmpty($sphinxSearch->facetSelect('print_type', $this->getUser(), $criteria, $parentFacet), 'print_type');
-        $facet['projectNames'] = $this->removeEmpty($sphinxSearch->facetSelect('project', $this->getUser(), $criteria, $parentFacet), 'project');
+        $facet['projectNames'] = $this->removeEmpty($sphinxSearch->facetSelect('project', $this->getUser(), $criteria, $parentFacet, null, 'project_id', 'project_id'), 'project');
         $facet['reelDiameters'] = $this->removeEmpty($sphinxSearch->facetSelect('reel_diameter', $this->getUser(), $criteria, $parentFacet), 'reel_diameter');
         $facet['discDiameters'] = $this->removeEmpty($sphinxSearch->facetSelect('disk_diameter', $this->getUser(), $criteria, $parentFacet), 'disk_diameter');
         $facet['acidDetection'] = $this->removeEmpty($sphinxSearch->facetSelect('acid_detection', $this->getUser(), $criteria, $parentFacet), 'acid_detection');
         $facet['collectionNames'] = $this->removeEmpty($sphinxSearch->facetSelect('collection_name', $this->getUser(), $criteria, $parentFacet), 'collection_name');
-        $facet['organizationNames'] = $this->removeEmpty($sphinxSearch->facetSelect('organization_name', $this->getUser(), $criteria, $parentFacet, null, 'organization_id', 1), 'organization_name');
+        $facet['organizationNames'] = $this->removeEmpty($sphinxSearch->facetSelect('organization_name', $this->getUser(), $criteria, $parentFacet, null, 'organization_id', 'organization_id'), 'organization_name');
 
         $organizations = $em->getRepository('ApplicationFrontBundle:Organizations')->findAll();
         $view = array(
@@ -180,9 +188,9 @@ class RecordsController extends Controller {
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
         $searchOn = $this->criteria();
         $criteria = $searchOn['criteriaArr'];
-		
+
         $result = $sphinxSearch->select($this->getUser(), $offset, $limit, $sortIndex, $sortOrder, $criteria);
-		$records = $result[0];
+        $records = $result[0];
         $currentPageTotal = count($records);
         $totalRecords = $result[1][0]['Value'];
         $session = $this->getRequest()->getSession();

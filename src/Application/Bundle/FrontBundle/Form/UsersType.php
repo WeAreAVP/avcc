@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -113,7 +115,8 @@ class UsersType extends AbstractType {
                 'class' => 'ApplicationFrontBundle:Organizations',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
-                                    ->where('u.status = 1');
+                                    ->where('u.status = 1')
+                                    ->orderBy('u.order', 'ASC');
                 },
                 'empty_data' => '',
                 'required' => false,

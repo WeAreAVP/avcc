@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -40,15 +42,20 @@ class OrganizationsController extends Controller {
      * @return array
      */
     public function indexAction() {
+        $count = array();
         $em = $this->getDoctrine()->getManager();
         if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
-            $entities = $em->getRepository('ApplicationFrontBundle:Organizations')->findAll();
+            $entities = $em->getRepository('ApplicationFrontBundle:Organizations')->findBy(array(), array('order' => 'ASC'));
+            foreach ($entities as $entity) {
+                $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecord($entity->getId());
+                $count[$entity->getId()] = count($records);
+            }
         } else {
-            $entities = $em->getRepository('ApplicationFrontBundle:Organizations')->findBy(array('id' => $this->getUser()->getOrganizations()->getId()));
+            $entities = $em->getRepository('ApplicationFrontBundle:Organizations')->findBy(array('id' => $this->getUser()->getOrganizations()->getId()), array('order' => 'ASC'));
         }
-
         return array(
             'entities' => $entities,
+            'record_count' => $count
         );
     }
 
@@ -258,9 +265,9 @@ class OrganizationsController extends Controller {
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Organizations entity.');
             }
-            $records = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organization'=> $id));
+            $records = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organization' => $id));
             foreach ($records as $user) {
-                $record = $em->getRepository('ApplicationFrontBundle:Records')->findBy(array('user'=> $user->getId()));
+                $record = $em->getRepository('ApplicationFrontBundle:Records')->findBy(array('user' => $user->getId()));
                 $shpinxInfo = $this->container->getParameter('sphinx_param');
                 $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $record->getId(), $record->getMediaType()->getId());
                 $sphinxSearch->delete();
@@ -309,7 +316,7 @@ class OrganizationsController extends Controller {
                 $_user = $em->getRepository('ApplicationFrontBundle:Users')->find($user->getId());
                 $_user->setEnabled(0);
             }
-            
+
             $projects = $em->getRepository('ApplicationFrontBundle:Projects')->findBy(array('organization' => $id));
             foreach ($projects as $project) {
                 $_user = $em->getRepository('ApplicationFrontBundle:Projects')->find($project->getId());
@@ -332,6 +339,33 @@ class OrganizationsController extends Controller {
         }
         $em->flush();
         return $this->redirect($this->generateUrl('organizations'));
+    }
+
+    /**
+     * update field order
+     *
+     * @param Request $request
+     *
+     * @Route("/fieldOrder", name="organization_update_order")
+     * @Method("POST")
+     * @return array
+     */
+    public function updateFieldOrder(Request $request) {
+        // code to update
+        $adsIds = $this->get('request')->request->get('org_ids');
+        $count = 0;
+        foreach ($adsIds as $ads) {
+            $em = $this->getDoctrine()->getManager();
+            $entity = $em->getRepository('ApplicationFrontBundle:Organizations')->find($ads);
+            if ($entity) {
+                $entity->setOrder($count);
+                // $em->persist($entity);
+                $em->flush();
+                $count = $count + 1;
+            }
+        }
+        echo json_encode(array('success' => 'true'));
+        exit;
     }
 
 }

@@ -8,9 +8,11 @@
             </small>
         {% endif %}
     </h1>
-
-    <div class="table-responsive">
-        <table class="table bordered">
+    <div class="flash-success text-success" id="message">
+        Order updated succesfully.
+    </div>
+    <div class="table-responsive" {% if is_granted('ROLE_SUPER_ADMIN') %}style="width: 108%;"{% endif %}>
+        <table class="table bordered  {% if is_granted('ROLE_SUPER_ADMIN') %}sortable hovered{% endif %}">
             <thead>
                 <tr>
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
@@ -22,6 +24,9 @@
                     <th>Contact person name</th>
                     <th>Contact person email</th>
                     <th>Contact person phone</th>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <th> No. of records</th>
+                        {% endif %}
                         {% if is_granted('ROLE_MANAGER') %}
                         <th>Action</th>
                         {% endif %}
@@ -29,9 +34,9 @@
             </thead>
             <tbody>
                 {% for entity in entities %}
-                    <tr>
+                    <tr class="sortTr" id="{{entity.id}}">
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
-                            <th>{{entity.id}}</th>
+                            <th><i class="icon-menu on-left"></i>&nbsp;{{entity.id}}</th>
                             {% endif %}
                         <td><a href="{{ path('organizations_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
                         <td>{{ entity.departmentname }}</td>
@@ -39,10 +44,13 @@
                         <td>{{ entity.contactpersonname }}</td>
                         <td>{{ entity.contactpersonemail }}</td>
                         <td>{{ entity.contactpersonphone }}</td>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <td>    {{record_count[entity.id]}}</td>
+                        {% endif %}
                         {% if is_granted('ROLE_MANAGER') %}
                             <td>
-                                 {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                   {% if entity.status == true %}
+                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                    {% if entity.status == true %}
                                         {% set status = "Active" %}
                                         {% set statusId = "1" %}
                                         {% set class = "icon-checkmark" %}
@@ -68,5 +76,36 @@
                 {% endfor %}
             </tbody>
         </table>
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <p><input type="button" id="updatesettings" class="button primary" onclick="updateVocabSettings();" value="Update" /></p>
+            {% endif %}
     </div>
+
+    <script type="text/javascript">
+        var path = "{{ path('organization_update_order') }}";
+        $('#message').hide();
+        function updateVocabSettings() {
+            // each loop to get ids
+            i = 0;
+            ids = [];
+            $('.sortTr').each(function (index, id)
+            {
+                ids[i] = parseInt($(this).attr('id'));
+                i++;
+
+            });
+            $.ajax({
+                type: 'POST',
+                url: path,
+                data: {
+                    org_ids: ids
+                },
+                dataType: 'json',
+                success: function (response) {
+                    $('#message').show();
+                    window.scrollTo(0, 0);
+                }
+            });
+        }
+    </script>
 {% endblock body %}

@@ -33,6 +33,17 @@ class RecordsRepository extends EntityRepository {
         return $query->getResult();
     }
 
+    public function findOrganizationRecord($organizationID) {
+        $query = $this->getEntityManager()
+                ->createQuery("SELECT r from ApplicationFrontBundle:Records r "
+                . "JOIN r.project u "
+                . "JOIN u.organization o "
+                . "WHERE o.id =  :organization");
+        $query->setParameter('organization', $organizationID);
+
+        return $query->getResult();
+    }
+    
     public function findAudioRecordById($id) {
         return $this->getEntityManager()->createQuery("SELECT r as record, ar as audio, m.name as mediaType, p.name as projectTitle"
                                 . " FROM ApplicationFrontBundle:Records r"

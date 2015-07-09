@@ -27,8 +27,8 @@
                     {% endfor %}
                 </div>
             {% endif %}
-            <label id="user_label">Users</label>
-            <div class="input-control select" data-role="input-control" id="user_list">
+            <label id="user_label" style="display: none">Users</label>
+            <div class="input-control select" style="display: none" data-role="input-control" id="user_list">
                 {{ form_widget(form.projectUsers, {attr: {class:'size4'} }) }}
                 {% for errorItem in form.projectUsers.vars.errors %}
                     <span class="has-error text-danger" for="{{ form.projectUsers.vars.id }}">{{ errorItem.message }}</span>

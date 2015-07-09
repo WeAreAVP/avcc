@@ -235,8 +235,8 @@ function Records() {
         $('input[name="acidDetection[]"]').click(function () {
             checkParentFacet('acidDetection', $(this).prop('checked'));
         });
-        $('input[name="collectionName[]"]').click(function () {
-            checkParentFacet('collectionName', $(this).prop('checked'));
+        $('input[name="collection_name[]"]').click(function () {
+            checkParentFacet('collection_name', $(this).prop('checked'));
         });
         $('input[name="organization_name[]"]').click(function () {
             checkParentFacet('organization_name', $(this).prop('checked'));
