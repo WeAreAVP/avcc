@@ -21,7 +21,7 @@ Documentation
 Credits
 =======
 
-This software was created by Audio Visual Preservation Solutions, Inc.
+This software was created by AVPreserve (www.avpreserve.com).
 
 List of contributors 
 
