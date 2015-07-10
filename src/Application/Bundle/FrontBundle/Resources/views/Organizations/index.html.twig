@@ -8,43 +8,36 @@
             </small>
         {% endif %}
     </h1>
-    <div class="flash-success text-success" id="message">
-        Order updated succesfully.
-    </div>
-    <div class="table-responsive" {% if is_granted('ROLE_SUPER_ADMIN') %}style="width: 108%;"{% endif %}>
-        <table class="table bordered  {% if is_granted('ROLE_SUPER_ADMIN') %}sortable hovered{% endif %}">
+    <div class="table-responsive">
+        <table class="table bordered tablesorter">
             <thead>
                 <tr>
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <th>id</th>
+                        <th style="width: 45px;">id</th>
                         {% endif %}
-                    <th>Name</th>
-                    <th>Department name</th>
-                    <th>Address</th>
-                    <th>Contact person name</th>
-                    <th>Contact person email</th>
-                    <th>Contact person phone</th>
+                    <th style="width: 150px;">Name</th>
+                    <th style="width: 200px;">Department name</th>
+                    <th style="width: 200px;">Address</th>
+                    <th style="width: 270px;">Contact person</th>
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <th> No. of records</th>
+                        <th style="width: 120px;"> No. of records</th>
                         {% endif %}
                         {% if is_granted('ROLE_MANAGER') %}
                         <th>Action</th>
                         {% endif %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for entity in entities %}
-                    <tr class="sortTr" id="{{entity.id}}">
+                </tr> 
+            </thead>             
+            <tbody> 
+                {% for entity in entities %} 
+                    <tr>
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
-                            <th><i class="icon-menu on-left"></i>&nbsp;{{entity.id}}</th>
-                            {% endif %}
+                            <th>{{entity.id}}</th>
+                            {% endif %} 
                         <td><a href="{{ path('organizations_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
                         <td>{{ entity.departmentname }}</td>
                         <td>{{ entity.address }}</td>
-                        <td>{{ entity.contactpersonname }}</td>
-                        <td>{{ entity.contactpersonemail }}</td>
-                        <td>{{ entity.contactpersonphone }}</td>
-                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <td><b>Name:</b> {{ entity.contactpersonname }}<br/><b>Email:</b> {{ entity.contactpersonemail }}<br/><b>Phone:</b> {{ entity.contactpersonphone }}</td>
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
                             <td>    {{record_count[entity.id]}}</td>
                         {% endif %}
                         {% if is_granted('ROLE_MANAGER') %}
@@ -76,36 +69,12 @@
                 {% endfor %}
             </tbody>
         </table>
-        {% if is_granted('ROLE_SUPER_ADMIN') %}
-            <p><input type="button" id="updatesettings" class="button primary" onclick="updateVocabSettings();" value="Update" /></p>
-            {% endif %}
     </div>
-
-    <script type="text/javascript">
-        var path = "{{ path('organization_update_order') }}";
-        $('#message').hide();
-        function updateVocabSettings() {
-            // each loop to get ids
-            i = 0;
-            ids = [];
-            $('.sortTr').each(function (index, id)
-            {
-                ids[i] = parseInt($(this).attr('id'));
-                i++;
-
+    <script  type="text/javascript">
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            $(document).ready(function () {
+                $(".table").tablesorter();
             });
-            $.ajax({
-                type: 'POST',
-                url: path,
-                data: {
-                    org_ids: ids
-                },
-                dataType: 'json',
-                success: function (response) {
-                    $('#message').show();
-                    window.scrollTo(0, 0);
-                }
-            });
-        }
-    </script>
+        {% endif %}
+    </script> 
 {% endblock body %}

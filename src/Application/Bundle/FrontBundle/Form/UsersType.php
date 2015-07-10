@@ -115,8 +115,7 @@ class UsersType extends AbstractType {
                 'class' => 'ApplicationFrontBundle:Organizations',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
-                                    ->where('u.status = 1')
-                                    ->orderBy('u.order', 'ASC');
+                                    ->where('u.status = 1');
                 },
                 'empty_data' => '',
                 'required' => false,

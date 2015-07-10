@@ -105,13 +105,6 @@ class Organizations {
     private $updatedOn;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="sort_order", type="integer", options={"default" = 9999})
-     */
-    private $order = 9999;
-
-    /**
      * @var \Application\Bundle\FrontBundle\Entity\Users
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
@@ -1157,26 +1150,6 @@ class Organizations {
      */
     public function setIsPaid($isPaid) {
         $this->isPaid = $isPaid;
-    }
-
-    /**
-     * Get order
-     *
-     * @return integer
-     */
-    public function getOrder() {
-        return $this->order;
-    }
-
-    /**
-     * Set order
-     *
-     * @param integer $order
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\Colors
-     */
-    public function setOrder($order) {
-        $this->order = $order;
     }
 
 }
