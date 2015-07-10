@@ -22,7 +22,7 @@
                         {% endif %}
                 </tr>
             </thead>
-            <tbody>
+            <tbody> 
                 {% for entity in entities %}
                     <tr>
                         <td>
@@ -68,10 +68,11 @@
         $(document).ready(function () {
         {% if is_granted('ROLE_SUPER_ADMIN') %}
                 $('#projectsTable').dataTable({
+{#                    "bPaginate": false,#}
                     "aoColumnDefs": [
                         {"bSearchable": false, "aTargets": [0,2,3,4]},
                     ],
-                    "dom": '<"top"f><"clear">t<"bottom">',
+                    "dom": '<"top"fp><"clear">t<"bottom">',
                     "order"
                             : []
                 });{#            $('#projectsTable_filter').html('<input type="search" class="" placeholder="Search Organization" aria-controls="projectsTable">');#}

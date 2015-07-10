@@ -91,11 +91,11 @@
         {
         {% if is_granted('ROLE_SUPER_ADMIN') %}
                 $('.table').dataTable({
-                    "bPaginate": false,
+{#                    "bPaginate": false,#}
                     "aoColumnDefs": [
                         {"bSearchable": false, "aTargets": [0, 1, 4]},
                     ],
-                    "dom": '<"top"><"clear">t<"bottom">',
+                    "dom": '<"top"p><"clear">t<"bottom">',
                     "order": []
                 });
                 var field = '<input type="text" placeholder="Search organization" id="_organization" style="height: 29px;">';
