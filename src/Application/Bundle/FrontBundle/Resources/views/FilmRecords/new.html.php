@@ -25,8 +25,8 @@
                 }
                 $_style = (count($field) == 2 && $field[1] == 'isReview') ? 'width: 180px;float: left;margin-bottom: 15px;' : 'width: 200px';
                 ?>
-                <div style="<?php echo ($filmField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>">
-                    <div class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo isset($tooltip[$index]) ? $tooltip[$index] : ''; ?>" style="<?php echo  $_style ?>">                   
+                <div style="<?php echo ($filmField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>" data-view="<?php echo ($filmField['hidden']) ? 'hide' : 'show'; ?>">
+                    <div class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo isset($tooltip[$index]) ? $tooltip[$index] : ''; ?>" style="<?php echo $_style ?>">                   
                         <?php
                         $attr = ($filmField['is_required']) ? array('class' => 'size4') : array('class' => 'size4');
                         echo $view['form']->label((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], ' ');
@@ -38,12 +38,12 @@
                     if (count($field) == 2 && $field[1] == 'isReview')
                         $style = '';
                     else if (count($field) == 2 && $field[1] == 'conditionNote' || count($field) == 2 && $field[1] == 'generalNote' || count($field) == 2 && $field[1] == 'copyrightRestrictions' || count($field) == 2 && $field[1] == 'description')
-                         $style = 'textarea';
+                        $style = 'textarea';
                     else
                         $style = 'text';
                     ?>
                     <div class="input-control <?php echo $style; ?> new" data-role="input-control">
-                         <?php 
+                        <?php
                         $_attr = (count($field) == 2 && $field[1] == 'isReview') ? array() : $attr;
                         ?>
                         <?php echo $view['form']->widget((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => $_attr)) ?>
@@ -77,70 +77,19 @@
         $(function () {
             $('[data-toggle="popover"]').popover();
         });
+        var fields = ['uniqueId_lbl', 'location_lbl', 'title_lbl', 'printType_lbl', 'mediaDiameter_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'footage_lbl', 'reelCore_lbl', 'reelDiameters_lbl', 'diskDiameters_lbl', 'colors_lbl', 'sound_lbl', 'frameRate_lbl', 'acidDetectionStrip_lbl', 'shrinkage_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl'];
         $('#mediaType,#format').change(function () {
             if ($('#mediaType').val() == '' || $('#project').val() == '' || $('#format').val() == '') {
-                $('#uniqueId_lbl').hide();
-                $('#location_lbl').hide();
-                $('#title_lbl').hide();
-                $('#printType_lbl').hide();
-                $('#mediaDiameter_lbl').hide();
-                $('#collectionName_lbl').hide();
-                $('#description_lbl').hide();
-                $('#commercial_lbl').hide();
-                $('#footage_lbl').hide();
-                $('#reelCore_lbl').hide();
-                $('#reelDiameters_lbl').hide();
-                $('#diskDiameters_lbl').hide();
-                $('#colors_lbl').hide();
-                $('#sound_lbl').hide();
-                $('#frameRate_lbl').hide();
-                $('#acidDetectionStrip_lbl').hide();
-                $('#shrinkage_lbl').hide();
-                $('#contentDuration_lbl').hide();
-                $('#mediaDuration_lbl').hide();
-                $('#creationDate_lbl').hide();
-                $('#contentDate_lbl').hide();
-                $('#isReview_lbl').hide();
-                $('#genreTerms_lbl').hide();
-                $('#contributor_lbl').hide();
-                $('#generation_lbl').hide();
-                $('#part_lbl').hide();
-                $('#copyrightRestrictions_lbl').hide();
-                $('#duplicatesDerivatives_lbl').hide();
-                $('#relatedMaterial_lbl').hide();
-                $('#conditionNote_lbl').hide();
-                $('#generalNote_lbl').hide();
+                for (i = 0; i < fields.length; i++) {
+                    $('#' + fields[i]).hide();
+                }
             } else {
+                var fields1 = ['uniqueId_lbl', 'location_lbl', 'printType_lbl', 'mediaDiameter_lbl', 'title_lbl', 'footage_lbl', 'reelCore_lbl', 'colors_lbl', 'sound_lbl', 'frameRate_lbl', 'acidDetectionStrip_lbl', 'shrinkage_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl'];
                 showUpdateFields();
-                $('#uniqueId_lbl').show();
-                $('#location_lbl').show();
-                $('#printType_lbl').show();
-                $('#mediaDiameter_lbl').show();
-                $('#title_lbl').show();
-                $('#footage_lbl').show();
-                $('#reelCore_lbl').show();
-                $('#colors_lbl').show();
-                $('#sound_lbl').show();
-                $('#frameRate_lbl').show();
-                $('#acidDetectionStrip_lbl').show();
-                $('#shrinkage_lbl').show();
-                $('#collectionName_lbl').show();
-                $('#description_lbl').show();
-                $('#commercial_lbl').show();
-                $('#contentDuration_lbl').show();
-                $('#mediaDuration_lbl').show();
-                $('#creationDate_lbl').show();
-                $('#contentDate_lbl').show();
-                $('#isReview_lbl').show();
-                $('#genreTerms_lbl').show();
-                $('#contributor_lbl').show();
-                $('#generation_lbl').show();
-                $('#part_lbl').show();
-                $('#copyrightRestrictions_lbl').show();
-                $('#duplicatesDerivatives_lbl').show();
-                $('#relatedMaterial_lbl').show();
-                $('#conditionNote_lbl').show();
-                $('#generalNote_lbl').show();
+                for (i = 0; i < fields1.length; i++) {
+                    if ($('#' + fields1[i]).data('view') == 'show')
+                        $('#' + fields1[i]).show();
+                }
             }
         });
     });

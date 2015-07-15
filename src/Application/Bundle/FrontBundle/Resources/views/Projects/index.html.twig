@@ -68,10 +68,10 @@
         $(document).ready(function () {
         {% if is_granted('ROLE_SUPER_ADMIN') %}
                 $('#projectsTable').dataTable({
-{#                    "bPaginate": false,#}
+                    "pageLength": 300,
                     "aoColumnDefs": [
-                        {"bSearchable": false, "aTargets": [0,2,3,4]},
-                    ],
+                                {"bSearchable": false, "aTargets": [0, 2, 3, 4]},
+                            ],
                     "dom": '<"top"fp><"clear">t<"bottom">',
                     "order"
                             : []
@@ -80,7 +80,7 @@
         {% else %}   
                 $("#projectsTable").tablesorter();
         {% endif %}        
-                 }
-                 );
+            }
+            );
     </script>
 {% endblock %}

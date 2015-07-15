@@ -57,6 +57,8 @@
                         organizationId:{{organization}}, selectedIds: 0
                     },
                     success: function (response) {
+                        $('#user_label').show();
+                        $('#user_list').show();
                         $('#user_list').html(response);
                         $('#application_bundle_frontbundle_projects_projectUsers').chosen();
                     }

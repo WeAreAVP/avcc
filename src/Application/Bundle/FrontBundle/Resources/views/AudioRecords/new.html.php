@@ -27,33 +27,31 @@
 
                 $_style = (count($field) == 2 && $field[1] == 'isReview') ? 'width: 180px;float: left;margin-bottom: 15px;' : 'width: 200px';
                 ?>
-
-                <div style="<?php echo ($audioField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6 " id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>">
-                    <div class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo isset($tooltip[$index]) ? $tooltip[$index] : ''; ?>" style="<?php echo $_style ?>">
+                    <div style="<?php echo ($audioField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6 " id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>" data-view="<?php echo ($audioField['hidden']) ? 'hide' : 'show'; ?>">
+                        <div class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo isset($tooltip[$index]) ? $tooltip[$index] : ''; ?>" style="<?php echo $_style ?>">
+                            <?php
+                            $attr = ($audioField['is_required']) ? array('class' => 'size4') : array('class' => 'size4');
+                            echo $view['form']->label((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], ' ');
+                            echo $audioField['title'];
+                            echo ($audioField['is_required']) ? "&nbsp;<span>*</span>" : "";
+                            ?>
+                        </div>
                         <?php
-                        $attr = ($audioField['is_required']) ? array('class' => 'size4') : array('class' => 'size4');
-                        echo $view['form']->label((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], ' ');
-                        echo $audioField['title'];
-                        echo ($audioField['is_required']) ? "&nbsp;<span>*</span>" : "";
+                        if (count($field) == 2 && $field[1] == 'isReview')
+                            $style = '';
+                        else if (count($field) == 2 && $field[1] == 'conditionNote' || count($field) == 2 && $field[1] == 'generalNote' || count($field) == 2 && $field[1] == 'copyrightRestrictions' || count($field) == 2 && $field[1] == 'description')
+                            $style = 'textarea';
+                        else
+                            $style = 'text';
                         ?>
+                        <div class="input-control <?php echo $style; ?> new" data-role="input-control">
+                            <?php
+                            $_attr = (count($field) == 2 && $field[1] == 'isReview') ? array() : $attr;
+                            ?>
+                            <?php echo $view['form']->widget((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => $_attr)) ?>
+                            <span class="has-error text-danger"><?php echo $view['form']->errors((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]]) ?></span>
+                        </div>
                     </div>
-                    <?php
-                    if (count($field) == 2 && $field[1] == 'isReview')
-                        $style = '';
-                    else if (count($field) == 2 && $field[1] == 'conditionNote' || count($field) == 2 && $field[1] == 'generalNote' || count($field) == 2 && $field[1] == 'copyrightRestrictions' || count($field) == 2 && $field[1] == 'description')
-                         $style = 'textarea';
-                    else
-                        $style = 'text';
-                    ?>
-                    <div class="input-control <?php echo $style; ?> new" data-role="input-control">
-                        <?php
-                        $_attr = (count($field) == 2 && $field[1] == 'isReview') ? array() : $attr;
-                        ?>
-                        <?php echo $view['form']->widget((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => $_attr)) ?>
-                        <span class="has-error text-danger"><?php echo $view['form']->errors((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]]) ?></span>
-                    </div>
-
-                </div>
             <?php endforeach; ?>
         </fieldset><br />
         <?php echo $view['form']->widget($form['record']['userId']) ?>
@@ -86,63 +84,20 @@
         $('#mediaType, #format').change(function () {
             hideFields();
         });
-
+        
         function hideFields() {
-            if ($('#mediaType').val() == '' || $('#project').val() == '' || $('#format').val() == '') {
-                $('#uniqueId_lbl').hide();
-                $('#location_lbl').hide();
-                $('#title_lbl').hide();
-                $('#collectionName_lbl').hide();
-                $('#description_lbl').hide();
-                $('#commercial_lbl').hide();
-                $('#diskDiameters_lbl').hide();
-                $('#reelDiameters_lbl').hide();
-                $('#mediaDiameters_lbl').hide();
-                $('#bases_lbl').hide();
-                $('#contentDuration_lbl').hide();
-                $('#mediaDuration_lbl').hide();
-                $('#creationDate_lbl').hide();
-                $('#contentDate_lbl').hide();
-                $('#isReview_lbl').hide();
-                $('#recordingSpeed_lbl').hide();
-                $('#tapeThickness_lbl').hide();
-                $('#slides_lbl').hide();
-                $('#trackTypes_lbl').hide();
-                $('#monoStereo_lbl').hide();
-                $('#noiceReduction_lbl').hide();
-                $('#genreTerms_lbl').hide();
-                $('#contributor_lbl').hide();
-                $('#part_lbl').hide();
-                $('#generation_lbl').hide();
-                $('#copyrightRestrictions_lbl').hide();
-                $('#duplicatesDerivatives_lbl').hide();
-                $('#relatedMaterial_lbl').hide();
-                $('#conditionNote_lbl').hide();
-                $('#generalNote_lbl').hide();
-            } else {
-                if ($('#format').val()) {
-                    showUpdateFields();
-                    $('#uniqueId_lbl').show();
-                    $('#location_lbl').show();
-                    $('#title_lbl').show();
-                    $('#collectionName_lbl').show();
-                    $('#description_lbl').show();
-                    $('#commercial_lbl').show();
-                    $('#contentDuration_lbl').show();
-                    $('#mediaDuration_lbl').show();
-                    $('#creationDate_lbl').show();
-                    $('#contentDate_lbl').show();
-                    $('#isReview_lbl').show();
-                    $('#genreTerms_lbl').show();
-                    $('#contributor_lbl').show();
-                    $('#generation_lbl').show();
-                    $('#part_lbl').show();
-                    $('#copyrightRestrictions_lbl').show();
-                    $('#duplicatesDerivatives_lbl').show();
-                    $('#relatedMaterial_lbl').show();
-                    $('#conditionNote_lbl').show();
-                    $('#generalNote_lbl').show();
+            var fields = ['uniqueId_lbl', 'location_lbl', 'title_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'diskDiameters_lbl', 'reelDiameters_lbl', 'mediaDiameters_lbl', 'bases_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'recordingSpeed_lbl', 'tapeThickness_lbl', 'slides_lbl', 'trackTypes_lbl', 'monoStereo_lbl', 'noiceReduction_lbl', 'genreTerms_lbl', 'contributor_lbl', 'part_lbl', 'generation_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl'];
+            if ($('#mediaType').val() == '' || $('#project').val() == '' || $('#format').val() == '') {                
+                for (i = 0; i < fields.length; i++) {
+                    $('#' + fields[i]).hide();
                 }
+            } else {
+                    var fields1 = ['uniqueId_lbl', 'location_lbl', 'title_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl'];    
+                    for (i = 0; i < fields1.length; i++) {
+                        if ($('#' + fields1[i]).data('view') == 'show')
+                            $('#' + fields1[i]).show();
+                    }
+                    showUpdateFields();
             }
         }
 

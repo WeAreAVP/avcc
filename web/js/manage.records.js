@@ -93,7 +93,7 @@ function updateFormat() {
     } else {
         $('#processing').hide();
         $('#fieldsPanel').show();
-        $("#format_lbl").hide();        
+        $("#format_lbl").hide();
     }
 }
 
@@ -111,31 +111,36 @@ function showUpdateFields() {
         var hideBaseIfFormat = [3, 4, 5];
 
         if (jQuery.inArray(parseInt($(this).val()), showDiskDiameter) >= 0) {
-            $('#diskDiameters_lbl').show();
+            if ($('#diskDiameters_lbl').data('view') == 'show')
+                $('#diskDiameters_lbl').show();
         } else {
             $('#diskDiameters_lbl').hide();
         }
 
         if (jQuery.inArray(parseInt($(this).val()), showMediaDiameter) >= 0) {
-            $('#mediaDiameters_lbl').show();
+            if ($('#mediaDiameters_lbl').data('view') == 'show')
+                $('#mediaDiameters_lbl').show();
         } else {
             $('#mediaDiameters_lbl').hide();
         }
 
         if (jQuery.inArray(parseInt($(this).val()), showTapeThickness) >= 0) {
-            $('#tapeThickness_lbl').show();
+            if ($('#tapeThickness_lbl').data('view') == 'show')
+                $('#tapeThickness_lbl').show();
         } else {
             $('#tapeThickness_lbl').hide();
         }
 
         if (jQuery.inArray(parseInt($(this).val()), showTrackType) >= 0) {
-            $('#trackTypes_lbl').show();
+            if ($('#trackTypes_lbl').data('view') == 'show')
+                $('#trackTypes_lbl').show();
         } else {
             $('#trackTypes_lbl').hide();
         }
 
         if (jQuery.inArray(parseInt($(this).val()), showCassetteSize) >= 0) {
-            $('#cassetteSize_lbl').show();
+            if ($('#cassetteSize_lbl').data('view') == 'show')
+                $('#cassetteSize_lbl').show();
         } else {
             $('#cassetteSize_lbl').hide();
         }
@@ -143,15 +148,20 @@ function showUpdateFields() {
         if (jQuery.inArray(parseInt($(this).val()), hideIfFormat) >= 0) {
             $('#slides_lbl, #monoStereo_lbl').hide();
         } else {
-            $('#slides_lbl, #monoStereo_lbl').show();
+            if ($('#slides_lbl').data('view') == 'show')
+                $('#slides_lbl').show();
+            if ($('#monoStereo_lbl').data('view') == 'show')
+                $('#monoStereo_lbl').show();
         }
         if (jQuery.inArray(parseInt($(this).val()), showSideIfFormat) >= 0) {
-            $('#slides_lbl').show();
+            if ($('#slides_lbl').data('view') == 'show')
+                $('#slides_lbl').show();
         } else {
             $('#slides_lbl').hide();
         }
         if (jQuery.inArray(parseInt($(this).val()), showNoiceRedIfFormat) >= 0) {
-            $('#noiceReduction_lbl').show();
+            if ($('#noiceReduction_lbl').data('view') == 'show')
+                $('#noiceReduction_lbl').show();
         } else {
             $('#noiceReduction_lbl').hide();
         }
@@ -169,8 +179,10 @@ function showUpdateFields() {
                     url: _url,
                     success: function (response) {
                         if (response != "") {
-                            $("#bases_lbl").show();
-                            $("#bases").html(response);
+                            if ($('#bases_lbl').data('view') == 'show') {
+                                $("#bases_lbl").show();
+                                $("#bases").html(response);
+                            }
                         } else {
                             $("#bases_lbl").hide();
                         }
@@ -189,8 +201,10 @@ function showUpdateFields() {
                 url: RDurl,
                 success: function (response) {
                     if (response != "") {
-                        $("#reelDiameters_lbl").show();
-                        $("#reelDiameters").html(response);
+                        if ($('#reelDiameters_lbl').data('view') == 'show') {
+                            $("#reelDiameters_lbl").show();
+                            $("#reelDiameters").html(response);
+                        }
                     } else {
                         $("#reelDiameters_lbl").hide();
                     }
@@ -200,7 +214,7 @@ function showUpdateFields() {
             if (jQuery.inArray(parseInt($(this).val()), hideRecordingSpeedFormat) >= 0) {
                 $('#recordingSpeed_lbl').hide();
             } else {
-                $('#recordingSpeed_lbl').show();
+//                $('#recordingSpeed_lbl').show();
                 /// call to get recording speed dropdown options
                 if (selectedRS) {
                     url = baseUrl + 'getRecordingSpeed/' + $(this).val() + '/' + $("#mediaType").val() + '/' + selectedRS;
@@ -212,8 +226,10 @@ function showUpdateFields() {
                     url: url,
                     success: function (response) {
                         if (response != "") {
-                            $("#recordingSpeed_lbl").show();
-                            $("#recordingSpeed").html(response);
+                            if ($('#recordingSpeed_lbl').data('view') == 'show') {
+                                $("#recordingSpeed_lbl").show();
+                                $("#recordingSpeed").html(response);
+                            }
                         } else {
                             $("#recordingSpeed_lbl").hide();
                         }
@@ -231,8 +247,10 @@ function showUpdateFields() {
                 url: formatVersiourl,
                 success: function (response) {
                     if (response != "") {
-                        $("#formatVersion_lbl").show();
-                        $("#formatVersion").html(response);
+                        if ($('#formatVersion_lbl').data('view') == 'show') {
+                            $("#formatVersion_lbl").show();
+                            $("#formatVersion").html(response);
+                        }
                     } else {
                         $("#formatVersion_lbl").hide();
                     }
@@ -338,9 +356,9 @@ function updateProjects() {
             if (response != "") {
                 $("#project").html(response);
                 //$("#project").val(proj);
-            }else{
-                 $("#project").html('');
-                 $('#project').after('&nbsp;&nbsp;Create a project in the Settings menu');
+            } else {
+                $("#project").html('');
+                $('#project').after('&nbsp;&nbsp;Create a project in the Settings menu');
             }
         }
     }); // Ajax Call    
