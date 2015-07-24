@@ -86,13 +86,13 @@
         });
         
         function hideFields() {
-            var fields = ['uniqueId_lbl', 'location_lbl', 'title_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'diskDiameters_lbl', 'reelDiameters_lbl', 'mediaDiameters_lbl', 'bases_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'recordingSpeed_lbl', 'tapeThickness_lbl', 'slides_lbl', 'trackTypes_lbl', 'monoStereo_lbl', 'noiceReduction_lbl', 'genreTerms_lbl', 'contributor_lbl', 'part_lbl', 'generation_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl'];
+            var fields = ['uniqueId_lbl', 'location_lbl', 'alternateId_lbl', 'title_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'diskDiameters_lbl', 'reelDiameters_lbl', 'mediaDiameters_lbl', 'bases_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'recordingSpeed_lbl', 'tapeThickness_lbl', 'slides_lbl', 'trackTypes_lbl', 'monoStereo_lbl', 'noiceReduction_lbl', 'genreTerms_lbl', 'contributor_lbl', 'part_lbl', 'generation_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl'];
             if ($('#mediaType').val() == '' || $('#project').val() == '' || $('#format').val() == '') {                
                 for (i = 0; i < fields.length; i++) {
                     $('#' + fields[i]).hide();
                 }
             } else {
-                    var fields1 = ['uniqueId_lbl', 'location_lbl', 'title_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl'];    
+                    var fields1 = ['uniqueId_lbl', 'alternateId_lbl','location_lbl', 'title_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl'];    
                     for (i = 0; i < fields1.length; i++) {
                         if ($('#' + fields1[i]).data('view') == 'show')
                             $('#' + fields1[i]).show();

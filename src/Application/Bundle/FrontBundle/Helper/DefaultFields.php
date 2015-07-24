@@ -29,6 +29,7 @@ class DefaultFields {
             "Media_Type" => array("title" => 'Media Type', 'field' => "record.mediaType", "is_required" => 1, "hidden" => 0),
             "Project_Name" => array("title" => 'Project Name', 'field' => "record.project", "is_required" => 1, "hidden" => 0),
             "Unique_Id" => array("title" => 'Unique Id', 'field' => "record.uniqueId", "is_required" => 1, "hidden" => 0),
+            "Alternate_Id" => array("title" => 'Alternate Id', 'field' => "record.alternateId", "is_required" => 0, "hidden" => 0),
             "Location" => array("title" => 'Location', 'field' => "record.location", "is_required" => 1, "hidden" => 0),
             "Format" => array("title" => 'Format', 'field' => "record.format", "is_required" => 1, "hidden" => 0),
             "Title" => array("title" => 'Title', 'field' => "record.title", "is_required" => 1, "hidden" => 0),
@@ -65,6 +66,7 @@ class DefaultFields {
             "Media_Type" => array("title" => 'Media Type', 'field' => "record.mediaType", "is_required" => 1, "hidden" => 0),
             "Project_Name" => array("title" => 'Project Name', 'field' => "record.project", "is_required" => 1, "hidden" => 0),
             "Unique_Id" => array("title" => 'Unique Id', 'field' => "record.uniqueId", "is_required" => 1, "hidden" => 0),
+            "Alternate_Id" => array("title" => 'Alternate Id', 'field' => "record.alternateId", "is_required" => 0, "hidden" => 0),
             "Location" => array("title" => 'Location', 'field' => "record.location", "is_required" => 1, "hidden" => 0),
             "Format" => array("title" => 'Format', 'field' => "record.format", "is_required" => 1, "hidden" => 0),
             "Title" => array("title" => 'Title', 'field' => "record.title", "is_required" => 1, "hidden" => 0),
@@ -96,6 +98,7 @@ class DefaultFields {
             "Media_Type" => array("title" => 'Media Type', 'field' => "record.mediaType", "is_required" => 1, "hidden" => 0),
             "Project_Name" => array("title" => 'Project Name', 'field' => "record.project", "is_required" => 1, "hidden" => 0),
             "Unique_Id" => array("title" => 'Unique Id', 'field' => "record.uniqueId", "is_required" => 1, "hidden" => 0),
+            "Alternate_Id" => array("title" => 'Alternate Id', 'field' => "record.alternateId", "is_required" => 0, "hidden" => 0),
             "Location" => array("title" => 'Location', 'field' => "record.location", "is_required" => 1, "hidden" => 0),
             "Format" => array("title" => 'Format', 'field' => "record.format", "is_required" => 1, "hidden" => 0),
             "Print_Type" => array("title" => 'Print Type', 'field' => "printType", "is_required" => 1, "hidden" => 0),
@@ -110,6 +113,7 @@ class DefaultFields {
             "Base" => array("title" => 'Base', 'field' => "bases", "is_required" => 0, "hidden" => 0),
             "Color" => array("title" => 'Color', 'field' => "colors", "is_required" => 0, "hidden" => 0),
             "Sound" => array("title" => 'Sound', 'field' => "sound", "is_required" => 0, "hidden" => 0),
+            "Edge_Code/_Year" => array("title" => 'Edge Code/ Year', 'field' => "edgeCodeYear", "is_required" => 0, "hidden" => 0),
             "Content_Duration" => array("title" => 'Content Duration', 'field' => "record.contentDuration", "is_required" => 0, "hidden" => 0),
             "Creation_Date" => array("title" => 'Creation Date', 'field' => "record.creationDate", "is_required" => 0, "hidden" => 0),
             "Content_Date" => array("title" => 'Content Date', 'field' => "record.contentDate", "is_required" => 0, "hidden" => 0),
@@ -268,6 +272,7 @@ class DefaultFields {
         $tooltip['relatedMaterial'] = 'A free text field for notes on associated objects.';
         $tooltip['conditionNote'] = 'A free text field containing information identifying chemical or physical damage/degradation that may impact playback (mold, broken cassette, hydrolysis, brittleness, shrinkage, tape damage, etc.) The catalogers may also choose to note the date of the inspection in this field.';
         $tooltip['generalNote'] = '';
+        $tooltip['alternateId'] = '';
         $tooltip['commercial'] = 'A drop down field to identify an object as commercial or unique in nature. Unique may also be used to mean rare.';
         if ($media == 1) {
             $tooltip['reelDiameters'] = 'A drop-down field noting the diameter of the audio object’s reel. Combined with Media Diameter, this field may help catalogers estimate Content Duration. Values include 10.5” NAB, 10.5”, 7”, 5”, 4”, 3”.';
@@ -294,6 +299,7 @@ class DefaultFields {
             $tooltip['shrinkage'] = 'A free text field to note the shrinkage percentage of the film if measurements have been taken. At certain shrinkage level films cannot be projected and may or may not be able to be reformatted.';
         } else {
             $tooltip['reelDiameters'] = '';
+            $tooltip['edgeCodeYear'] = '';
             $tooltip['cassetteSize'] = 'A drop-down field to note if a cassette format that comes in two sizes (ex., U-matic, DigiBeta, Betacam, etc.) is large or small.';
             $tooltip['formatVersion'] = 'A drop-down field providing further information about the format version on a given format. Only applicable to certain formats. This may impact the type of deck required to reformat a video or the ability of a vendor to do that work. Values include: High Band, Low Band, Type A, Type B, Type C.';
             $tooltip['recordingSpeed'] = 'A drop-down field specifying at what speed the object was recorded. Only applies to specific formats that have variable recording speeds, such as VHS. Values include SP, LP, EP, SLP.';

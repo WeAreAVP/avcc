@@ -69,7 +69,7 @@ class RecordsController extends Controller {
         );
         $this->keywords = array('title',
             'description', 'collection_name',
-            'creation_date', 'content_date', 'genre_terms', 'contributor',
+            'creation_date', 'content_date', 'genre_terms', 'contributor', 'general_note'
         );
         $this->defaultFields = new DefaultFields();
         $this->limit = 100;
@@ -521,6 +521,7 @@ class RecordsController extends Controller {
         $entityArray = array();
         $entityArray["mediaType"] = $entity->getMediaType()->getName();
         $entityArray["uniqueId"] = $entity->getUniqueId();
+        $entityArray["alternateId"] = $entity->getAlternateId();
         $entityArray["project"] = $entity->getProject()->getName();
         $entityArray["location"] = $entity->getLocation();
         $entityArray["format"] = $entity->getFormat()->getName();
@@ -563,6 +564,7 @@ class RecordsController extends Controller {
             $entityArray['bases'] = ($entity->getFilmRecord()->getBases()) ? $entity->getFilmRecord()->getBases()->getName() : "";
             $entityArray['colors'] = ($entity->getFilmRecord()->getColors()) ? $entity->getFilmRecord()->getColors()->getName() : "";
             $entityArray['sound'] = ($entity->getFilmRecord()->getSound()) ? $entity->getFilmRecord()->getSound()->getName() : "";
+            $entityArray['edgeCodeYear'] = ($entity->getFilmRecord()->getEdgeCodeYear()) ? $entity->getFilmRecord()->getEdgeCodeYear() : "";
             $entityArray['frameRate'] = ($entity->getFilmRecord()->getFrameRate()) ? $entity->getFilmRecord()->getFrameRate()->getName() : "";
             $entityArray['acidDetectionStrip'] = ($entity->getFilmRecord()->getAcidDetectionStrip()) ? $entity->getFilmRecord()->getAcidDetectionStrip()->getName() : "";
             $entityArray['shrinkage'] = ($entity->getFilmRecord()->getShrinkage()) ? $entity->getFilmRecord()->getShrinkage() : "";
@@ -577,7 +579,10 @@ class RecordsController extends Controller {
 
 
         if ($entity->getProject()->getViewSetting()) {
-            $userViewSettings = $entity->getProject()->getViewSetting();
+            $defSettings = $fieldsObj->getDefaultOrder();
+            $dbSettings = $entity->getProject()->getViewSetting();
+            $userViewSettings = $this->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
+//            $userViewSettings = $entity->getProject()->getViewSetting();
         } else {
             $userViewSettings = $fieldsObj->getDefaultOrder();
         }
@@ -757,6 +762,45 @@ class RecordsController extends Controller {
             }
             exit;
         }
+    }
+
+    public function fields_cmp($default, $db_view) {
+        $field_order = array();
+        $previous = array();
+        $key = '';
+        $new = array();
+
+        foreach ($default as $key1 => $value) {
+            foreach ($value as $key2 => $fields) {
+                $index = array_search($fields['title'], array_map(function($element) {
+                            return $element['title'];
+                        }, $db_view[$key1]));
+                if ($default[$key1][$key2]['title'] == $db_view[$key1][$index]['title']) {
+                    if (array_diff($default[$key1][$key2], $db_view[$key1][$index])) {
+                        $db_view[$key1][$index] = $default[$key1][$key2];
+                    }
+                } else {
+                    $previous[$key1][$key] = $default[$key1][$key]['title'];
+                    $field_order[$key1][$key] = $default[$key1][$key2];
+                }
+                $key = $key2;
+            }
+        }
+        if (!empty($previous)) {
+            foreach ($db_view as $keys1 => $values) {
+                foreach ($values as $keys2 => $fields) {
+                    $new[$keys1][] = $db_view[$keys1][$keys2];
+                    if (in_array($fields['title'], $previous[$keys1])) {
+                        $new_index = array_search($fields['title'], $previous[$keys1]);
+                        $new[$keys1][] = $field_order[$keys1][$new_index];
+                    }
+                }
+            }
+        }
+        if (!empty($new))
+            return json_encode($new);
+        else
+            return json_encode($db_view);
     }
 
 }

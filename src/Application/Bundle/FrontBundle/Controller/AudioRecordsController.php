@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -102,7 +104,9 @@ class AudioRecordsController extends Controller {
             $projectId = $this->get('session')->get('project_id');
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project->getViewSetting() != null) {
-                $userViewSettings = $project->getViewSetting();
+                $defSettings = $fieldsObj->getDefaultOrder();
+                $dbSettings = $project->getViewSetting();
+                $userViewSettings = $this->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
             } else {
                 $userViewSettings = $fieldsObj->getDefaultOrder();
             }
@@ -202,7 +206,10 @@ class AudioRecordsController extends Controller {
         if ($projectId) {
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project->getViewSetting() != null) {
-                $userViewSettings = $project->getViewSetting();
+//                $userViewSettings = $project->getViewSetting();
+                $defSettings = $fieldsObj->getDefaultOrder();
+                $dbSettings = $project->getViewSetting();
+                $userViewSettings = $this->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
                 //    $this->get('session')->getFlashBag()->add('project_id', $projectId);
             } else {
                 $userViewSettings = $fieldsObj->getDefaultOrder();
@@ -212,7 +219,10 @@ class AudioRecordsController extends Controller {
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project) {
                 if ($project->getViewSetting() != null) {
-                    $userViewSettings = $project->getViewSetting();
+//                    $userViewSettings = $project->getViewSetting();
+                    $defSettings = $fieldsObj->getDefaultOrder();
+                    $dbSettings = $project->getViewSetting();
+                    $userViewSettings = $this->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
                 }
             } else {
                 $this->get('session')->remove('project_id');
@@ -293,12 +303,18 @@ class AudioRecordsController extends Controller {
         if ($projectId) {
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project->getViewSetting() != null) {
-                $userViewSettings = $project->getViewSetting();
+//                $userViewSettings = $project->getViewSetting();
+                $defSettings = $fieldsObj->getDefaultOrder();
+                $dbSettings = $project->getViewSetting();
+                $userViewSettings = $this->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
             } else {
                 $userViewSettings = $fieldsObj->getDefaultOrder();
             }
         } else if ($entity->getRecord()->getProject()->getViewSetting()) {
-            $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
+//            $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
+            $defSettings = $fieldsObj->getDefaultOrder();
+            $dbSettings = $entity->getRecord()->getProject()->getViewSetting();
+            $userViewSettings = $this->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
         }
 
         $userViewSettings = json_decode($userViewSettings, true);
@@ -400,7 +416,10 @@ class AudioRecordsController extends Controller {
             }
         }
         if ($entity->getRecord()->getProject()->getViewSetting()) {
-            $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
+            $defSettings = $fieldsObj->getDefaultOrder();
+            $dbSettings = $entity->getRecord()->getProject()->getViewSetting();
+            $userViewSettings = $this->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
+//            $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
         }
         $userViewSettings = json_decode($userViewSettings, true);
         $tooltip = $fieldsObj->getToolTip(1);
@@ -666,6 +685,45 @@ class AudioRecordsController extends Controller {
     public function newRecordAction(Request $request) {
         // echo 'here';exit;
         return $this->render('ApplicationFrontBundle:AudioRecords:newRecord.html.php');
+    }
+
+    public function fields_cmp($default, $db_view) {
+        $field_order = array();
+        $previous = array();
+        $key = '';
+        $new = array();
+
+        foreach ($default as $key1 => $value) {
+            foreach ($value as $key2 => $fields) {
+                $index = array_search($fields['title'], array_map(function($element) {
+                            return $element['title'];
+                        }, $db_view[$key1]));
+                if ($default[$key1][$key2]['title'] == $db_view[$key1][$index]['title']) {
+                    if (array_diff($default[$key1][$key2], $db_view[$key1][$index])) {
+                        $db_view[$key1][$index] = $default[$key1][$key2];
+                    }
+                } else {
+                    $previous[$key1][$key] = $default[$key1][$key]['title'];
+                    $field_order[$key1][$key] = $default[$key1][$key2];
+                }
+                $key = $key2;
+            }
+        }
+        if (!empty($previous)) {
+            foreach ($db_view as $keys1 => $values) {
+                foreach ($values as $keys2 => $fields) {
+                    $new[$keys1][] = $db_view[$keys1][$keys2];
+                    if (in_array($fields['title'], $previous[$keys1])) {
+                        $new_index = array_search($fields['title'], $previous[$keys1]);
+                        $new[$keys1][] = $field_order[$keys1][$new_index];
+                    }
+                }
+            }
+        }
+        if (!empty($new))
+            return json_encode($new);
+        else
+            return json_encode($db_view);
     }
 
 }

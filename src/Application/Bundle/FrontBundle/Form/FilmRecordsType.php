@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -37,7 +39,7 @@ class FilmRecordsType extends AbstractType {
                 ->add('record', new RecordsType($this->em, $this->data), array(
                     'data_class' => 'Application\Bundle\FrontBundle\Entity\Records'))
                 ->add('footage')
-                ->add('mediaDiameter')  
+                ->add('mediaDiameter')
                 ->add('shrinkage')
                 ->add('printType', 'entity', array(
                     'class' => 'ApplicationFrontBundle:PrintTypes',
@@ -76,6 +78,7 @@ class FilmRecordsType extends AbstractType {
                     'empty_data' => '',
                     'required' => false
                 ))
+                ->add('edgeCodeYear')
                 ->add('frameRate', 'entity', array(
                     'class' => 'ApplicationFrontBundle:FrameRates',
                     'query_builder' => function (EntityRepository $er) {

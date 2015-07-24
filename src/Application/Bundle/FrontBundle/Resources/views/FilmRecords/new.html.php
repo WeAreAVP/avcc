@@ -77,14 +77,14 @@
         $(function () {
             $('[data-toggle="popover"]').popover();
         });
-        var fields = ['uniqueId_lbl', 'location_lbl', 'title_lbl', 'printType_lbl', 'mediaDiameter_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'footage_lbl', 'reelCore_lbl', 'reelDiameters_lbl', 'diskDiameters_lbl', 'colors_lbl', 'sound_lbl', 'frameRate_lbl', 'acidDetectionStrip_lbl', 'shrinkage_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl'];
+        var fields = ['uniqueId_lbl', 'location_lbl','alternateId_lbl','edgeCodeYear_lbl', 'title_lbl', 'printType_lbl', 'mediaDiameter_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'footage_lbl', 'reelCore_lbl', 'reelDiameters_lbl', 'diskDiameters_lbl', 'colors_lbl', 'sound_lbl', 'frameRate_lbl', 'acidDetectionStrip_lbl', 'shrinkage_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl'];
         $('#mediaType,#format').change(function () {
             if ($('#mediaType').val() == '' || $('#project').val() == '' || $('#format').val() == '') {
                 for (i = 0; i < fields.length; i++) {
                     $('#' + fields[i]).hide();
                 }
             } else {
-                var fields1 = ['uniqueId_lbl', 'location_lbl', 'printType_lbl', 'mediaDiameter_lbl', 'title_lbl', 'footage_lbl', 'reelCore_lbl', 'colors_lbl', 'sound_lbl', 'frameRate_lbl', 'acidDetectionStrip_lbl', 'shrinkage_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl'];
+                var fields1 = ['uniqueId_lbl', 'location_lbl', 'alternateId_lbl','edgeCodeYear_lbl','printType_lbl', 'mediaDiameter_lbl', 'title_lbl', 'footage_lbl', 'reelCore_lbl', 'colors_lbl', 'sound_lbl', 'frameRate_lbl', 'acidDetectionStrip_lbl', 'shrinkage_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl'];
                 showUpdateFields();
                 for (i = 0; i < fields1.length; i++) {
                     if ($('#' + fields1[i]).data('view') == 'show')

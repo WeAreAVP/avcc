@@ -162,7 +162,6 @@ class ExportReport extends ContainerAware {
      * @return boolean
      */
     private function prepareRecords($activeSheet, $row, $records) {
-
         foreach ($records as $record) {
             $this->makeExcelRows($activeSheet, $record, false, $row);
             $row ++;
@@ -308,7 +307,7 @@ class ExportReport extends ContainerAware {
         }
     }
 
-    public function makeExcelRows($activeSheet, $record, $mergRow, $row, $new_header) {
+    public function makeExcelRows($activeSheet, $record, $mergRow, $row, $new_header = null) {
         if ($record) {
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record->getProject());
             $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, $record->getCollectionName());

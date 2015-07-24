@@ -42,6 +42,7 @@ class RecordsType extends AbstractType {
 //            echo '<pre>';print_r($this->selectedOptions['mediaTypesArr'][$this->selectedOptions['mediaTypeId']]);exit;
             $builder
                     ->add('uniqueId')
+                    ->add('alternateId')
                     ->add('location')
                     ->add('format', 'entity', array(
                         'class' => 'ApplicationFrontBundle:Formats',
@@ -103,6 +104,7 @@ class RecordsType extends AbstractType {
 
             $builder
                     ->add('uniqueId')
+                    ->add('alternateId')
                     ->add('location')
                     ->add('format', 'entity', array(
                         'class' => 'ApplicationFrontBundle:Formats',

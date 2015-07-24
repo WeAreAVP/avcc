@@ -52,7 +52,7 @@ class BackupCommand extends ContainerAwareCommand
                     $export = new ExportReport($this->getContainer());
                     if ($records) {
                         $phpExcelObject = $export->generateReport($records);
-                        $completePath = $export->saveReport('csv', $phpExcelObject);
+                        $completePath = $export->saveReport('csv', $phpExcelObject, 2);
                         $text = $completePath;
                     } else {
                         $notFound = 'Records not found.';

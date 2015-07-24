@@ -48,6 +48,8 @@ class SphinxFields
         $this->indexFields['media_type'] = ($this->record->getMediaType()->getName()) ? (string) $this->record->getMediaType()->getName() : "";
         $this->indexFields['s_genre_terms'] = ($this->record->getGenreTerms()) ? (string) $this->record->getGenreTerms() : "";
         $this->indexFields['genre_terms'] = ($this->record->getGenreTerms()) ? (string) $this->record->getGenreTerms() : "";
+        $this->indexFields['s_general_note'] = ($this->record->getGeneralNote()) ? (string) $this->record->getGeneralNote() : "";
+        $this->indexFields['general_note'] = ($this->record->getGeneralNote()) ? (string) $this->record->getGeneralNote() : "";
         $this->indexFields['s_contributor'] = ($this->record->getContributor()) ? (string) $this->record->getContributor() : "";
         $this->indexFields['contributor'] = ($this->record->getContributor()) ? (string) $this->record->getContributor() : "";
         $this->indexFields['location'] = ($this->record->getLocation()) ? (string) $this->record->getLocation() : "";

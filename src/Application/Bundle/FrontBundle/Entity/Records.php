@@ -107,6 +107,13 @@ class Records {
      *
      */
     private $uniqueId;
+    
+    /**
+     * @ORM\Column(name="alternate_id", type="string", nullable=true)
+     * @var string
+     *
+     */
+    private $alternateId;
 
     /**
      * @ORM\Column(name="location", type="string")
@@ -369,6 +376,29 @@ class Records {
     public function getUniqueId() {
         return $this->uniqueId;
     }
+    
+    /**
+     * Set alternate id
+     *
+     * @param string $AlternateId
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Records
+     */
+    public function setAlternateId($AlternateId) {
+        $this->alternateId = $AlternateId;
+
+        return $this;
+    }
+
+    /**
+     * Get alternate id
+     *
+     * @return string
+     */
+    public function getAlternateId() {
+        return $this->alternateId;
+    }
+
 
     /**
      * Set media diameter.

@@ -121,6 +121,13 @@ class FilmRecords
      * })
      */
     private $acidDetectionStrip = null;
+    
+    /**
+     * @ORM\Column(name="edge_code_year", type="string", nullable=true)
+     * @var string
+     *
+     */
+    private $edgeCodeYear;
 
     /**
      * @var float
@@ -147,6 +154,28 @@ class FilmRecords
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * Set edge Code Year
+     *
+     * @param string $edgeCodeYear
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Records
+     */
+    public function setEdgeCodeYear($edgeCodeYear) {
+        $this->edgeCodeYear = $edgeCodeYear;
+
+        return $this;
+    }
+
+    /**
+     * Get edge Code Year
+     *
+     * @return string
+     */
+    public function getEdgeCodeYear() {
+        return $this->edgeCodeYear;
     }
 
     /**

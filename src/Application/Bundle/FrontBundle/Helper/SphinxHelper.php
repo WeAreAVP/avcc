@@ -19,7 +19,7 @@ class SphinxHelper {
     public function __construct() {
         $this->keywords = array('title',
             'description', 'collection_name',
-            'creation_date', 'content_date', 'genre_terms', 'contributor',
+            'creation_date', 'content_date', 'genre_terms', 'contributor', 'general_note'
         );
     }
 
