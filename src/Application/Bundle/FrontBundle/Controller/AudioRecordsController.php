@@ -712,12 +712,12 @@ class AudioRecordsController extends Controller {
         if (!empty($previous)) {
             foreach ($db_view as $keys1 => $values) {
                 foreach ($values as $keys2 => $fields) {
-                    $new[$keys1][] = $db_view[$keys1][$keys2];
-                    if (in_array($fields['title'], $previous[$keys1])) {
-                        $new_index = array_search($fields['title'], $previous[$keys1]);
-                        $new[$keys1][] = $field_order[$keys1][$new_index];
+                        $new[$keys1][] = $db_view[$keys1][$keys2];
+                        if (in_array($fields['title'], $previous[$keys1])) {
+                            $new_index = array_search($fields['title'], $previous[$keys1]);
+                            $new[$keys1][] = $field_order[$keys1][$new_index];
+                        }
                     }
-                }
             }
         }
         if (!empty($new))

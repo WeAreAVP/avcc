@@ -43,6 +43,7 @@ class SphinxFields
         $this->indexFields['s_content_date'] = ($this->record->getContentDate()) ? (string) $this->record->getContentDate() : "";
         $this->indexFields['content_date'] = ($this->record->getContentDate()) ? (string) $this->record->getContentDate() : "";
         $this->indexFields['unique_id'] = ($this->record->getUniqueId()) ? (string) $this->record->getUniqueId() : "";
+        $this->indexFields['alternate_id'] = ($this->record->getAlternateId()) ? (string) $this->record->getAlternateId() : "";
         $this->indexFields['s_unique_id'] = ($this->record->getUniqueId()) ? (string) $this->record->getUniqueId() : "";
         $this->indexFields['s_media_type'] = ($this->record->getMediaType()->getName()) ? (string) $this->record->getMediaType()->getName() : "";
         $this->indexFields['media_type'] = ($this->record->getMediaType()->getName()) ? (string) $this->record->getMediaType()->getName() : "";
@@ -118,6 +119,7 @@ class SphinxFields
         $this->indexFields['s_base'] = ($this->record->getFilmRecord()->getBases()) ? (string) $this->record->getFilmRecord()->getBases()->getName() : "";
         $this->indexFields['color'] = ($this->record->getFilmRecord()->getColors()) ? (string) $this->record->getFilmRecord()->getColors()->getName() : "";
         $this->indexFields['sound'] = ($this->record->getFilmRecord()->getSound()) ? (string) $this->record->getFilmRecord()->getSound()->getName() : "";
+        $this->indexFields['edge_code_year'] = ($this->record->getFilmRecord()->getEdgeCodeYear()) ? (string) $this->record->getFilmRecord()->getEdgeCodeYear() : "";
         $this->indexFields['frame_rate'] = ($this->record->getFilmRecord()->getFrameRate()) ? (string) $this->record->getFilmRecord()->getFrameRate()->getName() : "";
         $this->indexFields['s_acid_detection'] = $this->indexFields['acid_detection'] = ($this->record->getFilmRecord()->getAcidDetectionStrip()) ? (string) $this->record->getFilmRecord()->getAcidDetectionStrip()->getName() : "";
         $this->indexFields['shrinkage'] = ($this->record->getFilmRecord()->getShrinkage()) ? (string) $this->record->getFilmRecord()->getShrinkage() : "";
