@@ -38,9 +38,11 @@ class ImportReportCommand extends ContainerAwareCommand
     {
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
+        @set_time_limit(0);
+        @ini_set("memory_limit", "2000M"); # 1GB
+        @ini_set("max_execution_time", 0); # unlimited
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
-        $id = $input->getArgument('id');
-      
+        $id = $input->getArgument('id');      
         if ($id) {
             $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id, 'type' => 'import', 'status' => 0));
             if ($entity) {

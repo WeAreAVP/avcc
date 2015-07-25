@@ -35,7 +35,7 @@
                 <?php
                     if (count($field) == 2 && $field[1] == 'isReview')
                         $style = '';
-                    else if (count($field) == 2 && $field[1] == 'conditionNote' || count($field) == 2 && $field[1] == 'generalNote')
+                    else if (count($field) == 2 && $field[1] == 'conditionNote' || count($field) == 2 && $field[1] == 'generalNote' || count($field) == 2 && $field[1] == 'copyrightRestrictions' || count($field) == 2 && $field[1] == 'description')
                          $style = 'textarea';
                     else
                         $style = 'text';

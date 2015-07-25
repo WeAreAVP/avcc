@@ -137,7 +137,7 @@ function Records() {
                         },
                         "aoColumnDefs": [
                             {"bSortable": false, "aTargets": [0]}
-                        ], 
+                        ],
                         "aaSorting": [],
                         "sAjaxSource": ajaxSource,
                         "bStateSave": true,
@@ -166,7 +166,7 @@ function Records() {
                     });
             if (filter == 1) {
                 oTable.fnPageChange("first", true);
-            } 
+            }
             $('#records tbody').on('click', 'tr', function () {
 //                var id = this.id;
 //                var rowid = id.split('-');
@@ -518,7 +518,8 @@ function Records() {
         }
         else {
             id = elementID;
-            if ($('#row_' + elementID).attr('checked') == 'checked' || $('#row_' + elementID).prop("checked") == true) {
+            if ($('#row_' + elementID).is(':checked')) {
+//            if ($('#row_' + elementID).attr('checked') == 'checked' || $('#row_' + elementID).prop("checked") == true) {
                 checked = 1;
                 if (selectedrecords) {
                     selectedrecords = selectedrecords + ',' + id;

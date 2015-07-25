@@ -72,6 +72,7 @@ function updateFormat() {
     if ($("#mediaType").val()) {
         $("#format_lbl").show();
         if (selectedFormat) {
+            
             url = baseUrl + 'getFormat/' + $("#mediaType").val() + '/' + selectedFormat;
         } else {
             url = baseUrl + 'getFormat/' + $("#mediaType").val();

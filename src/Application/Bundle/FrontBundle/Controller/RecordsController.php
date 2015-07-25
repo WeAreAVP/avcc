@@ -312,6 +312,7 @@ class RecordsController extends Controller {
         $session = $this->getRequest()->getSession();
         $checked = array();
         $recordsIds = null;
+        $new_checked =array();
         if ($data['is_all']) {
             $session->set("allRecords", $data['checked']);
             $recordsIds = 'all';
@@ -320,7 +321,7 @@ class RecordsController extends Controller {
                 $recordsIds = '';
             }
         } else {
-            if (!$data['checked']) {
+            if (!$data['id']) {
                 $session->remove("saveRecords");
             }
             if ($session->has("saveRecords")) {
@@ -334,8 +335,9 @@ class RecordsController extends Controller {
                     if (!in_array($recordId, $checked))
                         $checked[] = $recordId;
                 } else {
-                    if (($key = array_search($recordId, $checked)) !== false)
+                    if (($key = array_search($recordId, $checked)) !== false) {
                         unset($checked[$key]);
+                    }
                 }
             }
             $session->set("saveRecords", $checked);
