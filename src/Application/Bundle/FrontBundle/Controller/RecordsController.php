@@ -92,7 +92,7 @@ class RecordsController extends Controller {
         $session = $this->getRequest()->getSession();
         $shpinxInfo = $this->getSphinxInfo();
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-
+        $new_data = array();
         $isAjax = FALSE;
         $searchOn = $this->criteria();
 
@@ -116,6 +116,7 @@ class RecordsController extends Controller {
                     $session->set('organization', $new_data);
                 }
                 if ($key == 'project') {
+                    unset($new_data);
                     foreach ($value as $count => $project_id) {
                         $proj_info = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $project_id));
                         $new_data[$project_id] = $proj_info->getName();
@@ -312,7 +313,7 @@ class RecordsController extends Controller {
         $session = $this->getRequest()->getSession();
         $checked = array();
         $recordsIds = null;
-        $new_checked =array();
+        $new_checked = array();
         if ($data['is_all']) {
             $session->set("allRecords", $data['checked']);
             $recordsIds = 'all';
@@ -774,15 +775,15 @@ class RecordsController extends Controller {
 
         foreach ($default as $key1 => $value) {
             foreach ($value as $key2 => $fields) {
-                $index = array_search($fields['title'], array_map(function($element) {
-                            return $element['title'];
+                $index = array_search($fields['field'], array_map(function($element) {
+                            return $element['field'];
                         }, $db_view[$key1]));
-                if ($default[$key1][$key2]['title'] == $db_view[$key1][$index]['title']) {
+                if ($default[$key1][$key2]['field'] == $db_view[$key1][$index]['field']) {
                     if (array_diff($default[$key1][$key2], $db_view[$key1][$index])) {
                         $db_view[$key1][$index] = $default[$key1][$key2];
                     }
                 } else {
-                    $previous[$key1][$key] = $default[$key1][$key]['title'];
+                    $previous[$key1][$key] = $default[$key1][$key]['field'];
                     $field_order[$key1][$key] = $default[$key1][$key2];
                 }
                 $key = $key2;
@@ -791,12 +792,12 @@ class RecordsController extends Controller {
         if (!empty($previous)) {
             foreach ($db_view as $keys1 => $values) {
                 foreach ($values as $keys2 => $fields) {
-                        $new[$keys1][] = $db_view[$keys1][$keys2];
-                        if (in_array($fields['title'], $previous[$keys1])) {
-                            $new_index = array_search($fields['title'], $previous[$keys1]);
-                            $new[$keys1][] = $field_order[$keys1][$new_index];
-                        }
+                    $new[$keys1][] = $db_view[$keys1][$keys2];
+                    if (in_array($fields['field'], $previous[$keys1])) {
+                        $new_index = array_search($fields['field'], $previous[$keys1]);
+                        $new[$keys1][] = $field_order[$keys1][$new_index];
                     }
+                }
             }
         }
         if (!empty($new))
