@@ -60,6 +60,7 @@ class ExportFields
         'Duplicates_/_Derivatives',
         'Related_Material',
         'Condition_Note',
+        'General_Note',
         'Time_Stamp',
         'Timestamp_-_Last_Change',
         'Cataloger'
@@ -69,6 +70,7 @@ class ExportFields
         'Ext_Collection_Name',
         'Ext_Media_Type',
         'Ext_Unique_ID',
+        'Ext_Alternate_ID',
         'Ext_Location',
         'Ext_Format',
         'Ext_Title',
@@ -96,6 +98,7 @@ class ExportFields
         'Ext_Recording_Standard',
         'Ext_Reel_or_Core',
         'Ext_Sound',
+        'Ext_Edge_Code/_Year',
         'Ext_Frame_Rate',
         'Ext_Acid_Detection_Strip',
         'Ext_Shrinkage',
@@ -107,6 +110,7 @@ class ExportFields
         'Ext_Duplicates_/_Derivatives',
         'Ext_Related_Material',
         'Ext_Condition_Note',
+        'Ext_General_Note',
         'Ext_Time_Stamp',
         'Ext_Timestamp_-_Last_Change',
         'Ext_Cataloger'

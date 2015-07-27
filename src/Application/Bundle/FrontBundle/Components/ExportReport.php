@@ -331,9 +331,10 @@ class ExportReport extends ContainerAware {
             $activeSheet->setCellValueExplicitByColumnAndRow(41, $row, $record->getDuplicatesDerivatives());
             $activeSheet->setCellValueExplicitByColumnAndRow(42, $row, $record->getRelatedMaterial());
             $activeSheet->setCellValueExplicitByColumnAndRow(43, $row, $record->getConditionNote());
-            $activeSheet->setCellValueExplicitByColumnAndRow(44, $row, $record->getCreatedOn()->format('Y-m-d H:i:s'));
-            $activeSheet->setCellValueExplicitByColumnAndRow(45, $row, ($record->getUpdatedOn()) ? $record->getUpdatedOn()->format('Y-m-d H:i:s') : '');
-            $activeSheet->setCellValueExplicitByColumnAndRow(46, $row, $record->getUser()->getName());
+            $activeSheet->setCellValueExplicitByColumnAndRow(44, $row, $record->getGeneralNote());
+            $activeSheet->setCellValueExplicitByColumnAndRow(45, $row, $record->getCreatedOn()->format('Y-m-d H:i:s'));
+            $activeSheet->setCellValueExplicitByColumnAndRow(46, $row, ($record->getUpdatedOn()) ? $record->getUpdatedOn()->format('Y-m-d H:i:s') : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(47, $row, $record->getUser()->getName());
 
             if ($record->getAudioRecord()) {
                 $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, ($record->getAudioRecord()->getMediaDuration()) ? $record->getAudioRecord()->getMediaDuration() : "");
@@ -534,9 +535,10 @@ class ExportReport extends ContainerAware {
             $activeSheet->setCellValueExplicitByColumnAndRow(41, $row, $record['duplicates_derivatives']);
             $activeSheet->setCellValueExplicitByColumnAndRow(42, $row, $record['related_material']);
             $activeSheet->setCellValueExplicitByColumnAndRow(43, $row, $record['condition_note']);
-            $activeSheet->setCellValueExplicitByColumnAndRow(44, $row, ($record['created_on']) ? $record['created_on'] : '');
-            $activeSheet->setCellValueExplicitByColumnAndRow(45, $row, ($record['updated_on']) ? $record['updated_on'] : '');
-            $activeSheet->setCellValueExplicitByColumnAndRow(46, $row, $record['user_name']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(44, $row, $record['general_note']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(45, $row, ($record['created_on']) ? $record['created_on'] : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(46, $row, ($record['updated_on']) ? $record['updated_on'] : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(47, $row, $record['user_name']);
 
             if ($record['media_type'] == 'Audio') {
                 $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $record['media_duration']);
@@ -724,7 +726,7 @@ class ExportReport extends ContainerAware {
     }
 
     protected function mergeRow($activeSheet, $mergRow, $row, $header) {
-        $counter = 47;
+        $counter = 48;
         $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $mergRow['unique_id']);
         if (!empty($header)) {
             foreach ($header as $key => $value) {
