@@ -91,7 +91,6 @@
         {
         {% if is_granted('ROLE_SUPER_ADMIN') %}
                 $('.table').dataTable({
-{#                    "bPaginate": false,#}
                     "aoColumnDefs": [
                         {"bSearchable": false, "aTargets": [0, 1, 4]},
                     ],
