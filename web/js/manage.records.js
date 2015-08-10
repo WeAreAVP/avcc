@@ -16,7 +16,7 @@ function initialize_records_form() {
     $.mask.definitions['m'] = '[0-1,x]';
     $.mask.definitions['d'] = '[0-3,x]';
     $.mask.definitions['g'] = '[0-9,x]';
-    $("#creationDate, #contentDate").mask("yggg-mg-dg", {optional: true});
+//    $("#creationDate, #contentDate").mask("yggg-mg-dg", {optional: true});
     updateViewSetting();
     updateProjects();
     updateFormat();

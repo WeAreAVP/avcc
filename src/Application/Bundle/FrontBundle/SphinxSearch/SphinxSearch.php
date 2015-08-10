@@ -203,7 +203,7 @@ class SphinxSearch extends ContainerAware {
      */
     public function whereClause($criteria, $sq) {
         foreach ($criteria as $key => $value) {
-            if ($key == 'is_review') {
+            if ($key == 'is_review' || $key == 'is_reformatting_priority') {
                 if ($value == 1) {
                     $sq->where($key, '=', 1);
                 } elseif ($value == 2) {

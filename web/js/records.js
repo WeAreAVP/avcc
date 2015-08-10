@@ -242,7 +242,8 @@ function Records() {
             checkParentFacet('organization_name', $(this).prop('checked'));
         });
         initTriStateCheckBox('is_review_check', 'is_review_check_state', true);
-        $('#is_review_check').click(function () {
+        initTriStateCheckBox('is_reformatting_priority_check', 'is_reformatting_priority_check_state', true);
+        $('#is_review_check, #is_reformatting_priority_check').click(function () {
             var totalChecked = $('#total_checked').val();
             var containerId = $(this).attr('id');
             var currentVal = $('#' + containerId + '_state').val();

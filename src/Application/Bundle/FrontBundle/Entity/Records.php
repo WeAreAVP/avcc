@@ -199,7 +199,14 @@ class Records {
      * @ORM\Column(name="is_review", type="boolean", nullable=true, options={"default" = 0}) )
      */
     private $isReview;
-
+    
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="reformatting_priority", type="boolean", nullable=true, options={"default" = 0}) )
+     */
+    private $reformattingPriority;
+ 
     /**
      * @var string
      *
@@ -673,6 +680,21 @@ class Records {
      */
     public function setIsReview($isReview) {
         $this->isReview = $isReview;
+
+        return $this;
+    }
+
+    /**
+     * Get content date
+     *
+     * @return boolean
+     */
+    public function getReformattingPriority() {
+        return $this->reformattingPriority;
+    }
+    
+    public function setReformattingPriority($Reformatting_Priority) {
+        $this->reformattingPriority = $Reformatting_Priority;
 
         return $this;
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
@@ -69,6 +71,7 @@ class RecordsType extends AbstractType {
                     ->add('creationDate', 'text', array('required' => false))
                     ->add('contentDate', 'text', array('required' => false))
                     ->add('isReview')
+                    ->add('reformattingPriority')
                     ->add('genreTerms')
                     ->add('contributor')
                     ->add('generation')
@@ -129,6 +132,7 @@ class RecordsType extends AbstractType {
                     ->add('creationDate', 'text', array('required' => false))
                     ->add('contentDate', 'text', array('required' => false))
                     ->add('isReview')
+                    ->add('reformattingPriority')
                     ->add('genreTerms')
                     ->add('contributor')
                     ->add('generation')

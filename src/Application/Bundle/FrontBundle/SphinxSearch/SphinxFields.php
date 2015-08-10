@@ -58,6 +58,7 @@ class SphinxFields
         $this->indexFields['s_format'] = ($this->record->getFormat()->getName()) ? (string) $this->record->getFormat()->getName() : "";
         $this->indexFields['format'] = ($this->record->getFormat()->getName()) ? (string) $this->record->getFormat()->getName() : "";
         $this->indexFields['is_review'] = ($this->record->getIsReview()) ? $this->record->getIsReview() : "";
+        $this->indexFields['is_reformatting_priority'] = ($this->record->getReformattingPriority()) ? $this->record->getReformattingPriority() : "";
         $this->indexFields['s_commercial'] = $this->indexFields['commercial'] = ($this->record->getCommercial()) ? (string) $this->record->getCommercial()->getName() : '';
         $this->indexFields['s_reel_diameter'] = $this->indexFields['reel_diameter'] = ($this->record->getReelDiameters()) ? (string) $this->record->getReelDiameters()->getName() : "";
         $this->indexFields['content_duration'] = ($this->record->getContentDuration()) ? $this->record->getContentDuration() : "";

@@ -20,7 +20,7 @@
             } else {
                 $index = $field[0];
             }
-            $_style = (count($field) == 2 && $field[1] == 'isReview') ? 'width: 180px;float: left;margin-bottom: 15px;' : 'width: 200px';
+            $_style = (count($field) == 2 && $field[1] == 'isReview' || count($field) == 2 && $field[1] == 'reformattingPriority') ? 'width: 180px;float: left;margin-bottom: 15px;' : 'width: 200px';
             ?>
             <div style="<?php echo ($audioField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>" data-view="<?php echo ($audioField['hidden']) ? 'hide' : 'show'; ?>">
                 <div class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo isset($tooltip[$index]) ? $tooltip[$index] : ''; ?>" style="<?php echo  $_style ?>">
@@ -32,7 +32,7 @@
                     ?>
                 </div>
                 <?php
-                    if (count($field) == 2 && $field[1] == 'isReview')
+                    if (count($field) == 2 && $field[1] == 'isReview'  || count($field) == 2 && $field[1] == 'reformattingPriority')
                         $style = '';
                     else if (count($field) == 2 && $field[1] == 'conditionNote' || count($field) == 2 && $field[1] == 'generalNote' || count($field) == 2 && $field[1] == 'copyrightRestrictions' || count($field) == 2 && $field[1] == 'description')
                          $style = 'textarea';
@@ -41,7 +41,7 @@
                     ?>
                 <div class="input-control <?php echo $style; ?>" data-role="input-control">
                     <?php 
-                        $_attr = (count($field) == 2 && $field[1] == 'isReview') ? array() : $attr;
+                        $_attr = (count($field) == 2 && $field[1] == 'isReview'  || count($field) == 2 && $field[1] == 'reformattingPriority') ? array() : $attr;
                         ?>
                     <?php echo $view['form']->widget((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => $_attr)) ?>
                     <span class="has-error text-danger"><?php echo $view['form']->errors((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]]) ?></span>

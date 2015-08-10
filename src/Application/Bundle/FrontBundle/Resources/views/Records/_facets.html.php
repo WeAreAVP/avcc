@@ -505,6 +505,19 @@
                 </span>
                 Manager Review
             </li>
+            <li class="chekBoxFacet">
+                <span id="is_reformatting_priority_check" style="cursor: default;">
+                    <?php
+                    $reformatting_priority_check = 0;
+                    if (isset($facetData['is_reformatting_priority_check'])):
+
+                        $reformatting_priority_check = $facetData['is_reformatting_priority_check'];
+                    endif;
+                    ?>
+                    <input type="hidden" id="is_reformatting_priority_check_state" name="is_reformatting_priority_check" value="<?php echo $reformatting_priority_check ?>"  />
+                </span>
+                Reformatting Priority
+            </li>
         </ul>
     </nav>
     <?php

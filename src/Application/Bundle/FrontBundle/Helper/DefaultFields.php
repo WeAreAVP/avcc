@@ -46,6 +46,7 @@ class DefaultFields {
             "Content_Date" => array("title" => 'Content Date', 'field' => "record.contentDate", "is_required" => 0, "hidden" => 0),
             "Manager_Review" => array("title" => 'Manager Review', 'field' => "record.isReview", "is_required" => 0, "hidden" => 0),
             "General_Notes" => array("title" => 'General Notes', 'field' => "record.generalNote", "is_required" => 0, "hidden" => 0),
+            "Reformatting_Priority" => array("title" => 'Reformatting Priority', 'field' => "record.reformattingPriority", "is_required" => 0, "hidden" => 0),
             "Recording_Speed" => array("title" => 'Recording Speed', 'field' => "recordingSpeed", "is_required" => 0, "hidden" => 0),
             "Tape_Thickness" => array("title" => 'Tape Thickness', 'field' => "tapeThickness", "is_required" => 0, "hidden" => 0),
             "Slides" => array("title" => 'Sides', 'field' => "slides", "is_required" => 0, "hidden" => 0),
@@ -81,6 +82,7 @@ class DefaultFields {
             "Content_Date" => array("title" => 'Content Date', 'field' => "record.contentDate", "is_required" => 0, "hidden" => 0),
             "Manager_Review" => array("title" => 'Manager Review', 'field' => "record.isReview", "is_required" => 0, "hidden" => 0),
             "General_Notes" => array("title" => 'General Notes', 'field' => "record.generalNote", "is_required" => 0, "hidden" => 0),
+            "Reformatting_Priority" => array("title" => 'Reformatting Priority', 'field' => "record.reformattingPriority", "is_required" => 0, "hidden" => 0),
             "Format_Version" => array("title" => 'Format Version', 'field' => "formatVersion", "is_required" => 0, "hidden" => 0),
             "Recording_Speed" => array("title" => 'Recording Speed', 'field' => "recordingSpeed", "is_required" => 0, "hidden" => 0),
             "Recording_Standard" => array("title" => 'Recording Standard', 'field' => "recordingStandard", "is_required" => 0, "hidden" => 0),
@@ -119,6 +121,7 @@ class DefaultFields {
             "Content_Date" => array("title" => 'Content Date', 'field' => "record.contentDate", "is_required" => 0, "hidden" => 0),
             "Manager_Review" => array("title" => 'Manager Review', 'field' => "record.isReview", "is_required" => 0, "hidden" => 0),
             "General_Notes" => array("title" => 'General Notes', 'field' => "record.generalNote", "is_required" => 0, "hidden" => 0),
+             "Reformatting_Priority" => array("title" => 'Reformatting Priority', 'field' => "record.reformattingPriority", "is_required" => 0, "hidden" => 0),
             "Frame_Rate" => array("title" => 'Frame Rate', 'field' => "frameRate", "is_required" => 0, "hidden" => 0),
             "Acid_Detection_Strip" => array("title" => 'Acid Detection Strip', 'field' => "acidDetectionStrip", "is_required" => 0, "hidden" => 0),
             "Shrinkage" => array("title" => 'Shrinkage', 'field' => "shrinkage", "is_required" => 0, "hidden" => 0),
@@ -272,6 +275,7 @@ class DefaultFields {
         $tooltip['relatedMaterial'] = 'A free text field for notes on associated objects.';
         $tooltip['conditionNote'] = 'A free text field containing information identifying chemical or physical damage/degradation that may impact playback (mold, broken cassette, hydrolysis, brittleness, shrinkage, tape damage, etc.) The catalogers may also choose to note the date of the inspection in this field.';
         $tooltip['generalNote'] = '';
+        $tooltip['reformattingPriority'] = '';
         $tooltip['alternateId'] = '';
         $tooltip['commercial'] = 'A drop down field to identify an object as commercial or unique in nature. Unique may also be used to mean rare.';
         if ($media == 1) {

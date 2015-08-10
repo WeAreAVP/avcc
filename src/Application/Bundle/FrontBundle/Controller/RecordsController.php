@@ -544,6 +544,7 @@ class RecordsController extends Controller {
         $entityArray["relatedMaterial"] = $entity->getRelatedMaterial();
         $entityArray["conditionNote"] = $entity->getConditionNote();
         $entityArray["generalNote"] = $entity->getGeneralNote();
+        $entityArray["reformattingPriority"] = $entity->getReformattingPriority();
         $entityArray["commercial"] = $entity->getCommercial() ? $entity->getCommercial()->getName() : '';
         $entityArray["reelDiameters"] = $entity->getReelDiameters() ? $entity->getReelDiameters()->getName() : '';
         if ($entity->getMediaType()->getId() == 1) {
@@ -776,8 +777,8 @@ class RecordsController extends Controller {
         foreach ($default as $key1 => $value) {
             foreach ($value as $key2 => $fields) {
                 $index = array_search($fields['field'], array_map(function($element) {
-                            return $element['field'];
-                        }, $db_view[$key1]));
+                                    return $element['field'];
+                                }, $db_view[$key1]));
                 if ($default[$key1][$key2]['field'] == $db_view[$key1][$index]['field']) {
                     if (array_diff($default[$key1][$key2], $db_view[$key1][$index])) {
                         $db_view[$key1][$index] = $default[$key1][$key2];

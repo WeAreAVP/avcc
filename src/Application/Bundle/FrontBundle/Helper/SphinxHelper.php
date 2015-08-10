@@ -40,6 +40,7 @@ class SphinxHelper {
             'acidDetection' => 's_acid_detection',
             'project' => 'project_id',
             'is_review_check' => 'is_review',
+            'is_reformatting_priority_check' => 'is_reformatting_priority',
             'creationDate' => 's_creation_date',
             'contentDate' => 's_content_date',
             'contentDate' => 's_content_date',
