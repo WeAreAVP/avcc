@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -20,8 +21,7 @@ use Application\Bundle\FrontBundle\Form\OrganizationsType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
-class RegistrationFormType extends AbstractType
-{
+class RegistrationFormType extends AbstractType {
 
     /**
      * registration form fields modified to apply bootstrap and new field added
@@ -29,8 +29,7 @@ class RegistrationFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array                                        $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         // add your custom field
         $builder->add('name', 'text', array('label' => '', 'attr' => array('class' => 'form-control', 'placeholder' => 'Name')))
                 ->add('username', 'text', array('label' => '', 'attr' => array('class' => 'form-control', 'placeholder' => 'Username')))
@@ -42,19 +41,18 @@ class RegistrationFormType extends AbstractType
                     'second_options' => array('label' => ' ', 'attr' => array('class' => 'form-control', 'placeholder' => 'Confirm Password'), 'label_attr' => array('style' => 'visibility:hidden;display:none')),
                     'invalid_message' => 'fos_user.password.mismatch',
                         )
-                )->add('organizations', new OrganizationsType(array('from_registration'=>true)), array(
+                )->add('organizations', new OrganizationsType(array('from_registration' => true)), array(
             'data_class' => 'Application\Bundle\FrontBundle\Entity\Organizations'
-        ))
+        ))->add('termStatus', 'checkbox', array('label' => '', 'mapped' => false, 'required' => true))
 //                ->addEventListener(
 //                FormEvents::POST_SUBMIT, array($this, 'onPostSubmitData'));
         ;
     }
 
-    public function onPostSubmitData(FormEvent $event)
-    {
+    public function onPostSubmitData(FormEvent $event) {
         $formData = $event->getData();
         if ($formData->getOrganizations() instanceof \Application\Bundle\FrontBundle\Entity\Organizations) {
-
+            
         }
     }
 
@@ -63,8 +61,7 @@ class RegistrationFormType extends AbstractType
      *
      * @return string
      */
-    public function getParent()
-    {
+    public function getParent() {
         return 'fos_user_registration';
     }
 
@@ -73,8 +70,7 @@ class RegistrationFormType extends AbstractType
      *
      * @return string
      */
-    public function getName()
-    {
+    public function getName() {
         return 'application_user_registration';
     }
 

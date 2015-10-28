@@ -45,7 +45,12 @@ security:
         - { path: ^/record/, role: ROLE_USER }
         - { path: ^/records/, role: ROLE_USER }
         - { path: ^/report/, role: ROLE_USER }
+        - { path: ^/help/$, role: ROLE_USER }
+        - { path: ^/help/, role: ROLE_USER }
+        - { path: ^/terms/$, role: ROLE_SUPER_ADMIN }
+        - { path: ^/terms/, role: ROLE_SUPER_ADMIN }
         - { path: ^/$, role: ROLE_USER }
+        
 
 
 

@@ -75,6 +75,7 @@
                                         <li><a class="" href="<?php echo $view['router']->generate('projects') ?>">Projects</a></li>
                                         <?php if ($view['security']->isGranted('ROLE_SUPER_ADMIN')): ?>
                                             <li><a class="" href="<?php echo $view['router']->generate('help_guide') ?>">Help Guide</a></li>
+                                            <li><a class="" href="<?php echo $view['router']->generate('terms_of_service') ?>">Help Guide</a></li>
                                         <?php endif ?>
                                     </ul>
                                 </li>

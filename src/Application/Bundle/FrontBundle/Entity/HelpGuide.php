@@ -25,12 +25,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 
 /**
- * Description of HelpGuide
- *
- * @author rimsha
- */
-
-/**
  * HelpGuide
  *
  * @ORM\Table(name="help_guide")

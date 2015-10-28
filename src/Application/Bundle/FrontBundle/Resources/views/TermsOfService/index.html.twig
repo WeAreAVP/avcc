@@ -1,0 +1,67 @@
+{% extends 'FOSUserBundle::layout.html.twig' %}
+
+{% block body -%}
+
+
+<h1>Terms Of Service
+        {% if is_granted('ROLE_MANAGER') %}
+        <small class="on-right">
+            <a href="{{ path('terms_of_service_new') }}"><i class="icon-plus"></i> New</a>
+        </small>
+        {% endif %}
+    </h1>
+    <div class="flash-success text-success" id="message">
+        Order updated succesfully.
+    </div>
+    <div class="table-responsive">
+        <table class="table bordered hovered">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entity in entities %}
+                    <tr class="sortTr" id="{{entity.id}}">                        
+                        <td>&nbsp;<a href="{{ path('terms_of_service_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                        <td>{% if entity.isPublished %} Published {% else %} Unpublished {% endif %} </td>
+                         {% if not entity.isPublished %}
+                        <td><a class="icon-pencil" title="Edit" href="{{ path('terms_of_service_edit', { 'id': entity.id }) }}"></a> |
+                            <a class="icon-remove" onclick="return confirm('Are you sure you want to delete selected term?')" title="Delete" href="{{ path('terms_of_service_delete', { 'id': entity.id }) }}"></a></td>
+{% else %}
+                        <td></td>
+{% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>    
+        </div>
+        <script type="text/javascript">
+                                var path = "{{ path('hg_update_order') }}";
+                                $('#message').hide();
+                                function updateVocabSettings() {
+                                    // each loop to get ids
+                                    i = 0;
+                                    ids = [];
+                                    $('.sortTr').each(function(index, id)
+                                    {
+                                        ids[i] = parseInt($(this).attr('id'));
+                                        i++;
+
+                                    });
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: path,
+                                        data: {
+                                            help_ids: ids
+                                        },
+                                        dataType: 'json',
+                                        success: function(response) {
+                                            $('#message').show();
+                                        }
+                                    });
+                                }
+            </script>
+{% endblock %}

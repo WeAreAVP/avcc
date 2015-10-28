@@ -1,0 +1,23 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+<div class="grid fluid">
+    <h1>
+        <a href="{{ path('terms_of_service') }}"><i class="icon-arrow-left-3 smaller"></i> </a>
+        Terms Of Service Detail
+    </h1>
+
+    <dl class="horizontal">
+        <dt>Terms</dt>
+        <dd>
+               {{ entity.terms | raw}}
+            </dd>
+        </dl>
+        <dl class="horizontal">
+            <dt>Status</dt>
+            <dd>
+               {% if entity.status %} Published {% else %} Unpublished {% endif %}
+                </dd>
+            </dl>
+        </div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+<div class="grid fluid">
+    <h1>
+        <a href="{{ path('terms_of_service') }}"><i class="icon-arrow-left-3 smaller"></i> </a>
+        New Terms Of Service
+    </h1>
+
+        {{ form_start(form, {attr: {class:'form-horizontal'} }) }}
+    <fieldset>
+            {{ form_errors(form) }}
+            <br />
+            <label>Terms of Service</label>
+            <div class="input-control select" data-role="input-control">
+                {{ form_widget(form.terms, {attr: {class:'size4'} }) }}
+
+                {% for errorItem in form.terms.vars.errors %}
+                    <span class="has-error text-danger" for="{{ form.terms.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+                </div>
+                <div class="clearfix"></div>
+                <label>{{ form_widget(form.status, {attr: {class:''} }) }}  Publish</label>
+                <br/>
+                <div>
+                {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
+                        or
+                        <a class="button" href="{{ path('terms_of_service') }}">Cancel</a>
+                    </div>
+                </fieldset>
+        {{ form_end(form) }}
+            </div>
+
+            <script type="text/javascript">
+
+                tinymce.init({
+                    selector: "textarea",
+                    menubar: false,
+                    height: 250,
+                    theme: "modern",
+                    skin: 'light',
+                    statusbar: false,
+                    plugins: [
+                        "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+                        "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                        "save table contextmenu directionality emoticons template paste"
+                    ],
+                    toolbar1: "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | jbimages | preview",
+                    image_advtab: true,
+                });
+                $(document).ready(function() {
+                    $('.formats_dd').chosen();
+                });
+                </script>
+{% endblock %}

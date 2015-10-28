@@ -351,6 +351,7 @@ class Organizations {
      */
     private $isPaid = 0;
 
+
     /**
      * Organization construct
      */
@@ -1151,5 +1152,7 @@ class Organizations {
     public function setIsPaid($isPaid) {
         $this->isPaid = $isPaid;
     }
+    
+    
 
 }

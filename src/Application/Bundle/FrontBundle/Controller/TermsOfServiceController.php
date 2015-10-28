@@ -19,26 +19,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Application\Bundle\FrontBundle\Entity\HelpGuide;
-use Application\Bundle\FrontBundle\Entity\HelpGuideRepository;
-use Application\Bundle\FrontBundle\Form\HelpGuideType;
-use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
-use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
-use Symfony\Component\Form\FormError;
+use Application\Bundle\FrontBundle\Entity\TermsOfService;
+use Application\Bundle\FrontBundle\Form\TermsOfServiceType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-
 /**
- * HelpGuide controller.
+ * TermsOfService controller.
  *
- * @Route("/help")
+ * @Route("/terms")
  */
-class HelpGuideController extends Controller {
+class TermsOfServiceController extends Controller {
 
     /**
      * Lists all AudioRecords entities.
      *
-     * @Route("/", name="help_guide")
+     * @Route("/", name="terms_of_service")
      * @Method("GET")
      * @Template()
      * @return array
@@ -47,43 +42,10 @@ class HelpGuideController extends Controller {
         $entities = '';
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ApplicationFrontBundle:HelpGuide')->findBy(array(), array('order' => 'ASC'));
+        $entities = $em->getRepository('ApplicationFrontBundle:TermsOfService')->findAll();
 
         return array(
             'entities' => $entities,
-        );
-    }
-
-    /**
-     * Lists all AudioRecords entities.
-     *
-     * @param Request $request
-     * 
-     * @Route("/list", name="help_guide_list")
-     * @Method("GET")
-     * @Template()
-     * @return array
-     */
-    public function listAction(Request $request) {
-        $search = $request->query->get('search');
-        $entities = '';
-        $em = $this->getDoctrine()->getManager();
-        if ($search) {
-            $data = array();
-            $entities = $em->getRepository('ApplicationFrontBundle:HelpGuide')->searchHelpGuide($search);
-            foreach ($entities as $key => $entity) {
-                $data[$key]['slug'] = $entity->getSlug();
-                $data[$key]['title'] = $entity->getTitle();
-            }
-            echo json_encode(array('entities' => $data, 'search_val' => $search));
-            exit;
-        } else {
-            $entities = $em->getRepository('ApplicationFrontBundle:HelpGuide')->findBy(array(), array('order' => 'ASC'));
-        }
-
-        return array(
-            'entities' => $entities,
-            'search_val' => $search
         );
     }
 
@@ -92,23 +54,28 @@ class HelpGuideController extends Controller {
      *
      * @param Request $request
      *
-     * @Route("/", name="help_guide_create")
+     * @Route("/", name="terms_of_service_create")
      * @Method("POST")
-     * @Template("ApplicationFrontBundle:HelpGuide:new.html.twig")
+     * @Template("ApplicationFrontBundle:TermsOfService:new.html.twig")
      * @return array
      */
     public function createAction(Request $request) {
-        $entity = new HelpGuide();
+        $entity = new TermsOfService();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            if ($entity->getStatus()) {
+                $this->checkActiveRecord();
+                $entity->setIsPublished(1);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Help Guide added succesfully.');
+//            $this->updateTermsInOrg();
+            $this->get('session')->getFlashBag()->add('success', 'Terms Of Service added succesfully.');
 
-            return $this->redirect($this->generateUrl('help_guide'));
+            return $this->redirect($this->generateUrl('terms_of_service'));
         }
 
         return array(
@@ -126,9 +93,9 @@ class HelpGuideController extends Controller {
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(HelpGuide $entity) {
-        $form = $this->createForm(new HelpGuideType(), $entity, array(
-            'action' => $this->generateUrl('help_guide_create'),
+    private function createCreateForm(TermsOfService $entity) {
+        $form = $this->createForm(new TermsOfServiceType(), $entity, array(
+            'action' => $this->generateUrl('terms_of_service_create'),
             'method' => 'POST',
         ));
 
@@ -138,9 +105,9 @@ class HelpGuideController extends Controller {
     }
 
     /**
-     * Displays a form to create a new help_guide entity.
+     * Displays a form to create a new terms_of_service entity.
      *
-     * @Route("/new", name="help_guide_new")
+     * @Route("/new", name="terms_of_service_new")
      * @Method("GET")
      * @Template()
      * @return array
@@ -153,7 +120,7 @@ class HelpGuideController extends Controller {
         if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles())) {
             throw new AccessDeniedException('Access Denied.');
         }
-        $entity = new HelpGuide();
+        $entity = new TermsOfService();
         $form = $this->createCreateForm($entity);
 
         return array(
@@ -167,18 +134,18 @@ class HelpGuideController extends Controller {
      *
      * @param integer $id
      *
-     * @Route("/{slug}", name="help_guide_show")
+     * @Route("/{id}", name="terms_of_service_show")
      * @Method("GET")
      * @Template()
      * @return array
      */
-    public function showAction($slug) {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ApplicationFrontBundle:HelpGuide')->findOneBy(array('slug' => $slug));
+        $entity = $em->getRepository('ApplicationFrontBundle:TermsOfService')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Help Guide.');
+            throw $this->createNotFoundException('Unable to find Terms Of Service.');
         }
         return array(
             'entity' => $entity,
@@ -191,7 +158,7 @@ class HelpGuideController extends Controller {
      * @param Request $request
      * @param type    $id
      *
-     * @Route("/delete/{id}", name="help_guide_delete")
+     * @Route("/delete/{id}", name="terms_of_service_delete")
      * @Method("GET")
      * @return redirect
      */
@@ -200,15 +167,15 @@ class HelpGuideController extends Controller {
             throw new AccessDeniedException('Access Denied.');
         }
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('ApplicationFrontBundle:HelpGuide')->find($id);
+        $entity = $em->getRepository('ApplicationFrontBundle:TermsOfService')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Help Guide entity.');
+            throw $this->createNotFoundException('Unable to find Terms Of Service entity.');
         }
 
         $em->remove($entity);
         $em->flush();
-        return $this->redirect($this->generateUrl('help_guide'));
+        return $this->redirect($this->generateUrl('terms_of_service'));
     }
 
     /**
@@ -216,7 +183,7 @@ class HelpGuideController extends Controller {
      *
      * @param integer $id
      *
-     * @Route("/{id}/edit", name="help_guide_edit")
+     * @Route("/{id}/edit", name="terms_of_service_edit")
      * @Method("GET")
      * @Template()
      * @return array
@@ -227,10 +194,10 @@ class HelpGuideController extends Controller {
         }
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ApplicationFrontBundle:HelpGuide')->find($id);
+        $entity = $em->getRepository('ApplicationFrontBundle:TermsOfService')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Help Guide entity.');
+            throw $this->createNotFoundException('Unable to find Terms Of Service entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -248,9 +215,9 @@ class HelpGuideController extends Controller {
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(HelpGuide $entity) {
-        $form = $this->createForm(new HelpGuideType(), $entity, array(
-            'action' => $this->generateUrl('help_guide_update', array('id' => $entity->getId())),
+    private function createEditForm(TermsOfService $entity) {
+        $form = $this->createForm(new TermsOfServiceType(), $entity, array(
+            'action' => $this->generateUrl('terms_of_service_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -265,28 +232,32 @@ class HelpGuideController extends Controller {
      * @param Request $request
      * @param type    $id
      *
-     * @Route("/{id}", name="help_guide_update")
+     * @Route("/{id}", name="terms_of_service_update")
      * @Method("PUT")
-     * @Template("ApplicationFrontBundle:HelpGuide:edit.html.twig")
+     * @Template("ApplicationFrontBundle:TermsOfService:edit.html.twig")
      * @return array
      */
     public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ApplicationFrontBundle:HelpGuide')->find($id);
+        $entity = $em->getRepository('ApplicationFrontBundle:TermsOfService')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Help Guide entity.');
+            throw $this->createNotFoundException('Unable to find Terms Of Service entity.');
         }
 
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            if ($entity->getStatus()) {
+                $this->checkActiveRecord();
+                $entity->setIsPublished(1);
+            }
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', 'Help Guide updated succesfully.');
-
-            return $this->redirect($this->generateUrl('help_guide'));
+//            $this->updateTermsInOrg();
+            $this->get('session')->getFlashBag()->add('success', 'Terms Of Service updated succesfully.');
+            return $this->redirect($this->generateUrl('terms_of_service'));
         }
 
         return array(
@@ -295,31 +266,44 @@ class HelpGuideController extends Controller {
         );
     }
 
-    /**
-     * update field order
-     *
-     * @param Request $request
-     *
-     * @Route("/fieldOrder", name="hg_update_order")
-     * @Method("POST")
-     * @return array
-     */
-    public function updateFieldOrder(Request $request) {
-        // code to update
-        $adsIds = $this->get('request')->request->get('help_ids');
-        $count = 0;
-        foreach ($adsIds as $ads) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ApplicationFrontBundle:HelpGuide')->find($ads);
-            if ($entity) {
-                $entity->setOrder($count);
-                // $em->persist($entity);
+    private function checkActiveRecord($id = null) {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('ApplicationFrontBundle:TermsOfService')->findBy(array('status' => 1));
+        if (count($entities) > 0) {
+            foreach ($entities as $entity) {
+                if ($id) {
+                    if ($id != $entity->getId()) {
+                        $entity->setStatus(0);
+                    }
+                } else {
+                    $entity->setStatus(0);
+                }
+            }
+            $em->persist($entity);
+            $em->flush();
+        }
+    }
+
+    private function updateTermsInOrg() {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('ApplicationFrontBundle:Organizations')->findAll();
+        $activeRecord = $em->getRepository('ApplicationFrontBundle:TermsOfService')->findBy(array('status' => 1));
+        if (count($entities) > 0) {
+            $termsId = $activeRecord[0]->getId();
+            if ($termsId) {
+                foreach ($entities as $entity) {
+                    if ($entity->getTermsOfServiceId() == $termsId) {
+                        break;
+                    } else {
+                        $entity->setTermsOfServiceId($termsId);
+                        $entity->setIsAccepted(0);
+                        $em->persist($entity);
+                    }
+                }
                 $em->flush();
-                $count = $count + 1;
             }
         }
-        echo json_encode(array('success' => 'true'));
-        exit;
     }
 
 }
+

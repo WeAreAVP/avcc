@@ -1,0 +1,33 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+<div class="tab-control" data-role="tab-control">
+    <ul class="tabs">
+        <li class="active"><a href="#tab1">Terms of Service</a></li>
+        <li class=""><a href="#tab2">Updates</a></li>
+    </ul>
+
+    <div class="frames">
+        <div class="frame" id="tab1" style="display: none;">
+            {% if active %}
+              {{ active.terms | raw }}
+                {% else %}
+                No terms of service found.
+            {% endif %}
+            </div>
+            <div class="frame clearfix" id="tab2" style="display: block;">
+                <div class="accordion" data-role="accordion" data-closeany="true">
+                {% for key, entity in entities %}
+                        <div class="accordion-frame">
+                            <a class="heading collapsed" href="#">{{ entity.createdOn |date("F d, Y") }}</a>
+                            <div class="content">
+                        {{ entity.terms | raw }}
+                                </div>
+                            </div>
+                     {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+{% endblock %}
