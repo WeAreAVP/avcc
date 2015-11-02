@@ -29,8 +29,13 @@
             </div>
             <form  role="form" action="{{ path("accept_terms") }}" method="post">
                 <div class="modal-body">
+                    <div style="float: right; margin-right: 25px">
+                        <span title="print" class="icon-printer" onclick="printTerms()"></span>
+                    </div>
                     <div class="input-control textarea" style="height: 200px;overflow: auto;" data-role="input-control">
+                        <div id="tab1">
                         {{ terms | raw }}
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer" id="modal-footer"> 
@@ -101,32 +106,36 @@
     <script src="{{ asset('bundles/applicationfront/js/dashboard.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.blockUI.js') }}"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
-            var baseUrl = '{{ path('report') }}';
-            var formats
-                    ={{ formats | raw }};
-            var obj = new Dashboard();
-            obj.setBaseUrl(baseUrl);
-            obj.setFormats(formats);
-            obj.bindAll();
+                          $(document).ready(function() {
+                              var baseUrl = '{{ path('report') }}';
+                              var formats
+                                      ={{ formats | raw }};
+                              var obj = new Dashboard();
+                              obj.setBaseUrl(baseUrl);
+                              obj.setFormats(formats);
+                              obj.bindAll();
               {% if showTerms %}
-            $('#termsModal').show();
-            $('#termsModal').modal({
-                backdrop: 'static',
-                keyboard: false
-            });
+                              $('#termsModal').show();
+                              $('#termsModal').modal({
+                                  backdrop: 'static',
+                                  keyboard: false
+                              });
         {% endif %}
         {% if check %}
-            $('#messageModal').show();
-            $("#messageText").show();
+                              $('#messageModal').show();
+                              $("#messageText").show();
             {#                $("#messageModal").modal('show');#}
             {#                $("#messageModal").show();#}
     {#                    $('#messageText p span').html();#}
-            $('#messageModal').modal({
-                backdrop: 'static',
-                keyboard: false
-            });
+                              $('#messageModal').modal({
+                                  backdrop: 'static',
+                                  keyboard: false
+                              });
         {% endif %}
-        });
+                          });
+
+                          function printTerms() {
+                              $("#tab1").print();
+                          }
         </script>
 {% endblock view_javascripts %}

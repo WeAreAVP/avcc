@@ -1,6 +1,10 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block body %}
+<div style="float: right;">
+<button onclick="printTerms()" value="print"><span title="print" class="icon-printer"></span></button>
+</div>
+<div class="clearfix"></div>
 <div class="tab-control" data-role="tab-control">
     <ul class="tabs">
         <li class="active"><a href="#tab1">Terms of Service</a></li>
@@ -33,4 +37,12 @@
 {% endif %}
                         </div>
                     </div>
+{% block view_javascripts %}
+                    <script type="text/javascript">
+                        function printTerms() {   
+                             $("#tab1").print();
+                        }
+                        </script>
+					{% endblock %}
+
 {% endblock %}
