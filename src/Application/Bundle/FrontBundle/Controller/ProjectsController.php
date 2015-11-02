@@ -27,13 +27,13 @@ use Application\Bundle\FrontBundle\Form\ProjectsType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
-
+use Application\Bundle\FrontBundle\Controller\MyController;
 /**
  * Projects controller.
  *
  * @Route("/projects")
  */
-class ProjectsController extends Controller {
+class ProjectsController extends MyController {
 
     /**
      * Lists all Projects entities.
@@ -46,6 +46,10 @@ class ProjectsController extends Controller {
      * @return stdObject
      */
     public function indexAction($orgId = null) {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $organizations = array();
         $em = $this->getDoctrine()->getManager();
         $org = array();
@@ -153,6 +157,10 @@ class ProjectsController extends Controller {
      * @return array project entity and form
      */
     public function newAction() {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $entity = new Projects();
         $form = $this->createCreateForm($entity);
         $org_id = '';
@@ -178,6 +186,10 @@ class ProjectsController extends Controller {
      * @return array
      */
     public function showAction($id) {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Projects')->find($id);
@@ -205,6 +217,10 @@ class ProjectsController extends Controller {
      * @return array
      */
     public function editAction($id) {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Projects')->find($id);

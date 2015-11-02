@@ -28,13 +28,14 @@ use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\Entity\UserSettings as UserSettings;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Application\Bundle\FrontBundle\Helper\EmailHelper;
+use Application\Bundle\FrontBundle\Controller\MyController;
 
 /**
  * Users controller.
  *
  * @Route("/users")
  */
-class UsersController extends Controller {
+class UsersController extends MyController {
 
     /**
      * Lists all Users entities.
@@ -48,6 +49,10 @@ class UsersController extends Controller {
      * @return array
      */
     public function indexAction($orgId = null, $roleId = null) {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $organizations = array();
         $em = $this->getDoctrine()->getManager();
         $org = array();
@@ -201,6 +206,10 @@ class UsersController extends Controller {
      */
     public function newAction() {
 
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $entity = new Users();
         $form = $this->createCreateForm($entity);
         $organizationId = '';
@@ -227,6 +236,10 @@ class UsersController extends Controller {
      *
      */
     public function showAction($id) {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Users')->find($id);
@@ -255,6 +268,10 @@ class UsersController extends Controller {
      * @return array
      */
     public function editAction($id) {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $user = $this->container->get('security.context')->getToken()->getUser();
         if (!is_object($user) || !$user instanceof UserInterface) {
             throw new AccessDeniedException('This user does not have access to this section.');

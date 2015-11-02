@@ -26,14 +26,14 @@ use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
+use Application\Bundle\FrontBundle\Controller\MyController;
 
 /**
  * HelpGuide controller.
  *
  * @Route("/help")
  */
-class HelpGuideController extends Controller {
+class HelpGuideController extends MyController {
 
     /**
      * Lists all AudioRecords entities.
@@ -65,6 +65,10 @@ class HelpGuideController extends Controller {
      * @return array
      */
     public function listAction(Request $request) {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $search = $request->query->get('search');
         $entities = '';
         $em = $this->getDoctrine()->getManager();

@@ -23,7 +23,6 @@ use JMS\JobQueueBundle\Entity\Job;
 use DateInterval;
 use DateTime;
 use Application\Bundle\FrontBundle\Components\ImportReport;
-
 /**
  * Import controller.
  *

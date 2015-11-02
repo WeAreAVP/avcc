@@ -19,7 +19,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\Commercial;
 use Application\Bundle\FrontBundle\Form\CommercialType;
-
 /**
  * Commercial controller.
  *

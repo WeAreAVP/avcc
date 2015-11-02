@@ -19,7 +19,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Entity\TapeThickness;
 use Application\Bundle\FrontBundle\Form\TapeThicknessType;
-
 /**
  * TapeThickness controller.
  *

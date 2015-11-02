@@ -18,13 +18,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Components\ExportReport;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
-
+use Application\Bundle\FrontBundle\Controller\MyController;
 /**
  * ReelDiameters controller.
  *
  * @Route("/report")
  */
-class ReportController extends Controller {
+class ReportController extends MyController {
 
     /**
      * Show Reports view.
@@ -35,6 +35,10 @@ class ReportController extends Controller {
      * @return array
      */
     public function indexAction() {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         return array();
     }
 

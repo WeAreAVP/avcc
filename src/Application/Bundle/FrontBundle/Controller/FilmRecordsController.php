@@ -24,13 +24,13 @@ use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Bundle\FrontBundle\Entity\Projects;
-
+use Application\Bundle\FrontBundle\Controller\MyController;
 /**
  * FilmRecords controller.
  *
  * @Route("/record")
  */
-class FilmRecordsController extends Controller {
+class FilmRecordsController extends MyController {
 
     /**
      * Lists all FilmRecords entities.
@@ -40,6 +40,10 @@ class FilmRecordsController extends Controller {
      * @Template()
      */
     public function indexAction() {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('ApplicationFrontBundle:FilmRecords')->findAll();
@@ -151,6 +155,10 @@ class FilmRecordsController extends Controller {
      * @return template
      */
     public function newAction($projectId = null, $filmRecId = null) {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
         }
@@ -233,6 +241,10 @@ class FilmRecordsController extends Controller {
      * @return template
      */
     public function editAction($id, $projectId = null) {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
         }

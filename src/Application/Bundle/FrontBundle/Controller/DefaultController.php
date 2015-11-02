@@ -337,6 +337,7 @@ class DefaultController extends Controller {
      */
     public function updateTermsOfServiceAction(Request $request) {
         if ($request->request->get('accepted')) {
+            $session = $this->getRequest()->getSession();
             $user = $this->container->get('security.context')->getToken()->getUser();
             $em = $this->getDoctrine()->getManager();
             $orgId = $user->getOrganizations()->getId();
@@ -346,6 +347,8 @@ class DefaultController extends Controller {
             $entity[0]->setUserId($user->getId());
             $em->persist($entity[0]);
             $em->flush();
+            if ($session->has('termsStatus'))
+                $session->remove('termsStatus');
             return $this->redirect($this->generateUrl('dashboard'));
         } else {
             return $this->redirect($this->generateUrl('fos_user_security_logout'));
@@ -365,8 +368,8 @@ class DefaultController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $active = array();
         $activeRecord = $em->getRepository('ApplicationFrontBundle:TermsOfService')->findBy(array('status' => 1));
-        $entities = $em->getRepository('ApplicationFrontBundle:TermsOfService')->findBy(array('isPublished' => 1, 'status' => 0),  array('createdOn' => 'DESC'));
-        if(count($activeRecord) > 0){
+        $entities = $em->getRepository('ApplicationFrontBundle:TermsOfService')->findBy(array('isPublished' => 1, 'status' => 0), array('createdOn' => 'DESC'));
+        if (count($activeRecord) > 0) {
             $active = $activeRecord[0];
         }
         return $this->render('ApplicationFrontBundle:Default:show.html.twig', array(

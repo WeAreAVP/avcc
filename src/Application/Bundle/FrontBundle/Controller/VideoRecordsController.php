@@ -26,13 +26,13 @@ use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Bundle\FrontBundle\Entity\Projects;
-
+use Application\Bundle\FrontBundle\Controller\MyController;
 /**
  * VideoRecords controller.
  *
  * @Route("/record")
  */
-class VideoRecordsController extends Controller {
+class VideoRecordsController extends MyController {
 
     /**
      * Lists all VideoRecords entities.
@@ -42,6 +42,10 @@ class VideoRecordsController extends Controller {
      * @Template()
      */
     public function indexAction() {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('ApplicationFrontBundle:VideoRecords')->findAll();
@@ -150,6 +154,10 @@ class VideoRecordsController extends Controller {
      * @return template
      */
     public function newAction($projectId = null, $videoRecId = null) {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
         }
@@ -227,6 +235,10 @@ class VideoRecordsController extends Controller {
      * @return template
      */
     public function editAction($id, $projectId = null) {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
         }

@@ -27,13 +27,14 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Bundle\FrontBundle\Entity\Projects;
 use Application\Bundle\FrontBundle\Entity\Records;
+use Application\Bundle\FrontBundle\Controller\MyController;
 
 /**
  * AudioRecords controller.
  *
  * @Route("/record")
  */
-class AudioRecordsController extends Controller {
+class AudioRecordsController extends MyController {
 
     /**
      * Lists all AudioRecords entities.
@@ -44,6 +45,10 @@ class AudioRecordsController extends Controller {
      * @return array
      */
     public function indexAction() {
+        $session = $this->getRequest()->getSession();
+        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
@@ -160,6 +165,10 @@ class AudioRecordsController extends Controller {
      * @return array
      */
     public function newAction($projectId = null, $audioRecId = null) {
+        $session = $this->getRequest()->getSession();
+        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
 //        return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
@@ -254,6 +263,10 @@ class AudioRecordsController extends Controller {
      * @return array
      */
     public function showAction($id) {
+        $session = $this->getRequest()->getSession();
+        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->findOneBy(array('record' => $id));
@@ -286,6 +299,10 @@ class AudioRecordsController extends Controller {
      * @return array
      */
     public function editAction($id, $projectId = null) {
+        $session = $this->getRequest()->getSession();
+        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
         }
@@ -683,7 +700,10 @@ class AudioRecordsController extends Controller {
      * @Template()
      */
     public function newRecordAction(Request $request) {
-        // echo 'here';exit;
+        $session = $this->getRequest()->getSession();
+        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         return $this->render('ApplicationFrontBundle:AudioRecords:newRecord.html.php');
     }
 
@@ -696,8 +716,8 @@ class AudioRecordsController extends Controller {
         foreach ($default as $key1 => $value) {
             foreach ($value as $key2 => $fields) {
                 $index = array_search($fields['field'], array_map(function($element) {
-                            return $element['field'];
-                        }, $db_view[$key1]));
+                                    return $element['field'];
+                                }, $db_view[$key1]));
                 if ($default[$key1][$key2]['field'] == $db_view[$key1][$index]['field']) {
                     if (array_diff($default[$key1][$key2], $db_view[$key1][$index])) {
                         $db_view[$key1][$index] = $default[$key1][$key2];
@@ -712,12 +732,12 @@ class AudioRecordsController extends Controller {
         if (!empty($previous)) {
             foreach ($db_view as $keys1 => $values) {
                 foreach ($values as $keys2 => $fields) {
-                        $new[$keys1][] = $db_view[$keys1][$keys2];
-                        if (in_array($fields['field'], $previous[$keys1])) {
-                            $new_index = array_search($fields['field'], $previous[$keys1]);
-                            $new[$keys1][] = $field_order[$keys1][$new_index];
-                        }
+                    $new[$keys1][] = $db_view[$keys1][$keys2];
+                    if (in_array($fields['field'], $previous[$keys1])) {
+                        $new_index = array_search($fields['field'], $previous[$keys1]);
+                        $new[$keys1][] = $field_order[$keys1][$new_index];
                     }
+                }
             }
         }
         if (!empty($new))

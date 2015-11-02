@@ -25,13 +25,13 @@ use Application\Bundle\FrontBundle\Entity\Projects;
 use Application\Bundle\FrontBundle\Form\OrganizationsType;
 use Application\Bundle\FrontBundle\Entity\Records;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
-
+use Application\Bundle\FrontBundle\Controller\MyController;
 /**
  * Organizations controller.
  *
  * @Route("/organizations")
  */
-class OrganizationsController extends Controller {
+class OrganizationsController extends MyController {
 
     /**
      * Lists all Organizations entities.
@@ -42,6 +42,10 @@ class OrganizationsController extends Controller {
      * @return array
      */
     public function indexAction() {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         @set_time_limit(0);
         @ini_set("memory_limit", "1000M"); # 1GB
         @ini_set("max_execution_time", 0); # unlimited
@@ -121,6 +125,10 @@ class OrganizationsController extends Controller {
      * @return array
      */
     public function newAction() {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $entity = new Organizations();
         $form = $this->createCreateForm($entity);
 
@@ -142,6 +150,10 @@ class OrganizationsController extends Controller {
      * @return array
      */
     public function showAction($id) {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Organizations')->find($id);
@@ -169,6 +181,10 @@ class OrganizationsController extends Controller {
      * @return array
      */
     public function editAction($id) {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Organizations')->find($id);

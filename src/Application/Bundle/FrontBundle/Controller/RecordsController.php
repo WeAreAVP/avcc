@@ -23,6 +23,7 @@ use Application\Bundle\FrontBundle\Helper\DefaultFields;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Application\Bundle\FrontBundle\Entity\ImportExport;
 use Application\Bundle\FrontBundle\Helper\SphinxHelper;
+use Application\Bundle\FrontBundle\Controller\MyController;
 use JMS\JobQueueBundle\Entity\Job;
 use DateInterval;
 use DateTime;
@@ -34,7 +35,7 @@ use PHPExcel_Cell;
  * @Route("/records")
  *
  */
-class RecordsController extends Controller {
+class RecordsController extends MyController {
 
     /**
      * Object of DefaultFields
@@ -87,9 +88,11 @@ class RecordsController extends Controller {
      * @return array
      */
     public function indexAction(Request $request, $dialog = null) {
-
         $em = $this->getDoctrine()->getManager();
-        $session = $this->getRequest()->getSession();
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $shpinxInfo = $this->getSphinxInfo();
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
         $new_data = array();
@@ -514,6 +517,10 @@ class RecordsController extends Controller {
      * @return array
      */
     public function showAction($id) {
+        $session = $this->getRequest()->getSession();        
+        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('id' => $id));

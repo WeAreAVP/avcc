@@ -26,6 +26,7 @@ use Application\Bundle\FrontBundle\Form\UserSettingsType;
 use Symfony\Component\Validator\Constraints\Email as EmailConstraint;
 use Application\Bundle\FrontBundle\Entity\Records;
 use Application\Bundle\FrontBundle\Entity\Projects;
+use Application\Bundle\FrontBundle\Controller\MyController;
 use JMS\JobQueueBundle\Entity\Job;
 use DateInterval;
 use DateTime;
@@ -35,7 +36,7 @@ use DateTime;
  *
  * @Route("/fieldsettings")
  */
-class UserSettingsController extends Controller {
+class UserSettingsController extends MyController {
 
     /**
      * User settings
@@ -66,6 +67,10 @@ class UserSettingsController extends Controller {
      * @return array
      */
     public function indexAction($projectId = null) {
+        $session = $this->getRequest()->getSession();
+        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $em = $this->getDoctrine()->getManager();
         $entities = '';
         $name = '';
@@ -157,6 +162,10 @@ class UserSettingsController extends Controller {
      * @return array
      */
     public function backupAction(Request $request) {
+        $session = $this->getRequest()->getSession();
+        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+            return $this->redirect($this->generateUrl('dashboard'));
+        }
         $userEntity = $this->getDoctrine()
                 ->getRepository('ApplicationFrontBundle:UserSettings')
                 ->findOneBy(array('user' => $this->getUser()->getId()));
@@ -167,7 +176,7 @@ class UserSettingsController extends Controller {
             $em->persist($userEntity);
             $em->flush();
         }
-        $session = $request->getSession();
+//        $session = $request->getSession();
         if ($session->has('error')) {
             $error = $session->get('error');
             $session->remove('error');
@@ -323,8 +332,8 @@ class UserSettingsController extends Controller {
         foreach ($default as $key1 => $value) {
             foreach ($value as $key2 => $fields) {
                 $index = array_search($fields['field'], array_map(function($element) {
-                            return $element['field'];
-                        }, $db_view[$key1]));
+                                    return $element['field'];
+                                }, $db_view[$key1]));
                 if ($default[$key1][$key2]['field'] == $db_view[$key1][$index]['field']) {
                     if (array_diff($default[$key1][$key2], $db_view[$key1][$index])) {
                         $db_view[$key1][$index] = $default[$key1][$key2];
@@ -339,12 +348,12 @@ class UserSettingsController extends Controller {
         if (!empty($previous)) {
             foreach ($db_view as $keys1 => $values) {
                 foreach ($values as $keys2 => $fields) {
-                        $new[$keys1][] = $db_view[$keys1][$keys2];
-                        if (in_array($fields['field'], $previous[$keys1])) {
-                            $new_index = array_search($fields['field'], $previous[$keys1]);
-                            $new[$keys1][] = $field_order[$keys1][$new_index];
-                        }
+                    $new[$keys1][] = $db_view[$keys1][$keys2];
+                    if (in_array($fields['field'], $previous[$keys1])) {
+                        $new_index = array_search($fields['field'], $previous[$keys1]);
+                        $new[$keys1][] = $field_order[$keys1][$new_index];
                     }
+                }
             }
         }
         if (!empty($new))
