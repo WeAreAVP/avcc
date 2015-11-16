@@ -1,80 +1,83 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block body %}
-    <div class="grid fluid">
+<div class="grid fluid">
 
-		<h1>
-			<a href="{{ path('organizations') }}"><i class="icon-arrow-left-3 smaller"></i> </a>
-			New Organization
-		</h1>
+    <h1>
+        <a href="{{ path('organizations') }}"><i class="icon-arrow-left-3 smaller"></i> </a>
+        New Organization
+    </h1>
 		{{ form_start(form) }}
-		<fieldset>
+    <fieldset>
 			{{ form_errors(form) }}
-			<br />
+            <br />
 
-			<label>Name</label>
-			<div class="input-control text" data-role="input-control">
+            <label>Name</label>
+            <div class="input-control text" data-role="input-control">
 				{{ form_widget(form.name, {attr: {class:'size4'} }) }}
 				{% for errorItem in form.name.vars.errors %}
-					<span class="has-error text-danger" for="{{ form.name.vars.id }}">{{ errorItem.message }}</span>
+                    <span class="has-error text-danger" for="{{ form.name.vars.id }}">{{ errorItem.message }}</span>
 				{% endfor %}
-			</div>
+                </div>
 
 
-			<label>Department Name</label>
-			<div class="input-control text" data-role="input-control">
+                <label>Department Name</label>
+                <div class="input-control text" data-role="input-control">
 				{{ form_widget(form.department_name, {attr: {class:'size4'} }) }}
 				{% for errorItem in form.department_name.vars.errors %}
-					<span class="has-error text-danger" for="{{ form.department_name.vars.id }}">{{ errorItem.message }}</span>
+                        <span class="has-error text-danger" for="{{ form.department_name.vars.id }}">{{ errorItem.message }}</span>
 				{% endfor %}
-			</div>
+                    </div>
 
 
-			<label>Address</label>
-			<div class="input-control text" data-role="input-control">
+                    <label>Address</label>
+                    <div class="input-control text" data-role="input-control">
 				{{ form_widget(form.address, {attr: {class:'size4'} }) }}
 				{% for errorItem in form.address.vars.errors %}
-					<span class="has-error text-danger" for="{{ form.address.vars.id }}">{{ errorItem.message }}</span>
+                            <span class="has-error text-danger" for="{{ form.address.vars.id }}">{{ errorItem.message }}</span>
 				{% endfor %}
-			</div>
+                        </div>
 
 
-			<label>Contact Person Name</label>
-			<div class="input-control text" data-role="input-control">
+                        <label>Contact Person Name</label>
+                        <div class="input-control text" data-role="input-control">
 				{{ form_widget(form.contact_person_name, {attr: {class:'size4'} }) }}
 				{% for errorItem in form.contact_person_name.vars.errors %}
-					<span class="has-error text-danger" for="{{ form.contact_person_name.vars.id }}">{{ errorItem.message }}</span>
+                                <span class="has-error text-danger" for="{{ form.contact_person_name.vars.id }}">{{ errorItem.message }}</span>
 				{% endfor %}
-			</div>
+                            </div>
 
 
-			<label>Contact Person Email</label>
-			<div class="input-control text" data-role="input-control">
+                            <label>Contact Person Email</label>
+                            <div class="input-control text" data-role="input-control">
 				{{ form_widget(form.contact_person_email, {attr: {class:'size4'} }) }}
 				{% for errorItem in form.contact_person_email.vars.errors %}
-					<span class="has-error text-danger" for="{{ form.contact_person_email.vars.id }}">{{ errorItem.message }}</span>
+                                    <span class="has-error text-danger" for="{{ form.contact_person_email.vars.id }}">{{ errorItem.message }}</span>
 				{% endfor %}
-			</div>
+                                </div>
 
 
-			<label>Contact Person Phone#</label>
-			<div class="input-control text" data-role="input-control">
+                                <label>Contact Person Phone#</label>
+                                <div class="input-control text" data-role="input-control">
 				{{ form_widget(form.contact_person_phone, {attr: {class:'size4'} }) }}
 				{% for errorItem in form.contact_person_phone.vars.errors %}
-					<span class="has-error text-danger" for="{{ form.contact_person_phone.vars.id }}">{{ errorItem.message }}</span>
+                                        <span class="has-error text-danger" for="{{ form.contact_person_phone.vars.id }}">{{ errorItem.message }}</span>
 				{% endfor %}
-			</div>
-
-
+                                    </div>
+                                    <label style="width: 100px;float: left;margin-bottom: 15px;">Is Paid</label>
+                                    <div class="input-control" data-role="input-control">
+				{{ form_widget(form.isPaid) }}
+                                        </div>
+                                        <div class="clearfix"></div>
 			{{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
-			or
-			<a class="button"   href="{{ path('organizations') }}">Cancel</a>
+                                        or
+                                        <a class="button"   href="{{ path('organizations') }}">Cancel</a>
 
 
 
-		</fieldset>
+                                    </fieldset>
 		{#    {{ form(form) }}#}
 		{{ form_end(form) }}
 
-	</div>
+                                </div>
 {% endblock body %}
