@@ -160,3 +160,7 @@ span.has-error ul li{
     width: 400px;
 }
 
+.ellipsis {
+    display: none;
+}
+

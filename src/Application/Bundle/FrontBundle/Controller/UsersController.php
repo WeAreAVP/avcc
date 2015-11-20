@@ -49,8 +49,11 @@ class UsersController extends MyController {
      * @return array
      */
     public function indexAction($orgId = null, $roleId = null) {
-        $session = $this->getRequest()->getSession();        
-        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+        @set_time_limit(0);
+        @ini_set("memory_limit", "1000M"); # 1GB
+        @ini_set("max_execution_time", 0); # unlimited
+        $session = $this->getRequest()->getSession();
+        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $organizations = array();
@@ -81,19 +84,19 @@ class UsersController extends MyController {
                     if ($role[0] == 'ROLE_SUPER_ADMIN') {
                         $all[$key] = $entity;
                     }
-                }else if ($roleId == 2) {
+                } else if ($roleId == 2) {
                     if ($role[0] == 'ROLE_ADMIN') {
                         $all[$key] = $entity;
                     }
-                }else if ($roleId == 3) {
+                } else if ($roleId == 3) {
                     if ($role[0] == 'ROLE_MANAGER') {
                         $all[$key] = $entity;
                     }
-                }else if ($roleId == 4) {
+                } else if ($roleId == 4) {
                     if ($role[0] == 'ROLE_CATALOGER') {
                         $all[$key] = $entity;
                     }
-                }else if ($roleId == 5) {
+                } else if ($roleId == 5) {
                     if ($role[0] == 'ROLE_USER') {
                         $all[$key] = $entity;
                     }
@@ -109,10 +112,10 @@ class UsersController extends MyController {
             }
         }
 
-        if($roleId == null){
+        if ($roleId == null) {
             $roleId = 0;
         }
-        if($orgId == null){
+        if ($orgId == null) {
             $orgId = 0;
         }
         return array(
@@ -120,7 +123,7 @@ class UsersController extends MyController {
             'role' => $currentUserRole[0],
             'organization' => $org,
             'org_id' => $orgId,
-            'role_id' =>$roleId
+            'role_id' => $roleId
         );
     }
 
@@ -206,8 +209,8 @@ class UsersController extends MyController {
      */
     public function newAction() {
 
-        $session = $this->getRequest()->getSession();        
-        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+        $session = $this->getRequest()->getSession();
+        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $entity = new Users();
@@ -236,8 +239,8 @@ class UsersController extends MyController {
      *
      */
     public function showAction($id) {
-        $session = $this->getRequest()->getSession();        
-        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+        $session = $this->getRequest()->getSession();
+        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $em = $this->getDoctrine()->getManager();
@@ -268,8 +271,8 @@ class UsersController extends MyController {
      * @return array
      */
     public function editAction($id) {
-        $session = $this->getRequest()->getSession();        
-        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+        $session = $this->getRequest()->getSession();
+        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $user = $this->container->get('security.context')->getToken()->getUser();

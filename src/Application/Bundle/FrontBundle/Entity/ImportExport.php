@@ -73,7 +73,7 @@ class ImportExport
     private $format;
 
     /**
-     * @ORM\Column(name="query_or_id", type="string")
+     * @ORM\Column(name="query_or_id", type="text")
      * @var string
      */
     private $queryOrId;

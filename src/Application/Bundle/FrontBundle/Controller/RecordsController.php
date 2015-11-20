@@ -88,9 +88,12 @@ class RecordsController extends MyController {
      * @return array
      */
     public function indexAction(Request $request, $dialog = null) {
+        @set_time_limit(0);
+        @ini_set("memory_limit", "1000M");
+        @ini_set("max_execution_time", 0);
         $em = $this->getDoctrine()->getManager();
-        $session = $this->getRequest()->getSession();        
-        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+        $session = $this->getRequest()->getSession();
+        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $shpinxInfo = $this->getSphinxInfo();
@@ -196,7 +199,7 @@ class RecordsController extends MyController {
         $result = $sphinxSearch->select($this->getUser(), $offset, $limit, $sortIndex, $sortOrder, $criteria);
         $records = $result[0];
         $currentPageTotal = count($records);
-        $totalRecords = $result[1][0]['Value'];
+        $totalRecords = $result[1][1]['Value'];
         $session = $this->getRequest()->getSession();
         $tableView = $this->defaultFields->recordDatatableView($records, $session);
 
@@ -517,8 +520,8 @@ class RecordsController extends MyController {
      * @return array
      */
     public function showAction($id) {
-        $session = $this->getRequest()->getSession();        
-        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+        $session = $this->getRequest()->getSession();
+        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $em = $this->getDoctrine()->getManager();

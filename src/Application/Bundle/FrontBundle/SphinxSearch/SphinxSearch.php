@@ -136,6 +136,7 @@ class SphinxSearch extends ContainerAware {
      */
     public function select($user, $offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null) {
         $sq = SphinxQL::create($this->conn);
+//        $sq
         $sq->select()
                 ->from($this->indexName);
         if ($criteria) {
@@ -145,6 +146,7 @@ class SphinxSearch extends ContainerAware {
 
         $result = $sq->orderBy($sortColumn, $sortOrder)
                 ->limit($offset, $limit)
+                ->option('max_matches', 300000)
                 ->enqueue(SphinxQL::create($this->conn)->query('SHOW META'))
                 ->executeBatch();
 

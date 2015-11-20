@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -22,11 +24,9 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Application\Bundle\FrontBundle\Helper\EmailHelper;
 use Application\Bundle\FrontBundle\Helper\SphinxHelper;
 
-class ExportReportCommand extends ContainerAwareCommand
-{
+class ExportReportCommand extends ContainerAwareCommand {
 
-    protected function configure()
-    {
+    protected function configure() {
         $this
                 ->setName('avcc:export-report')
                 ->setDescription('Export the Records that are in queue and email to user.')
@@ -39,26 +39,26 @@ class ExportReportCommand extends ContainerAwareCommand
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+    protected function execute(InputInterface $input, OutputInterface $output) {
         error_reporting(E_ALL);
-        ini_set('display_errors',1);
+        ini_set('display_errors', 1);
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $id = $input->getArgument('id');
         if ($id) {
-            $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id,'type'=>'export', 'status' => 0));
+            $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id, 'type' => 'export', 'status' => 0));
             if ($entity) {
-                
+
                 $completePath = '';
                 $user = $entity->getUser();
-                
+
                 if ($entity->getQueryOrId() != 'all') {
                     $criteria = json_decode($entity->getQueryOrId(), true);
                 } else {
                     $criteria = $entity->getQueryOrId();
                 }
                 $export = new ExportReport($this->getContainer());
-                if ($criteria !='all' && array_key_exists('ids', $criteria)) {
+
+                if ($criteria != 'all' && array_key_exists('ids', $criteria)) {
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->findRecordsByIds($criteria['ids']);
                     if ($records) {
                         $phpExcelObject = $export->generateReport($records);

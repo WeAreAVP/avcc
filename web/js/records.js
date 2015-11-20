@@ -131,6 +131,7 @@ function Records() {
                         retrieve: true,
                         destroy: true,
                         "iDisplayLength": 100,
+                        "pagingType": "simple_numbers",
                         "language": {
                             "info": "Showing _START_ - _END_ of _TOTAL_",
                             "infoFiltered": ''

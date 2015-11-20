@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
@@ -28,20 +30,23 @@ class SphinxCommand extends ContainerAwareCommand {
 
     protected function execute(InputInterface $input, OutputInterface $output) {
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
-        $records = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
         $shpinxInfo = $this->getSphinxInfo();
+
+        $records = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
+//        
         foreach ($records as $record) {
             $recordId = $record->getId();
             $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId);
+
             $result = $sphinxSearch->search();
             if (count($result) == 0) {
-                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId , $record->getMediaType()->getId());
+                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId, $record->getMediaType()->getId());
                 $sphinxSearch->insert();
-                $output->writeln("Inserted record -- ". $recordId);
+                $output->writeln("Inserted record -- " . $recordId);
             } else {
-                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId,  $record->getMediaType()->getId());
+                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId, $record->getMediaType()->getId());
                 $sphinxSearch->replace();
-                $output->writeln("Updated record -- ". $recordId);
+                $output->writeln("Updated record -- " . $recordId);
             }
         }
         exit;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,6 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\Components\ExportReport;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Application\Bundle\FrontBundle\Controller\MyController;
+
 /**
  * ReelDiameters controller.
  *
@@ -35,8 +38,8 @@ class ReportController extends MyController {
      * @return array
      */
     public function indexAction() {
-        $session = $this->getRequest()->getSession();        
-        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+        $session = $this->getRequest()->getSession();
+        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         return array();
@@ -255,7 +258,7 @@ class ReportController extends MyController {
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
         $criteria = array('s_format' => array('1/4 Inch Open Reel Audio', '1/2 Inch Open Reel Audio', '1/2 Inch Open Reel Audio - Digital', '1 Inch Open Reel Audio', '2 Inch Open Reel Audio'));
         $result = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('reel_diameter', $this->getUser(), $criteria), 'reel_diameter');
-       
+
         $highChart = array();
         foreach ($result as $index => $reelDiameter) {
             $highChart[] = array($reelDiameter['reel_diameter'], (int) $reelDiameter['total']);
@@ -680,6 +683,9 @@ class ReportController extends MyController {
         $em = $this->getDoctrine()->getManager();
         $shpinxInfo = $this->container->getParameter('sphinx_param');
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
+        $total_records = $sphinxSearch->select($this->getUser(), 0, 1000, 'title', 'asc');
+        $max_offset = $total_records[1][1]['Value'];
+       
         $types = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('media_type', $this->getUser()), 'media_type');
         foreach ($types as $mediatype) {
             $typeCriteria = array('s_media_type' => array($mediatype['media_type']));
@@ -698,7 +704,7 @@ class ReportController extends MyController {
                         $_records = array_merge($_records, $records[0]);
                         $totalFound = $records[1][1]['Value'];
                         $offset = $offset + 1000;
-                        if ($totalFound < 1000) {
+                        if ($totalFound < 1000 || $offset >= $max_offset) {
                             $count++;
                         }
                     }
@@ -725,6 +731,7 @@ class ReportController extends MyController {
     private function calculateFileSize($totalDuration, $value) {
         return number_format(($totalDuration * $value) / 1024 / 1024, 5);
     }
+
     /**
      * Download All reports
      * @param type $format
@@ -742,5 +749,4 @@ class ReportController extends MyController {
 //        $this->fileSizeCalculatorAction($format);
 //        $this->linearFootCalculatorAction($format);
 //    }
-
 }
