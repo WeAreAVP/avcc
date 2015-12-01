@@ -14,7 +14,7 @@ function Users() {
      * @param {string} base_url
      * 
      */
-    this.setBaseUrl = function (base_url) {
+    this.setBaseUrl = function(base_url) {
         baseUrl = base_url;
     }
 
@@ -23,7 +23,7 @@ function Users() {
      * @param {string} organization_id
      * 
      */
-    this.setOrganizationId = function (organization_id) {
+    this.setOrganizationId = function(organization_id) {
         organizationId = organization_id;
     }
 
@@ -31,17 +31,19 @@ function Users() {
      * 
      * @returns {undefined}
      */
-    this.bindAll = function () {
+    this.bindAll = function() {
+
         selfObj.onChangeRole();
 //        selfObj.applyChosen();
         selfObj.getOrganizationProjects();
+
     }
     /**
      * 
      * @returns {undefined}
      */
-    this.onChangeRole = function () {
-        $('#roles').change(function () {
+    this.onChangeRole = function() {
+        $('#roles').change(function() {
             var selectedRole = $(this).val();
             if (selectedRole != 'ROLE_SUPER_ADMIN') {
                 $('#userOrganization').attr('required', 'required');
@@ -65,22 +67,21 @@ function Users() {
      * 
      * @returns {undefined}
      */
-    this.applyChosen = function () {
+    this.applyChosen = function() {
         $("#userProjects").chosen({
             placeholder_text_multiple: "Select Projects"
         });
     }
 
-    this.getOrganizationProjects = function () {
+    this.getOrganizationProjects = function() {
         var orgId = 0;
-        console.log(organizationId);
         if (organizationId) {
             orgId = organizationId;
         }
         if ($('#userOrganization').val()) {
             orgId = $('#userOrganization').val();
         } else {
-            $('#userOrganization').change(function () {
+            $('#userOrganization').change(function() {
                 orgId = $(this).val();
                 if (orgId) {
                     selfObj.getProjects(orgId);
@@ -99,14 +100,18 @@ function Users() {
         }
     }
 
-    this.getProjects = function (id) {
+    this.getProjects = function(id) {
+        var values = $("#userProjects").val();
         url = baseUrl + 'getOrganizationProjects/' + id + '/';
         $.ajax({
             type: "GET",
             url: url,
-            success: function (response) {
+            success: function(response) {
                 if (response != "") {
                     $("#userProjects").html(response);
+                    if(values){
+                        $("#userProjects").val(values);
+                    }
                     $("#userProjects").trigger("chosen:updated");
                 } else {
                     $("#userProjects").html("");
