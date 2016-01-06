@@ -209,7 +209,7 @@ class ExportReport extends ContainerAware {
             $this->prepareRecordsFromSphinx($activeSheet, $row, $rec);
             $offset = $offset + 1000;
             $row ++;
-            if ($totalFound < 1000) {
+            if ($totalFound < 1000 || $offset == 300000) {
                 $count ++;
             }
         }
