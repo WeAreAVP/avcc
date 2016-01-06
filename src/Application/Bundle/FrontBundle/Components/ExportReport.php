@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Components;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
@@ -39,7 +41,7 @@ class ExportReport extends ContainerAware {
             $activeSheet->getStyleByColumnAndRow($column, $row)->getFont()->setBold(true);
         }
         $activeSheet->getRowDimension($row)->setRowHeight(50);
-        $row ++;
+        $row++;
 
         foreach ($records as $record) {
 
@@ -70,7 +72,7 @@ class ExportReport extends ContainerAware {
                 }
             }
             $activeSheet->setCellValueExplicitByColumnAndRow(7, $row, $duration);
-            $row ++;
+            $row++;
         }
     }
 
@@ -85,7 +87,7 @@ class ExportReport extends ContainerAware {
         $row = 1;
 // Prepare header row for report
         $this->prepareHeader($activeSheet, $row);
-        $row ++;
+        $row++;
         $this->prepareRecords($activeSheet, $row, $records);
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
@@ -164,7 +166,7 @@ class ExportReport extends ContainerAware {
     private function prepareRecords($activeSheet, $row, $records) {
         foreach ($records as $record) {
             $this->makeExcelRows($activeSheet, $record, false, $row);
-            $row ++;
+            $row++;
         }
 
         return true;
@@ -207,10 +209,11 @@ class ExportReport extends ContainerAware {
             $rec = $records[0];
             $totalFound = $records[1][1]['Value'];
             $this->prepareRecordsFromSphinx($activeSheet, $row, $rec);
-            $offset = $offset + 1000;
-            $row ++;
-            if ($totalFound < 1000 || $offset == 300000) {
-                $count ++;
+            $offset = $offset + 1000;            
+            $total = count($records[0]);
+            $row = $row + $total;
+            if ((int) $total < 1000) {
+                $count++;
             }
         }
         $phpExcelObject->setActiveSheetIndex(0);
@@ -228,7 +231,7 @@ class ExportReport extends ContainerAware {
     private function prepareRecordsFromSphinx($activeSheet, $row, $records) {
         foreach ($records as $record) {
             $this->makeExcelRowsByArray($activeSheet, $record, false, $row);
-            $row ++;
+            $row++;
         }
     }
 
@@ -293,12 +296,12 @@ class ExportReport extends ContainerAware {
                         $this->makeExcelRowsByArray($activeSheet, $rec, false, $newrow, $new_header);
                     }
                 }
-                $newrow ++;
+                $newrow++;
             }
             if (count($rows) > 0) {
                 foreach ($rows as $row) {
                     $this->makeExcelRowsByArray($activeSheet, false, $row, $newrow, $new_header);
-                    $newrow ++;
+                    $newrow++;
                 }
             }
             return $newphpExcelObject;
@@ -501,9 +504,9 @@ class ExportReport extends ContainerAware {
             $totalFound = $records[1][1]['Value'];
             $phpExcelObject = $this->mergeRecords($rec, $mergeToFile, $phpExcelObject);
             $offset = $offset + 1000;
-            $row ++;
+            $row++;
             if ($totalFound < 1000) {
-                $count ++;
+                $count++;
             }
         }
         $phpExcelObject->setActiveSheetIndex(0);
@@ -643,7 +646,7 @@ class ExportReport extends ContainerAware {
         $row = 1;
 // Prepare header row for report
         $this->preparePrioritizationHeader($activeSheet, $row);
-        $row ++;
+        $row++;
         $this->preparePrioritizationRecords($activeSheet, $row, $records);
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
@@ -719,7 +722,7 @@ class ExportReport extends ContainerAware {
             }
             $scale_score = ($score / 100) * 5;
             $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $scale_score);
-            $row ++;
+            $row++;
         }
 
         return true;
@@ -795,24 +798,24 @@ class ExportReport extends ContainerAware {
         $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "File Size Calculator for Digitized Assets");
         $activeSheet->getColumnDimensionByColumn(1)->setWidth(20);
         $activeSheet->getStyleByColumnAndRow(1, $row)->getFont()->setBold(true);
-        $row ++;
+        $row++;
         $exportFields = new ExportFields();
         $columns = $exportFields->getFileSizeCalculatorColumns();
         if (isset($records['Audio'])) {
             $this->prepareHeaderFileSizeCalculator($activeSheet, $row, $columns['audio']);
-            $row ++;
+            $row++;
             $row = $this->prepareFileSizeCalculatorAudioRecords($activeSheet, $row, $records['Audio']);
         }
         $row = $row + 5;
         if (isset($records['Video'])) {
             $this->prepareHeaderFileSizeCalculator($activeSheet, $row, $columns['video']);
-            $row ++;
+            $row++;
             $row = $this->prepareFileSizeCalculatorVideoRecords($activeSheet, $row, $records['Video']);
         }
         $row = $row + 5;
         if (isset($records['Film'])) {
             $this->prepareHeaderFileSizeCalculator($activeSheet, $row, $columns['film']);
-            $row ++;
+            $row++;
             $row = $this->prepareFileSizeCalculatorFilmRecords($activeSheet, $row, $records['Film']);
         }
         $phpExcelObject->setActiveSheetIndex(0);
@@ -883,8 +886,8 @@ class ExportReport extends ContainerAware {
                 $kbps = $this->calculateFileSize($audio['sum_content_duration'], 1.92);
                 $totalKbps += $kbps;
                 $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $kbps);
-                $i ++;
-                $row ++;
+                $i++;
+                $row++;
             }
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Total File Space");
             $activeSheet->getStyleByColumnAndRow(0, $row)->getFont()->setBold(true);
@@ -910,7 +913,7 @@ class ExportReport extends ContainerAware {
             $activeSheet->getStyleByColumnAndRow(12, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $this->correctDecimal($totalKbps, 5));
             $activeSheet->getStyleByColumnAndRow(13, $row)->getFont()->setBold(true);
-            $row ++;
+            $row++;
         }
 
         return $row;
@@ -986,8 +989,8 @@ class ExportReport extends ContainerAware {
                 $MPEG42 = $this->calculateFileSize($video['sum_content_duration'], 17.1);
                 $totalMPEG42 += $MPEG42;
                 $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $MPEG42);
-                $i ++;
-                $row ++;
+                $i++;
+                $row++;
             }
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Total File Space");
             $activeSheet->getStyleByColumnAndRow(0, $row)->getFont()->setBold(true);
@@ -1013,7 +1016,7 @@ class ExportReport extends ContainerAware {
             $activeSheet->getStyleByColumnAndRow(12, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(13, $row, $this->correctDecimal($totalMPEG42));
             $activeSheet->getStyleByColumnAndRow(13, $row)->getFont()->setBold(true);
-            $row ++;
+            $row++;
         }
 
         return $row;
@@ -1065,8 +1068,8 @@ class ExportReport extends ContainerAware {
                 $totalMPEG42 += $MPEG42;
                 $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $MPEG42);
 
-                $i ++;
-                $row ++;
+                $i++;
+                $row++;
             }
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Total File Space");
             $activeSheet->getStyleByColumnAndRow(0, $row)->getFont()->setBold(true);
@@ -1088,7 +1091,7 @@ class ExportReport extends ContainerAware {
             $activeSheet->getStyleByColumnAndRow(10, $row)->getFont()->setBold(true);
             $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $this->correctDecimal($totalMPEG42));
             $activeSheet->getStyleByColumnAndRow(11, $row)->getFont()->setBold(true);
-            $row ++;
+            $row++;
         }
 
         return $row;
@@ -1107,12 +1110,12 @@ class ExportReport extends ContainerAware {
         $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "Linear Foot Calculator");
         $activeSheet->getColumnDimensionByColumn(1)->setWidth(20);
         $activeSheet->getStyleByColumnAndRow(1, $row)->getFont()->setBold(true);
-        $row ++;
+        $row++;
         $exportFields = new ExportFields();
         $columns = $exportFields->getLinearFootCalculatorColumns();
         if ($records) {
             $this->prepareHeaderLinearFootCalculator($activeSheet, $row, $columns);
-            $row ++;
+            $row++;
             $row = $this->prepareLinearFootCalculatorRecords($activeSheet, $row, $records);
         }
         $phpExcelObject->setActiveSheetIndex(0);
@@ -1152,7 +1155,7 @@ class ExportReport extends ContainerAware {
                     $totalLinearAudioCount += $linearAudioCount;
                     $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $linearAudioCount);
 
-                    $row ++;
+                    $row++;
                 }
                 $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "");
                 $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "");
@@ -1161,7 +1164,7 @@ class ExportReport extends ContainerAware {
                 $activeSheet->getStyleByColumnAndRow(3, $row)->getFont()->setBold(true);
                 $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, number_format($totalLinearAudioCount, 5));
                 $activeSheet->getStyleByColumnAndRow(4, $row)->getFont()->setBold(true);
-                $row ++;
+                $row++;
             }
             if ($records['video']) {
                 foreach ($records['video'] as $video) {
@@ -1173,7 +1176,7 @@ class ExportReport extends ContainerAware {
                     $totalLinearVideoCount += $linearVideoCount;
                     $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $linearVideoCount);
 
-                    $row ++;
+                    $row++;
                 }
                 $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "");
                 $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "");
@@ -1182,7 +1185,7 @@ class ExportReport extends ContainerAware {
                 $activeSheet->getStyleByColumnAndRow(3, $row)->getFont()->setBold(true);
                 $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, number_format($totalLinearVideoCount, 5));
                 $activeSheet->getStyleByColumnAndRow(4, $row)->getFont()->setBold(true);
-                $row ++;
+                $row++;
             }
             $totalLinearCount = $totalLinearAudioCount + $totalLinearVideoCount;
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "");
