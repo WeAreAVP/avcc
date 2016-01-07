@@ -1,12 +1,18 @@
 {% extends 'FOSUserBundle::layout.html.twig' %}
 {% block title %}AVCC - Error (404){% endblock %}
 {% block body %}
-    <center>
-		<div>
-			<h2>Error (404)</h2>
-		</div>
-		<div>
-			We can't find the page you're looking for. Head back to <a href="{{ path('_welcome')}}">home</a>.
-		</div>
-	</center>
+<center>
+    <div>
+        <h2>Error (404)</h2>
+    </div>
+            {% if exception.message %}
+    <div>
+        {{ exception.message|nl2br|format_file_from_text }}.
+        </div>
+        {%else%}
+        <div>
+            We can't find the page you're looking for. Head back to <a href="{{ path('_welcome')}}">home</a>.
+        </div>
+            {% endif %}
+    </center>
 {% endblock body %}
