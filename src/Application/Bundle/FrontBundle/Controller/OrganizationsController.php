@@ -26,6 +26,7 @@ use Application\Bundle\FrontBundle\Form\OrganizationsType;
 use Application\Bundle\FrontBundle\Entity\Records;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Application\Bundle\FrontBundle\Controller\MyController;
+
 /**
  * Organizations controller.
  *
@@ -42,20 +43,20 @@ class OrganizationsController extends MyController {
      * @return array
      */
     public function indexAction() {
-        $session = $this->getRequest()->getSession();        
-        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+        $session = $this->getRequest()->getSession();
+        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         @set_time_limit(0);
-        @ini_set("memory_limit", "1000M"); # 1GB
+        @ini_set("memory_limit", -1); # 1GB
         @ini_set("max_execution_time", 0); # unlimited
         $count = array();
         $em = $this->getDoctrine()->getManager();
         if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
-            $entities = $em->getRepository('ApplicationFrontBundle:Organizations')->findAll();
+            $entities = $em->getRepository('ApplicationFrontBundle:Organizations')->getAll();           
             foreach ($entities as $entity) {
-                $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecord($entity->getId());
-                $count[$entity->getId()] = count($records);
+                $records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($entity['id']);
+                $count[$entity['id']] = $records['total'];
             }
         } else {
             $entities = $em->getRepository('ApplicationFrontBundle:Organizations')->findBy(array('id' => $this->getUser()->getOrganizations()->getId()));
@@ -125,8 +126,8 @@ class OrganizationsController extends MyController {
      * @return array
      */
     public function newAction() {
-        $session = $this->getRequest()->getSession();        
-        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+        $session = $this->getRequest()->getSession();
+        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $entity = new Organizations();
@@ -150,8 +151,8 @@ class OrganizationsController extends MyController {
      * @return array
      */
     public function showAction($id) {
-        $session = $this->getRequest()->getSession();        
-        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+        $session = $this->getRequest()->getSession();
+        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $em = $this->getDoctrine()->getManager();
@@ -181,8 +182,8 @@ class OrganizationsController extends MyController {
      * @return array
      */
     public function editAction($id) {
-        $session = $this->getRequest()->getSession();        
-        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+        $session = $this->getRequest()->getSession();
+        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $em = $this->getDoctrine()->getManager();

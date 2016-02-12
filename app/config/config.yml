@@ -58,6 +58,9 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        dql:
+            datetime_functions:
+                DATE_FORMAT: Application\Bundle\FrontBundle\DQL\DateFormatFunction
     
 # Swiftmailer Configuration
 swiftmailer:

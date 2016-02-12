@@ -22,4 +22,9 @@ use Doctrine\ORM\EntityRepository;
  */
 class OrganizationRepository extends EntityRepository
 {
+     public function getAll() {
+        $query = $this->getEntityManager()
+                ->createQuery("SELECT o.id, o.name, o.departmentName, o.address, o.contactPersonName, o.contactPersonEmail, o.status, o.contactPersonPhone from ApplicationFrontBundle:Organizations o ");
+        return $query->getArrayResult();
+    }
 }

@@ -70,6 +70,7 @@
                                             {% if is_granted('ROLE_SUPER_ADMIN') %}
                                     <li><a class="" href="{{ path('help_guide') }}">Help Guide</a></li>
                                     <li><a class="" href="{{ path('terms_of_service') }}">Terms of Service</a></li>
+                                    <li><a class="" href="{{ path('monthly_charges') }}">Monthly Charge Rate</a></li>
                                             {% endif %}
                                     </ul>
                                 </li>
@@ -113,6 +114,13 @@
                             <ul class="element-menu place-right" style="">
                                 <li>
                                     <a class="" href="{{ path('help_guide_list') }}">Help Guide</a>
+
+                                </li>
+                            </ul>
+                            <a class="element1 pull-menu" href="#"></a>
+                            <ul class="element-menu place-right" style="">
+                                <li>
+                                    <a class="" href="{{ path('monthly_charge_report') }}">Monthly Charge Report</a>
 
                                 </li>
                             </ul>

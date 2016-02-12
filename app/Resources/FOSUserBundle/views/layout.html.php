@@ -21,7 +21,7 @@
         <link href="<?php echo $view['assets']->getUrl('css/metro-bootstrap-responsive.min.css') ?>" type="text/css" rel="stylesheet" />
         <link href="<?php echo $view['assets']->getUrl('css/iconFont.min.css') ?>" type="text/css" rel="stylesheet" />
         <link href="<?php echo $view['assets']->getUrl('css/chosen.css') ?>" type="text/css" rel="stylesheet" />
-        <!--<link href="<?php // echo $view['assets']->getUrl('css/bootstrap.css')  ?>" type="text/css" rel="stylesheet" />-->
+        <!--<link href="<?php // echo $view['assets']->getUrl('css/bootstrap.css')   ?>" type="text/css" rel="stylesheet" />-->
         <link href="<?php echo $view['assets']->getUrl('css/modal.css') ?>" type="text/css" rel="stylesheet" />
         <!-- Custom styles for this template -->
         <link href="<?php echo $view['assets']->getUrl('bundles/applicationfront/css/style.css') ?>" rel="stylesheet">
@@ -75,7 +75,8 @@
                                         <li><a class="" href="<?php echo $view['router']->generate('projects') ?>">Projects</a></li>
                                         <?php if ($view['security']->isGranted('ROLE_SUPER_ADMIN')): ?>
                                             <li><a class="" href="<?php echo $view['router']->generate('help_guide') ?>">Help Guide</a></li>
-                                            <li><a class="" href="<?php echo $view['router']->generate('terms_of_service') ?>">Help Guide</a></li>
+                                            <li><a class="" href="<?php echo $view['router']->generate('terms_of_service') ?>">Terms of Service</a></li>
+                                            <li><a class="" href="<?php echo $view['router']->generate('monthly_charges') ?>">Monthly Charge Rate</a></li>
                                         <?php endif ?>
                                     </ul>
                                 </li>
@@ -119,7 +120,12 @@
                             <ul class="element-menu place-right" style="">
                                 <li>
                                     <a class="" href="<?php echo $view['router']->generate('help_guide_list') ?>">Help Guide</a>
-
+                                </li>
+                            </ul>
+                            <a class="element1 pull-menu" href="#"></a>
+                            <ul class="element-menu place-right" style="">
+                                <li>
+                                    <a class="" href="<?php echo $view['router']->generate('monthly_charge_report') ?>">Monthly Charge Report</a>
                                 </li>
                             </ul>
                         <?php endif ?>
@@ -147,7 +153,7 @@
         <div class="container" id="container" style="margin-top:20px;margin-bottom:20px;">
             <?php if ($app->getUser() && $app->getUser()->getOrganizations()): ?>
                 <?php if ($app->getUser()->getOrganizations()->getIsPaid() == 0): ?>
-                            <!--<p>Want more than 2500 records? Upgrade now by contacting avcc@avpreserve.com</p>-->
+                                    <!--<p>Want more than 2500 records? Upgrade now by contacting avcc@avpreserve.com</p>-->
                 <?php endif ?>
             <?php endif ?>
             <?php foreach ($app->getSession()->getFlashBag()->all() as $type => $messages): ?>
@@ -171,9 +177,9 @@
         <script type="text/javascript" src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
         <?php if ($view->container->getParameter('ga_tracking')) { ?>
             <script>
-                (function (i, s, o, g, r, a, m) {
+                (function(i, s, o, g, r, a, m) {
                     i['GoogleAnalyticsObject'] = r;
-                    i[r] = i[r] || function () {
+                    i[r] = i[r] || function() {
                         (i[r].q = i[r].q || []).push(arguments)
                     }, i[r].l = 1 * new Date();
                     a = s.createElement(o),
@@ -187,15 +193,15 @@
             </script>
         <?php } ?>
         <script type="text/javascript">
-            setTimeout(function () {
+            setTimeout(function() {
                 $('.text-success').hide();
             }, 5000);
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('.formats_dd').chosen();
             });
 
         </script>
-        
+
         <?php $view['slots']->stop() ?>
         <?php $view['slots']->output('javascripts') ?>
         <?php $view['slots']->output('view_javascripts') ?>

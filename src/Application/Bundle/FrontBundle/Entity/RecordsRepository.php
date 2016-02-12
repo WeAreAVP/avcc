@@ -29,9 +29,19 @@ class RecordsRepository extends EntityRepository {
                 . "JOIN u.organizations o "
                 . "WHERE o.id =  :organization");
         $query->setParameter('organization', $organizationID);
-
         return $query->getResult();
     }
+    
+    public function countOrganizationRecords($organizationID) {
+        $query = $this->getEntityManager()
+                ->createQuery("SELECT COUNT(r.id) as total from ApplicationFrontBundle:Records r "
+                . "JOIN r.project u "
+                . "JOIN u.organization o "
+                . "WHERE o.id =  :organization");
+        $query->setParameter('organization', $organizationID);
+        return $query->getSingleResult();
+    }
+    
 
     public function findOrganizationRecord($organizationID) {
         $query = $this->getEntityManager()

@@ -49,6 +49,10 @@ security:
         - { path: ^/help/list, role: ROLE_USER }
         - { path: ^/terms/$, role: ROLE_SUPER_ADMIN }
         - { path: ^/terms/, role: ROLE_SUPER_ADMIN }
+        - { path: ^/monthly_charges/$, role: ROLE_SUPER_ADMIN }
+        - { path: ^/monthly_charges/, role: ROLE_SUPER_ADMIN }
+        - { path: ^/monthly_charge_report/$, role: ROLE_USER }
+        - { path: ^/monthly_charge_report/, role: ROLE_USER }
         - { path: ^/$, role: ROLE_USER }
         
 

@@ -107,7 +107,7 @@ class Organizations {
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users", fetch="EXTRA_LAZY")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="created_by", referencedColumnName="id",nullable=true, onDelete="SET NULL")
      * })
@@ -117,7 +117,7 @@ class Organizations {
     /**
      * @var \Application\Bundle\FrontBundle\Entity\Users
      *
-     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
+     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users", fetch="EXTRA_LAZY")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="updated_by", referencedColumnName="id",nullable=true, onDelete="SET NULL")
      * })
@@ -128,7 +128,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="AcidDetectionStrips",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
@@ -139,8 +139,8 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="Bases",
      *     mappedBy="organization",
-     *     fetch="EAGER",
-     *     indexBy="id"
+     *     fetch="EXTRA_LAZY",
+     *     indexBy="id",
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
@@ -150,7 +150,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="CassetteSizes",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
@@ -161,7 +161,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="Colors",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
@@ -172,7 +172,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="Commercial",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
@@ -183,7 +183,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="DiskDiameters",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
@@ -194,7 +194,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="FormatVersions",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
@@ -205,7 +205,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="FrameRates",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
@@ -216,7 +216,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="MediaDiameters",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
@@ -227,7 +227,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="MonoStereo",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
@@ -238,7 +238,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="NoiceReduction",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
@@ -249,7 +249,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="PrintTypes",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
@@ -260,7 +260,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="RecordingSpeed",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
@@ -271,7 +271,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="RecordingStandards",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
@@ -282,7 +282,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="ReelCore",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
@@ -293,7 +293,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="ReelDiameters",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
@@ -304,7 +304,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="Slides",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
@@ -315,7 +315,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="Sounds",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
@@ -326,7 +326,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="TapeThickness",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})
@@ -337,7 +337,7 @@ class Organizations {
      * @ORM\OneToMany(
      *     targetEntity="TrackTypes",
      *     mappedBy="organization",
-     *     fetch="EAGER",
+     *     fetch="EXTRA_LAZY",
      *     indexBy="id"
      * )
      * @ORM\OrderBy({"id"="ASC"})

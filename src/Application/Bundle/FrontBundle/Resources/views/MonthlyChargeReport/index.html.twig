@@ -1,0 +1,58 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+<h1>Monthly Charge Report</h1>
+<br />
+<div class="pull-left">   
+            {% if org_name and years %}     
+        <div class="button-dropdown place-left">
+            <button class="dropdown-toggle">{% if selYear != '' %}{{selYear}}{% else %}Select Year{% endif %}</button>
+            <ul class="dropdown-menu" data-role="dropdown">
+				{% for key,value in years %}
+                    <li><a href="{{ path('monthly_report_orgYear',  { 'organizationId': org_id, 'year': value.year }) }}">{{ value.year }}</a></li>
+					{% endfor %} 
+                    </ul>
+                </div>
+        {% elseif years %} 
+                <div class="button-dropdown place-left">
+                    <button class="dropdown-toggle">{% if selYear != '' %}{{selYear}}{% else %}Select Year{% endif %}</button>
+                    <ul class="dropdown-menu" data-role="dropdown">
+				{% for key,value in years %}
+                            <li><a href="{{ path('monthly_report_year', {'year': value.year }) }}">{{ value.year }}</a></li>
+					{% endfor %} 
+                            </ul>
+                        </div>
+        {% else %}
+        No record found.
+        {% endif %}  
+
+
+                        <br />
+                    </div>
+                    <br />
+    {% if entities %}
+                    <div class="table-responsive">
+                        <table class="table bordered hovered">
+                            <thead>
+                                <tr>
+                                    <th>Month</th>
+                                    <th>Total Records</th>
+                                    <th>Charge Rate</th>
+                                    <th>Total charges</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                {% for entity in entities %}
+                                    <tr>      
+                                        <td>{{ entity.month }}</td>
+                                        <td>{{ entity.totalRecords }}</td>
+                                        <td>${{ entity.chargeRate }}</td>
+                                        <td>${{ entity.totalCharges }}</td>
+                                    </tr>
+                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                                {% endif %}
+
+                                    {% endblock %}

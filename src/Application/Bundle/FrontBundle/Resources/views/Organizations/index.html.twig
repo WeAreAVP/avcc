@@ -34,11 +34,11 @@
                             <th>{{entity.id}}</th>
                             {% endif %} 
                         <td><a href="{{ path('organizations_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
-                        <td>{{ entity.departmentname }}</td>
+                        <td>{{ entity.departmentName }}</td>
                         <td>{{ entity.address }}</td>
-                        <td><b>Name:</b> {{ entity.contactpersonname }}<br/><b>Email:</b> {{ entity.contactpersonemail }}<br/><b>Phone:</b> {{ entity.contactpersonphone }}</td>
+                        <td><b>Name:</b> {{ entity.contactPersonName }}<br/><b>Email:</b> {{ entity.contactPersonEmail }}<br/><b>Phone:</b> {{ entity.contactPersonPhone }}</td>
                             {% if is_granted('ROLE_SUPER_ADMIN') %}
-                            <td>    {{record_count[entity.id]}}</td>
+                            <td>  {{record_count[entity.id]}}</td>
                         {% endif %}
                         {% if is_granted('ROLE_MANAGER') %}
                             <td>
@@ -59,7 +59,7 @@
                                 {% endif %}
                                 <a title="Edit" href="{{ path('organizations_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i></a>
                                 {% if is_granted('ROLE_SUPER_ADMIN') %} | 
-                                    <a class="icon-remove" title="Delete" href="{{ path('organizations_delete', { 'id': entity.id }) }}"></a>
+                                    <a class="icon-remove" title="Delete" href="{{ path('organizations_delete', { 'id': entity.id }) }}"></a> | <a class="icon-eye" target="_blank" title="Show Charge Report" href="{{ path('monthly_report_org', { 'organizationId': entity.id }) }}"></a>
                                 {% endif %}
 
 
