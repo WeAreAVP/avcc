@@ -76,13 +76,6 @@ class MonthlyChargeReport {
     private $organizationId;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(name="total_charges", type="float")
-     */
-    private $totalCharges;
-
-    /**
      * @var \DateTime $createdOn
      *
      * @ORM\Column(name="created_on", type="datetime")
@@ -178,26 +171,6 @@ class MonthlyChargeReport {
      */
     public function setChargeRate($ChargeRate) {
         $this->chargeRate = $ChargeRate;
-    }
-
-    /**
-     * Get totalCharges.
-     *
-     * @return float
-     */
-    public function getTotalCharges() {
-        return $this->totalCharges;
-    }
-
-    /**
-     * Set totalCharges.
-     *
-     * @param float $totalCharges
-     *
-     * @return \Application\Bundle\FrontBundle\Entity\MonthlyChargeReport
-     */
-    public function setTotalCharges($totalCharges) {
-        $this->totalCharges = $totalCharges;
     }
 
     /**

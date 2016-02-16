@@ -243,6 +243,7 @@
                             <li><a href="javascript://;" class="customToken" data-fieldName="Contributor"  data-columnName="contributor" style="font-size: 12px!important;">Contributor</a></li>
                             <li><a href="javascript://;" class="customToken" data-fieldName="Unique ID"  data-columnName="unique_id" style="font-size: 12px!important;">Unique ID</a></li>
                             <li><a href="javascript://;" class="customToken" data-fieldName="General Note"  data-columnName="general_note" style="font-size: 12px!important;">General Note</a></li>
+                            <li><a href="javascript://;" class="customToken" data-fieldName="Condition Note"  data-columnName="condition_note" style="font-size: 12px!important;">Condition Note</a></li>
                         </ul>
                     </div>
                     <div class="clearfix"></div>

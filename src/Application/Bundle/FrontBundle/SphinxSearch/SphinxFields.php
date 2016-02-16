@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,12 +11,12 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\SphinxSearch;
 
 use Doctrine\ORM\EntityManager;
 
-class SphinxFields
-{
+class SphinxFields {
 
     private $indexFields = array();
     private $record = null;
@@ -26,8 +27,7 @@ class SphinxFields
      * @param  int           $recordId
      * @return type
      */
-    public function prepareFields(EntityManager $entityManager, $recordId, $recordTypeId)
-    {
+    public function prepareFields(EntityManager $entityManager, $recordId, $recordTypeId) {
 
         $this->record = $entityManager->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('id' => $recordId));
 
@@ -73,7 +73,7 @@ class SphinxFields
         $this->indexFields['copyright_restrictions'] = ($this->record->getCopyrightRestrictions()) ? (string) $this->record->getCopyrightRestrictions() : "";
         $this->indexFields['duplicates_derivatives'] = ($this->record->getDuplicatesDerivatives()) ? (string) $this->record->getDuplicatesDerivatives() : "";
         $this->indexFields['related_material'] = ($this->record->getRelatedMaterial()) ? (string) $this->record->getRelatedMaterial() : "";
-        $this->indexFields['condition_note'] = ($this->record->getConditionNote()) ? (string) $this->record->getConditionNote() : "";
+        $this->indexFields['condition_note'] = $this->indexFields['s_condition_note'] = ($this->record->getConditionNote()) ? (string) $this->record->getConditionNote() : "";
         $this->indexFields['created_on'] = ($this->record->getCreatedOn()) ? (string) $this->record->getCreatedOn()->format('Y-m-d H:i:s') : "";
         $this->indexFields['updated_on'] = ($this->record->getUpdatedOn()) ? (string) $this->record->getUpdatedOn()->format('Y-m-d H:i:s') : "";
         $this->indexFields['project_id'] = ($this->record->getProject()) ? $this->record->getProject()->getId() : "";
@@ -92,8 +92,7 @@ class SphinxFields
     /**
      * Audio fields
      */
-    private function prepareAudioFields()
-    {
+    private function prepareAudioFields() {
         $this->indexFields['s_disk_diameter'] = $this->indexFields['disk_diameter'] = ($this->record->getAudioRecord()->getDiskDiameters()) ? (string) $this->record->getAudioRecord()->getDiskDiameters()->getName() : "";
         $this->indexFields['base'] = ($this->record->getAudioRecord()->getBases()) ? (string) $this->record->getAudioRecord()->getBases()->getName() : "";
         $this->indexFields['s_base'] = ($this->record->getAudioRecord()->getBases()) ? (string) $this->record->getAudioRecord()->getBases()->getName() : "";
@@ -110,8 +109,7 @@ class SphinxFields
     /**
      * Film fields
      */
-    private function prepareFilmFields()
-    {
+    private function prepareFilmFields() {
         $this->indexFields['s_print_type'] = $this->indexFields['print_type'] = ($this->record->getFilmRecord()->getPrintType()) ? (string) $this->record->getFilmRecord()->getPrintType()->getName() : "";
         $this->indexFields['reel_core'] = ($this->record->getFilmRecord()->getReelCore()) ? (string) $this->record->getFilmRecord()->getReelCore()->getName() : "";
         $this->indexFields['footage'] = ($this->record->getFilmRecord()->getFootage()) ? (string) $this->record->getFilmRecord()->getFootage() : "";
@@ -129,8 +127,7 @@ class SphinxFields
     /**
      * Film fields
      */
-    private function prepareVideoFields()
-    {
+    private function prepareVideoFields() {
         $this->indexFields['cassette_size'] = ($this->record->getVideoRecord()->getCassetteSize()) ? (string) $this->record->getVideoRecord()->getCassetteSize()->getName() : "";
         $this->indexFields['media_duration'] = ($this->record->getVideoRecord()->getMediaDuration()) ? $this->record->getVideoRecord()->getMediaDuration() : "";
         $this->indexFields['format_version'] = ($this->record->getVideoRecord()->getFormatVersion()) ? (string) $this->record->getVideoRecord()->getFormatVersion()->getName() : "";

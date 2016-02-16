@@ -77,13 +77,11 @@ class MonthlyReportCommand extends ContainerAwareCommand {
                                 $charge = 0;
                             } else {
                                 $charge = $charges[0]['charges'];
-                            }                            
-                            $total_charges = $total * $charge;
+                            } 
                             $chargeReport = new MonthlyChargeReport();
                             $chargeReport->setMonth($record['month']);
                             $chargeReport->setChargeRate($charge);
                             $chargeReport->setOrganizationId($organization['id']);
-                            $chargeReport->setTotalCharges($total_charges);
                             $chargeReport->setTotalRecords($total);
                             $chargeReport->setYear($year['year']);
                             $em->persist($chargeReport);
