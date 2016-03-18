@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,11 +11,13 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Components;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use PHPExcel_Cell;
+use PHPExcel_IOFactory;
 use Application\Bundle\FrontBundle\Helper\DefaultFields;
 use Application\Bundle\FrontBundle\Entity\Records;
 use Application\Bundle\FrontBundle\Entity\AudioRecords;
@@ -43,12 +46,9 @@ class ImportReport extends ContainerAware {
             $projects = $em->getRepository('ApplicationFrontBundle:Projects')->getAllAsArray();
             $requiredMissing = false;
             foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
-                $highestRow = $worksheet->getHighestRow();
-                $highestColumn = $worksheet->getHighestColumn();
-                $excelCell = new PHPExcel_Cell(null, null, $worksheet);
-                $highestColumnIndex = $excelCell->columnIndexFromString($highestColumn);
-                if ($highestRow > 0) {
-                    for ($row = 2; $row <= $highestRow; ++$row) {
+                foreach ($worksheet->getRowIterator() as $_row) {
+                    $row = $_row->getRowIndex();
+                    if ($row > 1) {
                         $project = $worksheet->getCellByColumnAndRow(0, $row);
                         $collectionName = $worksheet->getCellByColumnAndRow(1, $row);
                         $mediaType = $worksheet->getCellByColumnAndRow(2, $row);
@@ -182,7 +182,6 @@ class ImportReport extends ContainerAware {
                     }
                 }
             }
-
             return $invalidValues;
         } else {
             return 'file not found';
@@ -199,62 +198,57 @@ class ImportReport extends ContainerAware {
             $em = $this->container->get('doctrine')->getEntityManager();
             $rows = array();
             foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
-                $highestRow = $worksheet->getHighestRow();
-                $highestColumn = $worksheet->getHighestColumn();
-                $excelCell = new PHPExcel_Cell(null, null, $worksheet);
-                $highestColumnIndex = $excelCell->columnIndexFromString($highestColumn);
-                if ($highestRow > 0) {
-                    for ($row = 2; $row <= $highestRow; ++$row) {
-                        for ($col = 0; $col < $highestColumnIndex; ++$col) {
-                            $rows[$row - 1]['project'] = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
-                            $rows[$row - 1]['collectionName'] = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
-                            $rows[$row - 1]['mediaType'] = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-                            $rows[$row - 1]['uniqueId'] = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
-                            $rows[$row - 1]['alternateId'] = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
-                            $rows[$row - 1]['location'] = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
-                            $rows[$row - 1]['format'] = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
-                            $rows[$row - 1]['title'] = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
-                            $rows[$row - 1]['description'] = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
-                            $rows[$row - 1]['commercial'] = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
-                            $rows[$row - 1]['contentDuration'] = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
-                            $rows[$row - 1]['mediaDuration'] = $worksheet->getCellByColumnAndRow(11, $row)->getValue();
-                            $rows[$row - 1]['creationDate'] = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
-                            $rows[$row - 1]['contentDate'] = $worksheet->getCellByColumnAndRow(13, $row)->getValue();
-                            $rows[$row - 1]['base'] = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
-                            $rows[$row - 1]['printType'] = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
-                            $rows[$row - 1]['diskDiameter'] = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
-                            $rows[$row - 1]['reelDiameter'] = $worksheet->getCellByColumnAndRow(17, $row)->getValue();
-                            $md = $worksheet->getCellByColumnAndRow(18, $row);
-                            $nf = new NumberFormat();
-                            $mdValue = $nf->toFormattedString($md->getValue(), '0%');
-                            $rows[$row - 1]['mediaDiameter'] = $mdValue;
-                            $rows[$row - 1]['footage'] = $worksheet->getCellByColumnAndRow(19, $row)->getValue();
-                            $rows[$row - 1]['recordingSpeed'] = $worksheet->getCellByColumnAndRow(20, $row)->getValue();
-                            $rows[$row - 1]['color'] = $worksheet->getCellByColumnAndRow(21, $row)->getValue();
-                            $rows[$row - 1]['tapeThickness'] = $worksheet->getCellByColumnAndRow(22, $row)->getValue();
-                            $rows[$row - 1]['sides'] = $worksheet->getCellByColumnAndRow(23, $row)->getValue();
-                            $rows[$row - 1]['trackType'] = $worksheet->getCellByColumnAndRow(24, $row)->getValue();
-                            $rows[$row - 1]['monoOrStereo'] = $worksheet->getCellByColumnAndRow(25, $row)->getValue();
-                            $rows[$row - 1]['noiseReduction'] = $worksheet->getCellByColumnAndRow(26, $row)->getValue();
-                            $rows[$row - 1]['cassetteSize'] = $worksheet->getCellByColumnAndRow(27, $row)->getValue();
-                            $rows[$row - 1]['formatVersion'] = $worksheet->getCellByColumnAndRow(28, $row)->getValue();
-                            $rows[$row - 1]['recordingStandard'] = $worksheet->getCellByColumnAndRow(29, $row)->getValue();
-                            $rows[$row - 1]['reelOrCore'] = $worksheet->getCellByColumnAndRow(30, $row)->getValue();
-                            $rows[$row - 1]['sound'] = $worksheet->getCellByColumnAndRow(31, $row)->getValue();
-                            $rows[$row - 1]['edgeCodeYear'] = $worksheet->getCellByColumnAndRow(32, $row)->getValue();
-                            $rows[$row - 1]['frameRate'] = $worksheet->getCellByColumnAndRow(33, $row)->getValue();
-                            $rows[$row - 1]['acidDetectionStrip'] = $worksheet->getCellByColumnAndRow(34, $row)->getValue();
-                            $rows[$row - 1]['shrinkage'] = $worksheet->getCellByColumnAndRow(35, $row)->getValue();
-                            $rows[$row - 1]['genreTerms'] = $worksheet->getCellByColumnAndRow(36, $row)->getValue();
-                            $rows[$row - 1]['contributor'] = $worksheet->getCellByColumnAndRow(37, $row)->getValue();
-                            $rows[$row - 1]['generation'] = $worksheet->getCellByColumnAndRow(38, $row)->getValue();
-                            $rows[$row - 1]['part'] = $worksheet->getCellByColumnAndRow(39, $row)->getValue();
-                            $rows[$row - 1]['copyright'] = $worksheet->getCellByColumnAndRow(40, $row)->getValue();
-                            $rows[$row - 1]['duplicates'] = $worksheet->getCellByColumnAndRow(41, $row)->getValue();
-                            $rows[$row - 1]['relatedMaterial'] = $worksheet->getCellByColumnAndRow(42, $row)->getValue();
-                            $rows[$row - 1]['conditionNote'] = $worksheet->getCellByColumnAndRow(43, $row)->getValue();
-                            $rows[$row - 1]['generalNote'] = $worksheet->getCellByColumnAndRow(44, $row)->getValue();
-                        }
+                foreach ($worksheet->getRowIterator() as $_row) {
+                    $row = $_row->getRowIndex();
+                    if ($row > 1) {
+                        $rows[$row - 1]['project'] = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+                        $rows[$row - 1]['collectionName'] = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                        $rows[$row - 1]['mediaType'] = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+                        $rows[$row - 1]['uniqueId'] = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+                        $rows[$row - 1]['alternateId'] = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+                        $rows[$row - 1]['location'] = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+                        $rows[$row - 1]['format'] = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
+                        $rows[$row - 1]['title'] = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
+                        $rows[$row - 1]['description'] = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
+                        $rows[$row - 1]['commercial'] = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
+                        $rows[$row - 1]['contentDuration'] = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
+                        $rows[$row - 1]['mediaDuration'] = $worksheet->getCellByColumnAndRow(11, $row)->getValue();
+                        $rows[$row - 1]['creationDate'] = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
+                        $rows[$row - 1]['contentDate'] = $worksheet->getCellByColumnAndRow(13, $row)->getValue();
+                        $rows[$row - 1]['base'] = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
+                        $rows[$row - 1]['printType'] = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
+                        $rows[$row - 1]['diskDiameter'] = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
+                        $rows[$row - 1]['reelDiameter'] = $worksheet->getCellByColumnAndRow(17, $row)->getValue();
+                        $md = $worksheet->getCellByColumnAndRow(18, $row);
+                        $nf = new NumberFormat();
+                        $mdValue = $nf->toFormattedString($md->getValue(), '0%');
+                        $rows[$row - 1]['mediaDiameter'] = $mdValue;
+                        $rows[$row - 1]['footage'] = $worksheet->getCellByColumnAndRow(19, $row)->getValue();
+                        $rows[$row - 1]['recordingSpeed'] = $worksheet->getCellByColumnAndRow(20, $row)->getValue();
+                        $rows[$row - 1]['color'] = $worksheet->getCellByColumnAndRow(21, $row)->getValue();
+                        $rows[$row - 1]['tapeThickness'] = $worksheet->getCellByColumnAndRow(22, $row)->getValue();
+                        $rows[$row - 1]['sides'] = $worksheet->getCellByColumnAndRow(23, $row)->getValue();
+                        $rows[$row - 1]['trackType'] = $worksheet->getCellByColumnAndRow(24, $row)->getValue();
+                        $rows[$row - 1]['monoOrStereo'] = $worksheet->getCellByColumnAndRow(25, $row)->getValue();
+                        $rows[$row - 1]['noiseReduction'] = $worksheet->getCellByColumnAndRow(26, $row)->getValue();
+                        $rows[$row - 1]['cassetteSize'] = $worksheet->getCellByColumnAndRow(27, $row)->getValue();
+                        $rows[$row - 1]['formatVersion'] = $worksheet->getCellByColumnAndRow(28, $row)->getValue();
+                        $rows[$row - 1]['recordingStandard'] = $worksheet->getCellByColumnAndRow(29, $row)->getValue();
+                        $rows[$row - 1]['reelOrCore'] = $worksheet->getCellByColumnAndRow(30, $row)->getValue();
+                        $rows[$row - 1]['sound'] = $worksheet->getCellByColumnAndRow(31, $row)->getValue();
+                        $rows[$row - 1]['edgeCodeYear'] = $worksheet->getCellByColumnAndRow(32, $row)->getValue();
+                        $rows[$row - 1]['frameRate'] = $worksheet->getCellByColumnAndRow(33, $row)->getValue();
+                        $rows[$row - 1]['acidDetectionStrip'] = $worksheet->getCellByColumnAndRow(34, $row)->getValue();
+                        $rows[$row - 1]['shrinkage'] = $worksheet->getCellByColumnAndRow(35, $row)->getValue();
+                        $rows[$row - 1]['genreTerms'] = $worksheet->getCellByColumnAndRow(36, $row)->getValue();
+                        $rows[$row - 1]['contributor'] = $worksheet->getCellByColumnAndRow(37, $row)->getValue();
+                        $rows[$row - 1]['generation'] = $worksheet->getCellByColumnAndRow(38, $row)->getValue();
+                        $rows[$row - 1]['part'] = $worksheet->getCellByColumnAndRow(39, $row)->getValue();
+                        $rows[$row - 1]['copyright'] = $worksheet->getCellByColumnAndRow(40, $row)->getValue();
+                        $rows[$row - 1]['duplicates'] = $worksheet->getCellByColumnAndRow(41, $row)->getValue();
+                        $rows[$row - 1]['relatedMaterial'] = $worksheet->getCellByColumnAndRow(42, $row)->getValue();
+                        $rows[$row - 1]['conditionNote'] = $worksheet->getCellByColumnAndRow(43, $row)->getValue();
+                        $rows[$row - 1]['generalNote'] = $worksheet->getCellByColumnAndRow(44, $row)->getValue();
                     }
                 }
             }
@@ -280,7 +274,7 @@ class ImportReport extends ContainerAware {
             $record->setAlternateId($row['alternateId']);
             $record->setLocation($row['location']);
 
-            $format = $em->getRepository('ApplicationFrontBundle:Formats')->findOneBy(array('name' => $row['format'], 'mediaType'=> $mediaType->getId()));
+            $format = $em->getRepository('ApplicationFrontBundle:Formats')->findOneBy(array('name' => $row['format'], 'mediaType' => $mediaType->getId()));
             $record->setFormat($format);
 
             $record->setTitle($row['title']);
