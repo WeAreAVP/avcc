@@ -53,7 +53,7 @@ class ImportExport
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true, onDelete="CASCADE")
      * })
      */
     private $user;

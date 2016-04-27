@@ -84,7 +84,7 @@ class Records {
      *
      * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\Users")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="editor_user_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="editor_user_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      * })
      */
     private $editor;
