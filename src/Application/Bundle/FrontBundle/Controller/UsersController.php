@@ -428,7 +428,7 @@ class UsersController extends MyController {
         return $this->createFormBuilder()
                         ->setAction($this->generateUrl('users_delete', array('id' => $id)))
                         ->setMethod('DELETE')
-                        ->add('submit', 'submit', array('label' => 'Delete', 'attr' => array('onclick' => "return confirm('Are you sure you want to delete selected user?')")))
+                        ->add('submit', 'submit', array('label' => 'Delete', 'attr' => array('onclick' => "return confirm('All the records associated with this user will also delete. Are you sure you want to delete selected user?')")))
                         ->getForm();
     }
 
