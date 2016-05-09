@@ -24,7 +24,7 @@
     <div class="clearfix"></div>
     <div class="grid">
         <div class="row">
-            <div class="span4">Created by: <?php echo $entity->getUser()->getName(); ?></div>
+            <div class="span4">Created by: <?php echo ($entity->getUser()) ? $entity->getUser()->getName(): ""; ?></div>
             <?php if ($entity->getEditor()) : ?>
                 <div class="span4">Last Modified by: <?php echo $entity->getEditor()->getName(); ?></div>
             <?php endif;

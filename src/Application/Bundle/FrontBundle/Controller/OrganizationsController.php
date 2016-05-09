@@ -53,7 +53,7 @@ class OrganizationsController extends MyController {
         $count = array();
         $em = $this->getDoctrine()->getManager();
         if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
-            $entities = $em->getRepository('ApplicationFrontBundle:Organizations')->getAll();           
+            $entities = $em->getRepository('ApplicationFrontBundle:Organizations')->getAll();
             foreach ($entities as $entity) {
                 $records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($entity['id']);
                 $count[$entity['id']] = $records['total'];
@@ -285,12 +285,15 @@ class OrganizationsController extends MyController {
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Organizations entity.');
             }
-            $records = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organization' => $id));
+            $records = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $id));
             foreach ($records as $user) {
-                $record = $em->getRepository('ApplicationFrontBundle:Records')->findBy(array('user' => $user->getId()));
-                $shpinxInfo = $this->container->getParameter('sphinx_param');
-                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $record->getId(), $record->getMediaType()->getId());
-                $sphinxSearch->delete();
+                $_records = $em->getRepository('ApplicationFrontBundle:Records')->findBy(array('user' => $user->getId()));
+                foreach ($_records as $record) {
+                    $shpinxInfo = $this->container->getParameter('sphinx_param');
+                    $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $record->getId(), $record->getMediaType()->getId());
+                    $sphinxSearch->delete();
+                    $em->remove($record);
+                }
             }
             $em->remove($entity);
             $em->flush();

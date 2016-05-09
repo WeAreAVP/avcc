@@ -114,7 +114,7 @@ class Users extends BaseUser {
      *             onDelete="CASCADE"
      *         )
      *     },
-     *     inverseJoinColumns={@ORM\JoinColumn(name="projectId", referencedColumnName="id", nullable=false)}
+     *     inverseJoinColumns={@ORM\JoinColumn(name="projectId", referencedColumnName="id", nullable=false, onDelete="CASCADE")}
      * )
      * @ORM\OrderBy({"id"="ASC"})
      */
