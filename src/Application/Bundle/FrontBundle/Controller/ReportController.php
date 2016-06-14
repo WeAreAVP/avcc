@@ -54,6 +54,9 @@ class ReportController extends MyController {
      * @return array
      */
     public function allFormatsAction($type) {
+        @set_time_limit(0);
+        @ini_set("memory_limit", -1); # 1GB
+        @ini_set("max_execution_time", 0); # unlimited
         if (!in_array($type, array('csv', 'xlsx'))) {
             throw $this->createNotFoundException('Invalid report type');
         }
@@ -104,6 +107,9 @@ class ReportController extends MyController {
      * @return array
      */
     public function manifestAction($type) {
+        @set_time_limit(0);
+        @ini_set("memory_limit", -1); # 1GB
+        @ini_set("max_execution_time", 0); # unlimited
         if (!in_array($type, array('csv', 'xlsx'))) {
             throw $this->createNotFoundException('Invalid report type');
         }
@@ -138,20 +144,26 @@ class ReportController extends MyController {
      * @return array
      */
     public function prioritizationReportAction($type) {
+        @set_time_limit(0);
+        @ini_set("memory_limit", -1); # 1GB
+        @ini_set("max_execution_time", 0); # unlimited
         if (!in_array($type, array('csv', 'xlsx'))) {
             throw $this->createNotFoundException('Invalid report type');
         }
-
+        gc_enable();
         $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->getConnection()->getConfiguration()->setSQLLogger(null);
         if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN'))
             $records = $entityManager->getRepository('ApplicationFrontBundle:Records')->findAll();
         else
             $records = $entityManager->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($this->getUser()->getOrganizations()->getId());
 
         $exportComponent = new ExportReport($this->container);
-        $phpExcelObject = $exportComponent->generatePrioritizationReport($records);
+        $phpExcelObject = $exportComponent->generatePrioritizationReport($records, $entityManager);
         $response = $exportComponent->outputReport($type, $phpExcelObject, 'prioritization_report');
-
+        $entityManager->flush();
+        $entityManager->clear();
+        gc_collect_cycles();
         // create the response
         return $response;
         return array();
@@ -685,7 +697,7 @@ class ReportController extends MyController {
         $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
         $total_records = $sphinxSearch->select($this->getUser(), 0, 1000, 'title', 'asc');
         $max_offset = $total_records[1][1]['Value'];
-       
+
         $types = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('media_type', $this->getUser()), 'media_type');
         foreach ($types as $mediatype) {
             $typeCriteria = array('s_media_type' => array($mediatype['media_type']));
