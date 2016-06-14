@@ -57,11 +57,13 @@ class ReportController extends MyController {
         @set_time_limit(0);
         @ini_set("memory_limit", -1); # 1GB
         @ini_set("max_execution_time", 0); # unlimited
+        gc_enable();
         if (!in_array($type, array('csv', 'xlsx'))) {
             throw $this->createNotFoundException('Invalid report type');
         }
 
         $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->getConnection()->getConfiguration()->setSQLLogger(null);
         if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN'))
             $records = $entityManager->getRepository('ApplicationFrontBundle:Records')->findAll();
         else
@@ -71,7 +73,9 @@ class ReportController extends MyController {
         $phpExcelObject = $exportComponent->generateReport($records);
         $file_name = 'all_records_report';
         $response = $exportComponent->outputReport($type, $phpExcelObject, $file_name);
-
+        $entityManager->flush();
+        $entityManager->clear();
+        gc_collect_cycles();
         // create the response
         return $response;
         return array();
@@ -110,11 +114,12 @@ class ReportController extends MyController {
         @set_time_limit(0);
         @ini_set("memory_limit", -1); # 1GB
         @ini_set("max_execution_time", 0); # unlimited
+        gc_enable();
         if (!in_array($type, array('csv', 'xlsx'))) {
             throw $this->createNotFoundException('Invalid report type');
         }
         $entityManager = $this->getDoctrine()->getManager();
-
+        $entityManager->getConnection()->getConfiguration()->setSQLLogger(null);
         if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN'))
             $records = $entityManager->getRepository('ApplicationFrontBundle:Records')->findAll();
         else
@@ -130,6 +135,9 @@ class ReportController extends MyController {
         $exportComponent = new ExportReport($this->container);
         $exportComponent->prepareManifestReport($activeSheet, $records);
         $response = $exportComponent->outputReport($type, $phpExcelObject, 'manifest_report');
+        $entityManager->flush();
+        $entityManager->clear();
+        gc_collect_cycles();
 
         return $response;
         return array();
