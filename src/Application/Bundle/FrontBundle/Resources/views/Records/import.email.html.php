@@ -10,8 +10,20 @@
     }
     ?>
     <br/>
-<?php } else {
+    <?php
+} else if (isset($numberOfRecords)) {
     echo "$numberOfRecords records imported successfully.";
+} else if (isset($organization)) {
+    echo "No. of record exceeds 2500 limit for unpaid organization $organization.";
+} else {
+    ?>
+    <div>Following issues found while importing records.</div>
+    <?php
+    foreach ($errors as $key => $value) {
+        $format = explode(" | ", $value);
+        echo '<p>No format ' . $format[1] . ' found for media type ' . $format[0] . '<br />';
+        echo '</p>';
+    }
 }
 ?>
 <br/><br/>

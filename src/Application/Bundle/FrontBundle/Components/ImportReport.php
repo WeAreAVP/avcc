@@ -188,10 +188,19 @@ class ImportReport extends ContainerAware {
         }
     }
 
+    public function getTotalRows($fileName) {
+        $fileCompletePath = $this->container->getParameter('webUrl') . 'import/' . date('Y') . '/' . date('m') . '/' . $fileName;
+        if (file_exists($fileCompletePath)) {
+            $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($fileCompletePath);
+            return $phpExcelObject->setActiveSheetIndex(0)->getHighestRow();
+        }
+    }
+
     public function getRecordsFromFile($fileName, $user) {
         $fileCompletePath = $this->container->getParameter('webUrl') . 'import/' . date('Y') . '/' . date('m') . '/' . $fileName;
 //        $fileCompletePath = '/Applications/XAMPP/xamppfiles/htdocs/avcc/web/' . $fileName;
         if (file_exists($fileCompletePath)) {
+            $formats = array();
             $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($fileCompletePath);
             $invalidValues = null;
             $fields = new DefaultFields();
@@ -208,6 +217,7 @@ class ImportReport extends ContainerAware {
                         $rows[$row - 1]['alternateId'] = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
                         $rows[$row - 1]['location'] = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
                         $rows[$row - 1]['format'] = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
+                        $formats[] = $worksheet->getCellByColumnAndRow(2, $row)->getValue() . ' | ' . $worksheet->getCellByColumnAndRow(6, $row)->getValue();
                         $rows[$row - 1]['title'] = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
                         $rows[$row - 1]['description'] = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
                         $rows[$row - 1]['commercial'] = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
@@ -252,12 +262,31 @@ class ImportReport extends ContainerAware {
                     }
                 }
             }
+
             if ($rows) {
-                return $this->importRecords($rows, $user, $em);
+                $validation = $this->validateFormat($em, array_unique($formats));
+                if (empty($validation)) {
+                    return $this->importRecords($rows, $user, $em);
+                } else {
+                    return array('errors' => $validation);
+                }
             }
         } else {
             return 'file not found';
         }
+    }
+
+    public function validateFormat($em, $formats) {
+        $errors = array();
+        foreach ($formats as $format) {
+            $value = explode(" | ", $format);
+            $mediaType = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findOneBy(array('name' => $value[0]));
+            $_format = $em->getRepository('ApplicationFrontBundle:Formats')->findOneBy(array('name' => $value[1], 'mediaType' => $mediaType->getId()));
+            if (!$_format) {
+                $errors[] = $format;
+            }
+        }
+        return $errors;
     }
 
     public function importRecords($rows, $user, $em) {
