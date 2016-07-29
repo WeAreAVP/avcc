@@ -219,22 +219,22 @@ function Records() {
             checkParentFacet('base', $(this).prop('checked'));
         });
         $('input[name="recordingStandard[]"]').click(function () {
-            checkParentFacet('recordingStandard', $(this).prop('checked'));
+            checkParentFacet('recording_standard', $(this).prop('checked'));
         });
         $('input[name="printType[]"]').click(function () {
-            checkParentFacet('printType', $(this).prop('checked'));
+            checkParentFacet('print_type', $(this).prop('checked'));
         });
         $('input[name="project[]"]').click(function () {
             checkParentFacet('project', $(this).prop('checked'));
         });
         $('input[name="reelDiameter[]"]').click(function () {
-            checkParentFacet('reelDiameter', $(this).prop('checked'));
+            checkParentFacet('reel_diameter', $(this).prop('checked'));
         });
         $('input[name="discDiameter[]"]').click(function () {
-            checkParentFacet('discDiameter', $(this).prop('checked'));
+            checkParentFacet('disk_diameter', $(this).prop('checked'));
         });
         $('input[name="acidDetection[]"]').click(function () {
-            checkParentFacet('acidDetection', $(this).prop('checked'));
+            checkParentFacet('acid_detection', $(this).prop('checked'));
         });
         $('input[name="collection_name[]"]').click(function () {
             checkParentFacet('collection_name', $(this).prop('checked'));
@@ -252,7 +252,7 @@ function Records() {
             {
                 totalChecked++;
                 $('#parent_facet').val(containerId);
-                $('#total_checked').val(totalChecked);
+                $('#total_checked').val(totalChecked); 
             }
             if (currentVal == 0 && $('#parent_facet').val() == containerId) {
                 totalChecked--;
@@ -316,7 +316,7 @@ function Records() {
             $('#parent_facet').val(type);
         else if (totalChecked == 0)
             $('#parent_facet').val('');
-        filterRecords();
+        filterRecords(); 
     }
     /**
      * 
