@@ -176,7 +176,7 @@ class AudioRecordsController extends MyController {
         $em = $this->getDoctrine()->getManager();
 
         if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations() && $this->getUser()->getOrganizations()->getIsPaid() == 0) {
-            $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecord($this->getUser()->getOrganizations()->getId());
+            $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($this->getUser()->getOrganizations()->getId());
             $counter = $org_records['total'];
             if ($counter == 2500 && $this->getUser()->getOrganizations()->getIsPaid() == 0) {
                 return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
@@ -412,7 +412,7 @@ class AudioRecordsController extends MyController {
                 $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 1);
                 $sphinxSearch->replace();
                 if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
-                    $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecord($this->getUser()->getOrganizations()->getId());
+                    $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($this->getUser()->getOrganizations()->getId());
                     $counter = $org_records['total'];
                     if ($counter == 2500 && $this->getUser()->getOrganizations()->getIsPaid() == 0) {
                         return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
