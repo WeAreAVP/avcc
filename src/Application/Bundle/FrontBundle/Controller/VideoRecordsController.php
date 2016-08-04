@@ -342,8 +342,8 @@ class VideoRecordsController extends MyController {
                 $sphinxSearch = new SphinxSearch($em, $sphinxInfo, $entity->getRecord()->getId(), 3);
                 $sphinxSearch->replace();
                 if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
-                    $org_records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($this->getUser()->getOrganizations()->getId());
-                    $counter = count($org_records);
+                    $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecord($this->getUser()->getOrganizations()->getId());
+                    $counter = $org_records['total'];
                     if ($counter == 2500 && $this->getUser()->getOrganizations()->getIsPaid() == 0) {
                         return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
                     }

@@ -56,5 +56,5 @@ class MonthlyChargeReportRepository extends EntityRepository {
         $query->setParameter('year', $year);
         return $query->getResult();
     }
-
+    
 }

@@ -355,11 +355,13 @@ class UsersController extends MyController {
 
             if (in_array("ROLE_ADMIN", $entity->getRoles()) || in_array("ROLE_SUPER_ADMIN", $entity->getRoles())) {
                 $record = $request->request->get('application_bundle_frontbundle_users');
-                $userProjects = $record['userProjects'];
-                if (count($userProjects) > 0) {
-                    foreach ($userProjects as $project) {
-                        $project = $em->getRepository('ApplicationFrontBundle:Projects')->find($project);
-                        $entity->removeUserProjects($project);
+                if (isset($record['userProjects'])) {
+                    $userProjects = $record['userProjects'];
+                    if (count($userProjects) > 0) {
+                        foreach ($userProjects as $project) {
+                            $project = $em->getRepository('ApplicationFrontBundle:Projects')->find($project);
+                            $entity->removeUserProjects($project);
+                        }
                     }
                 }
             }

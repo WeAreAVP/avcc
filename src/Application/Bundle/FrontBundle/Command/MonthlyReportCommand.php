@@ -60,11 +60,10 @@ class MonthlyReportCommand extends ContainerAwareCommand {
         foreach ($organizations as $organization) {
             $years = $em->getRepository('ApplicationFrontBundle:MonthlyChargeReport')->getAllYears($organization['id']);
             $total = 0;
-            if ($years) {                
+            if ($years) {
                 foreach ($years as $year) {
                     $records = $em->getRepository('ApplicationFrontBundle:MonthlyChargeReport')->getRecordsForMonthlyCharges($organization['id'], $year['year'], $status, date('Y-m', strtotime('now')));
                     if ($records) {
-                        
                         foreach ($records as $record) {
                             $total = $total + (int) $record['total'];
                             $charges = $em->getRepository('ApplicationFrontBundle:MonthlyCharges')->getByTotalRecord($total, TRUE);
@@ -77,7 +76,7 @@ class MonthlyReportCommand extends ContainerAwareCommand {
                                 $charge = 0;
                             } else {
                                 $charge = $charges[0]['charges'];
-                            } 
+                            }
                             $chargeReport = new MonthlyChargeReport();
                             $chargeReport->setMonth($record['month']);
                             $chargeReport->setChargeRate($charge);
@@ -102,15 +101,23 @@ class MonthlyReportCommand extends ContainerAwareCommand {
         $status = false;
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $organizations = $em->getRepository('ApplicationFrontBundle:Organizations')->getAll();
+        $month = date('F', strtotime('last day of previous month'));
+        $year = date('Y', strtotime('last day of previous month'));
         foreach ($organizations as $organization) {
-            $year = date('Y', strtotime('last day of previous month'));
             $records = $em->getRepository('ApplicationFrontBundle:MonthlyChargeReport')->getRecordsForMonthlyCharges($organization['id'], $year, $status, date('Y-m', strtotime('last day of previous month')));
+            $m_records = $em->getRepository('ApplicationFrontBundle:MonthlyChargeReport')->findBy(array('organizationId' => $organization['id']));
+            $last_count = 0;
+            if ($m_records) {
+                $last_count = $m_records[count($m_records) - 1]->getTotalRecords();
+            }
             if ($records) {
-                foreach ($records as $record) {
-                    $charges = $em->getRepository('ApplicationFrontBundle:MonthlyCharges')->getByTotalRecord($record['total'], TRUE);
-
+                $index = count($records) - 1;
+                $total = 0;
+                if (strtolower($records[$index]['month']) == strtolower($month) && $records[$index]['total'] > 0) {
+                    $total = $last_count + (int) $records[$index]['total'];
+                    $charges = $em->getRepository('ApplicationFrontBundle:MonthlyCharges')->getByTotalRecord($total, TRUE);
                     if (count($charges) == 0) {
-                        $charges = $em->getRepository('ApplicationFrontBundle:MonthlyCharges')->getByTotalRecord($record['total'], FALSE);
+                        $charges = $em->getRepository('ApplicationFrontBundle:MonthlyCharges')->getByTotalRecord($total, FALSE);
                     } else {
                         $charge = $charges[0]['charges'];
                     }
@@ -120,11 +127,11 @@ class MonthlyReportCommand extends ContainerAwareCommand {
                         $charge = $charges[0]['charges'];
                     }
                     $chargeReport = new MonthlyChargeReport();
-                    $chargeReport->setMonth($record['month']);
+                    $chargeReport->setMonth($month);
                     $chargeReport->setChargeRate($charge);
                     $chargeReport->setOrganizationId($organization['id']);
-                    $chargeReport->setTotalRecords($record['total']);
-                    $chargeReport->setYear($year['year']);
+                    $chargeReport->setTotalRecords($total);
+                    $chargeReport->setYear($year);
                     $em->persist($chargeReport);
                 }
             }
