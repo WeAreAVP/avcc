@@ -209,7 +209,7 @@ class ExportReport extends ContainerAware {
             $rec = $records[0];
             $totalFound = $records[1][1]['Value'];
             $this->prepareRecordsFromSphinx($activeSheet, $row, $rec);
-            $offset = $offset + 1000;            
+            $offset = $offset + 1000;
             $total = count($records[0]);
             $row = $row + $total;
             if ((int) $total < 1000) {
@@ -362,6 +362,7 @@ class ExportReport extends ContainerAware {
                 $activeSheet->setCellValueExplicitByColumnAndRow(35, $row, ($record->getFilmRecord()->getShrinkage()) ? $record->getFilmRecord()->getShrinkage() : '');
             }
             if ($record->getVideoRecord()) {
+                $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, ($record->getVideoRecord()->getMediaDuration()) ? $record->getVideoRecord()->getMediaDuration() : "");
                 $activeSheet->setCellValueExplicitByColumnAndRow(20, $row, ($record->getVideoRecord()->getRecordingSpeed()) ? $record->getVideoRecord()->getRecordingSpeed()->getName() : '');
                 $activeSheet->setCellValueExplicitByColumnAndRow(27, $row, ($record->getVideoRecord()->getCassetteSize()) ? $record->getVideoRecord()->getCassetteSize()->getName() : '');
                 $activeSheet->setCellValueExplicitByColumnAndRow(28, $row, ($record->getVideoRecord()->getFormatVersion()) ? $record->getVideoRecord()->getFormatVersion()->getName() : '');
@@ -566,10 +567,11 @@ class ExportReport extends ContainerAware {
                 $activeSheet->setCellValueExplicitByColumnAndRow(35, $row, $record['shrinkage']);
             }
             if ($record['media_type'] == 'Video') {
+                $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $record['media_duration']);
                 $activeSheet->setCellValueExplicitByColumnAndRow(20, $row, $record['recording_speed']);
                 $activeSheet->setCellValueExplicitByColumnAndRow(27, $row, $record['cassette_size']);
                 $activeSheet->setCellValueExplicitByColumnAndRow(28, $row, $record['format_version']);
-                $activeSheet->setCellValueExplicitByColumnAndRow(29, $row, $record['media_duration']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(29, $row, $record['recording_standard']);
             }
         }
         if ($mergRow) {
