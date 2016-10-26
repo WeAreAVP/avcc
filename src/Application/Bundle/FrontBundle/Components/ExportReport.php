@@ -349,8 +349,10 @@ class ExportReport extends ContainerAware {
                 $activeSheet->setCellValueExplicitByColumnAndRow(24, $row, ($record->getAudioRecord()->getTrackTypes()) ? $record->getAudioRecord()->getTrackTypes()->getName() : '');
                 $activeSheet->setCellValueExplicitByColumnAndRow(25, $row, ($record->getAudioRecord()->getMonoStereo()) ? $record->getAudioRecord()->getMonoStereo()->getName() : '');
                 $activeSheet->setCellValueExplicitByColumnAndRow(26, $row, ($record->getAudioRecord()->getNoiceReduction()) ? $record->getAudioRecord()->getNoiceReduction()->getName() : '');
+                $activeSheet->setCellValueExplicitByColumnAndRow(20, $row, ($record->getAudioRecord()->getRecordingSpeed()) ? $record->getAudioRecord()->getRecordingSpeed()->getName() : '');
             }
             if ($record->getFilmRecord()) {
+                $activeSheet->setCellValueExplicitByColumnAndRow(14, $row, ($record->getFilmRecord()->getBases()) ? $record->getFilmRecord()->getBases()->getName() : '');
                 $activeSheet->setCellValueExplicitByColumnAndRow(15, $row, ($record->getFilmRecord()->getPrintType()) ? $record->getFilmRecord()->getPrintType()->getName() : '');
                 $activeSheet->setCellValueExplicitByColumnAndRow(19, $row, ($record->getFilmRecord()->getFootage()) ? $record->getFilmRecord()->getFootage() : '');
                 $activeSheet->setCellValueExplicitByColumnAndRow(21, $row, ($record->getFilmRecord()->getColors()) ? $record->getFilmRecord()->getColors()->getName() : '');
@@ -360,6 +362,7 @@ class ExportReport extends ContainerAware {
                 $activeSheet->setCellValueExplicitByColumnAndRow(33, $row, ($record->getFilmRecord()->getFrameRate()) ? $record->getFilmRecord()->getFrameRate()->getName() : '');
                 $activeSheet->setCellValueExplicitByColumnAndRow(34, $row, ($record->getFilmRecord()->getAcidDetectionStrip()) ? $record->getFilmRecord()->getAcidDetectionStrip()->getName() : "");
                 $activeSheet->setCellValueExplicitByColumnAndRow(35, $row, ($record->getFilmRecord()->getShrinkage()) ? $record->getFilmRecord()->getShrinkage() : '');
+                $activeSheet->setCellValueExplicitByColumnAndRow(18, $row, ($record->getFilmRecord()->getMediaDiameter()) ? $record->getFilmRecord()->getMediaDiameter()->getName() : '');
             }
             if ($record->getVideoRecord()) {
                 $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, ($record->getVideoRecord()->getMediaDuration()) ? $record->getVideoRecord()->getMediaDuration() : "");
@@ -554,8 +557,10 @@ class ExportReport extends ContainerAware {
                 $activeSheet->setCellValueExplicitByColumnAndRow(24, $row, $record['track_type']);
                 $activeSheet->setCellValueExplicitByColumnAndRow(25, $row, $record['mono_stereo']);
                 $activeSheet->setCellValueExplicitByColumnAndRow(26, $row, $record['noice_reduction']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(20, $row, $record['recording_speed']);
             }
             if ($record['media_type'] == 'Film') {
+                $activeSheet->setCellValueExplicitByColumnAndRow(14, $row, $record['base']);
                 $activeSheet->setCellValueExplicitByColumnAndRow(15, $row, $record['print_type']);
                 $activeSheet->setCellValueExplicitByColumnAndRow(19, $row, $record['footage']);
                 $activeSheet->setCellValueExplicitByColumnAndRow(21, $row, $record['color']);
@@ -565,6 +570,7 @@ class ExportReport extends ContainerAware {
                 $activeSheet->setCellValueExplicitByColumnAndRow(33, $row, $record['frame_rate']);
                 $activeSheet->setCellValueExplicitByColumnAndRow(34, $row, $record['acid_detection']);
                 $activeSheet->setCellValueExplicitByColumnAndRow(35, $row, $record['shrinkage']);
+                $activeSheet->setCellValueExplicitByColumnAndRow(18, $row, $record['media_diameter']);
             }
             if ($record['media_type'] == 'Video') {
                 $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, $record['media_duration']);
