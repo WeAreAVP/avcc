@@ -86,18 +86,17 @@ class DefaultController extends Controller {
                     }
                 }
                 if ($show) {
-                    if (in_array("ROLE_ADMIN", $this->getUser()->getRoles())) {
+//                    if (in_array("ROLE_ADMIN", $this->getUser()->getRoles())) {
                         $showTerms = true;
-
                         $terms = $activeRecord[0]->getTerms();
-                    } else {
-                        $csrfToken = $this->container->has('form.csrf_provider') ? $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate') : null;
-                        return $this->renderLogin(array(
-                                    'last_username' => $user->getUsername(),
-                                    'error' => "Email to avcc@avpreserve.com to resolve the issue.",
-                                    'csrf_token' => $csrfToken,
-                        ));
-                    }
+//                    } else {
+//                        $csrfToken = $this->container->has('form.csrf_provider') ? $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate') : null;
+//                        return $this->renderLogin(array(
+//                                    'last_username' => $user->getUsername(),
+//                                    'error' => "Email to avcc@avpreserve.com to resolve the issue.",
+//                                    'csrf_token' => $csrfToken,
+//                        ));
+//                    }
                 }
             }
         }
