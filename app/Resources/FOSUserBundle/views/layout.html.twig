@@ -17,16 +17,16 @@
         <!-- Bootstrap core CSS -->
         {% block stylesheets %}
             {#						<link href="{{ asset('css/bootstrap.css') }}" type="text/css" rel="stylesheet" />#}
-        <link href="{{ asset('css/metro-bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
-        <link href="{{ asset('css/metro-bootstrap-responsive.min.css') }}" type="text/css" rel="stylesheet" />
-        <link href="{{ asset('css/iconFont.min.css') }}" type="text/css" rel="stylesheet" />
-        <link href="{{ asset('css/chosen.css') }}" type="text/css" rel="stylesheet" />
-        <link href="{{ asset('css/modal.css') }}" type="text/css" rel="stylesheet" />
-        <link href="{{ asset('bundles/applicationfront/css/style.css') }}" rel="stylesheet">
-        <link rel="stylesheet" href="{{ asset('css/jquery.mCustomScrollbar.css') }}" />
-        <link rel="stylesheet" href="{{ asset('css/basic.css') }}" />
-        <link rel="stylesheet" href="{{ asset('css/tableSorter.css') }}" />
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
+            <link href="{{ asset('css/metro-bootstrap.min.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('css/metro-bootstrap-responsive.min.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('css/iconFont.min.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('css/chosen.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('css/modal.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('bundles/applicationfront/css/style.css') }}" rel="stylesheet">
+            <link rel="stylesheet" href="{{ asset('css/jquery.mCustomScrollbar.css') }}" />
+            <link rel="stylesheet" href="{{ asset('css/basic.css') }}" />
+            <link rel="stylesheet" href="{{ asset('css/tableSorter.css') }}" />
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
         {% endblock %}
         <script
             src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-2.min.js"
@@ -36,6 +36,11 @@
     </head>
 
     <body class="metro">
+        {% if qa_instance %}
+            <div class="qa-instance">
+                <h2 class="qa_heading">QA</h2>
+            </div>
+        {% endif %}
         <header class="bg-dark nav-container">
             <div class="navigation-bar dark fixed-top shadow">
                 <div class="navigation-bar-content container">
@@ -43,35 +48,44 @@
                     <span class="element-divider"></span>
                     {#                                        {{ dump(app.user) }}#}
                     {% if app.user %}
-                    <a class="element1 pull-menu" href="#"></a>
-                    <ul class="element-menu place-right" style="">
-                        <li>
-                            <a class="dropdown-toggle" href="#">Welcome, {{ app.user.name}}&nbsp;&nbsp;</a>
-                            <ul class="dropdown-menu dark" data-role="dropdown">
-                                <li><a href="{{ path('fos_user_profile_show') }}">Profile</a></li>
-                                <li><a href="{{ path('fos_user_change_password') }}">Change Password</a></li>
-                                <li class="divider"></li>
-                                <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+                        <a class="element1 pull-menu" href="#"></a>
+                        <ul class="element-menu place-right" style="">
+                            <li>
+                                <a class="dropdown-toggle" href="#">Welcome, {{ app.user.name}}&nbsp;&nbsp;</a>
+                                <ul class="dropdown-menu dark" data-role="dropdown">
+                                    <li><a href="{{ path('fos_user_profile_show') }}">Profile</a></li>
+                                    <li><a href="{{ path('fos_user_change_password') }}">Change Password</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="{{ path('fos_user_security_logout') }}">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
                         {% if is_granted('ROLE_MANAGER') %}
-                    <a class="element1 pull-menu" href="#"></a>
-                    <ul class="element-menu place-right" style="">
-                        <li>
-                            <a class="dropdown-toggle" href="#"><span class="icon-cog"></span> Settings
-                            </a>
-                            <ul class="dropdown-menu dark" data-role="dropdown">
-                                <li><a href="{{ path('users') }}">Users</a></li>
-                                <li><a href="{{ path('organizations') }}">Organization</a></li>
-                                <li><a href="{{ path('field_settings') }}">Field Settings</a></li>
-                                <li><a href="{{ path('field_settings_backup') }}">Enable Backup</a></li>
-                                <li><a class="" href="{{ path('projects') }}">Projects</a></li>
+                            <a class="element1 pull-menu" href="#"></a>
+                            <ul class="element-menu place-right" style="">
+                                <li>
+                                    <a class="dropdown-toggle" href="#"><span class="icon-cog"></span> Settings
+                                    </a>
+                                    <ul class="dropdown-menu dark" data-role="dropdown">
+                                        <li><a href="{{ path('users') }}">Users</a></li>
+                                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                        <li><a href="{{ path('organizations') }}">Organization</a></li>
+                                        {% endif %}
+                                        <li><a href="{{ path('field_settings') }}">Field Settings</a></li>
+                                        <li><a href="{{ path('field_settings_backup') }}">Enable Backup</a></li>
+                                        <li><a class="" href="{{ path('projects') }}">Projects</a></li>
                                             {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                    <li><a class="" href="{{ path('help_guide') }}">Help Guide</a></li>
-                                    <li><a class="" href="{{ path('terms_of_service') }}">Terms of Service</a></li>
-                                    <li><a class="" href="{{ path('monthly_charges') }}">Monthly Charge Rate</a></li>
+                                            <li><a class="" href="{{ path('help_guide') }}">Help Guide</a></li>
+                                            <li><a class="" href="{{ path('terms_of_service') }}">Terms of Service</a></li>
+                                            <li><a class="" href="{{ path('plan') }}">Plans</a></li>
+                                            <li><a class="" href="{{ path('subscription') }}">Subscriptions</a></li>
                                             {% endif %}
+                                            {% if not is_granted('ROLE_SUPER_ADMIN') and is_granted('ROLE_ADMIN') %}
+                                            <li>
+                                                <a class="" href="{{ path('account') }}">Account</a>
+
+                                            </li>
+                                        {% endif %}
                                     </ul>
                                 </li>
                             </ul>
@@ -109,43 +123,37 @@
                                 </li>
                             </ul>
                         {% endif %}
-                            <a class="element1 pull-menu" href="#"></a>
+
                         {% if not is_granted('ROLE_SUPER_ADMIN') %}
+                            <a class="element1 pull-menu" href="#"></a>
                             <ul class="element-menu place-right" style="">
                                 <li>
                                     <a class="" href="{{ path('help_guide_list') }}">Help Guide</a>
 
                                 </li>
                             </ul>
-                            <a class="element1 pull-menu" href="#"></a>
-                            <ul class="element-menu place-right" style="">
-                                <li>
-                                    <a class="" href="{{ path('monthly_charge_report') }}">Monthly Charge Report</a>
-
-                                </li>
-                            </ul>
                         {% endif %}
-                            <a class="element1 pull-menu" href="#"></a>
-                            <ul class="element-menu place-right" style="">
-                                <li>
-                                    <a class="" href="{{ path('report') }}">Reports</a>
-                                </li>
-                            </ul>
-                            <a class="element1 pull-menu" href="#"></a>
-                            <ul class="element-menu place-right" style="">
-                                <li>
-                                    <a class="" href="{{ path('record_list') }}">Records</a>
-                                </li>
-                            </ul>
+                        <a class="element1 pull-menu" href="#"></a>
+                        <ul class="element-menu place-right" style="">
+                            <li>
+                                <a class="" href="{{ path('report') }}">Reports</a>
+                            </li>
+                        </ul>
+                        <a class="element1 pull-menu" href="#"></a>
+                        <ul class="element-menu place-right" style="">
+                            <li>
+                                <a class="" href="{{ path('record_list') }}">Records</a>
+                            </li>
+                        </ul>
 
 
 
                     {% endif %}
-                        </div>
-                    </div>
-                </header>
+                </div>
+            </div>
+        </header>
 
-                <div class="container" id="container" style="margin-top:20px;margin-bottom:20px;">            
+        <div class="container" id="container" style="margin-top:20px;margin-bottom:20px;">            
             {#{% if app.user %}
                 {% if app.user.organizations %}
                     {% if app.user.organizations.isPaid == 0 %}
@@ -156,9 +164,9 @@
             {% for type, messages in app.session.flashbag.all() %}
                 {% for message in messages %}
                     {#                                     {% if type == 'success' %}#}
-                        <div class="flash-{{ type }} text-success">
+                    <div class="flash-{{ type }} text-success">
                         {{ message }}
-                            </div>
+                    </div>
                     {#                                     {% endif %}  #}
                 {% endfor %}
             {% endfor %}
@@ -166,28 +174,28 @@
             {% endblock body %}
 
 
-                        </div> <!-- /container -->
+        </div> <!-- /container -->
 
         {% block javascripts %}
-                        <script src="{{ asset('js/jquery.min.js') }}"></script>
-                        <script src="{{ asset('js/jquery.widget.min.js') }}"></script>
-                        <script src="{{ asset('js/jquery.mousewheel.js') }}"></script>
-                        <script src="{{ asset('js/metro.min.js') }}"></script>
-                        <script src="{{ asset('js/modal.js') }}"></script>
-                        <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
-                        <script src="{{ asset('js/chosen.jquery.js') }}"></script>
-                        <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
-                        <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-{#            <script src="{{ asset('js/jquery.simplemodal.1.4.4.min.js') }}"></script>#}
-                        <script src="{{ asset('js/jquery.tablesorter.js') }}"></script>
-                        <script src="{{ asset('js/jquery.print.js') }}"></script>
-                        <script src="{{ asset('js/tabcontrol.js') }}"></script>
-                        <script src="{{ asset('js/accordion.js') }}"></script>
+            <script src="{{ asset('js/jquery.min.js') }}"></script>
+            <script src="{{ asset('js/jquery.widget.min.js') }}"></script>
+            <script src="{{ asset('js/jquery.mousewheel.js') }}"></script>
+            <script src="{{ asset('js/metro.min.js') }}"></script>
+            <script src="{{ asset('js/modal.js') }}"></script>
+            <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+            <script src="{{ asset('js/chosen.jquery.js') }}"></script>
+            <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+            <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+            {#            <script src="{{ asset('js/jquery.simplemodal.1.4.4.min.js') }}"></script>#}
+            <script src="{{ asset('js/jquery.tablesorter.js') }}"></script>
+            <script src="{{ asset('js/jquery.print.js') }}"></script>
+            <script src="{{ asset('js/tabcontrol.js') }}"></script>
+            <script src="{{ asset('js/accordion.js') }}"></script>
             {% if ga_tracking %}
-                        <script>
-                (function(i, s, o, g, r, a, m) {
+                <script>
+                (function (i, s, o, g, r, a, m) {
                     i['GoogleAnalyticsObject'] = r;
-                    i[r] = i[r] || function() {
+                    i[r] = i[r] || function () {
                         (i[r].q = i[r].q || []).push(arguments)
                     }, i[r].l = 1 * new Date();
                     a = s.createElement(o),
@@ -198,36 +206,36 @@
                 })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
                 ga('create', '{{ga_tracking}}', 'auto');
                 ga('send', 'pageview');
-                            </script>
+                </script>
             {%endif%}
-                            <script type="text/javascript">
-                                setTimeout(function() {
-                                    $('.text-success').hide();
-                                }, 5000);
-                                $(document).ready(function() {
-                                    $('.formats_dd').chosen();
-                                    var fixHelper = function(e, ui) {
-                                        ui.children().each(function() {
-                                            $(this).width($(this).width());
-                                        });
-                                        return ui;
-                                    };
+            <script type="text/javascript">
+                setTimeout(function () {
+                    $('.text-success').hide();
+                }, 5000);
+                $(document).ready(function () {
+                    $('.formats_dd').chosen();
+                    var fixHelper = function (e, ui) {
+                        ui.children().each(function () {
+                            $(this).width($(this).width());
+                        });
+                        return ui;
+                    };
 
-                                    $(".sortable tbody").sortable({
-                                        helper: fixHelper,
-                                        //handle: ".icon-align-justify",
-                                {#update: function (event, ui) {
-                                    var newOrder = $(this).sortable('toArray').toString();
-                                    $.post(base_url + 'settings/save_sort', {order: newOrder});
-                                }#}
-                                    }).disableSelection();
-                                });
+                    $(".sortable tbody").sortable({
+                        helper: fixHelper,
+                        //handle: ".icon-align-justify",
+                {#update: function (event, ui) {
+                    var newOrder = $(this).sortable('toArray').toString();
+                    $.post(base_url + 'settings/save_sort', {order: newOrder});
+                }#}
+                        }).disableSelection();
+                    });
 
-                                </script>
+            </script>
 
         {% endblock %}
         {% block view_javascripts %}
         {% endblock %}
 
-                            </body>
-                        </html>
+    </body>
+</html>

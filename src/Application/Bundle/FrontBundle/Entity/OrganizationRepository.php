@@ -27,4 +27,10 @@ class OrganizationRepository extends EntityRepository
                 ->createQuery("SELECT o.id, o.name, o.departmentName, o.address, o.contactPersonName, o.contactPersonEmail, o.status, o.contactPersonPhone from ApplicationFrontBundle:Organizations o ");
         return $query->getArrayResult();
     }
+    
+    public function getAllActiveOrgs() {
+        $query = $this->getEntityManager()
+                ->createQuery("SELECT o.id, o.name from ApplicationFrontBundle:Organizations o Where o.status = 1");
+        return $query->getArrayResult();
+    }
 }

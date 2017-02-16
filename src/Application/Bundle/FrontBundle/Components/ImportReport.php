@@ -36,7 +36,6 @@ class ImportReport extends ContainerAware {
 
     public function validateVocabulary($fileName, $organizationId = 0) {
         $fileCompletePath = $this->container->getParameter('webUrl') . 'import/' . date('Y') . '/' . date('m') . '/' . $fileName;
-//        $fileCompletePath = '/Applications/XAMPP/xamppfiles/htdocs/avcc/web/' . $fileName;
         if (file_exists($fileCompletePath)) {
             $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($fileCompletePath);
             $invalidValues = null;
@@ -133,9 +132,11 @@ class ImportReport extends ContainerAware {
                             $invalidValues['reel_diameters'][] = $reelDiameter->getValue() . ' at row ' . $row . ' not exist in db';
                         }
                         $nf = new NumberFormat();
-                        $mdValue = $nf->toFormattedString($mediaDiameter->getValue(), '0%');
-                        if ($mediaDiameter->getValue() && !in_array($mdValue, $vocabularies['mediaDiameters'])) {
-                            $invalidValues['media_diameters'][] = $mediaDiameter->getValue() . ' at row ' . $row . ' not exist in db';
+                        if (!in_array($mediaType, array("film", "Film"))) {
+                            $mdValue = $nf->toFormattedString($mediaDiameter->getValue(), '0%');
+                            if ($mediaDiameter->getValue() && !in_array($mdValue, $vocabularies['mediaDiameters'])) {
+                                $invalidValues['media_diameters'][] = $mediaDiameter->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
                         }
                         if ($recordingSpeed->getValue() && !in_array($recordingSpeed->getValue(), $vocabularies['recordingSpeed'])) {
                             $invalidValues['recording_speed'][] = $recordingSpeed->getValue() . ' at row ' . $row . ' not exist in db';

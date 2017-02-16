@@ -66,7 +66,7 @@ class HelpGuideController extends MyController {
      */
     public function listAction(Request $request) {
         $session = $this->getRequest()->getSession();        
-        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+       if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $search = $request->query->get('search');

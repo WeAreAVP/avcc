@@ -93,7 +93,7 @@ class RecordsController extends MyController {
         @ini_set("max_execution_time", 0);
         $em = $this->getDoctrine()->getManager();
         $session = $this->getRequest()->getSession();
-        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $shpinxInfo = $this->getSphinxInfo();
@@ -147,12 +147,23 @@ class RecordsController extends MyController {
         $facet['organizationNames'] = $this->removeEmpty($sphinxSearch->facetSelect('organization_name', $this->getUser(), $criteria, $parentFacet, null, 'organization_id', 'organization_id'), 'organization_name');
 
         $organizations = $em->getRepository('ApplicationFrontBundle:Organizations')->findAll();
+        $contact_person = "avcc@avpreserve.com";
+        if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $dialog) {
+            $creator = $this->getUser()->getOrganizations()->getUsersCreated();
+            if (in_array("ROLE_ADMIN", $creator->getRoles())) {
+                $contact_person = $creator->getEmail();
+            }
+            if ($contact_person == $this->getUser()->getEmail()) {
+                $contact_person = "";
+            }
+        }
         $view = array(
             'facets' => $facet,
             'columns' => $this->columns,
             'isAjax' => $isAjax,
             'organizations' => $organizations,
-            'notification' => $dialog
+            'notification' => $dialog,
+            'contact_person' => $contact_person
         );
 
         if ($request->isXmlHttpRequest()) {
@@ -373,6 +384,9 @@ class RecordsController extends MyController {
             if ($session->has('facetData')) {
                 $facetData = json_encode(array('criteria' => $session->get('facetData')));
             }
+            if (isset($data["account_close"])) {
+                $facetData = '{"criteria":{"org_filter":"","organization_name":["' . $this->getUser()->getOrganizations()->getId() . '"],"formt_filter":"","collection_filter":"","project_filter":"","is_review_check":"0","is_reformatting_priority_check":"0","parent_facet":"organization_name","total_checked":"1","facet_keyword_search":""}}';
+            }
             $type = $data['type'];
             $records = $data['records'];
             $export = new ImportExport();
@@ -521,7 +535,7 @@ class RecordsController extends MyController {
      */
     public function showAction($id) {
         $session = $this->getRequest()->getSession();
-        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $em = $this->getDoctrine()->getManager();
@@ -787,8 +801,8 @@ class RecordsController extends MyController {
         foreach ($default as $key1 => $value) {
             foreach ($value as $key2 => $fields) {
                 $index = array_search($fields['field'], array_map(function($element) {
-                                    return $element['field'];
-                                }, $db_view[$key1]));
+                            return $element['field'];
+                        }, $db_view[$key1]));
                 if ($default[$key1][$key2]['field'] == $db_view[$key1][$index]['field']) {
                     if (array_diff($default[$key1][$key2], $db_view[$key1][$index])) {
                         $db_view[$key1][$index] = $default[$key1][$key2];

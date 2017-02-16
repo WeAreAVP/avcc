@@ -50,9 +50,9 @@ class MonthlyChargeReport {
     /**
      * @var string
      *
-     * @ORM\Column(name="month", type="string")
+     * @ORM\Column(name="charge_at", type="string")
      */
-    private $month;
+    private $chargeAt;
 
     /**
      * @var integer
@@ -64,9 +64,9 @@ class MonthlyChargeReport {
     /**
      * @var float
      *
-     * @ORM\Column(name="charge_rate", type="float")
+     * @ORM\Column(name="charge_amount", type="float")
      */
-    private $chargeRate;
+    private $chargeAmount;
 
     /**
      * @var integer
@@ -74,6 +74,15 @@ class MonthlyChargeReport {
      * @ORM\Column(name="organization_id", type="integer")
      */
     private $organizationId;
+
+   /**
+     * @ORM\ManyToOne(
+     *     targetEntity="\Application\Bundle\FrontBundle\Entity\Plans",
+     *     
+     * )
+     * @ORM\JoinColumn(name="plan_id", referencedColumnName="id", nullable=true)
+     */
+    private $plan;
 
     /**
      * @var \DateTime $createdOn
@@ -117,8 +126,8 @@ class MonthlyChargeReport {
      *
      * @return integer
      */
-    public function getMonth() {
-        return $this->month;
+    public function getChargeAt() {
+        return $this->chargeAt;
     }
 
     /**
@@ -128,8 +137,8 @@ class MonthlyChargeReport {
      *
      * @return \Application\Bundle\FrontBundle\Entity\MonthlyChargeReport
      */
-    public function setMonth($month) {
-        $this->month = $month;
+    public function setChargeAt($chargeAt) {
+        $this->chargeAt = $chargeAt;
         return $this;
     }
 
@@ -158,8 +167,8 @@ class MonthlyChargeReport {
      *
      * @return float
      */
-    public function getChargeRate() {
-        return $this->chargeRate;
+    public function getChargeAmount() {
+        return $this->chargeAmount;
     }
 
     /**
@@ -169,8 +178,8 @@ class MonthlyChargeReport {
      *
      * @return \Application\Bundle\FrontBundle\Entity\MonthlyChargeReport
      */
-    public function setChargeRate($ChargeRate) {
-        $this->chargeRate = $ChargeRate;
+    public function setChargeAmount($ChargeRate) {
+        $this->chargeAmount = $ChargeRate;
     }
 
     /**
@@ -190,8 +199,8 @@ class MonthlyChargeReport {
     public function getCreatedOn() {
         return $this->createdOn;
     }
-    
-     /**
+
+    /**
      * Get Organization Id.
      *
      * @return float
@@ -209,6 +218,26 @@ class MonthlyChargeReport {
      */
     public function setOrganizationId($OrganizationId) {
         $this->organizationId = $OrganizationId;
+    }
+
+    /**
+     * Get Organization Id.
+     *
+     * @return float
+     */
+    public function getPlans() {
+        return $this->plan;
+    }
+
+    /**
+     * Set Organization Id.
+     *
+     * @param float $year
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Plans
+     */
+    public function setPlans(\Application\Bundle\FrontBundle\Entity\Plans $plan) {
+        $this->plan = $plan;
     }
 
 }

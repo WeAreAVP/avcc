@@ -14,7 +14,7 @@
 } else if (isset($numberOfRecords)) {
     echo "$numberOfRecords records imported successfully.";
 } else if (isset($organization)) {
-    echo "No. of record exceeds 2500 limit for unpaid organization $organization.";
+    echo "No. of record exceeds $plan_limit limit for organization $organization. Please upgrade your account by contacting $contact_person";
 } else {
     ?>
     <div>Following issues found while importing records.</div>

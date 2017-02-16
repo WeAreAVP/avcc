@@ -65,12 +65,6 @@
                                     </div>
 
 
-                                    <label class="{% if is_granted('ROLE_SUPER_ADMIN') %} {{''}} {% else %} {{'hide'}} {% endif %}" style="width: 100px;float: left;margin-bottom: 15px;">Is Paid</label>
-                                    <div class="input-control {% if is_granted('ROLE_SUPER_ADMIN') %} {{''}} {% else %} {{'hide'}} {% endif %}" data-role="input-control">
-				{{ form_widget(edit_form.isPaid) }}
-                                        </div>
-
-
                                         <div class="clearfix"></div>
 			{{ form_widget(edit_form.submit, {attr: {class:'button primary'} }) }}
                                         or

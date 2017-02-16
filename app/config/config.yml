@@ -27,6 +27,8 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         ga_tracking: "%ga_tracking%"
+        qa_instance: "%qa_instance%"
+        stripe_publishkey: "%stripe_publishkey%"
 
 # Assetic Configuration
 assetic:
@@ -102,3 +104,4 @@ parameters:
     
 bugsnag:
     api_key: 0cbb25f7dc748ed279d3dbeafbace9ab
+

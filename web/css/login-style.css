@@ -8825,3 +8825,19 @@ a:focus {
 .basic-margin > li, .basic-margin > a {
     margin: 0 5px 5px 0;
 }
+
+.qa-instance {
+    -webkit-transform: rotate(-45deg);
+    position: absolute;
+    background: yellow;
+    z-index: 9999999;
+    text-align: center;
+    width: 337px;
+    left: -95px;
+    top: 50px;
+}
+
+.qa_heading { 
+    font-weight: bold;
+    color: blue;
+}

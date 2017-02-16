@@ -1,0 +1,40 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+    <div class="grid fluid">
+        <h1>
+            <a href="{{ path('plan') }}"><i class="icon-arrow-left-3 smaller"></i> </a>
+            {{ entity.name }}
+        </h1>
+        <dl class="horizontal">
+            <dt>Plan ID</dt>
+            <dd>
+                {{ entity.planId }}
+            </dd>
+        </dl>
+            <dl class="horizontal">
+            <dt>Records</dt>
+            <dd>
+                {{ entity.records }}
+            </dd>
+        </dl>
+        <dl class="horizontal">
+            <dt>Amount</dt>
+            <dd>
+                ${{ entity.amount }}
+            </dd>
+        </dl>
+        <dl class="horizontal">
+            <dt>Interval</dt>
+            <dd>
+                Monthly
+            </dd>
+        </dl>
+        <dl class="horizontal">
+            <dt>Description</dt>
+            <dd>
+                {{ entity.description }}
+            </dd>
+        </dl>
+    </div>
+{% endblock %}

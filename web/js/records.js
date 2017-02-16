@@ -585,7 +585,7 @@ function Records() {
         });
     }
 
-    this.exportRecords = function () {
+    this.exportRecords = function (_var) {
         $('#exportRequest').click(function () {
             var exportType = $("#exportType").val();
             var selectedrecords = $("#selectedrecords").val();

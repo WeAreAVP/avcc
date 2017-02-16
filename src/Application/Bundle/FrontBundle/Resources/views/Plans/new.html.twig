@@ -1,0 +1,93 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+    <div class="grid fluid">
+        <h1>
+            <a href="{{ path('plan') }}"><i class="icon-arrow-left-3 smaller"></i> </a>
+            New Plan
+        </h1>
+
+        {{ form_start(form, {attr: {class:'form-horizontal'} }) }}
+        <fieldset>
+            {{ form_errors(form) }}
+            <br />
+
+            <label>Name</label>
+            <div class="input-control text" data-role="input-control">
+                {{ form_widget(form.name, {attr: {class:'size4'} }) }}
+                {% for errorItem in form.name.vars.errors %}
+                    <span class="has-error text-danger" for="{{ form.name.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            <label>Plan ID</label>
+            <div class="input-control text" data-role="input-control">
+                {{ form_widget(form.planId, {attr: {class:'size4'} }) }}
+                {% for errorItem in form.planId.vars.errors %}
+                    <span class="has-error text-danger" for="{{ form.planId.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            <label>Total Records</label>
+            <div class="input-control select" data-role="input-control">
+                {{ form_widget(form.records, {attr: {class:'size4'} }) }}
+
+                {% for errorItem in form.records.vars.errors %}
+                    <span class="has-error text-danger" for="{{ form.records.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            <label>Amount</label>
+            <div class="input-control text" data-role="input-control">
+                {{ form_widget(form.amount, {attr: {class:'size4'} }) }}
+                {% for errorItem in form.amount.vars.errors %}
+                    <span class="has-error text-danger" for="{{ form.amount.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            
+            <label>Statement Descriptor</label>
+            <div class="input-control text" data-role="input-control">
+                {{ form_widget(form.description, {attr: {class:'size4', maxlength:"22"} }) }}
+
+                {% for errorItem in form.description.vars.errors %}
+                    <span class="has-error text-danger" for="{{ form.description.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            <div class="clearfix"></div>
+            <br/>
+            <div>
+                {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
+                or
+                <a class="button" href="{{ path('plan') }}">Cancel</a>
+            </div>
+        </fieldset>
+        {{ form_end(form) }}
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#application_bundle_frontbundle_plan_name").blur(function () {
+                var title = $("#application_bundle_frontbundle_plan_name").val();
+                if (title != "" && title != null) {
+                    var slug = slugify(title);
+                    $("#application_bundle_frontbundle_plan_planId").val(slug);
+                }
+            }).blur();
+
+            $("#application_bundle_frontbundle_plan_planId").blur(function () {
+                var title = $("#application_bundle_frontbundle_plan_planId").val();
+                if (title != "" && title != null) {
+                    var slug = slugify(title);
+                    $("#application_bundle_frontbundle_plan_planId").val(slug);
+                }
+            }).blur();
+        });
+
+        function slugify(text)
+        {
+            return text.toString().toLowerCase()
+                    .replace(/\s+/g, '-')           // Replace spaces with -
+                    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+                    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+                    .replace(/^-+/, '')             // Trim - from start of text
+                    .replace(/-+$/, '');            // Trim - from end of text
+        }
+    </script>
+{% endblock %}

@@ -350,6 +350,13 @@ class Organizations {
      * @ORM\Column(name="is_paid", type="boolean", options={"default" = 0}, nullable=true)
      */
     private $isPaid = 0;
+    
+     /**
+     * @var int
+     *
+     * @ORM\Column(name="cancel_subscription", type="boolean", options={"default" = 0}, nullable=true)
+     */
+    private $cancelSubscription = 0;
 
 
     /**
@@ -1151,6 +1158,24 @@ class Organizations {
      */
     public function setIsPaid($isPaid) {
         $this->isPaid = $isPaid;
+    }
+    
+      /**
+     * Get is paid org
+     *
+     * @return int
+     */
+    public function getCancelSubscription() {
+        return (bool) $this->cancelSubscription;
+    }
+
+    /**
+     * Set  Enable Backup
+     *
+     * @param int $isPaid
+     */
+    public function setCancelSubscription($cancelSubscription) {
+        $this->cancelSubscription = $cancelSubscription;
     }
     
     

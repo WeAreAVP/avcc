@@ -1,0 +1,56 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+    <h1>Subscriptions</h1>
+    <div class="table-responsive" style="padding-top: 25px;"> 
+        <table class="table bordered tablesorter">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Organization</th>
+                    <th>Subscribed For</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, entity in entities %}
+                    <tr>
+                        <td>{{ entity.name }}</td>
+                        <td>{{ entity.email }}</td>
+                        <td>
+                            {{entity.organizations }}
+                        </td>
+                        <td>
+                            {{ entity.stripePlanId }}
+                        </td>
+                        <td>
+                            <a class="icon-cancel" title="Unsubscribe" href="{{ path('sub_cancel', { 'id': entity.id }) }}"></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        $(document).ready(function ()
+        {
+            $('.table').dataTable({
+                "aoColumnDefs": [
+                    {"bSearchable": false, "aTargets": [0, 1, 4]},
+                ],
+                "dom": '<"top"p><"clear">t<"bottom">',
+                "order": []
+            });
+            var field = '<input type="text" placeholder="Search Organization" id="_organization" style="height: 29px;">';
+            $('.top').append(field);
+            var table = $('.table').DataTable();
+
+            $("#_organization").keyup(function () {
+                table.column(2).search($("#_organization").val(), true, false).draw();
+            });
+
+        }
+        );
+    </script>
+{% endblock body %}

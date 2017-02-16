@@ -164,3 +164,56 @@ span.has-error ul li{
     display: none;
 }
 
+.qa-instance {
+    -webkit-transform: rotate(-45deg);
+    position: absolute;
+    background: yellow;
+    z-index: 9999999;
+    text-align: center;
+    width: 120px;
+    left: -34px;
+    top: 0px;
+}
+
+.qa_heading {
+    font-weight: bold ! important;
+    color: blue ! important;
+}
+
+.plans{
+    height: 250px ! important;
+    text-align: center;
+    margin-left: 70px ! important;
+    margin-top: 20px ! important;
+}
+
+.plans h1 {
+    margin-bottom: 20px ! important;
+}
+.plans h3 {
+    margin-top: 25px ! important;
+    margin-bottom: 40px ! important;
+}
+
+/*.subscribe, #unsubscribe{
+    border-radius: 15px ! important;
+}*/
+
+#_plans{
+    margin: 0 auto;
+    width: 87%;
+}
+
+.metro .span4{
+    width: 220px ! important;
+}
+
+
+#application_bundle_frontbundle_accountclosure_reason input{
+    float: left;
+    margin-top: 6px;
+}
+
+#application_bundle_frontbundle_accountclosure_reason label{
+    padding-left: 26px;
+} 

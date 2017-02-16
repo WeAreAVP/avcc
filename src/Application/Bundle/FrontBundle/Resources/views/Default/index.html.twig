@@ -1,40 +1,40 @@
 {% extends 'FOSUserBundle::layout.html.twig' %}
 {% block body %}
-<div id="messageModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true" style="display:none;">
-    <div class='modal-dialog'>
-        <div class='modal-content'>
-            <div class="modal-header" style="background-color: black">
-                <h4 id="heading" style="color: white">How to get started</h4>
-            </div>
-            <form  role="form" action="{{ path("message_settings") }}" method="post">
-                <div class="modal-body">
-                    <div id="messageText" style="display:none;">
-                        <p><span style="font-size:13px;">1. Create Projects in the Settings menu<br/>2. Create Users in the Settings menu<br/>3. Assign Users to Projects or Projects to Users<br/>4. Create new records in the Records menu<br/></span></p>                        
-                        <input type="checkbox" id="check_message" name="check_message" value="1"  class="icheck-me" data-skin="square" data-color="blue"> Do not show this message again
+    <div id="messageModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true" style="display:none;">
+        <div class='modal-dialog'>
+            <div class='modal-content'>
+                <div class="modal-header" style="background-color: black">
+                    <h4 id="heading" style="color: white">How to get started</h4>
+                </div>
+                <form  role="form" action="{{ path("message_settings") }}" method="post">
+                    <div class="modal-body">
+                        <div id="messageText" style="display:none;">
+                            <p><span style="font-size:13px;">1. Create Projects in the Settings menu<br/>2. Create Users in the Settings menu<br/>3. Assign Users to Projects or Projects to Users<br/>4. Create new records in the Records menu<br/></span></p>                        
+                            <input type="checkbox" id="check_message" name="check_message" value="1"  class="icheck-me" data-skin="square" data-color="blue"> Do not show this message again
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer" id="modal-footer">                        
-                    <input type="submit" value="Ok" id="_submit" name="_submit" class="btn btn-primary">
-                </div>
-            </form>
+                    <div class="modal-footer" id="modal-footer">                        
+                        <input type="submit" value="Ok" id="_submit" name="_submit" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-<div id="termsModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true" style="display:none;">
-    <div class='modal-dialog'>
-        <div class='modal-content'>
-            <div class="modal-header" style="background-color: black">
-                <h4 id="heading" style="color: white">Terms Of Service</h4>
-            </div>
-            <form  role="form" action="{{ path("accept_terms") }}" method="post">
-                <div class="modal-body">
-                    <div style="float: right; margin-right: 25px">
-                        <span title="print" class="icon-printer" onclick="printTerms()"></span>
-                    </div>
-                    <div class="input-control textarea" style="height: 200px;overflow: auto;" data-role="input-control">
-                        <div id="tab1">
-                        {{ terms | raw }}
+    <div id="termsModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true" style="display:none;">
+        <div class='modal-dialog'>
+            <div class='modal-content'>
+                <div class="modal-header" style="background-color: black">
+                    <h4 id="heading" style="color: white">Terms Of Service</h4>
+                </div>
+                <form  role="form" action="{{ path("accept_terms") }}" method="post">
+                    <div class="modal-body">
+                        <div style="float: right; margin-right: 25px">
+                            <span title="print" class="icon-printer" onclick="printTerms()"></span>
+                        </div>
+                        <div class="input-control textarea" style="height: 200px;overflow: auto;" data-role="input-control">
+                            <div id="tab1">
+                                {{ terms | raw }}
                             </div>
                         </div>
                     </div>
@@ -46,13 +46,46 @@
             </div>
         </div>
     </div>
+
+    <div id="notificationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true" style="display:none;">
+        <div class='modal-dialog'>
+            <div class='modal-content'>
+                <div class="modal-header">
+                    <h3 id="myModalLabel">Notification</h3>
+                </div>
+                <div id="notification_process">
+                    {% if notification == "cancel" %}
+                        <div class="modal-body" id="notification_body" style="font-size: 12px;">
+                            Your account has been suspended. {% if contact_person != "" %}Please contact {{ contact_person }} to upgrade account.{% else %}Please upgrade your account.{%  endif %}
+                        </div>
+                        <div class="modal-footer" id="notification_footer">
+                            {% if cancelBySAdmin %}
+                                <a href="{{ path('fos_user_security_logout') }}"><input type="button" value="Ok" class="btn primary"></a>
+                                {% else %}
+                                <a href="{{ path('fos_user_security_logout') }}"><input type="button" value="Cancel" class="btn"></a>
+                                {% endif %}
+                                {% if contact_person == "" %} <a href="{{ path('plan_list', { 'id': user.organizations.id }) }}"><input type="button" value="Upgrade Now" class="btn primary"></a> {% endif %}
+                        </div>
+                    {% elseif notification == "not-cancel" %}
+                        <div class="modal-body" id="notification_body" style="font-size: 12px;">
+                            You have reached the maximum number of records for your account. If you would like to add more records please upgrade.
+                        </div>
+                        <div class="modal-footer" id="notification_footer">
+                              <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">Ok</button>
+                       </div>
+                    {% endif %}
+                </div>  
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <h1 class="place-left">Dashboard</h1> 
         <div class="place-left" style="margin-top: 35px; margin-left: 5px;">
             <select name="projects" id="projects">
                 <option value="all">All Projects</option>
                 {% for project in projects %}
-                <option value="{{ project.id }}">{{ project.name }}</option>
+                    <option value="{{ project.id }}">{{ project.name }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -106,36 +139,40 @@
     <script src="{{ asset('bundles/applicationfront/js/dashboard.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/jquery.blockUI.js') }}"></script>
     <script type="text/javascript">
-                          $(document).ready(function() {
-                              var baseUrl = '{{ path('report') }}';
-                              var formats
-                                      ={{ formats | raw }};
-                              var obj = new Dashboard();
-                              obj.setBaseUrl(baseUrl);
-                              obj.setFormats(formats);
-                              obj.bindAll();
-              {% if showTerms %}
-                              $('#termsModal').show();
-                              $('#termsModal').modal({
-                                  backdrop: 'static',
-                                  keyboard: false
-                              });
+                                $(document).ready(function () {
+                                    var baseUrl = '{{ path('report') }}';
+                                    var formats
+                                    ={{ formats | raw }} ;
+                                            var obj = new Dashboard();
+                                    obj.setBaseUrl(baseUrl);
+                                    obj.setFormats(formats);
+                                    obj.bindAll();
+        {% if showTerms %}
+                $('#termsModal').show();
+                $('#termsModal').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
         {% endif %}
         {% if check %}
-                              $('#messageModal').show();
-                              $("#messageText").show();
-            {#                $("#messageModal").modal('show');#}
-            {#                $("#messageModal").show();#}
-    {#                    $('#messageText p span').html();#}
-                              $('#messageModal').modal({
-                                  backdrop: 'static',
-                                  keyboard: false
-                              });
+                $('#messageModal').show();
+                $("#messageText").show();
+                $('#messageModal').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
         {% endif %}
-                          });
+        {% if notification == "cancel" or notification == "not-cancel" %}
+                $('#notificationModal').show();
+                $('#notificationModal').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+        {% endif %}
+            });
 
-                          function printTerms() {
-                              $("#tab1").print();
-                          }
-        </script>
+            function printTerms() {
+                $("#tab1").print();
+            }
+    </script>
 {% endblock view_javascripts %}

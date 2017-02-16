@@ -28,6 +28,12 @@ use Application\Bundle\FrontBundle\Helper\DefaultFields as DefaultFields;
 use Application\Bundle\FrontBundle\Entity\UserSettings as UserSettings;
 use Application\Bundle\FrontBundle\Entity\OrganizationTerms as OrganizationTerms;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
+use Application\Bundle\FrontBundle\Helper\EmailHelper;
+use Application\Bundle\FrontBundle\Helper\StripeHelper;
+use Application\Bundle\FrontBundle\Entity\MonthlyChargeReport;
+use JMS\JobQueueBundle\Entity\Job;
+use DateInterval;
+use DateTime;
 
 /**
  * Default controller.
@@ -63,7 +69,10 @@ class DefaultController extends Controller {
         $check = 0;
         $user = $this->container->get('security.context')->getToken()->getUser();
         $showTerms = false;
+        $contact_person = "avcc@avpreserve.com";
+        $notification = "";
         $terms = "";
+        $cancelBySAdmin = false;
         $em = $this->getDoctrine()->getManager();
         if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles())) {
             $orgId = $user->getOrganizations()->getId();
@@ -86,17 +95,38 @@ class DefaultController extends Controller {
                     }
                 }
                 if ($show) {
-//                    if (in_array("ROLE_ADMIN", $this->getUser()->getRoles())) {
-                        $showTerms = true;
-                        $terms = $activeRecord[0]->getTerms();
-//                    } else {
-//                        $csrfToken = $this->container->has('form.csrf_provider') ? $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate') : null;
-//                        return $this->renderLogin(array(
-//                                    'last_username' => $user->getUsername(),
-//                                    'error' => "Email to avcc@avpreserve.com to resolve the issue.",
-//                                    'csrf_token' => $csrfToken,
-//                        ));
-//                    }
+                    $showTerms = true;
+                    $terms = $activeRecord[0]->getTerms();
+                }
+            }
+            $fieldsObj = new DefaultFields();
+            $paidOrg = $fieldsObj->paidOrganizations($orgId);
+            if ($paidOrg) {
+                $free = 2500;
+                $freePlan = $em->getRepository('ApplicationFrontBundle:Plans')->findOneBy(array("amount" => 0));
+                if (!empty($freePlan)) {
+                    $free = $freePlan->getRecords();
+                }
+                $organization = $em->getRepository('ApplicationFrontBundle:Organizations')->find($orgId);
+                $creator = $organization->getUsersCreated();
+                $customerId = $creator->getStripeCustomerId();
+                $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($orgId);
+                $counter = $org_records['total'];
+                if (($counter > $free && ($organization->getIsPaid() == 0 || ($customerId == NULL || $customerId == ""))) || $organization->getCancelSubscription() == 1) {
+                    $notification = "cancel";
+                    $creator = $this->getUser()->getOrganizations()->getUsersCreated();
+                    if (in_array("ROLE_ADMIN", $creator->getRoles())) {
+                        $contact_person = $creator->getEmail();
+                    }
+                    if ($contact_person == $this->getUser()->getEmail()) {
+                        $contact_person = "";
+                    }
+                    if ($this->getUser()->getOrganizations()->getCancelSubscription() == 1) {
+                        $contact_person = "avcc@avpreserve.com";
+                        $cancelBySAdmin = true;
+                    }
+                } else if ($counter == $free && $organization->getIsPaid() == 0) {
+                    $notification = "not-cancel";
                 }
             }
         }
@@ -138,7 +168,11 @@ class DefaultController extends Controller {
                     'formats' => json_encode($formatsChart),
                     'check' => $check,
                     'showTerms' => $showTerms,
-                    'terms' => $terms
+                    'terms' => $terms,
+                    'notification' => $notification,
+                    'contact_person' => $contact_person,
+                    'cancelBySAdmin' => $cancelBySAdmin,
+                    'user' => $this->getUser()
                         )
         );
     }
@@ -376,6 +410,88 @@ class DefaultController extends Controller {
                     'active' => $active
                         )
         );
+    }
+
+    /**
+     * Cancel subscription.
+     *
+     * @param Request $request
+     *
+     * @Route("/webhooks", name="webhook")
+     * @Method("POST")
+     */
+    public function webhooks(Request $request) {
+        $input = @file_get_contents("php://input");
+        $event_json = json_decode($input, true);
+        $em = $this->getDoctrine()->getManager();
+        $helper = new StripeHelper($this->container);
+        echo $event_json["type"];
+        if ($event_json["type"] == "invoice.payment_succeeded") {
+            $customerId = $event_json["data"]["object"]["customer"];
+            $card = $helper->getCardInfo($customerId);
+            $datetime1 = new DateTime($card["exp_year"] . '-' . $card["exp_month"]);
+            $datetime2 = new DateTime(date('Y-m', strtotime('first day of next month')));
+            $interval = $datetime2->diff($datetime1);
+            $difference = (int) $interval->format('%R%a');
+            if ($difference <= 0) {
+                $expiration = new DateTime('today +20 days');
+                $user = $em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('stripeCustomerId' => $customerId));
+                $job = new Job('avcc:stripe-notification', array('id' => $user->getId(), 'type' => 'card-expire'));
+                $job->setExecuteAfter($expiration);
+                $em->persist($job);
+                $em->flush($job);
+            }
+            $this->generateBillingReport($event_json, $em);
+        } else if ($event_json["type"] == "customer.subscription.deleted") {// || $event_json["type"] == "customer.deleted"
+            if (isset($event_json["data"]["object"]["customer"])) {
+                $customerId = $event_json["data"]["object"]["customer"];
+            } else {
+                $customerId = $event_json["data"]["object"]["id"];
+            }
+            $user = $em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('stripeCustomerId' => $customerId));
+            if ($user) {
+                $job = new Job('avcc:stripe-notification', array('id' => $user->getId(), 'type' => 'subscription-cancel'));
+                $date = new DateTime();
+                $date->add(new DateInterval('PT5M'));
+                $job->setExecuteAfter($date);
+                $em->persist($job);
+                $em->flush($job);
+            }
+        } else if ($event_json["type"] == "charge.succeeded") {
+            $charge_id = $event_json["data"]["object"]["id"];
+            $customer_id = $event_json["data"]["object"]["customer"];
+            $user = $em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('stripeCustomerId' => $customer_id));
+            if ($user && $user->getReceiptRecipients() != NULL) {
+                $data["id"] = $charge_id;
+                $data["emails"] = $user->getReceiptRecipients();
+                $helper->updateCharge($data);
+                echo "sent receipt to: " . $data["emails"];
+            }
+        }
+        http_response_code(200);
+        exit;
+    }
+
+    private function generateBillingReport($object, $em) {
+        $customerId = $object["data"]["object"]["customer"];
+        $date = $object["data"]["object"]["date"];
+        $amount = $object["data"]["object"]["total"];
+        $user = $em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('stripeCustomerId' => $customerId));
+        if ($user) {
+            $plan = $em->getRepository('ApplicationFrontBundle:Plans')->findOneBy(array("plan_id" => $user->getStripePlanId()));
+            $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($user->getOrganizations()->getId());
+            $total = $org_records['total'];
+            $chargeReport = new MonthlyChargeReport();
+            $chargeReport->setChargeAt(date('Y-m-d', $date));
+            $chargeReport->setChargeAmount((int) $amount / 100);
+            $chargeReport->setOrganizationId($user->getOrganizations()->getId());
+            $chargeReport->setPlans($plan);
+            $chargeReport->setTotalRecords($total);
+            $chargeReport->setYear(date('Y', $date));
+            $em->persist($chargeReport);
+            $em->flush($chargeReport);
+            echo 'done billing <br>';
+        }
     }
 
 }

@@ -43,7 +43,8 @@ signup:
     path: /signup
     defaults: { _controller: ApplicationFrontBundle:Default:signup}
     
+
 JMSJobQueueBundle:
     resource: "@JMSJobQueueBundle/Controller/"
     type: annotation
-    prefix: /jobs
+    prefix: /jobs 

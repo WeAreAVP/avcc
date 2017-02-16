@@ -64,10 +64,7 @@
                                         <span class="has-error text-danger" for="{{ form.contact_person_phone.vars.id }}">{{ errorItem.message }}</span>
 				{% endfor %}
                                     </div>
-                                    <label style="width: 100px;float: left;margin-bottom: 15px;">Is Paid</label>
-                                    <div class="input-control" data-role="input-control">
-				{{ form_widget(form.isPaid) }}
-                                        </div>
+                                   
                                         <div class="clearfix"></div>
 			{{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
                                         or

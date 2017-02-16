@@ -1,0 +1,82 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block body %}
+    <div class="grid fluid">
+        <h1>
+            Close Account Permanently
+        </h1>
+        <p>We're sad to see you go. Before you close your account, we suggest you <a href="javascript://" id="exportRequest">export you account data</a>. It will be <span style="color:red; font-weight: bold">permanently deleted</span> once the account is closed.</p>
+        {{ form_start(form, {attr: {class:'form-horizontal'} }) }}
+        <fieldset>
+            {{ form_errors(form) }}
+            <br />
+            <label>If you'd like to help us make AVCC better for people like you, can you let us know what made you decide to cancel?</label>
+            <div class="input-control" data-role="input-control">
+                {{ form_widget(form.reason, {attr: {class:'size4'} }) }}
+                {% for errorItem in form.reason.vars.errors %}
+                    <span class="has-error text-danger" for="{{ form.reason.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            <label>Can you tell us why you chose the above?</label>
+            <div class="input-control textarea" data-role="input-control">
+                {{ form_widget(form.explanation, {attr: {class:'size4'} }) }}
+                {% for errorItem in form.explanation.vars.errors %}
+                    <span class="has-error text-danger" for="{{ form.explanation.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            <label>Which service(if any) will you be using instead of AVCC?</label>
+            <div class="input-control text" data-role="input-control">
+                {{ form_widget(form.otherService, {attr: {class:'size4'} }) }}
+                {% for errorItem in form.otherService.vars.errors %}
+                    <span class="has-error text-danger" for="{{ form.otherService.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            <label>Any other feedback you'd like to share?</label>
+            <div class="input-control textarea" data-role="input-control">
+                {{ form_widget(form.feedback, {attr: {class:'size4'} }) }}
+                {% for errorItem in form.feedback.vars.errors %}
+                    <span class="has-error text-danger" for="{{ form.feedback.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
+            <p>Thank you for your time!</p>
+            {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
+            or
+            <a class="button" href="{{ path('_welcome') }}">Cancel</a>
+        </fieldset>
+        {{ form_end(form) }}
+    </div>
+
+    <div id="exportModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel" aria-hidden="true" style="display:none;">
+        <div class='modal-dialog'>
+            <div class='modal-content'>
+                <div class="modal-header">
+                    <h4>Export Records</h4>
+                </div>
+                <div>
+                    <div class="modal-body">
+                        <p><span style="font-size:13px;">You will receive an email shortly with download link of exported records.</span></p>
+                    </div>
+                    <div class="modal-footer" id="modal-footer">
+                        <button type="button" name="close" id="closeBtn" class="button primary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var ajaxExportUrl = "{{ path('record_export') }}";
+        $('#exportRequest').click(function () {
+            $.ajax({
+                type: 'POST',
+                url: ajaxExportUrl,
+                data: {type: "xlsx", records: "all", account_close: true, merge: false},
+                dataType: 'json',
+                success: function (response)
+                {
+                    $("#exportModal").show();
+                    $("#exportModal").modal('show');
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -53,11 +53,7 @@
                                 <fieldset class="organization-info">
                                     <legend>Organization Info</legend>
                                     <div class="form-group">
-                                         <div class="form-group hide">
-                                                <div class="controls">
-						{{ form_widget(form.organizations.isPaid) }}
-                                                    </div>
-                                                </div>
+                                       
                                         <div class="controls">
 						{{ form_widget(form.organizations.name, {attr: {class:'form-control',placeholder:'Organization Name'} }) }}
 						{% for errorItem in form.organizations.name.vars.errors %}

@@ -22,14 +22,15 @@
 		"sensio/generator-bundle": "2.3.*",
 		"incenteev/composer-parameter-handler": "~2.0",
 		"friendsofsymfony/user-bundle": "~2.0@dev",
-		"doctrine/migrations": "1.0.*@dev",
+		"doctrine/migrations": "dev-master",
 		"doctrine/doctrine-migrations-bundle": "2.1.*@dev",
 		"doctrine/doctrine-fixtures-bundle": "2.2.*",
 		"liuggio/excelbundle": "~2.0",
 		"foolz/sphinxql-query-builder": "dev-master",
-		"jms/job-queue-bundle": "dev-master",
+		"jms/job-queue-bundle": "dev-master", 
 		"pagerfanta/pagerfanta": "dev-master",
-		"wrep/bugsnag-php-symfony": "^1.0"
+		"wrep/bugsnag-php-symfony": "^1.0",
+                "stripe/stripe-php": "3.*"
 	},
 	"scripts": {
 		"post-install-cmd": [

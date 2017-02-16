@@ -68,7 +68,9 @@ class MonthlyChargeReportController extends MyController {
             }
             $years = $em->getRepository('ApplicationFrontBundle:MonthlyChargeReport')->getAllYears($this->getUser()->getOrganizations()->getId());
         }
-        
+//        echo '<pre>';
+//        print_r($entities);
+//        exit;
         return array(
             'entities' => $entities,
             'years' => $years,

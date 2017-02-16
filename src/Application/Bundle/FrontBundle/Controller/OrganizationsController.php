@@ -26,6 +26,7 @@ use Application\Bundle\FrontBundle\Form\OrganizationsType;
 use Application\Bundle\FrontBundle\Entity\Records;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
 use Application\Bundle\FrontBundle\Controller\MyController;
+use Application\Bundle\FrontBundle\Helper\StripeHelper;
 
 /**
  * Organizations controller.
@@ -44,26 +45,36 @@ class OrganizationsController extends MyController {
      */
     public function indexAction() {
         $session = $this->getRequest()->getSession();
-        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         @set_time_limit(0);
         @ini_set("memory_limit", -1); # 1GB
         @ini_set("max_execution_time", 0); # unlimited
         $count = array();
+        $upgrade = FALSE;
         $em = $this->getDoctrine()->getManager();
         if (true === $this->get('security.context')->isGranted('ROLE_SUPER_ADMIN')) {
+            $upgrade = TRUE;
             $entities = $em->getRepository('ApplicationFrontBundle:Organizations')->getAll();
             foreach ($entities as $entity) {
                 $records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($entity['id']);
                 $count[$entity['id']] = $records['total'];
             }
         } else {
+            $org_creator = $this->getUser()->getOrganizations()->getUsersCreated();
+            $id = $this->getUser()->getId();
+            if ($org_creator->getId() == $id) {
+                $upgrade = TRUE;
+            }
             $entities = $em->getRepository('ApplicationFrontBundle:Organizations')->findBy(array('id' => $this->getUser()->getOrganizations()->getId()));
         }
+
+
         return array(
             'entities' => $entities,
-            'record_count' => $count
+            'record_count' => $count,
+            'upgrade' => $upgrade
         );
     }
 
@@ -127,7 +138,7 @@ class OrganizationsController extends MyController {
      */
     public function newAction() {
         $session = $this->getRequest()->getSession();
-        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $entity = new Organizations();
@@ -152,7 +163,7 @@ class OrganizationsController extends MyController {
      */
     public function showAction($id) {
         $session = $this->getRequest()->getSession();
-        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $em = $this->getDoctrine()->getManager();
@@ -183,7 +194,7 @@ class OrganizationsController extends MyController {
      */
     public function editAction($id) {
         $session = $this->getRequest()->getSession();
-        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $em = $this->getDoctrine()->getManager();
@@ -277,11 +288,17 @@ class OrganizationsController extends MyController {
     public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
-
+        $helper = new StripeHelper($this->container);
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('ApplicationFrontBundle:Organizations')->find($id);
-
+            $creator = $entity->getUsersCreated();
+            if (in_array("ROLE_ADMIN", $creator->getRoles())) {
+                $cus_id = $creator->getStripeCustomerId();
+                if ($cus_id != NULL && $cus_id != "") {
+                    $helper->deleteCustomer($cus_id);
+                }
+            }
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Organizations entity.');
             }
@@ -330,9 +347,19 @@ class OrganizationsController extends MyController {
      */
     public function changeStatusAction($id, $status) {
         $em = $this->getDoctrine()->getManager();
+        $helper = new StripeHelper($this->container);
         $organization = $em->getRepository('ApplicationFrontBundle:Organizations')->find($id);
         if ($status == 1) {
             $organization->setStatus(0);
+            $creator = $organization->getUsersCreated();
+            if (in_array("ROLE_ADMIN", $creator->getRoles())) {
+                $cus_id = $creator->getStripeCustomerId();
+                if ($cus_id != NULL && $cus_id != "") {
+                    $helper->deleteCustomer($cus_id);
+                    $creator->setStripePlanId(NULL);
+                    $creator->setStripeSubscribeId(NULL);
+                }
+            }
             $users = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $id));
 
             foreach ($users as $user) {
@@ -348,6 +375,7 @@ class OrganizationsController extends MyController {
             $this->get('session')->getFlashBag()->add('success', 'Organization disabled succesfully.');
         } else {
             $organization->setStatus(1);
+            $organization->setCancelSubscription(0);
             $users = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $id));
             foreach ($users as $user) {
                 $_user = $em->getRepository('ApplicationFrontBundle:Users')->find($user->getId());

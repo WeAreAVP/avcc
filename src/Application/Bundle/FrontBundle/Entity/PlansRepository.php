@@ -1,5 +1,4 @@
 <?php
-
 /**
  * AVCC
  * 
@@ -11,11 +10,9 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
-
 namespace Application\Bundle\FrontBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -23,24 +20,10 @@ use Doctrine\ORM\EntityRepository;
  */
 
 /**
- * Description of MonthlyChargesRepository
+ * Description of PlansRepository
  *
  * @author rimsha
  */
-class MonthlyChargesRepository extends EntityRepository {
-
-    public function getByTotalRecord($total, $condition) {
-        $where = '';
-        if ($condition) {
-            $where = 'mc.end >= :total';
-        } else {
-            $where = 'mc.end IS NULL';
-        }
-        $query = $this->getEntityManager()
-                ->createQuery("SELECT mc.charges from ApplicationFrontBundle:MonthlyCharges mc "
-                . "WHERE mc.start <= :total AND " . $where);
-        $query->setParameter('total', $total);
-        return $query->getResult();
-    }
-
+class PlansRepository extends EntityRepository{
+ 
 }

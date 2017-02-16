@@ -47,7 +47,7 @@
                 </div>
                 <div style="font-size: 20px; margin-left: 11px; float: left;"><a href="<?php echo $view['router']->generate('new_record') ?>"><i class="icon-plus"></i> New</a></div>
             <?php endif; ?>
-            <?php echo $view->render('ApplicationFrontBundle::Records/_modal.html.php', array("organizations" => $organizations, "notification" => $notification)) ?>
+            <?php echo $view->render('ApplicationFrontBundle::Records/_modal.html.php', array("organizations" => $organizations, "notification" => $notification, 'contact_person'=> $contact_person)) ?>
             <div class="table-responsive">
                 <table class="table hovered bordered" id="records">
                     <thead>

@@ -53,7 +53,7 @@ class UsersController extends MyController {
         @ini_set("memory_limit", "1000M"); # 1GB
         @ini_set("max_execution_time", 0); # unlimited
         $session = $this->getRequest()->getSession();
-        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $organizations = array();
@@ -210,7 +210,7 @@ class UsersController extends MyController {
     public function newAction() {
 
         $session = $this->getRequest()->getSession();
-        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $entity = new Users();
@@ -240,7 +240,7 @@ class UsersController extends MyController {
      */
     public function showAction($id) {
         $session = $this->getRequest()->getSession();
-        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $em = $this->getDoctrine()->getManager();
@@ -275,7 +275,7 @@ class UsersController extends MyController {
         @ini_set("memory_limit", "1000M"); # 1GB
         @ini_set("max_execution_time", 0); # unlimited
         $session = $this->getRequest()->getSession();
-        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $user = $this->container->get('security.context')->getToken()->getUser();

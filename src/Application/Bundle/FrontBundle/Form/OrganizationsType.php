@@ -32,7 +32,6 @@ class OrganizationsType extends AbstractType {
                 ->add('contact_person_name')
                 ->add('contact_person_email', 'email')
                 ->add('contact_person_phone')
-                ->add('isPaid')
         ;
     }
 

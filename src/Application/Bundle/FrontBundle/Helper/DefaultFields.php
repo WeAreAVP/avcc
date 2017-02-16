@@ -313,4 +313,21 @@ class DefaultFields {
         return $tooltip;
     }
 
+    public function paidOrganizations($id) {
+        $now = date("Y-m-d");
+        if ((int)$id == 239) {
+            return false;
+        } else if ((int)$id == 140) {
+            $march = strtotime("1st March 2017");
+            if ($now < date("Y-m-d", $march)) {                
+                return false;
+            }
+        } else if ((int)$id == 308) {
+            $may = strtotime("1st May 2017");
+            if ($now < date("Y-m-d", $may)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

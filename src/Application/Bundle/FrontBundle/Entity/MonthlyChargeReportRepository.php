@@ -31,10 +31,8 @@ class MonthlyChargeReportRepository extends EntityRepository {
 
     public function getAllYears($organizationID) {
         $query = $this->getEntityManager()
-                ->createQuery("SELECT DATE_FORMAT(r.createdOn, '%Y') as year from ApplicationFrontBundle:Records r "
-                . "JOIN r.project u "
-                . "JOIN u.organization o "
-                . "WHERE r.createdOn IS NOT NULL AND o.id =  :organization GROUP BY year");
+                ->createQuery("SELECT DATE_FORMAT(r.createdOn, '%Y') as year from ApplicationFrontBundle:MonthlyChargeReport r "
+                 . "WHERE r.createdOn IS NOT NULL AND r.organizationId =  :organization GROUP BY year");
         $query->setParameter('organization', $organizationID);
         return $query->getResult();
     }

@@ -68,7 +68,7 @@ class UserSettingsController extends MyController {
      */
     public function indexAction($projectId = null) {
         $session = $this->getRequest()->getSession();
-        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+       if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $em = $this->getDoctrine()->getManager();
@@ -163,7 +163,7 @@ class UserSettingsController extends MyController {
      */
     public function backupAction(Request $request) {
         $session = $this->getRequest()->getSession();
-        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $userEntity = $this->getDoctrine()

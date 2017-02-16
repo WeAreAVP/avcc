@@ -32,9 +32,10 @@ security:
         - { path: ^/register/confirm/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register/confirmed, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/webhooks, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_SUPER_ADMIN }
         - { path: ^/users, role: ROLE_MANAGER }
-        - { path: ^/jobs, role: ROLE_SUPER_ADMIN }
+        - { path: ^/jobs, role: ROLE_SUPER_ADMIN }        
         - { path: ^/organizations/new, role: ROLE_SUPER_ADMIN }
         - { path: ^/organizations, role: ROLE_MANAGER }
         - { path: ^/projects/$, role: ROLE_USER }
@@ -47,12 +48,16 @@ security:
         - { path: ^/report/, role: ROLE_USER }
         - { path: ^/help/$, role: ROLE_SUPER_ADMIN }
         - { path: ^/help/list, role: ROLE_USER }
+        - { path: ^/plan/$, role: ROLE_SUPER_ADMIN }
+        - { path: ^/plan/upgrade, role: ROLE_ADMIN }
         - { path: ^/terms/$, role: ROLE_SUPER_ADMIN }
-        - { path: ^/terms/, role: ROLE_SUPER_ADMIN }
-        - { path: ^/monthly_charges/$, role: ROLE_SUPER_ADMIN }
-        - { path: ^/monthly_charges/, role: ROLE_SUPER_ADMIN }
+        - { path: ^/terms/, role: ROLE_SUPER_ADMIN }        
+        - { path: ^/subscription/$, role: ROLE_SUPER_ADMIN } 
+        - { path: ^/subscription/, role: ROLE_SUPER_ADMIN } 
         - { path: ^/monthly_charge_report/$, role: ROLE_USER }
         - { path: ^/monthly_charge_report/, role: ROLE_USER }
+        - { path: ^/account/$, role: ROLE_ADMIN }
+        - { path: ^/account/, role: ROLE_ADMIN }
         - { path: ^/$, role: ROLE_USER }
         
 

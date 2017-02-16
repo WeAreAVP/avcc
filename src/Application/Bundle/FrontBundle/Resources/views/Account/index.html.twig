@@ -1,0 +1,262 @@
+{% extends 'FOSUserBundle::layout.html.twig' %}
+
+{% block body -%}
+
+    <div class="grid fluid">
+        <h1>
+            Account Settings
+        </h1>
+
+        <dl class="horizontal">
+            <dt>Organization Name</dt>
+            <dd>
+                {{ app.user.organizations.name }} <a title="Edit" href="{{ path('organizations_edit', { 'id': app.user.organizations.id }) }}"><i class="icon-pencil"></i></a>                 
+            </dd>
+        </dl>
+            <dl class="horizontal">
+            <dt>Department Name</dt>
+            <dd>
+                {{ app.user.organizations.departmentName is empty ? "" : app.user.organizations.departmentName }}
+            </dd>
+        </dl>
+        <dl class="horizontal">
+            <dt>Member Since</dt>
+            <dd>
+                {{ app.user.organizations.createdOn is empty ? "" : app.user.organizations.createdOn|date("d M Y") }}
+            </dd>
+        </dl>
+            
+        <dl class="horizontal">
+            <dt>Contact Person</dt>
+            <dd>
+                <b>Name:</b> {{ app.user.organizations.contactPersonName is empty ? "" : app.user.organizations.contactPersonName }}<br/>
+               <b>Email:</b> {{ app.user.organizations.contactPersonEmail is empty ? "" : app.user.organizations.contactPersonEmail }} <br/>
+               <b>Phone:</b> {{ app.user.organizations.contactPersonPhone is empty ? "" : app.user.organizations.contactPersonPhone }}
+            </dd>
+        </dl> 
+        <dl class="horizontal">
+            <dt>Address</dt>
+            <dd>
+                {{ app.user.organizations.address is empty ? "" : app.user.organizations.address }}
+            </dd>
+        </dl>
+        <dl class="horizontal">
+            <dt>Subscription Plan</dt>
+            <dd>
+                {% if entities.plan == "" %}
+                    Free
+                {% else %}
+                    <b>{{ entities.plan[0].name }}</b> <br />${{ entities.plan[0].amount }} per month, includes {{ entities.plan[0].records }} records({{ entities.org_total }} current records)
+                {% endif %}
+            </dd>
+        </dl>
+        <dl class="horizontal">
+            <dt>Credit Card</dt>
+            <dd>
+                {% if entities.plan != "" %}
+                    Card No: {{ entities.card.last4 }}<br>
+                    Expiry Date: {{ entities.card.exp_month }}/{{ entities.card.exp_year }}<br/>
+                    {% if(upgrade) %}
+                        <a href="javascript://" class="update_card">Edit Card</a>
+                    {% endif %}
+                {% else %}
+                    --
+                {% endif %}
+            </dd>
+        </dl>
+
+        <dl class="horizontal">
+            <dt>Receipt Recipients</dt>
+            <dd>
+                {% if entities.plan != "" and entities.recipients is not null %}
+                    {{ entities.recipients }}<br/>
+                    {% if(upgrade) %}
+                        <a href="javascript://" class="update_recipients">Edit Emails</a>
+                    {% endif %}
+                {% elseif entities.customer_email %}
+                    {{ entities.customer_email }}
+                    <br/>
+                    {% if(upgrade) %}
+                        <a href="javascript://" class="update_recipients">Edit Emails</a>
+                    {% endif %}
+                {% else %}
+                    --
+                {% endif %}
+            </dd>
+        </dl>
+        <dl class="horizontal">
+            <dt>Billing History</dt>
+            <dd>
+                {% if entities.history %}
+                    {{ entities.history }}<br/>
+                    <a href="{{ path('monthly_charge_report') }}">see all</a>
+                {% else %}
+                    No billing history
+                {% endif %}
+            </dd>
+        </dl>
+        <br/>
+        {% if(upgrade) %}
+            <a class="button primary" title="Upgrade" href="{{ path('plan_list', { 'id': app.user.organizations.id }) }}">Change Plan</a>  
+            <a class="button primary" href="{{ path('account_close') }}">Close Account</a>
+        {% endif %}
+    </div>
+
+    <div id="subscribeModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="subscribeModalLabel" aria-hidden="true" style="display:none;">
+        <div class='modal-dialog'>
+            <div class='modal-content'>
+                <div class="modal-header">
+                    <h4 id="head">Edit Card</h4>
+                </div>
+                <div id="beforeExport">
+                    <form action="{{ path('plan_sub') }}" method="POST" id="payment-form" class="form-horizontal">
+                        <input type="hidden" id="plan_id" name="plan_id" value="">
+                        <input type="hidden" id="org_id" name="org_id" value="{{app.user.organizations.id}}">
+                        <div class="modal-body">
+                            <span class="text-alert flash-error payment-errors"></span>
+                            <br>
+                            <label>Card Number</label>
+                            <div class="input-control text" data-role="input-control">
+                                <input type="text" size="20" data-stripe="number" class="size4">{% if entities.plan != "" %} <span>({{ entities.card.last4 }})</span> {% endif %}
+                            </div>
+
+                            <label>Expiration (MM/YY)</label>
+                            <div class="input-control text" data-role="input-control">
+                                <input type="text" size="2" data-stripe="exp_month" class="size1"> <span> / </span>
+                                <input type="text" size="2" class="size1" data-stripe="exp_year">
+                            </div>
+
+                            <label>CVC</label>
+                            <div class="input-control text" data-role="input-control">
+                                <input type="text" size="4" data-stripe="cvc" class="size2">
+                            </div>
+                        </div>
+                        <div class="modal-footer" id="modal-footer">
+                            <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">No</button> &nbsp;
+                            <button class="button primary submit" id="subscribe_now" onclick="cardValidation()">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="recipientsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="recipientsModalLabel" aria-hidden="true" style="display:none;">
+        <div class='modal-dialog'>
+            <div class='modal-content'>
+                <div class="modal-header">
+                    <h4 id="head">Edit Emails</h4>
+                </div>
+                <div id="beforeExport">
+                    <form action="{{ path('update_recipients') }}" method="POST" id="emails-form" class="form-horizontal">
+                        <input type="hidden" id="org_id" name="org_id" value="{{app.user.organizations.id}}">
+                        <div class="modal-body">
+                            <span class="text-alert flash-error payment-errors"></span>
+                            <br>
+                            <label>Send Receipt to</label>
+                            <div class="input-control textarea" data-role="input-control">
+                                <textarea name="recipients" id="recipients">
+                                    {% if entities.plan != "" and entities.recipients is not null %}
+                                        {{ entities.recipients }}
+                                    {% elseif entities.customer_email %}
+                                        {{ entities.customer_email }}
+                                    {% endif %}
+                                </textarea>
+                            </div>
+                            <p>Separate multiple email addresses with commas.</p>
+                        </div>
+                        <div class="modal-footer" id="modal-footer">
+                            <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">No</button> &nbsp;
+                            <input type="submit" class="button primary submit" value="Update">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block view_javascripts %}
+        <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+        <script type="text/javascript">
+            Stripe.setPublishableKey('{{stripe_publishkey}}');</script>
+        {% endblock%}
+    <script type="text/javascript">
+        function cardValidation() {
+            var $form = $('#payment-form');
+            $form.submit(function (event) {
+                $form.find('.submit').prop('disabled', true);
+                Stripe.card.createToken($form, stripeResponseHandler);
+                return false;
+            });
+        }
+
+        function stripeResponseHandler(status, response) {
+            // Grab the form:
+            var $form = $('#payment-form');
+
+            if (response.error) { // Problem!
+
+                // Show the errors on the form:
+                $form.find('.payment-errors').text(response.error.message);
+                $form.find('.submit').prop('disabled', false); // Re-enable submission
+
+            } else { // Token was created!
+
+                // Get the token ID:
+                var token = response.id;
+                // Insert the token ID into the form so it gets submitted to the server:
+                $form.append($('<input type="hidden" name="stripeToken">').val(token));
+
+                // Submit the form:
+                $form.get(0).submit();
+            }
+        }
+        $(document).ready(function () {
+            $('.update_card').click(function () {
+                $(".payment-errors").html("");
+                $("#subscribeModal").show();
+                $("#subscribeModal").modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            });
+            $('.update_recipients').click(function () {
+                $("#recipientsModal").show();
+                $("#recipientsModal").modal({
+                    backdrop: 'static',
+                    keyboard: false
+                });
+            });
+
+            $("#emails-form").submit(function (event) {
+                if (run(true)) {
+                    $("#emails-form").find('.payment-errors').text("");
+                    return true;
+                }
+                $("#emails-form").find('.payment-errors').text("Recipients contains an invalid email address.");
+                return false;
+            });
+
+        });
+
+        function run(trim) {
+            var group_members = $("#recipients").val();
+            var member_split = group_members.split(',');
+
+            var valid = true;
+            for (var n = 0; n < member_split.length; n++) {
+                var member_info = trim ? member_split[n].trim() : member_split[n];
+                var validRegExp = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+
+                if (member_info.search(validRegExp) === -1) {
+                    valid = false;
+                    break;
+                }
+            }
+            if (valid)
+                return true;
+            else
+                return false;
+        }
+
+    </script>
+{% endblock %}

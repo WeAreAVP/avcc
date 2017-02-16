@@ -128,6 +128,36 @@ class Users extends BaseUser {
     private $messageDisplay = 1;
 
     /**
+     * @var string $stripeCustomerId
+     *
+     * @ORM\Column(name="stripe_customer_id", type="string", nullable=true)
+     */
+    private $stripeCustomerId;
+
+    /**
+     * @var string $stripeSubscribeId
+     *
+     * @ORM\Column(name="stripe_subscribe_id", type="string", nullable=true)
+     */
+    private $stripeSubscribeId;
+
+    /**
+     * @var string $stripePlanId
+     *
+     * @ORM\Column(name="stripe_plan_id", type="string", nullable=true)
+     */
+    private $stripePlanId;
+    
+    
+    /**
+     * @var string $stripePlanId
+     *
+     * @ORM\Column(name="receipt_recipients", type="text", nullable=true)
+     */
+    private $receiptRecipients;
+    
+
+    /**
      * Users constructor
      */
     public function __construct() {
@@ -359,14 +389,13 @@ class Users extends BaseUser {
     public function getUserProjects() {
         return $this->userProjects;
     }
-    
+
     /**
      * Get  Enable Backup
      *
      * @return int
      */
-    public function getMessageDisplay()
-    {
+    public function getMessageDisplay() {
         return (bool) $this->messageDisplay;
     }
 
@@ -375,9 +404,80 @@ class Users extends BaseUser {
      *
      * @param int $enableBackup
      */
-    public function setMessageDisplay($messageDisplay)
-    {
+    public function setMessageDisplay($messageDisplay) {
         $this->messageDisplay = $messageDisplay;
+    }
+
+    /**
+     * Get  Enable Backup
+     *
+     * @return int
+     */
+    public function getStripeCustomerId() {
+        return $this->stripeCustomerId;
+    }
+
+    /**
+     * Set  Enable Backup
+     *
+     * @param int $enableBackup
+     */
+    public function setStripeCustomerId($stripeCustomerId) {
+        $this->stripeCustomerId = $stripeCustomerId;
+    }
+
+    /**
+     * Get  Enable Backup
+     *
+     * @return int
+     */
+    public function getStripeSubscribeId() {
+        return $this->stripeSubscribeId;
+    }
+
+    /**
+     * Set  Enable Backup
+     *
+     * @param int $enableBackup
+     */
+    public function setStripeSubscribeId($stripeCustomerId) {
+        $this->stripeSubscribeId = $stripeCustomerId;
+    }
+
+    /**
+     * Get  Enable Backup
+     *
+     * @return int
+     */
+    public function getStripePlanId() {
+        return $this->stripePlanId;
+    }
+
+    /**
+     * Set  Enable Backup
+     *
+     * @param int $enableBackup
+     */
+    public function setStripePlanId($stripePlanId) {
+        $this->stripePlanId = $stripePlanId;
+    }
+            
+            /**
+     * Get  Enable Backup
+     *
+     * @return int
+     */
+    public function getReceiptRecipients() {
+        return $this->receiptRecipients;
+    }
+
+    /**
+     * Set  Enable Backup
+     *
+     * @param int $receiptRecipients
+     */
+    public function setReceiptRecipients($receiptRecipients) {
+        $this->receiptRecipients = $receiptRecipients;
     }
 
 }

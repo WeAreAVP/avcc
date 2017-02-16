@@ -182,7 +182,7 @@
                 </div>
                 <div id="notification_process">
                     <div class="modal-body" id="notification_body" style="font-size: 12px;">
-                        Free accounts allow up to 2500 records. Upgrade now by contacting avcc@avpreserve.com
+                        You are not allowed to add more records. <?php if ($contact_person != "") { ?>Please contact <?php echo $contact_person; ?> to upgrade account.<?php } else { ?>Please upgrade your account.<?php } ?>
                     </div>
                     <div class="modal-footer" id="notification_footer">
                         <a class="" href="<?php echo $view['router']->generate('record_list') ?>"><input type="button" value="close"></a>

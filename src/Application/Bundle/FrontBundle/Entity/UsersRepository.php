@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
@@ -34,4 +36,13 @@ class UsersRepository extends EntityRepository {
         $users = $query->getResult();
         return $users;
     }
+
+    public function getSubscribedUsers() { 
+        $query = $this->getEntityManager()->createQuery('SELECT u'
+                . ' from ApplicationFrontBundle:Users u Where u.stripeCustomerId IS NOT NULL AND u.stripeSubscribeId IS NOT NULL'
+        );
+        $users = $query->getResult();
+        return $users;
+    }
+
 }

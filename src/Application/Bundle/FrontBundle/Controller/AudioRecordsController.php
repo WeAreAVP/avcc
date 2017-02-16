@@ -46,7 +46,7 @@ class AudioRecordsController extends MyController {
      */
     public function indexAction() {
         $session = $this->getRequest()->getSession();
-        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $em = $this->getDoctrine()->getManager();
@@ -92,6 +92,27 @@ class AudioRecordsController extends MyController {
                 $sphinxSearch->insert();
                 $this->get('session')->getFlashBag()->add('success', 'Audio record added succesfully.');
                 $this->get('session')->set('project_id', $entity->getRecord()->getProject()->getId());
+
+                if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations() && ($form->get('save_and_duplicate')->isClicked() || $form->get('save_and_new')->isClicked())) {
+                    $paidOrg = $fieldsObj->paidOrganizations($this->getUser()->getOrganizations()->getId());
+                    if ($paidOrg) {
+                        $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($this->getUser()->getOrganizations()->getId());
+                        $counter = $org_records['total'];
+                        $plan_limit = 2500;
+                        $plan_id = "";
+                        $creator = $this->getUser()->getOrganizations()->getUsersCreated();
+                        if (in_array("ROLE_ADMIN", $creator->getRoles())) {
+                            $plan_id = $creator->getStripePlanId();
+                        }
+                        if ($plan_id != NULL && $plan_id != "") {
+                            $plan = $em->getRepository('ApplicationFrontBundle:Plans')->findBy(array("planId" => $plan_id));
+                            $plan_limit = $plan[0]->getRecords();
+                        }
+                        if ($counter == $plan_limit) {
+                            return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
+                        }
+                    }
+                }
                 // the save_and_dupplicate button was clicked
                 if ($form->get('save_and_duplicate')->isClicked()) {
                     return $this->redirect($this->generateUrl('record_audio_duplicate', array('audioRecId' => $entity->getId())));
@@ -166,7 +187,7 @@ class AudioRecordsController extends MyController {
      */
     public function newAction($projectId = null, $audioRecId = null) {
         $session = $this->getRequest()->getSession();
-        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
 //        return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
@@ -175,13 +196,6 @@ class AudioRecordsController extends MyController {
         }
         $em = $this->getDoctrine()->getManager();
 
-        if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations() && $this->getUser()->getOrganizations()->getIsPaid() == 0) {
-            $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($this->getUser()->getOrganizations()->getId());
-            $counter = $org_records['total'];
-            if ($counter == 2500 && $this->getUser()->getOrganizations()->getIsPaid() == 0) {
-                return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
-            }
-        }
 
         $fieldsObj = new DefaultFields();
         $userViewSettings = $fieldsObj->getDefaultOrder();
@@ -264,7 +278,7 @@ class AudioRecordsController extends MyController {
      */
     public function showAction($id) {
         $session = $this->getRequest()->getSession();
-        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $em = $this->getDoctrine()->getManager();
@@ -300,7 +314,7 @@ class AudioRecordsController extends MyController {
      */
     public function editAction($id, $projectId = null) {
         $session = $this->getRequest()->getSession();
-        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
@@ -411,11 +425,24 @@ class AudioRecordsController extends MyController {
                 $shpinxInfo = $this->getSphinxInfo();
                 $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 1);
                 $sphinxSearch->replace();
-                if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
-                    $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($this->getUser()->getOrganizations()->getId());
-                    $counter = $org_records['total'];
-                    if ($counter == 2500 && $this->getUser()->getOrganizations()->getIsPaid() == 0) {
-                        return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
+                if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations() && ($editForm->get('save_and_duplicate')->isClicked() || $editForm->get('save_and_new')->isClicked())) {
+                    $paidOrg = $fieldsObj->paidOrganizations($this->getUser()->getOrganizations()->getId());
+                    if ($paidOrg) {
+                        $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($this->getUser()->getOrganizations()->getId());
+                        $counter = $org_records['total'];
+                        $plan_limit = 2500;
+                        $plan_id = "";
+                        $creator = $this->getUser()->getOrganizations()->getUsersCreated();
+                        if (in_array("ROLE_ADMIN", $creator->getRoles())) {
+                            $plan_id = $creator->getStripePlanId();
+                        }
+                        if ($plan_id != NULL && $plan_id != "") {
+                            $plan = $em->getRepository('ApplicationFrontBundle:Plans')->findBy(array("planId" => $plan_id));
+                            $plan_limit = $plan[0]->getRecords();
+                        }
+                        if ($counter == $plan_limit) {
+                            return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
+                        }
                     }
                 }
                 // the save_and_dupplicate button was clicked
@@ -700,10 +727,33 @@ class AudioRecordsController extends MyController {
      * @Template()
      */
     public function newRecordAction(Request $request) {
+        $fieldsObj = new DefaultFields();
         $session = $this->getRequest()->getSession();
-        if ($session->has('termsStatus') && $session->get('termsStatus') == 0) {
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
+        $em = $this->getDoctrine()->getManager();
+        if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
+            $paidOrg = $fieldsObj->paidOrganizations($this->getUser()->getOrganizations()->getId());
+            if ($paidOrg) {
+                $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($this->getUser()->getOrganizations()->getId());
+                $counter = $org_records['total'];
+                $plan_limit = 2500;
+                $plan_id = "";
+                $creator = $this->getUser()->getOrganizations()->getUsersCreated();
+                if (in_array("ROLE_ADMIN", $creator->getRoles())) {
+                    $plan_id = $creator->getStripePlanId();
+                }
+                if ($plan_id != NULL && $plan_id != "") {
+                    $plan = $em->getRepository('ApplicationFrontBundle:Plans')->findBy(array("planId" => $plan_id));
+                    $plan_limit = $plan[0]->getRecords();
+                }
+                if ($counter == $plan_limit) {
+                    return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
+                }
+            }
+        }
+
         return $this->render('ApplicationFrontBundle:AudioRecords:newRecord.html.php');
     }
 
@@ -716,8 +766,8 @@ class AudioRecordsController extends MyController {
         foreach ($default as $key1 => $value) {
             foreach ($value as $key2 => $fields) {
                 $index = array_search($fields['field'], array_map(function($element) {
-                                    return $element['field'];
-                                }, $db_view[$key1]));
+                            return $element['field'];
+                        }, $db_view[$key1]));
                 if ($default[$key1][$key2]['field'] == $db_view[$key1][$index]['field']) {
                     if (array_diff($default[$key1][$key2], $db_view[$key1][$index])) {
                         $db_view[$key1][$index] = $default[$key1][$key2];

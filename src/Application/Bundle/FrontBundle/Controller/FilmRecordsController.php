@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +27,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Application\Bundle\FrontBundle\Entity\Projects;
 use Application\Bundle\FrontBundle\Controller\MyController;
+
 /**
  * FilmRecords controller.
  *
@@ -40,8 +43,8 @@ class FilmRecordsController extends MyController {
      * @Template()
      */
     public function indexAction() {
-        $session = $this->getRequest()->getSession();        
-        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+        $session = $this->getRequest()->getSession();
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $em = $this->getDoctrine()->getManager();
@@ -82,7 +85,26 @@ class FilmRecordsController extends MyController {
                 $shpinxInfo = $this->getSphinxInfo();
                 $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 2);
                 $sphinxSearch->insert();
-
+                if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations() && ($form->get('save_and_duplicate')->isClicked() || $form->get('save_and_new')->isClicked())) {
+                    $paidOrg = $fieldsObj->paidOrganizations($this->getUser()->getOrganizations()->getId());
+                    if ($paidOrg) {
+                        $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($this->getUser()->getOrganizations()->getId());
+                        $counter = $org_records['total'];
+                        $plan_limit = 2500;
+                        $plan_id = "";
+                        $creator = $this->getUser()->getOrganizations()->getUsersCreated();
+                        if (in_array("ROLE_ADMIN", $creator->getRoles())) {
+                            $plan_id = $creator->getStripePlanId();
+                        }
+                        if ($plan_id != NULL && $plan_id != "") {
+                            $plan = $em->getRepository('ApplicationFrontBundle:Plans')->findBy(array("planId" => $plan_id));
+                            $plan_limit = $plan[0]->getRecords();
+                        }
+                        if ($counter == $plan_limit) {
+                            return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
+                        }
+                    }
+                }
                 // the save_and_dupplicate button was clicked
                 if ($form->get('save_and_duplicate')->isClicked()) {
                     return $this->redirect($this->generateUrl('record_film_duplicate', array('filmRecId' => $entity->getId())));
@@ -155,8 +177,8 @@ class FilmRecordsController extends MyController {
      * @return template
      */
     public function newAction($projectId = null, $filmRecId = null) {
-        $session = $this->getRequest()->getSession();        
-        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+        $session = $this->getRequest()->getSession();
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
@@ -241,8 +263,8 @@ class FilmRecordsController extends MyController {
      * @return template
      */
     public function editAction($id, $projectId = null) {
-        $session = $this->getRequest()->getSession();        
-        if($session->has('termsStatus') && $session->get('termsStatus') == 0){
+        $session = $this->getRequest()->getSession();
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
@@ -349,11 +371,24 @@ class FilmRecordsController extends MyController {
                 $shpinxInfo = $this->getSphinxInfo();
                 $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 2);
                 $sphinxSearch->replace();
-                if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations()) {
-                    $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($this->getUser()->getOrganizations()->getId());
-                    $counter = $org_records['total'];
-                    if ($counter == 2500 && $this->getUser()->getOrganizations()->getIsPaid() == 0) {
-                        return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
+                if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations() && ($editForm->get('save_and_duplicate')->isClicked() || $editForm->get('save_and_new')->isClicked())) {
+                    $paidOrg = $fieldsObj->paidOrganizations($this->getUser()->getOrganizations()->getId());
+                    if ($paidOrg) {
+                        $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($this->getUser()->getOrganizations()->getId());
+                        $counter = $org_records['total'];
+                        $plan_limit = 2500;
+                        $plan_id = "";
+                        $creator = $this->getUser()->getOrganizations()->getUsersCreated();
+                        if (in_array("ROLE_ADMIN", $creator->getRoles())) {
+                            $plan_id = $creator->getStripePlanId();
+                        }
+                        if ($plan_id != NULL && $plan_id != "") {
+                            $plan = $em->getRepository('ApplicationFrontBundle:Plans')->findBy(array("planId" => $plan_id));
+                            $plan_limit = $plan[0]->getRecords();
+                        }
+                        if ($counter == $plan_limit) {
+                            return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
+                        }
                     }
                 }
                 // the save_and_dupplicate button was clicked
@@ -372,7 +407,7 @@ class FilmRecordsController extends MyController {
             }
         }
         if ($entity->getRecord()->getProject()->getViewSetting()) {
-             $defSettings = $fieldsObj->getDefaultOrder();
+            $defSettings = $fieldsObj->getDefaultOrder();
             $dbSettings = $entity->getRecord()->getProject()->getViewSetting();
             $userViewSettings = $this->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
 //            $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
@@ -455,7 +490,7 @@ class FilmRecordsController extends MyController {
         }
         return '';
     }
-    
+
     public function fields_cmp($default, $db_view) {
         $field_order = array();
         $previous = array();
@@ -481,12 +516,12 @@ class FilmRecordsController extends MyController {
         if (!empty($previous)) {
             foreach ($db_view as $keys1 => $values) {
                 foreach ($values as $keys2 => $fields) {
-                        $new[$keys1][] = $db_view[$keys1][$keys2];
-                        if (in_array($fields['field'], $previous[$keys1])) {
-                            $new_index = array_search($fields['field'], $previous[$keys1]);
-                            $new[$keys1][] = $field_order[$keys1][$new_index];
-                        }
+                    $new[$keys1][] = $db_view[$keys1][$keys2];
+                    if (in_array($fields['field'], $previous[$keys1])) {
+                        $new_index = array_search($fields['field'], $previous[$keys1]);
+                        $new[$keys1][] = $field_order[$keys1][$new_index];
                     }
+                }
             }
         }
         if (!empty($new))

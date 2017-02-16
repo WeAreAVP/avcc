@@ -1,0 +1,15 @@
+<div>Hi <b>{{ user.name }}</b>,</div>
+<br/>
+
+<div>{{message}}</div>
+
+{% if fileUrl is defined and fileUrl !=''%}
+    <br/>  
+    <div>You can download your organization records from the following link.</div>
+    <br/>
+
+    <a href="{{ baseUrl }}{{ fileUrl }}">Download</a><br />
+{% endif %}
+
+<br/><br/>
+<div>AVCC-team</div>

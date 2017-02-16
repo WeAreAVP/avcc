@@ -1,0 +1,33 @@
+{% extends 'FOSUserBundle::layout.html.twig' %}
+
+{% block body -%}
+
+    
+        <h1>Plans
+            <small class="on-right">
+                <a href="{{ path('plan_new') }}"><i class="icon-plus"></i> New</a>
+            </small>
+        </h1>
+        <div class="table-responsive">
+            <table class="table bordered sortable hovered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for entity in entities %}
+                        <tr class="sortTr" id="{{entity.id}}">                        
+                            <td><i class="icon-menu on-left"></i>&nbsp;<a href="{{ path('plan_show', { 'id': entity.id }) }}">{{ entity.planId }}</a></td>
+                            <td>{{ entity.name }}</td>
+                            <td>${{ entity.amount }}</td>
+                            <td><a class="icon-pencil" title="Edit" href="{{ path('plan_edit', { 'id': entity.id }) }}"></a></td>
+                         </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+{% endblock %}
