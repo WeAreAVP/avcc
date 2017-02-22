@@ -61,7 +61,7 @@ Composer is a tool for dependency management in php. It allows to declare the de
 
         $ php app/console doctrine:schema:update --force --dump-sql
 
-**6) Default Data for database
+**6) Default Data for database**
 
 You can use  SQL file for importing default data into table. Path for file is documentation/database/avcc.sql
 
