@@ -16,7 +16,9 @@ parameters:
         host: 127.0.0.1
         port: 9306
         indexName: records
-    baseUrl: 'http://avccqa.avpreserve.com/' 
-    webUrl : '/home/avccqa/avcc/web/'
+    baseUrl: 'http://yourdomain.com/' 
+    webUrl : '/path/to/web/folder/'
     ga_tracking: UA-xxxxx-x
+    stripe_publishkey: key_publish
+    stripe_secretkey: key_secret
     qa_instance: false

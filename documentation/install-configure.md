@@ -7,7 +7,7 @@ Installation and Configuration
 * All the prerequisites are completed.
 * Apache web directory avcc
 
-VIAA Application
+AVCC Application
 ----------
 Application is build in PHP Framework **[Symfony2] (http://symfony.com)**
 
@@ -50,14 +50,18 @@ Composer is a tool for dependency management in php. It allows to declare the de
         ...host: 127.0.0.1
         ...port: 9306
         ...indexName: records
-        baseUrl: 'http://avccqa.avpreserve.com/' 
-        webUrl : '/home/avccqa/avcc/web/' 
+        baseUrl: 'http://yourdomain.com/' 
+        webUrl : '/path/to/web/folder/'
+        ga_tracking: UA-xxxxx-x
+        stripe_publishkey: key_publish
+        stripe_secretkey: key_secret
+        qa_instance: false 
 
 **5) Database**
 
         $ php app/console doctrine:schema:update --force --dump-sql
 
-**6) Default Data for database
+**6) Default Data for database**
 
 You can use  SQL file for importing default data into table. Path for file is documentation/database/avcc.sql
 
