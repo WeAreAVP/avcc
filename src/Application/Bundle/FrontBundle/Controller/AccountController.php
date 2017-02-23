@@ -104,9 +104,9 @@ class AccountController extends MyController {
         $entities = $em->getRepository('ApplicationFrontBundle:MonthlyChargeReport')->findBy(array('organizationId' => $id), array('id' => 'DESC'), 3);
         foreach ($entities as $entity) {
             $data[] = $entity->getCreatedOn()->format('d M Y');
-            $data[] = "Plan: " . $entity->getPlans()->getName();
-            $data[] = "Records: " . $entity->getPlans()->getRecords();
-            $data[] = "Amount: $" . $entity->getPlans()->getAmount();
+            $data[] = "Plan: " . ($entity->getPlans()) ? $entity->getPlans()->getName(): "";
+            $data[] = "Records: " . ($entity->getPlans()) ? $entity->getPlans()->getRecords(): "";
+            $data[] = "Amount: $" . ($entity->getPlans()) ?$entity->getPlans()->getAmount(): "";
             $_history[] = implode(", ", $data);
             unset($data);
         }
