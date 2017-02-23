@@ -36,7 +36,7 @@
                 <thead>
                     <tr>
                         <th>Date of charge</th>   
-                         <th>Plan</th>
+                        <th>Plan</th>
                         <th>Total Records</th>                                                         
                         <th>Charge amount</th>
                     </tr>
@@ -45,7 +45,11 @@
                     {% for entity in entities %}
                         <tr>  
                             <td>{{ entity.chargeAt }}</td>
-                            <td>{{ entity.plans.name }}</td>
+                            {% if entity.plans %}
+                                <td>{{ entity.plans.name }}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
                             <td>{{ entity.totalRecords }}</td>                            
                             <td>${{ entity.chargeAmount }}</td>
                         </tr>
