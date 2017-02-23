@@ -88,7 +88,7 @@
             <dt>Billing History</dt>
             <dd>
                 {% if entities.history %}
-                    {{ entities.history }}<br/>
+                    {{ entities.history | raw }}<br/>
                     <a href="{{ path('monthly_charge_report') }}">see all</a>
                 {% else %}
                     No billing history

@@ -104,13 +104,19 @@ class AccountController extends MyController {
         $entities = $em->getRepository('ApplicationFrontBundle:MonthlyChargeReport')->findBy(array('organizationId' => $id), array('id' => 'DESC'), 3);
         foreach ($entities as $entity) {
             $data[] = $entity->getCreatedOn()->format('d M Y');
-            $data[] = "Plan: " . ($entity->getPlans()) ? $entity->getPlans()->getName(): "";
-            $data[] = "Records: " . ($entity->getPlans()) ? $entity->getPlans()->getRecords(): "";
-            $data[] = "Amount: $" . ($entity->getPlans()) ?$entity->getPlans()->getAmount(): "";
+            if ($entity->getPlans() != NULL && $entity->getPlans() != "") {
+                $data[] = "Plan: " . ($entity->getPlans() != NULL) ? $entity->getPlans()->getName() : "";
+                $data[] = "Records: " . ($entity->getPlans()) ? $entity->getPlans()->getRecords() : "";
+                $data[] = "Amount: $" . $entity->getChargeAmount();
+            } else {
+                $data[] = "Plan: ";
+                $data[] = "Records: ";
+                $data[] = "Amount: $". $entity->getChargeAmount();
+            }
             $_history[] = implode(", ", $data);
             unset($data);
         }
-        return implode("<br />", $_history);
+        return implode("<br/>", $_history);
     }
 
     /**
