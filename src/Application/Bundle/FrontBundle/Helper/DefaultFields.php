@@ -318,7 +318,7 @@ class DefaultFields {
         if ((int)$id == 239) {
             return false;
         } else if ((int)$id == 140) {
-            $march = strtotime("1st March 2017");
+            $march = strtotime("1st April 2017");
             if ($now < date("Y-m-d", $march)) {                
                 return false;
             }
