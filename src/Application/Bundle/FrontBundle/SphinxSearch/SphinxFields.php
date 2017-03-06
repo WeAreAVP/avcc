@@ -54,7 +54,7 @@ class SphinxFields {
         $this->indexFields['s_contributor'] = ($this->record->getContributor()) ? (string) $this->record->getContributor() : "";
         $this->indexFields['contributor'] = ($this->record->getContributor()) ? (string) $this->record->getContributor() : "";
         $this->indexFields['location'] = ($this->record->getLocation()) ? (string) $this->record->getLocation() : "";
-        $this->indexFields['s_location'] = ($this->record->getLocation()) ? $this->record->getLocation() : "";
+        $this->indexFields['s_location'] = ($this->record->getLocation()) ? (string) $this->record->getLocation() : "";
         $this->indexFields['s_format'] = ($this->record->getFormat()->getName()) ? (string) $this->record->getFormat()->getName() : "";
         $this->indexFields['format'] = ($this->record->getFormat()->getName()) ? (string) $this->record->getFormat()->getName() : "";
         $this->indexFields['is_review'] = ($this->record->getIsReview()) ? $this->record->getIsReview() : "";
@@ -113,7 +113,7 @@ class SphinxFields {
         $this->indexFields['s_print_type'] = $this->indexFields['print_type'] = ($this->record->getFilmRecord()->getPrintType()) ? (string) $this->record->getFilmRecord()->getPrintType()->getName() : "";
         $this->indexFields['reel_core'] = ($this->record->getFilmRecord()->getReelCore()) ? (string) $this->record->getFilmRecord()->getReelCore()->getName() : "";
         $this->indexFields['footage'] = ($this->record->getFilmRecord()->getFootage()) ? (string) $this->record->getFilmRecord()->getFootage() : "";
-        $this->indexFields['media_diameter'] = ($this->record->getFilmRecord()->getMediaDiameter()) ? (string) $this->record->getFilmRecord()->getMediaDiameter() : "";
+        $this->indexFields['media_diameter'] = ($this->record->getFilmRecord()->getMediaDiameter()) ? $this->record->getFilmRecord()->getMediaDiameter() : "";
         $this->indexFields['base'] = ($this->record->getFilmRecord()->getBases()) ? (string) $this->record->getFilmRecord()->getBases()->getName() : "";
         $this->indexFields['s_base'] = ($this->record->getFilmRecord()->getBases()) ? (string) $this->record->getFilmRecord()->getBases()->getName() : "";
         $this->indexFields['color'] = ($this->record->getFilmRecord()->getColors()) ? (string) $this->record->getFilmRecord()->getColors()->getName() : "";

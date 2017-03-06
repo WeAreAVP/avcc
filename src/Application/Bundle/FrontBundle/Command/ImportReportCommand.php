@@ -67,7 +67,7 @@ class ImportReportCommand extends ContainerAwareCommand {
                     }
                     if ($counter > $plan_limit) {
                         $_import = false;
-                        $templateParameters = array('user' => $entity->getUser(), 'organization' => $organization->getName(), 'limit' => $plan_limit, 'contact_person' => $contact_person);
+                        $templateParameters = array('user' => $entity->getUser(), 'organization' => $organization->getName(), 'plan_limit' => $plan_limit, 'contact_person' => $contact_person);
                     }
                 }
                 if ($_import) {

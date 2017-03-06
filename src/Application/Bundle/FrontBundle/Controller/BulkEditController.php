@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Application\Bundle\FrontBundle\SphinxSearch\SphinxSearch;
+use Application\Bundle\FrontBundle\Helper\SphinxHelper;
 
 /**
  * Bulk Edit controller.
@@ -64,10 +67,10 @@ class BulkEditController extends Controller {
                         $disable["format"] = 1;
                     }
                 }
-                    $relatedFields = $this->getRelatedFields();
-                    $templateParameters = array('selectedrecords' => $recordIds, 'disableFields' => $disable, 'mediaTypeId' => $mediaTypeId, 'relatedFields' => $relatedFields);
-                    $html = $this->container->get('templating')->render('ApplicationFrontBundle:BulkEdit:bulkedit.html.php', $templateParameters);
-                    $success = true;
+                $relatedFields = $this->getRelatedFields();
+                $templateParameters = array('selectedrecords' => $recordIds, 'disableFields' => $disable, 'mediaTypeId' => $mediaTypeId, 'relatedFields' => $relatedFields);
+                $html = $this->container->get('templating')->render('ApplicationFrontBundle:BulkEdit:bulkedit.html.php', $templateParameters);
+                $success = true;
             } else {
                 $success = false;
                 $errorMsg = 'Select records to edit.';
@@ -148,11 +151,7 @@ class BulkEditController extends Controller {
             if ($recordIds) {
                 if ($recordIds == 'all') {
                     $sphinxInfo = $this->getSphinxInfo();
-                    $shpinxRecordIds = $this->fetchFromSphinx($this->getUser(), $sphinxInfo, $em);
-                    $recordIdsArray = array();
-                    foreach ($shpinxRecordIds as $recIds) {
-                        $recordIdsArray = $recIds;
-                    }
+                    $recordIdsArray = $this->fetchFromSphinx($this->getUser(), $sphinxInfo, $em);
                 } else {
                     $recordIdsArray = explode(',', $recordIds);
                 }
@@ -402,33 +401,29 @@ class BulkEditController extends Controller {
         $offset = 0;
         $recordIds = array();
         $sphinxObj = new SphinxSearch($em, $sphinxInfo);
+        $searchOn = $this->criteria();
+        $criteria = $searchOn['criteriaArr'];
         while ($count == 0) {
-            $records = $sphinxObj->select($user, $offset, 1000, 'id');
-            $recordIds[] = $this->getRecordIds($records[0]);
+            $records = $sphinxObj->select($user, $offset, 5000, 'id', 'asc', $criteria);
+            foreach ($records[0] as $record) {
+                $recordIds[] = $record['id'];
+            }
             $totalFound = $records[1][1]['Value'];
-            $offset = $offset + 1000;
-            if ($totalFound < 1000) {
+            $offset = $offset + 5000;
+            if ($totalFound < 5000) {
                 $count++;
             }
         }
-
         return $recordIds;
     }
 
-    /**
-     * Get record ids from sphinx records
-     *
-     * @param array $sphinxRecords
-     *
-     * @return array
-     */
-    protected function getRecordIds($sphinxRecords) {
-        $recordIds = array();
-        foreach ($sphinxRecords as $record) {
-            $recordIds[] = $record['id'];
-        }
+    protected function criteria() {
+        $session = $this->getRequest()->getSession();
+        $facetData = $session->get('facetData');
+        $makeCriteria = new SphinxHelper();
+        $criteria = $makeCriteria->makeSphinxCriteria($facetData);
 
-        return $recordIds;
+        return $criteria;
     }
 
 }

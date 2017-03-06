@@ -733,6 +733,7 @@ class RecordsController extends MyController {
      * @return array
      */
     public function deleteRecords(Request $request) {
+        $em = $this->getDoctrine()->getManager();
         if ($request->isXmlHttpRequest()) {
             $session = $this->getRequest()->getSession();
             $posted = $request->request->all();
@@ -741,16 +742,12 @@ class RecordsController extends MyController {
             if ($recordIds) {
                 if ($recordIds == 'all') {
                     $sphinxInfo = $this->getSphinxInfo();
-                    $shpinxRecordIds = $this->fetchFromSphinx($this->getUser(), $sphinxInfo, $em);
-                    $recordIdsArray = array();
-                    foreach ($shpinxRecordIds as $recIds) {
-                        $recordIdsArray[] = $recIds;
-                    }
+                    $recordIdsArray = $this->fetchFromSphinx($this->getUser(), $sphinxInfo, $em);
                 } else {
                     $recordIdsArray = explode(',', $recordIds);
                 }
                 foreach ($recordIdsArray as $recId) {
-                    $em = $this->getDoctrine()->getManager();
+
                     $record = $em->getRepository('ApplicationFrontBundle:Records')->find($recId);
                     if ($record->getMediaType()->getId() == 1) {
                         $entity = $em->getRepository('ApplicationFrontBundle:AudioRecords')->findOneBy(array('record' => $record->getId()));
@@ -829,6 +826,28 @@ class RecordsController extends MyController {
             return json_encode($new);
         else
             return json_encode($db_view);
+    }
+
+    protected function fetchFromSphinx($user, $sphinxInfo, $em) {
+        $count = 0;
+        $offset = 0;
+        $recordIds = array();
+        $sphinxObj = new SphinxSearch($em, $sphinxInfo);
+        $searchOn = $this->criteria();
+        $criteria = $searchOn['criteriaArr'];
+        while ($count == 0) {
+            $records = $sphinxObj->select($user, $offset, 5000, 'id', 'asc', $criteria);
+            foreach ($records[0] as $record) {
+                $recordIds[] = $record['id'];
+            }
+            $totalFound = $records[1][1]['Value'];
+            $offset = $offset + 5000;
+            if ($totalFound < 5000) {
+                $count++;
+            }
+        }
+
+        return $recordIds;
     }
 
 }

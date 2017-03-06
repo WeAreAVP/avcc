@@ -211,6 +211,7 @@ class ImportReport extends ContainerAware {
                 foreach ($worksheet->getRowIterator() as $_row) {
                     $row = $_row->getRowIndex();
                     if ($row > 1) {
+                        $media_type = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
                         $rows[$row - 1]['project'] = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
                         $rows[$row - 1]['collectionName'] = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
                         $rows[$row - 1]['mediaType'] = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
@@ -233,7 +234,11 @@ class ImportReport extends ContainerAware {
                         $md = $worksheet->getCellByColumnAndRow(18, $row);
                         $nf = new NumberFormat();
                         $mdValue = $nf->toFormattedString($md->getValue(), '0%');
-                        $rows[$row - 1]['mediaDiameter'] = $mdValue;
+                        if (in_array($media_type, array("film", "Film"))) {
+                            $rows[$row - 1]['mediaDiameter'] = $md->getValue();
+                        } else {
+                            $rows[$row - 1]['mediaDiameter'] = $mdValue;
+                        }
                         $rows[$row - 1]['footage'] = $worksheet->getCellByColumnAndRow(19, $row)->getValue();
                         $rows[$row - 1]['recordingSpeed'] = $worksheet->getCellByColumnAndRow(20, $row)->getValue();
                         $rows[$row - 1]['color'] = $worksheet->getCellByColumnAndRow(21, $row)->getValue();
@@ -375,6 +380,10 @@ class ImportReport extends ContainerAware {
             }
             if ($row['mediaType'] == 'Film') {
                 $filmRecord = new FilmRecords();
+
+                if ($row['mediaDiameter']) {
+                    $filmRecord->setMediaDiameter($row['mediaDiameter']);
+                }
                 if ($row['printType']) {
                     $printType = $em->getRepository('ApplicationFrontBundle:PrintTypes')->findOneBy(array('name' => $row['printType']));
                     $filmRecord->setPrintType($printType);
