@@ -362,7 +362,7 @@ class ExportReport extends ContainerAware {
                 $activeSheet->setCellValueExplicitByColumnAndRow(33, $row, ($record->getFilmRecord()->getFrameRate()) ? $record->getFilmRecord()->getFrameRate()->getName() : '');
                 $activeSheet->setCellValueExplicitByColumnAndRow(34, $row, ($record->getFilmRecord()->getAcidDetectionStrip()) ? $record->getFilmRecord()->getAcidDetectionStrip()->getName() : "");
                 $activeSheet->setCellValueExplicitByColumnAndRow(35, $row, ($record->getFilmRecord()->getShrinkage()) ? $record->getFilmRecord()->getShrinkage() : '');
-                $activeSheet->setCellValueExplicitByColumnAndRow(18, $row, ($record->getFilmRecord()->getMediaDiameter()) ? $record->getFilmRecord()->getMediaDiameter()->getName() : '');
+                $activeSheet->setCellValueExplicitByColumnAndRow(18, $row, ($record->getFilmRecord()->getMediaDiameter()) ? $record->getFilmRecord()->getMediaDiameter() : '');
             }
             if ($record->getVideoRecord()) {
                 $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, ($record->getVideoRecord()->getMediaDuration()) ? $record->getVideoRecord()->getMediaDuration() : "");

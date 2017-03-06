@@ -342,6 +342,10 @@ class ImportReport extends ContainerAware {
             if ($row['mediaType'] == 'Audio') {
                 $audio = new AudioRecords();
                 $audio->setMediaDuration($row['mediaDuration']);
+                if ($row['recordingSpeed']) {
+                    $speed = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findOneBy(array('name' => $row['recordingSpeed']));
+                    $audio->setRecordingSpeed($speed);
+                }
                 if ($row['base']) {
                     $base = $em->getRepository('ApplicationFrontBundle:Bases')->findOneBy(array('name' => $row['base']));
                     $audio->setBases($base);
@@ -380,7 +384,10 @@ class ImportReport extends ContainerAware {
             }
             if ($row['mediaType'] == 'Film') {
                 $filmRecord = new FilmRecords();
-
+                if ($row['base']) {
+                    $base = $em->getRepository('ApplicationFrontBundle:Bases')->findOneBy(array('name' => $row['base']));
+                    $filmRecord->setBases($base);
+                }
                 if ($row['mediaDiameter']) {
                     $filmRecord->setMediaDiameter($row['mediaDiameter']);
                 }
@@ -417,6 +424,9 @@ class ImportReport extends ContainerAware {
             }
             if ($row['mediaType'] == 'Video') {
                 $videoRecord = new VideoRecords();
+                if ($row['mediaDuration']) {
+                    $videoRecord->setMediaDuration($row['mediaDuration']);
+                }
                 if ($row['recordingSpeed']) {
                     $speed = $em->getRepository('ApplicationFrontBundle:RecordingSpeed')->findOneBy(array('name' => $row['recordingSpeed']));
                     $videoRecord->setRecordingSpeed($speed);
