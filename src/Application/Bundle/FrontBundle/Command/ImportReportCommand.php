@@ -21,6 +21,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Application\Bundle\FrontBundle\Components\ImportReport;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Application\Bundle\FrontBundle\Helper\EmailHelper;
+use Application\Bundle\FrontBundle\Helper\DefaultFields;
 
 class ImportReportCommand extends ContainerAwareCommand {
 
@@ -30,7 +31,7 @@ class ImportReportCommand extends ContainerAwareCommand {
                 ->setDescription('Import the Records that are in queue and email to user.')
                 ->addArgument(
                         'id', InputArgument::REQUIRED, ' import db id?'
-                );
+        );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
@@ -50,24 +51,29 @@ class ImportReportCommand extends ContainerAwareCommand {
                 $organization = $em->getRepository('ApplicationFrontBundle:Organizations')->find($entity->getOrganizationId());
                 $rows = $import->getTotalRows($fileName) - 1;
                 $_import = true;
+                $fieldsObj = new DefaultFields();
+                
                 if ($organization) {
-                    $plan_limit = 2500;
-                    $plan_id = "";
-                    $org_records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($entity->getOrganizationId());
-                    $counter = count($org_records) + $rows;
-                    $creator = $organization->getUsersCreated();
-                    $contact_person = "avcc@avpreserve.com";
-                    if (in_array("ROLE_ADMIN", $creator->getRoles())) {
-                        $plan_id = $creator->getStripePlanId();
-                        $contact_person = $creator->getEmail();
-                    }
-                    if ($plan_id != NULL && $plan_id != "") {
-                        $plan = $em->getRepository('ApplicationFrontBundle:Plans')->findBy(array("planId" => $plan_id));
-                        $plan_limit = $plan[0]->getRecords();
-                    }
-                    if ($counter > $plan_limit) {
-                        $_import = false;
-                        $templateParameters = array('user' => $entity->getUser(), 'organization' => $organization->getName(), 'plan_limit' => $plan_limit, 'contact_person' => $contact_person);
+                    $paidOrg = $fieldsObj->paidOrganizations($organization->getId());
+                    if ($paidOrg) {
+                        $plan_limit = 2500;
+                        $plan_id = "";
+                        $org_records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($entity->getOrganizationId());
+                        $counter = count($org_records) + $rows;
+                        $creator = $organization->getUsersCreated();
+                        $contact_person = "avcc@avpreserve.com";
+                        if (in_array("ROLE_ADMIN", $creator->getRoles())) {
+                            $plan_id = $creator->getStripePlanId();
+                            $contact_person = $creator->getEmail();
+                        }
+                        if ($plan_id != NULL && $plan_id != "") {
+                            $plan = $em->getRepository('ApplicationFrontBundle:Plans')->findBy(array("planId" => $plan_id));
+                            $plan_limit = $plan[0]->getRecords();
+                        }
+                        if ($counter > $plan_limit) {
+                            $_import = false;
+                            $templateParameters = array('user' => $entity->getUser(), 'organization' => $organization->getName(), 'plan_limit' => $plan_limit, 'contact_person' => $contact_person);
+                        }
                     }
                 }
                 if ($_import) {
@@ -105,4 +111,5 @@ class ImportReportCommand extends ContainerAwareCommand {
         return true;
     }
 
+    
 }
