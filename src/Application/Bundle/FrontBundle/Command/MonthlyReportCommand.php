@@ -35,10 +35,10 @@ class MonthlyReportCommand extends ContainerAwareCommand {
             $this->generateMonthlyReport();
             $output->writeln("Monthly charge report generated successfully.");
         }
-        $job = new Job($this->getName());
-        $date = new DateTime(date('Y-m-d', strtotime('first day of next month')));
-        $job->setExecuteAfter($date);
-        $em->persist($job);
+//        $job = new Job($this->getName());
+//        $date = new DateTime(date('Y-m-d', strtotime('first day of next month')));
+//        $job->setExecuteAfter($date);
+//        $em->persist($job);
         $em->flush();
         exit;
     }
