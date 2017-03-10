@@ -437,7 +437,6 @@ class PlansController extends MyController {
             }
             $organization->setIsPaid(1);
             $em->persist($organization);
-            $em->flush();
             $user->setStripePlanId($planID);
             $user->setStripeSubscribeId($res["subscriptions"]["data"][0]["id"]);
             $user->setStripeCustomerId($res["id"]);

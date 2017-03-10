@@ -30,33 +30,57 @@
         <br />
     </div>
     <br />
-    {% if entities %}
-        <div class="table-responsive">
-            <table class="table bordered hovered">
-                <thead>
-                    <tr>
-                        <th>Date of charge</th>   
-                        <th>Plan</th>
-                        <th>Total Records</th>                                                         
-                        <th>Charge amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for entity in entities %}
-                        <tr>  
-                            <td>{{ entity.chargeAt }}</td>
-                            {% if entity.plans %}
-                                <td>{{ entity.plans.name }}</td>
-                            {% else %}
-                                <td></td>
-                            {% endif %}
-                            <td>{{ entity.totalRecords }}</td>                            
-                            <td>${{ entity.chargeAmount }}</td>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        {% if entities %}
+            <div class="table-responsive">
+                <table class="table bordered hovered">
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Total Records</th>
+                            <th>Total charges</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                        {% for entity in entities %}
+                            <tr>      
+                                <td>{{ entity.month }}</td>
+                                <td>{{ entity.totalRecords }}</td>
+                                <td>${{ entity.chargeRate }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    {% else %}
+        {% if entities %}
+            <div class="table-responsive">
+                <table class="table bordered hovered">
+                    <thead>
+                        <tr>
+                            <th>Date of charge</th>   
+                            <th>Plan</th>
+                            <th>Total Records</th>                                                         
+                            <th>Charge amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entity in entities %}
+                            <tr>  
+                                <td>{{ entity.chargeAt }}</td>
+                                {% if entity.plans %}
+                                    <td>{{ entity.plans.name }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                                <td>{{ entity.totalRecords }}</td>                            
+                                <td>${{ entity.chargeAmount }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
     {% endif %}
-
 {% endblock %}

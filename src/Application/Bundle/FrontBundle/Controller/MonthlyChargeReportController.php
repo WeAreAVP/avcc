@@ -54,13 +54,13 @@ class MonthlyChargeReportController extends MyController {
                 $selYear = $year;
                 $org = $em->getRepository('ApplicationFrontBundle:Organizations')->find($organizationId);
                 $name = $org->getName();
-                $years = $em->getRepository('ApplicationFrontBundle:MonthlyChargeReport')->getAllYears($organizationId);
-                $entities = $em->getRepository('ApplicationFrontBundle:MonthlyChargeReport')->findBy(array('organizationId' => $organizationId, 'year' => $year));
+                $years = $em->getRepository('ApplicationFrontBundle:ManualChargeReport')->getAllYears($organizationId);
+                $entities = $em->getRepository('ApplicationFrontBundle:ManualChargeReport')->findBy(array('organizationId' => $organizationId, 'year' => $year));
             } else if ($organizationId) {
                 $org = $em->getRepository('ApplicationFrontBundle:Organizations')->find($organizationId);
                 $name = $org->getName();
-                $years = $em->getRepository('ApplicationFrontBundle:MonthlyChargeReport')->getAllYears($organizationId);
-            }            
+                $years = $em->getRepository('ApplicationFrontBundle:ManualChargeReport')->getAllYears($organizationId);
+            }  
         } else {
             if ($year) {
                 $selYear = $year;
@@ -68,9 +68,6 @@ class MonthlyChargeReportController extends MyController {
             }
             $years = $em->getRepository('ApplicationFrontBundle:MonthlyChargeReport')->getAllYears($this->getUser()->getOrganizations()->getId());
         }
-//        echo '<pre>';
-//        print_r($entities);
-//        exit;
         return array(
             'entities' => $entities,
             'years' => $years,

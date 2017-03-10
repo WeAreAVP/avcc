@@ -185,6 +185,7 @@ span.has-error ul li{
     text-align: center;
     margin-left: 70px ! important;
     margin-top: 20px ! important;
+    width: 220px ! important;
 }
 
 .plans h1 {
@@ -202,10 +203,6 @@ span.has-error ul li{
 #_plans{
     margin: 0 auto;
     width: 87%;
-}
-
-.metro .span4{
-    width: 220px ! important;
 }
 
 

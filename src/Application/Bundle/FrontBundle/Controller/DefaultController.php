@@ -478,7 +478,9 @@ class DefaultController extends Controller {
         $amount = $object["data"]["object"]["total"];
         $user = $em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('stripeCustomerId' => $customerId));
         if ($user) {
-            $plan = $em->getRepository('ApplicationFrontBundle:Plans')->findOneBy(array("plan_id" => $user->getStripePlanId()));
+//            echo $user->getId() . " ". $user->getOrganizations()->getId();
+//            exit;
+            $plan = $em->getRepository('ApplicationFrontBundle:Plans')->findOneBy(array("planId" => $user->getStripePlanId()));
             $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($user->getOrganizations()->getId());
             $total = $org_records['total'];
             $chargeReport = new MonthlyChargeReport();

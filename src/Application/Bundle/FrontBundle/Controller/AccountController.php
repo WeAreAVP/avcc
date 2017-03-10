@@ -102,17 +102,21 @@ class AccountController extends MyController {
         $em = $this->getDoctrine()->getManager();
         $_history = array();
         $entities = $em->getRepository('ApplicationFrontBundle:MonthlyChargeReport')->findBy(array('organizationId' => $id), array('id' => 'DESC'), 3);
+//        
         foreach ($entities as $entity) {
+//            echo "<pre>";
+//            print_r($entity->getPlans()->getId());
+//            exit;
             $data[] = $entity->getCreatedOn()->format('d M Y');
-            if ($entity->getPlans() != NULL && $entity->getPlans() != "") {
-                $data[] = "Plan: " . ($entity->getPlans() != NULL) ? $entity->getPlans()->getName() : "";
-                $data[] = "Records: " . ($entity->getPlans()) ? $entity->getPlans()->getRecords() : "";
-                $data[] = "Amount: $" . $entity->getChargeAmount();
-            } else {
-                $data[] = "Plan: ";
-                $data[] = "Records: ";
-                $data[] = "Amount: $". $entity->getChargeAmount();
-            }
+//            if ($entity->getPlans()) {
+            $data[] = "Plan: " . $entity->getPlans()->getName();
+            $data[] = "Records: " . $entity->getPlans()->getRecords();
+            $data[] = "Amount: $" . $entity->getChargeAmount();
+//            } else {
+//                $data[] = "Plan: ";
+//                $data[] = "Records: ";
+//                $data[] = "Amount: $" . $entity->getChargeAmount();
+//            }
             $_history[] = implode(", ", $data);
             unset($data);
         }
