@@ -24,7 +24,8 @@ class OrganizationRepository extends EntityRepository
 {
      public function getAll() {
         $query = $this->getEntityManager()
-                ->createQuery("SELECT o.id, o.name, o.departmentName, o.address, o.contactPersonName, o.contactPersonEmail, o.status, o.contactPersonPhone from ApplicationFrontBundle:Organizations o ");
+                ->createQuery("SELECT o.id, o.name, o.departmentName, o.address, o.contactPersonName, o.contactPersonEmail, o.status, o.contactPersonPhone, u.username as owner, u.email as ownerEmail from ApplicationFrontBundle:Organizations o "
+                        . " LEFT JOIN ApplicationFrontBundle:Users u WITH u.id = o.usersCreated");
         return $query->getArrayResult();
     }
     

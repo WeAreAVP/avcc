@@ -37,7 +37,7 @@ security:
         - { path: ^/users, role: ROLE_MANAGER }
         - { path: ^/jobs, role: ROLE_SUPER_ADMIN }        
         - { path: ^/organizations/new, role: ROLE_SUPER_ADMIN }
-        - { path: ^/organizations, role: ROLE_MANAGER }
+        - { path: ^/organizations, role: ROLE_SUPER_ADMIN }
         - { path: ^/projects/$, role: ROLE_USER }
         - { path: ^/projects/, role: ROLE_MANAGER }
         - { path: ^/vocabularies/, role: ROLE_SUPER_ADMIN }

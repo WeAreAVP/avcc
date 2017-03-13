@@ -36,8 +36,14 @@
                         <td><a href="{{ path('organizations_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
                         <td>{{ entity.departmentName }}</td>
                         <td>{{ entity.address }}</td>
-                        <td><b>Name:</b> {{ entity.contactPersonName }}<br/><b>Email:</b> {{ entity.contactPersonEmail }}<br/><b>Phone:</b> {{ entity.contactPersonPhone }}</td>
-                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <td>
+                            <b>Name:</b> {{ entity.contactPersonName }}<br/><b>Email:</b> {{ entity.contactPersonEmail }}<br/><b>Phone:</b> {{ entity.contactPersonPhone }}
+                            {% if entity.owner %}
+                                <br><b>Owner Name:</b> {{ entity.owner }} <br>
+                                <b>Owner Email:</b> {{ entity.ownerEmail }}
+                            {% endif %} 
+                        </td>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
                             <td>  {{record_count[entity.id]}}</td>
                         {% endif %}
                         {% if is_granted('ROLE_MANAGER') %}
@@ -60,8 +66,8 @@
                                 <a title="Edit" href="{{ path('organizations_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i></a>
                                 {% if is_granted('ROLE_SUPER_ADMIN') %} | 
                                     <a class="icon-remove" title="Delete" href="{{ path('organizations_delete', { 'id': entity.id }) }}"></a> | <a class="icon-eye" target="_blank" title="Billing History" href="{{ path('monthly_report_org', { 'organizationId': entity.id }) }}"></a>
-                             
-                                   | <a class="icon-arrow-up-3" title="Upgrade" href="{{ path('plan_list', { 'id': entity.id }) }}"></a>
+
+                                    | <a class="icon-arrow-up-3" title="Upgrade" href="{{ path('plan_list', { 'id': entity.id }) }}"></a>
                                 {% endif %}
 
                             </td>

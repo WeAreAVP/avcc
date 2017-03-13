@@ -40,8 +40,6 @@ class ExportReportCommand extends ContainerAwareCommand {
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $id = $input->getArgument('id');
         if ($id) {

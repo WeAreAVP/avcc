@@ -70,7 +70,6 @@ class OrganizationsController extends MyController {
             $entities = $em->getRepository('ApplicationFrontBundle:Organizations')->findBy(array('id' => $this->getUser()->getOrganizations()->getId()));
         }
 
-
         return array(
             'entities' => $entities,
             'record_count' => $count,
