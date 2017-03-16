@@ -55,7 +55,7 @@ class ReportController extends MyController {
      */
     public function allFormatsAction($type) {
         @set_time_limit(0);
-        @ini_set("memory_limit", "2000M"); # 2GB
+        @ini_set("memory_limit", -1); # 2GB
         @ini_set("max_execution_time", 0); # unlimited
         gc_enable();
         if (!in_array($type, array('csv', 'xlsx'))) {
