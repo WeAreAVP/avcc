@@ -59,7 +59,7 @@ class MonthlyReportCommand extends ContainerAwareCommand {
         $organizations = $em->getRepository('ApplicationFrontBundle:Organizations')->getAll();
         foreach ($organizations as $organization) {
             $total = 0;
-            $records = $em->getRepository('ApplicationFrontBundle:ManualChargeReport')->getRecordsForMonthlyCharges(140, "2017", $status, date('Y-m', strtotime('now')));
+            $records = $em->getRepository('ApplicationFrontBundle:ManualChargeReport')->getRecordsForMonthlyCharges($organization['id'], "2017", $status, date('Y-m', strtotime('now')));
             if ($records) {
                 foreach ($records as $record) {
                     $total = $total + (int) $record['total'];
