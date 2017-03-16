@@ -46,7 +46,8 @@ class ExportReport extends ContainerAware {
         foreach ($records as $record) {
 
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, $record->getUniqueId());
-            $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, ($record->getUser()->getOrganizations()) ? $record->getUser()->getOrganizations()->getName() : '');
+            if ($record->getUser())
+                $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, ($record->getUser()->getOrganizations()) ? $record->getUser()->getOrganizations()->getName() : '');
             $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, $record->getCollectionName());
             $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, ($record->getFormat()->getName()) ? $record->getFormat()->getName() : '');
             $printType = '';
@@ -337,7 +338,7 @@ class ExportReport extends ContainerAware {
             $activeSheet->setCellValueExplicitByColumnAndRow(44, $row, $record->getGeneralNote());
             $activeSheet->setCellValueExplicitByColumnAndRow(45, $row, $record->getCreatedOn()->format('Y-m-d H:i:s'));
             $activeSheet->setCellValueExplicitByColumnAndRow(46, $row, ($record->getUpdatedOn()) ? $record->getUpdatedOn()->format('Y-m-d H:i:s') : '');
-            $activeSheet->setCellValueExplicitByColumnAndRow(47, $row, $record->getUser()->getName());
+            $activeSheet->setCellValueExplicitByColumnAndRow(47, $row, ($record->getUser()) ? $record->getUser()->getName() : "");
 
             if ($record->getAudioRecord()) {
                 $activeSheet->setCellValueExplicitByColumnAndRow(11, $row, ($record->getAudioRecord()->getMediaDuration()) ? $record->getAudioRecord()->getMediaDuration() : "");
