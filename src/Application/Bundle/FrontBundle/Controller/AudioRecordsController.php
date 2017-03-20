@@ -93,7 +93,7 @@ class AudioRecordsController extends MyController {
                 $this->get('session')->getFlashBag()->add('success', 'Audio record added succesfully.');
                 $this->get('session')->set('project_id', $entity->getRecord()->getProject()->getId());
 
-                if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations() && ($form->get('save_and_duplicate')->isClicked() || $form->get('save_and_new')->isClicked())) {
+                if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations() && ($form->get('save_and_duplicate')->isClicked() || $form->get('save_and_new')->isClicked()) && $this->container->getParameter("enable_stripe")) {
                     $paidOrg = $fieldsObj->paidOrganizations($this->getUser()->getOrganizations()->getId());
                     if ($paidOrg) {
                         $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($this->getUser()->getOrganizations()->getId());

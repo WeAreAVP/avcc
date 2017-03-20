@@ -36,7 +36,7 @@ class MyController extends Controller {
                 }
             }
             $paidOrg = $fieldsObj->paidOrganizations($orgId);
-            if ($paidOrg) {
+            if ($paidOrg && $this->container->getParameter("enable_stripe")) {
                 $free = 2500;
                 $freePlan = $em->getRepository('ApplicationFrontBundle:Plans')->findOneBy(array("amount" => 0));
                 if (!empty($freePlan)) {

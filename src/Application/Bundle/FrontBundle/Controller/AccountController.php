@@ -50,12 +50,16 @@ class AccountController extends MyController {
         $data["plan"] = "";
         $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($id);
         $data["org_total"] = $org_records['total'];
-        $creator = $organization->getUsersCreated();
+        $plan_id = "";
         $upgrade = FALSE;
-        if ($creator->getId() == $this->getUser()->getId()) {
-            $upgrade = TRUE;
+        if ($this->container->getParameter("enable_stripe")) {
+            $creator = $organization->getUsersCreated();
+            
+            if ($creator->getId() == $this->getUser()->getId()) {
+                $upgrade = TRUE;
+            }
+            $plan_id = $creator->getStripePlanId();
         }
-        $plan_id = $creator->getStripePlanId();
         $data["card"] = '';
         $data["customer_email"] = '';
         $data["plan"] = '';

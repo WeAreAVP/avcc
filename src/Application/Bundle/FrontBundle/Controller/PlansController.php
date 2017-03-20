@@ -36,6 +36,12 @@ class PlansController extends MyController {
 
     public $proration_date = "";
 
+    private function checkStripe() {
+        if (!$this->container->getParameter("enable_stripe")) {
+            throw $this->createNotFoundException("Page Not Found");
+        }
+    }
+
     /**
      * Lists all AudioRecords entities.
      *
@@ -45,6 +51,7 @@ class PlansController extends MyController {
      * @return array
      */
     public function indexAction() {
+        $this->checkStripe();
         $entities = '';
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('ApplicationFrontBundle:Plans')->findAll();
@@ -64,6 +71,7 @@ class PlansController extends MyController {
      * @return array
      */
     public function upgradeAction(Request $request, $id) {
+        $this->checkStripe();
         $email = 'avcc@avpreserve.com'; //$this->container->getParameter('google_client_id');
         $users = '';
         $plan_id = '';
@@ -145,6 +153,7 @@ class PlansController extends MyController {
      * @return array
      */
     public function createAction(Request $request) {
+        $this->checkStripe();
         $entity = new Plans();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -206,6 +215,7 @@ class PlansController extends MyController {
      * @return array
      */
     public function newAction() {
+        $this->checkStripe();
         if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles())) {
             throw new AccessDeniedException('Access Denied.');
         }
@@ -229,6 +239,7 @@ class PlansController extends MyController {
      * @return array
      */
     public function showAction($id) {
+        $this->checkStripe();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Plans')->findOneBy(array('id' => $id));
@@ -252,6 +263,7 @@ class PlansController extends MyController {
      * @return redirect
      */
     public function deleteAction(Request $request, $id) {
+        $this->checkStripe();
         if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles())) {
             throw new AccessDeniedException('Access Denied.');
         }
@@ -278,6 +290,7 @@ class PlansController extends MyController {
      * @return array
      */
     public function editAction($id) {
+        $this->checkStripe();
         if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles())) {
             throw new AccessDeniedException('Access Denied.');
         }
@@ -327,6 +340,7 @@ class PlansController extends MyController {
      * @return array
      */
     public function updateAction(Request $request, $id) {
+        $this->checkStripe();
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ApplicationFrontBundle:Plans')->find($id);
@@ -376,6 +390,7 @@ class PlansController extends MyController {
      * @return array
      */
     public function subscribeAction(Request $request) {
+        $this->checkStripe();
         $stripeToken = $request->request->get('stripeToken');
         $planID = $request->request->get('plan_id');
         $org_id = $request->request->get('org_id');

@@ -13,7 +13,7 @@
                 {{ app.user.organizations.name }} <a title="Edit" href="{{ path('organizations_edit', { 'id': app.user.organizations.id }) }}"><i class="icon-pencil"></i></a>                 
             </dd>
         </dl>
-            <dl class="horizontal">
+        <dl class="horizontal">
             <dt>Department Name</dt>
             <dd>
                 {{ app.user.organizations.departmentName is empty ? "" : app.user.organizations.departmentName }}
@@ -25,13 +25,13 @@
                 {{ app.user.organizations.createdOn is empty ? "" : app.user.organizations.createdOn|date("d M Y") }}
             </dd>
         </dl>
-            
+
         <dl class="horizontal">
             <dt>Contact Person</dt>
             <dd>
                 <b>Name:</b> {{ app.user.organizations.contactPersonName is empty ? "" : app.user.organizations.contactPersonName }}<br/>
-               <b>Email:</b> {{ app.user.organizations.contactPersonEmail is empty ? "" : app.user.organizations.contactPersonEmail }} <br/>
-               <b>Phone:</b> {{ app.user.organizations.contactPersonPhone is empty ? "" : app.user.organizations.contactPersonPhone }}
+                <b>Email:</b> {{ app.user.organizations.contactPersonEmail is empty ? "" : app.user.organizations.contactPersonEmail }} <br/>
+                <b>Phone:</b> {{ app.user.organizations.contactPersonPhone is empty ? "" : app.user.organizations.contactPersonPhone }}
             </dd>
         </dl> 
         <dl class="horizontal">
@@ -40,65 +40,67 @@
                 {{ app.user.organizations.address is empty ? "" : app.user.organizations.address }}
             </dd>
         </dl>
-        <dl class="horizontal">
-            <dt>Subscription Plan</dt>
-            <dd>
-                {% if entities.plan == "" %}
-                    Free
-                {% else %}
-                    <b>{{ entities.plan[0].name }}</b> <br />${{ entities.plan[0].amount }} per month, includes {{ entities.plan[0].records }} records({{ entities.org_total }} current records)
-                {% endif %}
-            </dd>
-        </dl>
-        <dl class="horizontal">
-            <dt>Credit Card</dt>
-            <dd>
-                {% if entities.plan != "" %}
-                    Card No: {{ entities.card.last4 }}<br>
-                    Expiry Date: {{ entities.card.exp_month }}/{{ entities.card.exp_year }}<br/>
-                    {% if(upgrade) %}
-                        <a href="javascript://" class="update_card">Edit Card</a>
+        {% if(enable_stripe) %}
+            <dl class="horizontal">
+                <dt>Subscription Plan</dt>
+                <dd>
+                    {% if entities.plan == "" %}
+                        Free
+                    {% else %}
+                        <b>{{ entities.plan[0].name }}</b> <br />${{ entities.plan[0].amount }} per month, includes {{ entities.plan[0].records }} records({{ entities.org_total }} current records)
                     {% endif %}
-                {% else %}
-                    --
-                {% endif %}
-            </dd>
-        </dl>
+                </dd>
+            </dl>
+            <dl class="horizontal">
+                <dt>Credit Card</dt>
+                <dd>
+                    {% if entities.plan != "" %}
+                        Card No: {{ entities.card.last4 }}<br>
+                        Expiry Date: {{ entities.card.exp_month }}/{{ entities.card.exp_year }}<br/>
+                        {% if(upgrade) %}
+                            <a href="javascript://" class="update_card">Edit Card</a>
+                        {% endif %}
+                    {% else %}
+                        --
+                    {% endif %}
+                </dd>
+            </dl>
 
-        <dl class="horizontal">
-            <dt>Receipt Recipients</dt>
-            <dd>
-                {% if entities.plan != "" and entities.recipients is not null %}
-                    {{ entities.recipients }}<br/>
-                    {% if(upgrade) %}
-                        <a href="javascript://" class="update_recipients">Edit Emails</a>
+            <dl class="horizontal">
+                <dt>Receipt Recipients</dt>
+                <dd>
+                    {% if entities.plan != "" and entities.recipients is not null %}
+                        {{ entities.recipients }}<br/>
+                        {% if(upgrade) %}
+                            <a href="javascript://" class="update_recipients">Edit Emails</a>
+                        {% endif %}
+                    {% elseif entities.customer_email %}
+                        {{ entities.customer_email }}
+                        <br/>
+                        {% if(upgrade) %}
+                            <a href="javascript://" class="update_recipients">Edit Emails</a>
+                        {% endif %}
+                    {% else %}
+                        --
                     {% endif %}
-                {% elseif entities.customer_email %}
-                    {{ entities.customer_email }}
-                    <br/>
-                    {% if(upgrade) %}
-                        <a href="javascript://" class="update_recipients">Edit Emails</a>
+                </dd>
+            </dl>
+            <dl class="horizontal">
+                <dt>Billing History</dt>
+                <dd>
+                    {% if entities.history %}
+                        {{ entities.history | raw }}<br/>
+                        <a href="{{ path('monthly_charge_report') }}">see all</a>
+                    {% else %}
+                        No billing history
                     {% endif %}
-                {% else %}
-                    --
-                {% endif %}
-            </dd>
-        </dl>
-        <dl class="horizontal">
-            <dt>Billing History</dt>
-            <dd>
-                {% if entities.history %}
-                    {{ entities.history | raw }}<br/>
-                    <a href="{{ path('monthly_charge_report') }}">see all</a>
-                {% else %}
-                    No billing history
-                {% endif %}
-            </dd>
-        </dl>
-        <br/>
-        {% if(upgrade) %}
-            <a class="button primary" title="Upgrade" href="{{ path('plan_list', { 'id': app.user.organizations.id }) }}">Change Plan</a>  
-            <a class="button primary" href="{{ path('account_close') }}">Close Account</a>
+                </dd>
+            </dl>
+            <br/>
+            {% if(upgrade) %}
+                <a class="button primary" title="Upgrade" href="{{ path('plan_list', { 'id': app.user.organizations.id }) }}">Change Plan</a>  
+                <a class="button primary" href="{{ path('account_close') }}">Close Account</a>
+            {% endif %}
         {% endif %}
     </div>
 

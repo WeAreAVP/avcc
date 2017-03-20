@@ -66,8 +66,9 @@
                                 <a title="Edit" href="{{ path('organizations_edit', { 'id': entity.id }) }}"><i class="icon-pencil"></i></a>
                                 {% if is_granted('ROLE_SUPER_ADMIN') %} | 
                                     <a class="icon-remove" title="Delete" href="{{ path('organizations_delete', { 'id': entity.id }) }}"></a> | <a class="icon-eye" target="_blank" title="Billing History" href="{{ path('monthly_report_org', { 'organizationId': entity.id }) }}"></a>
-
-                                    | <a class="icon-arrow-up-3" title="Upgrade" href="{{ path('plan_list', { 'id': entity.id }) }}"></a>
+                                    {% if enable_stripe %}
+                                        | <a class="icon-arrow-up-3" title="Upgrade" href="{{ path('plan_list', { 'id': entity.id }) }}"></a>
+                                    {% endif %}
                                 {% endif %}
 
                             </td>

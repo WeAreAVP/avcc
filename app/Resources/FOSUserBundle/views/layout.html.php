@@ -21,7 +21,7 @@
         <link href="<?php echo $view['assets']->getUrl('css/metro-bootstrap-responsive.min.css') ?>" type="text/css" rel="stylesheet" />
         <link href="<?php echo $view['assets']->getUrl('css/iconFont.min.css') ?>" type="text/css" rel="stylesheet" />
         <link href="<?php echo $view['assets']->getUrl('css/chosen.css') ?>" type="text/css" rel="stylesheet" />
-        <!--<link href="<?php // echo $view['assets']->getUrl('css/bootstrap.css')        ?>" type="text/css" rel="stylesheet" />-->
+        <!--<link href="<?php // echo $view['assets']->getUrl('css/bootstrap.css')          ?>" type="text/css" rel="stylesheet" />-->
         <link href="<?php echo $view['assets']->getUrl('css/modal.css') ?>" type="text/css" rel="stylesheet" />
         <!-- Custom styles for this template -->
         <link href="<?php echo $view['assets']->getUrl('bundles/applicationfront/css/style.css') ?>" rel="stylesheet">
@@ -83,9 +83,13 @@
                                         <?php if ($view['security']->isGranted('ROLE_SUPER_ADMIN')): ?>
                                             <li><a class="" href="<?php echo $view['router']->generate('help_guide') ?>">Help Guide</a></li>
                                             <li><a class="" href="<?php echo $view['router']->generate('terms_of_service') ?>">Terms of Service</a></li>
-                                            <li><a class="" href="<?php echo $view['router']->generate('plan') ?>">Plans</a></li>
-                                            <li><a class="" href="<?php echo $view['router']->generate('subscription') ?>">Subscriptions</a></li>
-                                        <?php endif ?>
+                                            <?php if ($view->container->getParameter('enable_stripe')): ?>
+                                                <li><a class="" href="<?php echo $view['router']->generate('plan') ?>">Plans</a></li>
+                                                <li><a class="" href="<?php echo $view['router']->generate('subscription') ?>">Subscriptions</a></li>
+                                                <?php
+                                            endif;
+                                        endif;
+                                        ?>
                                         <?php if (!$view['security']->isGranted('ROLE_SUPER_ADMIN') && $view['security']->isGranted('ROLE_ADMIN')): ?>
                                             <li>
                                                 <a class="" href="<?php echo $view['router']->generate('account') ?>">Account</a>
@@ -162,7 +166,7 @@
         <div class="container" id="container" style="margin-top:20px;margin-bottom:20px;">
             <?php if ($app->getUser() && $app->getUser()->getOrganizations()): ?>
                 <?php if ($app->getUser()->getOrganizations()->getIsPaid() == 0): ?>
-                                                                            <!--<p>Want more than 2500 records? Upgrade now by contacting avcc@avpreserve.com</p>-->
+                                                                                            <!--<p>Want more than 2500 records? Upgrade now by contacting avcc@avpreserve.com</p>-->
                 <?php endif ?>
             <?php endif ?>
             <?php foreach ($app->getSession()->getFlashBag()->all() as $type => $messages): ?>

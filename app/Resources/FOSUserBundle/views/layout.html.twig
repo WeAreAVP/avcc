@@ -68,17 +68,19 @@
                                     </a>
                                     <ul class="dropdown-menu dark" data-role="dropdown">
                                         <li><a href="{{ path('users') }}">Users</a></li>
-                                        {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                        <li><a href="{{ path('organizations') }}">Organization</a></li>
-                                        {% endif %}
+                                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                            <li><a href="{{ path('organizations') }}">Organization</a></li>
+                                            {% endif %}
                                         <li><a href="{{ path('field_settings') }}">Field Settings</a></li>
                                         <li><a href="{{ path('field_settings_backup') }}">Enable Backup</a></li>
                                         <li><a class="" href="{{ path('projects') }}">Projects</a></li>
                                             {% if is_granted('ROLE_SUPER_ADMIN') %}
                                             <li><a class="" href="{{ path('help_guide') }}">Help Guide</a></li>
                                             <li><a class="" href="{{ path('terms_of_service') }}">Terms of Service</a></li>
-                                            <li><a class="" href="{{ path('plan') }}">Plans</a></li>
-                                            <li><a class="" href="{{ path('subscription') }}">Subscriptions</a></li>
+                                                {% if enable_stripe %}
+                                                <li><a class="" href="{{ path('plan') }}">Plans</a></li>
+                                                <li><a class="" href="{{ path('subscription') }}">Subscriptions</a></li>
+                                                {% endif %}
                                             {% endif %}
                                             {% if not is_granted('ROLE_SUPER_ADMIN') and is_granted('ROLE_ADMIN') %}
                                             <li>

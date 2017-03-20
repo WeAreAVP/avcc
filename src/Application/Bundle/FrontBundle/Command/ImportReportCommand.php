@@ -51,7 +51,7 @@ class ImportReportCommand extends ContainerAwareCommand {
                 $_import = true;
                 $fieldsObj = new DefaultFields();
                 
-                if ($organization) {
+                if ($organization && $this->getContainer()->getParameter("enable_stripe")) {
                     $paidOrg = $fieldsObj->paidOrganizations($organization->getId());
                     if ($paidOrg) {
                         $plan_limit = 2500;

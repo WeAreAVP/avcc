@@ -29,6 +29,12 @@ use Application\Bundle\FrontBundle\Controller\MyController;
  */
 class SubscriptionsController extends MyController {
 
+    private function checkStripe() {
+        if (!$this->container->getParameter("enable_stripe")) {
+            throw $this->createNotFoundException("Page Not Found");
+        }
+    }
+
     /**
      * Lists all AudioRecords entities.
      *
@@ -38,6 +44,7 @@ class SubscriptionsController extends MyController {
      * @return array
      */
     public function indexAction() {
+        $this->checkStripe();
         $organizations = array();
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('ApplicationFrontBundle:Users')->getSubscribedUsers();
@@ -57,6 +64,7 @@ class SubscriptionsController extends MyController {
      * @return redirect
      */
     public function cancelAction(Request $request, $id) {
+        $this->checkStripe();
         $helper = new StripeHelper($this->container);
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('ApplicationFrontBundle:Users')->find($id);
@@ -65,7 +73,7 @@ class SubscriptionsController extends MyController {
         $freePlan = $em->getRepository('ApplicationFrontBundle:Plans')->findOneBy(array("amount" => 0));
         if (!empty($freePlan)) {
             $free = $freePlan->getRecords();
-        }        
+        }
         $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($entity->getOrganizations()->getId());
         $counter = $org_records['total'];
         $cus_id = $entity->getStripeCustomerId();
@@ -73,7 +81,7 @@ class SubscriptionsController extends MyController {
         if ($res == TRUE) {
             if ($counter > $free) {
                 $organization->setCancelSubscription(1);
-            }else{
+            } else {
                 $entity->setStripeCustomerId(NULL);
             }
             $organization->setIsPaid(0);

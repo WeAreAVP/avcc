@@ -23,12 +23,13 @@ framework:
 
 # Twig Configuration
 twig:
-    debug:            "%kernel.debug%"
+    debug:            "%kernel.debug%" 
     strict_variables: "%kernel.debug%"
     globals:
         ga_tracking: "%ga_tracking%"
         qa_instance: "%qa_instance%"
         stripe_publishkey: "%stripe_publishkey%"
+        enable_stripe: "%enable_stripe%"
 
 # Assetic Configuration
 assetic:

@@ -61,20 +61,14 @@ class OrganizationsController extends MyController {
                 $records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($entity['id']);
                 $count[$entity['id']] = $records['total'];
             }
+            return array(
+                'entities' => $entities,
+                'record_count' => $count,
+                'upgrade' => $upgrade
+            );
         } else {
-            $org_creator = $this->getUser()->getOrganizations()->getUsersCreated();
-            $id = $this->getUser()->getId();
-            if ($org_creator->getId() == $id) {
-                $upgrade = TRUE;
-            }
-            $entities = $em->getRepository('ApplicationFrontBundle:Organizations')->findBy(array('id' => $this->getUser()->getOrganizations()->getId()));
+            return $this->redirect($this->generateUrl("account"));
         }
-
-        return array(
-            'entities' => $entities,
-            'record_count' => $count,
-            'upgrade' => $upgrade
-        );
     }
 
     /**
@@ -291,11 +285,13 @@ class OrganizationsController extends MyController {
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('ApplicationFrontBundle:Organizations')->find($id);
-            $creator = $entity->getUsersCreated();
-            if (in_array("ROLE_ADMIN", $creator->getRoles())) {
-                $cus_id = $creator->getStripeCustomerId();
-                if ($cus_id != NULL && $cus_id != "") {
-                    $helper->deleteCustomer($cus_id);
+            if ($this->container->getParameter("enable_stripe")) {
+                $creator = $entity->getUsersCreated();
+                if (in_array("ROLE_ADMIN", $creator->getRoles())) {
+                    $cus_id = $creator->getStripeCustomerId();
+                    if ($cus_id != NULL && $cus_id != "") {
+                        $helper->deleteCustomer($cus_id);
+                    }
                 }
             }
             if (!$entity) {
@@ -350,13 +346,15 @@ class OrganizationsController extends MyController {
         $organization = $em->getRepository('ApplicationFrontBundle:Organizations')->find($id);
         if ($status == 1) {
             $organization->setStatus(0);
-            $creator = $organization->getUsersCreated();
-            if (in_array("ROLE_ADMIN", $creator->getRoles())) {
-                $cus_id = $creator->getStripeCustomerId();
-                if ($cus_id != NULL && $cus_id != "") {
-                    $helper->deleteCustomer($cus_id);
-                    $creator->setStripePlanId(NULL);
-                    $creator->setStripeSubscribeId(NULL);
+            if ($this->container->getParameter("enable_stripe")) {
+                $creator = $organization->getUsersCreated();
+                if (in_array("ROLE_ADMIN", $creator->getRoles())) {
+                    $cus_id = $creator->getStripeCustomerId();
+                    if ($cus_id != NULL && $cus_id != "") {
+                        $helper->deleteCustomer($cus_id);
+                        $creator->setStripePlanId(NULL);
+                        $creator->setStripeSubscribeId(NULL);
+                    }
                 }
             }
             $users = $em->getRepository('ApplicationFrontBundle:Users')->findBy(array('organizations' => $id));
