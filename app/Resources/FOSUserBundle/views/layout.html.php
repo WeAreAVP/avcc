@@ -14,19 +14,27 @@
         <script src="<?php echo $view['assets']->getUrl('js/tinymce/tinymce.min.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/tooltip.js') ?>"></script>
         <script src="<?php echo $view['assets']->getUrl('js/popover.js') ?>"></script>
+        <script src="<?php echo $view['assets']->getUrl('lightgallery/js/lightslider.js') ?>"></script>
+
+
         <!-- Bootstrap core CSS -->
         <?php $view['slots']->start('stylesheets') ?>
+        <!--<link href="<?php // echo $view['assets']->getUrl('lightgallery/css/lightgallery.min.css')   ?>" type="text/css" rel="stylesheet" />-->
+        <link href="<?php echo $view['assets']->getUrl('lightgallery/css/lightslider.css') ?>" type="text/css" rel="stylesheet" />
+
         <!--{#						<link href="{{ asset('css/bootstrap.css') }}" type="text/css" rel="stylesheet" />#}-->
         <link href="<?php echo $view['assets']->getUrl('css/metro-bootstrap.min.css') ?>" type="text/css" rel="stylesheet" />
         <link href="<?php echo $view['assets']->getUrl('css/metro-bootstrap-responsive.min.css') ?>" type="text/css" rel="stylesheet" />
         <link href="<?php echo $view['assets']->getUrl('css/iconFont.min.css') ?>" type="text/css" rel="stylesheet" />
         <link href="<?php echo $view['assets']->getUrl('css/chosen.css') ?>" type="text/css" rel="stylesheet" />
-        <!--<link href="<?php // echo $view['assets']->getUrl('css/bootstrap.css')          ?>" type="text/css" rel="stylesheet" />-->
+        <!--<link href="<?php // echo $view['assets']->getUrl('css/bootstrap.css')             ?>" type="text/css" rel="stylesheet" />-->
         <link href="<?php echo $view['assets']->getUrl('css/modal.css') ?>" type="text/css" rel="stylesheet" />
         <!-- Custom styles for this template -->
         <link href="<?php echo $view['assets']->getUrl('bundles/applicationfront/css/style.css') ?>" rel="stylesheet">
         <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('css/jquery.mCustomScrollbar.css') ?>" />
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
+        <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('css/jquery.iviewer.css') ?>" />
+     
         <link href="<?php echo $view['assets']->getUrl('css/basic.css') ?>" type="text/css" rel="stylesheet" />
 <!--        <link href="<?php echo $view['assets']->getUrl('css/basic_ie.css') ?>" type="text/css" rel="stylesheet" />-->
         <?php $view['slots']->stop() ?>
@@ -128,6 +136,7 @@
                                         <li><a href="<?php echo $view['router']->generate('vocabularies_sounds') ?>">Sound</a></li>
                                         <li><a href="<?php echo $view['router']->generate('vocabularies_tapethickness') ?>">Tape Thickness</a></li>
                                         <li><a href="<?php echo $view['router']->generate('vocabularies_tracktypes') ?>">Track Types</a></li>
+                                        <li><a href="<?php echo $view['router']->generate('vocabularies_pcollection') ?>">Parent Collection</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -166,7 +175,7 @@
         <div class="container" id="container" style="margin-top:20px;margin-bottom:20px;">
             <?php if ($app->getUser() && $app->getUser()->getOrganizations()): ?>
                 <?php if ($app->getUser()->getOrganizations()->getIsPaid() == 0): ?>
-                                                                                            <!--<p>Want more than 2500 records? Upgrade now by contacting avcc@avpreserve.com</p>-->
+                                                                                                                    <!--<p>Want more than 2500 records? Upgrade now by contacting avcc@avpreserve.com</p>-->
                 <?php endif ?>
             <?php endif ?>
             <?php foreach ($app->getSession()->getFlashBag()->all() as $type => $messages): ?>
@@ -188,6 +197,8 @@
         <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/chosen.jquery.js') ?>"></script>
         <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/jquery.mCustomScrollbar.concat.min.js') ?>"></script>
         <script type="text/javascript" src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+         <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/jquery.iviewer.js') ?>"></script>
+       
         <?php if ($view->container->getParameter('ga_tracking')) { ?>
             <script>
                     (function (i, s, o, g, r, a, m) {

@@ -97,8 +97,9 @@ function Dashboard() {
                 }
             },
             tooltip: {
+                useHTML: true,
                 headerFormat: '<span><b>{series.name}: </b></span>',
-                pointFormat: '<span style="color:{point.color}">{point.name}</span><br/><b>Total:</b>{point.y}<br/>'
+                pointFormat: '<a href="javascript://" onclick="setFacets(\'{point.name}\')"><span style="color:{point.color}">{point.name}</span><br/><b>Total:</b>{point.y}<br/>'
             },
             series: [{
                     name: 'Format',
@@ -207,31 +208,56 @@ function Dashboard() {
             url: totalRecordsUrl,
             dataType: 'json',
             success: function (response) {
+                console.log(response);
                 if (response) {
-                    $('#audioTotal').html(0);
-                    $('#audiolinear').html(0.00);
-                    $('#audiofile').html(0.00);
-                    $('#videoTotal').html(0);
-                    $('#videolinear').html(0.00);
-                    $('#videofile').html(0.00);
-                    $('#filmTotal').html(0);
-                    $('#filmlinear').html(0.00);
-                    $('#filmfile').html(0.00);
-                    if (typeof response[0] !== "undefined" && response[0].Audio) {
-                        $('#audioTotal').html(response[0].Audio.totalRecords);
-                        $('#audiolinear').html(response[0].Audio.linearFeet);
-                        $('#audiofile').html(response[0].Audio.fileSize);
-                    }
-                    if (typeof response[1] !== "undefined" && response[1].Video) {
-                        $('#videoTotal').html(response[1].Video.totalRecords);
-                        $('#videolinear').html(response[1].Video.linearFeet);
-                        $('#videofile').html(response[1].Video.fileSize);
-                    }
-                    if (typeof response[2] !== "undefined" && response[2].Film) {
-                        $('#filmTotal').html(response[2].Film.totalRecords);
-                        $('#filmlinear').html(response[2].Film.linearFeet);
-                        $('#filmfile').html(response[2].Film.fileSize);
-                    }                    
+                    $.each(response, function (index, element) {
+                        console.log(index);
+                        var prefix = "";
+                        if (index == "ndigitized") {
+                            prefix = "nd";
+                        }
+                        $('#' + prefix + 'audioTotal').html(0);
+                        $('#' + prefix + 'audiolinear').html(0.00);
+                        $('#' + prefix + 'audiofile').html(0.00);
+                        $('#' + prefix + 'audiodigitized').html(0);
+                        $('#' + prefix + 'audiocontentDur').html(0.00);
+                        $('#' + prefix + 'videoTotal').html(0);
+                        $('#' + prefix + 'videolinear').html(0.00);
+                        $('#' + prefix + 'videofile').html(0.00);
+                        $('#' + prefix + 'videodigitized').html(0);
+                        $('#' + prefix + 'videocontentDur').html(0.00);
+                        $('#' + prefix + 'filmTotal').html(0);
+                        $('#' + prefix + 'filmlinear').html(0.00);
+                        $('#' + prefix + 'filmfile').html(0.00);
+                        $('#' + prefix + 'filmdigitized').html(0);
+                        $('#' + prefix + 'filmcontentDur').html(0.00);
+                        //  non digitized
+                        if (typeof element !== "undefined" && typeof element[0] !== "undefined" && element[0].Audio) {
+                            var audio = element[0].Audio;
+                            $('#' + prefix + 'audioTotal').html(audio.totalRecords);
+                            $('#' + prefix + 'audiolinear').html(audio.linearFeet);
+                            $('#' + prefix + 'audiofile').html(audio.fileSize);
+                            $('#' + prefix + 'audiodigitized').html(audio.dRecords);
+                            $('#' + prefix + 'audiocontentDur').html(audio.sum_content_duration);
+                        }
+                        if (typeof element !== "undefined" && typeof element[1] !== "undefined" && element[1].Video) {
+                            var video = element[1].Video;
+                            $('#' + prefix + 'videoTotal').html(video.totalRecords);
+                            $('#' + prefix + 'videolinear').html(video.linearFeet);
+                            $('#' + prefix + 'videofile').html(video.fileSize);
+                            $('#' + prefix + 'videodigitized').html(video.dRecords);
+                            $('#' + prefix + 'videocontentDur').html(video.sum_content_duration);
+                        }
+                        if (typeof element !== "undefined" && typeof element[2] !== "undefined" && element[2].Film) {
+                            var film = element[2].Film;
+                            $('#' + prefix + 'filmTotal').html(film.totalRecords);
+                            $('#' + prefix + 'filmlinear').html(film.linearFeet);
+                            $('#' + prefix + 'filmfile').html(film.fileSize);
+                            $('#' + prefix + 'filmdigitized').html(film.dRecords);
+                            $('#' + prefix + 'filmcontentDur').html(film.sum_content_duration);
+                        }
+                    });
+
                 }
 
             }

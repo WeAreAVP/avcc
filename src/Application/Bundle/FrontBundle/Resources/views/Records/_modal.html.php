@@ -62,13 +62,15 @@
 <div id="importModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true" style="display:none;">
     <div class='modal-dialog'>
         <div class='modal-content'>
-            <div class="modal-header">
-                <h4>Import Records</h4>
-            </div>
+            <form action="<?php echo $view['router']->generate('import_records') ?>" method="post" enctype="multipart/form-data" name="frmExportMerge">
 
-            <div class="modal-body">
-                <form action="<?php echo $view['router']->generate('import_records') ?>" method="post" enctype="multipart/form-data" name="frmExportMerge">
-                    <div id="beforeExportMerge">
+                <div class="modal-header">
+                    <h4>Import Records</h4>
+                </div>
+
+                <div class="modal-body" style="height: 400px ! important; overflow: auto">
+                    <div id="import_rec">
+                        <span class="has-error text-danger" id="error_span" style='display:none'></span>
                         <p><span style="font-size:13px;">Are you sure you want to import the record(s)?</span></p>
                         <div class="pull-right">
                             <?php
@@ -85,32 +87,38 @@
                                         }
                                         ?>   
                                     </select>
-                                    <br/>
-                                    <span class="has-error text-danger" id="error_span" style='display:none'>Organization is required.</span>
                                     <br>
                                     <br>
                                 </div>
                             <?php } ?>
 
-                            <input type="file" name="importfile" class="required" required="required" /><br /><br />
+                            <input type="file" name="importfile" class="required" required="required" id="importfile" /><br /><br />
                             <input type="hidden" name="impfiletype"  id="impfiletype" value="" />
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer" id="modal-footer">
-                <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">No</button> &nbsp;
-                <?php
-                if ($view['security']->isGranted('ROLE_SUPER_ADMIN')) {
-                    ?>
-                    <button type="button" name="submit" id="submit" class="button primary" onclick="checkOrganization();">Submit</button>
-                    <?php
-                } else {
-                    ?>
-                    <button type="button" name="submit" id="submit" class="button primary" onclick="$('#importModal form').submit();">Submit</button>
-                <?php } ?>
-            </div>
+                    <div id="import_rec_1">
+                        <input type="hidden" name="existingRecords"  id="existingRecords" value="0" />
+                    </div>
 
+                </div>
+                <div class="modal-footer" id="modal-footer_1">
+                    <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">No</button> &nbsp;
+                    <?php
+                    if ($view['security']->isGranted('ROLE_SUPER_ADMIN')) {
+                        ?>
+                        <button type="submit" name="submit" id="submit" class="button primary" onclick="return validateRecords(1);" value="0">Submit</button>
+                        <?php
+                    } else {
+                        ?>
+                        <button type="submit" name="submit" id="submit" class="button primary" onclick="return validateRecords(0);" value="0">Submit</button>
+                    <?php } ?>
+                </div>
+                <div class="modal-footer" id="modal-footer_2" style="display: none;">
+                    <button type="button" class="button closeModal" data-dismiss="modal" onclick="window.location.reload();">Cancel</button> &nbsp;
+                    <button type="submit" name="" id="sub_1" class="button primary" onclick="addValue('sub_1', 1)" value="">Add New Records Only</button>
+                    <button type="submit" name=""  id="sub_2" class="button primary" onclick="addValue('sub_2', 2)" value="">Add New & Update Existing Records</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -201,6 +209,68 @@
         });
 <?php } ?>
 
+    function validateRecords(org_test) {
+        $('#error_span').hide();
+        if (org_test == 1) {
+            if ($('#organization').val() == '') {
+                $('#error_span').html('Organization is required.')
+                $('#error_span').show();
+                return;
+            }
+        }
+        var validate_url = "<?php echo $view['router']->generate('validate_records') ?>";
+        var fd = new FormData();
+        $('#importModal form').find('input').each(function () {
+            if (this.type != "file") {
+                fd.append(this.name, $(this).val());
+            }
+        });
+
+
+        $('#importModal form').find('select').each(function () {
+            if (this.type != "file") {
+                fd.append(this.name, $(this).val());
+            }
+        });
+
+        var file = $("#importfile");
+        var individual_file = "";
+        if (file.val() != "") {
+            individual_file = file[0].files[0];
+        }
+        fd.append("importfile", individual_file);
+
+        $.ajax({
+            type: "POST",
+            url: validate_url,
+            data: fd,
+            async: false,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success: function (response) {
+                if (response.success == false) {
+                    $('#error_span').html(response.message)
+                    $('#error_span').show();
+                    return false;
+                } else if (response.message == "submit") {
+                    return true;
+                } else if (response.success == true) {
+                    $("#existingRecords").val(response.count);
+                    $('#import_rec').hide();
+                    $('#import_rec_1').append("Unique Id(s) already existed in db: <br>" + response.message);
+                    $("#modal-footer_1").remove();
+                    $("#modal-footer_2").show();
+                    return false;
+                }
+            }
+        });
+    }
+
+    function submitImportForm() {
+        console.log("submittinggg...");
+        $('#importModal form').submit();
+    }
     function checkOrganization() {
         if ($('#organization').val() == '') {
             $('#error_span').show();
@@ -226,5 +296,10 @@
                 }
             });
         }
+    }
+
+    function addValue(ele, val) {
+        $("#" + ele).attr("name", "submit");
+        $("#" + ele).val(val);
     }
 </script>

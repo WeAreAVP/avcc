@@ -124,6 +124,20 @@
                         <div class="clearfix"></div>
                     <?php } ?>
                     <?php
+                    if (isset($facetData['parent_collection']) && $facetData['parent_collection'] != '') {
+                        ?>
+                        <div id="mediaType_main" class="chekBoxFacet">
+                            <div class="filter-fileds"><b>Parent Collection</b></div>
+                            <?php
+                            foreach ($facetData['parent_collection'] as $value) {
+                                $id = time() . rand(0, 1000);
+                                ?>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'parentCollection_' . name_slug($value); ?>" data-type="parentCollection"></i></div>
+                            <?php } ?>
+                        </div>
+                        <div class="clearfix"></div>
+                    <?php } ?>
+                    <?php
                     if (isset($facetData['collection_name']) && $facetData['collection_name'] != '') {
                         ?>
                         <div id="mediaType_main" class="chekBoxFacet">
@@ -137,6 +151,7 @@
                         </div>
                         <div class="clearfix"></div>
                     <?php } ?>
+
                     <?php
                     if (isset($facetData['recordingStandard']) && $facetData['recordingStandard'] != '') {
                         ?>
@@ -171,7 +186,7 @@
                         <div id="mediaType_main" class="chekBoxFacet">
                             <div class="filter-fileds"><b>Project</b></div>
                             <?php
-                            foreach ($projectData as $id =>$value) {
+                            foreach ($projectData as $id => $value) {
 //                                $id = time() . rand(0, 1000);
                                 ?>
                                 <div class="btn-img" id="facet_project_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo $id . '_project_' . name_slug($value); ?>" data-type="project"></i></div>
@@ -279,7 +294,7 @@
                                         <b class="caret"></b>
                                     </a>
                                     <div id="org_ml" style="display:none;">
-                                        <li><a href="javascript://"><label for="<?php echo $mediaType['organization_id'] . '_organization_name_' .name_slug($mediaType['organization_name']) ?>"><input id='<?php echo $mediaType['organization_id'] . '_organization_name_' . name_slug($mediaType['organization_name']) ?>' <?php echo (isset($facetData['organization_name']) && in_array($mediaType['organization_id'], $facetData['organization_name'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="organization_name[]" value="<?php echo $mediaType['organization_id'] ?>" style="float:left; width:20px"/><div class="orgs" style="margin-left: 25px;color: #696969;"><?php echo $mediaType['organization_name'] ?> (<?php echo $mediaType['total'] ?>)</div></label></a></li>
+                                        <li><a href="javascript://"><label for="<?php echo $mediaType['organization_id'] . '_organization_name_' . name_slug($mediaType['organization_name']) ?>"><input id='<?php echo $mediaType['organization_id'] . '_organization_name_' . name_slug($mediaType['organization_name']) ?>' <?php echo (isset($facetData['organization_name']) && in_array($mediaType['organization_id'], $facetData['organization_name'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="organization_name[]" value="<?php echo $mediaType['organization_id'] ?>" style="float:left; width:20px"/><div class="orgs" style="margin-left: 25px;color: #696969;"><?php echo $mediaType['organization_name'] ?> (<?php echo $mediaType['total'] ?>)</div></label></a></li>
                                         <?php
                                     } else {
                                         ?>
@@ -359,6 +374,43 @@
                     </ul>
                 </li>
             <?php endif; ?>
+            <?php if (count($facets['parentCollection']) > 0): ?>
+                <li>
+                    <a class="dropdown-toggle" href="#">Parent Collection</a>
+                    <ul  data-role="dropdown" <?php if (isset($facetData['parent_collection'])): ?> style="display:block" <?php endif ?>>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input style="  margin-left: 10px; height: 25px; width: 199px !important;" id="parent_collection_filter" name="parent_collection_filter" type="text" value="" >
+                            </div>
+                        </div>
+                        <?php foreach ($facets['parentCollection'] as $key => $collectionName): ?>
+                            <?php if ($collectionName['parent_collection'] != ''): ?>
+                                <?php if ($key < 5) { ?>  
+                                    <li><a href="javascript://"><label for="<?php echo 'parent_collection_' . str_replace(' ', '_', strtolower($collectionName['parent_collection'])) ?>"><input id='<?php echo 'parentCollection_' . name_slug($collectionName['parent_collection']) ?>' <?php echo (isset($facetData['parent_collection']) && in_array($collectionName['parent_collection'], $facetData['parent_collection'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="parent_collection[]" value="<?php echo $collectionName['parent_collection'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;" class="parent_collection"><?php echo $collectionName['parent_collection'] ?> (<?php echo $collectionName['total'] ?>)</div></label></a></li>
+                                <?php } else if ($key == 5) { ?>                        
+                                    <a class="parent_collection_ml" onclick="more_less('parent_collection_ml')" style="text-decoration: underline;">
+                                        More
+                                        <b class="caret"></b>
+                                    </a>
+                                    <div id="parent_collection_ml" style="display:none;">
+                                        <li><a href="javascript://"><label for="<?php echo 'parentCollection_' . str_replace(' ', '_', strtolower($collectionName['parent_collection'])) ?>"><input id='<?php echo 'parentCollection_' . name_slug($collectionName['parent_collection']) ?>' <?php echo (isset($facetData['parent_collection']) && in_array($collectionName['parent_collection'], $facetData['parent_collection'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="parent_collection[]" value="<?php echo $collectionName['parent_collection'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;" class="parent_collection"><?php echo $collectionName['parent_collection'] ?> (<?php echo $collectionName['total'] ?>)</div></label></a></li>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <li><a href="javascript://"><label for="<?php echo 'parentCollection_' . str_replace(' ', '_', strtolower($collectionName['parent_collection'])) ?>"><input id='<?php echo 'parentCollection_' . name_slug($collectionName['parent_collection']) ?>' <?php echo (isset($facetData['parent_collection']) && in_array($collectionName['parent_collection'], $facetData['parent_collection'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="parent_collection[]" value="<?php echo $collectionName['parent_collection'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;" class="parent_collection"><?php echo $collectionName['parent_collection'] ?> (<?php echo $collectionName['total'] ?>)</div></label></a></li>
+                                    <?php } ?>
+                                <?php endif ?>
+                            <?php endforeach; ?>
+                            <?php
+                            if (count($facets['parentCollection']) > 5) {
+                                ?>
+                                <a class="parent_collection_ml" onclick="more_less('parent_collection_ml')" style="display:none;text-decoration: underline;">Less</a>
+                            </div>
+                        <?php } ?>
+
+                    </ul>
+                </li>
+            <?php endif; ?>
             <?php if (count($facets['collectionNames']) > 0): ?>
                 <li>
                     <a class="dropdown-toggle" href="#">Collection Name</a>
@@ -396,6 +448,8 @@
                     </ul>
                 </li>
             <?php endif; ?>
+
+
             <?php if (count($facets['recordingStandards']) > 0): ?>
                 <li>
                     <a class="dropdown-toggle" href="#">Recording Standard</a>
@@ -519,6 +573,45 @@
                 </span>
                 Reformatting Priority
             </li>
+            <li class="chekBoxFacet">
+                <span id="has_images_check" style="cursor: default;">
+                    <?php
+                    $digitized = 0;
+                    if (isset($facetData['has_images_check'])):
+
+                        $digitized = $facetData['has_images_check'];
+                    endif;
+                    ?>
+                    <input type="hidden" id="has_images_check_state" name="has_images_check" value="<?php echo $digitized ?>"  />
+                </span>
+                Has Images
+            </li>
+            <li class="chekBoxFacet">
+                <span id="is_digitized_check" style="cursor: default;">
+                    <?php
+                    $digitized = 0;
+                    if (isset($facetData['is_digitized_check'])):
+
+                        $digitized = $facetData['is_digitized_check'];
+                    endif;
+                    ?>
+                    <input type="hidden" id="is_digitized_check_state" name="is_digitized_check" value="<?php echo $digitized ?>"  />
+                </span>
+                Digitized
+            </li>
+            <li class="chekBoxFacet">
+                <span id="is_transcription_check" style="cursor: default;">
+                    <?php
+                    $transcription = 0;
+                    if (isset($facetData['is_transcription_check'])):
+
+                        $transcription = $facetData['is_transcription_check'];
+                    endif;
+                    ?>
+                    <input type="hidden" id="is_transcription_check_state" name="is_transcription_check" value="<?php echo $transcription ?>"  />
+                </span>
+                Transcription 
+            </li>
         </ul>
     </nav>
     <?php
@@ -575,6 +668,25 @@
             $('#collection_ml').show();
         }
         var items = $(".collections");
+        //first, hide all:
+        items.parent().parent().hide();
+
+        //show only those matching user input:
+        items.filter(function () {
+            return $(this).text().toLowerCase().indexOf(text) >= 0;
+        }).parent().parent().show();
+    });
+
+    $("#parent_collection_filter").bind("keyup", function () {
+        var text = $(this).val().toLowerCase();
+        if (text == '') {
+            $('.parent_collection_ml').show();
+            $('#parent_collection_ml').hide();
+        } else {
+            $('.parent_collection_ml').hide();
+            $('#parent_collection_ml').show();
+        }
+        var items = $(".parentCollection");
         //first, hide all:
         items.parent().parent().hide();
 

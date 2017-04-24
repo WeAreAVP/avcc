@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,12 +11,14 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Application\Bundle\FrontBundle\Entity\Users as Users;
 use Application\Bundle\FrontBundle\Entity\Formats as Formats;
+use Application\Bundle\FrontBundle\Entity\ParentCollection as ParentCollection;
 use Application\Bundle\FrontBundle\Entity\Commercial as Commercial;
 use Application\Bundle\FrontBundle\Entity\Projects as Projects;
 use Application\Bundle\FrontBundle\Entity\MediaTypes as MediaTypes;
@@ -23,7 +26,7 @@ use Application\Bundle\FrontBundle\Entity\AudioRecords as AudioRecords;
 use Application\Bundle\FrontBundle\Entity\VideoRecords as VideoRecords;
 use Application\Bundle\FrontBundle\Entity\FilmRecords as FilmRecords;
 use Application\Bundle\FrontBundle\Entity\ReelDiameters as ReelDiameters;
-use Symfony\Component\Validator\ExecutionContext;
+use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
  * Records
@@ -31,7 +34,7 @@ use Symfony\Component\Validator\ExecutionContext;
  * @ORM\Table(name="records")
  * @ORM\Entity(repositoryClass="Application\Bundle\FrontBundle\Entity\RecordsRepository")
  * @ORM\HasLifecycleCallbacks
- * @Assert\Callback(methods={"checkUniqueId"})
+ * @Assert\Callback(methods={"checkDigitizedFields"})
  */
 class Records {
 
@@ -107,7 +110,7 @@ class Records {
      *
      */
     private $uniqueId;
-    
+
     /**
      * @ORM\Column(name="alternate_id", type="string", nullable=true)
      * @var string
@@ -132,6 +135,16 @@ class Records {
      * @Assert\NotBlank(message="Format is required.")
      */
     private $format;
+
+    /**
+     * @var \Application\Bundle\FrontBundle\Entity\ParentCollection
+     *
+     * @ORM\ManyToOne(targetEntity="Application\Bundle\FrontBundle\Entity\ParentCollection")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="parent_collection", referencedColumnName="id", nullable = true)
+     * })
+     */
+    private $parentCollection;
 
     /**
      * @ORM\Column(name="title", type="string")
@@ -175,7 +188,7 @@ class Records {
     /**
      * @var integer
      *
-     * @ORM\Column(name="content_duration", type="integer", nullable=true)
+     * @ORM\Column(name="content_duration", type="float", nullable=true)
      */
     private $contentDuration;
 
@@ -199,14 +212,49 @@ class Records {
      * @ORM\Column(name="is_review", type="boolean", nullable=true, options={"default" = 0}) )
      */
     private $isReview;
-    
+
     /**
      * @var boolean
      *
      * @ORM\Column(name="reformatting_priority", type="boolean", nullable=true, options={"default" = 0}) )
      */
     private $reformattingPriority;
- 
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="transcription", type="boolean", nullable=true, options={"default" = 0}) )
+     */
+    private $transcription;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="digitized", type="boolean", nullable=true, options={"default" = 0}) )
+     */
+    private $digitized;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="digitized_by", type="string", nullable=true)
+     */
+    private $digitizedBy;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="digitized_when", type="string", nullable=true)
+     */
+    private $digitizedWhen;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="urn", type="string", nullable=true)
+     */
+    private $urn;
+
     /**
      * @var string
      *
@@ -262,7 +310,7 @@ class Records {
      * @ORM\Column(name="condition_note", type="text", nullable=true)
      */
     private $conditionNote;
-    
+
     /**
      * @var string
      *
@@ -383,7 +431,7 @@ class Records {
     public function getUniqueId() {
         return $this->uniqueId;
     }
-    
+
     /**
      * Set alternate id
      *
@@ -405,7 +453,6 @@ class Records {
     public function getAlternateId() {
         return $this->alternateId;
     }
-
 
     /**
      * Set media diameter.
@@ -493,6 +540,28 @@ class Records {
      */
     public function getFormat() {
         return $this->format;
+    }
+
+    /**
+     * Set Format.
+     *
+     * @param \Application\Bundle\FrontBundle\Entity\ParentCollection $ParentCollection
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Records
+     */
+    public function setParentCollection(ParentCollection $ParentCollection) {
+        $this->parentCollection = $ParentCollection;
+
+        return $this;
+    }
+
+    /**
+     * Get ParentCollection
+     *
+     * @return \Application\Bundle\FrontBundle\Entity\Records
+     */
+    public function getParentCollection() {
+        return $this->parentCollection;
     }
 
     /**
@@ -692,7 +761,7 @@ class Records {
     public function getReformattingPriority() {
         return $this->reformattingPriority;
     }
-    
+
     public function setReformattingPriority($Reformatting_Priority) {
         $this->reformattingPriority = $Reformatting_Priority;
 
@@ -883,7 +952,7 @@ class Records {
     public function getConditionNote() {
         return $this->conditionNote;
     }
-    
+
     /**
      * Set condition note
      *
@@ -989,19 +1058,89 @@ class Records {
         $this->editor = $editor;
     }
 
-    public function checkUniqueId(ExecutionContext $context) {
-//        $uniqueID = $this->getUniqueId();
-//        echo $uniqueID.'<br/>';
-//		echo $this->getProject()->getOrganization()->getId();
-//        
-//       // $records = 2;
-//		$em = $context->getEntityManager();
-////        $em = $this->getDoctrine()->getManager();
-//		exit;
-//      //  $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueidRecords($this->getUser()->getOrganizations()->getId(), $unique);
-//        if (count($records) > 0) {
-//            $context->addViolationAt('uniqueId', 'unique id must be unique');
-//        }
+    /**
+     * Get transcription
+     *
+     * @return boolean
+     */
+    public function getTranscription() {
+        return $this->transcription;
+    }
+
+    public function setTranscription($transcription) {
+        $this->transcription = $transcription;
+        return $this;
+    }
+
+    /**
+     * Get digitized
+     *
+     * @return boolean
+     */
+    public function getDigitized() {
+        return $this->digitized;
+    }
+
+    public function setDigitized($digitized) {
+        $this->digitized = $digitized;
+        return $this;
+    }
+
+    /**
+     * Get digitizedBy
+     *
+     * @return boolean
+     */
+    public function getDigitizedBy() {
+        return $this->digitizedBy;
+    }
+
+    public function setDigitizedBy($digitizedBy) {
+        $this->digitizedBy = $digitizedBy;
+        return $this;
+    }
+
+    /**
+     * Get digitizedWhen
+     *
+     * @return boolean
+     */
+    public function getDigitizedWhen() {
+        return $this->digitizedWhen;
+    }
+
+    public function setDigitizedWhen($digitizedWhen) {
+        $this->digitizedWhen = $digitizedWhen;
+        return $this;
+    }
+
+    /**
+     * Get urn
+     *
+     * @return boolean
+     */
+    public function getUrn() {
+        return $this->urn;
+    }
+
+    public function setUrn($urn) {
+        $this->urn = $urn;
+        return $this;
+    }
+
+    public function checkDigitizedFields(ExecutionContextInterface $context) {
+        $digitized = $this->getDigitized();
+        if ($digitized > 0) {
+            if ($this->getDigitizedWhen() == NULL || empty($this->getDigitizedWhen())) {
+                $context->addViolationAt('digitizedWhen', 'Digitized When is required');
+            }
+            if ($this->getDigitizedBy() == NULL || empty($this->getDigitizedBy())) {
+                $context->addViolationAt('digitizedBy', 'Digitized By is required');
+            }
+            if ($this->getContentDuration() == NULL || $this->getContentDuration() == "") {
+                $context->addViolationAt('contentDuration', 'Content Duration is required');
+            }
+        }
     }
 
 }

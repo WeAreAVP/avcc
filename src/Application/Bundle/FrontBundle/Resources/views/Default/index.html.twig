@@ -71,8 +71,8 @@
                             You have reached the maximum number of records for your account. If you would like to add more records please upgrade.
                         </div>
                         <div class="modal-footer" id="notification_footer">
-                              <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">Ok</button>
-                       </div>
+                            <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">Ok</button>
+                        </div>
                     {% endif %}
                 </div>  
             </div>
@@ -112,33 +112,78 @@
         </div>
         <div class="span7 place-left dashboardRecordsInfo">
             <h3>Overview</h3>
-            <div class="table-responsive">
-                <table class="table striped bordered hovered dashboardTotals">
-                    <thead>  
-                        <tr><td></td><th>Total Items</th><th>Linear Footage</th><th>File Size (TB)*</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><th>Audio</th><td id="audioTotal" class="text-center">0</td><td id="audiolinear" class="text-center">0.00</td><td id="audiofile" class="text-center">0.00</td></tr>
-                        <tr><th>Video</th><td id="videoTotal" class="text-center">0</td><td id="videolinear" class="text-center">0.00</td><td id="videofile" class="text-center">0.00</td></tr>
-                        <tr><th>Film</th><td id="filmTotal" class="text-center">0</td><td id="filmlinear" class="text-center">0.00</td><td id="filmfile" class="text-center">0.00</td></tr>
-                    </tbody>
-                </table>
+            <div data-role="tab-control" class="tab-control">
+                <ul class="tabs">
+                    <li id="xlsTab" class="active"><a href="#d_tab">Digitized Tab</a></li>
+                    <li id="graphsTab" class=""><a href="#nd_tab">Non-Digitized Tab</a></li>
+                </ul>
+
+                <div class="frames">
+                    <div id="d_tab" class="frame" style="display: block;">
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table striped bordered hovered dashboardTotals">
+                                    <thead>  
+                                        <tr><td></td><th>Total Items</th><th>Linear Shelf Footage for AV /Film Footage for digitized items</th><th>Total Items Digitized</th><th>Total Content Duration of Digitized Items</th><th>File Size of digitized items (TB)</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><th>Audio</th><td id="audioTotal" class="text-center">0</td><td id="audiolinear" class="text-center">0.00</td><td id="audiodigitized" class="text-center">0</td><td id="audiocontentDur" class="text-center">0.00</td><td id="audiofile" class="text-center">0.00</td></tr>
+                                        <tr><th>Video</th><td id="videoTotal" class="text-center">0</td><td id="videolinear" class="text-center">0.00</td><td id="videodigitized" class="text-center">0</td><td id="videocontentDur" class="text-center">0.00</td><td id="videofile" class="text-center">0.00</td></tr>
+                                        <tr><th>Film</th><td id="filmTotal" class="text-center">0</td><td id="filmlinear" class="text-center">0.00</td><td id="filmdigitized" class="text-center">0</td><td id="filmcontentDur" class="text-center">0.00</td><td id="filmfile" class="text-center">0.00</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="nd_tab" class="frame" style="display: block;">
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table striped bordered hovered dashboardTotals">
+                                    <thead>  
+                                        <tr><td></td><th>Total Items</th><th>Linear Shelf Footage for AV/Film Footage for non-digitized items</th><th>Total Items Not Digitized</th><th>Total Content Duration of Non-Digitized Items</th><th>File Size of non-digitized items (TB)</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><th>Audio</th><td id="ndaudioTotal" class="text-center">0</td><td id="ndaudiolinear" class="text-center">0.00</td><td id="ndaudiodigitized" class="text-center">0</td><td id="ndaudiocontentDur" class="text-center">0.00</td><td id="ndaudiofile" class="text-center">0.00</td></tr>
+                                        <tr><th>Video</th><td id="ndvideoTotal" class="text-center">0</td><td id="ndvideolinear" class="text-center">0.00</td><td id="ndvideodigitized" class="text-center">0</td><td id="ndvideocontentDur" class="text-center">0.00</td><td id="ndvideofile" class="text-center">0.00</td></tr>
+                                        <tr><th>Film</th><td id="ndfilmTotal" class="text-center">0</td><td id="ndfilmlinear" class="text-center">0.00</td><td id="ndfilmdigitized" class="text-center">0</td><td id="ndfilmcontentDur" class="text-center">0.00</td><td id="ndfilmfile" class="text-center">0.00</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p style="font-size: 13px;">* The file size calculation assumes the following target format choices:</p>
+                <p style="font-size: 13px;" class="margin20">Audio: 96/24 Uncompressed WAV Stereo & 256Kbps MP3</p>
+                <p style="font-size: 13px;" class="margin20">Video: FFV1 10-bit & MPEG4 5.0Mbps</p>
+                <p style="font-size: 13px;" class="margin20">Film: 2k Uncompressed, AVC Intra 100 & MPEG4 5.0Mbps</p>
+                <p style="font-size: 13px;"> For more extensive reporting see the File Size Calculator Report found on the Reports page.
+                </p>
             </div>
-            <p style="font-size: 13px;">* The file size calculation assumes the following target format choices:</p>
-            <p style="font-size: 13px;" class="margin20">Audio: 96/24 Uncompressed WAV Stereo & 256Kbps MP3</p>
-            <p style="font-size: 13px;" class="margin20">Video: FFV1 10-bit & MPEG4 5.0Mbps</p>
-            <p style="font-size: 13px;" class="margin20">Film: 2k Uncompressed, AVC Intra 100 & MPEG4 5.0Mbps</p>
-            <p style="font-size: 13px;"> For more extensive reporting see the File Size Calculator Report found on the Reports page.
-            </p>
         </div>
-    </div>
-{% endblock body %}
-{% block view_javascripts %}
-    <script type="text/javascript" src="{{ asset('js/highcharts.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/exporting.js') }}"></script>
-    <script src="{{ asset('bundles/applicationfront/js/dashboard.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/jquery.blockUI.js') }}"></script>
-    <script type="text/javascript">
+    {% endblock body %}
+    {% block view_javascripts %}
+        <script type="text/javascript" src="{{ asset('js/highcharts.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/exporting.js') }}"></script>
+        <script src="{{ asset('bundles/applicationfront/js/dashboard.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery.blockUI.js') }}"></script>
+        <script type="text/javascript">
+                                function setFacets(format) {
+                                    var setFacetsUrl = '{{ path('set_format_facets') }}';
+                                    var pId = $('#projects').val();
+                                    if (pId == "all") {
+                                        pId = "";
+                                    }
+                                    $.ajax({
+                                        method: "GET",
+                                        url: setFacetsUrl,
+                                        data: {projectId: pId, format: format},
+                                        dataType: "json",
+                                        success: function (result) {
+                                            window.location = '{{ path('record_list') }}';
+                                        }
+                                    });
+                                }
                                 $(document).ready(function () {
                                     var baseUrl = '{{ path('report') }}';
                                     var formats
@@ -147,32 +192,33 @@
                                     obj.setBaseUrl(baseUrl);
                                     obj.setFormats(formats);
                                     obj.bindAll();
-        {% if showTerms %}
-                $('#termsModal').show();
-                $('#termsModal').modal({
-                    backdrop: 'static',
-                    keyboard: false
-                });
-        {% endif %}
-        {% if check %}
-                $('#messageModal').show();
-                $("#messageText").show();
-                $('#messageModal').modal({
-                    backdrop: 'static',
-                    keyboard: false
-                });
-        {% endif %}
-        {% if notification == "cancel" or notification == "not-cancel" %}
-                $('#notificationModal').show();
-                $('#notificationModal').modal({
-                    backdrop: 'static',
-                    keyboard: false
-                });
-        {% endif %}
-            });
 
-            function printTerms() {
-                $("#tab1").print();
-            }
-    </script>
-{% endblock view_javascripts %}
+            {% if showTerms %}
+                    $('#termsModal').show();
+                    $('#termsModal').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+            {% endif %}
+            {% if check %}
+                    $('#messageModal').show();
+                    $("#messageText").show();
+                    $('#messageModal').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+            {% endif %}
+            {% if notification == "cancel" or notification == "not-cancel" %}
+                    $('#notificationModal').show();
+                    $('#notificationModal').modal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+            {% endif %}
+                });
+
+                function printTerms() {
+                    $("#tab1").print();
+                }
+        </script>
+    {% endblock view_javascripts %}

@@ -32,20 +32,14 @@ class SphinxCommand extends ContainerAwareCommand {
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $shpinxInfo = $this->getSphinxInfo();
 
-        $records = $em->getRepository('ApplicationFrontBundle:Records')->findAll();
-//        
+        $records = $em->getRepository('ApplicationFrontBundle:Records')->findAll();        
         foreach ($records as $record) {
             $recordId = $record->getId();
-            $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId);
-
-            $result = $sphinxSearch->search();
-            if (count($result) == 0) {
-                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId, $record->getMediaType()->getId());
-                $sphinxSearch->insert();
-                $output->writeln("Inserted record -- " . $recordId);
+            $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId, $record->getMediaType()->getId());
+            $result = $sphinxSearch->replace();
+            if ($result == false) {
+                $output->writeln("Record Not Inserted -- " . $recordId);
             } else {
-                $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $recordId, $record->getMediaType()->getId());
-                $sphinxSearch->replace();
                 $output->writeln("Updated record -- " . $recordId);
             }
         }

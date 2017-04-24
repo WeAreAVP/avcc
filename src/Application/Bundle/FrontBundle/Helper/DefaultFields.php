@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Helper;
 
 use Doctrine\ORM\EntityManager;
@@ -60,7 +62,14 @@ class DefaultFields {
             "Copyright" => array("title" => 'Copyright', 'field' => "record.copyrightRestrictions", "is_required" => 0, "hidden" => 0),
             "Duplicates" => array("title" => 'Duplicates', 'field' => "record.duplicatesDerivatives", "is_required" => 0, "hidden" => 0),
             "Related_Meterial" => array("title" => 'Related Material', 'field' => "record.relatedMaterial", "is_required" => 0, "hidden" => 0),
-            "Condition_Note" => array("title" => 'Condition Note', 'field' => "record.conditionNote", "is_required" => 0, "hidden" => 0)
+            "Condition_Note" => array("title" => 'Condition Note', 'field' => "record.conditionNote", "is_required" => 0, "hidden" => 0),
+            "Parent_Collection" => array("title" => 'Parent Collection', 'field' => "record.parentCollection", "is_required" => 0, "hidden" => 0),
+            "Digitized" => array("title" => 'Digitized', 'field' => "record.digitized", "is_required" => 0, "hidden" => 0),
+            "Digitized_By" => array("title" => 'Digitized By', 'field' => "record.digitizedBy", "is_required" => 0, "hidden" => 0),
+            "Digitized_When" => array("title" => 'Digitized When', 'field' => "record.digitizedWhen", "is_required" => 0, "hidden" => 0),
+            "Urn" => array("title" => 'URN', 'field' => "record.urn", "is_required" => 0, "hidden" => 0),
+            "Transcription" => array("title" => 'Transcription', 'field' => "record.transcription", "is_required" => 0, "hidden" => 0),
+            "Show_Images" => array("title" => 'Show Images', 'field' => "", "is_required" => 0, "hidden" => 0),
         );
 
         $this->defaultOrder['video'] = array(
@@ -93,7 +102,14 @@ class DefaultFields {
             "Copyright" => array("title" => 'Copyright', 'field' => "record.copyrightRestrictions", "is_required" => 0, "hidden" => 0),
             "Duplicates" => array("title" => 'Duplicates', 'field' => "record.duplicatesDerivatives", "is_required" => 0, "hidden" => 0),
             "Related_Meterial" => array("title" => 'Related Material', 'field' => "record.relatedMaterial", "is_required" => 0, "hidden" => 0),
-            "Condition_Note" => array("title" => 'Condition Note', 'field' => "record.conditionNote", "is_required" => 0, "hidden" => 0)
+            "Condition_Note" => array("title" => 'Condition Note', 'field' => "record.conditionNote", "is_required" => 0, "hidden" => 0),
+            "Parent_Collection" => array("title" => 'Parent Collection', 'field' => "record.parentCollection", "is_required" => 0, "hidden" => 0),
+            "Digitized" => array("title" => 'Digitized', 'field' => "record.digitized", "is_required" => 0, "hidden" => 0),
+            "Digitized_By" => array("title" => 'Digitized By', 'field' => "record.digitizedBy", "is_required" => 0, "hidden" => 0),
+            "Digitized_When" => array("title" => 'Digitized When', 'field' => "record.digitizedWhen", "is_required" => 0, "hidden" => 0),
+            "Urn" => array("title" => 'URN', 'field' => "record.urn", "is_required" => 0, "hidden" => 0),
+            "Transcription" => array("title" => 'Transcription', 'field' => "record.transcription", "is_required" => 0, "hidden" => 0),
+            "Show_Images" => array("title" => 'Show Images', 'field' => "", "is_required" => 0, "hidden" => 0),
         );
 
         $this->defaultOrder['film'] = array(
@@ -121,7 +137,7 @@ class DefaultFields {
             "Content_Date" => array("title" => 'Content Date', 'field' => "record.contentDate", "is_required" => 0, "hidden" => 0),
             "Manager_Review" => array("title" => 'Manager Review', 'field' => "record.isReview", "is_required" => 0, "hidden" => 0),
             "General_Notes" => array("title" => 'General Notes', 'field' => "record.generalNote", "is_required" => 0, "hidden" => 0),
-             "Reformatting_Priority" => array("title" => 'Reformatting Priority', 'field' => "record.reformattingPriority", "is_required" => 0, "hidden" => 0),
+            "Reformatting_Priority" => array("title" => 'Reformatting Priority', 'field' => "record.reformattingPriority", "is_required" => 0, "hidden" => 0),
             "Frame_Rate" => array("title" => 'Frame Rate', 'field' => "frameRate", "is_required" => 0, "hidden" => 0),
             "Acid_Detection_Strip" => array("title" => 'Acid Detection Strip', 'field' => "acidDetectionStrip", "is_required" => 0, "hidden" => 0),
             "Shrinkage" => array("title" => 'Shrinkage', 'field' => "shrinkage", "is_required" => 0, "hidden" => 0),
@@ -132,7 +148,14 @@ class DefaultFields {
             "Copyright" => array("title" => 'Copyright', 'field' => "record.copyrightRestrictions", "is_required" => 0, "hidden" => 0),
             "Duplicates" => array("title" => 'Duplicates', 'field' => "record.duplicatesDerivatives", "is_required" => 0, "hidden" => 0),
             "Related_Meterial" => array("title" => 'Related Material', 'field' => "record.relatedMaterial", "is_required" => 0, "hidden" => 0),
-            "Condition_Note" => array("title" => 'Condition Note', 'field' => "record.conditionNote", "is_required" => 0, "hidden" => 0)
+            "Condition_Note" => array("title" => 'Condition Note', 'field' => "record.conditionNote", "is_required" => 0, "hidden" => 0),
+            "Parent_Collection" => array("title" => 'Parent Collection', 'field' => "record.parentCollection", "is_required" => 0, "hidden" => 0),
+            "Digitized" => array("title" => 'Digitized', 'field' => "record.digitized", "is_required" => 0, "hidden" => 0),
+            "Digitized_By" => array("title" => 'Digitized By', 'field' => "record.digitizedBy", "is_required" => 0, "hidden" => 0),
+            "Digitized_When" => array("title" => 'Digitized When', 'field' => "record.digitizedWhen", "is_required" => 0, "hidden" => 0),
+            "Urn" => array("title" => 'URN', 'field' => "record.urn", "is_required" => 0, "hidden" => 0),
+            "Transcription" => array("title" => 'Transcription', 'field' => "record.transcription", "is_required" => 0, "hidden" => 0),
+            "Show_Images" => array("title" => 'Show Images', 'field' => "", "is_required" => 0, "hidden" => 0),
         );
 
         return json_encode($this->defaultOrder);
@@ -214,8 +237,8 @@ class DefaultFields {
             $tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['title'] . '</a>';
 
             $tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['collection_name'] . '</a>';
-            
-           
+
+
 
             $tableView[$mainIndex][] = '<a href="' . $url . '">' . $value['location'] . '</a>';
         }
@@ -232,6 +255,7 @@ class DefaultFields {
         $vocabularies['diskDiameters'] = $em->getRepository('ApplicationFrontBundle:DiskDiameters')->getAllAsArray();
         $vocabularies['formatVersions'] = $em->getRepository('ApplicationFrontBundle:FormatVersions')->getAllAsArray();
         $vocabularies['formats'] = $em->getRepository('ApplicationFrontBundle:Formats')->getAllAsArray();
+        $vocabularies['parentCollection'] = $em->getRepository('ApplicationFrontBundle:ParentCollection')->getAllAsArray();
         $vocabularies['frameRates'] = $em->getRepository('ApplicationFrontBundle:FrameRates')->getAllAsArray();
         $vocabularies['mediaDiameters'] = $em->getRepository('ApplicationFrontBundle:MediaDiameters')->getAllAsArray();
         $vocabularies['mediaTypes'] = $em->getRepository('ApplicationFrontBundle:MediaTypes')->getAllAsArray();
@@ -275,7 +299,13 @@ class DefaultFields {
         $tooltip['relatedMaterial'] = 'A free text field for notes on associated objects.';
         $tooltip['conditionNote'] = 'A free text field containing information identifying chemical or physical damage/degradation that may impact playback (mold, broken cassette, hydrolysis, brittleness, shrinkage, tape damage, etc.) The catalogers may also choose to note the date of the inspection in this field.';
         $tooltip['generalNote'] = '';
+        $tooltip['parentCollection'] = '';
         $tooltip['reformattingPriority'] = '';
+        $tooltip['digitized'] = '';
+        $tooltip['digitizedBy'] = '';
+        $tooltip['digitizedWhen'] = '';
+        $tooltip['urn'] = '';
+        $tooltip['transcription'] = '';
         $tooltip['alternateId'] = '';
         $tooltip['commercial'] = 'A drop down field to identify an object as commercial or unique in nature. Unique may also be used to mean rare.';
         if ($media == 1) {
@@ -315,14 +345,14 @@ class DefaultFields {
 
     public function paidOrganizations($id) {
         $now = date("Y-m-d");
-        if ((int)$id == 239) {
+        if ((int) $id == 239) {
             return false;
-        } else if ((int)$id == 140) {
+        } else if ((int) $id == 140) {
             $march = strtotime("1st April 2017");
-            if ($now < date("Y-m-d", $march)) {                
+            if ($now < date("Y-m-d", $march)) {
                 return false;
             }
-        } else if ((int)$id == 308) {
+        } else if ((int) $id == 308) {
             $may = strtotime("1st May 2017");
             if ($now < date("Y-m-d", $may)) {
                 return false;
@@ -330,4 +360,49 @@ class DefaultFields {
         }
         return true;
     }
+
+    public function fields_cmp($default, $db_view) {
+        $excluded = $this->excludeExtraFields($db_view, $default);
+        $included = $this->includeExtraFields($default, $excluded);
+        return json_encode($included);
+    }
+
+    function includeExtraFields($default, $db) {
+        $new_array = $db;
+        foreach ($default as $key => $field) {
+            foreach ($field as $key1 => $val) {
+                $duplicate = false;
+                foreach ($db[$key] as $data2) {
+                    if (isset($val['title']) && isset($data2['title']) && $val['title'] === $data2['title']) {
+                        $duplicate = true;
+                        break;
+                    }
+                }
+                if ($duplicate === false) {
+                    $new_array[$key][] = $val;
+                }
+            }
+        }
+        return $new_array;
+    }
+
+    function excludeExtraFields($db, $default) {
+        $new_array = $db;
+        foreach ($db as $key => $field) {
+            foreach ($field as $key1 => $val) {
+                $duplicate = false;
+                foreach ($default[$key] as $data2) {
+                    if (isset($val['title']) && isset($data2['title']) && $val['title'] === $data2['title']) {
+                        $duplicate = true;
+                        break;
+                    }
+                }
+                if ($duplicate === false) {
+                    unset($new_array[$key][$key1]);
+                }
+            }
+        }
+        return $new_array;
+    }
+
 }

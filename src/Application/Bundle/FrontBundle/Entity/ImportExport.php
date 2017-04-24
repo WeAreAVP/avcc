@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -22,8 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\HasLifecycleCallbacks
  *
  */
-class ImportExport
-{
+class ImportExport {
 
     /**
      * @var integer
@@ -89,6 +90,7 @@ class ImportExport
      * @var integer
      */
     private $organizationId;
+
     /**
      * @var boolean
      *
@@ -97,11 +99,22 @@ class ImportExport
     private $status;
 
     /**
+     * @ORM\Column(name="insert_option", type="integer", nullable=true, options={"default" = 0})
+     * @var integer
+     */
+    private $insertOption;
+    
+    /**
+     * @ORM\Column(name="existing_records", type="integer", nullable=true, options={"default" = 0})
+     * @var integer
+     */
+    private $existingRecords;
+
+    /**
      * @ORM\PrePersist
      */
-    public function setCreatedOnValue()
-    {
-        if ( ! $this->getCreatedOn()) {
+    public function setCreatedOnValue() {
+        if (!$this->getCreatedOn()) {
             $this->createdOn = new \DateTime();
         }
     }
@@ -109,8 +122,7 @@ class ImportExport
     /**
      * @ORM\PreUpdate
      */
-    public function setUpdatedOnValue()
-    {
+    public function setUpdatedOnValue() {
         $this->updatedOn = new \DateTime();
     }
 
@@ -119,88 +131,71 @@ class ImportExport
      *
      * @return string
      */
-    public function __toString()
-    {
+    public function __toString() {
         return '';
     }
 
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
-    public function getCreatedOn()
-    {
+    public function getCreatedOn() {
         return $this->createdOn;
     }
 
-    public function getUpdatedOn()
-    {
+    public function getUpdatedOn() {
         return $this->updatedOn;
     }
 
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
-    public function getType()
-    {
+    public function getType() {
         return $this->type;
     }
 
-    public function getFormat()
-    {
+    public function getFormat() {
         return $this->format;
     }
 
-    public function getQueryOrId()
-    {
+    public function getQueryOrId() {
         return $this->queryOrId;
     }
 
-    public function getStatus()
-    {
+    public function getStatus() {
         return $this->status;
     }
 
-    public function setId($id)
-    {
+    public function setId($id) {
         $this->id = $id;
     }
 
-    public function setCreatedOn(\DateTime $createdOn)
-    {
+    public function setCreatedOn(\DateTime $createdOn) {
         $this->createdOn = $createdOn;
     }
 
-    public function setUpdatedOn(\DateTime $updatedOn)
-    {
+    public function setUpdatedOn(\DateTime $updatedOn) {
         $this->updatedOn = $updatedOn;
     }
 
-    public function setUser(\Application\Bundle\FrontBundle\Entity\Users $user)
-    {
+    public function setUser(\Application\Bundle\FrontBundle\Entity\Users $user) {
         $this->user = $user;
     }
 
-    public function setType($type)
-    {
+    public function setType($type) {
         $this->type = $type;
     }
 
-    public function setFormat($format)
-    {
+    public function setFormat($format) {
         $this->format = $format;
     }
 
-    public function setQueryOrId($queryOrId)
-    {
+    public function setQueryOrId($queryOrId) {
         $this->queryOrId = $queryOrId;
     }
 
-    public function setStatus($status)
-    {
+    public function setStatus($status) {
         $this->status = $status;
     }
 
@@ -209,8 +204,7 @@ class ImportExport
      *
      * @param string $file
      */
-    public function setFileName($file)
-    {
+    public function setFileName($file) {
         $this->fileName = $file;
     }
 
@@ -219,18 +213,16 @@ class ImportExport
      *
      * @return string
      */
-    public function getFileName()
-    {
+    public function getFileName() {
         return $this->fileName;
     }
-    
+
     /**
      * Set organization Id field     *
      *
      * @param integer $organizationId
      */
-    public function setOrganizationId($organizationId)
-    {
+    public function setOrganizationId($organizationId) {
         $this->organizationId = $organizationId;
     }
 
@@ -239,8 +231,44 @@ class ImportExport
      *
      * @return integer
      */
-    public function getOrganizationId()
-    {
+    public function getOrganizationId() {
         return $this->organizationId;
     }
+
+    /**
+     * Set insertOption   
+     *
+     * @param integer $organizationId
+     */
+    public function setInsertOption($insertOption) {
+        $this->insertOption = $insertOption;
+    }
+
+    /**
+     * Return  insertOption
+     *
+     * @return integer
+     */
+    public function getInsertOption() {
+        return $this->insertOption;
+    }
+    
+      /**
+     * Set insertOption   
+     *
+     * @param integer $existingRecords
+     */
+    public function setExistingRecords($existingRecords) {
+        $this->existingRecords = $existingRecords;
+    }
+
+    /**
+     * Return  insertOption
+     *
+     * @return integer
+     */
+    public function getExistingRecords() {
+        return $this->existingRecords;
+    }
+
 }

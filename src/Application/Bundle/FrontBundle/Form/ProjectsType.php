@@ -52,13 +52,16 @@ class ProjectsType extends AbstractType {
                         return $er->createQueryBuilder('u');
                     },
                     'required' => false,
-                    'multiple' => true,                    
+                    'multiple' => true,
 //                    'mapped' => false,
                 ))
                 ->add('hidden_projectUsers', 'hidden', array(
                     'mapped' => false,
                     'required' => false,
                 ))
+                ->add('audioFilesize')
+                ->add('videoFilesize')
+                ->add('filmFilesize') 
                 ->addEventListener(
                         FormEvents::POST_SET_DATA, array($this, 'onPreSetData'))
                 ->addEventListener(

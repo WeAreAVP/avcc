@@ -30,6 +30,7 @@ class SphinxHelper {
         $searchColumns = array(
             'mediaType' => 's_media_type',
             'commercial' => 's_commercial',
+            'parent_collection' => 's_parent_collection',
             'format' => 's_format',
             'base' => 's_base',
             'collection_name' => 's_collection_name',
@@ -40,10 +41,13 @@ class SphinxHelper {
             'acidDetection' => 's_acid_detection',
             'project' => 'project_id',
             'is_review_check' => 'is_review',
+            'is_transcription_check' => 'is_transcription',
+            'is_digitized_check' => 'is_digitized',
+            'has_images_check' => 'has_images',
             'is_reformatting_priority_check' => 'is_reformatting_priority',
             'creationDate' => 's_creation_date',
             'contentDate' => 's_content_date',
-            'contentDate' => 's_content_date',
+            'contentDate' => 's_content_date', 
             'organization_name' => 'organization_id'
         );
 
@@ -59,10 +63,10 @@ class SphinxHelper {
                 foreach ($keywords as $keyword) {
                     if ($keyword['type'] == 'all') {
                         foreach ($this->keywords as $key) {
-                            $criteriaArr['*'] = $keyword['value'];
+                            $criteriaArr['*'][] = $keyword['value'];
                         }
                     } else {
-                        $criteriaArr['s_' . $keyword['type']] = $keyword['value'];
+                        $criteriaArr['s_' . $keyword['type']][] = $keyword['value'];
                     }
                 }
             }

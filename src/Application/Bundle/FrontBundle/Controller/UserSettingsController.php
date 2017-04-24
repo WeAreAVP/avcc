@@ -68,7 +68,7 @@ class UserSettingsController extends MyController {
      */
     public function indexAction($projectId = null) {
         $session = $this->getRequest()->getSession();
-       if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
+        if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
         $em = $this->getDoctrine()->getManager();
@@ -93,7 +93,7 @@ class UserSettingsController extends MyController {
             } else {
                 $defSettings = $fObj->getDefaultOrder();
                 $dbSettings = $entities->getViewSetting();
-                $viewSettings = $this->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
+                $viewSettings = $fObj->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
 //				$name = $entities->getName();
             }
             $name = $entities->getName();
@@ -136,7 +136,7 @@ class UserSettingsController extends MyController {
                     $userEntity->setViewSetting($userSetting);
                     $userEntity->setUpdatedOnValue(date('Y-m-d h:i:s'));
                     $em->persist($userEntity);
-                    $em->flush();
+                    $em->flush($userEntity);
                     $this->get('session')->getFlashBag()->add('success', 'Settings updated succesfully.');
                     $success = TRUE;
                     $reload = TRUE;
@@ -321,45 +321,6 @@ class UserSettingsController extends MyController {
         $em->persist($job);
         $em->flush($job);
         exit;
-    }
-
-    public function fields_cmp($default, $db_view) {
-        $field_order = array();
-        $previous = array();
-        $key = '';
-        $new = array();
-
-        foreach ($default as $key1 => $value) {
-            foreach ($value as $key2 => $fields) {
-                $index = array_search($fields['field'], array_map(function($element) {
-                                    return $element['field'];
-                                }, $db_view[$key1]));
-                if ($default[$key1][$key2]['field'] == $db_view[$key1][$index]['field']) {
-                    if (array_diff($default[$key1][$key2], $db_view[$key1][$index])) {
-                        $db_view[$key1][$index] = $default[$key1][$key2];
-                    }
-                } else {
-                    $previous[$key1][$key] = $default[$key1][$key]['field'];
-                    $field_order[$key1][$key] = $default[$key1][$key2];
-                }
-                $key = $key2;
-            }
-        }
-        if (!empty($previous)) {
-            foreach ($db_view as $keys1 => $values) {
-                foreach ($values as $keys2 => $fields) {
-                    $new[$keys1][] = $db_view[$keys1][$keys2];
-                    if (in_array($fields['field'], $previous[$keys1])) {
-                        $new_index = array_search($fields['field'], $previous[$keys1]);
-                        $new[$keys1][] = $field_order[$keys1][$new_index];
-                    }
-                }
-            }
-        }
-        if (!empty($new))
-            return json_encode($new);
-        else
-            return json_encode($db_view);
     }
 
 }

@@ -55,6 +55,15 @@ class RecordsType extends AbstractType {
                         'required' => true,
                         'empty_data' => ''
                     ))
+                    ->add('parentCollection', 'entity', array(
+                        'class' => 'ApplicationFrontBundle:ParentCollection',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('pc')
+                                    ->orderBy('pc.order', 'ASC');
+                        },
+                        'required' => false,
+                        'empty_data' => ''
+                    ))
                     ->add('title')
                     ->add('collectionName', 'text', array('required' => false))
                     ->add('description')
@@ -72,6 +81,11 @@ class RecordsType extends AbstractType {
                     ->add('contentDate', 'text', array('required' => false))
                     ->add('isReview')
                     ->add('reformattingPriority')
+                    ->add('digitized')
+                    ->add('digitizedBy')
+                    ->add('digitizedWhen')
+                    ->add('urn')
+                    ->add('transcription')
                     ->add('genreTerms')
                     ->add('contributor')
                     ->add('generation')
@@ -116,6 +130,15 @@ class RecordsType extends AbstractType {
                                     ->orderBy('f.name', 'ASC');
                         }
                     ))
+                    ->add('parentCollection', 'entity', array(
+                        'class' => 'ApplicationFrontBundle:ParentCollection',
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('pc')
+                                    ->orderBy('pc.order', 'ASC');
+                        },
+                        'empty_data' => '',
+                        'required' => false
+                    ))
                     ->add('title')
                     ->add('collectionName', 'text', array('required' => false))
                     ->add('description')
@@ -127,12 +150,17 @@ class RecordsType extends AbstractType {
                         },
                         'empty_data' => '',
                         'required' => false
-                    ))
+                    )) 
                     ->add('contentDuration', 'text', array('required' => false))
                     ->add('creationDate', 'text', array('required' => false))
                     ->add('contentDate', 'text', array('required' => false))
                     ->add('isReview')
                     ->add('reformattingPriority')
+                    ->add('digitized')
+                    ->add('digitizedBy')
+                    ->add('digitizedWhen')
+                    ->add('urn')
+                    ->add('transcription')
                     ->add('genreTerms')
                     ->add('contributor')
                     ->add('generation')

@@ -124,7 +124,7 @@ class VideoRecordsController extends MyController {
             if ($project->getViewSetting() != null) {
                 $defSettings = $fieldsObj->getDefaultOrder();
                 $dbSettings = $project->getViewSetting();
-                $userViewSettings = $this->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
+                $userViewSettings = $fieldsObj->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
 //                $userViewSettings = $project->getViewSetting();
             } else {
                 $userViewSettings = $fieldsObj->getDefaultOrder();
@@ -182,9 +182,11 @@ class VideoRecordsController extends MyController {
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
         }
+       
         $em = $this->getDoctrine()->getManager();
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(3, $em, $this->getUser(), $projectId);
+       
         if ($videoRecId) {
             $entity = $em->getRepository('ApplicationFrontBundle:VideoRecords')->find($videoRecId);
             $entity->getRecord()->setUniqueId(NULL);
@@ -214,7 +216,7 @@ class VideoRecordsController extends MyController {
 //                $userViewSettings = $project->getViewSetting();
                 $defSettings = $fieldsObj->getDefaultOrder();
                 $dbSettings = $project->getViewSetting();
-                $userViewSettings = $this->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
+                $userViewSettings = $fieldsObj->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
             } else {
                 $userViewSettings = $fieldsObj->getDefaultOrder();
             }
@@ -224,8 +226,7 @@ class VideoRecordsController extends MyController {
             if ($project->getViewSetting() != null) {
                 $defSettings = $fieldsObj->getDefaultOrder();
                 $dbSettings = $project->getViewSetting();
-                $userViewSettings = $this->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
-//                $userViewSettings = $project->getViewSetting();
+                $userViewSettings = $fieldsObj->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
             } else {
                 $userViewSettings = $fieldsObj->getDefaultOrder();
             }
@@ -233,9 +234,6 @@ class VideoRecordsController extends MyController {
             $userViewSettings = $fieldsObj->getDefaultOrder();
         }
         $userViewSettings = json_decode($userViewSettings, true);
-//        echo '<pre>';
-//        print_r($userViewSettings);
-//        exit;
         $tooltip = $fieldsObj->getToolTip(3);
         return $this->render('ApplicationFrontBundle:VideoRecords:new.html.php', array(
                     'entity' => $entity,
@@ -279,7 +277,7 @@ class VideoRecordsController extends MyController {
             if ($project->getViewSetting() != null) {
                 $defSettings = $fieldsObj->getDefaultOrder();
                 $dbSettings = $project->getViewSetting();
-                $userViewSettings = $this->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
+                $userViewSettings = $fieldsObj->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
 //                $userViewSettings = $project->getViewSetting();
             } else {
                 $userViewSettings = $fieldsObj->getDefaultOrder();
@@ -288,7 +286,7 @@ class VideoRecordsController extends MyController {
 //            $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
             $defSettings = $fieldsObj->getDefaultOrder();
             $dbSettings = $entity->getRecord()->getProject()->getViewSetting();
-            $userViewSettings = $this->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
+            $userViewSettings = $fieldsObj->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
         } else {
             $userViewSettings = $fieldsObj->getDefaultOrder();
         }
@@ -401,7 +399,7 @@ class VideoRecordsController extends MyController {
         if ($entity->getRecord()->getProject()->getViewSetting()) {
             $defSettings = $fieldsObj->getDefaultOrder();
             $dbSettings = $entity->getRecord()->getProject()->getViewSetting();
-            $userViewSettings = $this->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
+            $userViewSettings = $fieldsObj->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
 //            $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
         }
         $userViewSettings = json_decode($userViewSettings, true);
@@ -482,44 +480,4 @@ class VideoRecordsController extends MyController {
         }
         return '';
     }
-
-    public function fields_cmp($default, $db_view) {
-        $field_order = array();
-        $previous = array();
-        $key = '';
-        $new = array();
-
-        foreach ($default as $key1 => $value) {
-            foreach ($value as $key2 => $fields) {
-                $index = array_search($fields['field'], array_map(function($element) {
-                            return $element['field'];
-                        }, $db_view[$key1]));
-                if ($default[$key1][$key2]['field'] == $db_view[$key1][$index]['field']) {
-                    if (array_diff($default[$key1][$key2], $db_view[$key1][$index])) {
-                        $db_view[$key1][$index] = $default[$key1][$key2];
-                    }
-                } else {
-                    $previous[$key1][$key] = $default[$key1][$key]['field'];
-                    $field_order[$key1][$key] = $default[$key1][$key2];
-                }
-                $key = $key2;
-            }
-        }
-        if (!empty($previous)) {
-            foreach ($db_view as $keys1 => $values) {
-                foreach ($values as $keys2 => $fields) {
-                    $new[$keys1][] = $db_view[$keys1][$keys2];
-                    if (in_array($fields['field'], $previous[$keys1])) {
-                        $new_index = array_search($fields['field'], $previous[$keys1]);
-                        $new[$keys1][] = $field_order[$keys1][$new_index];
-                    }
-                }
-            }
-        }
-        if (!empty($new))
-            return json_encode($new);
-        else
-            return json_encode($db_view);
-    }
-
 }

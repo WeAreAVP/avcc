@@ -12,17 +12,42 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class ApplicationFrontExtension extends Extension
-{
+class ApplicationFrontExtension extends Extension {
+
     /**
      * {@inheritDoc}
      */
-    public function load(array $configs, ContainerBuilder $container)
-    {
+    public function load(array $configs, ContainerBuilder $container) {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+        if (!isset($config['amazon_s3']['aws_key'])) {
+            throw new \InvalidArgumentException(
+            'The option "application_front.amazon_s3.aws_key" must be set.'
+            );
+        }
+        $container->setParameter(
+                'application_front.amazon_s3.aws_key', $config['amazon_s3']['aws_key']
+        );
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        if (!isset($config['amazon_s3']['aws_secret_key'])) {
+            throw new \InvalidArgumentException(
+            'The option "application_front.amazon_s3.aws_secret_key" must be set.'
+            );
+        }
+        $container->setParameter(
+                'application_front.amazon_s3.aws_secret_key', $config['amazon_s3']['aws_secret_key']
+        );
+
+        if (!isset($config['amazon_s3']['base_url'])) {
+            throw new \InvalidArgumentException(
+            'The option "application_front.amazon_s3.base_url" must be set.'
+            );
+        }
+        $container->setParameter(
+                'application_front.amazon_s3.base_url', $config['amazon_s3']['base_url']
+        );
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
     }
+
 }

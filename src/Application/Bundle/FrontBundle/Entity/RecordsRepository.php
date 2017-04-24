@@ -140,9 +140,9 @@ class RecordsRepository extends EntityRepository {
             $where = 'WHERE o.id =  :organization AND r.uniqueId = :unique AND r.id != :id';
         }
         $query = $this->getEntityManager()
-                ->createQuery("SELECT r.uniqueId from ApplicationFrontBundle:Records r "
-                . "JOIN r.user u "
-                . "JOIN u.organizations o "
+                ->createQuery("SELECT r.uniqueId, r.id from ApplicationFrontBundle:Records r "
+                . "JOIN r.project u "
+                . "JOIN u.organization o "
                 . $where);
         $query->setParameter('organization', $organizationID);
         $query->setParameter('unique', $unique_id);

@@ -2,52 +2,55 @@
 
 {% block body %}
     <div class="grid fluid">
-		<h1>
-			<a href="{{ path('projects') }}"><i class="icon-arrow-left-3 smaller"></i> </a>
-			Project Detail
-		</h1>
+        <h1>
+            <a href="{{ path('projects') }}"><i class="icon-arrow-left-3 smaller"></i> </a>
+            Project Detail
+        </h1>
 
 
-		<ul class="inline">
-			<li>
-				<a href="{{ path('projects_edit', { 'id': entity.id }) }}" class="button primary">
-					Edit
-				</a>
-			</li>
-			<li>{{ form(delete_form) }}</li>
-                        <li>
-				<a href="{{ path('project_record_add', { 'id': entity.id } ) }}" class="button primary">
-					Add Record
-				</a>
-			</li>
-		</ul>
-		<dl class="horizontal">
-			<dt>Name</dt>
-			<dd>{{ entity.name }}</dd>
-		</dl>
+        <ul class="inline">
+            <li>
+                <a href="{{ path('projects_edit', { 'id': entity.id }) }}" class="button primary">
+                    Edit
+                </a>
+            </li>
+            <li>{{ form(delete_form) }}</li>
+            <li>
+                <a href="{{ path('project_record_add', { 'id': entity.id } ) }}" class="button primary">
+                    Add Record
+                </a>
+            </li>
+        </ul>
+        <dl class="horizontal">
+            <dt>Name</dt>
+            <dd>{{ entity.name }}</dd>
+        </dl>
 
-		<dl class="horizontal">
-			<dt>Organization</dt>
-			<dd>{{ entity.organization }}</dd>
-		</dl>
+        <dl class="horizontal">
+            <dt>Organization</dt>
+            <dd>{{ entity.organization }}</dd>
+        </dl>
+        <dl class="horizontal">
+            <dt style="white-space: normal ! important;">File Size for the Digitized Items</dt>
+            <dd>Audio: {{ entity.audioFilesize }}, Video: {{ entity.videoFilesize }}, Film: {{ entity.filmFilesize }}</dd>
+        </dl>
+        <dl class="horizontal">
+            <dt>Created On</dt>
+            <dd>{{ entity.createdon|date('Y-m-d H:i:s') }}</dd>
+        </dl>
+        <dl class="horizontal">
+            <dt>Updated On</dt>
+            <dd>{{ entity.updatedon|date('Y-m-d H:i:s') }}</dd>
+        </dl>
+        <dl class="horizontal">
+            <dt>Created by</dt>
+            <dd>{{ entity.userscreated }}</dd>
+        </dl>
+        <dl class="horizontal">
+            <dt>Updated by</dt>
+            <dd>{{ entity.usersupdated }}</dd>
+        </dl>
 
-		<dl class="horizontal">
-			<dt>Created On</dt>
-			<dd>{{ entity.createdon|date('Y-m-d H:i:s') }}</dd>
-		</dl>
-		<dl class="horizontal">
-			<dt>Updated On</dt>
-			<dd>{{ entity.updatedon|date('Y-m-d H:i:s') }}</dd>
-		</dl>
-		<dl class="horizontal">
-			<dt>Created by</dt>
-			<dd>{{ entity.userscreated }}</dd>
-		</dl>
-		<dl class="horizontal">
-			<dt>Updated by</dt>
-			<dd>{{ entity.usersupdated }}</dd>
-		</dl>
-
-	</div>
+    </div>
 
 {% endblock %}

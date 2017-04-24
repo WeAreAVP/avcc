@@ -145,6 +145,7 @@ class RecordsController extends MyController {
         $facet['acidDetection'] = $this->removeEmpty($sphinxSearch->facetSelect('acid_detection', $this->getUser(), $criteria, $parentFacet), 'acid_detection');
         $facet['collectionNames'] = $this->removeEmpty($sphinxSearch->facetSelect('collection_name', $this->getUser(), $criteria, $parentFacet), 'collection_name');
         $facet['organizationNames'] = $this->removeEmpty($sphinxSearch->facetSelect('organization_name', $this->getUser(), $criteria, $parentFacet, null, 'organization_id', 'organization_id'), 'organization_name');
+        $facet['parentCollection'] = $this->removeEmpty($sphinxSearch->facetSelect('parent_collection', $this->getUser(), $criteria, $parentFacet), 'parent_collection');
 
         $organizations = $em->getRepository('ApplicationFrontBundle:Organizations')->findAll();
         $contact_person = "avcc@avpreserve.com";
@@ -569,7 +570,13 @@ class RecordsController extends MyController {
         $entityArray["conditionNote"] = $entity->getConditionNote();
         $entityArray["generalNote"] = $entity->getGeneralNote();
         $entityArray["reformattingPriority"] = $entity->getReformattingPriority();
+        $entityArray["digitized"] = $entity->getDigitized();
+        $entityArray["digitizedBy"] = $entity->getDigitizedBy();
+        $entityArray["digitizedWhen"] = $entity->getDigitizedWhen();
+        $entityArray["urn"] = $entity->getUrn();
+        $entityArray["transcription"] = $entity->getTranscription();
         $entityArray["commercial"] = $entity->getCommercial() ? $entity->getCommercial()->getName() : '';
+        $entityArray["parentCollection"] = $entity->getParentCollection() ? $entity->getParentCollection()->getName() : '';
         $entityArray["reelDiameters"] = $entity->getReelDiameters() ? $entity->getReelDiameters()->getName() : '';
         if ($entity->getMediaType()->getId() == 1) {
             $tooltip = $fieldsObj->getToolTip(1);
@@ -609,19 +616,27 @@ class RecordsController extends MyController {
         if ($entity->getProject()->getViewSetting()) {
             $defSettings = $fieldsObj->getDefaultOrder();
             $dbSettings = $entity->getProject()->getViewSetting();
-            $userViewSettings = $this->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
-//            $userViewSettings = $entity->getProject()->getViewSetting();
+            $userViewSettings = $fieldsObj->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
         } else {
             $userViewSettings = $fieldsObj->getDefaultOrder();
         }
+        $uploadImages = FALSE;
+        $org_id = $entity->getProject()->getOrganization()->getId();
+        $organization = $em->getRepository('ApplicationFrontBundle:Organizations')->find($org_id);
+        if ($organization->getIsPaid() == 1) {
+            $uploadImages = TRUE;
+        }
 
+        $images = $em->getRepository('ApplicationFrontBundle:RecordImages')->findBy(array('recordId' => $id));
 
         $userViewSettings = json_decode($userViewSettings, true);
         return $this->render('ApplicationFrontBundle:Records:show.html.php', array(
                     'entity' => $entity,
                     'entityArray' => $entityArray,
                     'fieldSettings' => $userViewSettings,
-                    'tooltip' => $tooltip
+                    'tooltip' => $tooltip,
+                    'images' => $images,
+                    'uploadImages' => $uploadImages
         ));
     }
 
@@ -789,45 +804,6 @@ class RecordsController extends MyController {
         }
     }
 
-    public function fields_cmp($default, $db_view) {
-        $field_order = array();
-        $previous = array();
-        $key = '';
-        $new = array();
-
-        foreach ($default as $key1 => $value) {
-            foreach ($value as $key2 => $fields) {
-                $index = array_search($fields['field'], array_map(function($element) {
-                            return $element['field'];
-                        }, $db_view[$key1]));
-                if ($default[$key1][$key2]['field'] == $db_view[$key1][$index]['field']) {
-                    if (array_diff($default[$key1][$key2], $db_view[$key1][$index])) {
-                        $db_view[$key1][$index] = $default[$key1][$key2];
-                    }
-                } else {
-                    $previous[$key1][$key] = $default[$key1][$key]['field'];
-                    $field_order[$key1][$key] = $default[$key1][$key2];
-                }
-                $key = $key2;
-            }
-        }
-        if (!empty($previous)) {
-            foreach ($db_view as $keys1 => $values) {
-                foreach ($values as $keys2 => $fields) {
-                    $new[$keys1][] = $db_view[$keys1][$keys2];
-                    if (in_array($fields['field'], $previous[$keys1])) {
-                        $new_index = array_search($fields['field'], $previous[$keys1]);
-                        $new[$keys1][] = $field_order[$keys1][$new_index];
-                    }
-                }
-            }
-        }
-        if (!empty($new))
-            return json_encode($new);
-        else
-            return json_encode($db_view);
-    }
-
     protected function fetchFromSphinx($user, $sphinxInfo, $em) {
         $count = 0;
         $offset = 0;
@@ -848,6 +824,80 @@ class RecordsController extends MyController {
         }
 
         return $recordIds;
+    }
+
+    /**
+     * Lists all AudioRecords entities.
+     *
+     * @param Request $request
+     *
+     * @Route("/set_format_facets", name="set_format_facets")
+     * @Method("GET")
+     * @Template()
+     * @return array
+     */
+    public function setFormatFacetAction(Request $request) {
+        $data = $request->query->all();
+        $format = $data["format"];
+        $projectId = $data["projectId"];
+        $session = $this->getRequest()->getSession();
+        $session->remove('facetData');
+        $session->remove('projectFacet');
+        $facetData = array(
+            "org_filter" => "",
+            "formt_filter" => "",
+            "collection_filter" => "",
+            "parent_collection_filter" => "",
+            "project_filter" => "",
+            "is_review_check" => "",
+            "is_reformatting_priority_check" => "",
+            "has_images_check" => "",
+            "is_digitized_check" => "",
+            "is_transcription_check" => "",
+            "facet_keyword_search" => ""
+        );
+        $em = $this->getDoctrine()->getManager();
+        if (!empty($projectId)) {
+            $facetData["project"][] = $projectId;
+            $facetData["format"][] = $format;
+            $facetData["parent_facet"] = "project";
+            $facetData["total_checked"] = 2;
+            $proj_info = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
+            $new_data[$projectId] = $proj_info->getName();
+            $session->set('projectFacet', $new_data);
+        } else {
+            $facetData["format"][] = $format;
+            $facetData["parent_facet"] = "format";
+            $facetData["total_checked"] = 1;
+        }
+
+        $session->set('facetData', $facetData);
+        echo json_encode(array("session" => "done"));
+        exit;
+    }
+
+    /**
+     *  delete record image
+     *
+     * @param Request $request
+     *
+     * @Route("/delete_image", name="record_delete_image")
+     * @Method("POST")
+     * @return array
+     */
+    public function deleteImages(Request $request) {
+        // code to update
+        $imageId = $this->get('request')->request->get('image_id');
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('ApplicationFrontBundle:RecordImages')->find($imageId);
+        if (!$entity) {
+            echo json_encode(array('success' => 'true'));
+            exit;
+        }
+        $em->remove($entity);
+        $em->flush();
+        echo json_encode(array('success' => 'true'));
+        exit;
     }
 
 }

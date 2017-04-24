@@ -22,3 +22,4 @@ parameters:
     stripe_publishkey: key_publish
     stripe_secretkey: key_secret
     qa_instance: false
+    enable_stripe: false

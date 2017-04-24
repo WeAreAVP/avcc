@@ -23,6 +23,17 @@ class Configuration implements ConfigurationInterface
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
+        $rootNode
+            ->children()
+                ->arrayNode('amazon_s3')
+                    ->children()
+                        ->scalarNode('aws_key')->end()
+                        ->scalarNode('aws_secret_key')->end()
+                        ->scalarNode('base_url')->end()
+                    ->end()
+                ->end()
+            ->end(); 
+
         return $treeBuilder;
     }
 }

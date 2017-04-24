@@ -12,10 +12,11 @@ function initialize_records_form() {
 
     if (selectedMediaType)
         $('#mediaType option[value="' + selectedMediaType + '"]').attr("selected", "selected");
-    $.mask.definitions['y'] = '[1-2,x]';
-    $.mask.definitions['m'] = '[0-1,x]';
-    $.mask.definitions['d'] = '[0-3,x]';
-    $.mask.definitions['g'] = '[0-9,x]';
+    $.mask.definitions['y'] = '[1-2]';
+    $.mask.definitions['m'] = '[0-1]';
+    $.mask.definitions['d'] = '[0-3]';
+    $.mask.definitions['g'] = '[0-9]';
+    $("#digitizedWhen").mask("mg/yggg", {optional: true});
 //    $("#creationDate, #contentDate").mask("yggg-mg-dg", {optional: true});
     updateViewSetting();
     updateProjects();
@@ -23,7 +24,8 @@ function initialize_records_form() {
     onChangeMediaType();
 
     showUpdateFields();
-
+    showDigitizedFields();
+    convertTimeToMinutes();
     saveBulkEdit();
     closeBtn();
     var check = 0;
@@ -72,7 +74,7 @@ function updateFormat() {
     if ($("#mediaType").val()) {
         $("#format_lbl").show();
         if (selectedFormat) {
-            
+
             url = baseUrl + 'getFormat/' + $("#mediaType").val() + '/' + selectedFormat;
         } else {
             url = baseUrl + 'getFormat/' + $("#mediaType").val();
@@ -96,6 +98,50 @@ function updateFormat() {
         $('#fieldsPanel').show();
         $("#format_lbl").hide();
     }
+}
+
+function convertTimeToMinutes() {
+    $("#contentDuration").on("blur", function () {
+        var hms = $("#contentDuration").val();
+        if (hms != "") {
+            var a = hms.split(':');
+            if (a.length > 1) {
+                var seconds;
+                if (a.length == 2) {
+                    seconds = (+a[0]) * 60 + (+a[1]);
+                } else {
+                    seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+                }
+                var minutes = seconds / 60;
+                $("#contentDuration").val(minutes.toFixed(2));
+            }
+        }
+    });
+}
+function showDigitizedFields() {
+//    $("#digitizedBy").val('');
+//    $("#digitizedWhen").val('');
+//    $("#urn").val('');
+    if ($('#digitized').prop("checked") == false) {
+        $("#digitizedBy_lbl").hide();
+        $("#digitizedWhen_lbl").hide();
+        $("#urn_lbl").hide();
+    }
+
+    $('#digitized').click(function () {
+        if ($(this).prop("checked") == true) {
+            $("#digitizedBy_lbl").show();
+            $("#digitizedWhen_lbl").show();
+            $("#urn_lbl").show();
+        } else {
+            $("#digitizedBy").val('');
+            $("#digitizedWhen").val('');
+            $("#urn").val('');
+            $("#digitizedBy_lbl").hide();
+            $("#digitizedWhen_lbl").hide();
+            $("#urn_lbl").hide();
+        }
+    });
 }
 
 function showUpdateFields() {
@@ -340,9 +386,10 @@ function updateProjects() {
     }
     proj = $("#project").val();
     var path = window.location.href;
-    console.log(path);
     var split_path = path.split('/');
-    if ($.isNumeric(split_path[split_path.length - 1])) {
+    var split = split_path[split_path.length - 1];
+    var split_2 = split_path[split_path.length - 2];
+    if (Math.floor(split) == split && $.isNumeric(split) && (split_2 == "new" || split_2 == "edit")) { 
         selectedProject = split_path[split_path.length - 1];
     }
     if (selectedProject) {

@@ -1,4 +1,9 @@
 ## YAML Template.
+parameters:
+
+  application_front.amazon_s3.class: AmazonS3
+#  core_storage.photo_uploader.class: Application\Bundle\FrontBundle\Service\PhotoUploader
+  
 services:
     application_user.registration.form.type:
         class: Application\Bundle\FrontBundle\Form\Type\RegistrationFormType
@@ -14,3 +19,13 @@ services:
         class: Application\Bundle\FrontBundle\EventListener\SearchIndexerSubscriber
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+            
+    
+    application_front.amazon_s3:
+        class: %application_front.amazon_s3.class%
+        arguments:
+             - { key: %amazon_aws_key%, secret: %amazon_aws_secret_key% }
+
+#    application_front.photo_uploader:
+#        class: %core_storage.photo_uploader.class%
+#        arguments: [@photo_storage_filesystem]

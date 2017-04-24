@@ -23,7 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Application\Bundle\FrontBundle\Helper\EmailHelper;
 use Application\Bundle\FrontBundle\Helper\DefaultFields;
 
-class ImportReportCommand extends ContainerAwareCommand {
+class ImportReportCommand extends ContainerAwareCommand { 
 
     protected function configure() {
         $this
@@ -43,14 +43,21 @@ class ImportReportCommand extends ContainerAwareCommand {
         if ($id) {
             $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id, 'type' => 'import', 'status' => 0));
             if ($entity) {
-                $import = new ImportReport($this->getContainer());
-                $user = $entity->getUser();
+
                 $fileName = $entity->getFileName();
+                $user = $entity->getUser();
                 $organization = $em->getRepository('ApplicationFrontBundle:Organizations')->find($entity->getOrganizationId());
-                $rows = $import->getTotalRows($fileName) - 1;
+                $insertType = $entity->getInsertOption();
+                $import = new ImportReport($this->getContainer());
+                $existingRows = 0;
+                $rows = (int) $import->getTotalRows($fileName) - 1;
+                if ($insertType != 0) {
+                    $existingRows = (int) $entity->getExistingRecords();
+                    $rows = $rows - $existingRows;
+                } 
+
                 $_import = true;
                 $fieldsObj = new DefaultFields();
-                
                 if ($organization && $this->getContainer()->getParameter("enable_stripe")) {
                     $paidOrg = $fieldsObj->paidOrganizations($organization->getId());
                     if ($paidOrg) {
@@ -75,15 +82,16 @@ class ImportReportCommand extends ContainerAwareCommand {
                     }
                 }
                 if ($_import) {
-                    $validateFields = $import->validateVocabulary($fileName, $entity->getOrganizationId());
+                    $validateFields = $import->validateVocabulary($fileName, $entity->getOrganizationId(), true);
                     if ($validateFields) {
                         $baseUrl = $this->getContainer()->getParameter('baseUrl');
                         $templateParameters = array('user' => $entity->getUser(), 'fieldErrors' => $validateFields);
                     } else {
-                        $numberOfRecords = $import->getRecordsFromFile($fileName, $user);
+                        $numberOfRecords = $import->getRecordsFromFile($fileName, $user, $insertType);
+
                         if (isset($numberOfRecords['errors'])) {
                             $templateParameters = array('user' => $entity->getUser(), 'errors' => $numberOfRecords['errors']);
-                        } else if ($numberOfRecords) {
+                        } else if ($numberOfRecords >= 0) {
                             $baseUrl = $this->getContainer()->getParameter('baseUrl');
                             $templateParameters = array('user' => $entity->getUser(), 'numberOfRecords' => $numberOfRecords);
                         }
@@ -109,5 +117,4 @@ class ImportReportCommand extends ContainerAwareCommand {
         return true;
     }
 
-    
 }

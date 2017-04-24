@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -46,6 +48,30 @@ class Projects {
      * @ORM\Column(name="view_setting", type="text", nullable=true)
      */
     private $viewSetting;
+
+    /**
+     * @var audio_filesize
+     *
+     * @ORM\Column(name="audio_filesize", type="float", nullable=true)
+     * 
+     */
+    private $audioFilesize;
+
+    /**
+     * @var video_filesize
+     *
+     * @ORM\Column(name="video_filesize", type="float", nullable=true)
+     * 
+     */
+    private $videoFilesize;
+
+    /**
+     * @var film_filesize
+     *
+     * @ORM\Column(name="film_filesize", type="float", nullable=true)
+     * 
+     */
+    private $filmFilesize;
 
     /**
      * @var \DateTime $createdOn
@@ -293,7 +319,6 @@ class Projects {
     public function removeProjectUsers(\Application\Bundle\FrontBundle\Entity\Users $user) {
         $this->projectUsers->removeElement($user);
         $user->removeUserProjects($this);
-        
     }
 
     /**
@@ -345,6 +370,36 @@ class Projects {
 
     public function getStatus() {
         return (bool) $this->status;
+    }
+
+    public function setAudioFilesize($audioFilesize) {
+        $this->audioFilesize = $audioFilesize;
+
+        return $this;
+    }
+
+    public function getAudioFilesize() {
+        return $this->audioFilesize;
+    }
+    
+    public function setVideoFilesize($videoFilesize) {
+        $this->videoFilesize = $videoFilesize;
+
+        return $this;
+    }
+
+    public function getVideoFilesize() {
+        return $this->videoFilesize;
+    }
+    
+    public function setFilmFilesize($filmFilesize) {
+        $this->filmFilesize = $filmFilesize;
+
+        return $this;
+    }
+
+    public function getFilmFilesize() { 
+        return $this->filmFilesize;
     }
 
 }

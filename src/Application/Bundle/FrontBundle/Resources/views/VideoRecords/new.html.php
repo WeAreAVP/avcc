@@ -16,13 +16,16 @@
             <?php echo $view['form']->errors($form) ?>
             <?php foreach ($fieldSettings[strtolower($type)] as $viedoField): ?>
                 <?php
+                if ($viedoField["title"] == "Show Images") {
+                    continue;
+                }
                 $field = explode('.', $viedoField['field']);
                 if (count($field) == 2) {
                     $index = $field[1];
                 } else {
                     $index = $field[0];
                 }
-                $_style = (count($field) == 2 && $field[1] == 'isReview' || count($field) == 2 && $field[1] == 'reformattingPriority') ? 'width: 180px;float: left;margin-bottom: 15px;' : 'width: 200px';
+                $_style = (count($field) == 2 && ($field[1] == 'isReview' || $field[1] == 'reformattingPriority' || $field[1] == 'digitized' || $field[1] == 'transcription')) ? 'width: 180px;float: left;margin-bottom: 15px;' : 'width: 200px';
                 ?>
                 <div style="<?php echo ($viedoField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>" data-view="<?php echo ($viedoField['hidden']) ? 'hide' : 'show'; ?>">
                     <div class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo isset($tooltip[$index]) ? $tooltip[$index] : ''; ?>" style="<?php echo $_style ?>">                   
@@ -34,7 +37,7 @@
                         ?>
                     </div>
                     <?php
-                    if (count($field) == 2 && $field[1] == 'isReview' || count($field) == 2 && $field[1] == 'reformattingPriority')
+                    if (count($field) == 2 && ($field[1] == 'isReview' || $field[1] == 'reformattingPriority' || $field[1] == 'digitized' || $field[1] == 'transcription'))
                         $style = '';
                     else if (count($field) == 2 && $field[1] == 'conditionNote' || count($field) == 2 && $field[1] == 'generalNote' || count($field) == 2 && $field[1] == 'copyrightRestrictions' || count($field) == 2 && $field[1] == 'description')
                         $style = 'textarea';
@@ -43,12 +46,13 @@
                     ?>
                     <div class="input-control <?php echo $style; ?> new" data-role="input-control">
                         <?php
-                        $_attr = (count($field) == 2 && $field[1] == 'isReview' || count($field) == 2 && $field[1] == 'reformattingPriority') ? array() : $attr;
+                        $_attr = (count($field) == 2 && ($field[1] == 'isReview' || $field[1] == 'reformattingPriority' || $field[1] == 'digitized' || $field[1] == 'transcription')) ? array() : $attr;
                         ?>
                         <?php echo $view['form']->widget((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => $_attr)) ?>
                         <span class="has-error text-danger"><?php echo $view['form']->errors((count($field) == 2) ? $form[$field[0]][$field[1]] : $form[$field[0]]) ?></span>
                     </div>
                 </div>
+                <div class="clearfix"></div>
             <?php endforeach; ?>
         </fieldset><br />
         <?php echo $view['form']->widget($form['record']['userId']) ?>
@@ -78,17 +82,17 @@
         });
         $('#mediaType,#format').change(function () {
             if ($('#mediaType').val() == '' || $('#project').val() == '' || $('#format').val() == '') {
-                var fields = ['uniqueId_lbl','alternateId_lbl','reformattingPriority_lbl', 'location_lbl', 'title_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'cassetteSize_lbl', 'reelDiameters_lbl', 'formatVersion_lbl', 'recordingStandard_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'recordingSpeed_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl'];
+                var fields = ['uniqueId_lbl', 'alternateId_lbl', 'reformattingPriority_lbl', 'location_lbl', 'title_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'cassetteSize_lbl', 'reelDiameters_lbl', 'formatVersion_lbl', 'recordingStandard_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'recordingSpeed_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl', 'parentCollection_lbl', 'digitized_lbl', 'transcription_lbl', 'digitizedBy_lbl', 'digitizedWhen_lbl', 'urn_lbl'];
                 for (i = 0; i < fields.length; i++) {
                     $('#' + fields[i]).hide();
                 }
             } else {
-                showUpdateFields();
-                var fields1 = ['uniqueId_lbl', 'location_lbl','reformattingPriority_lbl', 'alternateId_lbl', 'title_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'recordingStandard_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl'];
+                var fields1 = ['uniqueId_lbl', 'location_lbl', 'reformattingPriority_lbl', 'alternateId_lbl', 'title_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'recordingStandard_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl', 'parentCollection_lbl', 'digitized_lbl', 'transcription_lbl'];
                 for (i = 0; i < fields1.length; i++) {
                     if ($('#' + fields1[i]).data('view') == 'show')
                         $('#' + fields1[i]).show();
                 }
+                showUpdateFields();
             }
         });
     });

@@ -34,6 +34,37 @@
                     <span class="has-error text-danger" for="{{ form.projectUsers.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
             </div>  
+            <h5> 
+                File Size for the Digitized Items
+            </h5>
+            <div class="size4"  style="float: left">
+                <label>Audio</label>
+                <div class="input-control text">
+                    {{ form_widget(form.audioFilesize, {attr: {class:'size3'} }) }}
+                    {% for errorItem in form.audioFilesize.vars.errors %}
+                        <span class="has-error text-danger" for="{{ form.audioFilesize.vars.id }}">{{ errorItem.message }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="size4" style="float: left">
+                <label>Video</label> 
+                <div class="input-control text">
+                    {{ form_widget(form.videoFilesize, {attr: {class:'size3'} }) }}
+                    {% for errorItem in form.videoFilesize.vars.errors %}
+                        <span class="has-error text-danger" for="{{ form.videoFilesize.vars.id }}">{{ errorItem.message }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="size4" style="float: left">
+                <label>Film</label>
+                <div class="input-control text">
+                    {{ form_widget(form.filmFilesize, {attr: {class:'size3'} }) }}
+                    {% for errorItem in form.filmFilesize.vars.errors %}
+                        <span class="has-error text-danger" for="{{ form.filmFilesize.vars.id }}">{{ errorItem.message }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="clearfix"></div>
             <div class="input-control">
                 {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
                 or

@@ -30,7 +30,7 @@ class SphinxFields {
     public function prepareFields(EntityManager $entityManager, $recordId, $recordTypeId) {
 
         $this->record = $entityManager->getRepository('ApplicationFrontBundle:Records')->findOneBy(array('id' => $recordId));
-
+      
         $this->indexFields['id'] = $this->record->getId();
         $this->indexFields['s_title'] = ($this->record->getTitle()) ? (string) $this->record->getTitle() : "";
         $this->indexFields['title'] = ($this->record->getTitle()) ? (string) $this->record->getTitle() : "";
@@ -78,12 +78,43 @@ class SphinxFields {
         $this->indexFields['updated_on'] = ($this->record->getUpdatedOn()) ? (string) $this->record->getUpdatedOn()->format('Y-m-d H:i:s') : "";
         $this->indexFields['project_id'] = ($this->record->getProject()) ? $this->record->getProject()->getId() : "";
         $this->indexFields['width'] = ($this->record->getFormat()) ? (double) $this->record->getFormat()->getWidth() : 0;
-        if ($this->record->getAudioRecord()) {
+        $this->indexFields['s_parent_collection'] = $this->indexFields['parent_collection'] = ($this->record->getParentCollection()) ? (string) $this->record->getParentCollection()->getName() : '';
+        $this->indexFields['is_digitized'] = ($this->record->getDigitized()) ? $this->record->getDigitized() : 0;
+        $this->indexFields['is_transcription'] = ($this->record->getTranscription()) ? $this->record->getTranscription() : 0;
+        $this->indexFields['s_digitized_by'] = $this->indexFields['digitized_by'] = ($this->record->getDigitizedBy()) ? $this->record->getDigitizedBy() : "";
+        $this->indexFields['s_digitized_when'] = $this->indexFields['digitized_when'] = ($this->record->getDigitizedWhen()) ? $this->record->getDigitizedWhen() : "";
+        $this->indexFields['s_urn'] = $this->indexFields['urn'] = ($this->record->getUrn()) ? $this->record->getUrn() : "";
+
+        $this->indexFields['has_images'] = 0;
+        $images = $entityManager->getRepository('ApplicationFrontBundle:RecordImages')->findBy(array('recordId' => $recordId));
+        if (!empty($images)) {
+            $this->indexFields['has_images'] = 1;
+        }
+        $in = 0;
+        if ($this->record->getAudioRecord()) {            
+            $rec = $entityManager->getRepository('ApplicationFrontBundle:AudioRecords')->findOneBy(array('record' => $this->record->getId()));
+            if ($rec == null || empty($rec)) {
+                return false;
+            }
             $this->prepareAudioFields();
+            $in = 1;
         } elseif ($this->record->getFilmRecord()) {
+            $in = 1;
+            $rec = $entityManager->getRepository('ApplicationFrontBundle:FilmRecords')->findOneBy(array('record' => $this->record->getId()));
+            if ($rec == null || empty($rec)) {
+                return false;
+            }
             $this->prepareFilmFields();
         } elseif ($this->record->getVideoRecord()) {
+            $rec = $entityManager->getRepository('ApplicationFrontBundle:VideoRecords')->findOneBy(array('record' => $this->record->getId()));
+            if ($rec == null || empty($rec)) {
+                return false;
+            }
+            $in = 1;
             $this->prepareVideoFields();
+        }
+        if ($in == 0) {
+            return false;
         }
 
         return $this->indexFields;
@@ -93,6 +124,7 @@ class SphinxFields {
      * Audio fields
      */
     private function prepareAudioFields() {
+
         $this->indexFields['s_disk_diameter'] = $this->indexFields['disk_diameter'] = ($this->record->getAudioRecord()->getDiskDiameters()) ? (string) $this->record->getAudioRecord()->getDiskDiameters()->getName() : "";
         $this->indexFields['base'] = ($this->record->getAudioRecord()->getBases()) ? (string) $this->record->getAudioRecord()->getBases()->getName() : "";
         $this->indexFields['s_base'] = ($this->record->getAudioRecord()->getBases()) ? (string) $this->record->getAudioRecord()->getBases()->getName() : "";

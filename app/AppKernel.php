@@ -24,7 +24,8 @@ class AppKernel extends Kernel
             new JMS\JobQueueBundle\JMSJobQueueBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\AopBundle\JMSAopBundle(),
-            new Wrep\Bundle\BugsnagBundle\BugsnagBundle()
+            new Wrep\Bundle\BugsnagBundle\BugsnagBundle(),
+            new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

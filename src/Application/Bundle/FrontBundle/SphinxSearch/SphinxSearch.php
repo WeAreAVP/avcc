@@ -75,7 +75,6 @@ class SphinxSearch extends ContainerAware {
         $this->entityManager = $entityManager;
         $this->recordId = $recordId;
         $this->recordTypeId = $recordTypeId;
-
         $this->conn = new Connection();
         $this->conn->setParams(array('host' => $sphinxInfo['host'], 'port' => $sphinxInfo['port']));
         $this->conn->silenceConnectionWarning(true);
@@ -104,10 +103,13 @@ class SphinxSearch extends ContainerAware {
     public function replace() {
         $sphinxFields = new SphinxFields();
         $data = $sphinxFields->prepareFields($this->entityManager, $this->recordId, $this->recordTypeId);
-        $sq = SphinxQL::create($this->conn)->replace()->into($this->indexName);
-        $sq->set($data);
-
-        return $sq->execute();
+        if ($data == false) {
+            return false;
+        } else {
+            $sq = SphinxQL::create($this->conn)->replace()->into($this->indexName);
+            $sq->set($data);
+            return $sq->execute();
+        }
     }
 
     /**
@@ -205,7 +207,7 @@ class SphinxSearch extends ContainerAware {
      */
     public function whereClause($criteria, $sq) {
         foreach ($criteria as $key => $value) {
-            if ($key == 'is_review' || $key == 'is_reformatting_priority') {
+            if (in_array($key, array('is_review', 'is_reformatting_priority', 'is_digitized', 'is_transcription', 'has_images'))) {
                 if ($value == 1) {
                     $sq->where($key, '=', 1);
                 } elseif ($value == 2) {
@@ -220,10 +222,12 @@ class SphinxSearch extends ContainerAware {
                 $new = array_map('intval', $value);
                 $sq->where('project_id', 'IN', $new);
             } else {
-
-                $_value = (is_array($value)) ? '"' . implode('" | "', $value) . '"' : $value;
-
-                $sq->match($key, $_value, true);
+                if ($key == "format" && !is_array($value)) {
+                    $sq->where('format', "=", $value, false);
+                } else {
+                    $_value = (is_array($value)) ? '"' . implode('" | "', $value) . '"' : $value;
+                    $sq->match($key, $_value, true);
+                }
             }
         }
     }

@@ -4,7 +4,7 @@
 <div class="grid fluid">
     <h1>
         <a href="<?php echo $view['router']->generate('record_list') ?>"><i class="icon-arrow-left-3 smaller"></i> </a>
-        Edit Record<?php // echo ucwords($type)     ?>
+        Edit Record<?php // echo ucwords($type)       ?>
     </h1>
     <?php // echo $view['form']->widget($edit_form); exit;?>
     <?php echo $view['form']->start($edit_form) ?>
@@ -15,16 +15,19 @@
         ?>
         <?php foreach ($fieldSettings['video'] as $viedoField): ?>
             <?php
+            if ($viedoField["title"] == "Show Images") {
+                continue;
+            }
             $field = explode('.', $viedoField['field']);
             if (count($field) == 2) {
                 $index = $field[1];
             } else {
                 $index = $field[0];
             }
-            $_style = (count($field) == 2 && $field[1] == 'isReview' || count($field) == 2 && $field[1] == 'reformattingPriority') ? 'width: 180px;float: left;margin-bottom: 15px;' : 'width: 200px';
+            $_style = (count($field) == 2 && (in_array($field[1], array('isReview', 'reformattingPriority', 'digitized', 'transcription')))) ? 'width: 180px;float: left;margin-bottom: 15px;' : 'width: 200px';
             ?>
             <div style="<?php echo ($viedoField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>" data-view="<?php echo ($viedoField['hidden']) ? 'hide' : 'show'; ?>">
-                <div class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo isset($tooltip[$index]) ? $tooltip[$index] : ''; ?>" style="<?php echo  $_style ?>">
+                <div class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo isset($tooltip[$index]) ? $tooltip[$index] : ''; ?>" style="<?php echo $_style ?>">
                     <?php
                     $attr = ($viedoField['is_required']) ? array('class' => 'size4') : array('class' => 'size4');
                     echo $view['form']->label((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]], ' ');
@@ -33,22 +36,22 @@
                     ?>
                 </div>
                 <?php
-                    if (count($field) == 2 && $field[1] == 'isReview' || count($field) == 2 && $field[1] == 'reformattingPriority')
-                        $style = '';
-                    else if (count($field) == 2 && $field[1] == 'conditionNote' || count($field) == 2 && $field[1] == 'generalNote' || count($field) == 2 && $field[1] == 'copyrightRestrictions' || count($field) == 2 && $field[1] == 'description')
-                         $style = 'textarea';
-                    else
-                        $style = 'text';
-                    ?>
+                if (count($field) == 2 && (in_array($field[1], array('isReview', 'reformattingPriority', 'digitized', 'transcription'))))
+                    $style = '';
+                else if (count($field) == 2 && $field[1] == 'conditionNote' || count($field) == 2 && $field[1] == 'generalNote' || count($field) == 2 && $field[1] == 'copyrightRestrictions' || count($field) == 2 && $field[1] == 'description')
+                    $style = 'textarea';
+                else
+                    $style = 'text';
+                ?>
                 <div class="input-control <?php echo $style; ?> edit" data-role="input-control">
                     <?php
-                    $_attr = (count($field) == 2 && $field[1] == 'isReview' || count($field) == 2 && $field[1] == 'reformattingPriority') ? array() : $attr;
+                    $_attr = (count($field) == 2 && (in_array($field[1], array('isReview', 'reformattingPriority', 'digitized', 'transcription')))) ? array() : $attr;
                     ?>                    
                     <?php echo $view['form']->widget((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]], array('id' => (count($field) == 2) ? $field[1] : $field[0], 'attr' => $_attr)) ?>
                     <span class="has-error text-danger"><?php echo $view['form']->errors((count($field) == 2) ? $edit_form[$field[0]][$field[1]] : $edit_form[$field[0]]) ?></span>
                 </div>
             </div>
-
+            <div class="clearfix"></div>
         <?php endforeach; ?>
     </fieldset>
     <?php echo $view['form']->widget($edit_form['record']['userId']) ?>

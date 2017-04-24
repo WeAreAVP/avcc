@@ -35,7 +35,6 @@ function Records() {
      */
     this.setAjaxSource = function (source) {
         ajaxSource = source;
-
     }
     /**
      * Set the ajax URL for selected rows of datatable.
@@ -44,7 +43,6 @@ function Records() {
      */
     this.setAjaxSaveStateUrl = function (source) {
         ajaxSaveStateUrl = source;
-
     }
     /**
      * Set the ajax URL to save export request in db.
@@ -53,7 +51,6 @@ function Records() {
      */
     this.setAjaxExportUrl = function (source) {
         ajaxExportUrl = source;
-
     }
     /**
      * Set the page url.
@@ -62,7 +59,6 @@ function Records() {
      */
     this.setPageUrl = function (url) {
         pageUrl = url;
-
     }
     /**
      * Set the bulk url.
@@ -71,7 +67,6 @@ function Records() {
      */
     this.setBulkUrl = function (url) {
         bulkUrl = url;
-
     }
 
     /**
@@ -81,7 +76,6 @@ function Records() {
      */
     this.setDeleteUrl = function (url) {
         deleteUrl = url;
-
     }
     /**
      * Set the popup message.
@@ -90,7 +84,6 @@ function Records() {
      */
     this.setSuccessMsg = function (success_msg) {
         successMsg = success_msg;
-
     }
     /**
      * Set the error merge file message.
@@ -99,7 +92,6 @@ function Records() {
      */
     this.setErrorMsg = function (error_msg) {
         errorMsg = error_msg;
-
     }
     /**
      * Set the heading for popup.
@@ -108,17 +100,16 @@ function Records() {
      */
     this.setPopupHeading = function (heading) {
         popupHeading = heading;
-
     }
     /**
      * Initialize the datatable.
      * 
      */
     this.initDataTable = function (filter) {
-        // check the existence of table on which we are going to apply datatable.
+// check the existence of table on which we are going to apply datatable.
         if ($('#records').length > 0)
         {
-            // Modify css for managing view.
+// Modify css for managing view.
 //			$('#container').removeClass('container');
 //			$('#container').css('margin', '20px');
             var selected = [];
@@ -130,6 +121,10 @@ function Records() {
                         "bServerSide": true,
                         retrieve: true,
                         destroy: true,
+                        "fixedHeader": {
+                            header: true,
+//                            footer: true
+                        },
                         "iDisplayLength": 100,
                         "pagingType": "simple_numbers",
                         "language": {
@@ -168,6 +163,7 @@ function Records() {
             if (filter == 1) {
                 oTable.fnPageChange("first", true);
             }
+//            new $.fn.dataTable.FixedHeader(oTable);
             $('#records tbody').on('click', 'tr', function () {
 //                var id = this.id;
 //                var rowid = id.split('-');
@@ -242,9 +238,15 @@ function Records() {
         $('input[name="organization_name[]"]').click(function () {
             checkParentFacet('organization_name', $(this).prop('checked'));
         });
+        $('input[name="parent_collection[]"]').click(function () {
+            checkParentFacet('parent_collection', $(this).prop('checked'));
+        });
+        initTriStateCheckBox('has_images_check', 'has_images_check_state', true);
+        initTriStateCheckBox('is_digitized_check', 'is_digitized_check_state', true);
+        initTriStateCheckBox('is_transcription_check', 'is_transcription_check_state', true);
         initTriStateCheckBox('is_review_check', 'is_review_check_state', true);
         initTriStateCheckBox('is_reformatting_priority_check', 'is_reformatting_priority_check_state', true);
-        $('#is_review_check, #is_reformatting_priority_check').click(function () {
+        $('#is_review_check, #is_reformatting_priority_check, #is_digitized_check, #is_transcription_check, #has_images_check').click(function () {
             var totalChecked = $('#total_checked').val();
             var containerId = $(this).attr('id');
             var currentVal = $('#' + containerId + '_state').val();
@@ -252,7 +254,7 @@ function Records() {
             {
                 totalChecked++;
                 $('#parent_facet').val(containerId);
-                $('#total_checked').val(totalChecked); 
+                $('#total_checked').val(totalChecked);
             }
             if (currentVal == 0 && $('#parent_facet').val() == containerId) {
                 totalChecked--;
@@ -264,7 +266,6 @@ function Records() {
         $('#reset_all').click(function () {
             selfObj.resetAll();
         });
-
         selfObj.addCustomToken();
         $('#addKeyword').click(function () {
             selfObj.addKeyword();
@@ -274,7 +275,6 @@ function Records() {
                 selfObj.addKeyword();
             }
         });
-
         selfObj.removeFilter();
         selfObj.removeKeywordFilter();
         selfObj.selectCurrentPageRecords();
@@ -299,7 +299,7 @@ function Records() {
      * @returns {undefined}
      */
     var checkParentFacet = function (type, isChecked) {
-        //todo need to update function
+//todo need to update function
         var totalChecked = $('#total_checked').val();
         var total = $('#facet_sidebar input:checked').length;
         if (total == 0)
@@ -311,12 +311,11 @@ function Records() {
         if (totalChecked < 0)
             totalChecked = 0;
         $('#total_checked').val(totalChecked);
-
         if ($('#parent_facet').val() == '' && totalChecked == 1)
             $('#parent_facet').val(type);
         else if (totalChecked == 0)
             $('#parent_facet').val('');
-        filterRecords(); 
+        filterRecords();
     }
     /**
      * 
@@ -353,6 +352,13 @@ function Records() {
                 selfObj.initDataTable(1);
                 selfObj.bindEvents();
                 $('body').scrollTop(0);
+                $('.sidebarFacet').css('min-height', $(window).height() - 70);
+                $('.sidebarFacet').css('max-height', $(window).height() - 70);
+                $('.sidebarFacet').css({"overflow-y": "auto", "overflow-x": "hidden"});
+                $('body').on('scroll', function (e) {
+                    console.log("therere");
+                    $('#records').scroll();
+                });
                 $.unblockUI();
             }
 
@@ -373,7 +379,6 @@ function Records() {
             }
             $('#limit_field_text').html(customFieldName);
         });
-
         $("#keyword_menu").on('click', 'li a.resetToken', function () {
             customFieldName = $(this).attr('data-fieldName');
             customColumnName = 'all';
@@ -387,8 +392,7 @@ function Records() {
         if ($('#keywordSearch').val() != '') {
             if ($('#facet_keyword_search').val() != '' && $('#facet_keyword_search').val() != '""') {
                 Filters = JSON.parse($('#facet_keyword_search').val());
-            }
-            else {
+            } else {
                 Filters = new Array();
             }
             for (x in Filters) {
@@ -401,7 +405,6 @@ function Records() {
             temp.value = $('#keywordSearch').val();
             temp.type = customColumnName;
             Filters.push(temp);
-
             $('#facet_keyword_search').val(JSON.stringify(Filters));
             customFieldName = 'All';
             customColumnName = 'all';
@@ -426,7 +429,6 @@ function Records() {
             $('#facet_keyword_search').val(JSON.stringify(Filters));
             filterRecords();
         });
-
     }
     this.resetAll = function () {
         $('#formSearch').find('input:hidden, input:text, select').val('');
@@ -437,10 +439,8 @@ function Records() {
     this.isAnySearch = function () {
         if ($('.search_keys').length > 0) {
             $('#reset_all').show();
-        }
-        else {
+        } else {
             $('#reset_all').hide();
-
         }
 
     }
@@ -507,8 +507,7 @@ function Records() {
                 checked = isChecked;
                 isAll = 1;
                 selectedrecords = 'all';
-            }
-            else {
+            } else {
                 checked = isChecked;
                 if ($('input[name=record_checkbox]').attr("checked") == "checked") {
                     $('input[name=record_checkbox]').each(function () {
@@ -517,8 +516,7 @@ function Records() {
                     selectedrecords = id;
                 }
             }
-        }
-        else {
+        } else {
             id = elementID;
             if ($('#row_' + elementID).is(':checked')) {
 //            if ($('#row_' + elementID).attr('checked') == 'checked' || $('#row_' + elementID).prop("checked") == true) {
@@ -544,13 +542,11 @@ function Records() {
             }
         });
     };
-
     this.checkBoxes = function () {
         $(document).on('click', '.checkboxes', function () {
             selfObj.saveState($(this).val());
         });
     };
-
     this.exportRequest = function () {
         $('.export').click(function () {
             var checked = false;
@@ -710,7 +706,11 @@ function Records() {
     this.importRequest = function () {
         $('.import').click(function () {
             var importType = $(this).attr('data-type');
-            $("#importModal").modal('show');
+            $('#importModal').show();
+            $('#importModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
             $('#organization').chosen();
             $('#error_span').hide();
             $("#importModal #impfiletype").val(importType);
@@ -760,8 +760,7 @@ function Records() {
                 if (selectedrecords != 'all') {
                     var record = selectedrecords.split(',');
                     records = record.length
-                }
-                else {
+                } else {
                     records = $('#records-on-page').html();
                 }
                 $("#deleteModal").modal('show');

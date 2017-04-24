@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,13 +11,14 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Helper;
 
-class ExportFields
-{
+class ExportFields {
 
     private $columns = array(
         'Project_Name',
+        'Parent_Collection',
         'Collection_Name',
         'Media_Type',
         'Unique_ID',
@@ -61,12 +63,20 @@ class ExportFields
         'Related_Material',
         'Condition_Note',
         'General_Note',
+        'Manager_Review',
+        'Reformatting_Priority',
+        'Transcription',
+        'Digitized',
+        'Digitized_By',
+        'Digitized_When',
+        'URN',
         'Time_Stamp',
         'Timestamp_-_Last_Change',
         'Cataloger'
     );
     private $mergeColumns = array(
         'Ext_Project_Name',
+        'Ext_Parent_Collection',
         'Ext_Collection_Name',
         'Ext_Media_Type',
         'Ext_Unique_ID',
@@ -111,6 +121,13 @@ class ExportFields
         'Ext_Related_Material',
         'Ext_Condition_Note',
         'Ext_General_Note',
+        'Ext_Manager_Review',
+        'Ext_Reformatting_Priority',
+        'Ext_Transcription',
+        'Ext_Digitized',
+        'Ext_Digitized_By',
+        'Ext_Digitized_When',
+        'Ext_URN',
         'Ext_Time_Stamp',
         'Ext_Timestamp_-_Last_Change',
         'Ext_Cataloger'
@@ -131,7 +148,7 @@ class ExportFields
             '44.1/16 Uncompressed WAV Stereo (TB)',
             '96/24 Uncompressed WAV Mono (TB)',
             '48/24 Uncompressed WAV Mono (TB)',
-            '48/16 Uncompressed WAV Mono (TB)' ,
+            '48/16 Uncompressed WAV Mono (TB)',
             '44.1/16 Uncompressed WAV Mono (TB)',
             '256Kbps MP3',
         ),
@@ -166,7 +183,6 @@ class ExportFields
             'MPEG4 2.0Mbps (TB)',
         )
     );
-
     private $linearFootCalculatorColumns = array('Media Type', 'Format', 'Width', 'Total Count', 'Linear Feet');
 
     /**
@@ -174,8 +190,7 @@ class ExportFields
      *
      * @return array
      */
-    public function getExportColumns()
-    {
+    public function getExportColumns() {
         return $this->columns;
     }
 
@@ -184,8 +199,7 @@ class ExportFields
      *
      * @return array
      */
-    public function getManifestColumns()
-    {
+    public function getManifestColumns() {
         return $this->manifestColumns;
     }
 
@@ -194,8 +208,7 @@ class ExportFields
      *
      * @return array
      */
-    public function getPrioritizationColumns()
-    {
+    public function getPrioritizationColumns() {
         return $this->prioritizationCols;
     }
 
@@ -204,8 +217,7 @@ class ExportFields
      *
      * @return array
      */
-    public function getExportMergeColumns()
-    {
+    public function getExportMergeColumns() {
         return $this->mergeColumns;
     }
 
@@ -214,8 +226,7 @@ class ExportFields
      *
      * @return array
      */
-    public function getFileSizeCalculatorColumns()
-    {
+    public function getFileSizeCalculatorColumns() {
         return $this->fileSizeCalculatorColumns;
     }
 
@@ -224,8 +235,7 @@ class ExportFields
      *
      * @return array
      */
-    public function getLinearFootCalculatorColumns()
-    {
+    public function getLinearFootCalculatorColumns() {
         return $this->linearFootCalculatorColumns;
     }
 

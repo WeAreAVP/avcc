@@ -3,7 +3,10 @@
 <container xmlns="http://symfony.com/schema/dic/services"
 		   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		   xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
+<parameters>
+    <parameter key="application_front.amazon_s3.class">AmazonS3</parameter>
+    <parameter key="application_front.photo_uploader.class">Application\Bundle\FrontBundle\Upload\PhotoUploader</parameter>
+</parameters>
 	<!--
 	   <parameters>
 		   <parameter key="application_front.example.class">Application\Bundle\FrontBundle\Example</parameter>
@@ -19,13 +22,23 @@
 		<service id="myViewHelper" class="Application\Bundle\FrontBundle\Helper\ViewHelper">
 			<tag name="templating.helper" alias="myViewHelper" />
 		</service>
+                <service id="application_front.amazon_s3" class="%application_front.amazon_s3.class%">
+        <argument type="collection">
+            <argument key="key">%application_front.amazon_s3.aws_key%</argument>
+            <argument key="secret">%application_front.amazon_s3.aws_secret_key%</argument>
+        </argument>
+    </service>
+    <service id="application_front.photo_uploader" class="%application_front.photo_uploader.class%">
+        <argument type="service" id="photo_storage_filesystem" />
+        <argument type="service" id="service_container" />
+    </service>
 <!--		<service id="my.listener" class="Application\Bundle\FrontBundle\EventListener\SearchIndexer">
 			<tag name="doctrine.event_listener" event="postPersist" />
 		</service>
 
-		<service id="my.subscriber" class="Application\Bundle\FrontBundle\EventListener\SearchIndexerSubscriber">
-			<tag name="doctrine.event_subscriber" connection="default" />
-		</service>  -->
-	</services>
+        <service id="my.subscriber" class="Application\Bundle\FrontBundle\EventListener\SearchIndexerSubscriber">
+                <tag name="doctrine.event_subscriber" connection="default" />
+        </service>  -->
+    </services>
 
 </container>

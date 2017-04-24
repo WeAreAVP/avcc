@@ -4,7 +4,7 @@
     <div class="grid">
         <div class="row" id="recordsContainer">
         <?php endif; ?>
-        <div class="span3">
+        <div class="span3 sidebarFacet">
             <?php echo $view->render('ApplicationFrontBundle::Records/_facets.html.php', array('facets' => $facets)) ?>
         </div>
         <div class="span11">
@@ -36,9 +36,9 @@
                             </ul>
                         </li>
                         <?php if ($view['security']->isGranted('ROLE_MANAGER')): ?>
-                        <li>
-                            <a href="javascript://" id="bulkEdit">Bulk Edit</a>
-                        </li>
+                            <li>
+                                <a href="javascript://" id="bulkEdit">Bulk Edit</a>
+                            </li>
                         <?php endif ?>
                         <li>
                             <a href="javascript://" id="deleteRecord">Delete</a>
@@ -47,7 +47,7 @@
                 </div>
                 <div style="font-size: 20px; margin-left: 11px; float: left;"><a href="<?php echo $view['router']->generate('new_record') ?>"><i class="icon-plus"></i> New</a></div>
             <?php endif; ?>
-            <?php echo $view->render('ApplicationFrontBundle::Records/_modal.html.php', array("organizations" => $organizations, "notification" => $notification, 'contact_person'=> $contact_person)) ?>
+            <?php echo $view->render('ApplicationFrontBundle::Records/_modal.html.php', array("organizations" => $organizations, "notification" => $notification, 'contact_person' => $contact_person)) ?>
             <div class="table-responsive">
                 <table class="table hovered bordered" id="records">
                     <thead>
@@ -80,11 +80,13 @@
             <input type="hidden" name="selectedrecords" id="selectedrecords" value="<?php echo $recordsIds; ?>" />
             <input type="hidden" name="exportType" id="exportType" value="" />
         </div>
-        <?php $heading = null;
+        <?php
+        $heading = null;
         $successPopupMsg = null;
         ?>
         <?php foreach ($view['session']->getFlash("report_success") as $message): ?>
-            <?php $successPopupMsg = $message['message'];
+            <?php
+            $successPopupMsg = $message['message'];
             $heading = $message['heading'];
             ?>
             <?php
@@ -93,15 +95,16 @@
         ?>
         <?php $errorPopupMsg = null; ?>
         <?php foreach ($view['session']->getFlash("report_error") as $message): ?>
-            <?php $errorPopupMsg = $message['message'];
+            <?php
+            $errorPopupMsg = $message['message'];
             $heading = $message['heading'];
             ?>
             <?php
         endforeach;
         $app->getSession()->remove('report_error');
         ?>
-<?php if (!$isAjax): ?>
-    <?php $view['slots']->start('view_javascripts') ?>
+        <?php if (!$isAjax): ?>
+            <?php $view['slots']->start('view_javascripts') ?>
 
             <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
             <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/records.js') ?>"></script>
@@ -120,12 +123,37 @@
                 record.setDeleteUrl('<?php echo $view['router']->generate('delete_reocrds') ?>');
                 record.setPopupHeading('<?php echo $heading; ?>');
                 record.bindEvents();
-                
                 var delUrl = '<?php echo $view['router']->generate('delete_reocrds') ?>';
+                $(function () {
+                    var offset = $(".sidebarFacet").offset();
+                    var topPadding = 50;
+                    $(window).scroll(function () {
+                        if ($(window).scrollTop() > offset.top) {
+                            $(".sidebarFacet").stop().animate({
+                                marginTop: $(window).scrollTop() - offset.top + topPadding
+                            });
+                        } else {
+                            $(".sidebarFacet").stop().animate({
+                                marginTop: 0
+                            });
+                        }
+                        ;
+                    });
+                });
+                $(document).ready(function () {
+
+                    $('.sidebarFacet').css('min-height', $(window).height() - 70);
+                    $('.sidebarFacet').css('max-height', $(window).height() - 70);
+                    $('.sidebarFacet').css({
+                        "overflow-y": "auto",
+                        "overflow-x": "hidden",
+                    });
+                });
+
             </script>
-    <?php
-    $view['slots']->stop();
-    ?>
+            <?php
+            $view['slots']->stop();
+            ?>
         </div>
     </div>
     <?php
