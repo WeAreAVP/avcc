@@ -10,43 +10,45 @@
         <div class="span11">
             <div id="div-select-all-records" style="display:none;"></div>
             <div class="clearfix"></div>
-            <?php if ($view['security']->isGranted('ROLE_CATALOGER')): ?>
-                <div class="button-dropdown place-left">
-                    <button class="dropdown-toggle">Operations</button>
-                    <ul class="dropdown-menu" data-role="dropdown">
-                        <li>
-                            <a class="dropdown-toggle" href="#">Export</a>
-                            <ul class="dropdown-menu" data-role="dropdown">
-                                <li><a href="javascript://" class="export" data-type="csv">CSV</a></li>
-                                <li><a href="javascript://" class="export" data-type="xlsx">XLSX</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown-toggle" href="#">Export and Merge</a>
-                            <ul class="dropdown-menu" data-role="dropdown">
-                                <li><a href="javascript://" class="exportMerge" data-type="csv">CSV</a></li>
-                                <li><a href="javascript://" class="exportMerge" data-type="xlsx">XLSX</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="dropdown-toggle" href="#">Import</a>
-                            <ul class="dropdown-menu" data-role="dropdown">
-                                <li><a href="javascript://" class="import" data-type="csv">CSV</a></li>
-                                <li><a href="javascript://" class="import" data-type="xlsx">XLSX</a></li>
-                            </ul>
-                        </li>
-                        <?php if ($view['security']->isGranted('ROLE_MANAGER')): ?>
+            <div>
+                <?php if ($view['security']->isGranted('ROLE_CATALOGER')): ?>
+                    <div class="button-dropdown place-left">
+                        <button class="dropdown-toggle">Operations</button>
+                        <ul class="dropdown-menu" data-role="dropdown">
                             <li>
-                                <a href="javascript://" id="bulkEdit">Bulk Edit</a>
+                                <a class="dropdown-toggle" href="#">Export</a>
+                                <ul class="dropdown-menu" data-role="dropdown">
+                                    <li><a href="javascript://" class="export" data-type="csv">CSV</a></li>
+                                    <li><a href="javascript://" class="export" data-type="xlsx">XLSX</a></li>
+                                </ul>
                             </li>
-                        <?php endif ?>
-                        <li>
-                            <a href="javascript://" id="deleteRecord">Delete</a>
-                        </li>
-                    </ul>
-                </div>
-                <div style="font-size: 20px; margin-left: 11px; float: left;"><a href="<?php echo $view['router']->generate('new_record') ?>"><i class="icon-plus"></i> New</a></div>
-            <?php endif; ?>
+                            <li>
+                                <a class="dropdown-toggle" href="#">Export and Merge</a>
+                                <ul class="dropdown-menu" data-role="dropdown">
+                                    <li><a href="javascript://" class="exportMerge" data-type="csv">CSV</a></li>
+                                    <li><a href="javascript://" class="exportMerge" data-type="xlsx">XLSX</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="dropdown-toggle" href="#">Import</a>
+                                <ul class="dropdown-menu" data-role="dropdown">
+                                    <li><a href="javascript://" class="import" data-type="csv">CSV</a></li>
+                                    <li><a href="javascript://" class="import" data-type="xlsx">XLSX</a></li>
+                                </ul>
+                            </li>
+                            <?php if ($view['security']->isGranted('ROLE_MANAGER')): ?>
+                                <li>
+                                    <a href="javascript://" id="bulkEdit">Bulk Edit</a>
+                                </li>
+                            <?php endif ?>
+                            <li>
+                                <a href="javascript://" id="deleteRecord">Delete</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="font-size: 20px; margin-left: 11px; float: left;"><a href="<?php echo $view['router']->generate('new_record') ?>"><i class="icon-plus"></i> New</a></div>
+                <?php endif; ?>
+            </div>
             <?php echo $view->render('ApplicationFrontBundle::Records/_modal.html.php', array("organizations" => $organizations, "notification" => $notification, 'contact_person' => $contact_person)) ?>
             <div class="table-responsive">
                 <table class="table hovered bordered" id="records">
