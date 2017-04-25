@@ -890,12 +890,16 @@ class RecordsController extends MyController {
         $imageId = $this->get('request')->request->get('image_id');
         $em = $this->getDoctrine()->getManager();
         $entity = $em->getRepository('ApplicationFrontBundle:RecordImages')->find($imageId);
+        $id = $entity->getRecordId();
         if (!$entity) {
             echo json_encode(array('success' => 'true'));
             exit;
         }
         $em->remove($entity);
         $em->flush();
+        $shpinxInfo = $this->getSphinxInfo();
+        $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $id);
+        $sphinxSearch->replace();
         echo json_encode(array('success' => 'true'));
         exit;
     }
