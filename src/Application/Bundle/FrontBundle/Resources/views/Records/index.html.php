@@ -7,10 +7,11 @@
         <div class="span3 sidebarFacet">
             <?php echo $view->render('ApplicationFrontBundle::Records/_facets.html.php', array('facets' => $facets)) ?>
         </div>
-        <div class="span11">
-            <div id="div-select-all-records" style="display:none;"></div>
-            <div class="clearfix"></div>
-            <div>
+            <div class="span11 main-container">
+            <div class="menu-container">
+                <div id="div-select-all-records" style="display:none;"></div>
+                <div class="clearfix"></div>
+
                 <?php if ($view['security']->isGranted('ROLE_CATALOGER')): ?>
                     <div class="button-dropdown place-left">
                         <button class="dropdown-toggle">Operations</button>
@@ -50,7 +51,7 @@
                 <?php endif; ?>
             </div>
             <?php echo $view->render('ApplicationFrontBundle::Records/_modal.html.php', array("organizations" => $organizations, "notification" => $notification, 'contact_person' => $contact_person)) ?>
-            <div class="table-responsive">
+                <div class="table-responsive records-container">
                 <table class="table hovered bordered" id="records">
                     <thead>
                         <tr>
@@ -113,7 +114,7 @@
             <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/tristate-0.9.2.js') ?>"></script>
             <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/jquery.blockUI.js') ?>"></script>
             <script type="text/javascript">
-                var record = new Records();
+                var record = new Records(); 
                 record.setAjaxSource('<?php echo $view['router']->generate('record_dataTable') ?>');
                 record.setAjaxSaveStateUrl('<?php echo $view['router']->generate('record_saveState') ?>');
                 record.initDataTable();

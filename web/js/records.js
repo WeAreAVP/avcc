@@ -116,13 +116,13 @@ function Records() {
             oTable =
                     $('#records').dataTable(
                     {
-                        "dom": '<"top"pi><"clear">tir<"bottom"p>',
+                        "dom": '<"dataTableTop"<"top"pi>><"clear">tir<"bottom"p>',
                         "bProcessing": true,
                         "bServerSide": true,
                         retrieve: true,
-                        destroy: true,
-                        "fixedHeader": {
-                            header: true,
+                        destroy: true, 
+                        fixedHeader: {
+                            header: true
 //                            footer: true
                         },
                         "iDisplayLength": 100,

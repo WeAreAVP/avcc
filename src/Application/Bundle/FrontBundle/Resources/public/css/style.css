@@ -214,3 +214,30 @@ span.has-error ul li{
 #application_bundle_frontbundle_accountclosure_reason label{
     padding-left: 26px;
 } 
+.main-container{
+    position: relative;
+}
+.menu-container{
+    position: fixed;width:100%;background: #FFF;z-index: 1;height:59px;margin-top: -19px;padding-top: 30px;
+}
+#div-select-all-records{
+    position: absolute;
+    width: 100%;
+    margin-top: -25px;
+    text-align: left;
+    background: #FFF;
+    padding-top: 5px;
+}
+.records-container{
+    margin-top: 45px;
+}
+.dataTableTop{ 
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: white;
+    width: 65%;
+}
+.top{
+    position: fixed;z-index: 2;margin-top: 10px;
+}
