@@ -24,7 +24,11 @@ function initialize_records_form() {
     onChangeMediaType();
 
     showUpdateFields();
-    showDigitizedFields();
+    if (bulk) {
+        showBulkDigitizedFields();
+    } else {
+        showDigitizedFields();
+    }
     convertTimeToMinutes();
     saveBulkEdit();
     closeBtn();
@@ -119,9 +123,6 @@ function convertTimeToMinutes() {
     });
 }
 function showDigitizedFields() {
-//    $("#digitizedBy").val('');
-//    $("#digitizedWhen").val('');
-//    $("#urn").val('');
     if ($('#digitized').prop("checked") == false) {
         $("#digitizedBy_lbl").hide();
         $("#digitizedWhen_lbl").hide();
@@ -335,14 +336,26 @@ function onChangeMediaType() {
             window.location.href = baseUrl + 'audio/new';
         } else {
             window.location.href = baseUrl + 'new/';
-//            $('#processing').hide();
-//            $('#fieldsPanel').show();
         }
     });
 }
 
 function saveBulkEdit() {
     $("#submitBulkEdit").click(function () {
+        $("#digitizedByError").text("");
+        $("#digitizedWhenError").text("");
+        if ($("input[name=digitized]:checked").val() == 1) {
+            var digitizedBy = $("#digitizedBy").val();
+            var digitizedWhen = $("#digitizedWhen").val();
+            if (digitizedBy == null || digitizedBy == "") {
+                $("#digitizedByError").text("Digitized By is required");
+                return false;
+            }
+            if (digitizedWhen == null || digitizedWhen == "") {
+                $("#digitizedWhenError").text("Digitized When is required");
+                return false;
+            }
+        }
         data = $('#frmBulkEdit').serialize();
         $(document).ajaxStart(function () {
             $("#frmBulkEdit").hide();
@@ -389,7 +402,7 @@ function updateProjects() {
     var split_path = path.split('/');
     var split = split_path[split_path.length - 1];
     var split_2 = split_path[split_path.length - 2];
-    if (Math.floor(split) == split && $.isNumeric(split) && (split_2 == "new" || split_2 == "edit")) { 
+    if (Math.floor(split) == split && $.isNumeric(split) && (split_2 == "new" || split_2 == "edit")) {
         selectedProject = split_path[split_path.length - 1];
     }
     if (selectedProject) {
@@ -423,6 +436,25 @@ function updateViewSetting() {
                 window.location = newUrl;
 
             }
+        }
+    });
+}
+function showBulkDigitizedFields() {
+    $("#digitizedBy_lbl").hide();
+    $("#digitizedWhen_lbl").hide();
+    $("#urn_lbl").hide();
+    $('.digitized').click(function () {
+        if ($("input[name=digitized]:checked").val() == 1) {
+            $("#digitizedBy_lbl").show();
+            $("#digitizedWhen_lbl").show();
+            $("#urn_lbl").show();
+        } else {
+            $("#digitizedBy").val('');
+            $("#digitizedWhen").val('');
+            $("#urn").val('');
+            $("#digitizedBy_lbl").hide();
+            $("#digitizedWhen_lbl").hide();
+            $("#urn_lbl").hide();
         }
     });
 }

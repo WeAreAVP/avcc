@@ -238,6 +238,38 @@ span.has-error ul li{
     background: white;
     width: 65%;
 }
-.top{
+.dataTableTop .top{
     position: fixed;z-index: 2;margin-top: 10px;
+}
+
+.myRadio{
+    margin-left: 30px;
+}
+
+.lSSlideOuter .lSPager.lSGallery li.active{
+    border: solid 3px black;
+}
+.viewer {
+    width: 100%;
+    height: 303px;
+    position: relative;
+}
+.lSSlideOuter .lSPager.lSGallery li{
+    width: 90.556px ! important;
+}  
+.lSSlideOuter .lSPager.lSGallery{
+    width: 1200px ! important;
+}
+.wrapper {
+    overflow: hidden;
+}
+.iviewer_zoom_zero ,.iviewer_zoom_status,.iviewer_zoom_fit,.iviewer_rotate_left,.iviewer_rotate_right,.iviewer_zoom_in ,.iviewer_zoom_out {
+    display: none;
+}
+#actions {
+    background-color: black;
+    text-align: center;
+}
+#actions a{
+    color: white
 }

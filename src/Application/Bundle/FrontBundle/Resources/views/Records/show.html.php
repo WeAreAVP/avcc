@@ -59,51 +59,35 @@
                         $field = explode('.', $typeField['field']);
                         $arrayIndex = (count($field) == 2) ? $field[1] : $field[0];
                         if ($entityArray[$arrayIndex]) {
-                            ?>
-                            <tr style="<?php echo ($typeField['hidden']) ? 'display:none;' : ''; ?>">
-                                <th class="text-right" width="20%">
-                                    <p class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo isset($tooltip[$arrayIndex]) ? $tooltip[$arrayIndex] : ''; ?>">
-                                        <?php echo $typeField['title']; ?>
-                                    </p>
-                                </th>
-                                <td width="80%"><?php echo $entityArray[$arrayIndex] ?></td>
-                            </tr> 
-                        <?php } ?>  
+                            if (count($field) == 2 && ($field[1] == 'isReview' || $field[1] == 'reformattingPriority' || $field[1] == 'digitized' || $field[1] == 'transcription')) {
+                                ?>
+                                <tr style="<?php echo ($typeField['hidden']) ? "" : 'display:none;'; ?>">
+                                    <th class="text-right" width="20%">
+                                        <p class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo isset($tooltip[$arrayIndex]) ? $tooltip[$arrayIndex] : ''; ?>">
+                                            <?php echo $typeField['title']; ?>
+                                        </p>
+                                    </th>
+                                    <td width="80%"><?php echo ($entityArray[$arrayIndex] == 1 ) ? "Yes" : "No" ?></td>
+                                </tr> 
+                            <?php } else { ?>
+                                <tr style="<?php echo ($typeField['hidden']) ? '' : 'display:none;'; ?>">
+                                    <th class="text-right" width="20%">
+                                        <p class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo isset($tooltip[$arrayIndex]) ? $tooltip[$arrayIndex] : ''; ?>">
+                                            <?php echo $typeField['title']; ?>
+                                        </p>
+                                    </th>
+                                    <td width="80%"><?php echo $entityArray[$arrayIndex] ?></td>
+                                </tr> 
+                                <?php
+                            }
+                        }
+                        ?>  
                     <?php endforeach; ?>                          
                 </tbody>
             </table>
         </div>
-        <style>
-            .lSSlideOuter .lSPager.lSGallery li.active{
-                border: solid 3px black;
-            }
-            .viewer {
-                width: 100%;
-                height: 303px;
-                position: relative;
-            }
-            .lSSlideOuter .lSPager.lSGallery li{
-                width: 90.556px ! important;
-            }  
-            .lSSlideOuter .lSPager.lSGallery{
-                width: 1200px ! important;
-            }
-            .wrapper {
-                overflow: hidden;
-            }
-            .iviewer_zoom_zero ,.iviewer_zoom_status,.iviewer_zoom_fit,.iviewer_rotate_left,.iviewer_rotate_right,.iviewer_zoom_in ,.iviewer_zoom_out {
-                display: none;
-            }
-            #actions {
-                background-color: black;
-                text-align: center;
-            }
-            #actions a{
-                color: white
-            }
-        </style>
 
-        <?php if ($uploadImages && $hide_image == 0) { ?>
+        <?php if ($uploadImages && $hide_image == 1 && count($images) > 0) { ?>
             <div class="span6">
 
                 <ul id="lightSlider" class="hide">
@@ -119,97 +103,18 @@
             </div>
             <script>
                 var dpath = "<?php echo $view['router']->generate('record_delete_image'); ?>";
-                $(function () {
-
-                    $('#lightSlider').lightSlider({
-                        gallery: true,
-                        item: 1,
-                        slideMove: 1,
-                        loop: false,
-                        enableDrag: false,
-                        slideMargin: 0,
-                        thumbItem: 9,
-                        currentPagerPosition: 'middle',
-                        onSliderLoad: function (el) {
-                            var src = "";
-                            var id = "";
-                            el.find('li').each(function () {
-                                if ($(this).hasClass("active")) {
-                                    src = $(this).data("thumb");
-                                    id = $(this).attr("id").replace(/image_/gi, '');
-                                }
-                            });
-                            var html = '<div id="actions">' +
-                                    '<a href="javascript://" id="in" title="Zoom in"><i class="icon-zoom-in"></i></a>&nbsp;&nbsp;' +
-                                    '<a href="javascript://" id="out" title="Zoom out"><i class="icon-zoom-out"></i></a>&nbsp;&nbsp;' +
-                                    '<a href="javascript://" id="original" title="Original"><i class="icon-fullscreen-alt"></i></a>&nbsp;&nbsp;' +
-                                    '<a href="javascript://" id="rotate" title="Rotate"><i class="icon-loop"></i></a>&nbsp;&nbsp;' +
-                                    '<a href="javascript://" id="delete" data-img="" title="Delete"><i class="icon-remove"></i></a>&nbsp;&nbsp;' +
-                                    '</div>' + '<div id="viewer" class="viewer"></div>';
-
-                            $(".lSSlideWrapper").prepend(html);
-                            $("#viewer").iviewer({
-                                src: src,
-                                onFinishLoad: function () {
-                                    $("#viewer").iviewer('zoom_by', 0.5);
-                                }
-                            });
-    //                            $("#viewer").iviewer('zoom_by', 1);
-                            $("#in").click(function () {
-                                $("#viewer").iviewer('zoom_by', 1);
-                            });
-                            $("#out").click(function () {
-                                $("#viewer").iviewer('zoom_by', -1);
-                            });
-                            $("#original").click(function () {
-                                $("#viewer").iviewer('fit');
-                            });
-                            $("#rotate").click(function () {
-                                $("#viewer").iviewer('angle', 90);
-                            });
-                            $("#delete").attr("data-img", id);
-                            $("#delete").click(function () {
-                                var res = confirm('Are you sure you want to delete this image?');
-                                if (res) {
-                                    var id = $("#delete").data("img");
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: dpath,
-                                        data: {
-                                            image_id: id
-                                        },
-                                        dataType: 'json',
-                                        success: function (response) {
-                                            window.location.reload()
-                                        }
-                                    });
-                                }
-                            });
-                        },
-                        onAfterSlide: function (el) {
-                            el.find('li').each(function () {
-                                if ($(this).hasClass("active")) {
-                                    var src = $(this).data("thumb");
-                                    var id = $(this).attr("id").replace(/image_/gi, '');
-                                    $("#viewer").iviewer('loadImage', src);
-                                    $("#delete").attr("data-img", id);
-                                }
-                            });
-                        }
-                    });
-                });
             </script>
+            <script src="<?php echo $view['assets']->getUrl('js/slider.js') ?>"></script>
         <?php } ?>
     </div>
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-
-        $(function () {
-            $('[data-toggle="popover"]').popover();
-        });
-    });
+                $(document).ready(function () {
+                    $(function () {
+                        $('[data-toggle="popover"]').popover();
+                    });
+                });
 
 </script>
 <?php

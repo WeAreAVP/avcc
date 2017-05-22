@@ -125,9 +125,12 @@ class AudioRecordsController extends MyController {
                 
             }
         }
-
         if ($this->get('session')->get('project_id')) {
             $projectId = $this->get('session')->get('project_id');
+        } else if ($entity->getRecord()->getProject()->getId()) {
+            $projectId = $entity->getRecord()->getProject()->getId();
+        }
+        if ($projectId) {
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project->getViewSetting() != null) {
                 $defSettings = $fieldsObj->getDefaultOrder();
@@ -141,11 +144,15 @@ class AudioRecordsController extends MyController {
         }
         $userViewSettings = json_decode($userViewSettings, true);
         $tooltip = $fieldsObj->getToolTip(1);
+
+        $allErrors = $this->allFormErrors($form);
+
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
             'type' => $data['mediaType']->getName(),
             'fieldSettings' => $userViewSettings,
+            'allErrors' => $allErrors,
             'tooltip' => $tooltip
         );
     }
@@ -194,7 +201,7 @@ class AudioRecordsController extends MyController {
             throw new AccessDeniedException('Access Denied.');
         }
         $em = $this->getDoctrine()->getManager();
-      
+
 
         $fieldsObj = new DefaultFields();
         $userViewSettings = $fieldsObj->getDefaultOrder();
@@ -228,11 +235,9 @@ class AudioRecordsController extends MyController {
         if ($projectId) {
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project->getViewSetting() != null) {
-//                $userViewSettings = $project->getViewSetting();
                 $defSettings = $fieldsObj->getDefaultOrder();
                 $dbSettings = $project->getViewSetting();
                 $userViewSettings = $fieldsObj->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
-                //    $this->get('session')->getFlashBag()->add('project_id', $projectId);
             } else {
                 $userViewSettings = $fieldsObj->getDefaultOrder();
             }
@@ -241,7 +246,6 @@ class AudioRecordsController extends MyController {
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project) {
                 if ($project->getViewSetting() != null) {
-//                    $userViewSettings = $project->getViewSetting();
                     $defSettings = $fieldsObj->getDefaultOrder();
                     $dbSettings = $project->getViewSetting();
                     $userViewSettings = $fieldsObj->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
@@ -253,14 +257,12 @@ class AudioRecordsController extends MyController {
         }
         $userViewSettings = json_decode($userViewSettings, true);
         $tooltip = $fieldsObj->getToolTip(1);
-//        echo '<pre>';
-//        print_r($userViewSettings);
-//        exit;
         return $this->render('ApplicationFrontBundle:AudioRecords:new.html.php', array(
                     'entity' => $entity,
                     'form' => $form->createView(),
                     'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
+                    'allErrors' => array(),
                     'tooltip' => $tooltip
         ));
     }
@@ -348,7 +350,7 @@ class AudioRecordsController extends MyController {
         }
 
         $userViewSettings = json_decode($userViewSettings, true);
-
+        $images = $em->getRepository('ApplicationFrontBundle:RecordImages')->findBy(array('recordId' => $entity->getRecord()->getId()));
         $tooltip = $fieldsObj->getToolTip(1);
         return $this->render('ApplicationFrontBundle:AudioRecords:edit.html.php', array(
                     'entity' => $entity,
@@ -356,7 +358,9 @@ class AudioRecordsController extends MyController {
                     //   'delete_form' => $deleteForm->createView(),
                     'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
-                    'tooltip' => $tooltip
+                    'allErrors' => array(),
+                    'tooltip' => $tooltip,
+                    'images' => $images
         ));
     }
 
@@ -466,13 +470,18 @@ class AudioRecordsController extends MyController {
         }
         $userViewSettings = json_decode($userViewSettings, true);
         $tooltip = $fieldsObj->getToolTip(1);
+        $allErrors = $this->allFormErrors($editForm);
+        $images = $em->getRepository('ApplicationFrontBundle:RecordImages')->findBy(array('recordId' => $entity->getRecord()->getId()));
+
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             //   'delete_form' => $deleteForm->createView(),
             'fieldSettings' => $userViewSettings,
             'type' => $data['mediaType']->getName(),
-            'tooltip' => $tooltip
+            'allErrors' => $allErrors,
+            'tooltip' => $tooltip,
+            'images' => $images
         );
     }
 
@@ -754,6 +763,24 @@ class AudioRecordsController extends MyController {
         }
 
         return $this->render('ApplicationFrontBundle:AudioRecords:newRecord.html.php');
+    }
+
+    private function allFormErrors($form) {
+        $return = array();
+        $errors = $form->getErrorsAsString();
+        $all = explode(":", $errors);
+        $skip = false;
+        foreach ($all as $key => $value) {
+            if (strpos("ERROR", trim($value)) !== FALSE && strpos("ERROR", trim($value)) === 0) {
+                $skip = true;
+                $required = explode("\n", $all[$key + 1]);
+                $return[] = $required[0];
+            }
+            if ($skip) {
+                $skip = FALSE;
+            }
+        }
+        return $return;
     }
 
 }

@@ -2,27 +2,35 @@
 
 {% block body %}
     <div class="grid fluid">
-        <h1>
-            <a href="{{ path('vocabularies_pcollection') }}"><i class="icon-arrow-left-3 smaller"></i> </a>
-            Upload Images
-        </h1>
-
-        {{ form_start(form, {attr: {class:'form-horizontal'} }) }}
-        <fieldset>
-            {{ form_errors(form) }}
+        {% if error %}
+            <h1>Exception</h1>
             <br />
-            <label>Photo</label>
-            <div class="input-control text" data-role="input-control">
-                {{ form_widget(form.photo, { 'attr': { 'multiple': 'multiple', class:'size4' }, 'full_name': 'application_bundle_frontbundle_photo[photo]' ~ '[]' }) }}
-                
-                {% for errorItem in form.photo.vars.errors %}
-                    <span class="has-error text-danger" for="{{ form.name.vars.id }}">{{ errorItem.message }}</span>
-                {% endfor %}
-            </div>
-            {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
-			or 
-			<a class="button"   href="{{ path('record_show', { 'id': rec_id }) }}">Cancel</a>
-        </fieldset>
-        {{ form_end(form) }}
+            <p>{{msg}}</p>
+            <br />
+            <a class="button" href="{{ path('record_show', { 'id': rec_id }) }}">Back</a>
+        {% else %}
+            <h1>
+                <a href="{{ path('vocabularies_pcollection') }}"><i class="icon-arrow-left-3 smaller"></i> </a>
+                Upload Images
+            </h1>
+
+            {{ form_start(form, {attr: {class:'form-horizontal'} }) }}
+            <fieldset>
+                {{ form_errors(form) }}
+                <br />
+                <label>Photo</label>
+                <div class="input-control text" data-role="input-control">
+                    {{ form_widget(form.photo, { 'attr': { 'multiple': 'multiple', class:'size4' }, 'full_name': 'application_bundle_frontbundle_photo[photo]' ~ '[]' }) }}
+
+                    {% for errorItem in form.photo.vars.errors %}
+                        <span class="has-error text-danger" for="{{ form.name.vars.id }}">{{ errorItem.message }}</span>
+                    {% endfor %}
+                </div>
+                {{ form_widget(form.submit, {attr: {class:'button primary'} }) }}
+                or 
+                <a class="button"   href="{{ path('record_show', { 'id': rec_id }) }}">Cancel</a>
+            </fieldset>
+            {{ form_end(form) }}
+        {% endif %}
     </div>
 {% endblock %}

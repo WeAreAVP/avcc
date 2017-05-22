@@ -54,6 +54,9 @@ function Dashboard() {
         formatUrl = baseUrl + 'getFormatCount/' + selectedProject;
         cuUrl = baseUrl + 'getCommercialUniqueCount/' + selectedProject;
         totalRecordsUrl = baseUrl + 'getTotalRecords/' + selectedProject;
+        ////// ajax call to get total records, linear feet for media types.
+        selfObj.getOverview(totalRecordsUrl, 1, ""); //get digitized
+        selfObj.getOverview(totalRecordsUrl, 2, "nd"); //get not digitized
         $('#formatCount').highcharts({
             chart: {
                 type: 'column',
@@ -202,20 +205,17 @@ function Dashboard() {
                     })()
                 }]
         });
-        ////// ajax call to get total records, linear feet for media types.
+        
+    }
+
+    this.getOverview = function (totalRecordsUrl, digitized, prefix) {
         $.ajax({
             type: "GET",
-            url: totalRecordsUrl,
+            url: totalRecordsUrl + "/" + digitized,
             dataType: 'json',
             success: function (response) {
-                console.log(response);
                 if (response) {
                     $.each(response, function (index, element) {
-                        console.log(index);
-                        var prefix = "";
-                        if (index == "ndigitized") {
-                            prefix = "nd";
-                        }
                         $('#' + prefix + 'audioTotal').html(0);
                         $('#' + prefix + 'audiolinear').html(0.00);
                         $('#' + prefix + 'audiofile').html(0.00);

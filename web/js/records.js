@@ -121,10 +121,6 @@ function Records() {
                         "bServerSide": true,
                         retrieve: true,
                         destroy: true, 
-                        fixedHeader: {
-                            header: true
-//                            footer: true
-                        },
                         "iDisplayLength": 100,
                         "pagingType": "simple_numbers",
                         "language": {
@@ -355,10 +351,9 @@ function Records() {
                 $('.sidebarFacet').css('min-height', $(window).height() - 70);
                 $('.sidebarFacet').css('max-height', $(window).height() - 70);
                 $('.sidebarFacet').css({"overflow-y": "auto", "overflow-x": "hidden"});
-                $('body').on('scroll', function (e) {
-                    console.log("therere");
-                    $('#records').scroll();
-                });
+//                $('body').on('scroll', function (e) {
+//                    $('#records').scroll();
+//                });
                 $.unblockUI();
             }
 

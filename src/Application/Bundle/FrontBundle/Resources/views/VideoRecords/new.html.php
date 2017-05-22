@@ -12,6 +12,13 @@
     <div id="fieldsPanel" style="display:none;">
         <?php echo $view['form']->start($form) ?>
         <?php echo $view['form']->errors($form) ?>
+        <span class="has-error text-danger">
+        <?php
+        if (!empty($allErrors)) {
+            echo implode("<br/>", $allErrors);
+        }
+        ?>
+    </span> 
         <fieldset>
             <?php echo $view['form']->errors($form) ?>
             <?php foreach ($fieldSettings[strtolower($type)] as $viedoField): ?>
@@ -75,6 +82,7 @@
     var selectedProject = '<?php echo ($entity->getRecord() && $entity->getRecord()->getProject()) ? $entity->getRecord()->getProject()->getId() : ''; ?>';
     var viewUrl = baseUrl + 'video/new/';
     var projectId = <?php echo ($app->getSession()->get('vedioProjectId')) ? $app->getSession()->get('vedioProjectId') : 0 ?>;
+    var bulk = false;
     $(document).ready(function () {
         initialize_records_form();
         $(function () {

@@ -442,13 +442,15 @@ class ReportController extends MyController {
             $phpExcelObject = $exportComponent->generateFileSizeAssetsReport($formatInfo, $type);
             $response = $exportComponent->outputReport($type, $phpExcelObject, 'file_size_calculator', $formatInfo[1]);
             if ($type == "csv") {
-                $res = new Response(file_get_contents($response));
-                $res->headers->set('Content-Type', 'application/zip');
-                $res->headers->set('Content-Disposition', "attachment;filename={$response}");
-                $res->headers->set('Content-Length', "filesize({$response})");
-                $res->headers->set('Pragma', 'public');
-                $res->headers->set('Cache-Control', 'maxage=1');
-                return $res;
+                $filename = $response;
+                $response = new Response();
+                $response->headers->set('Cache-Control', 'private');
+                $response->headers->set('Content-type', 'application/zip');
+                $response->headers->set('Content-Disposition', 'attachment; filename="' . basename($filename) . '";');
+                $response->sendHeaders();
+
+                $response->setContent(file_get_contents($filename));
+                return $response;
             } else {
                 return $response;
             }
@@ -566,120 +568,101 @@ class ReportController extends MyController {
      * 
      * @param string $projectid 
      * 
-     * @Route("/getTotalRecords/{projectid}", name="getTotalRecords")
+     * @Route("/getTotalRecords/{projectid}/{digitized}", name="getTotalRecords")
      * @Method("GET")
      * @Template()
      * @return array
      */
-    public function getTotalRecordsAction($projectid) {
-        $record['digitized'] = $this->getFileSizeAndLinearFootageInfo($projectid, 1);
-        $record['ndigitized'] = $this->getFileSizeAndLinearFootageInfo($projectid, 2);
-
+    public function getTotalRecordsAction($projectid, $digitized) {
+        $em = $this->getDoctrine()->getManager();
+        $record['digitized'] = $this->getFileSizeAndLinearFootageInfo($projectid, $digitized);
         $audioTotal = $audiodTotal = 0;
         $filmTotal = $filmdTotal = 0;
         $videoTotal = $videodTotal = 0;
         $total = array();
-        $em = $this->getDoctrine()->getManager();
+        $totalLinearAudioCount = $totalLinearVideoCount = $totalLinearFilmCount = 0.00;
+        $totalAudioFileSize = $totalVideoFileSize = $totalFilmFileSize = 0.00;
+        $sum_content_duration = $vsum_content_duration = $fsum_content_duration = 0;
+
         foreach ($record as $rkey => $precords) {
-            $totalLinearAudioCount = 0.00;
-            $totalLinearVideoCount = 0.00;
-            $acount = $vcount = $fcount = 0;
             if ($precords) {
                 foreach ($precords as $pkey => $records) {
-                    $project = $em->getRepository('ApplicationFrontBundle:Projects')->getFileSizeById($pkey);
+                    $acount = $vcount = $fcount = 0;
+                    if ($pkey > 0) {
+                        $project = $em->getRepository('ApplicationFrontBundle:Projects')->getFileSizeById($pkey);
+                    }
                     if ($records) {
-                        if (isset($records['Audio']) && count($records['Audio']) > 2) {
-                            if ($acount == 0) {
-                                $audioTotal = $records['Audio']["total"];
-                                $audiodTotal = $records['Audio']["dtotal"];
-                                $totalAudioFileSize = 0.00;
-                                $sum_content_duration = 0;
-                                $acount++;
-                            }
-
+                        if (isset($records['Audio']) && $pkey != 0) {
                             foreach ($records['Audio'] as $key => $audio) {
-                                if (in_array($key, array("total", "dtotal"))) {
-                                    continue;
+                                $audioTotal += $audio["total"];
+                                if ($digitized == 1 && $audio['dtotal'] == 1) {
+                                    $audiodTotal += $audio["total"];
+                                } else if ($digitized != 1 && $audio['dtotal'] != 1) {
+                                    $audiodTotal += $audio["total"];
                                 }
-                                $linearAudioCount = $this->calculateLinearFeet($audio['total'], $audio['width']);
-                                $totalLinearAudioCount += $linearAudioCount;
-                                $totalAudioFileSize = $totalAudioFileSize + $this->getAudioFilesize($audio['sum_content_duration'], $rkey, $project["audioFilesize"]);
-                                $sum_content_duration += $audio['sum_content_duration'];
+                                if (($digitized == 1 && $audio['dtotal'] == 1) || ($digitized != 1 && $audio['dtotal'] != 1)) {
+                                    $linearAudioCount = $this->calculateLinearFeet($audio['total'], $audio['width']);
+                                    $totalLinearAudioCount += $linearAudioCount;
+                                    $sum_content_duration += (!empty($audio['sum_content_duration'])) ? $audio['sum_content_duration'] : 0;
+                                }
+                                if (!empty($project["audioFilesize"]) && $project["audioFilesize"] != NULL && $acount == 0) {
+                                    $totalAudioFileSize = $totalAudioFileSize + $this->getAudioFilesize($audio['sum_content_duration'], $digitized, $project["audioFilesize"]);
+                                    $acount++;
+                                } else if ($acount == 0 && ($digitized == 1 && $audio['dtotal'] == 1) || ($digitized != 1 && $audio['dtotal'] != 1)) {
+                                    $totalAudioFileSize = $totalAudioFileSize + $this->getAudioFilesize($audio['sum_content_duration'], $digitized, $project["audioFilesize"]);
+                                }
                             }
-                        } else {
-                            $audioTotal = (isset($records['Audio']["total"])) ? $records['Audio']["total"] : 0;
-                            $audiodTotal = (isset($records['Audio']["dtotal"])) ? $records['Audio']["dtotal"] : 0;
-                            $totalAudioFileSize = 0.00;
-                            $sum_content_duration = 0;
                         }
                         unset($key);
-                        if (isset($records['Video']) && count($records['Video']) > 2) {
-                            if ($vcount == 0) {
-                                $videoTotal = $records['Video']['total'];
-                                $videodTotal = $records['Video']["dtotal"];
-                                $totalVideoFileSize = 0.00;
-                                $vsum_content_duration = 0;
-                                $vcount++;
-                            }
-
+                        if (isset($records['Video']) && $pkey != 0) {
                             foreach ($records['Video'] as $key => $video) {
-                                if (in_array($key, array("total", "dtotal"))) {
-                                    continue;
+                                $videoTotal += $video["total"];
+                                if ($digitized == 1 && $video['dtotal'] == 1) {
+                                    $videodTotal += $video["total"];
+                                } else if ($digitized != 1 && $video['dtotal'] != 1) {
+                                    $videodTotal += $video["total"];
                                 }
-                                $linearVideoCount = $this->calculateLinearFeet($video['total'], $video['width']);
-                                $totalLinearVideoCount += $linearVideoCount;
-                                $vsum_content_duration += $video['sum_content_duration'];
-                                $totalVideoFileSize = $totalVideoFileSize + $this->getVideoFilesize($video['sum_content_duration'], $rkey, $project["videoFilesize"]);
+                                if (($digitized == 1 && $video['dtotal'] == 1) || ($digitized != 1 && $video['dtotal'] != 1)) {
+                                    $linearVideoCount = $this->calculateLinearFeet($video['total'], $video['width']);
+                                    $totalLinearVideoCount += $linearVideoCount;
+                                    $vsum_content_duration += (!empty($video['sum_content_duration'])) ? $video['sum_content_duration'] : 0;
+                                }
+                                if (!empty($project["videoFilesize"]) && $project["videoFilesize"] != NULL && $vcount == 0) {
+                                    $totalVideoFileSize = $totalVideoFileSize + $this->getVideoFilesize($video['sum_content_duration'], $digitized, $project["videoFilesize"]);
+                                    $vcount++;
+                                } else if ($vcount == 0 && ($digitized == 1 && $video['dtotal'] == 1) || ($digitized != 1 && $video['dtotal'] != 1)) {
+                                    $totalVideoFileSize = $totalVideoFileSize + $this->getVideoFilesize($video['sum_content_duration'], $digitized, $project["videoFilesize"]);
+                                }
                             }
-                        } else {
-                            $videoTotal = (isset($records['Video']["total"])) ? $records['Video']["total"] : 0;
-                            $videodTotal = (isset($records['Video']["dtotal"])) ? $records['Video']["dtotal"] : 0;
-                            $totalVideoFileSize = 0.00;
-                            $vsum_content_duration = 0;
                         }
                         unset($key);
-                        if (isset($records['Film'])) {
-
-                            if ($fcount == 0) {
-                                $filmTotal = $records['Film']['total'];
-                                $filmdTotal = $records['Film']["dtotal"];
-                                $totalFilmFileSize = 0.00;
-                                $fsum_content_duration = 0;
-                                $fcount++;
-                            }
-
+                        if (isset($records['Film']) && $pkey != 0) {
                             foreach ($records['Film'] as $key => $film) {
-                                if (in_array($key, array("total", "dtotal"))) {
-                                    continue;
+                                $filmTotal += $film["total"];
+                                if ($digitized == 1 && $film['dtotal'] == 1) {
+                                    $filmdTotal += $film["total"];
+                                } else if ($digitized != 1 && $film['dtotal'] != 1) {
+                                    $filmdTotal += $film["total"];
                                 }
-                                $fsum_content_duration += $film['sum_content_duration'];
-                                $totalFilmFileSize = $totalFilmFileSize + $this->getFilmFilesize($film['sum_content_duration'], $rkey, $project["filmFilesize"]);
+                                if (($digitized == 1 && $film['dtotal'] == 1) || ($digitized != 1 && $film['dtotal'] != 1)) {
+                                    $totalLinearFilmCount += $film['footage'];
+                                    $fsum_content_duration += (!empty($film['sum_content_duration'])) ? $film['sum_content_duration'] : 0;
+                                }
+                                if (!empty($project["filmFilesize"]) && $project["filmFilesize"] != NULL && $fcount == 0) {
+                                    $totalFilmFileSize = $totalFilmFileSize + $this->getFilmFilesize($film['sum_content_duration'], $digitized, $project["filmFilesize"]);
+                                    $fcount++;
+                                } else if ($fcount == 0 && ($digitized == 1 && $film['dtotal'] == 1) || ($digitized != 1 && $film['dtotal'] != 1)) {
+                                    $totalFilmFileSize = $totalFilmFileSize + $this->getFilmFilesize($film['sum_content_duration'], $digitized, $project["filmFilesize"]);
+                                }
                             }
-                        } else {
-                            $filmTotal = (isset($records['Video']["total"])) ? $records['Video']["total"] : 0;
-                            $filmdTotal = (isset($records['Video']["dtotal"])) ? $records['Video']["dtotal"] : 0;
-                            $totalFilmFileSize = 0.00;
-                            $fsum_content_duration = 0;
                         }
                     }
                 }
                 $total[$rkey][] = array("Audio" => array("totalRecords" => $audioTotal, 'dRecords' => $audiodTotal, "linearFeet" => round($totalLinearAudioCount, 1), "fileSize" => round($totalAudioFileSize, 1), 'sum_content_duration' => round($sum_content_duration, 1)));
                 $total[$rkey][] = array("Video" => array("totalRecords" => $videoTotal, 'dRecords' => $videodTotal, "linearFeet" => round($totalLinearVideoCount, 1), "fileSize" => round($totalVideoFileSize, 1), 'sum_content_duration' => round($vsum_content_duration, 1)));
-                $total[$rkey][] = array("Film" => array("totalRecords" => $filmTotal, 'dRecords' => $filmdTotal, "linearFeet" => "", "fileSize" => round($totalFilmFileSize, 1), 'sum_content_duration' => round($fsum_content_duration, 1)));
+                $total[$rkey][] = array("Film" => array("totalRecords" => $filmTotal, 'dRecords' => $filmdTotal, "linearFeet" => $totalLinearFilmCount, "fileSize" => round($totalFilmFileSize, 1), 'sum_content_duration' => round($fsum_content_duration, 1)));
             }
         }
-
-        if (!isset($total["digitized"])) {
-            $total["digitized"][] = array("Audio" => array("totalRecords" => $audioTotal, 'dRecords' => 0, "linearFeet" => 0.00, "fileSize" => 0.00, 'sum_content_duration' => 0.00));
-            $total["digitized"][] = array("Video" => array("totalRecords" => $videoTotal, 'dRecords' => 0, "linearFeet" => 0.00, "fileSize" => 0.00, 'sum_content_duration' => 0.00));
-            $total["digitized"][] = array("Film" => array("totalRecords" => $filmTotal, 'dRecords' => 0, "linearFeet" => "", "fileSize" => 0.00, 'sum_content_duration' => 0.00));
-        }
-        if (!isset($total["ndigitized"])) {
-            $total["ndigitized"][] = array("Audio" => array("totalRecords" => $audioTotal, 'dRecords' => 0, "linearFeet" => 0.00, "fileSize" => 0.00, 'sum_content_duration' => 0.00));
-            $total["ndigitized"][] = array("Video" => array("totalRecords" => $videoTotal, 'dRecords' => 0, "linearFeet" => 0.00, "fileSize" => 0.00, 'sum_content_duration' => 0.00));
-            $total["ndigitized"][] = array("Film" => array("totalRecords" => $filmTotal, 'dRecords' => 0, "linearFeet" => "", "fileSize" => 0.00, 'sum_content_duration' => 0.00));
-        }
-
         echo json_encode($total);
         exit;
     }
@@ -703,102 +686,36 @@ class ReportController extends MyController {
      * 
      * @return array
      */
-    private function getFileSizeAndLinearFootageInfo($projectid = null, $is_digitized = 0) {
-        $formatInfo = null;
+    private function getFileSizeAndLinearFootageInfo($projectid = null, $digitized = 0) {
         $em = $this->getDoctrine()->getManager();
-        $shpinxInfo = $this->container->getParameter('sphinx_param');
-        $sphinxSearch = new SphinxSearch($em, $shpinxInfo);
-        $total_records = $sphinxSearch->select($this->getUser(), 0, 1000, 'title', 'asc');
-        $max_offset = $total_records[1][1]['Value'];
-        $projects = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('project', $this->getUser(), array('is_digitized' => $is_digitized), false, null, null, "project_id"), 'project');
-        $return = false;
-        foreach ($projects as $project) {
-            $pId = null;
-            if (empty($projectid) || ($projectid && $projectid == 'all')) {
-                $pId = (int) $project["project_id"];
-            } else if ($projectid && $projectid != 'all') {
-                $pId = (int) $projectid;
-                $return = true;
+        if ($projectid == 'all') {
+            $projectid = 0;
+        }
+        if ($digitized == 2) {
+            $digitized = 0;
+        }
+        if (in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles())) {
+            $org_records = $em->getRepository('ApplicationFrontBundle:Records')->getDataForDashboard($projectid, $digitized);
+        } else {
+            $org_records = $em->getRepository('ApplicationFrontBundle:Records')->getDataForDashboard($projectid, $digitized, $this->getUser()->getOrganizations()->getId());
+        }
+        $formatInfo = array();
+        foreach ($org_records as $data) {
+            $pId = $data['projectId'];
+            $mediatype = $data['media'];
+            $f = str_replace(" ", "_", $data['format']);
+            if ($mediatype == "Audio") {
+                $sum_content_duration = $data["audio_sum"];
+            } elseif ($mediatype == "Video") {
+                $sum_content_duration = $data["video_sum"];
+            } else {
+                $sum_content_duration = $data["film_sum"];
             }
-            if ($pId != null) {
-                if ($projectid && $projectid != 'all') {
-                    $types = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('media_type', $this->getUser(), array('project_id' => (int) $pId)), 'media_type');
-                } else {
-                    $types = $sphinxSearch->removeEmpty($sphinxSearch->facetSelect('media_type', $this->getUser()), 'media_type');
-                }
-                foreach ($types as $mediatype) {
-                    $dtotalFound = 0;
-                    if ($is_digitized != 0) {
-                        $dCriteria = array(
-                            's_media_type' => array($mediatype['media_type']),
-                            'is_digitized' => $is_digitized,
-                            'project_id' => (int) $pId
-                        );
-                        if ($projectid && $projectid == 'all') {
-                            unset($dCriteria["project_id"]);
-                        }
-                        $d_records = $sphinxSearch->select($this->getUser(), 0, 1000, 'title', 'asc', $dCriteria);
-                        $dtotalFound = $d_records[1][1]['Value'];
-                    }
-                    $typeCriteria = array('s_media_type' => array($mediatype['media_type']));
-
-                    $typeCriteria['project_id'] = (int) $pId;
-                    $typeCriteria['is_digitized'] = $is_digitized;
-
-                    $formatResult = $sphinxSearch->removeEmpty($sphinxSearch->facetDurationSumSelect('format', $this->getUser(), $typeCriteria), 'format');
-                    if ($formatResult) {
-                        foreach ($formatResult as $format) {
-                            $_records = array();
-                            $recordCriteria = array('format' => $format['format']);
-                            if ($is_digitized != 0) {
-                                $recordCriteria = array(
-                                    'format' => $format['format'],
-                                    'is_digitized' => $is_digitized,
-                                    'project_id' => (int) $pId
-                                );
-                            }
-                            $count = 0;
-                            $offset = 0;
-
-                            while ($count == 0) {
-                                $records = $sphinxSearch->select($this->getUser(), $offset, 1000, 'title', 'asc', $recordCriteria);
-                                $_records = array_merge($_records, $records[0]);
-                                $totalFound = $records[1][1]['Value'];
-                                $offset = $offset + 1000;
-                                if ($totalFound < 1000 || $offset >= $max_offset) {
-                                    $count++;
-                                }
-                            }
-
-                            if ($_records) {
-                                $sumDuration = 0;
-                                $f = str_replace(" ", "_", $format['format']);
-                                foreach ($_records as $rec) {
-                                    if ($rec['format'] == $format['format']) {
-                                        if ($is_digitized == 1) {
-                                            if ($rec['content_duration']) {
-                                                $sumDuration = $sumDuration + $rec['content_duration'];
-                                            }
-                                        } else {
-                                            if ($rec['content_duration']) {
-                                                $sumDuration = $sumDuration + $rec['content_duration'];
-                                            } elseif ($mediatype['media_type'] != 'Film') {
-                                                $sumDuration = $sumDuration + $rec['media_duration'];
-                                            }
-                                        }
-                                    }
-                                }
-                                $formatInfo[$pId][$mediatype['media_type']][$f] = array('format' => $format['format'], 'sum_content_duration' => $sumDuration, 'total' => $format['total'], 'width' => $format['width']);
-                            }
-                        }
-                    }
-                    $formatInfo[$pId][$mediatype['media_type']]["total"] = $mediatype['total'];
-                    $formatInfo[$pId][$mediatype['media_type']]["dtotal"] = $dtotalFound;
-                }
-                if ($return) {
-                    return $formatInfo;
-                }
+            $_dTotal = 0;
+            if ($data["digitized"] == 1) {
+                $_dTotal = 1;
             }
+            $formatInfo[$pId][$mediatype][$f] = array('format' => $data['format'], 'sum_content_duration' => $sum_content_duration, 'total' => $data['total'], "dtotal" => $_dTotal, 'width' => $data['width'], 'footage' => $data['sum_footage']);
         }
         return $formatInfo;
     }
@@ -807,28 +724,10 @@ class ReportController extends MyController {
         return number_format(($totalDuration * $value) / 1024 / 1024, 5);
     }
 
-    /**
-     * Download All reports
-     * @param type $format
-     * 
-     * @Route("/downloadAll/{format}", name="download_all_reports")
-     * @Method("GET")
-     * @Template()
-     * @return array
-     * 
-     */
-//    public function downloadAll($format){
-//        $this->allFormatsAction($format);
-//        $this->prioritizationReportAction($format);
-//        $this->manifestAction($format);
-//        $this->fileSizeCalculatorAction($format);
-//        $this->linearFootCalculatorAction($format);
-//    }
-
     private function getAudioFilesize($contentDuration, $type, $val = null) {
         $totalAudioFileSize = 0.00;
-        if ($type == "digitized" && $val != null && !empty($val)) {
-            return $this->calculateFileSize($contentDuration, $val);
+        if ($type == 1 && $val != null && !empty($val)) {
+            return $val;
         } else {
             $uncompress1 = $this->calculateFileSize($contentDuration, 34.56);
             $totalAudioFileSize = $totalAudioFileSize + $uncompress1;
@@ -841,8 +740,8 @@ class ReportController extends MyController {
 
     private function getVideoFilesize($contentDuration, $type, $val = null) {
         $totalVideoFileSize = 0.00;
-        if ($type == "digitized" && $val != null && !empty($val)) {
-            return $this->calculateFileSize($contentDuration, $val);
+        if ($type == 1 && $val != null && !empty($val)) {
+            return $val;
         } else {
             $FFV1 = $this->calculateFileSize($contentDuration, 600);
             $totalVideoFileSize = $totalVideoFileSize + $FFV1;
@@ -856,8 +755,8 @@ class ReportController extends MyController {
 
     private function getFilmFilesize($contentDuration, $type, $val = null) {
         $totalFilmFileSize = 0.00;
-        if ($type == "digitized" && $val != null && !empty($val)) {
-            return $this->calculateFileSize($contentDuration, $val);
+        if ($type == 1 && $val != null && !empty($val)) {
+            return $val;
         } else {
             $k2Uncompressed = $this->calculateFileSize($contentDuration, 17500);
             $totalFilmFileSize = $totalFilmFileSize + $k2Uncompressed;

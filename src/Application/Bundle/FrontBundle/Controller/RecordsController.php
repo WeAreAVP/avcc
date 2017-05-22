@@ -623,12 +623,16 @@ class RecordsController extends MyController {
         $uploadImages = FALSE;
         $org_id = $entity->getProject()->getOrganization()->getId();
         $organization = $em->getRepository('ApplicationFrontBundle:Organizations')->find($org_id);
-        if ($organization->getIsPaid() == 1) {
+        $creator = $organization->getUsersCreated();
+        $customerId = $creator->getStripeCustomerId();
+        if ($organization->getIsPaid() == 1 && $customerId != "" && $customerId != null) {
             $uploadImages = TRUE;
         }
 
         $images = $em->getRepository('ApplicationFrontBundle:RecordImages')->findBy(array('recordId' => $id));
-
+        if (in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles())) {
+            $uploadImages = TRUE;
+        }
         $userViewSettings = json_decode($userViewSettings, true);
         return $this->render('ApplicationFrontBundle:Records:show.html.php', array(
                     'entity' => $entity,

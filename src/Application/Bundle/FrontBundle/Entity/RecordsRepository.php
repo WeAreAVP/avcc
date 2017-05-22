@@ -1,4 +1,5 @@
 <?php
+
 /**
  * AVCC
  * 
@@ -10,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.avpreserve.com
  */
+
 namespace Application\Bundle\FrontBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
@@ -31,7 +33,7 @@ class RecordsRepository extends EntityRepository {
         $query->setParameter('organization', $organizationID);
         return $query->getResult();
     }
-    
+
     public function countOrganizationRecord($organizationID) {
         $query = $this->getEntityManager()
                 ->createQuery("SELECT COUNT(r.id) as total from ApplicationFrontBundle:Records r "
@@ -41,7 +43,7 @@ class RecordsRepository extends EntityRepository {
         $query->setParameter('organization', $organizationID);
         return $query->getSingleResult();
     }
-    
+
     public function countOrganizationRecords($organizationID) {
         $query = $this->getEntityManager()
                 ->createQuery("SELECT COUNT(r.id) as total from ApplicationFrontBundle:Records r "
@@ -51,7 +53,6 @@ class RecordsRepository extends EntityRepository {
         $query->setParameter('organization', $organizationID);
         return $query->getSingleResult();
     }
-    
 
     public function findOrganizationRecord($organizationID) {
         $query = $this->getEntityManager()
@@ -63,7 +64,7 @@ class RecordsRepository extends EntityRepository {
 
         return $query->getResult();
     }
-    
+
     public function findAudioRecordById($id) {
         return $this->getEntityManager()->createQuery("SELECT r as record, ar as audio, m.name as mediaType, p.name as projectTitle"
                                 . " FROM ApplicationFrontBundle:Records r"
@@ -150,6 +151,65 @@ class RecordsRepository extends EntityRepository {
         if ($id != 0) {
             $query->setParameter('id', $id);
         }
+        return $query->getResult();
+    }
+
+    public function getDataForDashboard($pid, $digitized, $org = NULL) {
+        $where = '';
+        if ($pid > 0) {
+            $where .= " Where r.project = " . $pid;
+        }
+        if ($org > 0) {
+            if (empty($where)) {
+                $where .= ' Where o.id = ' . $org;
+            } else {
+                $where .= ' AND o.id = ' . $org;
+            }
+        }
+        $query = $this->getEntityManager()->createQuery("SELECT count(r.id) AS total,u.id as projectId,f.id as formatId, f.width as width,f.name as format,m.name as media,m.id as mediaId"
+                . ",SUM(IF(r.contentDuration > 0, r.contentDuration, ar.mediaDuration)) as audio_sum, 
+SUM(IF(r.contentDuration > 0, r.contentDuration, vr.mediaDuration)) as video_sum, 
+SUM(r.contentDuration) as film_sum, Sum(fr.footage) as sum_footage,r.digitized"
+                . " FROM ApplicationFrontBundle:Records r"
+                . " LEFT JOIN ApplicationFrontBundle:MediaTypes m WITH r.mediaType = m.id"
+                . " LEFT JOIN ApplicationFrontBundle:Formats f WITH r.format = f.id"
+                . " LEFT JOIN ApplicationFrontBundle:AudioRecords ar WITH ar.record = r.id "
+                . " LEFT JOIN ApplicationFrontBundle:VideoRecords vr WITH vr.record = r.id "
+                . " LEFT JOIN ApplicationFrontBundle:FilmRecords fr WITH fr.record = r.id "
+                . " JOIN r.project u "
+                . " JOIN u.organization o "
+                . $where
+                . " GROUP BY r.project, r.mediaType, r.format, r.digitized"
+        );
+        return $query->getResult();
+    }
+
+    public function countRecords($pid, $digitized = -1, $org = 0) {
+        $where = '';
+        if ($pid > 0) {
+            $where .= " Where r.format = " . $pid;
+        }
+        if ($digitized >= 0) {
+            if (empty($where)) {
+                $where .= " Where r.digitized = " . $digitized;
+            } else {
+                $where .= " AND r.digitized = " . $digitized;
+            }
+        }
+        if ($org > 0) {
+            if (empty($where)) {
+                $where .= ' Where o.id = ' . $org;
+            } else {
+                $where .= ' AND o.id = ' . $org;
+            }
+        }
+        $query = $this->getEntityManager()->createQuery("SELECT count(r.id) AS total"
+                . " FROM ApplicationFrontBundle:Records r"
+                . " JOIN r.project u "
+                . " JOIN u.organization o "
+                . $where
+                . " GROUP BY r.mediaType"
+        );
         return $query->getResult();
     }
 

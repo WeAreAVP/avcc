@@ -102,6 +102,7 @@ class BulkEditController extends Controller {
         $data = array();
         $em = $this->getDoctrine()->getManager();
         $data['mediaTypes'] = $em->getRepository('ApplicationFrontBundle:MediaTypes')->findAll();
+        $data['parentCollection'] = $em->getRepository('ApplicationFrontBundle:ParentCollection')->findAll();
         $data['formats'] = $em->getRepository('ApplicationFrontBundle:Formats')->findAll();
         $data['projects'] = $em->getRepository('ApplicationFrontBundle:Projects')->findAll();
         $data['commercial'] = $em->getRepository('ApplicationFrontBundle:Commercial')->findAll();
@@ -162,9 +163,34 @@ class BulkEditController extends Controller {
                         $record->setFormat($format);
                         $update = true;
                     }
+                    if ($posted['parentCollection']) {
+                        $parentCollection = $em->getRepository('ApplicationFrontBundle:ParentCollection')->findOneBy(array('id' => $posted['parentCollection']));
+                        $record->setParentCollection($parentCollection);
+                        $update = true;
+                    }
                     if ($posted['project']) {
                         $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $posted['project']));
                         $record->setProject($project);
+                        $update = true;
+                    }
+                    if ($posted['transcription'] && $posted['transcription'] != 3) {
+                        $transcription = ($posted['transcription'] == 1) ? 1 : 0;
+                        $record->setTranscription($transcription);
+                        $update = true;
+                    }
+                    if ($posted['digitized'] && $posted['digitized'] != 3) {
+                        $digitized = ($posted['digitized'] == 1) ? 1 : 0;
+                        $record->setDigitized($digitized);
+                        if ($digitized == 1) {
+                            $record->setDigitizedBy($posted['digitizedBy']);
+                            $record->setDigitizedWhen($posted['digitizedWhen']);
+                            if ($posted['urn'])
+                                $record->setUrn($posted['urn']);
+                        } else {
+                            $record->setDigitizedBy('');
+                            $record->setDigitizedWhen('');
+                            $record->setUrn('');
+                        }
                         $update = true;
                     }
                     if ($posted['location']) {

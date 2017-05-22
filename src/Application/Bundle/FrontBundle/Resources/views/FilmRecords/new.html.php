@@ -12,6 +12,13 @@
     <div id="fieldsPanel" style="display:none;">
         <?php echo $view['form']->start($form) ?>
         <?php echo $view['form']->errors($form) ?>
+        <span class="has-error text-danger">
+            <?php
+            if (!empty($allErrors)) {
+                echo implode("<br/>", $allErrors);
+            }
+            ?>
+        </span>
         <fieldset>
             <?php echo $view['form']->errors($form) ?>
             <?php // echo $view['form']->widget($form) ?>
@@ -28,7 +35,7 @@
                 }
                 $_style = (count($field) == 2 && ($field[1] == 'isReview' || $field[1] == 'reformattingPriority' || $field[1] == 'digitized' || $field[1] == 'transcription')) ? 'width: 180px;float: left;margin-bottom: 15px;' : 'width: 200px';
                 ?>
-                <div style="<?php echo ($filmField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>" data-view="<?php echo ($filmField['hidden']) ? 'hide' : 'show'; ?>">
+                <div style="<?php echo ($filmField['hidden']) ? "" : 'display:none;'; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>" data-view="<?php echo ($filmField['hidden']) ? 'show' : 'hide'; ?>">
                     <div class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo isset($tooltip[$index]) ? $tooltip[$index] : ''; ?>" style="<?php echo $_style ?>">                   
                         <?php
                         $attr = ($filmField['is_required']) ? array('class' => 'size4') : array('class' => 'size4');
@@ -76,6 +83,7 @@
     var selectedProject = '<?php echo ($entity->getRecord() && $entity->getRecord()->getProject()) ? $entity->getRecord()->getProject()->getId() : ''; ?>';
     var viewUrl = baseUrl + 'film/new/';
     var projectId = <?php echo ($app->getSession()->get('filmProjectId')) ? $app->getSession()->get('filmProjectId') : 0 ?>;
+    var bulk = false;
     $(document).ready(function () {
         initialize_records_form();
         $(function () {

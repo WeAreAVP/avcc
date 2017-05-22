@@ -37,6 +37,7 @@
     var selectedProject = '';
     var viewUrl = '';
     var projectId = 0;
+    var bulk = false;
     $(document).ready(function () {
         initialize_records_form();
         $(function () {

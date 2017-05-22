@@ -119,8 +119,13 @@ class FilmRecordsController extends MyController {
                 
             }
         }
+        
         if ($this->get('session')->get('filmProjectId')) {
             $projectId = $this->get('session')->get('filmProjectId');
+        } else if ($entity->getRecord()->getProject()->getId()) {
+            $projectId = $entity->getRecord()->getProject()->getId();
+        }
+        if ($projectId) {            
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project->getViewSetting() != null) {
                 $defSettings = $fieldsObj->getDefaultOrder();
@@ -134,11 +139,13 @@ class FilmRecordsController extends MyController {
         }
         $userViewSettings = json_decode($userViewSettings, true);
         $tooltip = $fieldsObj->getToolTip(2);
+        $allErrors = $this->allFormErrors($form);
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
             'fieldSettings' => $userViewSettings,
             'type' => $data['mediaType']->getName(),
+            'allErrors' => $allErrors,
             'tooltip' => $tooltip
         );
     }
@@ -246,6 +253,7 @@ class FilmRecordsController extends MyController {
                     'form' => $form->createView(),
                     'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
+                    'allErrors' => array(),
                     'tooltip' => $tooltip
         ));
     }
@@ -302,12 +310,15 @@ class FilmRecordsController extends MyController {
 
         $userViewSettings = json_decode($userViewSettings, true);
         $tooltip = $fieldsObj->getToolTip(2);
+        $images = $em->getRepository('ApplicationFrontBundle:RecordImages')->findBy(array('recordId' => $entity->getRecord()->getId()));
+
         return $this->render('ApplicationFrontBundle:FilmRecords:edit.html.php', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
-                    //      'delete_form' => $deleteForm->createView(),
+                    'images' => $images,
                     'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
+                    'allErrors' => array(),
                     'tooltip' => $tooltip
         ));
     }
@@ -410,15 +421,18 @@ class FilmRecordsController extends MyController {
             $defSettings = $fieldsObj->getDefaultOrder();
             $dbSettings = $entity->getRecord()->getProject()->getViewSetting();
             $userViewSettings = $fieldsObj->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
-//            $userViewSettings = $entity->getRecord()->getProject()->getViewSetting();
         }
         $userViewSettings = json_decode($userViewSettings, true);
         $tooltip = $fieldsObj->getToolTip(2);
+        $allErrors = $this->allFormErrors($editForm);
+        $images = $em->getRepository('ApplicationFrontBundle:RecordImages')->findBy(array('recordId' => $entity->getRecord()->getId()));
+
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
-            //     'delete_form' => $deleteForm->createView(),
+            'images' => $images,
             'fieldSettings' => $userViewSettings,
+            'allErrors' => $allErrors,
             'type' => $data['mediaType']->getName(),
             'tooltip' => $tooltip
         );
@@ -492,7 +506,7 @@ class FilmRecordsController extends MyController {
     }
 
     private function getErrorMessages(\Symfony\Component\Form\Form $form) {
-       
+
         $errors = array();
         foreach ($form->getErrors() as $key => $error) {
             $template = $error->getMessageTemplate();
@@ -512,6 +526,24 @@ class FilmRecordsController extends MyController {
             }
         }
         return $errors;
+    }
+
+    private function allFormErrors($form) {
+        $return = array();
+        $errors = $form->getErrorsAsString();
+        $all = explode(":", $errors);
+        $skip = false;
+        foreach ($all as $key => $value) {
+            if (strpos("ERROR", trim($value)) !== FALSE && strpos("ERROR", trim($value)) === 0) {
+                $skip = true;
+                $required = explode("\n", $all[$key + 1]);
+                $return[] = $required[0];
+            }
+            if ($skip) {
+                $skip = FALSE;
+            }
+        }
+        return $return;
     }
 
 }

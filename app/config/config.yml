@@ -66,6 +66,7 @@ doctrine:
         dql:
             datetime_functions:
                 DATE_FORMAT: Application\Bundle\FrontBundle\DQL\DateFormatFunction
+                IF: Application\Bundle\FrontBundle\DQL\IfFunction
     
 # Swiftmailer Configuration
 swiftmailer:

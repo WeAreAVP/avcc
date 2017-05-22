@@ -52,21 +52,6 @@
 
                     <?php } ?>
                     <?php
-                    if (isset($facetData['mediaType']) && $facetData['mediaType'] != '') {
-                        ?>
-                        <div id="mediaType_main" class="chekBoxFacet">
-                            <div class="filter-fileds"><b>Media Type</b></div>
-                            <?php
-                            foreach ($facetData['mediaType'] as $value) {
-                                $id = time() . rand(0, 1000);
-                                ?>
-                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'mediaType_' . name_slug($value); ?>" data-type="mediaType"></i></div>
-                            <?php } ?>
-                        </div>
-                        <div class="clearfix"></div>
-
-                    <?php } ?>
-                    <?php
                     if (isset($orgData) && $orgData != '') {
                         ?>
                         <div id="organizationName_main" class="chekBoxFacet">
@@ -81,6 +66,64 @@
                         <div class="clearfix"></div>
 
                     <?php } ?>
+                    <?php
+                    if (isset($projectData) && $projectData != '') {
+                        ?>
+                        <div id="mediaType_main" class="chekBoxFacet">
+                            <div class="filter-fileds"><b>Project</b></div>
+                            <?php
+                            foreach ($projectData as $id => $value) {
+//                                $id = time() . rand(0, 1000);
+                                ?>
+                                <div class="btn-img" id="facet_project_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo $id . '_project_' . name_slug($value); ?>" data-type="project"></i></div>
+                            <?php } ?>
+                        </div>
+                        <div class="clearfix"></div>
+                    <?php } ?>
+                    <?php
+                    if (isset($facetData['parent_collection']) && $facetData['parent_collection'] != '') {
+                        ?>
+                        <div id="mediaType_main" class="chekBoxFacet">
+                            <div class="filter-fileds"><b>Parent Collection</b></div>
+                            <?php
+                            foreach ($facetData['parent_collection'] as $value) {
+                                $id = time() . rand(0, 1000);
+                                ?>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'parentCollection_' . name_slug($value); ?>" data-type="parentCollection"></i></div>
+                            <?php } ?>
+                        </div>
+                        <div class="clearfix"></div>
+                    <?php } ?>
+                    <?php
+                    if (isset($facetData['collection_name']) && $facetData['collection_name'] != '') {
+                        ?>
+                        <div id="mediaType_main" class="chekBoxFacet">
+                            <div class="filter-fileds"><b>Collection Name</b></div>
+                            <?php
+                            foreach ($facetData['collection_name'] as $value) {
+                                $id = time() . rand(0, 1000);
+                                ?>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'collectionName_' . name_slug($value); ?>" data-type="collectionName"></i></div>
+                            <?php } ?>
+                        </div>
+                        <div class="clearfix"></div>
+                    <?php } ?>
+                    <?php
+                    if (isset($facetData['mediaType']) && $facetData['mediaType'] != '') {
+                        ?>
+                        <div id="mediaType_main" class="chekBoxFacet">
+                            <div class="filter-fileds"><b>Media Type</b></div>
+                            <?php
+                            foreach ($facetData['mediaType'] as $value) {
+                                $id = time() . rand(0, 1000);
+                                ?>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'mediaType_' . name_slug($value); ?>" data-type="mediaType"></i></div>
+                            <?php } ?>
+                        </div>
+                        <div class="clearfix"></div>
+
+                    <?php } ?>
+
                     <?php
                     if (isset($facetData['format']) && $facetData['format'] != '') {
                         ?>
@@ -124,49 +167,6 @@
                         <div class="clearfix"></div>
                     <?php } ?>
                     <?php
-                    if (isset($facetData['parent_collection']) && $facetData['parent_collection'] != '') {
-                        ?>
-                        <div id="mediaType_main" class="chekBoxFacet">
-                            <div class="filter-fileds"><b>Parent Collection</b></div>
-                            <?php
-                            foreach ($facetData['parent_collection'] as $value) {
-                                $id = time() . rand(0, 1000);
-                                ?>
-                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'parentCollection_' . name_slug($value); ?>" data-type="parentCollection"></i></div>
-                            <?php } ?>
-                        </div>
-                        <div class="clearfix"></div>
-                    <?php } ?>
-                    <?php
-                    if (isset($facetData['collection_name']) && $facetData['collection_name'] != '') {
-                        ?>
-                        <div id="mediaType_main" class="chekBoxFacet">
-                            <div class="filter-fileds"><b>Collection Name</b></div>
-                            <?php
-                            foreach ($facetData['collection_name'] as $value) {
-                                $id = time() . rand(0, 1000);
-                                ?>
-                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'collectionName_' . name_slug($value); ?>" data-type="collectionName"></i></div>
-                            <?php } ?>
-                        </div>
-                        <div class="clearfix"></div>
-                    <?php } ?>
-
-                    <?php
-                    if (isset($facetData['recordingStandard']) && $facetData['recordingStandard'] != '') {
-                        ?>
-                        <div id="mediaType_main" class="chekBoxFacet">
-                            <div class="filter-fileds"><b>Recording Standard</b></div>
-                            <?php
-                            foreach ($facetData['recordingStandard'] as $value) {
-                                $id = time() . rand(0, 1000);
-                                ?>
-                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'recordingStandard_' . name_slug($value); ?>" data-type="recordingStandard"></i></div>
-                            <?php } ?>
-                        </div>
-                        <div class="clearfix"></div>
-                    <?php } ?>
-                    <?php
                     if (isset($facetData['printType']) && $facetData['printType'] != '') {
                         ?>
                         <div id="mediaType_main" class="chekBoxFacet">
@@ -181,15 +181,15 @@
                         <div class="clearfix"></div>
                     <?php } ?>
                     <?php
-                    if (isset($projectData) && $projectData != '') {
+                    if (isset($facetData['acidDetection']) && $facetData['acidDetection'] != '') {
                         ?>
                         <div id="mediaType_main" class="chekBoxFacet">
-                            <div class="filter-fileds"><b>Project</b></div>
+                            <div class="filter-fileds"><b>Acid Detection</b></div>
                             <?php
-                            foreach ($projectData as $id => $value) {
-//                                $id = time() . rand(0, 1000);
+                            foreach ($facetData['acidDetection'] as $value) {
+                                $id = time() . rand(0, 1000);
                                 ?>
-                                <div class="btn-img" id="facet_project_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo $id . '_project_' . name_slug($value); ?>" data-type="project"></i></div>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'acidDetection_' . name_slug($value); ?>" data-type="acidDetection"></i></div>
                             <?php } ?>
                         </div>
                         <div class="clearfix"></div>
@@ -223,19 +223,19 @@
                         <div class="clearfix"></div>
                     <?php } ?>
                     <?php
-                    if (isset($facetData['acidDetection']) && $facetData['acidDetection'] != '') {
+                    if (isset($facetData['recordingStandard']) && $facetData['recordingStandard'] != '') {
                         ?>
                         <div id="mediaType_main" class="chekBoxFacet">
-                            <div class="filter-fileds"><b>Acid Detection</b></div>
+                            <div class="filter-fileds"><b>Recording Standard</b></div>
                             <?php
-                            foreach ($facetData['acidDetection'] as $value) {
+                            foreach ($facetData['recordingStandard'] as $value) {
                                 $id = time() . rand(0, 1000);
                                 ?>
-                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'acidDetection_' . name_slug($value); ?>" data-type="acidDetection"></i></div>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'recordingStandard_' . name_slug($value); ?>" data-type="recordingStandard"></i></div>
                             <?php } ?>
                         </div>
                         <div class="clearfix"></div>
-                    <?php } ?>
+                    <?php } ?>                         
                     <div class="clearfix"></div>
                     <div><input type="button" value="Reset" id="reset_all" name="reset_all"  style="display: none;" class="button" /></div>
                 </li>
@@ -265,16 +265,6 @@
                     <div class="button primary" id="addKeyword">Add Keyword</div>
                 </div>
             </li>
-            <?php if (count($facets['mediaType']) > 0): ?>
-                <li>
-                    <a class="dropdown-toggle" href="#">Media Type</a>
-                    <ul data-role="dropdown" <?php echo isset($facetData['mediaType']) ? 'style="display:block"' : 'style="display:none"'; ?>>
-                        <?php foreach ($facets['mediaType'] as $mediaType): ?>
-                            <li><a href="javascript://"><label for="<?php echo 'mediaType_' . str_replace(' ', '_', strtolower($mediaType['media_type'])) ?>"><input id='<?php echo 'mediaType_' . str_replace(' ', '_', strtolower($mediaType['media_type'])) ?>' <?php echo (isset($facetData['mediaType']) && in_array($mediaType['media_type'], $facetData['mediaType'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="mediaType[]" value="<?php echo $mediaType['media_type'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;"><?php echo $mediaType['media_type'] ?> (<?php echo $mediaType['total'] ?>)</div></label></a></li>
-                        <?php endforeach; ?>
-                    </ul> 
-                </li>
-            <?php endif; ?>
             <?php if ($view['security']->isGranted('ROLE_SUPER_ADMIN')): ?>
                 <?php if (count($facets['organizationNames']) > 0): ?>
                     <li>
@@ -314,67 +304,44 @@
                 endif;
             endif;
             ?>
-            <?php if (count($facets['formats']) > 0): ?>
+                    <?php if (count($facets['projectNames']) > 0): ?>
                 <li>
-                    <a class="dropdown-toggle" href="#">Format</a>
-
-                    <ul data-role="dropdown" <?php if (isset($facetData['format'])): ?> style="display:block" <?php endif; ?>>
+                    <a class="dropdown-toggle" href="#">Project Name</a>
+                    <ul  data-role="dropdown" <?php if (isset($facetData['project'])): ?> style="display:block" <?php endif ?>>
                         <div class="controls">
                             <div class="input-append">
-                                <input style="  margin-left: 10px; height: 25px; width: 199px !important;" id="formt_filter" name="formt_filter" type="text" value="" >
+                                <input style="  margin-left: 10px; height: 25px; width: 199px !important;" id="project_filter" name="project_filter" type="text" value="" >
                             </div>
                         </div>
-                        <?php foreach ($facets['formats'] as $key => $format): ?>
-                            <?php if ($key < 5) { ?>
-                                <li><a href="javascript://"><label for="<?php echo 'format_' . str_replace(' ', '_', strtolower($format['format'])) ?>"><input id='<?php echo 'format_' . name_slug($format['format']) ?>' <?php echo (isset($facetData['format']) && in_array($format['format'], $facetData['format'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="format[]" value="<?php echo $format['format'] ?>" style="float:left; width:20px"/><div class="frmts" style="margin-left: 25px;color: #696969;"><?php echo $format['format'] ?> (<?php echo $format['total'] ?>)</div></label></a></li>
-                            <?php } else if ($key == 5) { ?>                        
-                                <a class="format_ml" onclick="more_less('format_ml')" style="text-decoration: underline;">
-                                    More
-                                    <b class="caret"></b>
-                                </a>
-                                <div id="format_ml" style="display:none;">
-                                    <li><a href="javascript://"><label for="<?php echo 'format_' . str_replace(' ', '_', strtolower($format['format'])) ?>"><input id='<?php echo 'format_' . name_slug($format['format']) ?>' <?php echo (isset($facetData['format']) && in_array($format['format'], $facetData['format'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="format[]" value="<?php echo $format['format'] ?>" style="float:left; width:20px"/><div class="frmts" style="margin-left: 25px;color: #696969;"><?php echo $format['format'] ?> (<?php echo $format['total'] ?>)</div></label></a></li>
-                                    <?php
-                                } else {
-                                    ?>
-                                    <li><a href="javascript://"><label for="<?php echo 'format_' . str_replace(' ', '_', strtolower($format['format'])) ?>"><input id='<?php echo 'format_' . name_slug($format['format']) ?>' <?php echo (isset($facetData['format']) && in_array($format['format'], $facetData['format'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="format[]" value="<?php echo $format['format'] ?>" style="float:left; width:20px"/><div class="frmts" style="margin-left: 25px;color: #696969;"><?php echo $format['format'] ?> (<?php echo $format['total'] ?>)</div></label></a></li>
-                                <?php }
-                                ?>
+                        <?php foreach ($facets['projectNames'] as $key => $projectName): ?>
+                            <?php if ($projectName['project']): ?>
+                                <?php if ($key < 5) { ?>       
+                                    <li><a href="javascript://"><label for="<?php echo $projectName['project_id'] . '_project_' . str_replace(' ', '_', strtolower($projectName['project'])) ?>"><input id='<?php echo $projectName['project_id'] . '_project_' . name_slug($projectName['project']) ?>' <?php echo (isset($facetData['project']) && in_array($projectName['project_id'], $facetData['project'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="project[]" value="<?php echo $projectName['project_id'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;" class="projects"><?php echo $projectName['project'] ?> (<?php echo $projectName['total'] ?>)</div></label></a></li>
+                                <?php } else if ($key == 5) { ?>                        
+                                    <a class="project_ml" onclick="more_less('project_ml')" style="text-decoration: underline;">
+                                        More
+                                        <b class="caret"></b>
+                                    </a>
+                                    <div id="project_ml" style="display:none;">
+                                        <li><a href="javascript://"><label for="<?php echo $projectName['project_id'] . '_project_' . str_replace(' ', '_', strtolower($projectName['project'])) ?>"><input id='<?php echo $projectName['project_id'] . '_project_' . name_slug($projectName['project']) ?>' <?php echo (isset($facetData['project']) && in_array($projectName['project_id'], $facetData['project'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="project[]" value="<?php echo $projectName['project_id'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;" class="projects"><?php echo $projectName['project'] ?> (<?php echo $projectName['total'] ?>)</div></label></a></li>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <li><a href="javascript://"><label for="<?php echo $projectName['project_id'] . '_project_' . str_replace(' ', '_', strtolower($projectName['project'])) ?>"><input id='<?php echo $projectName['project_id'] . '_project_' . name_slug($projectName['project']) ?>' <?php echo (isset($facetData['project']) && in_array($projectName['project_id'], $facetData['project'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="project[]" value="<?php echo $projectName['project_id'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;" class="projects"><?php echo $projectName['project'] ?> (<?php echo $projectName['total'] ?>)</div></label></a></li>
+                                    <?php } ?>
+                                <?php endif ?>
                             <?php endforeach; ?>
                             <?php
-                            if (count($facets['formats']) > 5) {
+                            if (count($facets['projectNames']) > 5) {
                                 ?>
-                                <a class="format_ml" onclick="more_less('format_ml')" style="display:none;text-decoration: underline;">Less</a>
+                                <a class="project_ml" onclick="more_less('project_ml')" style="display:none;text-decoration: underline;">Less</a>
                             </div>
                         <?php } ?>
+
                     </ul>
                 </li>
             <?php endif; ?>
-            <?php if (count($facets['commercialUnique']) > 0): ?>
-                <li>
-                    <a class="dropdown-toggle" href="#">Commercial/Unique</a>
-                    <ul  data-role="dropdown" <?php if (isset($facetData['commercial'])): ?> style="display:block" <?php endif; ?>>
-                        <?php foreach ($facets['commercialUnique'] as $cOrU): ?>
-                            <?php if ($cOrU['commercial'] != ''): ?>
-                                <li><a href="javascript://"><label for="<?php echo 'commercial_' . str_replace(' ', '_', strtolower($cOrU['commercial'])) ?>"><input id='<?php echo 'commercial_' . name_slug($cOrU['commercial']) ?>' <?php echo (isset($facetData['commercial']) && in_array($cOrU['commercial'], $facetData['commercial'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="commercial[]" value="<?php echo $cOrU['commercial'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;"><?php echo $cOrU['commercial'] ?> (<?php echo $cOrU['total'] ?>)</div></label></a></li>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                    </ul>
-                </li>
-            <?php endif; ?>
-            <?php if (count($facets['bases']) > 0): ?>
-                <li>
-                    <a class="dropdown-toggle" href="#">Base</a>
-                    <ul  data-role="dropdown" <?php if (isset($facetData['base'])): ?> style="display:block" <?php endif; ?>>
-                        <?php foreach ($facets['bases'] as $base): ?>
-                            <?php if ($base['base'] != ''): ?>
-                                <li><a href="javascript://"><label for="<?php echo 'base_' . str_replace(' ', '_', strtolower($base['base'])) ?>"><input id='<?php echo 'base_' . name_slug($base['base']) ?>' <?php echo (isset($facetData['base']) && in_array($base['base'], $facetData['base'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="base[]" value="<?php echo $base['base'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;"><?php echo $base['base'] ?> (<?php echo $base['total'] ?>)</div></label></a></li>
-                            <?php endif ?>
-                        <?php endforeach ?>
-                    </ul>
-                </li>
-            <?php endif; ?>
-            <?php if (count($facets['parentCollection']) > 0): ?>
+                <?php if (count($facets['parentCollection']) > 0): ?>
                 <li>
                     <a class="dropdown-toggle" href="#">Parent Collection</a>
                     <ul  data-role="dropdown" <?php if (isset($facetData['parent_collection'])): ?> style="display:block" <?php endif ?>>
@@ -448,119 +415,54 @@
                     </ul>
                 </li>
             <?php endif; ?>
-
-
-            <?php if (count($facets['recordingStandards']) > 0): ?>
+            <?php if (count($facets['mediaType']) > 0): ?>
                 <li>
-                    <a class="dropdown-toggle" href="#">Recording Standard</a>
-                    <ul  data-role="dropdown" <?php if (isset($facetData['recordingStandard'])): ?> style="display:block" <?php endif ?>>
-                        <?php foreach ($facets['recordingStandards'] as $recordingStandard): ?>
-                            <?php if ($recordingStandard['recording_standard'] != ''): ?>
-                                <li><a href="javascript://"><label for="<?php echo 'recordingStandard_' . str_replace(' ', '_', strtolower($recordingStandard['recording_standard'])) ?>"><input id='<?php echo 'recordingStandard_' . name_slug($recordingStandard['recording_standard']) ?>' <?php echo (isset($facetData['recordingStandard']) && in_array($recordingStandard['recording_standard'], $facetData['recordingStandard'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="recordingStandard[]" value="<?php echo $recordingStandard['recording_standard'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;"><?php echo $recordingStandard['recording_standard'] ?> (<?php echo $recordingStandard['total'] ?>)</div></label></a></li>
-                            <?php endif ?>
+                    <a class="dropdown-toggle" href="#">Media Type</a>
+                    <ul data-role="dropdown" <?php echo isset($facetData['mediaType']) ? 'style="display:block"' : 'style="display:none"'; ?>>
+                        <?php foreach ($facets['mediaType'] as $mediaType): ?>
+                            <li><a href="javascript://"><label for="<?php echo 'mediaType_' . str_replace(' ', '_', strtolower($mediaType['media_type'])) ?>"><input id='<?php echo 'mediaType_' . str_replace(' ', '_', strtolower($mediaType['media_type'])) ?>' <?php echo (isset($facetData['mediaType']) && in_array($mediaType['media_type'], $facetData['mediaType'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="mediaType[]" value="<?php echo $mediaType['media_type'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;"><?php echo $mediaType['media_type'] ?> (<?php echo $mediaType['total'] ?>)</div></label></a></li>
                         <?php endforeach; ?>
-                    </ul>
+                    </ul> 
                 </li>
             <?php endif; ?>
-            <?php if (count($facets['printTypes']) > 0): ?>
+            
+            <?php if (count($facets['formats']) > 0): ?>
                 <li>
-                    <a class="dropdown-toggle" href="#">Print Type</a>
-                    <ul  data-role="dropdown" <?php if (isset($facetData['printType'])): ?> style="display:block" <?php endif ?>>
-                        <?php foreach ($facets['printTypes'] as $printType): ?>
-                            <?php if ($printType['print_type']): ?>
-                                <li><a href="javascript://"><label for="<?php echo 'printType_' . str_replace(' ', '_', strtolower($printType['print_type'])) ?>"><input id='<?php echo 'printType_' . name_slug($printType['print_type']) ?>' <?php echo (isset($facetData['printType']) && in_array($printType['print_type'], $facetData['printType'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="printType[]" value="<?php echo $printType['print_type'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;"><?php echo $printType['print_type'] ?> (<?php echo $printType['total'] ?>)</div></label></a></li>
-                            <?php endif ?>
-                        <?php endforeach ?>
-                    </ul>
-                </li>
-            <?php endif; ?>
-            <?php if (count($facets['projectNames']) > 0): ?>
-                <li>
-                    <a class="dropdown-toggle" href="#">Project Name</a>
-                    <ul  data-role="dropdown" <?php if (isset($facetData['project'])): ?> style="display:block" <?php endif ?>>
+                    <a class="dropdown-toggle" href="#">Format</a>
+
+                    <ul data-role="dropdown" <?php if (isset($facetData['format'])): ?> style="display:block" <?php endif; ?>>
                         <div class="controls">
                             <div class="input-append">
-                                <input style="  margin-left: 10px; height: 25px; width: 199px !important;" id="project_filter" name="project_filter" type="text" value="" >
+                                <input style="  margin-left: 10px; height: 25px; width: 199px !important;" id="formt_filter" name="formt_filter" type="text" value="" >
                             </div>
                         </div>
-                        <?php foreach ($facets['projectNames'] as $key => $projectName): ?>
-                            <?php if ($projectName['project']): ?>
-                                <?php if ($key < 5) { ?>       
-                                    <li><a href="javascript://"><label for="<?php echo $projectName['project_id'] . '_project_' . str_replace(' ', '_', strtolower($projectName['project'])) ?>"><input id='<?php echo $projectName['project_id'] . '_project_' . name_slug($projectName['project']) ?>' <?php echo (isset($facetData['project']) && in_array($projectName['project_id'], $facetData['project'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="project[]" value="<?php echo $projectName['project_id'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;" class="projects"><?php echo $projectName['project'] ?> (<?php echo $projectName['total'] ?>)</div></label></a></li>
-                                <?php } else if ($key == 5) { ?>                        
-                                    <a class="project_ml" onclick="more_less('project_ml')" style="text-decoration: underline;">
-                                        More
-                                        <b class="caret"></b>
-                                    </a>
-                                    <div id="project_ml" style="display:none;">
-                                        <li><a href="javascript://"><label for="<?php echo $projectName['project_id'] . '_project_' . str_replace(' ', '_', strtolower($projectName['project'])) ?>"><input id='<?php echo $projectName['project_id'] . '_project_' . name_slug($projectName['project']) ?>' <?php echo (isset($facetData['project']) && in_array($projectName['project_id'], $facetData['project'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="project[]" value="<?php echo $projectName['project_id'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;" class="projects"><?php echo $projectName['project'] ?> (<?php echo $projectName['total'] ?>)</div></label></a></li>
-                                        <?php
-                                    } else {
-                                        ?>
-                                        <li><a href="javascript://"><label for="<?php echo $projectName['project_id'] . '_project_' . str_replace(' ', '_', strtolower($projectName['project'])) ?>"><input id='<?php echo $projectName['project_id'] . '_project_' . name_slug($projectName['project']) ?>' <?php echo (isset($facetData['project']) && in_array($projectName['project_id'], $facetData['project'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="project[]" value="<?php echo $projectName['project_id'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;" class="projects"><?php echo $projectName['project'] ?> (<?php echo $projectName['total'] ?>)</div></label></a></li>
-                                    <?php } ?>
-                                <?php endif ?>
+                        <?php foreach ($facets['formats'] as $key => $format): ?>
+                            <?php if ($key < 5) { ?>
+                                <li><a href="javascript://"><label for="<?php echo 'format_' . str_replace(' ', '_', strtolower($format['format'])) ?>"><input id='<?php echo 'format_' . name_slug($format['format']) ?>' <?php echo (isset($facetData['format']) && in_array($format['format'], $facetData['format'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="format[]" value="<?php echo $format['format'] ?>" style="float:left; width:20px"/><div class="frmts" style="margin-left: 25px;color: #696969;"><?php echo $format['format'] ?> (<?php echo $format['total'] ?>)</div></label></a></li>
+                            <?php } else if ($key == 5) { ?>                        
+                                <a class="format_ml" onclick="more_less('format_ml')" style="text-decoration: underline;">
+                                    More
+                                    <b class="caret"></b>
+                                </a>
+                                <div id="format_ml" style="display:none;">
+                                    <li><a href="javascript://"><label for="<?php echo 'format_' . str_replace(' ', '_', strtolower($format['format'])) ?>"><input id='<?php echo 'format_' . name_slug($format['format']) ?>' <?php echo (isset($facetData['format']) && in_array($format['format'], $facetData['format'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="format[]" value="<?php echo $format['format'] ?>" style="float:left; width:20px"/><div class="frmts" style="margin-left: 25px;color: #696969;"><?php echo $format['format'] ?> (<?php echo $format['total'] ?>)</div></label></a></li>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <li><a href="javascript://"><label for="<?php echo 'format_' . str_replace(' ', '_', strtolower($format['format'])) ?>"><input id='<?php echo 'format_' . name_slug($format['format']) ?>' <?php echo (isset($facetData['format']) && in_array($format['format'], $facetData['format'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="format[]" value="<?php echo $format['format'] ?>" style="float:left; width:20px"/><div class="frmts" style="margin-left: 25px;color: #696969;"><?php echo $format['format'] ?> (<?php echo $format['total'] ?>)</div></label></a></li>
+                                <?php }
+                                ?>
                             <?php endforeach; ?>
                             <?php
-                            if (count($facets['projectNames']) > 5) {
+                            if (count($facets['formats']) > 5) {
                                 ?>
-                                <a class="project_ml" onclick="more_less('project_ml')" style="display:none;text-decoration: underline;">Less</a>
+                                <a class="format_ml" onclick="more_less('format_ml')" style="display:none;text-decoration: underline;">Less</a>
                             </div>
                         <?php } ?>
-
                     </ul>
                 </li>
             <?php endif; ?>
-            <?php if (count($facets['reelDiameters']) > 0): ?>
-                <li>
-                    <a class="dropdown-toggle" href="#">Reel Diameter</a>
-                    <ul  data-role="dropdown" <?php if (isset($facetData['reelDiameter'])): ?> style="display:block" <?php endif ?>>
-                        <?php foreach ($facets['reelDiameters'] as $reelDiameter): ?>
-                            <?php if ($reelDiameter['reel_diameter']): ?>
-                                <li><a href="javascript://"><label for="<?php echo 'reelDiameter_' . str_replace(' ', '_', strtolower($reelDiameter['reel_diameter'])) ?>"><input id='<?php echo 'reelDiameter_' . name_slug($reelDiameter['reel_diameter']) ?>' <?php echo (isset($facetData['reelDiameter']) && in_array($reelDiameter['reel_diameter'], $facetData['reelDiameter'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="reelDiameter[]" value="<?php echo $reelDiameter['reel_diameter'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;"><?php echo $reelDiameter['reel_diameter'] ?> (<?php echo $reelDiameter['total'] ?>)</div></label></a></li>
-                            <?php endif ?>
-                        <?php endforeach ?>
-                    </ul>
-                </li>
-            <?php endif; ?>
-            <?php if (count($facets['discDiameters']) > 0): ?>
-                <li>
-                    <a class="dropdown-toggle" href="#">Disk Diameter</a>
-                    <ul  data-role="dropdown" <?php if (isset($facetData['discDiameter'])): ?> style="display:block" <?php endif ?>>
-                        <?php foreach ($facets['discDiameters'] as $discDiameter): ?>
-                            <?php if ($discDiameter['disk_diameter'] != ''): ?>
-                                <li><a href="javascript://"><label for="<?php echo 'diskDiameter_' . str_replace(' ', '_', strtolower($discDiameter['disk_diameter'])) ?>"><input id='<?php echo 'diskDiameter_' . name_slug($discDiameter['disk_diameter']) ?>' <?php echo (isset($facetData['discDiameter']) && in_array($discDiameter['disk_diameter'], $facetData['discDiameter'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="discDiameter[]" value="<?php echo $discDiameter['disk_diameter'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;"><?php echo $discDiameter['disk_diameter'] ?> (<?php echo $discDiameter['total'] ?>)</div></label></a></li>
-                            <?php endif ?>
-                        <?php endforeach; ?>
-                    </ul>
-                </li>
-            <?php endif; ?>
-            <?php if (count($facets['acidDetection']) > 0): ?>
-                <li>
-                    <a class="dropdown-toggle" href="#">Acid Detection Strip</a>
-                    <ul  data-role="dropdown" <?php if (isset($facetData['acidDetection'])): ?> style="display:block" <?php endif ?>>
-                        <?php foreach ($facets['acidDetection'] as $strip): ?>
-                            <?php if ($strip['acid_detection']): ?>
-                                <li><a href="javascript://"><label for="<?php echo 'acidDetection_' . str_replace(' ', '_', strtolower($strip['acid_detection'])) ?>"><input id='<?php echo 'acidDetection_' . name_slug($strip['acid_detection']) ?>' <?php echo (isset($facetData['acidDetection']) && in_array($strip['acid_detection'], $facetData['acidDetection'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="acidDetection[]" value="<?php echo $strip['acid_detection'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;"><?php echo $strip['acid_detection'] ?> (<?php echo $strip['total'] ?>)</div></label></a></li>
-                            <?php endif ?>
-                        <?php endforeach; ?>
-                    </ul>
-                </li>
-            <?php endif; ?>
-            <li class="chekBoxFacet">
-                <span id="is_review_check" style="cursor: default;">
-                    <?php
-                    $review_check = 0;
-                    if (isset($facetData['is_review_check'])):
-
-                        $review_check = $facetData['is_review_check'];
-                    endif;
-                    ?>
-                    <input type="hidden" id="is_review_check_state" name="is_review_check" value="<?php echo $review_check ?>"  />
-                </span>
-                Manager Review
-            </li>
-            <li class="chekBoxFacet">
+                <li class="chekBoxFacet">
                 <span id="is_reformatting_priority_check" style="cursor: default;">
                     <?php
                     $reformatting_priority_check = 0;
@@ -572,19 +474,6 @@
                     <input type="hidden" id="is_reformatting_priority_check_state" name="is_reformatting_priority_check" value="<?php echo $reformatting_priority_check ?>"  />
                 </span>
                 Reformatting Priority
-            </li>
-            <li class="chekBoxFacet">
-                <span id="has_images_check" style="cursor: default;">
-                    <?php
-                    $digitized = 0;
-                    if (isset($facetData['has_images_check'])):
-
-                        $digitized = $facetData['has_images_check'];
-                    endif;
-                    ?>
-                    <input type="hidden" id="has_images_check_state" name="has_images_check" value="<?php echo $digitized ?>"  />
-                </span>
-                Has Images
             </li>
             <li class="chekBoxFacet">
                 <span id="is_digitized_check" style="cursor: default;">
@@ -612,6 +501,121 @@
                 </span>
                 Transcription 
             </li>
+            <li class="chekBoxFacet">
+                <span id="has_images_check" style="cursor: default;">
+                    <?php
+                    $digitized = 0;
+                    if (isset($facetData['has_images_check'])):
+
+                        $digitized = $facetData['has_images_check'];
+                    endif;
+                    ?>
+                    <input type="hidden" id="has_images_check_state" name="has_images_check" value="<?php echo $digitized ?>"  />
+                </span>
+                Has Images
+            </li>
+            <?php if (count($facets['commercialUnique']) > 0): ?>
+                <li>
+                    <a class="dropdown-toggle" href="#">Commercial/Unique</a>
+                    <ul  data-role="dropdown" <?php if (isset($facetData['commercial'])): ?> style="display:block" <?php endif; ?>>
+                        <?php foreach ($facets['commercialUnique'] as $cOrU): ?>
+                            <?php if ($cOrU['commercial'] != ''): ?>
+                                <li><a href="javascript://"><label for="<?php echo 'commercial_' . str_replace(' ', '_', strtolower($cOrU['commercial'])) ?>"><input id='<?php echo 'commercial_' . name_slug($cOrU['commercial']) ?>' <?php echo (isset($facetData['commercial']) && in_array($cOrU['commercial'], $facetData['commercial'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="commercial[]" value="<?php echo $cOrU['commercial'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;"><?php echo $cOrU['commercial'] ?> (<?php echo $cOrU['total'] ?>)</div></label></a></li>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+            <?php if (count($facets['bases']) > 0): ?>
+                <li>
+                    <a class="dropdown-toggle" href="#">Base</a>
+                    <ul  data-role="dropdown" <?php if (isset($facetData['base'])): ?> style="display:block" <?php endif; ?>>
+                        <?php foreach ($facets['bases'] as $base): ?>
+                            <?php if ($base['base'] != ''): ?>
+                                <li><a href="javascript://"><label for="<?php echo 'base_' . str_replace(' ', '_', strtolower($base['base'])) ?>"><input id='<?php echo 'base_' . name_slug($base['base']) ?>' <?php echo (isset($facetData['base']) && in_array($base['base'], $facetData['base'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="base[]" value="<?php echo $base['base'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;"><?php echo $base['base'] ?> (<?php echo $base['total'] ?>)</div></label></a></li>
+                            <?php endif ?>
+                        <?php endforeach ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+            
+ <?php if (count($facets['printTypes']) > 0): ?>
+                <li>
+                    <a class="dropdown-toggle" href="#">Print Type</a>
+                    <ul  data-role="dropdown" <?php if (isset($facetData['printType'])): ?> style="display:block" <?php endif ?>>
+                        <?php foreach ($facets['printTypes'] as $printType): ?>
+                            <?php if ($printType['print_type']): ?>
+                                <li><a href="javascript://"><label for="<?php echo 'printType_' . str_replace(' ', '_', strtolower($printType['print_type'])) ?>"><input id='<?php echo 'printType_' . name_slug($printType['print_type']) ?>' <?php echo (isset($facetData['printType']) && in_array($printType['print_type'], $facetData['printType'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="printType[]" value="<?php echo $printType['print_type'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;"><?php echo $printType['print_type'] ?> (<?php echo $printType['total'] ?>)</div></label></a></li>
+                            <?php endif ?>
+                        <?php endforeach ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+<?php if (count($facets['acidDetection']) > 0): ?>
+                <li>
+                    <a class="dropdown-toggle" href="#">Acid Detection Strip</a>
+                    <ul  data-role="dropdown" <?php if (isset($facetData['acidDetection'])): ?> style="display:block" <?php endif ?>>
+                        <?php foreach ($facets['acidDetection'] as $strip): ?>
+                            <?php if ($strip['acid_detection']): ?>
+                                <li><a href="javascript://"><label for="<?php echo 'acidDetection_' . str_replace(' ', '_', strtolower($strip['acid_detection'])) ?>"><input id='<?php echo 'acidDetection_' . name_slug($strip['acid_detection']) ?>' <?php echo (isset($facetData['acidDetection']) && in_array($strip['acid_detection'], $facetData['acidDetection'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="acidDetection[]" value="<?php echo $strip['acid_detection'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;"><?php echo $strip['acid_detection'] ?> (<?php echo $strip['total'] ?>)</div></label></a></li>
+                            <?php endif ?>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+                <?php if (count($facets['reelDiameters']) > 0): ?>
+                <li>
+                    <a class="dropdown-toggle" href="#">Reel Diameter</a>
+                    <ul  data-role="dropdown" <?php if (isset($facetData['reelDiameter'])): ?> style="display:block" <?php endif ?>>
+                        <?php foreach ($facets['reelDiameters'] as $reelDiameter): ?>
+                            <?php if ($reelDiameter['reel_diameter']): ?>
+                                <li><a href="javascript://"><label for="<?php echo 'reelDiameter_' . str_replace(' ', '_', strtolower($reelDiameter['reel_diameter'])) ?>"><input id='<?php echo 'reelDiameter_' . name_slug($reelDiameter['reel_diameter']) ?>' <?php echo (isset($facetData['reelDiameter']) && in_array($reelDiameter['reel_diameter'], $facetData['reelDiameter'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="reelDiameter[]" value="<?php echo $reelDiameter['reel_diameter'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;"><?php echo $reelDiameter['reel_diameter'] ?> (<?php echo $reelDiameter['total'] ?>)</div></label></a></li>
+                            <?php endif ?>
+                        <?php endforeach ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+            <?php if (count($facets['discDiameters']) > 0): ?>
+                <li>
+                    <a class="dropdown-toggle" href="#">Disk Diameter</a>
+                    <ul  data-role="dropdown" <?php if (isset($facetData['discDiameter'])): ?> style="display:block" <?php endif ?>>
+                        <?php foreach ($facets['discDiameters'] as $discDiameter): ?>
+                            <?php if ($discDiameter['disk_diameter'] != ''): ?>
+                                <li><a href="javascript://"><label for="<?php echo 'diskDiameter_' . str_replace(' ', '_', strtolower($discDiameter['disk_diameter'])) ?>"><input id='<?php echo 'diskDiameter_' . name_slug($discDiameter['disk_diameter']) ?>' <?php echo (isset($facetData['discDiameter']) && in_array($discDiameter['disk_diameter'], $facetData['discDiameter'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="discDiameter[]" value="<?php echo $discDiameter['disk_diameter'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;"><?php echo $discDiameter['disk_diameter'] ?> (<?php echo $discDiameter['total'] ?>)</div></label></a></li>
+                            <?php endif ?>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+            <?php if (count($facets['recordingStandards']) > 0): ?>
+                <li>
+                    <a class="dropdown-toggle" href="#">Recording Standard</a>
+                    <ul  data-role="dropdown" <?php if (isset($facetData['recordingStandard'])): ?> style="display:block" <?php endif ?>>
+                        <?php foreach ($facets['recordingStandards'] as $recordingStandard): ?>
+                            <?php if ($recordingStandard['recording_standard'] != ''): ?>
+                                <li><a href="javascript://"><label for="<?php echo 'recordingStandard_' . str_replace(' ', '_', strtolower($recordingStandard['recording_standard'])) ?>"><input id='<?php echo 'recordingStandard_' . name_slug($recordingStandard['recording_standard']) ?>' <?php echo (isset($facetData['recordingStandard']) && in_array($recordingStandard['recording_standard'], $facetData['recordingStandard'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="recordingStandard[]" value="<?php echo $recordingStandard['recording_standard'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;"><?php echo $recordingStandard['recording_standard'] ?> (<?php echo $recordingStandard['total'] ?>)</div></label></a></li>
+                            <?php endif ?>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+                     
+            <li class="chekBoxFacet">
+                <span id="is_review_check" style="cursor: default;">
+                    <?php
+                    $review_check = 0;
+                    if (isset($facetData['is_review_check'])):
+
+                        $review_check = $facetData['is_review_check'];
+                    endif;
+                    ?>
+                    <input type="hidden" id="is_review_check_state" name="is_review_check" value="<?php echo $review_check ?>"  />
+                </span>
+                Manager Review
+            </li>
+            
+            
+            
         </ul>
     </nav>
     <?php

@@ -118,14 +118,18 @@ class VideoRecordsController extends MyController {
                 
             }
         }
+
         if ($this->get('session')->get('vedioProjectId')) {
             $projectId = $this->get('session')->get('vedioProjectId');
+        } else if ($entity->getRecord()->getProject()->getId()) {
+            $projectId = $entity->getRecord()->getProject()->getId();
+        }
+        if ($projectId) {
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project->getViewSetting() != null) {
                 $defSettings = $fieldsObj->getDefaultOrder();
                 $dbSettings = $project->getViewSetting();
                 $userViewSettings = $fieldsObj->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
-//                $userViewSettings = $project->getViewSetting();
             } else {
                 $userViewSettings = $fieldsObj->getDefaultOrder();
             }
@@ -135,10 +139,12 @@ class VideoRecordsController extends MyController {
 
         $userViewSettings = json_decode($userViewSettings, true);
         $tooltip = $fieldsObj->getToolTip(3);
+        $allErrors = $this->allFormErrors($form);
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
             'fieldSettings' => $userViewSettings,
+            'allErrors' => $allErrors,
             'type' => $data['mediaType']->getName(),
             'tooltip' => $tooltip
         );
@@ -182,11 +188,11 @@ class VideoRecordsController extends MyController {
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
         }
-       
+
         $em = $this->getDoctrine()->getManager();
         $fieldsObj = new DefaultFields();
         $data = $fieldsObj->getData(3, $em, $this->getUser(), $projectId);
-       
+
         if ($videoRecId) {
             $entity = $em->getRepository('ApplicationFrontBundle:VideoRecords')->find($videoRecId);
             $entity->getRecord()->setUniqueId(NULL);
@@ -240,6 +246,7 @@ class VideoRecordsController extends MyController {
                     'form' => $form->createView(),
                     'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
+                    'allErrors' => array(),
                     'tooltip' => $tooltip
         ));
     }
@@ -293,13 +300,17 @@ class VideoRecordsController extends MyController {
 
         $userViewSettings = json_decode($userViewSettings, true);
         $tooltip = $fieldsObj->getToolTip(3);
+        $images = $em->getRepository('ApplicationFrontBundle:RecordImages')->findBy(array('recordId' => $entity->getRecord()->getId()));
+
         return $this->render('ApplicationFrontBundle:VideoRecords:edit.html.php', array(
                     'entity' => $entity,
                     'edit_form' => $editForm->createView(),
                     //        'delete_form' => $deleteForm->createView(),
                     'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
-                    'tooltip' => $tooltip
+                    'allErrors' => array(),
+                    'tooltip' => $tooltip,
+                    'images' => $images
         ));
     }
 
@@ -404,13 +415,18 @@ class VideoRecordsController extends MyController {
         }
         $userViewSettings = json_decode($userViewSettings, true);
         $tooltip = $fieldsObj->getToolTip(3);
+        $allErrors = $this->allFormErrors($editForm);
+        $images = $em->getRepository('ApplicationFrontBundle:RecordImages')->findBy(array('recordId' => $entity->getRecord()->getId()));
+
         return array(
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             //     'delete_form' => $deleteForm->createView(),
             'fieldSettings' => $userViewSettings,
+            'allErrors' => $allErrors,
             'type' => $data['mediaType']->getName(),
-            'tooltip' => $tooltip
+            'tooltip' => $tooltip,
+            'images' => $images
         );
     }
 
@@ -480,4 +496,23 @@ class VideoRecordsController extends MyController {
         }
         return '';
     }
+
+    private function allFormErrors($form) {
+        $return = array();
+        $errors = $form->getErrorsAsString();
+        $all = explode(":", $errors);
+        $skip = false;
+        foreach ($all as $key => $value) {
+            if (strpos("ERROR", trim($value)) !== FALSE && strpos("ERROR", trim($value)) === 0) {
+                $skip = true;
+                $required = explode("\n", $all[$key + 1]);
+                $return[] = $required[0];
+            }
+            if ($skip) {
+                $skip = FALSE;
+            }
+        }
+        return $return;
+    }
+
 }

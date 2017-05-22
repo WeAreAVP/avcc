@@ -97,12 +97,6 @@ class ImportReport extends ContainerAware {
                         } else if (!empty($uniqueId)) {
                             $unique[] = $uniqueId;
                         }
-//                        if (trim($collectionName->getValue()) == '') {
-//                            $invalidValues['missing_fields'][] = 'Collection name missing at row ' . $row;
-//                        }
-//                        if (trim($description->getValue()) == '') {
-//                            $invalidValues['missing_fields'][] = 'Description missing at row ' . $row;
-//                        }
                         if (trim($title->getValue()) == '') {
                             $invalidValues['missing_fields'][] = 'Title missing at row ' . $row;
                         }

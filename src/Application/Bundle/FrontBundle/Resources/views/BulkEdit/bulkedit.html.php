@@ -43,12 +43,12 @@
                     </div>
                     <div id="project_lbl" class="col-lg-6" style="" style="" data-view="show">
                         <label for="project">Project Name</label>
-                        <div data-role="input-control" class="input-control">
+                        <div data-role="input-control" class="input-control"> 
                             <select class="size4" name="project" id="project">
                                 <option value=""></option>
                                 <?php foreach ($relatedFields['projects'] as $project) { ?>
                                     <option value="<?php echo $project->getId(); ?>"><?php echo $project->getName() ?></option>
-<?php } ?>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>
@@ -62,6 +62,22 @@
                         <label for="title" class="required">Title</label>
                         <div data-role="input-control" class="input-control">
                             <input type="text" class="size4" name="title" id="title">
+                        </div>
+                    </div>
+                    <div id="parentCollection_lbl" class="col-lg-6" style="" style="" data-view="show">
+                        <label for="parentCollection">Parent Collection</label>
+                        <div data-role="input-control" class="input-control">
+                            <?php // $selected?>
+                            <select class="size4" name="parentCollection" id="parentCollection">
+                                <option value=""></option>
+                                <?php
+                                foreach ($relatedFields['parentCollection'] as $mediaType) {
+                                    ?>
+                                    <option value="<?php echo $mediaType->getId(); ?>"><?php echo $mediaType->getName() ?></option>
+                                    <?php
+                                }
+                                ?>
+                            </select>
                         </div>
                     </div>
                     <div id="collectionName_lbl" class="col-lg-6" style="" style="" data-view="show">
@@ -83,7 +99,7 @@
                                 <option value=""></option>
                                 <?php foreach ($relatedFields['commercial'] as $commercial) { ?>
                                     <option value="<?php echo $commercial->getId(); ?>"><?php echo $commercial->getName() ?></option>
-<?php } ?>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>
@@ -98,7 +114,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['diskDiameters'] as $diskDiameter) { ?>
                                             <option value="<?php echo $diskDiameter->getId(); ?>"><?php echo $diskDiameter->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -109,7 +125,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['reelDiameters'] as $reelDiameter) { ?>
                                             <option value="<?php echo $reelDiameter->getId(); ?>"><?php echo $reelDiameter->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -120,7 +136,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['mediaDiameters'] as $mediaDiameter) { ?>
                                             <option value="<?php echo $mediaDiameter->getId(); ?>"><?php echo $mediaDiameter->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -153,7 +169,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['tapeThickness'] as $tapeThickness) { ?>
                                             <option value="<?php echo $tapeThickness->getId(); ?>"><?php echo $tapeThickness->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -164,7 +180,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['sides'] as $side) { ?>
                                             <option value="<?php echo $side->getId(); ?>"><?php echo $side->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -175,7 +191,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['trackTypes'] as $trackType) { ?>
                                             <option value="<?php echo $trackType->getId(); ?>"><?php echo $trackType->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -186,7 +202,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['monoStereo'] as $monoStereo) { ?>
                                             <option value="<?php echo $monoStereo->getId(); ?>"><?php echo $monoStereo->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -197,7 +213,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['noiseReduction'] as $noiseReduction) { ?>
                                             <option value="<?php echo $noiseReduction->getId(); ?>"><?php echo $noiseReduction->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -211,7 +227,7 @@
                                         <option value=''></option>
                                         <?php foreach ($relatedFields['reelCore'] as $reelCore) { ?>
                                             <option value="<?php echo $reelCore->getId(); ?>"><?php echo $reelCore->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -222,7 +238,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['reelDiameters'] as $reelDiameter) { ?>
                                             <option value="<?php echo $reelDiameter->getId(); ?>"><?php echo $reelDiameter->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -245,7 +261,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['bases'] as $base) { ?>
                                             <option value="<?php echo $base->getId(); ?>"><?php echo $base->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -256,7 +272,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['colors'] as $color) { ?>
                                             <option value="<?php echo $color->getId(); ?>"><?php echo $color->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -267,7 +283,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['sounds'] as $sound) { ?>
                                             <option value="<?php echo $sound->getId(); ?>"><?php echo $sound->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -278,7 +294,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['frameRates'] as $frameRate) { ?>
                                             <option value="<?php echo $frameRate->getId(); ?>"><?php echo $frameRate->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -289,7 +305,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['acidDetectionStrips'] as $acidDetectionStrip) { ?>
                                             <option value="<?php echo $acidDetectionStrip->getId(); ?>"><?php echo $acidDetectionStrip->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -300,7 +316,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['printTypes'] as $printType) { ?>
                                             <option value="<?php echo $printType->getId(); ?>"><?php echo $printType->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -314,7 +330,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['cassetteSizes'] as $cassetteSize) { ?>
                                             <option value="<?php echo $cassetteSize->getId(); ?>"><?php echo $cassetteSize->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -325,7 +341,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['reelDiameters'] as $reelDiameter) { ?>
                                             <option value="<?php echo $reelDiameter->getId(); ?>"><?php echo $reelDiameter->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -336,7 +352,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['formatVersions'] as $formatVersion) { ?>
                                             <option value="<?php echo $formatVersion->getId(); ?>"><?php echo $formatVersion->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -353,7 +369,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['recordingSpeed'] as $recordingSpeed) { ?>
                                             <option value="<?php echo $recordingSpeed->getId(); ?>"><?php echo $recordingSpeed->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -364,7 +380,7 @@
                                         <option value=""></option>
                                         <?php foreach ($relatedFields['recordingStandards'] as $recordingStandard) { ?>
                                             <option value="<?php echo $recordingStandard->getId(); ?>"><?php echo $recordingStandard->getName() ?></option>
-        <?php } ?>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -372,10 +388,46 @@
                         }
                     }
                     ?>
+                    <div id="digitized_lbl" class="col-lg-6" style="" data-view="show">
+                        <label for="digitized">Digitized</label>
+                        <div data-role="input-control" class="input-control">
+                            <input type="radio" class="digitized" name="digitized" value="1"> check
+                            <input type="radio" class="myRadio digitized" name="digitized" value="2"> uncheck
+                            <input type="radio" class="myRadio digitized" name="digitized" value="3" checked="checked"> none
+                        </div>
+                    </div>
+                    <div id="digitizedBy_lbl" class="col-lg-6" style="" data-view="show">
+                        <label for="digitizedBy">Digitized By</label>
+                        <div data-role="input-control" class="input-control">
+                            <input type="text" class="size4" name="digitizedBy" id="digitizedBy">
+                            <span class="has-error text-danger" id="digitizedByError"></span>
+                        </div>
+                    </div>
+                    <div id="digitizedWhen_lbl" class="col-lg-6" style="" data-view="show">
+                        <label for="digitizedWhen">Digitized When</label>
+                        <div data-role="input-control" class="input-control">
+                            <input type="text" class="size4" name="digitizedWhen" id="digitizedWhen">
+                            <span class="has-error text-danger" id="digitizedWhenError"></span>
+                        </div>
+                    </div>
+                    <div id="urn_lbl" class="col-lg-6" style="" data-view="show">
+                        <label for="urn">URN</label>
+                        <div data-role="input-control" class="input-control">
+                            <input type="text" class="size4" name="urn" id="urn">
+                        </div>
+                    </div>
                     <div id="contentDuration_lbl" class="col-lg-6" style="" data-view="show">
                         <label for="contentDuration">Content Duration</label>
                         <div data-role="input-control" class="input-control">
                             <input type="text" class="size4" name="contentDuration" id="contentDuration">
+                        </div>
+                    </div>
+                    <div id="transcription_lbl" class="col-lg-6" style="" data-view="show">
+                        <label for="transcription">Transcription</label>
+                        <div data-role="input-control" class="input-control">
+                            <input type="radio" class="" name="transcription" value="1"> check
+                            <input type="radio" class="myRadio" name="transcription" value="2"> uncheck
+                            <input type="radio" class="myRadio" name="transcription" value="3" checked="checked"> none
                         </div>
                     </div>
                     <div id="copyrightRestrictions_lbl" class="col-lg-6" style="" data-view="show">
@@ -404,6 +456,7 @@
     var selectedFormatVersion = '';
     var selectedRS = '';
     var selectedRD = '';
+    var bulk = true;
     $(document).ready(function () {
         initialize_records_form();
     });

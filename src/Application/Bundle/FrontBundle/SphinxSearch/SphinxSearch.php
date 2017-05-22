@@ -136,15 +136,24 @@ class SphinxSearch extends ContainerAware {
      *
      * @return array
      */
-    public function select($user, $offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null) {
+    public function select($user, $offset = 0, $limit = 100, $sortColumn = 'title', $sortOrder = 'asc', $criteria = null, $type = null) {
         $sq = SphinxQL::create($this->conn);
-//        $sq
-        $sq->select()
-                ->from($this->indexName);
+        if ($type == "report") {
+            $sq->select('format, content_duration, media_duration')
+                    ->from($this->indexName);
+            if (!in_array("ROLE_SUPER_ADMIN", $user->getRoles())) {
+                $sq->where('organization_id', "=", $user->getOrganizations()->getId());
+            }
+        } else {
+            $sq->select()
+                    ->from($this->indexName);
+            $this->roleCriteria($user, $sq);
+        }
         if ($criteria) {
             $this->whereClause($criteria, $sq);
         }
-        $this->roleCriteria($user, $sq);
+
+
 
         $result = $sq->orderBy($sortColumn, $sortOrder)
                 ->limit($offset, $limit)
@@ -296,7 +305,7 @@ class SphinxSearch extends ContainerAware {
      */
     public function facetDurationSumSelect($facetColumn, $user, $criteria = null, $parentFacet = false) {
         $sq = SphinxQL::create($this->conn)
-                ->select($facetColumn, SphinxQL::expr('count(*) AS total'), SphinxQL::expr('sum(content_duration) AS sum_content_duration'), SphinxQL::expr('width'))
+                ->select($facetColumn, SphinxQL::expr('count(*) AS total'), SphinxQL::expr('SUM(IF(content_duration > 0,content_duration,media_duration)) AS sum_content_duration'), SphinxQL::expr('width'), SphinxQL::expr('sum(footage) AS s_footage'))
                 ->from($this->indexName);
         if ($criteria && $facetColumn != $parentFacet) {
             $this->whereClause($criteria, $sq);
@@ -307,7 +316,7 @@ class SphinxSearch extends ContainerAware {
                 ->orderBy($facetColumn, 'asc');
         $sq->limit(0, 1000);
 
-        return $sq->execute();
+        return $sq->execute(); 
     }
 
     /**

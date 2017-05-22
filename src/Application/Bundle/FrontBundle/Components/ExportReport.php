@@ -102,10 +102,10 @@ class ExportReport extends ContainerAware {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
                 ->setTitle("AVCC - Report")
-                ->setSubject("Filesize Project Level Report")
-                ->setDescription("Filesize Project Level Report");
+                ->setSubject("Filesize Project Level Digitized Report")
+                ->setDescription("Filesize Project Level Digitized Report");
         $activeSheet = $phpExcelObject->setActiveSheetIndex(0);
-        $phpExcelObject->getActiveSheet()->setTitle('Project Level Report');
+        $phpExcelObject->getActiveSheet()->setTitle('Project Level Digitized Report');
         $row = 1;
         $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Project Name");
         $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "Audio");
@@ -134,17 +134,17 @@ class ExportReport extends ContainerAware {
         $filename = $fileStartName . '_' . $date->format('Ymdhis') . '.' . $type;
 
         if ($fileStartName == "file_size_calculator" && $type == "csv") {
-            $path = $this->container->getParameter("webUrl"). "uploads/projectReports/";
+            $path = $this->container->getParameter("webUrl") . "uploads/projectReports/";
             $projectReport = $this->generateProjectlevelReport($data);
             $pwriter = $this->container->get('phpexcel')->createWriter($projectReport, $format);
             $pfilename = 'project_level_report_' . $date->format('Ymdhis') . '.' . $type;
             $writer->save($path . $filename);
             $pwriter->save($path . $pfilename);
-            $zipname = $path  . $fileStartName . '_' . $date->format('Ymdhis') . '.zip';
+            $zipname = $path . $fileStartName . '_' . $date->format('Ymdhis') . '.zip';
             $zip = new ZipArchive();
             $zip->open($zipname, ZipArchive::CREATE);
-            $zip->addFile($path . $filename);
-            $zip->addFile($path . $pfilename);            
+            $zip->addFile($path . $filename, basename($path . $filename));
+            $zip->addFile($path . $pfilename, basename($path . $pfilename));
             $zip->close();
             unlink($path . $filename);
             unlink($path . $pfilename);
@@ -866,13 +866,13 @@ class ExportReport extends ContainerAware {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
         $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
                 ->setTitle("AVCC - Report")
-                ->setSubject("File Size Calculator for Digitized Assets")
-                ->setDescription("File Size Calculator for Digitized Assets");
+                ->setSubject("File Size Calculator for All Assets")
+                ->setDescription("File Size Calculator for All Assets");
         $activeSheet = $phpExcelObject->setActiveSheetIndex(0);
         $phpExcelObject->getActiveSheet()->setTitle('File Size Calculator');
         $row = 2;
 
-        $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "File Size Calculator for Digitized Assets");
+        $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "File Size Calculator for All Assets");
         $activeSheet->getColumnDimensionByColumn(1)->setWidth(20);
         $activeSheet->getStyleByColumnAndRow(1, $row)->getFont()->setBold(true);
         $row++;
@@ -899,7 +899,7 @@ class ExportReport extends ContainerAware {
         if ($type != "csv") {
             $phpExcelObject->createSheet();
             $activeSheet = $phpExcelObject->setActiveSheetIndex(1);
-            $phpExcelObject->getActiveSheet()->setTitle('Project Level Report');
+            $phpExcelObject->getActiveSheet()->setTitle('Project Level Digitized Assets');
 
             $row = 1;
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Project Name");
