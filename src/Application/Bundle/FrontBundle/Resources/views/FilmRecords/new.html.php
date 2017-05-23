@@ -10,7 +10,7 @@
         <span><b>Processing please wait...</b></span>
     </div>
     <div id="fieldsPanel" style="display:none;">
-        <?php echo $view['form']->start($form) ?>
+        <?php echo $view['form']->start($form, array('attr' => array('enctype' => 'multipart/form-data'))) ?>
         <?php echo $view['form']->errors($form) ?>
         <span class="has-error text-danger">
             <?php
@@ -25,6 +25,14 @@
             <?php foreach ($fieldSettings[strtolower($type)] as $filmField): ?>
                 <?php
                 if ($filmField["title"] == "Show Images") {
+                    if ($filmField['hidden'] == 1 && !empty($allowed_upload) && $allowed_upload) {
+                        ?>
+                        <div class="input-control text" data-role="input-control" id="add_images" data-view="show">
+                            <label>Add Images</label>
+                            <input type="file" name="files[]" multiple="multiple" accept="image/*" class="size4">
+                        </div>
+                        <?php
+                    }
                     continue;
                 }
                 $field = explode('.', $filmField['field']);
@@ -89,14 +97,14 @@
         $(function () {
             $('[data-toggle="popover"]').popover();
         });
-        var fields = ['uniqueId_lbl', 'location_lbl', 'alternateId_lbl', 'reformattingPriority_lbl', 'edgeCodeYear_lbl', 'title_lbl', 'printType_lbl', 'mediaDiameter_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'footage_lbl', 'reelCore_lbl', 'reelDiameters_lbl', 'diskDiameters_lbl', 'colors_lbl', 'sound_lbl', 'frameRate_lbl', 'acidDetectionStrip_lbl', 'shrinkage_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl', 'parentCollection_lbl', 'digitized_lbl', 'transcription_lbl', 'digitizedBy_lbl', 'digitizedWhen_lbl', 'urn_lbl'];
+        var fields = ['uniqueId_lbl', 'location_lbl', 'alternateId_lbl', 'reformattingPriority_lbl', 'edgeCodeYear_lbl', 'title_lbl', 'printType_lbl', 'mediaDiameter_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'footage_lbl', 'reelCore_lbl', 'reelDiameters_lbl', 'diskDiameters_lbl', 'colors_lbl', 'sound_lbl', 'frameRate_lbl', 'acidDetectionStrip_lbl', 'shrinkage_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl', 'parentCollection_lbl', 'digitized_lbl', 'transcription_lbl', 'digitizedBy_lbl', 'digitizedWhen_lbl', 'urn_lbl', 'add_images'];
         $('#mediaType,#format').change(function () {
             if ($('#mediaType').val() == '' || $('#project').val() == '' || $('#format').val() == '') {
                 for (i = 0; i < fields.length; i++) {
                     $('#' + fields[i]).hide();
                 }
             } else {
-                var fields1 = ['uniqueId_lbl', 'location_lbl', 'alternateId_lbl', 'reformattingPriority_lbl', 'edgeCodeYear_lbl', 'printType_lbl', 'mediaDiameter_lbl', 'title_lbl', 'footage_lbl', 'reelCore_lbl', 'colors_lbl', 'sound_lbl', 'frameRate_lbl', 'acidDetectionStrip_lbl', 'shrinkage_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl', 'parentCollection_lbl', 'digitized_lbl', 'transcription_lbl'];
+                var fields1 = ['uniqueId_lbl', 'location_lbl', 'alternateId_lbl', 'reformattingPriority_lbl', 'edgeCodeYear_lbl', 'printType_lbl', 'mediaDiameter_lbl', 'title_lbl', 'footage_lbl', 'reelCore_lbl', 'colors_lbl', 'sound_lbl', 'frameRate_lbl', 'acidDetectionStrip_lbl', 'shrinkage_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl', 'parentCollection_lbl', 'digitized_lbl', 'transcription_lbl', 'add_images'];
 
                 for (i = 0; i < fields1.length; i++) {
                     if ($('#' + fields1[i]).data('view') == 'show')

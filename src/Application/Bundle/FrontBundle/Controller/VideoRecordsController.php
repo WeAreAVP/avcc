@@ -80,6 +80,9 @@ class VideoRecordsController extends MyController {
             $em->persist($entity);
             try {
                 $em->flush();
+                if (!empty($request->files->get('files'))) {
+                    $this->get('application_front.photo_uploader')->upload($request->files->get('files'), $entity->getRecord()->getId());
+                }
                 $sphinxInfo = $this->getSphinxInfo();
                 $sphinxSearch = new SphinxSearch($em, $sphinxInfo, $entity->getRecord()->getId(), 3);
                 $sphinxSearch->insert();
@@ -216,18 +219,13 @@ class VideoRecordsController extends MyController {
             $entity = new VideoRecords();
         }
         $form = $this->createCreateForm($entity, $em, $data);
-        if ($projectId) {
-            $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
-            if ($project->getViewSetting() != null) {
-//                $userViewSettings = $project->getViewSetting();
-                $defSettings = $fieldsObj->getDefaultOrder();
-                $dbSettings = $project->getViewSetting();
-                $userViewSettings = $fieldsObj->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
-            } else {
-                $userViewSettings = $fieldsObj->getDefaultOrder();
+        $userViewSettings = $fieldsObj->getDefaultOrder();
+        $allowed_upload = "";
+        if ($projectId || $this->get('session')->get('vedioProjectId')) {
+            $allowed_upload = true;
+            if ($projectId == null && $this->get('session')->get('vedioProjectId')) {
+                $projectId = $this->get('session')->get('vedioProjectId');
             }
-        } else if ($this->get('session')->get('vedioProjectId')) {
-            $projectId = $this->get('session')->get('vedioProjectId');
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project->getViewSetting() != null) {
                 $defSettings = $fieldsObj->getDefaultOrder();
@@ -236,8 +234,12 @@ class VideoRecordsController extends MyController {
             } else {
                 $userViewSettings = $fieldsObj->getDefaultOrder();
             }
-        } else {
-            $userViewSettings = $fieldsObj->getDefaultOrder();
+            $organization = $em->getRepository('ApplicationFrontBundle:Organizations')->find($project->getOrganization()->getId());
+            $creator = $organization->getUsersCreated();
+            $customerId = $creator->getStripeCustomerId();
+            if ($organization->getIsPaid() != 1 || $customerId == "" || $customerId == null) {
+                $allowed_upload = false;
+            }
         }
         $userViewSettings = json_decode($userViewSettings, true);
         $tooltip = $fieldsObj->getToolTip(3);
@@ -247,7 +249,8 @@ class VideoRecordsController extends MyController {
                     'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
                     'allErrors' => array(),
-                    'tooltip' => $tooltip
+                    'tooltip' => $tooltip,
+                    'allowed_upload' => $allowed_upload
         ));
     }
 

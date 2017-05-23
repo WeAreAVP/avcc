@@ -11,7 +11,7 @@
         <span><b>Processing please wait...</b></span>
     </div>
     <div id="fieldsPanel" style="display:none;">
-        <?php echo $view['form']->start($form) ?>
+        <?php echo $view['form']->start($form, array('attr' => array('enctype' => 'multipart/form-data'))) ?>
         <?php echo $view['form']->errors($form) ?>
         <span class="has-error text-danger">
             <?php
@@ -26,6 +26,14 @@
             <?php foreach ($fieldSettings[strtolower($type)] as $audioField): ?>
                 <?php
                 if ($audioField["title"] == "Show Images") {
+                    if ($audioField['hidden'] == 1 && !empty($allowed_upload) && $allowed_upload) {
+                        ?>
+                        <div class="input-control text" data-role="input-control" id="add_images" data-view="show">
+                            <label>Add Images</label>
+                            <input type="file" name="files[]" multiple="multiple" accept="image/*" class="size4">
+                        </div>
+                        <?php
+                    }
                     continue;
                 }
                 $field = explode('.', $audioField['field']);
@@ -65,10 +73,13 @@
                     </div>
                 </div>
                 <div class="clearfix"></div>
+
             <?php endforeach; ?>
+
+
         </fieldset><br />
         <?php echo $view['form']->widget($form['record']['userId']) ?>
-        <a href="<?php echo $view['router']->generate('record_list') ?>" name="cancle" class="button">Cancel</a>&nbsp;
+        <a href="<?php echo $view['router']->generate('record_list') ?>" name="cancel" class="button">Cancel</a>&nbsp;
         <?php echo $view['form']->widget($form['submit'], array('attr' => array('class' => 'button primary'))) ?>&nbsp;
         <?php echo $view['form']->widget($form['save_and_new']) ?>&nbsp;
         <?php echo $view['form']->widget($form['save_and_duplicate']) ?>
@@ -99,13 +110,13 @@
         });
 
         function hideFields() {
-            var fields = ['uniqueId_lbl', 'location_lbl', 'reformattingPriority_lbl', 'alternateId_lbl', 'title_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'diskDiameters_lbl', 'reelDiameters_lbl', 'mediaDiameters_lbl', 'bases_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'recordingSpeed_lbl', 'tapeThickness_lbl', 'slides_lbl', 'trackTypes_lbl', 'monoStereo_lbl', 'noiceReduction_lbl', 'genreTerms_lbl', 'contributor_lbl', 'part_lbl', 'generation_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl', 'parentCollection_lbl', 'digitized_lbl', 'transcription_lbl', 'digitizedBy_lbl', 'digitizedWhen_lbl', 'urn_lbl'];
+            var fields = ['uniqueId_lbl', 'location_lbl', 'reformattingPriority_lbl', 'alternateId_lbl', 'title_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'diskDiameters_lbl', 'reelDiameters_lbl', 'mediaDiameters_lbl', 'bases_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'recordingSpeed_lbl', 'tapeThickness_lbl', 'slides_lbl', 'trackTypes_lbl', 'monoStereo_lbl', 'noiceReduction_lbl', 'genreTerms_lbl', 'contributor_lbl', 'part_lbl', 'generation_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl', 'parentCollection_lbl', 'digitized_lbl', 'transcription_lbl', 'digitizedBy_lbl', 'digitizedWhen_lbl', 'urn_lbl', 'add_images'];
             if ($('#mediaType').val() == '' || $('#project').val() == '' || $('#format').val() == '') {
                 for (i = 0; i < fields.length; i++) {
                     $('#' + fields[i]).hide();
                 }
             } else {
-                var fields1 = ['uniqueId_lbl', 'alternateId_lbl', 'reformattingPriority_lbl', 'location_lbl', 'title_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl', 'parentCollection_lbl', 'digitized_lbl', 'transcription_lbl'];
+                var fields1 = ['uniqueId_lbl', 'alternateId_lbl', 'reformattingPriority_lbl', 'location_lbl', 'title_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl', 'parentCollection_lbl', 'digitized_lbl', 'transcription_lbl', 'add_images'];
                 for (i = 0; i < fields1.length; i++) {
                     if ($('#' + fields1[i]).data('view') == 'show')
                         $('#' + fields1[i]).show();

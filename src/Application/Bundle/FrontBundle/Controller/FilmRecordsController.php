@@ -82,6 +82,9 @@ class FilmRecordsController extends MyController {
             $em->persist($entity);
             try {
                 $em->flush();
+                if (!empty($request->files->get('files'))) {
+                    $this->get('application_front.photo_uploader')->upload($request->files->get('files'), $entity->getRecord()->getId());
+                }
                 $shpinxInfo = $this->getSphinxInfo();
                 $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 2);
                 $sphinxSearch->insert();
@@ -119,13 +122,13 @@ class FilmRecordsController extends MyController {
                 
             }
         }
-        
+
         if ($this->get('session')->get('filmProjectId')) {
             $projectId = $this->get('session')->get('filmProjectId');
         } else if ($entity->getRecord()->getProject()->getId()) {
             $projectId = $entity->getRecord()->getProject()->getId();
         }
-        if ($projectId) {            
+        if ($projectId) {
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project->getViewSetting() != null) {
                 $defSettings = $fieldsObj->getDefaultOrder();
@@ -222,7 +225,13 @@ class FilmRecordsController extends MyController {
             $entity = new FilmRecords();
         }
         $form = $this->createCreateForm($entity, $em, $data);
-        if ($projectId) {
+        $userViewSettings = $fieldsObj->getDefaultOrder();
+        $allowed_upload = "";
+        if ($projectId || $this->get('session')->get('filmProjectId')) {
+            $allowed_upload = true;
+            if ($projectId == null && $this->get('session')->get('filmProjectId')) {
+                $projectId = $this->get('session')->get('filmProjectId');
+            }
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project->getViewSetting()) {
 //                $userViewSettings = $project->getViewSetting();
@@ -232,19 +241,12 @@ class FilmRecordsController extends MyController {
             } else {
                 $userViewSettings = $fieldsObj->getDefaultOrder();
             }
-        } else if ($this->get('session')->get('filmProjectId')) {
-            $projectId = $this->get('session')->get('filmProjectId');
-            $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
-            if ($project->getViewSetting() != null) {
-//                $userViewSettings = $project->getViewSetting();
-                $defSettings = $fieldsObj->getDefaultOrder();
-                $dbSettings = $project->getViewSetting();
-                $userViewSettings = $fieldsObj->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
-            } else {
-                $userViewSettings = $fieldsObj->getDefaultOrder();
+            $organization = $em->getRepository('ApplicationFrontBundle:Organizations')->find($project->getOrganization()->getId());
+            $creator = $organization->getUsersCreated();
+            $customerId = $creator->getStripeCustomerId();
+            if ($organization->getIsPaid() != 1 || $customerId == "" || $customerId == null) {
+                $allowed_upload = false;
             }
-        } else {
-            $userViewSettings = $fieldsObj->getDefaultOrder();
         }
         $userViewSettings = json_decode($userViewSettings, true);
         $tooltip = $fieldsObj->getToolTip(2);
@@ -254,7 +256,8 @@ class FilmRecordsController extends MyController {
                     'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
                     'allErrors' => array(),
-                    'tooltip' => $tooltip
+                    'tooltip' => $tooltip,
+                    'allowed_upload' => $allowed_upload
         ));
     }
 

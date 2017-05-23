@@ -10,7 +10,7 @@
         <span><b>Processing please wait...</b></span>
     </div>
     <div id="fieldsPanel" style="display:none;">
-        <?php echo $view['form']->start($form) ?>
+        <?php echo $view['form']->start($form, array('attr' => array('enctype' => 'multipart/form-data'))) ?>
         <?php echo $view['form']->errors($form) ?>
         <span class="has-error text-danger">
         <?php
@@ -24,6 +24,14 @@
             <?php foreach ($fieldSettings[strtolower($type)] as $viedoField): ?>
                 <?php
                 if ($viedoField["title"] == "Show Images") {
+                    if ($viedoField['hidden'] == 1 && !empty($allowed_upload) && $allowed_upload) {
+                        ?>
+                        <div class="input-control text" data-role="input-control" id="add_images" data-view="show">
+                            <label>Add Images</label>
+                            <input type="file" name="files[]" multiple="multiple" accept="image/*" class="size4">
+                        </div>
+                        <?php
+                    }
                     continue;
                 }
                 $field = explode('.', $viedoField['field']);
@@ -34,7 +42,7 @@
                 }
                 $_style = (count($field) == 2 && ($field[1] == 'isReview' || $field[1] == 'reformattingPriority' || $field[1] == 'digitized' || $field[1] == 'transcription')) ? 'width: 180px;float: left;margin-bottom: 15px;' : 'width: 200px';
                 ?>
-                <div style="<?php echo ($viedoField['hidden']) ? 'display:none;' : ''; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>" data-view="<?php echo ($viedoField['hidden']) ? 'hide' : 'show'; ?>">
+                <div style="<?php echo ($viedoField['hidden']) ? '': 'display:none;'; ?>" class="col-lg-6" id="<?php echo (count($field) == 2) ? $field[1] . '_lbl' : $field[0] . '_lbl' ?>" data-view="<?php echo ($viedoField['hidden']) ? 'show' : 'hide'; ?>">
                     <div class="label_class" data-toggle="popover" data-placement="bottom" data-content="<?php echo isset($tooltip[$index]) ? $tooltip[$index] : ''; ?>" style="<?php echo $_style ?>">                   
                         <?php
                         $attr = ($viedoField['is_required']) ? array('class' => 'size4') : array('class' => 'size4');
@@ -90,12 +98,12 @@
         });
         $('#mediaType,#format').change(function () {
             if ($('#mediaType').val() == '' || $('#project').val() == '' || $('#format').val() == '') {
-                var fields = ['uniqueId_lbl', 'alternateId_lbl', 'reformattingPriority_lbl', 'location_lbl', 'title_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'cassetteSize_lbl', 'reelDiameters_lbl', 'formatVersion_lbl', 'recordingStandard_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'recordingSpeed_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl', 'parentCollection_lbl', 'digitized_lbl', 'transcription_lbl', 'digitizedBy_lbl', 'digitizedWhen_lbl', 'urn_lbl'];
+                var fields = ['uniqueId_lbl', 'alternateId_lbl', 'reformattingPriority_lbl', 'location_lbl', 'title_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'cassetteSize_lbl', 'reelDiameters_lbl', 'formatVersion_lbl', 'recordingStandard_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'recordingSpeed_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl', 'parentCollection_lbl', 'digitized_lbl', 'transcription_lbl', 'digitizedBy_lbl', 'digitizedWhen_lbl', 'urn_lbl', 'add_images'];
                 for (i = 0; i < fields.length; i++) {
                     $('#' + fields[i]).hide();
                 }
             } else {
-                var fields1 = ['uniqueId_lbl', 'location_lbl', 'reformattingPriority_lbl', 'alternateId_lbl', 'title_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'recordingStandard_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl', 'parentCollection_lbl', 'digitized_lbl', 'transcription_lbl'];
+                var fields1 = ['uniqueId_lbl', 'location_lbl', 'reformattingPriority_lbl', 'alternateId_lbl', 'title_lbl', 'collectionName_lbl', 'description_lbl', 'commercial_lbl', 'recordingStandard_lbl', 'contentDuration_lbl', 'mediaDuration_lbl', 'creationDate_lbl', 'contentDate_lbl', 'isReview_lbl', 'genreTerms_lbl', 'contributor_lbl', 'generation_lbl', 'part_lbl', 'copyrightRestrictions_lbl', 'duplicatesDerivatives_lbl', 'relatedMaterial_lbl', 'conditionNote_lbl', 'generalNote_lbl', 'parentCollection_lbl', 'digitized_lbl', 'transcription_lbl', 'add_images'];
                 for (i = 0; i < fields1.length; i++) {
                     if ($('#' + fields1[i]).data('view') == 'show')
                         $('#' + fields1[i]).show();

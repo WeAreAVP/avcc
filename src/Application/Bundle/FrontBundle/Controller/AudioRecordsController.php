@@ -87,6 +87,9 @@ class AudioRecordsController extends MyController {
             $em->persist($entity);
             try {
                 $em->flush();
+                if (!empty($request->files->get('files'))) {
+                    $this->get('application_front.photo_uploader')->upload($request->files->get('files'), $entity->getRecord()->getId());
+                }
                 $shpinxInfo = $this->getSphinxInfo();
                 $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 1);
                 $sphinxSearch->insert();
@@ -196,7 +199,6 @@ class AudioRecordsController extends MyController {
         if (($session->has('termsStatus') && $session->get('termsStatus') == 0) || ($session->has('limitExceed') && $session->get('limitExceed') == 0)) {
             return $this->redirect($this->generateUrl('dashboard'));
         }
-//        return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
         if (false === $this->get('security.context')->isGranted('ROLE_CATALOGER')) {
             throw new AccessDeniedException('Access Denied.');
         }
@@ -232,7 +234,12 @@ class AudioRecordsController extends MyController {
             $entity = new AudioRecords();
         }
         $form = $this->createCreateForm($entity, $em, $data);
-        if ($projectId) {
+        $allowed_upload = "";
+        if ($projectId || $this->get('session')->get('project_id')) {
+            $allowed_upload = true;
+            if ($projectId == null && $this->get('session')->get('project_id')) {
+                $projectId = $this->get('session')->get('project_id');
+            }
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project->getViewSetting() != null) {
                 $defSettings = $fieldsObj->getDefaultOrder();
@@ -241,18 +248,11 @@ class AudioRecordsController extends MyController {
             } else {
                 $userViewSettings = $fieldsObj->getDefaultOrder();
             }
-        } else if ($this->get('session')->get('project_id')) {
-            $projectId = $this->get('session')->get('project_id');
-            $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
-            if ($project) {
-                if ($project->getViewSetting() != null) {
-                    $defSettings = $fieldsObj->getDefaultOrder();
-                    $dbSettings = $project->getViewSetting();
-                    $userViewSettings = $fieldsObj->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
-                }
-            } else {
-                $this->get('session')->remove('project_id');
-                $userViewSettings = $fieldsObj->getDefaultOrder();
+            $organization = $em->getRepository('ApplicationFrontBundle:Organizations')->find($project->getOrganization()->getId());
+            $creator = $organization->getUsersCreated();
+            $customerId = $creator->getStripeCustomerId();
+            if ($organization->getIsPaid() != 1 || $customerId == "" || $customerId == null) {
+                $allowed_upload = false;
             }
         }
         $userViewSettings = json_decode($userViewSettings, true);
@@ -263,7 +263,8 @@ class AudioRecordsController extends MyController {
                     'fieldSettings' => $userViewSettings,
                     'type' => $data['mediaType']->getName(),
                     'allErrors' => array(),
-                    'tooltip' => $tooltip
+                    'tooltip' => $tooltip,
+                    'allowed_upload' => $allowed_upload
         ));
     }
 
