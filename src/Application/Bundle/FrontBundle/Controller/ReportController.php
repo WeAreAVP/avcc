@@ -586,6 +586,9 @@ class ReportController extends MyController {
 
         foreach ($record as $rkey => $precords) {
             if ($precords) {
+                $audioTotal = $record['digitized'][0]["audio"];
+                $videoTotal = $record['digitized'][0]["video"];
+                $filmTotal = $record['digitized'][0]["film"];
                 foreach ($precords as $pkey => $records) {
                     $acount = $vcount = $fcount = 0;
                     if ($pkey > 0) {
@@ -594,7 +597,7 @@ class ReportController extends MyController {
                     if ($records) {
                         if (isset($records['Audio']) && $pkey != 0) {
                             foreach ($records['Audio'] as $key => $audio) {
-                                $audioTotal += $audio["total"];
+//                                $audioTotal += $audio["total"];
                                 if ($digitized == 1 && $audio['dtotal'] == 1) {
                                     $audiodTotal += $audio["total"];
                                 } else if ($digitized != 1 && $audio['dtotal'] != 1) {
@@ -616,7 +619,7 @@ class ReportController extends MyController {
                         unset($key);
                         if (isset($records['Video']) && $pkey != 0) {
                             foreach ($records['Video'] as $key => $video) {
-                                $videoTotal += $video["total"];
+//                                $videoTotal += $video["total"];
                                 if ($digitized == 1 && $video['dtotal'] == 1) {
                                     $videodTotal += $video["total"];
                                 } else if ($digitized != 1 && $video['dtotal'] != 1) {
@@ -638,7 +641,7 @@ class ReportController extends MyController {
                         unset($key);
                         if (isset($records['Film']) && $pkey != 0) {
                             foreach ($records['Film'] as $key => $film) {
-                                $filmTotal += $film["total"];
+//                                $filmTotal += $film["total"];
                                 if ($digitized == 1 && $film['dtotal'] == 1) {
                                     $filmdTotal += $film["total"];
                                 } else if ($digitized != 1 && $film['dtotal'] != 1) {
@@ -663,6 +666,7 @@ class ReportController extends MyController {
                 $total[$rkey][] = array("Film" => array("totalRecords" => $filmTotal, 'dRecords' => $filmdTotal, "linearFeet" => $totalLinearFilmCount, "fileSize" => round($totalFilmFileSize, 1), 'sum_content_duration' => round($fsum_content_duration, 1)));
             }
         }
+
         echo json_encode($total);
         exit;
     }
@@ -700,15 +704,19 @@ class ReportController extends MyController {
             $org_records = $em->getRepository('ApplicationFrontBundle:Records')->getDataForDashboard($projectid, $digitized, $this->getUser()->getOrganizations()->getId());
         }
         $formatInfo = array();
+        $atotal = $vtotal = $ftotal = 0;
         foreach ($org_records as $data) {
             $pId = $data['projectId'];
             $mediatype = $data['media'];
             $f = str_replace(" ", "_", $data['format']);
             if ($mediatype == "Audio") {
+                $atotal += $data["total"];
                 $sum_content_duration = $data["audio_sum"];
             } elseif ($mediatype == "Video") {
+                $vtotal += $data["total"];
                 $sum_content_duration = $data["video_sum"];
             } else {
+                $ftotal += $data["total"];
                 $sum_content_duration = $data["film_sum"];
             }
             $_dTotal = 0;
@@ -717,6 +725,9 @@ class ReportController extends MyController {
             }
             $formatInfo[$pId][$mediatype][$f] = array('format' => $data['format'], 'sum_content_duration' => $sum_content_duration, 'total' => $data['total'], "dtotal" => $_dTotal, 'width' => $data['width'], 'footage' => $data['sum_footage']);
         }
+        $formatInfo[0]["audio"] = $atotal;
+        $formatInfo[0]["video"] = $vtotal;
+        $formatInfo[0]["film"] = $ftotal;
         return $formatInfo;
     }
 
@@ -728,7 +739,7 @@ class ReportController extends MyController {
         $totalAudioFileSize = 0.00;
         if ($type == 1 && $val != null && !empty($val)) {
             return $val;
-        } else {
+        } else if ($type != 1) {
             $uncompress1 = $this->calculateFileSize($contentDuration, 34.56);
             $totalAudioFileSize = $totalAudioFileSize + $uncompress1;
 
@@ -742,7 +753,7 @@ class ReportController extends MyController {
         $totalVideoFileSize = 0.00;
         if ($type == 1 && $val != null && !empty($val)) {
             return $val;
-        } else {
+        } else if ($type != 1) {
             $FFV1 = $this->calculateFileSize($contentDuration, 600);
             $totalVideoFileSize = $totalVideoFileSize + $FFV1;
 
@@ -757,7 +768,7 @@ class ReportController extends MyController {
         $totalFilmFileSize = 0.00;
         if ($type == 1 && $val != null && !empty($val)) {
             return $val;
-        } else {
+        } else if ($type != 1) {
             $k2Uncompressed = $this->calculateFileSize($contentDuration, 17500);
             $totalFilmFileSize = $totalFilmFileSize + $k2Uncompressed;
 

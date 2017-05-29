@@ -18,7 +18,7 @@ class ExportFields {
 
     private $columns = array(
         'Project_Name',
-        'Parent_Collection',
+        'Collection_Classification',
         'Collection_Name',
         'Media_Type',
         'Unique_ID',
@@ -76,7 +76,7 @@ class ExportFields {
     );
     private $mergeColumns = array(
         'Ext_Project_Name',
-        'Ext_Parent_Collection',
+        'Ext_Collection_Classification',
         'Ext_Collection_Name',
         'Ext_Media_Type',
         'Ext_Unique_ID',

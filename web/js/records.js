@@ -109,20 +109,20 @@ function Records() {
 // check the existence of table on which we are going to apply datatable.
         if ($('#records').length > 0)
         {
-// Modify css for managing view.
-//			$('#container').removeClass('container');
-//			$('#container').css('margin', '20px');
             var selected = [];
             oTable =
                     $('#records').dataTable(
                     {
-                        "dom": '<"dataTableTop"<"top"pi>><"clear">tir<"bottom"p>',
+                        "dom": '<"dataTableTop"<"top"pi>><"clear">tr',
                         "bProcessing": true,
                         "bServerSide": true,
                         retrieve: true,
-                        destroy: true, 
+                        destroy: true,
                         "iDisplayLength": 100,
                         "pagingType": "simple_numbers",
+                        "bFilter": false,
+                        "bLengthChange": false,
+                        scrollY: $(window).height() - 180 + "px",
                         "language": {
                             "info": "Showing _START_ - _END_ of _TOTAL_",
                             "infoFiltered": ''
@@ -133,9 +133,6 @@ function Records() {
                         "aaSorting": [],
                         "sAjaxSource": ajaxSource,
                         "bStateSave": true,
-//				"fnInitComplete": function () {
-//					this.oTable.fnAdjustColumnSizing();
-//				},
                         "fnServerData": function (sSource, aoData, fnCallback) {
                             jQuery.getJSON(sSource, aoData, function (json) {
                                 fnCallback(json);

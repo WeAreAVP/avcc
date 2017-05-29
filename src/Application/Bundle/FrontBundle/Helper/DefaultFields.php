@@ -35,6 +35,7 @@ class DefaultFields {
             "Location" => array("title" => 'Location', 'field' => "record.location", "is_required" => 1, "hidden" => 1),
             "Format" => array("title" => 'Format', 'field' => "record.format", "is_required" => 1, "hidden" => 1),
             "Title" => array("title" => 'Title', 'field' => "record.title", "is_required" => 1, "hidden" => 1),
+            "Parent_Collection" => array("title" => 'Collection Classification', 'field' => "record.parentCollection", "is_required" => 0, "hidden" => 1),
             "Collection_Name" => array("title" => 'Collection Name', 'field' => "record.collectionName", "is_required" => 0, "hidden" => 1),
             "Description" => array("title" => 'Description', 'field' => "record.description", "is_required" => 0, "hidden" => 1),
             "Commercial" => array("title" => 'Commercial', 'field' => "record.commercial", "is_required" => 0, "hidden" => 1),
@@ -63,7 +64,6 @@ class DefaultFields {
             "Duplicates" => array("title" => 'Duplicates', 'field' => "record.duplicatesDerivatives", "is_required" => 0, "hidden" => 1),
             "Related_Meterial" => array("title" => 'Related Material', 'field' => "record.relatedMaterial", "is_required" => 0, "hidden" => 1),
             "Condition_Note" => array("title" => 'Condition Note', 'field' => "record.conditionNote", "is_required" => 0, "hidden" => 1),
-            "Parent_Collection" => array("title" => 'Parent Collection', 'field' => "record.parentCollection", "is_required" => 0, "hidden" => 1),
             "Digitized" => array("title" => 'Digitized', 'field' => "record.digitized", "is_required" => 0, "hidden" => 1),
             "Digitized_By" => array("title" => 'Digitized By', 'field' => "record.digitizedBy", "is_required" => 0, "hidden" => 1),
             "Digitized_When" => array("title" => 'Digitized When', 'field' => "record.digitizedWhen", "is_required" => 0, "hidden" => 1),
@@ -80,6 +80,7 @@ class DefaultFields {
             "Location" => array("title" => 'Location', 'field' => "record.location", "is_required" => 1, "hidden" => 1),
             "Format" => array("title" => 'Format', 'field' => "record.format", "is_required" => 1, "hidden" => 1),
             "Title" => array("title" => 'Title', 'field' => "record.title", "is_required" => 1, "hidden" => 1),
+            "Parent_Collection" => array("title" => 'Collection Classification', 'field' => "record.parentCollection", "is_required" => 0, "hidden" => 1),
             "Collection_Name" => array("title" => 'Collection Name', 'field' => "record.collectionName", "is_required" => 0, "hidden" => 1),
             "Description" => array("title" => 'Description', 'field' => "record.description", "is_required" => 0, "hidden" => 1),
             "Commercial" => array("title" => 'Commercial', 'field' => "record.commercial", "is_required" => 0, "hidden" => 1),
@@ -103,7 +104,6 @@ class DefaultFields {
             "Duplicates" => array("title" => 'Duplicates', 'field' => "record.duplicatesDerivatives", "is_required" => 0, "hidden" => 1),
             "Related_Meterial" => array("title" => 'Related Material', 'field' => "record.relatedMaterial", "is_required" => 0, "hidden" => 1),
             "Condition_Note" => array("title" => 'Condition Note', 'field' => "record.conditionNote", "is_required" => 0, "hidden" => 1),
-            "Parent_Collection" => array("title" => 'Parent Collection', 'field' => "record.parentCollection", "is_required" => 0, "hidden" => 1),
             "Digitized" => array("title" => 'Digitized', 'field' => "record.digitized", "is_required" => 0, "hidden" => 1),
             "Digitized_By" => array("title" => 'Digitized By', 'field' => "record.digitizedBy", "is_required" => 0, "hidden" => 1),
             "Digitized_When" => array("title" => 'Digitized When', 'field' => "record.digitizedWhen", "is_required" => 0, "hidden" => 1),
@@ -121,6 +121,7 @@ class DefaultFields {
             "Format" => array("title" => 'Format', 'field' => "record.format", "is_required" => 1, "hidden" => 1),
             "Print_Type" => array("title" => 'Print Type', 'field' => "printType", "is_required" => 1, "hidden" => 1),
             "Title" => array("title" => 'Title', 'field' => "record.title", "is_required" => 1, "hidden" => 1),
+            "Parent_Collection" => array("title" => 'Collection Classification', 'field' => "record.parentCollection", "is_required" => 0, "hidden" => 1),
             "Collection_Name" => array("title" => 'Collection Name', 'field' => "record.collectionName", "is_required" => 0, "hidden" => 1),
             "Description" => array("title" => 'Description', 'field' => "record.description", "is_required" => 0, "hidden" => 1),
             "Commercial" => array("title" => 'Commercial', 'field' => "record.commercial", "is_required" => 0, "hidden" => 1),
@@ -149,7 +150,6 @@ class DefaultFields {
             "Duplicates" => array("title" => 'Duplicates', 'field' => "record.duplicatesDerivatives", "is_required" => 0, "hidden" => 1),
             "Related_Meterial" => array("title" => 'Related Material', 'field' => "record.relatedMaterial", "is_required" => 0, "hidden" => 1),
             "Condition_Note" => array("title" => 'Condition Note', 'field' => "record.conditionNote", "is_required" => 0, "hidden" => 1),
-            "Parent_Collection" => array("title" => 'Parent Collection', 'field' => "record.parentCollection", "is_required" => 0, "hidden" => 1),
             "Digitized" => array("title" => 'Digitized', 'field' => "record.digitized", "is_required" => 0, "hidden" => 1),
             "Digitized_By" => array("title" => 'Digitized By', 'field' => "record.digitizedBy", "is_required" => 0, "hidden" => 1),
             "Digitized_When" => array("title" => 'Digitized When', 'field' => "record.digitizedWhen", "is_required" => 0, "hidden" => 1),
@@ -403,7 +403,6 @@ class DefaultFields {
             }
         }
         return $new_array;
-    }   
-    
+    }
 
 }

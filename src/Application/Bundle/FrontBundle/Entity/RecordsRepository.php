@@ -167,9 +167,9 @@ class RecordsRepository extends EntityRepository {
             }
         }
         $query = $this->getEntityManager()->createQuery("SELECT count(r.id) AS total,u.id as projectId,f.id as formatId, f.width as width,f.name as format,m.name as media,m.id as mediaId"
-                . ",SUM(IF(r.contentDuration > 0, r.contentDuration, ar.mediaDuration)) as audio_sum, 
-SUM(IF(r.contentDuration > 0, r.contentDuration, vr.mediaDuration)) as video_sum, 
-SUM(r.contentDuration) as film_sum, Sum(fr.footage) as sum_footage,r.digitized"
+                . ",SUM(IF(r.contentDuration > 0, r.contentDuration, ar.mediaDuration)) as audio_sum,"
+                . "SUM(IF(r.contentDuration > 0, r.contentDuration, vr.mediaDuration)) as video_sum, "
+                . "SUM(r.contentDuration) as film_sum, Sum(fr.footage) as sum_footage,r.digitized"
                 . " FROM ApplicationFrontBundle:Records r"
                 . " LEFT JOIN ApplicationFrontBundle:MediaTypes m WITH r.mediaType = m.id"
                 . " LEFT JOIN ApplicationFrontBundle:Formats f WITH r.format = f.id"

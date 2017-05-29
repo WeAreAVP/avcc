@@ -84,7 +84,7 @@
                     if (isset($facetData['parent_collection']) && $facetData['parent_collection'] != '') {
                         ?>
                         <div id="mediaType_main" class="chekBoxFacet">
-                            <div class="filter-fileds"><b>Parent Collection</b></div>
+                            <div class="filter-fileds"><b>Collection Classification</b></div>
                             <?php
                             foreach ($facetData['parent_collection'] as $value) {
                                 $id = time() . rand(0, 1000);
@@ -343,7 +343,7 @@
             <?php endif; ?>
                 <?php if (count($facets['parentCollection']) > 0): ?>
                 <li>
-                    <a class="dropdown-toggle" href="#">Parent Collection</a>
+                    <a class="dropdown-toggle" href="#">Collection Classification</a>
                     <ul  data-role="dropdown" <?php if (isset($facetData['parent_collection'])): ?> style="display:block" <?php endif ?>>
                         <div class="controls">
                             <div class="input-append">

@@ -49,145 +49,147 @@ class ImportReport extends ContainerAware {
                 foreach ($worksheet->getRowIterator() as $_row) {
                     $row = $_row->getRowIndex();
                     if ($row > 1) {
-
                         $project = $worksheet->getCellByColumnAndRow(0, $row);
-                        $parentCollection = $worksheet->getCellByColumnAndRow(1, $row);
-                        $collectionName = $worksheet->getCellByColumnAndRow(2, $row);
-                        $mediaType = $worksheet->getCellByColumnAndRow(3, $row);
-                        $location = $worksheet->getCellByColumnAndRow(6, $row);
-                        $format = $worksheet->getCellByColumnAndRow(7, $row);
-                        $title = $worksheet->getCellByColumnAndRow(8, $row);
-                        $description = $worksheet->getCellByColumnAndRow(9, $row);
-                        $commercial = $worksheet->getCellByColumnAndRow(10, $row);
-                        $base = $worksheet->getCellByColumnAndRow(15, $row);
-                        $printType = $worksheet->getCellByColumnAndRow(16, $row);
-                        $diskDiameter = $worksheet->getCellByColumnAndRow(17, $row);
-                        $reelDiameter = $worksheet->getCellByColumnAndRow(18, $row);
-                        $mediaDiameter = $worksheet->getCellByColumnAndRow(19, $row);
-                        $recordingSpeed = $worksheet->getCellByColumnAndRow(21, $row);
-                        $color = $worksheet->getCellByColumnAndRow(22, $row);
-                        $tapeThickness = $worksheet->getCellByColumnAndRow(23, $row);
-                        $sides = $worksheet->getCellByColumnAndRow(24, $row);
-                        $trackType = $worksheet->getCellByColumnAndRow(25, $row);
-                        $monoOrStereo = $worksheet->getCellByColumnAndRow(26, $row);
-                        $noiseReduction = $worksheet->getCellByColumnAndRow(27, $row);
-                        $cassetteSize = $worksheet->getCellByColumnAndRow(28, $row);
-                        $formatVersion = $worksheet->getCellByColumnAndRow(29, $row);
-                        $recordingStandard = $worksheet->getCellByColumnAndRow(30, $row);
-                        $reelOrCore = $worksheet->getCellByColumnAndRow(31, $row);
-                        $sound = $worksheet->getCellByColumnAndRow(32, $row);
-                        $frameRate = $worksheet->getCellByColumnAndRow(34, $row);
-                        $acidDetectionStrip = $worksheet->getCellByColumnAndRow(35, $row);    
-                        $uniqueId = $worksheet->getCellByColumnAndRow(4, $row);
-                        if (!$uniqueCheck) {
-                            $uniqueids = $this->checkUniqueId($organizationId, $uniqueId->getValue());
-                            if ($uniqueId->getValue() && $uniqueids != 0) {
-                                $invalidValues['unique_ids'][] = $uniqueId->getValue() . ' at row ' . $row . ' already exist in db';
+                        if (!empty(trim($project)) && $project != null) {
+                            $parentCollection = $worksheet->getCellByColumnAndRow(1, $row);
+                            $collectionName = $worksheet->getCellByColumnAndRow(2, $row);
+                            $mediaType = $worksheet->getCellByColumnAndRow(3, $row);
+                            $location = $worksheet->getCellByColumnAndRow(6, $row);
+                            $format = $worksheet->getCellByColumnAndRow(7, $row);
+                            $title = $worksheet->getCellByColumnAndRow(8, $row);
+                            $description = $worksheet->getCellByColumnAndRow(9, $row);
+                            $commercial = $worksheet->getCellByColumnAndRow(10, $row);
+                            $base = $worksheet->getCellByColumnAndRow(15, $row);
+                            $printType = $worksheet->getCellByColumnAndRow(16, $row);
+                            $diskDiameter = $worksheet->getCellByColumnAndRow(17, $row);
+                            $reelDiameter = $worksheet->getCellByColumnAndRow(18, $row);
+                            $mediaDiameter = $worksheet->getCellByColumnAndRow(19, $row);
+                            $recordingSpeed = $worksheet->getCellByColumnAndRow(21, $row);
+                            $color = $worksheet->getCellByColumnAndRow(22, $row);
+                            $tapeThickness = $worksheet->getCellByColumnAndRow(23, $row);
+                            $sides = $worksheet->getCellByColumnAndRow(24, $row);
+                            $trackType = $worksheet->getCellByColumnAndRow(25, $row);
+                            $monoOrStereo = $worksheet->getCellByColumnAndRow(26, $row);
+                            $noiseReduction = $worksheet->getCellByColumnAndRow(27, $row);
+                            $cassetteSize = $worksheet->getCellByColumnAndRow(28, $row);
+                            $formatVersion = $worksheet->getCellByColumnAndRow(29, $row);
+                            $recordingStandard = $worksheet->getCellByColumnAndRow(30, $row);
+                            $reelOrCore = $worksheet->getCellByColumnAndRow(31, $row);
+                            $sound = $worksheet->getCellByColumnAndRow(32, $row);
+                            $frameRate = $worksheet->getCellByColumnAndRow(34, $row);
+                            $acidDetectionStrip = $worksheet->getCellByColumnAndRow(35, $row);
+                            $uniqueId = $worksheet->getCellByColumnAndRow(4, $row);
+                            if (!$uniqueCheck) {
+                                $uniqueids = $this->checkUniqueId($organizationId, $uniqueId->getValue());
+                                if ($uniqueId->getValue() && $uniqueids != 0) {
+                                    $invalidValues['unique_ids'][] = $uniqueId->getValue() . ' at row ' . $row . ' already exist in db';
+                                }
                             }
-                        }
-                        if (trim($uniqueId->getValue()) == '') {
-                            $invalidValues['missing_fields'][] = 'Unique missing at ' . $row;
-                        }
-                        if (trim($location->getValue()) == '') {
-                            $invalidValues['missing_fields'][] = 'Location missing at row ' . $row;
-                        }
-
-                        if (!empty($uniqueId) && in_array($uniqueId, $unique)) {
-                            $invalidValues['unique_ids'][] = $uniqueId->getValue() . ' at row ' . $row . ' already exist in import file';
-                        } else if (!empty($uniqueId)) {
-                            $unique[] = $uniqueId;
-                        }
-                        if (trim($title->getValue()) == '') {
-                            $invalidValues['missing_fields'][] = 'Title missing at row ' . $row;
-                        }
-                        if (trim($project->getValue()) != '' && !in_array($project->getValue(), $projects)) {
-                            $invalidValues['project_names'][] = $project->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if (trim($project->getValue()) == '') {
-                            $invalidValues['missing_fields'][] = 'Project name missing at row ' . $row;
-                        }
-                        if (trim($mediaType->getValue()) != '' && !in_array($mediaType->getValue(), $vocabularies['mediaTypes'])) {
-                            $invalidValues['media_types'][] = $mediaType->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if (trim($mediaType->getValue()) == '') {
-                            $invalidValues['missing_fields'][] = 'Media type missing at row ' . $row;
-                        }
-
-                        if ($parentCollection->getValue() && !in_array($parentCollection->getValue(), $vocabularies['parentCollection'])) {
-                            $invalidValues['parentCollection'][] = $parentCollection->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if ($format->getValue() && !in_array($format->getValue(), $vocabularies['formats'])) {
-                            $invalidValues['formats'][] = $format->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if (trim($format->getValue()) == '') {
-                            $invalidValues['missing_fields'][] = 'Format missing at row ' . $row;
-                        }
-                        if ($commercial->getValue() && !in_array($commercial->getValue(), $vocabularies['commercial'])) {
-                            $invalidValues['commercial'][] = $commercial->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if ($base->getValue() && !in_array($base->getValue(), $vocabularies['bases'])) {
-                            $invalidValues['bases'][] = $base->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if ($printType->getValue() && !in_array($printType->getValue(), $vocabularies['printTypes'])) {
-                            $invalidValues['print_types'][] = $printType->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if ($diskDiameter->getValue() && !in_array($diskDiameter->getValue(), $vocabularies['diskDiameters'])) {
-                            $invalidValues['disk_diameters'][] = $diskDiameter->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if ($reelDiameter->getValue() && !in_array($reelDiameter->getValue(), $vocabularies['reelDiameters'])) {
-                            $invalidValues['reel_diameters'][] = $reelDiameter->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        $nf = new NumberFormat();
-                        if (!in_array($mediaType, array("film", "Film"))) {
-                            $mdValue = $nf->toFormattedString($mediaDiameter->getValue(), '0%');
-                            if ($mediaDiameter->getValue() && !in_array($mdValue, $vocabularies['mediaDiameters'])) {
-                                $invalidValues['media_diameters'][] = $mediaDiameter->getValue() . ' at row ' . $row . ' not exist in db';
+                            if (trim($uniqueId->getValue()) == '') {
+                                $invalidValues['missing_fields'][] = 'Unique missing at ' . $row;
                             }
-                        }
-                        if ($recordingSpeed->getValue() && !in_array($recordingSpeed->getValue(), $vocabularies['recordingSpeed'])) {
-                            $invalidValues['recording_speed'][] = $recordingSpeed->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if ($color->getValue() && !in_array($color->getValue(), $vocabularies['colors'])) {
-                            $invalidValues['colors'][] = $color->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if ($tapeThickness->getValue() && !in_array($tapeThickness->getValue(), $vocabularies['tapeThickness'])) {
-                            $invalidValues['tape_thickness'][] = $tapeThickness->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if ($sides->getValue() && !in_array($sides->getValue(), $vocabularies['sides'])) {
-                            $invalidValues['sides'][] = $sides->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if ($trackType->getValue() && !in_array($trackType->getValue(), $vocabularies['trackTypes'])) {
-                            $invalidValues['track_types'][] = $trackType->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if ($monoOrStereo->getValue() && !in_array($monoOrStereo->getValue(), $vocabularies['monoStereo'])) {
-                            $invalidValues['mono_or_stereo'][] = $monoOrStereo->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if ($noiseReduction->getValue() && !in_array($noiseReduction->getValue(), $vocabularies['noiseReduction'])) {
-                            $invalidValues['noise_reduction'][] = $noiseReduction->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if ($cassetteSize->getValue() && !in_array($cassetteSize->getValue(), $vocabularies['cassetteSizes'])) {
-                            $invalidValues['cassette_sizes'][] = $cassetteSize->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if ($formatVersion->getValue() && !in_array($formatVersion->getValue(), $vocabularies['formatVersions'])) {
-                            $invalidValues['format_versions'][] = $formatVersion->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if ($recordingStandard->getValue() && !in_array($recordingStandard->getValue(), $vocabularies['recordingStandards'])) {
-                            $invalidValues['recording_standards'][] = $recordingStandard->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if ($reelOrCore->getValue() && !in_array($reelOrCore->getValue(), $vocabularies['reelCore'])) {
-                            $invalidValues['reel_or_core'][] = $reelOrCore->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if ($sound->getValue() && !in_array($sound->getValue(), $vocabularies['sounds'])) {
-                            $invalidValues['sounds'][] = $sound->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if ($frameRate->getValue() && !in_array($frameRate->getValue(), $vocabularies['frameRates'])) {
-                            $invalidValues['frame_rates'][] = $frameRate->getValue() . ' at row ' . $row . ' not exist in db';
-                        }
-                        if ($acidDetectionStrip->getValue() && !in_array($acidDetectionStrip->getValue(), $vocabularies['acidDetectionStrips'])) {
-                            $invalidValues['acid_detection_strips'][] = $acidDetectionStrip->getValue() . ' at row ' . $row . ' not exist in db';
+                            if (trim($location->getValue()) == '') {
+                                $invalidValues['missing_fields'][] = 'Location missing at row ' . $row;
+                            }
+
+                            if (!empty($uniqueId) && in_array($uniqueId, $unique)) {
+                                $invalidValues['unique_ids'][] = $uniqueId->getValue() . ' at row ' . $row . ' already exist in import file';
+                            } else if (!empty($uniqueId)) {
+                                $unique[] = $uniqueId;
+                            }
+                            if (trim($title->getValue()) == '') {
+                                $invalidValues['missing_fields'][] = 'Title missing at row ' . $row;
+                            }
+                            if (trim($project->getValue()) != '' && !in_array($project->getValue(), $projects)) {
+                                $invalidValues['project_names'][] = $project->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if (trim($project->getValue()) == '') {
+                                $invalidValues['missing_fields'][] = 'Project name missing at row ' . $row;
+                            }
+                            if (trim($mediaType->getValue()) != '' && !in_array($mediaType->getValue(), $vocabularies['mediaTypes'])) {
+                                $invalidValues['media_types'][] = $mediaType->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if (trim($mediaType->getValue()) == '') {
+                                $invalidValues['missing_fields'][] = 'Media type missing at row ' . $row;
+                            }
+
+                            if ($parentCollection->getValue() && !in_array($parentCollection->getValue(), $vocabularies['parentCollection'])) {
+                                $invalidValues['parentCollection'][] = $parentCollection->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if ($format->getValue() && !in_array($format->getValue(), $vocabularies['formats'])) {
+                                $invalidValues['formats'][] = $format->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if (trim($format->getValue()) == '') {
+                                $invalidValues['missing_fields'][] = 'Format missing at row ' . $row;
+                            }
+                            if ($commercial->getValue() && !in_array($commercial->getValue(), $vocabularies['commercial'])) {
+                                $invalidValues['commercial'][] = $commercial->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if ($base->getValue() && !in_array($base->getValue(), $vocabularies['bases'])) {
+                                $invalidValues['bases'][] = $base->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if ($printType->getValue() && !in_array($printType->getValue(), $vocabularies['printTypes'])) {
+                                $invalidValues['print_types'][] = $printType->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if ($diskDiameter->getValue() && !in_array($diskDiameter->getValue(), $vocabularies['diskDiameters'])) {
+                                $invalidValues['disk_diameters'][] = $diskDiameter->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if ($reelDiameter->getValue() && !in_array($reelDiameter->getValue(), $vocabularies['reelDiameters'])) {
+                                $invalidValues['reel_diameters'][] = $reelDiameter->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            $nf = new NumberFormat();
+                            if (!in_array($mediaType, array("film", "Film"))) {
+                                $mdValue = $nf->toFormattedString($mediaDiameter->getValue(), '0%');
+                                if ($mediaDiameter->getValue() && !in_array($mdValue, $vocabularies['mediaDiameters'])) {
+                                    $invalidValues['media_diameters'][] = $mediaDiameter->getValue() . ' at row ' . $row . ' not exist in db';
+                                }
+                            }
+                            if ($recordingSpeed->getValue() && !in_array($recordingSpeed->getValue(), $vocabularies['recordingSpeed'])) {
+                                $invalidValues['recording_speed'][] = $recordingSpeed->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if ($color->getValue() && !in_array($color->getValue(), $vocabularies['colors'])) {
+                                $invalidValues['colors'][] = $color->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if ($tapeThickness->getValue() && !in_array($tapeThickness->getValue(), $vocabularies['tapeThickness'])) {
+                                $invalidValues['tape_thickness'][] = $tapeThickness->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if ($sides->getValue() && !in_array($sides->getValue(), $vocabularies['sides'])) {
+                                $invalidValues['sides'][] = $sides->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if ($trackType->getValue() && !in_array($trackType->getValue(), $vocabularies['trackTypes'])) {
+                                $invalidValues['track_types'][] = $trackType->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if ($monoOrStereo->getValue() && !in_array($monoOrStereo->getValue(), $vocabularies['monoStereo'])) {
+                                $invalidValues['mono_or_stereo'][] = $monoOrStereo->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if ($noiseReduction->getValue() && !in_array($noiseReduction->getValue(), $vocabularies['noiseReduction'])) {
+                                $invalidValues['noise_reduction'][] = $noiseReduction->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if ($cassetteSize->getValue() && !in_array($cassetteSize->getValue(), $vocabularies['cassetteSizes'])) {
+                                $invalidValues['cassette_sizes'][] = $cassetteSize->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if ($formatVersion->getValue() && !in_array($formatVersion->getValue(), $vocabularies['formatVersions'])) {
+                                $invalidValues['format_versions'][] = $formatVersion->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if ($recordingStandard->getValue() && !in_array($recordingStandard->getValue(), $vocabularies['recordingStandards'])) {
+                                $invalidValues['recording_standards'][] = $recordingStandard->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if ($reelOrCore->getValue() && !in_array($reelOrCore->getValue(), $vocabularies['reelCore'])) {
+                                $invalidValues['reel_or_core'][] = $reelOrCore->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if ($sound->getValue() && !in_array($sound->getValue(), $vocabularies['sounds'])) {
+                                $invalidValues['sounds'][] = $sound->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if ($frameRate->getValue() && !in_array($frameRate->getValue(), $vocabularies['frameRates'])) {
+                                $invalidValues['frame_rates'][] = $frameRate->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
+                            if ($acidDetectionStrip->getValue() && !in_array($acidDetectionStrip->getValue(), $vocabularies['acidDetectionStrips'])) {
+                                $invalidValues['acid_detection_strips'][] = $acidDetectionStrip->getValue() . ' at row ' . $row . ' not exist in db';
+                            }
                         }
                     }
                 }
+                break;
             }
             return $invalidValues;
         } else {
@@ -196,10 +198,23 @@ class ImportReport extends ContainerAware {
     }
 
     public function getTotalRows($fileName) {
+        $counter = 0;
         $fileCompletePath = $this->container->getParameter('webUrl') . 'import/' . date('Y') . '/' . date('m') . '/' . $fileName;
         if (file_exists($fileCompletePath)) {
             $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject($fileCompletePath);
-            return $phpExcelObject->setActiveSheetIndex(0)->getHighestRow();
+            foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
+                foreach ($worksheet->getRowIterator() as $_row) {
+                    $row = $_row->getRowIndex();
+                    if ($row > 1) {
+                        $project = $worksheet->getCellByColumnAndRow(0, $row);
+                        if (!empty(trim($project)) && $project != null) {
+                            $counter++;
+                        }
+                    }
+                }
+                break;
+            }
+            return $counter;
         }
     }
 
@@ -218,70 +233,73 @@ class ImportReport extends ContainerAware {
                     $row = $_row->getRowIndex();
                     if ($row > 1) {
                         $media_type = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-                        $rows[$row - 1]['project'] = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
-                        $rows[$row - 1]['parentCollection'] = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
-                        $rows[$row - 1]['collectionName'] = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
-                        $rows[$row - 1]['mediaType'] = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
-                        $rows[$row - 1]['uniqueId'] = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
-                        $rows[$row - 1]['alternateId'] = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
-                        $rows[$row - 1]['location'] = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
-                        $rows[$row - 1]['format'] = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
-                        $formats[] = $worksheet->getCellByColumnAndRow(3, $row)->getValue() . ' | ' . $worksheet->getCellByColumnAndRow(7, $row)->getValue();
-                        $rows[$row - 1]['title'] = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
-                        $rows[$row - 1]['description'] = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
-                        $rows[$row - 1]['commercial'] = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
-                        $rows[$row - 1]['contentDuration'] = $worksheet->getCellByColumnAndRow(11, $row)->getValue();
-                        $rows[$row - 1]['mediaDuration'] = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
-                        $rows[$row - 1]['creationDate'] = $worksheet->getCellByColumnAndRow(13, $row)->getValue();
-                        $rows[$row - 1]['contentDate'] = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
-                        $rows[$row - 1]['base'] = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
-                        $rows[$row - 1]['printType'] = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
-                        $rows[$row - 1]['diskDiameter'] = $worksheet->getCellByColumnAndRow(17, $row)->getValue();
-                        $rows[$row - 1]['reelDiameter'] = $worksheet->getCellByColumnAndRow(18, $row)->getValue();
-                        $md = $worksheet->getCellByColumnAndRow(19, $row);
-                        $nf = new NumberFormat();
-                        $mdValue = $nf->toFormattedString($md->getValue(), '0%');
-                        if (in_array($media_type, array("film", "Film"))) {
-                            $rows[$row - 1]['mediaDiameter'] = $md->getValue();
-                        } else {
-                            $rows[$row - 1]['mediaDiameter'] = $mdValue;
+                        if (!empty(trim($media_type)) && $media_type != null) {
+                            $rows[$row - 1]['project'] = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+                            $rows[$row - 1]['parentCollection'] = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                            $rows[$row - 1]['collectionName'] = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+                            $rows[$row - 1]['mediaType'] = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+                            $rows[$row - 1]['uniqueId'] = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+                            $rows[$row - 1]['alternateId'] = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+                            $rows[$row - 1]['location'] = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
+                            $rows[$row - 1]['format'] = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
+                            $formats[] = $worksheet->getCellByColumnAndRow(3, $row)->getValue() . ' | ' . $worksheet->getCellByColumnAndRow(7, $row)->getValue();
+                            $rows[$row - 1]['title'] = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
+                            $rows[$row - 1]['description'] = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
+                            $rows[$row - 1]['commercial'] = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
+                            $rows[$row - 1]['contentDuration'] = $worksheet->getCellByColumnAndRow(11, $row)->getValue();
+                            $rows[$row - 1]['mediaDuration'] = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
+                            $rows[$row - 1]['creationDate'] = $worksheet->getCellByColumnAndRow(13, $row)->getValue();
+                            $rows[$row - 1]['contentDate'] = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
+                            $rows[$row - 1]['base'] = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
+                            $rows[$row - 1]['printType'] = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
+                            $rows[$row - 1]['diskDiameter'] = $worksheet->getCellByColumnAndRow(17, $row)->getValue();
+                            $rows[$row - 1]['reelDiameter'] = $worksheet->getCellByColumnAndRow(18, $row)->getValue();
+                            $md = $worksheet->getCellByColumnAndRow(19, $row);
+                            $nf = new NumberFormat();
+                            $mdValue = $nf->toFormattedString($md->getValue(), '0%');
+                            if (in_array($media_type, array("film", "Film"))) {
+                                $rows[$row - 1]['mediaDiameter'] = $md->getValue();
+                            } else {
+                                $rows[$row - 1]['mediaDiameter'] = $mdValue;
+                            }
+                            $rows[$row - 1]['footage'] = $worksheet->getCellByColumnAndRow(20, $row)->getValue();
+                            $rows[$row - 1]['recordingSpeed'] = $worksheet->getCellByColumnAndRow(21, $row)->getValue();
+                            $rows[$row - 1]['color'] = $worksheet->getCellByColumnAndRow(22, $row)->getValue();
+                            $rows[$row - 1]['tapeThickness'] = $worksheet->getCellByColumnAndRow(23, $row)->getValue();
+                            $rows[$row - 1]['sides'] = $worksheet->getCellByColumnAndRow(24, $row)->getValue();
+                            $rows[$row - 1]['trackType'] = $worksheet->getCellByColumnAndRow(25, $row)->getValue();
+                            $rows[$row - 1]['monoOrStereo'] = $worksheet->getCellByColumnAndRow(26, $row)->getValue();
+                            $rows[$row - 1]['noiseReduction'] = $worksheet->getCellByColumnAndRow(27, $row)->getValue();
+                            $rows[$row - 1]['cassetteSize'] = $worksheet->getCellByColumnAndRow(28, $row)->getValue();
+                            $rows[$row - 1]['formatVersion'] = $worksheet->getCellByColumnAndRow(29, $row)->getValue();
+                            $rows[$row - 1]['recordingStandard'] = $worksheet->getCellByColumnAndRow(30, $row)->getValue();
+                            $rows[$row - 1]['reelOrCore'] = $worksheet->getCellByColumnAndRow(31, $row)->getValue();
+                            $rows[$row - 1]['sound'] = $worksheet->getCellByColumnAndRow(32, $row)->getValue();
+                            $rows[$row - 1]['edgeCodeYear'] = $worksheet->getCellByColumnAndRow(33, $row)->getValue();
+                            $rows[$row - 1]['frameRate'] = $worksheet->getCellByColumnAndRow(34, $row)->getValue();
+                            $rows[$row - 1]['acidDetectionStrip'] = $worksheet->getCellByColumnAndRow(35, $row)->getValue();
+                            $rows[$row - 1]['shrinkage'] = $worksheet->getCellByColumnAndRow(36, $row)->getValue();
+                            $rows[$row - 1]['genreTerms'] = $worksheet->getCellByColumnAndRow(37, $row)->getValue();
+                            $rows[$row - 1]['contributor'] = $worksheet->getCellByColumnAndRow(38, $row)->getValue();
+                            $rows[$row - 1]['generation'] = $worksheet->getCellByColumnAndRow(39, $row)->getValue();
+                            $rows[$row - 1]['part'] = $worksheet->getCellByColumnAndRow(40, $row)->getValue();
+                            $rows[$row - 1]['copyright'] = $worksheet->getCellByColumnAndRow(41, $row)->getValue();
+                            $rows[$row - 1]['duplicates'] = $worksheet->getCellByColumnAndRow(42, $row)->getValue();
+                            $rows[$row - 1]['relatedMaterial'] = $worksheet->getCellByColumnAndRow(43, $row)->getValue();
+                            $rows[$row - 1]['conditionNote'] = $worksheet->getCellByColumnAndRow(44, $row)->getValue();
+                            $rows[$row - 1]['generalNote'] = $worksheet->getCellByColumnAndRow(45, $row)->getValue();
+                            // here
+                            $rows[$row - 1]['isReview'] = $worksheet->getCellByColumnAndRow(46, $row)->getValue();
+                            $rows[$row - 1]['reformattingPriority'] = $worksheet->getCellByColumnAndRow(47, $row)->getValue();
+                            $rows[$row - 1]['transcription'] = $worksheet->getCellByColumnAndRow(48, $row)->getValue();
+                            $rows[$row - 1]['digitized'] = $worksheet->getCellByColumnAndRow(49, $row)->getValue();
+                            $rows[$row - 1]['digitizedBy'] = $worksheet->getCellByColumnAndRow(50, $row)->getValue();
+                            $rows[$row - 1]['digitizedWhen'] = $worksheet->getCellByColumnAndRow(51, $row)->getFormattedValue(); //$worksheet->getCellByColumnAndRow(51, $row)->getValue();
+                            $rows[$row - 1]['urn'] = $worksheet->getCellByColumnAndRow(52, $row)->getValue();
                         }
-                        $rows[$row - 1]['footage'] = $worksheet->getCellByColumnAndRow(20, $row)->getValue();
-                        $rows[$row - 1]['recordingSpeed'] = $worksheet->getCellByColumnAndRow(21, $row)->getValue();
-                        $rows[$row - 1]['color'] = $worksheet->getCellByColumnAndRow(22, $row)->getValue();
-                        $rows[$row - 1]['tapeThickness'] = $worksheet->getCellByColumnAndRow(23, $row)->getValue();
-                        $rows[$row - 1]['sides'] = $worksheet->getCellByColumnAndRow(24, $row)->getValue();
-                        $rows[$row - 1]['trackType'] = $worksheet->getCellByColumnAndRow(25, $row)->getValue();
-                        $rows[$row - 1]['monoOrStereo'] = $worksheet->getCellByColumnAndRow(26, $row)->getValue();
-                        $rows[$row - 1]['noiseReduction'] = $worksheet->getCellByColumnAndRow(27, $row)->getValue();
-                        $rows[$row - 1]['cassetteSize'] = $worksheet->getCellByColumnAndRow(28, $row)->getValue();
-                        $rows[$row - 1]['formatVersion'] = $worksheet->getCellByColumnAndRow(29, $row)->getValue();
-                        $rows[$row - 1]['recordingStandard'] = $worksheet->getCellByColumnAndRow(30, $row)->getValue();
-                        $rows[$row - 1]['reelOrCore'] = $worksheet->getCellByColumnAndRow(31, $row)->getValue();
-                        $rows[$row - 1]['sound'] = $worksheet->getCellByColumnAndRow(32, $row)->getValue();
-                        $rows[$row - 1]['edgeCodeYear'] = $worksheet->getCellByColumnAndRow(33, $row)->getValue();
-                        $rows[$row - 1]['frameRate'] = $worksheet->getCellByColumnAndRow(34, $row)->getValue();
-                        $rows[$row - 1]['acidDetectionStrip'] = $worksheet->getCellByColumnAndRow(35, $row)->getValue();
-                        $rows[$row - 1]['shrinkage'] = $worksheet->getCellByColumnAndRow(36, $row)->getValue();
-                        $rows[$row - 1]['genreTerms'] = $worksheet->getCellByColumnAndRow(37, $row)->getValue();
-                        $rows[$row - 1]['contributor'] = $worksheet->getCellByColumnAndRow(38, $row)->getValue();
-                        $rows[$row - 1]['generation'] = $worksheet->getCellByColumnAndRow(39, $row)->getValue();
-                        $rows[$row - 1]['part'] = $worksheet->getCellByColumnAndRow(40, $row)->getValue();
-                        $rows[$row - 1]['copyright'] = $worksheet->getCellByColumnAndRow(41, $row)->getValue();
-                        $rows[$row - 1]['duplicates'] = $worksheet->getCellByColumnAndRow(42, $row)->getValue();
-                        $rows[$row - 1]['relatedMaterial'] = $worksheet->getCellByColumnAndRow(43, $row)->getValue();
-                        $rows[$row - 1]['conditionNote'] = $worksheet->getCellByColumnAndRow(44, $row)->getValue();
-                        $rows[$row - 1]['generalNote'] = $worksheet->getCellByColumnAndRow(45, $row)->getValue();
-                        // here
-                        $rows[$row - 1]['isReview'] = $worksheet->getCellByColumnAndRow(46, $row)->getValue();
-                        $rows[$row - 1]['reformattingPriority'] = $worksheet->getCellByColumnAndRow(47, $row)->getValue();
-                        $rows[$row - 1]['transcription'] = $worksheet->getCellByColumnAndRow(48, $row)->getValue();
-                        $rows[$row - 1]['digitized'] = $worksheet->getCellByColumnAndRow(49, $row)->getValue();
-                        $rows[$row - 1]['digitizedBy'] = $worksheet->getCellByColumnAndRow(50, $row)->getValue();
-                        $rows[$row - 1]['digitizedWhen'] = $worksheet->getCellByColumnAndRow(51, $row)->getValue();
-                        $rows[$row - 1]['urn'] = $worksheet->getCellByColumnAndRow(52, $row)->getValue();
                     }
                 }
+                break;
             }
 
             if ($rows) {
@@ -368,7 +386,7 @@ class ImportReport extends ContainerAware {
                 $record->setRelatedMaterial($row['relatedMaterial']);
                 $record->setConditionNote($row['conditionNote']);
                 $record->setGeneralNote($row['generalNote']);
-                // here
+
                 if (strtolower($row['isReview']) == 'yes') {
                     $record->setIsReview(1);
                 } else {

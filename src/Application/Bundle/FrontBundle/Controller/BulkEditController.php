@@ -181,16 +181,18 @@ class BulkEditController extends Controller {
                     if ($posted['digitized'] && $posted['digitized'] != 3) {
                         $digitized = ($posted['digitized'] == 1) ? 1 : 0;
                         $record->setDigitized($digitized);
-                        if ($digitized == 1) {
-                            $record->setDigitizedBy($posted['digitizedBy']);
-                            $record->setDigitizedWhen($posted['digitizedWhen']);
-                            if ($posted['urn'])
-                                $record->setUrn($posted['urn']);
-                        } else {
-                            $record->setDigitizedBy('');
-                            $record->setDigitizedWhen('');
-                            $record->setUrn('');
-                        }
+                        $update = true;
+                    }
+                    if ($posted['digitizedBy']) {
+                        $record->setDigitizedBy($posted['digitizedBy']);
+                        $update = true;
+                    }
+                    if ($posted['digitizedWhen']) {
+                        $record->setDigitizedWhen($posted['digitizedWhen']);
+                        $update = true;
+                    }
+                    if ($posted['urn']) {
+                        $record->setUrn($posted['urn']);
                         $update = true;
                     }
                     if ($posted['location']) {

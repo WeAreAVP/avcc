@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     <div id="parentCollection_lbl" class="col-lg-6" style="" style="" data-view="show">
-                        <label for="parentCollection">Parent Collection</label>
+                        <label for="parentCollection">Collection Classification</label>
                         <div data-role="input-control" class="input-control">
                             <?php // $selected?>
                             <select class="size4" name="parentCollection" id="parentCollection">

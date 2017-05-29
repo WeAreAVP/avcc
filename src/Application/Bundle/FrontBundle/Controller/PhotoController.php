@@ -60,7 +60,7 @@ class PhotoController extends Controller {
                 $sphinxSearch->replace();
                 return $this->redirect($this->generateUrl('record_show', array('id' => $data['recordId'])));
             }
-        }
+        } 
 
         return array(
             'rec_id' => $id,

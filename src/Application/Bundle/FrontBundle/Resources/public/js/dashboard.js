@@ -205,7 +205,7 @@ function Dashboard() {
                     })()
                 }]
         });
-        
+
     }
 
     this.getOverview = function (totalRecordsUrl, digitized, prefix) {
@@ -231,17 +231,32 @@ function Dashboard() {
                         $('#' + prefix + 'filmfile').html(0.00);
                         $('#' + prefix + 'filmdigitized').html(0);
                         $('#' + prefix + 'filmcontentDur').html(0.00);
+                        $('#' + prefix + 'total').html(0);
+                        $('#' + prefix + 'dtotal').html(0);
+                        $('#' + prefix + 'durTotal').html(0);
+                        $('#' + prefix + 'fileTotal').html(0);
+                        var total, dtotal, durTotal, fileTotal;
+                        total = dtotal = durTotal = fileTotal = 0;
                         //  non digitized
                         if (typeof element !== "undefined" && typeof element[0] !== "undefined" && element[0].Audio) {
                             var audio = element[0].Audio;
+                            total += audio.totalRecords;
+                            dtotal += audio.dRecords;
+                            durTotal += audio.sum_content_duration;
+                            fileTotal += audio.fileSize;
                             $('#' + prefix + 'audioTotal').html(audio.totalRecords);
                             $('#' + prefix + 'audiolinear').html(audio.linearFeet);
                             $('#' + prefix + 'audiofile').html(audio.fileSize);
                             $('#' + prefix + 'audiodigitized').html(audio.dRecords);
                             $('#' + prefix + 'audiocontentDur').html(audio.sum_content_duration);
+
                         }
                         if (typeof element !== "undefined" && typeof element[1] !== "undefined" && element[1].Video) {
                             var video = element[1].Video;
+                            total += video.totalRecords;
+                            dtotal += video.dRecords;
+                            durTotal += video.sum_content_duration;
+                            fileTotal += video.fileSize;
                             $('#' + prefix + 'videoTotal').html(video.totalRecords);
                             $('#' + prefix + 'videolinear').html(video.linearFeet);
                             $('#' + prefix + 'videofile').html(video.fileSize);
@@ -250,12 +265,20 @@ function Dashboard() {
                         }
                         if (typeof element !== "undefined" && typeof element[2] !== "undefined" && element[2].Film) {
                             var film = element[2].Film;
+                            total += film.totalRecords;
+                            dtotal += film.dRecords;
+                            durTotal += film.sum_content_duration;
+                            fileTotal += film.fileSize;
                             $('#' + prefix + 'filmTotal').html(film.totalRecords);
                             $('#' + prefix + 'filmlinear').html(film.linearFeet);
                             $('#' + prefix + 'filmfile').html(film.fileSize);
                             $('#' + prefix + 'filmdigitized').html(film.dRecords);
                             $('#' + prefix + 'filmcontentDur').html(film.sum_content_duration);
                         }
+                        $('#' + prefix + 'total').html(total);
+                        $('#' + prefix + 'dtotal').html(dtotal);
+                        $('#' + prefix + 'durTotal').html(durTotal);
+                        $('#' + prefix + 'fileTotal').html(fileTotal);
                     });
 
                 }

@@ -273,3 +273,14 @@ span.has-error ul li{
 #actions a{
     color: white
 }
+
+
+.lSSlideOuter .lSPager.lSGallery img {
+    height: 58px ! important;
+}
+
+div.dataTables_scrollBody table.dataTable thead th.sorting:after,
+div.dataTables_scrollBody table.dataTable thead th.sorting_asc:after,
+div.dataTables_scrollBody table.dataTable thead th.sorting_desc:after {
+content: "";
+}

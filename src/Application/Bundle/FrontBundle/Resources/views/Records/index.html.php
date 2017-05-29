@@ -70,9 +70,7 @@
                             <?php } ?>
                         </tr>
                     </thead>
-                    <tbody>
-
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
             <?php
@@ -109,11 +107,14 @@
         <?php if (!$isAjax): ?>
             <?php $view['slots']->start('view_javascripts') ?>
 
-            <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
+<!--            <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
+-->            <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/fixedheader/3.1.2/js/dataTables.fixedHeader.min.js">
+            <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/fixedheader/3.1.2/css/fixedHeader.dataTables.min.css">
             <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/records.js') ?>"></script>
             <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/tristate-0.9.2.js') ?>"></script>
             <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/jquery.blockUI.js') ?>"></script>
             <script type="text/javascript">
+                $('body').css('overflow', 'hidden'); 
                 var record = new Records();
                 record.setAjaxSource('<?php echo $view['router']->generate('record_dataTable') ?>');
                 record.setAjaxSaveStateUrl('<?php echo $view['router']->generate('record_saveState') ?>');
@@ -144,6 +145,7 @@
                     });
                 });
                 $(document).ready(function () {
+                    
                     $(window).bind('resize', function (e) {
                         manageLayout();
                     }).resize();

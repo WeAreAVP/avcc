@@ -25,7 +25,7 @@ function initialize_records_form() {
 
     showUpdateFields();
     if (bulk) {
-        showBulkDigitizedFields();
+//        showBulkDigitizedFields();
     } else {
         showDigitizedFields();
     }

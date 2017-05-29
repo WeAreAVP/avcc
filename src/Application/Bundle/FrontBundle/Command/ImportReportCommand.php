@@ -50,12 +50,11 @@ class ImportReportCommand extends ContainerAwareCommand {
                 $insertType = $entity->getInsertOption();
                 $import = new ImportReport($this->getContainer());
                 $existingRows = 0;
-                $rows = (int) $import->getTotalRows($fileName) - 1;
+                $rows = (int) $import->getTotalRows($fileName);
                 if ($insertType != 0) {
                     $existingRows = (int) $entity->getExistingRecords();
                     $rows = $rows - $existingRows;
                 } 
-
                 $_import = true;
                 $fieldsObj = new DefaultFields();
                 if ($organization && $this->getContainer()->getParameter("enable_stripe")) {
