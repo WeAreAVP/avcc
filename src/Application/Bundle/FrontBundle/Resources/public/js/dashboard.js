@@ -275,10 +275,10 @@ function Dashboard() {
                             $('#' + prefix + 'filmdigitized').html(film.dRecords);
                             $('#' + prefix + 'filmcontentDur').html(film.sum_content_duration);
                         }
-                        $('#' + prefix + 'total').html(total);
-                        $('#' + prefix + 'dtotal').html(dtotal);
-                        $('#' + prefix + 'durTotal').html(durTotal);
-                        $('#' + prefix + 'fileTotal').html(fileTotal);
+                        $('#' + prefix + 'total').html(Math.round(total));
+                        $('#' + prefix + 'dtotal').html(Math.round(dtotal));
+                        $('#' + prefix + 'durTotal').html(Math.round(durTotal));
+                        $('#' + prefix + 'fileTotal').html(Math.round(fileTotal));
                     });
 
                 }
