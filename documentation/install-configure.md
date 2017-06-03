@@ -55,7 +55,12 @@ Composer is a tool for dependency management in php. It allows to declare the de
         ga_tracking: UA-xxxxx-x
         stripe_publishkey: key_publish
         stripe_secretkey: key_secret
-        qa_instance: false 
+        qa_instance: false
+        enable_stripe: false
+        amazon_aws_key: 'aws_key'
+        amazon_aws_secret_key: 'aws_secret_key'
+        amazon_s3_bucket_name: 'bucket_name'
+        amazon_s3_base_url: 'https://s3.amazonaws.com/bucket_name/'
 
 **5) Database**
 

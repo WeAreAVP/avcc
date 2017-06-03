@@ -8,7 +8,7 @@ application_front:
 #    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
 _welcome:
-    pattern:  /dashboard
+    pattern:  /
     defaults: { _controller: ApplicationFrontBundle:Default:index}
 
 fos_user_profile:
