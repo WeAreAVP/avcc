@@ -278,7 +278,7 @@ function Dashboard() {
                         $('#' + prefix + 'total').html($.number(total));
                         $('#' + prefix + 'dtotal').html($.number(dtotal));
                         $('#' + prefix + 'durTotal').html($.number(durTotal,2));
-                        $('#' + prefix + 'fileTotal').html($.number(fileTotal/2));
+                        $('#' + prefix + 'fileTotal').html($.number(fileTotal,2));
                     });
 
                 }
