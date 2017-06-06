@@ -8,16 +8,14 @@
 #  from running method more         #
 #  than one time                    #
 #  Developer : Nouman Tayyab        #
-#  nouman@geekschicago.com          #
+#  nouman@avpreserve.com            #
 #                                   #
 #####################################
 
-#source /root/.bash_profile
 
-#HOST=`/bin/hostname`
 PID_FILE="PIDs/backups.pid"
 OUTPUT_FILE="cronlogs/backups.log"
-BASEDIR="/home/avccqa/avcc/"
+BASEDIR="/home/avcc/avcc/"
 DATE=`date`
 
 PHP_PATH=`which php`
@@ -28,7 +26,7 @@ touch $PID_FULLPATH
 touch $OUTPUT_FILE
 
 PID=`cat $PID_FULLPATH`
-PIDD=/proc/$PID 
+PIDD=/proc/$PID
 if [ -n "$PID" ]  && [ -d $PIDD ]
 then
 echo "Already running ...."

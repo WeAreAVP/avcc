@@ -244,11 +244,11 @@ function Dashboard() {
                             dtotal += audio.dRecords;
                             durTotal += audio.sum_content_duration;
                             fileTotal += audio.fileSize;
-                            $('#' + prefix + 'audioTotal').html(audio.totalRecords);
-                            $('#' + prefix + 'audiolinear').html(audio.linearFeet);
-                            $('#' + prefix + 'audiofile').html(audio.fileSize);
-                            $('#' + prefix + 'audiodigitized').html(audio.dRecords);
-                            $('#' + prefix + 'audiocontentDur').html(audio.sum_content_duration);
+                            $('#' + prefix + 'audioTotal').html($.number(audio.totalRecords));
+                            $('#' + prefix + 'audiolinear').html($.number(audio.linearFeet,2));
+                            $('#' + prefix + 'audiofile').html($.number(audio.fileSize,2));
+                            $('#' + prefix + 'audiodigitized').html($.number(audio.dRecords));
+                            $('#' + prefix + 'audiocontentDur').html($.number(audio.sum_content_duration,2));
 
                         }
                         if (typeof element !== "undefined" && typeof element[1] !== "undefined" && element[1].Video) {
@@ -257,11 +257,11 @@ function Dashboard() {
                             dtotal += video.dRecords;
                             durTotal += video.sum_content_duration;
                             fileTotal += video.fileSize;
-                            $('#' + prefix + 'videoTotal').html(video.totalRecords);
-                            $('#' + prefix + 'videolinear').html(video.linearFeet);
-                            $('#' + prefix + 'videofile').html(video.fileSize);
-                            $('#' + prefix + 'videodigitized').html(video.dRecords);
-                            $('#' + prefix + 'videocontentDur').html(video.sum_content_duration);
+                            $('#' + prefix + 'videoTotal').html($.number(video.totalRecords));
+                            $('#' + prefix + 'videolinear').html($.number(video.linearFeet,2));
+                            $('#' + prefix + 'videofile').html($.number(video.fileSize,2));
+                            $('#' + prefix + 'videodigitized').html($.number(video.dRecords));
+                            $('#' + prefix + 'videocontentDur').html($.number(video.sum_content_duration,2));
                         }
                         if (typeof element !== "undefined" && typeof element[2] !== "undefined" && element[2].Film) {
                             var film = element[2].Film;
@@ -269,16 +269,16 @@ function Dashboard() {
                             dtotal += film.dRecords;
                             durTotal += film.sum_content_duration;
                             fileTotal += film.fileSize;
-                            $('#' + prefix + 'filmTotal').html(film.totalRecords);
-                            $('#' + prefix + 'filmlinear').html(film.linearFeet);
-                            $('#' + prefix + 'filmfile').html(film.fileSize);
-                            $('#' + prefix + 'filmdigitized').html(film.dRecords);
-                            $('#' + prefix + 'filmcontentDur').html(film.sum_content_duration);
+                            $('#' + prefix + 'filmTotal').html($.number(film.totalRecords));
+                            $('#' + prefix + 'filmlinear').html($.number(film.linearFeet,2));
+                            $('#' + prefix + 'filmfile').html($.number(film.fileSize,2));
+                            $('#' + prefix + 'filmdigitized').html($.number(film.dRecords));
+                            $('#' + prefix + 'filmcontentDur').html($.number(film.sum_content_duration,2));
                         }
-                        $('#' + prefix + 'total').html(total);
-                        $('#' + prefix + 'dtotal').html(dtotal);
-                        $('#' + prefix + 'durTotal').html(durTotal);
-                        $('#' + prefix + 'fileTotal').html(fileTotal);
+                        $('#' + prefix + 'total').html($.number(total));
+                        $('#' + prefix + 'dtotal').html($.number(dtotal));
+                        $('#' + prefix + 'durTotal').html($.number(durTotal,2));
+                        $('#' + prefix + 'fileTotal').html($.number(fileTotal,2));
                     });
 
                 }
