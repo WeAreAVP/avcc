@@ -903,9 +903,9 @@ class ExportReport extends ContainerAware {
 
             $row = 1;
             $activeSheet->setCellValueExplicitByColumnAndRow(0, $row, "Project Name");
-            $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "Audio");
-            $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, "Video");
-            $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "Film");
+            $activeSheet->setCellValueExplicitByColumnAndRow(1, $row, "Audio (TB)");
+            $activeSheet->setCellValueExplicitByColumnAndRow(2, $row, "Video (TB)");
+            $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, "Film (TB)");
             $row++;
             $em = $this->container->get('doctrine')->getEntityManager();
             $projects = $allData[1];

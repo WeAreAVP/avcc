@@ -114,8 +114,8 @@
             <h3>Overview</h3>
             <div data-role="tab-control" class="tab-control">
                 <ul class="tabs">
-                    <li id="xlsTab" class="active"><a href="#d_tab">Digitized Tab</a></li>
-                    <li id="graphsTab" class=""><a href="#nd_tab">Non-Digitized Tab</a></li>
+                    <li id="xlsTab" class="active"><a href="#d_tab">Digitized</a></li>
+                    <li id="graphsTab" class=""><a href="#nd_tab">Non-Digitized</a></li>
                 </ul>
 
                 <div class="frames">
@@ -124,7 +124,7 @@
                             <div class="table-responsive">
                                 <table class="table striped bordered hovered dashboardTotals">
                                     <thead>  
-                                        <tr><td></td><th>Total Items</th><th>Total Items Digitized</th><th>Total Content Duration of Digitized Items (min)</th><th>File Size of digitized items (TB)</th><th>Linear Shelf Footage for AV /Film Footage for digitized items</th></tr>
+                                        <tr><td></td><th>Total Items</th><th>Total Items Digitized</th><th>Total Content Duration of Digitized Items (min)</th><th>File Size of digitized items (TB)*</th><th>Linear Shelf Footage for AV /Film Footage for digitized items</th></tr>
                                     </thead>
                                     <tbody>
                                         <tr><th>Audio</th><td id="audioTotal" class="text-center">0</td><td id="audiodigitized" class="text-center">0</td><td id="audiocontentDur" class="text-center">0.00</td><td id="audiofile" class="text-center">0.00</td><td id="audiolinear" class="text-center">0.00</td></tr>
@@ -141,7 +141,7 @@
                             <div class="table-responsive">
                                 <table class="table striped bordered hovered dashboardTotals">
                                     <thead>  
-                                        <tr><td></td><th>Total Items</th><th>Total Items Not Digitized</th><th>Total Content Duration of Non-Digitized Items (min)</th><th>File Size of non-digitized items (TB)</th><th>Linear Shelf Footage for AV/Film Footage for non-digitized items</th></tr>
+                                        <tr><td></td><th>Total Items</th><th>Total Items Not Digitized</th><th>Total Content Duration of Non-Digitized Items (min)</th><th>File Size of non-digitized items (TB)*</th><th>Linear Shelf Footage for AV/Film Footage for non-digitized items</th></tr>
                                     </thead>
                                     <tbody>
                                         <tr><th>Audio</th><td id="ndaudioTotal" class="text-center">0</td><td id="ndaudiodigitized" class="text-center">0</td><td id="ndaudiocontentDur" class="text-center">0.00</td><td id="ndaudiofile" class="text-center">0.00</td><td id="ndaudiolinear" class="text-center">0.00</td></tr>
@@ -155,7 +155,8 @@
                     </div>
                 </div>
 
-                <p style="font-size: 13px;">* For digitized items the reporting here gives preference to the file sizes entered under the project settings. If nothing is entered under project settings, and for non-digitized items, the file size calculation assumes the following target format choices:</p>
+                <p style="font-size: 13px;">* For the Digitized tab file size reporting is derived from user entered data under settings -> Projects.</p>
+                <p style="font-size: 13px;">For the Non-Digitized tab file size calculation assumes the following target format choices: </p>
                 <p style="font-size: 13px;" class="margin20">Audio: 96/24 Uncompressed WAV Stereo & 256Kbps MP3</p>
                 <p style="font-size: 13px;" class="margin20">Video: FFV1 10-bit & MPEG4 5.0Mbps</p>
                 <p style="font-size: 13px;" class="margin20">Film: 2k Uncompressed, AVC Intra 100 & MPEG4 5.0Mbps</p>
