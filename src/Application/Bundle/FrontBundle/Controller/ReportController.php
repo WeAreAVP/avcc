@@ -576,6 +576,7 @@ class ReportController extends MyController {
     public function getTotalRecordsAction($projectid, $digitized) {
         $em = $this->getDoctrine()->getManager();
         $record['digitized'] = $this->getFileSizeAndLinearFootageInfo($projectid, $digitized);
+
         $audioTotal = $audiodTotal = 0;
         $filmTotal = $filmdTotal = 0;
         $videoTotal = $videodTotal = 0;
@@ -589,6 +590,9 @@ class ReportController extends MyController {
                 $audioTotal = $record['digitized'][0]["audio"];
                 $videoTotal = $record['digitized'][0]["video"];
                 $filmTotal = $record['digitized'][0]["film"];
+                $audiodTotal = $record['digitized'][0]["ad"];
+                $videodTotal = $record['digitized'][0]["vd"];
+                $filmdTotal = $record['digitized'][0]["fd"];
                 foreach ($precords as $pkey => $records) {
                     $acount = $vcount = $fcount = 0;
                     if ($pkey > 0) {
@@ -597,12 +601,6 @@ class ReportController extends MyController {
                     if ($records) {
                         if (isset($records['Audio']) && $pkey != 0) {
                             foreach ($records['Audio'] as $key => $audio) {
-//                                $audioTotal += $audio["total"];
-                                if ($digitized == 1 && $audio['dtotal'] == 1) {
-                                    $audiodTotal += $audio["total"];
-                                } else if ($digitized != 1 && $audio['dtotal'] != 1) {
-                                    $audiodTotal += $audio["total"];
-                                }
                                 if (($digitized == 1 && $audio['dtotal'] == 1) || ($digitized != 1 && $audio['dtotal'] != 1)) {
                                     $linearAudioCount = $this->calculateLinearFeet($audio['total'], $audio['width']);
                                     $totalLinearAudioCount += $linearAudioCount;
@@ -619,12 +617,6 @@ class ReportController extends MyController {
                         unset($key);
                         if (isset($records['Video']) && $pkey != 0) {
                             foreach ($records['Video'] as $key => $video) {
-//                                $videoTotal += $video["total"];
-                                if ($digitized == 1 && $video['dtotal'] == 1) {
-                                    $videodTotal += $video["total"];
-                                } else if ($digitized != 1 && $video['dtotal'] != 1) {
-                                    $videodTotal += $video["total"];
-                                }
                                 if (($digitized == 1 && $video['dtotal'] == 1) || ($digitized != 1 && $video['dtotal'] != 1)) {
                                     $linearVideoCount = $this->calculateLinearFeet($video['total'], $video['width']);
                                     $totalLinearVideoCount += $linearVideoCount;
@@ -641,12 +633,6 @@ class ReportController extends MyController {
                         unset($key);
                         if (isset($records['Film']) && $pkey != 0) {
                             foreach ($records['Film'] as $key => $film) {
-//                                $filmTotal += $film["total"];
-                                if ($digitized == 1 && $film['dtotal'] == 1) {
-                                    $filmdTotal += $film["total"];
-                                } else if ($digitized != 1 && $film['dtotal'] != 1) {
-                                    $filmdTotal += $film["total"];
-                                }
                                 if (($digitized == 1 && $film['dtotal'] == 1) || ($digitized != 1 && $film['dtotal'] != 1)) {
                                     $totalLinearFilmCount += $film['footage'];
                                     $fsum_content_duration += (!empty($film['sum_content_duration'])) ? $film['sum_content_duration'] : 0;
@@ -704,7 +690,7 @@ class ReportController extends MyController {
             $org_records = $em->getRepository('ApplicationFrontBundle:Records')->getDataForDashboard($projectid, $digitized, $this->getUser()->getOrganizations()->getId());
         }
         $formatInfo = array();
-        $atotal = $vtotal = $ftotal = 0;
+        $atotal = $vtotal = $ftotal = $adtotal = $vdtotal = $fdtotal = 0;
         foreach ($org_records as $data) {
             $pId = $data['projectId'];
             $mediatype = $data['media'];
@@ -723,11 +709,29 @@ class ReportController extends MyController {
             if ($data["digitized"] == 1) {
                 $_dTotal = 1;
             }
+            if ($digitized == 1 && $_dTotal == 1) {
+                if ($mediatype == "Audio")
+                    $adtotal += $data["total"];
+                else if ($mediatype == "Video")
+                    $vdtotal += $data["total"];
+                else if ($mediatype == "Film")
+                    $fdtotal += $data["total"];
+            } else if ($digitized == 0 && $_dTotal == 0) {
+                if ($mediatype == "Audio")
+                    $adtotal += $data["total"];
+                else if ($mediatype == "Video")
+                    $vdtotal += $data["total"];
+                else if ($mediatype == "Film")
+                    $fdtotal += $data["total"];
+            }
             $formatInfo[$pId][$mediatype][$f] = array('format' => $data['format'], 'sum_content_duration' => $sum_content_duration, 'total' => $data['total'], "dtotal" => $_dTotal, 'width' => $data['width'], 'footage' => $data['sum_footage']);
         }
         $formatInfo[0]["audio"] = $atotal;
         $formatInfo[0]["video"] = $vtotal;
         $formatInfo[0]["film"] = $ftotal;
+        $formatInfo[0]["ad"] = $adtotal;
+        $formatInfo[0]["vd"] = $vdtotal;
+        $formatInfo[0]["fd"] = $fdtotal;
         return $formatInfo;
     }
 

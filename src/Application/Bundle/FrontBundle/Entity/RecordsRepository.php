@@ -176,8 +176,8 @@ class RecordsRepository extends EntityRepository {
                 . " LEFT JOIN ApplicationFrontBundle:AudioRecords ar WITH ar.record = r.id "
                 . " LEFT JOIN ApplicationFrontBundle:VideoRecords vr WITH vr.record = r.id "
                 . " LEFT JOIN ApplicationFrontBundle:FilmRecords fr WITH fr.record = r.id "
-                . " JOIN r.project u "
-                . " JOIN u.organization o "
+                . " LEFT JOIN r.project u "
+                . " LEFT JOIN u.organization o "
                 . $where
                 . " GROUP BY r.project, r.mediaType, r.format, r.digitized"
         );

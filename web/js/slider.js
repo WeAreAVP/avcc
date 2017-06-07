@@ -3,10 +3,11 @@ $(function () {
         gallery: true,
         item: 1,
         slideMove: 1,
+//        loop: true,
         loop: false,
         enableDrag: false,
         slideMargin: 0,
-        thumbItem: 9,
+        thumbItem: 6,
         currentPagerPosition: 'middle',
         onSliderLoad: function (el) {
             var src = "";
