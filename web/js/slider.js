@@ -29,8 +29,11 @@ $(function () {
             $(".lSSlideWrapper").prepend(html);
             $("#viewer").iviewer({
                 src: src,
+                zoom: 'fit',
+                zoom_max: '200%',
+                zoom_min: '50%',
                 onFinishLoad: function () {
-                    $("#viewer img").attr('style', 'position: absolute; top: 0px;left: 0px;max-width: none; width: 557px; height: 303px;')
+                    // $("#viewer img").attr('style', 'position: absolute; top: 0px;left: 0px; width: auto; height: 305px;')
                 }
             });
 
@@ -41,8 +44,7 @@ $(function () {
                 $("#viewer").iviewer('zoom_by', -1);
             });
             $("#original").click(function () {
-                $("#viewer img").attr('style', 'position: absolute; top: 0px; left: 0px; max-width: none; width: 557px; height: 303px;');
-
+                $("#viewer").iviewer('fit');
             });
             $("#rotate").click(function () {
                 $("#viewer").iviewer('angle', 90);

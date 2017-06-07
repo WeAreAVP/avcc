@@ -276,7 +276,9 @@ span.has-error ul li{
 
 
 .lSSlideOuter .lSPager.lSGallery img {
-    height: 58px ! important;
+    height: 60px ! important;
+    width: 100%;
+    object-fit: cover;
 }
 
 div.dataTables_scrollBody table.dataTable thead th.sorting:after,
