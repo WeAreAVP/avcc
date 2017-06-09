@@ -77,7 +77,6 @@
             
             ?>
             <div class="span6">
-
                 <ul id="lightSlider" class="hide">
                     <?php
                     foreach ($images as $key => $image) {

@@ -76,7 +76,7 @@
             <?php echo $view['form']->end($edit_form) ?>
         </div>
         <?php if ($hide_image == 1 && count($images) > 0) { ?>
-            <div class="span6">
+            <div class="span6"> 
 
                 <ul id="lightSlider" class="hide">
                     <?php

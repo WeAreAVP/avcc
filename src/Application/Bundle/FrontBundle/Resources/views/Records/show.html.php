@@ -88,7 +88,7 @@
         </div>
 
         <?php if ($uploadImages && $hide_image == 1 && count($images) > 0) { ?>
-            <div class="span6">
+            <div class="span6"> 
 
                 <ul id="lightSlider" class="hide">
                     <?php

@@ -3,6 +3,8 @@ $(function () {
         gallery: true,
         item: 1,
         slideMove: 1,
+        prevHtml : '<h1><span class="icon-arrow-left-3 smaller"></span></h1>',
+        nextHtml : '<h1><span class="icon-arrow-right-3 smaller"></span></h1>',
 //        loop: true,
         loop: false,
         enableDrag: false,

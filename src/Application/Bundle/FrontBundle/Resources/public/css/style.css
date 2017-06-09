@@ -254,9 +254,9 @@ span.has-error ul li{
     height: 303px;
     position: relative;
 }
-.lSSlideOuter .lSPager.lSGallery li{
+/*.lSSlideOuter .lSPager.lSGallery li{
     width: 90.556px ! important;
-}  
+}  */
 .lSSlideOuter .lSPager.lSGallery{
     width: 1200px ! important;
 }
@@ -274,6 +274,9 @@ span.has-error ul li{
     color: white
 }
 
+.lSAction > a {
+    background-image: none;    
+}
 
 .lSSlideOuter .lSPager.lSGallery img {
     height: 60px ! important;
@@ -284,5 +287,5 @@ span.has-error ul li{
 div.dataTables_scrollBody table.dataTable thead th.sorting:after,
 div.dataTables_scrollBody table.dataTable thead th.sorting_asc:after,
 div.dataTables_scrollBody table.dataTable thead th.sorting_desc:after {
-content: "";
+    content: "";
 }
