@@ -30,7 +30,7 @@ class StripeHelper {
         try {
             $response = \Stripe\Plan::create(array(
                         "amount" => (int) $data["amount"] * 100,
-                        "interval" => "month",
+                        "interval" => $data["interval"],
                         "name" => $data["name"],
                         "currency" => "usd",
                         "id" => $data["id"],

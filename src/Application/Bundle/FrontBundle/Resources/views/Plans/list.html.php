@@ -46,7 +46,7 @@
 
                                     <div class="list span4 plans">
                                         <h3><?php echo ucwords($entity->getDescription()) ?></h3>
-                                        <h1><sup>$</sup><?php echo $entity->getAmount() ?><sup>/Mth</sup></h1>
+                                        <h1><sup>$</sup><?php echo $entity->getAmount() ?><sup>/<?php echo $entity->getPlanInterval() ?></sup></h1>
                                         <?php
                                         if ($plan_id == $entity->getPlanId()) {
                                             $text = "Unsubscribe";

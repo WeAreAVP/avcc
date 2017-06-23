@@ -31,18 +31,37 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class PlansType extends AbstractType {
 
+    private $id = 0;
+
+    public function __construct($data = null) {
+        $this->id = $data;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options) {
-
-        $builder
-                ->add('name')
-                ->add('planId')
-                ->add('amount')
-                ->add('records')
-                ->add('description');
+        if ($this->id > 0) {
+            $builder
+                    ->add('name')
+                    ->add('planId')
+                    ->add('amount')
+                    ->add('records')
+                    ->add('description')
+            ;
+        } else {
+            $builder
+                    ->add('name')
+                    ->add('planId')
+                    ->add('amount')
+                    ->add('records')
+                    ->add('description')
+                    ->add('planInterval', 'choice', array('choices' => array(
+                            'month' => 'Month',
+                            'year' => 'Year'
+            )));
+        }
     }
 
     /**

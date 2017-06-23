@@ -164,13 +164,13 @@ class PlansController extends MyController {
                 'amount' => $entity->getAmount(),
                 'id' => $entity->getPlanId(),
                 'name' => $entity->getName(),
-                'desc' => $entity->getDescription()
+                'desc' => $entity->getDescription(),
+                'interval' => $entity->getPlanInterval()
             );
             $res = $helper->createPlan($data);
             if ($res == TRUE) {
                 $em = $this->getDoctrine()->getManager();
                 $entity->setCurrency("usd");
-                $entity->setPlanInterval("month");
                 $em->persist($entity);
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success', 'Plan added succesfully.');
@@ -318,7 +318,7 @@ class PlansController extends MyController {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(Plans $entity) {
-        $form = $this->createForm(new PlansType(), $entity, array(
+        $form = $this->createForm(new PlansType($entity->getId()), $entity, array(
             'action' => $this->generateUrl('plan_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));

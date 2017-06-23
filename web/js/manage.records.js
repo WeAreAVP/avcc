@@ -111,12 +111,19 @@ function convertTimeToMinutes() {
             var a = hms.split(':');
             if (a.length > 1) {
                 var seconds;
-                if (a.length == 2) {
-                    seconds = (+a[0]) * 60 + (+a[1]);
+                var minutes;
+                if (a.length == 2 && parseInt(a[1]) == 60) {
+                    seconds = (parseInt(a[0]) * 60) + parseInt(a[1]);
+                    minutes = seconds / 60;
+                } else if (a.length == 2) {
+                    minutes = parseInt(a[0]) + (parseInt(a[1]) / 100);
+                } else if (a.length == 3 && parseInt(a[2]) == 60) {
+                    seconds = (parseInt(a[0]) * 60 * 60) + (parseInt(a[1]) * 60) + parseInt(a[2]);
+                    minutes = seconds / 60;
                 } else {
-                    seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+                    seconds = (parseInt(a[0]) * 60 * 60) + (parseInt(a[1]) * 60);
+                    minutes = (seconds / 60) + (parseInt(a[2]) / 100);
                 }
-                var minutes = seconds / 60;
                 $("#contentDuration").val(minutes.toFixed(2));
             }
         }

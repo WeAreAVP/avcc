@@ -99,6 +99,7 @@ class Plans {
      * @var real
      *
      * @ORM\Column(name="plan_interval", type="string")
+     * @Assert\NotBlank(message="Plan Interval is required") 
      */
     private $planInterval;
 

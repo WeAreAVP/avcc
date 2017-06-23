@@ -246,7 +246,7 @@ class ImportReport extends ContainerAware {
                             $rows[$row - 1]['title'] = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
                             $rows[$row - 1]['description'] = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
                             $rows[$row - 1]['commercial'] = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
-                            $rows[$row - 1]['contentDuration'] = $worksheet->getCellByColumnAndRow(11, $row)->getValue();
+                            $rows[$row - 1]['contentDuration'] = $worksheet->getCellByColumnAndRow(11, $row)->getFormattedValue();
                             $rows[$row - 1]['mediaDuration'] = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
                             $rows[$row - 1]['creationDate'] = $worksheet->getCellByColumnAndRow(13, $row)->getValue();
                             $rows[$row - 1]['contentDate'] = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
@@ -288,7 +288,7 @@ class ImportReport extends ContainerAware {
                             $rows[$row - 1]['relatedMaterial'] = $worksheet->getCellByColumnAndRow(43, $row)->getValue();
                             $rows[$row - 1]['conditionNote'] = $worksheet->getCellByColumnAndRow(44, $row)->getValue();
                             $rows[$row - 1]['generalNote'] = $worksheet->getCellByColumnAndRow(45, $row)->getValue();
-                            // here
+// here
                             $rows[$row - 1]['isReview'] = $worksheet->getCellByColumnAndRow(46, $row)->getValue();
                             $rows[$row - 1]['reformattingPriority'] = $worksheet->getCellByColumnAndRow(47, $row)->getValue();
                             $rows[$row - 1]['transcription'] = $worksheet->getCellByColumnAndRow(48, $row)->getValue();
@@ -368,8 +368,8 @@ class ImportReport extends ContainerAware {
                 if ($row['commercial']) {
                     $commercial = $em->getRepository('ApplicationFrontBundle:Commercial')->findOneBy(array('name' => $row['commercial']));
                     $record->setCommercial($commercial);
-                }
-                $record->setContentDuration($row['contentDuration']);
+                }                
+                $record->setContentDuration($this->convertTimeToMinutes($row['contentDuration']));
                 $record->setCreationDate($row['creationDate']);
                 $record->setContentDate($row['contentDate']);
                 if ($row['reelDiameter']) {
@@ -598,6 +598,28 @@ class ImportReport extends ContainerAware {
         } else {
             return 'file not found';
         }
+    }
+
+    private function convertTimeToMinutes($hms) {
+        if ($hms != "") {
+            $a = explode(":", $hms);
+            if (count($a) > 1) {
+                if (count($a) == 2 && (int) $a[1] == 60) {
+                    $seconds = ((int) $a[0] * 60) + (int) $a[1];
+                    $minutes = $seconds / 60;
+                } else if (count($a) == 2) {
+                    $minutes = (int) $a[0] + ((int) $a[1] / 100);
+                } else if (count($a) == 3 && (int) $a[2] == 60) {
+                    $seconds = ((int) $a[0] * 60 * 60) + ((int) $a[1] * 60) + (int) $a[2];
+                    $minutes = $seconds / 60;
+                } else {
+                    $seconds = ((int) $a[0] * 60 * 60) + ((int) $a[1] * 60);
+                    $minutes = ($seconds / 60) + ((int) $a[2] / 100);
+                }
+                return $minutes;
+            }
+        }
+        return $hms;
     }
 
 }

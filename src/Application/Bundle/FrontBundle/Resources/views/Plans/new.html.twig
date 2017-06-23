@@ -26,6 +26,13 @@
                     <span class="has-error text-danger" for="{{ form.planId.vars.id }}">{{ errorItem.message }}</span>
                 {% endfor %}
             </div>
+            <label>Plan Interval</label>
+            <div class="input-control text" data-role="input-control">
+                {{ form_widget(form.planInterval, {attr: {class:'size4'} }) }}
+                {% for errorItem in form.planInterval.vars.errors %} 
+                    <span class="has-error text-danger" for="{{ form.planInterval.vars.id }}">{{ errorItem.message }}</span>
+                {% endfor %}
+            </div>
             <label>Total Records</label>
             <div class="input-control select" data-role="input-control">
                 {{ form_widget(form.records, {attr: {class:'size4'} }) }}
