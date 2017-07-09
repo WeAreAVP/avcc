@@ -357,6 +357,11 @@ class DefaultFields {
             if ($now < date("Y-m-d", $may)) {
                 return false;
             }
+        } else if ((int) $id == 258) {
+            $may = strtotime("1st July 2018");
+            if ($now < date("Y-m-d", $may)) {
+                return false;
+            }
         }
         return true;
     }
