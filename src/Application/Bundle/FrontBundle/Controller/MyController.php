@@ -35,21 +35,20 @@ class MyController extends Controller {
                     $session->set('termsStatus', 0);
                 }
             }
-            $paidOrg = $fieldsObj->paidOrganizations($orgId);
+            $paidOrg = $fieldsObj->paidOrganizations($orgId, $em);
             if ($paidOrg && $this->container->getParameter("enable_stripe")) {
                 $free = 2500;
                 $freePlan = $em->getRepository('ApplicationFrontBundle:Plans')->findOneBy(array("amount" => 0));
                 if (!empty($freePlan)) {
                     $free = $freePlan->getRecords();
-                }
-
+                } 
                 $organization = $em->getRepository('ApplicationFrontBundle:Organizations')->find($orgId);
                 $creator = $organization->getUsersCreated();
                 $customerId = $creator->getStripeCustomerId();
                 $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($orgId);
                 $counter = $org_records['total'];
                 if (($counter > $free && ($organization->getIsPaid() == 0 || ($customerId == NULL || $customerId == ""))) || $organization->getCancelSubscription() == 1) {
-                    $session->set('limitExceed', 0);
+                    $session->set('limitExceed', 0); 
                 }
             }
         }

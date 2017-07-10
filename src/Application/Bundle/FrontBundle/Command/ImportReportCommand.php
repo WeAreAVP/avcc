@@ -23,7 +23,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Application\Bundle\FrontBundle\Helper\EmailHelper;
 use Application\Bundle\FrontBundle\Helper\DefaultFields;
 
-class ImportReportCommand extends ContainerAwareCommand { 
+class ImportReportCommand extends ContainerAwareCommand {
 
     protected function configure() {
         $this
@@ -54,13 +54,13 @@ class ImportReportCommand extends ContainerAwareCommand {
                 if ($insertType != 0) {
                     $existingRows = (int) $entity->getExistingRecords();
                     $rows = $rows - $existingRows;
-                } 
+                }
                 $_import = true;
                 $fieldsObj = new DefaultFields();
                 if ($organization && $this->getContainer()->getParameter("enable_stripe")) {
-                    $paidOrg = $fieldsObj->paidOrganizations($organization->getId());
-                    if ($paidOrg) {
-                        $plan_limit = 2500;
+                    $paidOrg = $fieldsObj->paidOrganizations($organization->getId(), $em);
+                    if ($paidOrg || is_array($paidOrg)) {
+                        $plan_limit = 2500; 
                         $plan_id = "";
                         $org_records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($entity->getOrganizationId());
                         $counter = count($org_records) + $rows;

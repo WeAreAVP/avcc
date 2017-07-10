@@ -343,7 +343,7 @@ class DefaultFields {
         return $tooltip;
     }
 
-    public function paidOrganizations($id) {
+    public function paidOrganizations($id, $em = null) {
         $now = date("Y-m-d");
         if ((int) $id == 239) {
             return false;
@@ -360,7 +360,15 @@ class DefaultFields {
         } else if ((int) $id == 258) {
             $may = strtotime("1st July 2018");
             if ($now < date("Y-m-d", $may)) {
-                return false;
+                return array("plan" => "avcc-2500-7500-annual");
+            } else {
+                $organization = $em->getRepository('ApplicationFrontBundle:Organizations')->find((int) $id);
+                $creator = $organization->getUsersCreated();
+                if (in_array("ROLE_ADMIN", $creator->getRoles())) {
+                    $creator->setStripePlanId("");
+                }
+                $em->persist($creator);
+                $em->flush($creator);
             }
         }
         return true;

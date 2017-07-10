@@ -54,7 +54,7 @@
             <dl class="horizontal">
                 <dt>Credit Card</dt>
                 <dd>
-                    {% if entities.plan != "" %}
+                    {% if entities.plan != "" and entities.card != "" %} 
                         Card No: {{ entities.card.last4 }}<br>
                         Expiry Date: {{ entities.card.exp_month }}/{{ entities.card.exp_year }}<br/>
                         {% if(upgrade) %}
@@ -119,7 +119,7 @@
                             <br>
                             <label>Card Number</label>
                             <div class="input-control text" data-role="input-control">
-                                <input type="text" size="20" data-stripe="number" class="size4">{% if entities.plan != "" %} <span>({{ entities.card.last4 }})</span> {% endif %}
+                                <input type="text" size="20" data-stripe="number" class="size4">{% if entities.plan != "" and entities.card != "" %} <span>({{ entities.card.last4 }})</span> {% endif %}
                             </div>
 
                             <label>Expiration (MM/YY)</label>

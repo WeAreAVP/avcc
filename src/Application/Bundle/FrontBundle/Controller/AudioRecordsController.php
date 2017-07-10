@@ -97,8 +97,8 @@ class AudioRecordsController extends MyController {
                 $this->get('session')->set('project_id', $entity->getRecord()->getProject()->getId());
 
                 if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations() && ($form->get('save_and_duplicate')->isClicked() || $form->get('save_and_new')->isClicked()) && $this->container->getParameter("enable_stripe")) {
-                    $paidOrg = $fieldsObj->paidOrganizations($this->getUser()->getOrganizations()->getId());
-                    if ($paidOrg) {
+                    $paidOrg = $fieldsObj->paidOrganizations($this->getUser()->getOrganizations()->getId(), $em);
+                    if ($paidOrg || is_array($paidOrg)) {
                         $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($this->getUser()->getOrganizations()->getId());
                         $counter = $org_records['total'];
                         $plan_limit = 2500;
@@ -106,7 +106,7 @@ class AudioRecordsController extends MyController {
                         $creator = $this->getUser()->getOrganizations()->getUsersCreated();
                         if (in_array("ROLE_ADMIN", $creator->getRoles())) {
                             $plan_id = $creator->getStripePlanId();
-                        }
+                        } 
                         if ($plan_id != NULL && $plan_id != "") {
                             $plan = $em->getRepository('ApplicationFrontBundle:Plans')->findBy(array("planId" => $plan_id));
                             $plan_limit = $plan[0]->getRecords();
@@ -430,8 +430,8 @@ class AudioRecordsController extends MyController {
                 $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 1);
                 $sphinxSearch->replace();
                 if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations() && ($editForm->get('save_and_duplicate')->isClicked() || $editForm->get('save_and_new')->isClicked()) && $this->container->getParameter("enable_stripe")) {
-                    $paidOrg = $fieldsObj->paidOrganizations($this->getUser()->getOrganizations()->getId());
-                    if ($paidOrg) {
+                    $paidOrg = $fieldsObj->paidOrganizations($this->getUser()->getOrganizations()->getId(), $em);
+                    if ($paidOrg || is_array($paidOrg)) {
                         $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($this->getUser()->getOrganizations()->getId());
                         $counter = $org_records['total'];
                         $plan_limit = 2500;
@@ -743,8 +743,8 @@ class AudioRecordsController extends MyController {
         }
         $em = $this->getDoctrine()->getManager();
         if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations() && $this->container->getParameter("enable_stripe")) {
-            $paidOrg = $fieldsObj->paidOrganizations($this->getUser()->getOrganizations()->getId());
-            if ($paidOrg) {
+            $paidOrg = $fieldsObj->paidOrganizations($this->getUser()->getOrganizations()->getId(), $em);
+            if ($paidOrg || is_array($paidOrg)) {
                 $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($this->getUser()->getOrganizations()->getId());
                 $counter = $org_records['total'];
                 $plan_limit = 2500;
@@ -757,7 +757,7 @@ class AudioRecordsController extends MyController {
                     $plan = $em->getRepository('ApplicationFrontBundle:Plans')->findBy(array("planId" => $plan_id));
                     $plan_limit = $plan[0]->getRecords();
                 }
-                if ($counter == $plan_limit) {
+                if ($counter >= $plan_limit) {
                     return $this->redirect($this->generateUrl('record_list_withdialog', array('dialog' => 1)));
                 }
             }

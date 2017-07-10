@@ -87,8 +87,8 @@ class VideoRecordsController extends MyController {
                 $sphinxSearch = new SphinxSearch($em, $sphinxInfo, $entity->getRecord()->getId(), 3);
                 $sphinxSearch->insert();
                 if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations() && ($form->get('save_and_duplicate')->isClicked() || $form->get('save_and_new')->isClicked()) && $this->container->getParameter("enable_stripe")) {
-                    $paidOrg = $fieldsObj->paidOrganizations($this->getUser()->getOrganizations()->getId());
-                    if ($paidOrg) {
+                    $paidOrg = $fieldsObj->paidOrganizations($this->getUser()->getOrganizations()->getId(), $em);
+                    if ($paidOrg || is_array($paidOrg)) {
                         $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($this->getUser()->getOrganizations()->getId());
                         $counter = $org_records['total'];
                         $plan_limit = 2500;
@@ -375,8 +375,8 @@ class VideoRecordsController extends MyController {
                 $sphinxSearch = new SphinxSearch($em, $sphinxInfo, $entity->getRecord()->getId(), 3);
                 $sphinxSearch->replace();
                 if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations() && ($editForm->get('save_and_duplicate')->isClicked() || $editForm->get('save_and_new')->isClicked()) && $this->container->getParameter("enable_stripe")) {
-                    $paidOrg = $fieldsObj->paidOrganizations($this->getUser()->getOrganizations()->getId());
-                    if ($paidOrg) {
+                    $paidOrg = $fieldsObj->paidOrganizations($this->getUser()->getOrganizations()->getId(), $em);
+                    if ($paidOrg || is_array($paidOrg)) {
                         $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($this->getUser()->getOrganizations()->getId());
                         $counter = $org_records['total'];
                         $plan_limit = 2500;
