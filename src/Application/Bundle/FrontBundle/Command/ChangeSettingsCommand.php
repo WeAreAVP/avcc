@@ -89,6 +89,33 @@ class ChangeSettingsCommand extends ContainerAwareCommand {
                     }
                 }
             }
+        } else if ($id == 3) {
+            foreach ($entities as $entity) {
+                $output->writeln("Updateing project Id: " . $entity->getId());
+                $dbSettings = $entity->getViewSetting();
+                if ($dbSettings != NULL && $dbSettings != "") {
+                    $settings = json_decode($dbSettings, true);
+                    $new_settings = array();
+                    
+                    foreach ($settings as $key => $setting) {
+                        $found = false;
+                        foreach ($setting as $field) {
+                            if ($found && ($field['title'] == "Collection Classification" || $field['title'] == "Parent Collection")) {
+                                continue;
+                            }
+                            if ($field['title'] == "Collection Classification" || $field['title'] == "Parent Collection") {
+                                $found = true;
+                            }
+                            $new_settings[$key][] = $field;
+                        }
+                    }
+                    if (!empty($new_settings)) {
+                        $entity->setViewSetting(json_encode($new_settings));
+                        $em->persist($entity);
+                        $em->flush($entity);
+                    }
+                }
+            }
         }
         $output->writeln("Done all changes");
         exit;
