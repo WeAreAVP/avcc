@@ -31,24 +31,26 @@ class PhotoUploader {
 
     public function upload($files, $recordID) {
         foreach ($files as $key => $file) {
-            $imageRec = new RecordImages();
+            if ($file != NULL) {
+                $imageRec = new RecordImages();
 // Check if the file's mime type is in the list of allowed mime types.
 //            echo $file->getClientMimeType();exit;
-            if (!in_array($file->getClientMimeType(), self::$allowedMimeTypes)) {
-                throw new \InvalidArgumentException(sprintf('Files of type %s are not allowed.', $file->getClientMimeType()));
-            }
+                if (!in_array($file->getClientMimeType(), self::$allowedMimeTypes)) {
+                    throw new \InvalidArgumentException(sprintf('Files of type %s are not allowed.', $file->getClientMimeType()));
+                }
 // Generate a unique filename based on the date and add file extension of the uploaded file
 //            $file->get
-            $filename = sprintf('%s/%s_%s_%s', $recordID, $recordID, strtotime("now"), $file->getClientOriginalName());
+                $filename = sprintf('%s/%s_%s_%s', $recordID, $recordID, strtotime("now"), $file->getClientOriginalName());
 
-            $adapter = $this->filesystem->getAdapter();
-            $adapter->setMetadata($filename, array('contentType' => $file->getClientMimeType()));
-            $adapter->write($filename, file_get_contents($file->getPathname()));
-            $imageRec->setAwsPath($this->container->getParameter("amazon_s3_base_url") . $filename);
-            $imageRec->setFilename($filename);
-            $imageRec->setRecordId($recordID);
-            $this->entityManager->persist($imageRec);
-            $this->entityManager->flush($imageRec);
+                $adapter = $this->filesystem->getAdapter();
+                $adapter->setMetadata($filename, array('contentType' => $file->getClientMimeType()));
+                $adapter->write($filename, file_get_contents($file->getPathname()));
+                $imageRec->setAwsPath($this->container->getParameter("amazon_s3_base_url") . $filename);
+                $imageRec->setFilename($filename);
+                $imageRec->setRecordId($recordID);
+                $this->entityManager->persist($imageRec);
+                $this->entityManager->flush($imageRec);
+            }
         }
         $this->entityManager->flush();
         return "";

@@ -121,13 +121,14 @@ class VideoRecordsController extends MyController {
                 
             }
         }
-
+        $allowed_upload = "";
         if ($this->get('session')->get('vedioProjectId')) {
             $projectId = $this->get('session')->get('vedioProjectId');
         } else if ($entity->getRecord()->getProject()->getId()) {
             $projectId = $entity->getRecord()->getProject()->getId();
         }
         if ($projectId) {
+            $allowed_upload = true;
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project->getViewSetting() != null) {
                 $defSettings = $fieldsObj->getDefaultOrder();
@@ -135,6 +136,12 @@ class VideoRecordsController extends MyController {
                 $userViewSettings = $fieldsObj->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
             } else {
                 $userViewSettings = $fieldsObj->getDefaultOrder();
+            }
+            $organization = $em->getRepository('ApplicationFrontBundle:Organizations')->find($project->getOrganization()->getId());
+            $creator = $organization->getUsersCreated();
+            $customerId = $creator->getStripeCustomerId();
+            if ($organization->getIsPaid() != 1 || $customerId == "" || $customerId == null) {
+                $allowed_upload = false;
             }
         } else {
             $userViewSettings = $fieldsObj->getDefaultOrder();
@@ -149,7 +156,8 @@ class VideoRecordsController extends MyController {
             'fieldSettings' => $userViewSettings,
             'allErrors' => $allErrors,
             'type' => $data['mediaType']->getName(),
-            'tooltip' => $tooltip
+            'tooltip' => $tooltip,
+            'allowed_upload' => $allowed_upload
         );
     }
 

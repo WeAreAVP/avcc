@@ -90,7 +90,7 @@ class FilmRecordsController extends MyController {
                 $sphinxSearch->insert();
                 if (!in_array("ROLE_SUPER_ADMIN", $this->getUser()->getRoles()) && $this->getUser()->getOrganizations() && ($form->get('save_and_duplicate')->isClicked() || $form->get('save_and_new')->isClicked()) && $this->container->getParameter("enable_stripe")) {
                     $paidOrg = $fieldsObj->paidOrganizations($this->getUser()->getOrganizations()->getId(), $em);
-                    if ($paidOrg || is_array($paidOrg)) { 
+                    if ($paidOrg || is_array($paidOrg)) {
                         $org_records = $em->getRepository('ApplicationFrontBundle:Records')->countOrganizationRecords($this->getUser()->getOrganizations()->getId());
                         $counter = $org_records['total'];
                         $plan_limit = 2500;
@@ -122,13 +122,14 @@ class FilmRecordsController extends MyController {
                 
             }
         }
-
+        $allowed_upload = "";
         if ($this->get('session')->get('filmProjectId')) {
             $projectId = $this->get('session')->get('filmProjectId');
         } else if ($entity->getRecord()->getProject()->getId()) {
             $projectId = $entity->getRecord()->getProject()->getId();
         }
         if ($projectId) {
+            $allowed_upload = true;
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project->getViewSetting() != null) {
                 $defSettings = $fieldsObj->getDefaultOrder();
@@ -136,6 +137,12 @@ class FilmRecordsController extends MyController {
                 $userViewSettings = $fieldsObj->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
             } else {
                 $userViewSettings = $fieldsObj->getDefaultOrder();
+            }
+            $organization = $em->getRepository('ApplicationFrontBundle:Organizations')->find($project->getOrganization()->getId());
+            $creator = $organization->getUsersCreated();
+            $customerId = $creator->getStripeCustomerId();
+            if ($organization->getIsPaid() != 1 || $customerId == "" || $customerId == null) {
+                $allowed_upload = false;
             }
         } else {
             $userViewSettings = $fieldsObj->getDefaultOrder();
@@ -149,7 +156,8 @@ class FilmRecordsController extends MyController {
             'fieldSettings' => $userViewSettings,
             'type' => $data['mediaType']->getName(),
             'allErrors' => $allErrors,
-            'tooltip' => $tooltip
+            'tooltip' => $tooltip,
+            'allowed_upload' => $allowed_upload
         );
     }
 

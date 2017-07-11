@@ -106,7 +106,7 @@ class AudioRecordsController extends MyController {
                         $creator = $this->getUser()->getOrganizations()->getUsersCreated();
                         if (in_array("ROLE_ADMIN", $creator->getRoles())) {
                             $plan_id = $creator->getStripePlanId();
-                        } 
+                        }
                         if ($plan_id != NULL && $plan_id != "") {
                             $plan = $em->getRepository('ApplicationFrontBundle:Plans')->findBy(array("planId" => $plan_id));
                             $plan_limit = $plan[0]->getRecords();
@@ -133,7 +133,9 @@ class AudioRecordsController extends MyController {
         } else if ($entity->getRecord()->getProject()->getId()) {
             $projectId = $entity->getRecord()->getProject()->getId();
         }
+        $allowed_upload = "";
         if ($projectId) {
+            $allowed_upload = true;
             $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('id' => $projectId));
             if ($project->getViewSetting() != null) {
                 $defSettings = $fieldsObj->getDefaultOrder();
@@ -141,6 +143,12 @@ class AudioRecordsController extends MyController {
                 $userViewSettings = $fieldsObj->fields_cmp(json_decode($defSettings, true), json_decode($dbSettings, true));
             } else {
                 $userViewSettings = $fieldsObj->getDefaultOrder();
+            }
+            $organization = $em->getRepository('ApplicationFrontBundle:Organizations')->find($project->getOrganization()->getId());
+            $creator = $organization->getUsersCreated();
+            $customerId = $creator->getStripeCustomerId();
+            if ($organization->getIsPaid() != 1 || $customerId == "" || $customerId == null) {
+                $allowed_upload = false;
             }
         } else {
             $userViewSettings = $fieldsObj->getDefaultOrder();
@@ -156,7 +164,8 @@ class AudioRecordsController extends MyController {
             'type' => $data['mediaType']->getName(),
             'fieldSettings' => $userViewSettings,
             'allErrors' => $allErrors,
-            'tooltip' => $tooltip
+            'tooltip' => $tooltip,
+            'allowed_upload' => $allowed_upload
         );
     }
 
