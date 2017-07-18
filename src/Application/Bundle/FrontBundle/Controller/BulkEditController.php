@@ -142,6 +142,9 @@ class BulkEditController extends Controller {
      */
     public function bulkEditAction(Request $request) {
         if ($request->isXmlHttpRequest()) {
+            @set_time_limit(0);
+            @ini_set("memory_limit", -1); # 1GB
+            @ini_set("max_execution_time", 0); # unlimited
             $posted = $request->request->all();
             $session = $this->getRequest()->getSession();
             $recordIds = $posted['records'];
@@ -252,7 +255,8 @@ class BulkEditController extends Controller {
                         }
                     }
                     if ($update) {
-                        $em->flush();
+                        $em->persist($record);
+                        $em->flush($record);
                         $shpinxInfo = $this->getSphinxInfo();
                         $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $record->getId(), $record->getMediaType()->getId());
                         $sphinxSearch->replace();
