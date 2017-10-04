@@ -42,7 +42,8 @@ class ImportReport extends ContainerAware {
             $fields = new DefaultFields();
             $em = $this->container->get('doctrine')->getEntityManager();
             $vocabularies = $fields->getAllVocabularies($em);
-            $projects = $em->getRepository('ApplicationFrontBundle:Projects')->getAllAsArray();
+            $projects = $em->getRepository('ApplicationFrontBundle:Projects')->getAllAsArray($organizationId);
+           
             $requiredMissing = false;
             $unique = array();
             foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
@@ -218,7 +219,7 @@ class ImportReport extends ContainerAware {
         }
     }
 
-    public function getRecordsFromFile($fileName, $user, $insertType = false) {
+    public function getRecordsFromFile($fileName, $user, $insertType = false, $org_id = false) {
         $fileCompletePath = $this->container->getParameter('webUrl') . 'import/' . date('Y') . '/' . date('m') . '/' . $fileName;
 //        $fileCompletePath = '/Applications/XAMPP/xamppfiles/htdocs/avcc/web/' . $fileName;
         if (file_exists($fileCompletePath)) {
@@ -305,7 +306,7 @@ class ImportReport extends ContainerAware {
             if ($rows) {
                 $validation = $this->validateFormat($em, array_unique($formats));
                 if (empty($validation)) {
-                    return $this->importRecords($rows, $user, $em, $insertType);
+                    return $this->importRecords($rows, $user, $em, $insertType, $org_id);
                 } else {
                     return array('errors' => $validation);
                 }
@@ -328,12 +329,17 @@ class ImportReport extends ContainerAware {
         return $errors;
     }
 
-    public function importRecords($rows, $user, $em, $insertType = false) {
+    public function importRecords($rows, $user, $em, $insertType = false, $org_id = false) {
         $countt = 0;
         foreach ($rows as $row) {
             if (!empty($row['uniqueId'])) {
-                $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('name' => $row['project']));
-
+                $project = array();
+                if ($org_id) {
+                    $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('name' => $row['project'], 'organization' => $org_id));
+                } else {
+                    $project = $em->getRepository('ApplicationFrontBundle:Projects')->findOneBy(array('name' => $row['project']));
+                }
+                
                 $result = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationUniqueRecords($project->getOrganization()->getId(), $row['uniqueId'], 0);
 
                 if ($insertType == 1) {
@@ -368,7 +374,7 @@ class ImportReport extends ContainerAware {
                 if ($row['commercial']) {
                     $commercial = $em->getRepository('ApplicationFrontBundle:Commercial')->findOneBy(array('name' => $row['commercial']));
                     $record->setCommercial($commercial);
-                }                
+                }
                 $record->setContentDuration($this->convertTimeToMinutes($row['contentDuration']));
                 $record->setCreationDate($row['creationDate']);
                 $record->setContentDate($row['contentDate']);

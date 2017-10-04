@@ -24,10 +24,18 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProjectsRepository extends EntityRepository {
 
-    public function getAllAsArray() {
-        $names = $this->getEntityManager()->createQuery('SELECT projects.name'
-                        . ' from ApplicationFrontBundle:Projects projects'
-                )->getScalarResult();
+    public function getAllAsArray($organizationId = false) {
+        if ($organizationId) {            
+            $query = $this->getEntityManager()->createQuery('SELECT projects.name'
+                            . ' from ApplicationFrontBundle:Projects projects WHERE projects.organization = :pid'
+                    );
+            $query->setParameter('pid', $organizationId);
+            $names = $query->getScalarResult();
+        } else {
+            $names = $this->getEntityManager()->createQuery('SELECT projects.name'
+                            . ' from ApplicationFrontBundle:Projects projects'
+                    )->getScalarResult();
+        }
         $p = array_map("current", $names);
 
         return $p;
@@ -40,6 +48,6 @@ class ProjectsRepository extends EntityRepository {
                 . "WHERE projects.id =  :pid");
         $query->setParameter('pid', $id);
         return $query->getSingleResult();
-    } 
+    }
 
 }

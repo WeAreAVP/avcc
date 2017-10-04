@@ -40,12 +40,14 @@ class ImportReportCommand extends ContainerAwareCommand {
         @ini_set("max_execution_time", 0); # unlimited
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $id = $input->getArgument('id');
+       
         if ($id) {
             $entity = $em->getRepository('ApplicationFrontBundle:ImportExport')->findOneBy(array('id' => $id, 'type' => 'import', 'status' => 0));
             if ($entity) {
 
                 $fileName = $entity->getFileName();
                 $user = $entity->getUser();
+                
                 $organization = $em->getRepository('ApplicationFrontBundle:Organizations')->find($entity->getOrganizationId());
                 $insertType = $entity->getInsertOption();
                 $import = new ImportReport($this->getContainer());
@@ -86,7 +88,7 @@ class ImportReportCommand extends ContainerAwareCommand {
                         $baseUrl = $this->getContainer()->getParameter('baseUrl');
                         $templateParameters = array('user' => $entity->getUser(), 'fieldErrors' => $validateFields);
                     } else {
-                        $numberOfRecords = $import->getRecordsFromFile($fileName, $user, $insertType);
+                        $numberOfRecords = $import->getRecordsFromFile($fileName, $user, $insertType, $entity->getOrganizationId());
 
                         if (isset($numberOfRecords['errors'])) {
                             $templateParameters = array('user' => $entity->getUser(), 'errors' => $numberOfRecords['errors']);
