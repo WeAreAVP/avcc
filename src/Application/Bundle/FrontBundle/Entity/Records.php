@@ -549,7 +549,7 @@ class Records {
      *
      * @return \Application\Bundle\FrontBundle\Entity\Records
      */
-    public function setParentCollection(ParentCollection $ParentCollection) {
+    public function setParentCollection(ParentCollection $ParentCollection = null) {
         $this->parentCollection = $ParentCollection;
 
         return $this;
