@@ -25,8 +25,8 @@ This software was created by AVPreserve (www.avpreserve.com).
 
 List of contributors 
 
- * Nouman Tayyab nouman@avpreserve.com
+ * Nouman Tayyab nouman@weareavp.com
  * Rubab Rafique rubab@avpreserve.com
- * Rimsha Khalid rimsha@avpreserve.com
+ * Rimsha Khalid rimsha@weareavp.com
 
 
