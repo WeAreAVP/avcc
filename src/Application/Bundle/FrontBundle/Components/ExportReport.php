@@ -80,7 +80,7 @@ class ExportReport extends ContainerAware {
 
     public function generateReport($records) {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
-        $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
+        $phpExcelObject->getProperties()->setCreator("AVCC - WeAreAVP")
                 ->setTitle("AVCC - Report")
                 ->setSubject("Report for all formats")
                 ->setDescription("Report for all formats");
@@ -100,7 +100,7 @@ class ExportReport extends ContainerAware {
 
     private function generateProjectlevelReport($projects) {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
-        $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
+        $phpExcelObject->getProperties()->setCreator("AVCC - WeAreAVP")
                 ->setTitle("AVCC - Report")
                 ->setSubject("Filesize Project Level Digitized Report")
                 ->setDescription("Filesize Project Level Digitized Report");
@@ -223,7 +223,7 @@ class ExportReport extends ContainerAware {
 
     public function initReport() {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
-        $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
+        $phpExcelObject->getProperties()->setCreator("AVCC - WeAreAVP")
                 ->setTitle("AVCC - Report")
                 ->setSubject("Report for all formats")
                 ->setDescription("Report for all formats");
@@ -714,7 +714,7 @@ class ExportReport extends ContainerAware {
 
     public function generatePrioritizationReport($records) {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
-        $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
+        $phpExcelObject->getProperties()->setCreator("AVCC - WeAreAVP")
                 ->setTitle("AVCC - Report")
                 ->setSubject("Prioritization Report")
                 ->setDescription("Prioritization Report");
@@ -820,7 +820,7 @@ class ExportReport extends ContainerAware {
 
     public function initMergeReport($merge_header = null) {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
-        $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
+        $phpExcelObject->getProperties()->setCreator("AVCC - WeAreAVP")
                 ->setTitle("AVCC - Report")
                 ->setSubject("Report for all formats")
                 ->setDescription("Report for all formats");
@@ -864,7 +864,7 @@ class ExportReport extends ContainerAware {
 
     public function generateFileSizeAssetsReport($allData, $type) {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
-        $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
+        $phpExcelObject->getProperties()->setCreator("AVCC - WeAreAVP")
                 ->setTitle("AVCC - Report")
                 ->setSubject("File Size Calculator for All Assets")
                 ->setDescription("File Size Calculator for All Assets");
@@ -1202,7 +1202,7 @@ class ExportReport extends ContainerAware {
 
     public function generateLinearFootReport($records) {
         $phpExcelObject = $this->container->get('phpexcel')->createPHPExcelObject();
-        $phpExcelObject->getProperties()->setCreator("AVCC - AVPreserve")
+        $phpExcelObject->getProperties()->setCreator("AVCC - WeAreAVP")
                 ->setTitle("AVCC - Report")
                 ->setSubject("Linear Foot Calculator")
                 ->setDescription("Linear Foot Calculator");

@@ -8,7 +8,7 @@
         <meta name="author" content="">
         <link rel="icon" type="image/x-icon" href="<?php echo $view['assets']->getUrl('favicon.png') ?>" />
 
-        <title><?php $view['slots']->output('title', 'AVCC - AVPreserve') ?></title>
+        <title><?php $view['slots']->output('title', 'AVCC - WeAreAVP') ?></title>
         <script src="<?php echo $view['assets']->getUrl('js/jquery.min.js') ?>"></script>
 
         <script src="<?php echo $view['assets']->getUrl('js/tinymce/tinymce.min.js') ?>"></script>
