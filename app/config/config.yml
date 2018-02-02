@@ -92,7 +92,7 @@ fos_user:
             type: application_user_profile
     from_email:
         address:        "%mail_from_email%"
-        sender_name:    AVCC AVPreserve
+        sender_name:    AVCC WeAreAVP
 
 doctrine_migrations:
     dir_name: %kernel.root_dir%/DoctrineMigrations

@@ -69,7 +69,7 @@ class DefaultController extends Controller {
         $check = 0;
         $user = $this->container->get('security.context')->getToken()->getUser();
         $showTerms = false;
-        $contact_person = "avcc@avpreserve.com";
+        $contact_person = "avcc@weareavp.com";
         $notification = "";
         $terms = "";
         $cancelBySAdmin = false;
@@ -122,7 +122,7 @@ class DefaultController extends Controller {
                         $contact_person = "";
                     }
                     if ($this->getUser()->getOrganizations()->getCancelSubscription() == 1) {
-                        $contact_person = "avcc@avpreserve.com";
+                        $contact_person = "avcc@weareavp.com";
                         $cancelBySAdmin = true;
                     }
                 } else if ($counter == $free && $organization->getIsPaid() == 0) {
