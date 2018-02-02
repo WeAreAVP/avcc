@@ -21,12 +21,11 @@ Documentation
 Credits
 =======
 
-This software was created by AVPreserve (www.avpreserve.com).
+This software was created by WeAreAVP (www.weareavp.com).
 
 List of contributors 
 
  * Nouman Tayyab nouman@weareavp.com
- * Rubab Rafique rubab@avpreserve.com
  * Rimsha Khalid rimsha@weareavp.com
 
 
