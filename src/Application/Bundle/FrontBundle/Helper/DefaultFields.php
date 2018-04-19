@@ -360,7 +360,7 @@ class DefaultFields {
         } else if ((int) $id == 258) {
             $may = strtotime("1st July 2018");
             if ($now < date("Y-m-d", $may)) {
-                return array("plan" => "avcc-2500-7500-annual");
+                return array("plan_id" => "avcc-2500-7500-annual");
             } else {
                 $organization = $em->getRepository('ApplicationFrontBundle:Organizations')->find((int) $id);
                 $creator = $organization->getUsersCreated();
