@@ -101,7 +101,7 @@ class DefaultController extends Controller {
             }
             $fieldsObj = new DefaultFields();
             $paidOrg = $fieldsObj->paidOrganizations($orgId, $em);
-            if ($paidOrg  && $this->container->getParameter("enable_stripe")) {
+            if ($paidOrg && $this->container->getParameter("enable_stripe")) {
                 $free = 2500;
                 $freePlan = $em->getRepository('ApplicationFrontBundle:Plans')->findOneBy(array("amount" => 0));
                 if (!empty($freePlan)) {
@@ -408,6 +408,22 @@ class DefaultController extends Controller {
         return $this->render('ApplicationFrontBundle:Default:show.html.twig', array(
                     'entities' => $entities,
                     'active' => $active
+                        )
+        );
+    }
+
+    /**
+     * show Privacy Policy
+     *
+     * @param Request $request
+     *
+     * @Route("/privacy-policy", name="privacy_policy")
+     * @Method("GET")
+     * @Template()
+     */
+    public function privacy_policy(Request $request) {
+        return $this->render('ApplicationFrontBundle:Default:privacy_policy.html.twig', array(
+                    
                         )
         );
     }
