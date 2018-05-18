@@ -421,7 +421,7 @@ class DefaultController extends Controller {
      * @Method("GET")
      * @Template()
      */
-    public function privacy_policy(Request $request) {
+    public function privacy_policyAction(Request $request) {
         return $this->render('ApplicationFrontBundle:Default:privacy_policy.html.twig', array(
                     
                         )
