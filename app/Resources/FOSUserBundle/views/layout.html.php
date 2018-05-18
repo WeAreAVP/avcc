@@ -19,7 +19,7 @@
 
         <!-- Bootstrap core CSS -->
         <?php $view['slots']->start('stylesheets') ?>
-        <!--<link href="<?php // echo $view['assets']->getUrl('lightgallery/css/lightgallery.min.css')   ?>" type="text/css" rel="stylesheet" />-->
+        <!--<link href="<?php // echo $view['assets']->getUrl('lightgallery/css/lightgallery.min.css')    ?>" type="text/css" rel="stylesheet" />-->
         <link href="<?php echo $view['assets']->getUrl('lightgallery/css/lightslider.css') ?>" type="text/css" rel="stylesheet" />
 
         <!--{#						<link href="{{ asset('css/bootstrap.css') }}" type="text/css" rel="stylesheet" />#}-->
@@ -27,14 +27,14 @@
         <link href="<?php echo $view['assets']->getUrl('css/metro-bootstrap-responsive.min.css') ?>" type="text/css" rel="stylesheet" />
         <link href="<?php echo $view['assets']->getUrl('css/iconFont.min.css') ?>" type="text/css" rel="stylesheet" />
         <link href="<?php echo $view['assets']->getUrl('css/chosen.css') ?>" type="text/css" rel="stylesheet" />
-        <!--<link href="<?php // echo $view['assets']->getUrl('css/bootstrap.css')             ?>" type="text/css" rel="stylesheet" />-->
+        <!--<link href="<?php // echo $view['assets']->getUrl('css/bootstrap.css')              ?>" type="text/css" rel="stylesheet" />-->
         <link href="<?php echo $view['assets']->getUrl('css/modal.css') ?>" type="text/css" rel="stylesheet" />
         <!-- Custom styles for this template -->
         <link href="<?php echo $view['assets']->getUrl('bundles/applicationfront/css/style.css') ?>" rel="stylesheet">
         <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('css/jquery.mCustomScrollbar.css') ?>" />
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" />
         <link rel="stylesheet" href="<?php echo $view['assets']->getUrl('css/jquery.iviewer.css') ?>" />
-     
+
         <link href="<?php echo $view['assets']->getUrl('css/basic.css') ?>" type="text/css" rel="stylesheet" />
 <!--        <link href="<?php echo $view['assets']->getUrl('css/basic_ie.css') ?>" type="text/css" rel="stylesheet" />-->
         <?php $view['slots']->stop() ?>
@@ -175,7 +175,7 @@
         <div class="container" id="container" style="margin-top:20px;margin-bottom:20px;">
             <?php if ($app->getUser() && $app->getUser()->getOrganizations()): ?>
                 <?php if ($app->getUser()->getOrganizations()->getIsPaid() == 0): ?>
-                                                                                                                    <!--<p>Want more than 2500 records? Upgrade now by contacting avcc@avpreserve.com</p>-->
+                                                                                                                            <!--<p>Want more than 2500 records? Upgrade now by contacting avcc@avpreserve.com</p>-->
                 <?php endif ?>
             <?php endif ?>
             <?php foreach ($app->getSession()->getFlashBag()->all() as $type => $messages): ?>
@@ -197,23 +197,23 @@
         <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/chosen.jquery.js') ?>"></script>
         <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/jquery.mCustomScrollbar.concat.min.js') ?>"></script>
         <script type="text/javascript" src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-         <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/jquery.iviewer.js') ?>"></script>
-       
+        <script type="text/javascript" src="<?php echo $view['assets']->getUrl('js/jquery.iviewer.js') ?>"></script>
+
         <?php if ($view->container->getParameter('ga_tracking')) { ?>
             <script>
-                    (function (i, s, o, g, r, a, m) {
-                        i['GoogleAnalyticsObject'] = r;
-                        i[r] = i[r] || function () {
-                            (i[r].q = i[r].q || []).push(arguments)
-                        }, i[r].l = 1 * new Date();
-                        a = s.createElement(o),
-                                m = s.getElementsByTagName(o)[0];
-                        a.async = 1;
-                        a.src = g;
-                        m.parentNode.insertBefore(a, m)
-                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-                    ga('create', '<?php echo $view->container->getParameter('ga_tracking'); ?>', 'auto');
-                    ga('send', 'pageview');
+                (function (i, s, o, g, r, a, m) {
+                    i['GoogleAnalyticsObject'] = r;
+                    i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+                    a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0];
+                    a.async = 1;
+                    a.src = g;
+                    m.parentNode.insertBefore(a, m)
+                })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+                ga('create', '<?php echo $view->container->getParameter('ga_tracking'); ?>', 'auto');
+                ga('send', 'pageview');
             </script>
         <?php } ?>
         <script type="text/javascript">
@@ -229,5 +229,7 @@
         <?php $view['slots']->stop() ?>
         <?php $view['slots']->output('javascripts') ?>
         <?php $view['slots']->output('view_javascripts') ?>
+        <script type="text/javascript" id="cookieinfo" src="//cookieinfoscript.com/js/cookieinfo.min.js" data-cookie="CookieInfoScript" data-text-align="center" data-linkmsg="Check our Privacy Policy." data-moreinfo="/privacy-policy" data-close-text="Got it!">
+        </script>
     </body>
 </html>
