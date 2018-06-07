@@ -287,10 +287,12 @@ class OrganizationsController extends MyController {
             $entity = $em->getRepository('ApplicationFrontBundle:Organizations')->find($id);
             if ($this->container->getParameter("enable_stripe")) {
                 $creator = $entity->getUsersCreated();
-                if (in_array("ROLE_ADMIN", $creator->getRoles())) {
-                    $cus_id = $creator->getStripeCustomerId();
-                    if ($cus_id != NULL && $cus_id != "") {
-                        $helper->deleteCustomer($cus_id);
+                if ($creator) {
+                    if (in_array("ROLE_ADMIN", $creator->getRoles())) {
+                        $cus_id = $creator->getStripeCustomerId();
+                        if ($cus_id != NULL && $cus_id != "") {
+                            $helper->deleteCustomer($cus_id);
+                        }
                     }
                 }
             }
