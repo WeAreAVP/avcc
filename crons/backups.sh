@@ -38,7 +38,7 @@ MSG="Starting cron at $DATE"
 echo $MSG >> $OUTPUT_FILE
 echo $CMD >> $OUTPUT_FILE
 
-$PHP_PATH ${BASEDIR}app/console avcc:backup-report >> $OUTPUT_FILE 2>&1 & echo $! > $PID_FULLPATH
+$PHP_PATH ${BASEDIR}app/console avcc:backup-report --env=prod >> $OUTPUT_FILE 2>&1 & echo $! > $PID_FULLPATH
 PID=`cat $PID_FULLPATH`
 echo "Started Cron [$PID]"
 echo "To view logs Use tail -f $OUTPUT_FILE"
