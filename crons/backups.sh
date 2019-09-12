@@ -31,7 +31,7 @@ if [ -n "$PID" ]  && [ -d $PIDD ]
 then
 echo "Already running ...."
 else
-CMD="$PHP_PATH ${BASEDIR}app/console avcc:backup-report > $OUTPUT_FILE 2>&1 & echo $! > $PID_FULLPATH"
+CMD="$PHP_PATH ${BASEDIR}app/console avcc:backup-report --env=prod > $OUTPUT_FILE 2>&1 & echo $! > $PID_FULLPATH"
 MSG="ENV [$ENVIRONMENT]"
 echo $MSG >> $OUTPUT_FILE
 MSG="Starting cron at $DATE"
