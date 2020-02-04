@@ -230,13 +230,15 @@ class SphinxSearch extends ContainerAware {
             } else if ($key == 'project_id') {
                 $new = array_map('intval', $value);
                 $sq->where('project_id', 'IN', $new);
-            } else {
-                if ($key == "format" && !is_array($value)) {
-                    $sq->where('format', "=", $value, false);
+            } else if ($key == 's_format' || $key == 'format') {
+                if (is_array($value)) {
+                    $sq->where('format', "IN", $value);
                 } else {
-                    $_value = (is_array($value)) ? '"' . implode('" | "', $value) . '"' : $value;
-                    $sq->match($key, $_value, true);
+                    $sq->where('format', "=", $value);
                 }
+            } else {
+                $_value = (is_array($value)) ? '"' . implode('" | "', $value) . '"' : $value;
+                $sq->match($key, $_value, true);
             }
         }
     }
@@ -316,7 +318,7 @@ class SphinxSearch extends ContainerAware {
                 ->orderBy($facetColumn, 'asc');
         $sq->limit(0, 1000);
 
-        return $sq->execute(); 
+        return $sq->execute();
     }
 
     /**
