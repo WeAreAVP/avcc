@@ -11,6 +11,7 @@
  * @copyright Audio Visual Preservation Solutions, Inc
  * @link     http://avcc.weareavp.com
  */
+
 namespace Application\Bundle\FrontBundle\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -23,11 +24,9 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Application\Bundle\FrontBundle\Helper\EmailHelper;
 use Application\Bundle\FrontBundle\Entity\UserSettings;
 
-class BackupCommand extends ContainerAwareCommand
-{
+class BackupCommand extends ContainerAwareCommand {
 
-    protected function configure()
-    {
+    protected function configure() {
         $this
                 ->setName('avcc:backup-report')
                 ->setDescription('backup of records')
@@ -36,48 +35,52 @@ class BackupCommand extends ContainerAwareCommand
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $em = $this->getContainer()->get('doctrine')->getEntityManager();
+    protected function execute(InputInterface $input, OutputInterface $output) {
+        $em = $this->getContainer()->get('doctrine')->getManager();
         $entity = $em->getRepository('ApplicationFrontBundle:UserSettings')->findBy(array('enableBackup' => 1));
         if ($entity) {
-            $completePath = '';
-            $notFound = '';
+
             foreach ($entity as $record) {
+                $completePath = '';
+                $notFound = '';
                 $backupEmails = $record->getBackupEmail();
                 $emailTo = $this->getEmailTo($backupEmails, $record);
+                $records = false;
+                $output->writeln("Running Record with ID: {$record->getId()}");
                 if ($record->getUser()->getOrganizations()) {
+                    $output->writeln("Organization ID: {$record->getUser()->getOrganizations()->getId()}");
                     $records = $em->getRepository('ApplicationFrontBundle:Records')->findOrganizationRecords($record->getUser()->getOrganizations()->getId());
-
-                    $export = new ExportReport($this->getContainer());
                     if ($records) {
+                        $output->writeln("Processing records for Organization ID: {$record->getUser()->getOrganizations()->getId()}");
+                        $export = new ExportReport($this->getContainer());
                         $phpExcelObject = $export->generateReport($records);
                         $completePath = $export->saveReport('csv', $phpExcelObject, 2);
                         $text = $completePath;
+                        $phpExcelObject = null;
                     } else {
-                        $notFound = 'Records not found.';
+                        $output->writeln("No Record found for Organization ID: {$record->getUser()->getOrganizations()->getId()}");
+                        $notFound = "Records not found for Organization {$record->getUser()->getOrganizations()->getName()}";
                     }
                     $baseUrl = $this->getContainer()->getParameter('baseUrl');
                     $templateParameters = array('user' => $record->getUser(), 'baseUrl' => $baseUrl, 'fileUrl' => $completePath, 'notFound' => $notFound);
 
                     $rendered = $this->getContainer()->get('templating')->render('ApplicationFrontBundle:Records:export.email.html.twig', $templateParameters);
                     $email = new EmailHelper($this->getContainer());
-                    $subject = 'Record Backup';
+                    $subject = 'AVCC - Record Backup';
                     foreach ($emailTo as $emailId) {
                         $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), trim($emailId));
                     }
                     $text = $rendered;
                 } else {
-                    $text = 'record not found';
+                    $output->writeln("No organization found for Record {$record->getId()}");
                 }
             }
         } else {
-            $text = 'Hello';
-        } $output->writeln($text);
+            $text = 'No backup settings availables.';
+        }
     }
 
-    public function getEmailTo($backupEmails, $record)
-    {
+    public function getEmailTo($backupEmails, $record) {
         $return = array();
         if (empty($backupEmails) || $backupEmails == NULL) {
             $return[] = $record->getUser()->getEmail();
