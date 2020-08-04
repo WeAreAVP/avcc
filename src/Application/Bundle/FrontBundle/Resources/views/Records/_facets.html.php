@@ -235,7 +235,20 @@
                             <?php } ?>
                         </div>
                         <div class="clearfix"></div>
-                    <?php } ?>                         
+                    <?php } ?>  
+                        <?php if (isset($facetData['accessLevel']) && $facetData['accessLevel'] != '') {
+                        ?>
+                        <div id="mediaType_main" class="chekBoxFacet">
+                            <div class="filter-fileds"><b>Access Level</b></div>
+                            <?php
+                            foreach ($facetData['accessLevel'] as $value) {
+                                $id = time() . rand(0, 1000);
+                                ?>
+                                <div class="btn-img" id="facet_media_<?php echo $id; ?>" ><span class="search_keys"><?php echo html_entity_decode($value); ?></span><i class="icon-cancel delFilter" style="float: right;cursor: pointer;" data-elementId="<?php echo 'accessLevel_' . name_slug($value); ?>" data-type="accessLevel"></i></div>
+                            <?php } ?>
+                        </div>
+                        <div class="clearfix"></div>
+                    <?php } ?>    
                     <div class="clearfix"></div>
                     <div><input type="button" value="Reset" id="reset_all" name="reset_all"  style="display: none;" class="button" /></div>
                 </li>
@@ -599,6 +612,45 @@
                     </ul>
                 </li>
             <?php endif; ?>
+                
+                <?php if (count($facets['accessLevel']) > 0): ?>
+                <li>
+                    <a class="dropdown-toggle" href="#">Access Level</a>
+                    <ul  data-role="dropdown" <?php if (isset($facetData['accessLevel'])): ?> style="display:block" <?php endif ?>>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input style="  margin-left: 10px; height: 25px; width: 199px !important;" id="ac_filter" name="ac_filter" type="text" value="" >
+                            </div>
+                        </div>
+                        <?php foreach ($facets['accessLevel'] as $key => $accessLevel): ?>
+                            <?php if ($accessLevel['access_level'] != ''): ?>
+                                <?php if ($key < 5) { ?>  
+                                    <li><a href="javascript://"><label for="<?php echo 'accessLevel_' . str_replace(' ', '_', strtolower($accessLevel['access_level'])) ?>"><input id='<?php echo 'accessLevel_' . name_slug($accessLevel['access_level']) ?>' <?php echo (isset($facetData['accessLevel']) && in_array($accessLevel['access_level'], $facetData['accessLevel'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="accessLevel[]" value="<?php echo $accessLevel['access_level'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;" class="aLevels"><?php echo $accessLevel['access_level'] ?> (<?php echo $accessLevel['total'] ?>)</div></label></a></li>
+                                <?php } else if ($key == 5) { ?>                        
+                                    <a class="ac_ml" onclick="more_less('ac_ml')" style="text-decoration: underline;">
+                                        More
+                                        <b class="caret"></b>
+                                    </a>
+                                    <div id="ac_ml" style="display:none;">
+                                        <li><a href="javascript://"><label for="<?php echo 'accessLevel_' . str_replace(' ', '_', strtolower($accessLevel['access_level'])) ?>"><input id='<?php echo 'accessLevel_' . name_slug($accessLevel['access_level']) ?>' <?php echo (isset($facetData['accessLevel']) && in_array($accessLevel['access_level'], $facetData['accessLevel'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="accessLevel[]" value="<?php echo $accessLevel['access_level'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;" class="aLevels"><?php echo $accessLevel['access_level'] ?> (<?php echo $accessLevel['total'] ?>)</div></label></a></li>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <li><a href="javascript://"><label for="<?php echo 'accessLevel_' . str_replace(' ', '_', strtolower($accessLevel['access_level'])) ?>"><input id='<?php echo 'accessLevel_' . name_slug($accessLevel['access_level']) ?>' <?php echo (isset($facetData['accessLevel']) && in_array($accessLevel['access_level'], $facetData['accessLevel'])) ? 'checked="checked"' : '' ?> type="checkbox" class="facet_checkbox" name="accessLevel[]" value="<?php echo $accessLevel['access_level'] ?>" style="float:left; width:20px"/><div style="margin-left: 25px;color: #696969;" class="aLevels"><?php echo $accessLevel['access_level'] ?> (<?php echo $accessLevel['total'] ?>)</div></label></a></li>
+                                    <?php } ?>
+                                <?php endif ?>
+                            <?php endforeach; ?>
+                            <?php
+                            if (count($facets['accessLevel']) > 5) {
+                                ?>
+                                <a class="ac_ml" onclick="more_less('ac_ml')" style="display:none;text-decoration: underline;">Less</a>
+                            </div>
+                        <?php } ?>
+
+                    </ul>
+                </li>
+               
+            <?php endif; ?>
                      
             <li class="chekBoxFacet">
                 <span id="is_review_check" style="cursor: default;">
@@ -672,6 +724,25 @@
             $('#collection_ml').show();
         }
         var items = $(".collections");
+        //first, hide all:
+        items.parent().parent().hide();
+
+        //show only those matching user input:
+        items.filter(function () {
+            return $(this).text().toLowerCase().indexOf(text) >= 0;
+        }).parent().parent().show();
+    });
+    
+    $("#ac_filter").bind("keyup", function () {
+        var text = $(this).val().toLowerCase();
+        if (text == '') {
+            $('.ac_ml').show();
+            $('#ac_ml').hide();
+        } else {
+            $('.ac_ml').hide();
+            $('#ac_ml').show();
+        }
+        var items = $(".aLevels");
         //first, hide all:
         items.parent().parent().hide();
 

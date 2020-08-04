@@ -36,7 +36,7 @@ class ImportReportCommand extends ContainerAwareCommand {
 
     protected function execute(InputInterface $input, OutputInterface $output) {
         @set_time_limit(0);
-        @ini_set("memory_limit", "1000M"); # 1GB
+        @ini_set("memory_limit", "3000M"); # 1GB
         @ini_set("max_execution_time", 0); # unlimited
         $em = $this->getContainer()->get('doctrine')->getEntityManager();
         $id = $input->getArgument('id');
@@ -87,9 +87,9 @@ class ImportReportCommand extends ContainerAwareCommand {
                     if ($validateFields) {
                         $baseUrl = $this->getContainer()->getParameter('baseUrl');
                         $templateParameters = array('user' => $entity->getUser(), 'fieldErrors' => $validateFields);
-                    } else {
+                    } else { 
                         $numberOfRecords = $import->getRecordsFromFile($fileName, $user, $insertType, $entity->getOrganizationId());
-
+                         
                         if (isset($numberOfRecords['errors'])) {
                             $templateParameters = array('user' => $entity->getUser(), 'errors' => $numberOfRecords['errors']);
                         } else if ($numberOfRecords >= 0) {
@@ -104,7 +104,7 @@ class ImportReportCommand extends ContainerAwareCommand {
                 $email->sendEmail($rendered, $subject, $this->getContainer()->getParameter('from_email'), $user->getEmail());
                 $entity->setStatus(1);
                 $em->persist($entity);
-                $em->flush();
+                $em->flush($entity);
                 $text = $rendered;
             } else {
                 $text = 'import id not found';

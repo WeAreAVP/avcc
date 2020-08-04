@@ -70,9 +70,10 @@ class ExportFields {
         'Digitized_By',
         'Digitized_When',
         'URN',
+        'Access_Level',
         'Time_Stamp',
         'Timestamp_-_Last_Change',
-        'Cataloger'
+        'Cataloger'    
     );
     private $mergeColumns = array(
         'Ext_Project_Name',
@@ -128,6 +129,7 @@ class ExportFields {
         'Ext_Digitized_By',
         'Ext_Digitized_When',
         'Ext_URN',
+        'Ext_Access_Level',
         'Ext_Time_Stamp',
         'Ext_Timestamp_-_Last_Change',
         'Ext_Cataloger'

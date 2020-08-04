@@ -146,6 +146,7 @@ class RecordsController extends MyController {
         $facet['collectionNames'] = $this->removeEmpty($sphinxSearch->facetSelect('collection_name', $this->getUser(), $criteria, $parentFacet), 'collection_name');
         $facet['organizationNames'] = $this->removeEmpty($sphinxSearch->facetSelect('organization_name', $this->getUser(), $criteria, $parentFacet, null, 'organization_id', 'organization_id'), 'organization_name');
         $facet['parentCollection'] = $this->removeEmpty($sphinxSearch->facetSelect('parent_collection', $this->getUser(), $criteria, $parentFacet), 'parent_collection');
+        $facet['accessLevel'] = $this->removeEmpty($sphinxSearch->facetSelect('access_level', $this->getUser(), $criteria, $parentFacet), 'access_level');
 
         $organizations = $em->getRepository('ApplicationFrontBundle:Organizations')->findAll();
         $contact_person = "avcc@avpreserve.com";
@@ -574,6 +575,7 @@ class RecordsController extends MyController {
         $entityArray["digitizedBy"] = $entity->getDigitizedBy();
         $entityArray["digitizedWhen"] = $entity->getDigitizedWhen();
         $entityArray["urn"] = $entity->getUrn();
+        $entityArray["accessLevel"] = $entity->getAccessLevel();
         $entityArray["transcription"] = $entity->getTranscription();
         $entityArray["commercial"] = $entity->getCommercial() ? $entity->getCommercial()->getName() : '';
         $entityArray["parentCollection"] = $entity->getParentCollection() ? $entity->getParentCollection()->getName() : '';

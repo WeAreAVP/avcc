@@ -234,6 +234,9 @@ function Records() {
         $('input[name="parent_collection[]"]').click(function () {
             checkParentFacet('parent_collection', $(this).prop('checked'));
         });
+        $('input[name="accessLevel[]"]').click(function () {
+            checkParentFacet('access_level', $(this).prop('checked'));
+        });
         initTriStateCheckBox('has_images_check', 'has_images_check_state', true);
         initTriStateCheckBox('is_digitized_check', 'is_digitized_check_state', true);
         initTriStateCheckBox('is_transcription_check', 'is_transcription_check_state', true);

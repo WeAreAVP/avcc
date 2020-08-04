@@ -254,6 +254,13 @@ class Records {
      * @ORM\Column(name="urn", type="string", nullable=true)
      */
     private $urn;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="access_level", type="string", nullable=true)
+     */
+    private $accessLevel;
 
     /**
      * @var string
@@ -1117,7 +1124,7 @@ class Records {
     /**
      * Get urn
      *
-     * @return boolean
+     * @return string
      */
     public function getUrn() {
         return $this->urn;
@@ -1125,6 +1132,20 @@ class Records {
 
     public function setUrn($urn) {
         $this->urn = $urn;
+        return $this;
+    }
+    
+    /**
+     * Get Access Level
+     *
+     * @return string
+     */
+    public function getAccessLevel() {
+        return $this->accessLevel;
+    }
+
+    public function setAccessLevel($accessLevel) {
+        $this->accessLevel = $accessLevel;
         return $this;
     }
 

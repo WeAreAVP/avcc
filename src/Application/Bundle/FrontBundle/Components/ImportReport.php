@@ -233,7 +233,7 @@ class ImportReport extends ContainerAware {
                 foreach ($worksheet->getRowIterator() as $_row) {
                     $row = $_row->getRowIndex();
                     if ($row > 1) {
-                        $media_type = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+                        $media_type = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
                         if (!empty(trim($media_type)) && $media_type != null) {
                             $rows[$row - 1]['project'] = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
                             $rows[$row - 1]['parentCollection'] = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
@@ -297,13 +297,15 @@ class ImportReport extends ContainerAware {
                             $rows[$row - 1]['digitizedBy'] = $worksheet->getCellByColumnAndRow(50, $row)->getValue();
                             $rows[$row - 1]['digitizedWhen'] = $worksheet->getCellByColumnAndRow(51, $row)->getFormattedValue(); //$worksheet->getCellByColumnAndRow(51, $row)->getValue();
                             $rows[$row - 1]['urn'] = $worksheet->getCellByColumnAndRow(52, $row)->getValue();
+                            $rows[$row - 1]['accessLevel'] = $worksheet->getCellByColumnAndRow(53, $row)->getValue();
                         }
                     }
                 }
                 break;
             }
-
+            
             if ($rows) {
+                
                 $validation = $this->validateFormat($em, array_unique($formats));
                 if (empty($validation)) {
                     return $this->importRecords($rows, $user, $em, $insertType, $org_id);
@@ -419,7 +421,7 @@ class ImportReport extends ContainerAware {
                     $record->setDigitizedWhen("");
                     $record->setUrn("");
                 }
-
+                $record->setAccessLevel($row['accessLevel']);
                 if (!empty($row['parentCollection']) && $row['parentCollection'] != null) {
                     $parentCollection = $em->getRepository('ApplicationFrontBundle:ParentCollection')->findOneBy(array('name' => $row['parentCollection']));
                     $record->setParentCollection($parentCollection);

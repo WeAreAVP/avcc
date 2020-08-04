@@ -416,6 +416,12 @@
                             <input type="text" class="size4" name="urn" id="urn">
                         </div>
                     </div>
+                    <div id="accessLevel_lbl" class="col-lg-6" style="" data-view="show">
+                        <label for="accessLevel">Access Level</label>
+                        <div data-role="input-control" class="input-control">
+                            <input type="text" class="size4" name="accessLevel" id="accessLevel">
+                        </div>
+                    </div>
                     <div id="contentDuration_lbl" class="col-lg-6" style="" data-view="show">
                         <label for="contentDuration">Content Duration</label>
                         <div data-role="input-control" class="input-control">

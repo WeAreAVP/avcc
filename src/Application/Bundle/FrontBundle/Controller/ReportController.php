@@ -74,8 +74,7 @@ class ReportController extends MyController {
         $phpExcelObject = $exportComponent->generateReport($records);
         $file_name = 'all_records_report';
         $response = $exportComponent->outputReport($type, $phpExcelObject, $file_name);
-        $entityManager->flush();
-        $entityManager->clear();
+      
         gc_collect_cycles();
         // create the response
         return $response;

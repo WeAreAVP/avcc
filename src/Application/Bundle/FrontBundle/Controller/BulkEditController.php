@@ -198,6 +198,10 @@ class BulkEditController extends Controller {
                         $record->setUrn($posted['urn']);
                         $update = true;
                     }
+                    if ($posted['accessLevel']) {
+                        $record->setAccessLevel($posted['accessLevel']);
+                        $update = true;
+                    }
                     if ($posted['location']) {
                         $record->setLocation($posted['location']);
                         $update = true;

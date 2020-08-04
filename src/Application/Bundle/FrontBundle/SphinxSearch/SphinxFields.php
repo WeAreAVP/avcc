@@ -84,6 +84,7 @@ class SphinxFields {
         $this->indexFields['s_digitized_by'] = $this->indexFields['digitized_by'] = ($this->record->getDigitizedBy()) ? $this->record->getDigitizedBy() : "";
         $this->indexFields['s_digitized_when'] = $this->indexFields['digitized_when'] = ($this->record->getDigitizedWhen()) ? $this->record->getDigitizedWhen() : "";
         $this->indexFields['s_urn'] = $this->indexFields['urn'] = ($this->record->getUrn()) ? $this->record->getUrn() : "";
+        $this->indexFields['s_access_level'] = $this->indexFields['access_level'] = ($this->record->getAccessLevel()) ? $this->record->getAccessLevel() : "";
 
         $this->indexFields['has_images'] = 0;
         $images = $entityManager->getRepository('ApplicationFrontBundle:RecordImages')->findBy(array('recordId' => $recordId));

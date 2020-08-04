@@ -1,8 +1,8 @@
 {
-	"name": "symfony/framework-standard-edition",
-	"license": "MIT",
+	"name": "weareavp/avcc",
+	"license": "AGPLv3", 
 	"type": "project",
-	"description": "The \"Symfony Standard Edition\" distribution",
+	"description": "AVCC makes collaborative, efficient item-level cataloging of audiovisual collections possible over the web. Built-in reporting on critical data enables users to uncover hidden collections, support preservation reformatting, and expand access to content.",
 	"autoload": {
 		"psr-0": {
 			"": "src/"

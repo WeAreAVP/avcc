@@ -323,6 +323,7 @@ class ExportReport extends ContainerAware {
                 $this->merge_header = $new_header;
                 $newphpExcelObject = $this->initMergeReport($head);
             }
+           
             $newphpExcelObject->setActiveSheetIndex(0);
             $activeSheet = $newphpExcelObject->getActiveSheet();
             // Rimsha excel is now reading all the cell values. You need to fix code below this line.
@@ -394,9 +395,12 @@ class ExportReport extends ContainerAware {
             $activeSheet->setCellValueExplicitByColumnAndRow(51, $row, $record->getDigitizedWhen());
             $activeSheet->setCellValueExplicitByColumnAndRow(52, $row, $record->getUrn());
             // end here
-            $activeSheet->setCellValueExplicitByColumnAndRow(53, $row, $record->getCreatedOn()->format('Y-m-d H:i:s'));
-            $activeSheet->setCellValueExplicitByColumnAndRow(54, $row, ($record->getUpdatedOn()) ? $record->getUpdatedOn()->format('Y-m-d H:i:s') : '');
-            $activeSheet->setCellValueExplicitByColumnAndRow(55, $row, ($record->getUser()) ? $record->getUser()->getName() : "");
+            $activeSheet->setCellValueExplicitByColumnAndRow(53, $row, $record->getAccessLevel());
+            $activeSheet->setCellValueExplicitByColumnAndRow(54, $row, $record->getCreatedOn()->format('Y-m-d H:i:s'));
+            
+            $activeSheet->setCellValueExplicitByColumnAndRow(55, $row, ($record->getUpdatedOn()) ? $record->getUpdatedOn()->format('Y-m-d H:i:s') : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(56, $row, ($record->getUser()) ? $record->getUser()->getName() : "");
+            
 
             if ($record->getAudioRecord()) {
                 $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, ($record->getAudioRecord()->getMediaDuration()) ? $record->getAudioRecord()->getMediaDuration() : "");
@@ -611,10 +615,12 @@ class ExportReport extends ContainerAware {
             $activeSheet->setCellValueExplicitByColumnAndRow(50, $row, $record['digitized_by']);
             $activeSheet->setCellValueExplicitByColumnAndRow(51, $row, $record['digitized_when']);
             $activeSheet->setCellValueExplicitByColumnAndRow(52, $row, $record['urn']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(53, $row, $record['access_level']);
             //end
-            $activeSheet->setCellValueExplicitByColumnAndRow(53, $row, ($record['created_on']) ? $record['created_on'] : '');
-            $activeSheet->setCellValueExplicitByColumnAndRow(54, $row, ($record['updated_on']) ? $record['updated_on'] : '');
-            $activeSheet->setCellValueExplicitByColumnAndRow(55, $row, $record['user_name']);
+            $activeSheet->setCellValueExplicitByColumnAndRow(54, $row, ($record['created_on']) ? $record['created_on'] : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(55, $row, ($record['updated_on']) ? $record['updated_on'] : '');
+            $activeSheet->setCellValueExplicitByColumnAndRow(56, $row, $record['user_name']);
+            
 
             if ($record['media_type'] == 'Audio') {
                 $activeSheet->setCellValueExplicitByColumnAndRow(12, $row, $record['media_duration']);
@@ -806,8 +812,8 @@ class ExportReport extends ContainerAware {
     }
 
     protected function mergeRow($activeSheet, $mergRow, $row, $header) {
-        $counter = 48;
-        $activeSheet->setCellValueExplicitByColumnAndRow(3, $row, $mergRow['unique_id']);
+        $counter = 57;
+        $activeSheet->setCellValueExplicitByColumnAndRow(4, $row, $mergRow['unique_id']);
         if (!empty($header)) {
             foreach ($header as $key => $value) {
                 if (isset($mergRow[strtolower($value)])) {
@@ -827,7 +833,7 @@ class ExportReport extends ContainerAware {
         $activeSheet = $phpExcelObject->setActiveSheetIndex(0);
         $phpExcelObject->getActiveSheet()->setTitle('All Formats');
         $row = 1;
-// Prepare header row for report
+        // Prepare header row for report
         $this->prepareHeaderMerge($activeSheet, $row, $merge_header);
 
         return $phpExcelObject;

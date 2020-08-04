@@ -68,6 +68,7 @@ class DefaultFields {
             "Digitized_By" => array("title" => 'Digitized By', 'field' => "record.digitizedBy", "is_required" => 0, "hidden" => 1),
             "Digitized_When" => array("title" => 'Digitized When', 'field' => "record.digitizedWhen", "is_required" => 0, "hidden" => 1),
             "Urn" => array("title" => 'URN', 'field' => "record.urn", "is_required" => 0, "hidden" => 1),
+            "Access_Level" => array("title" => 'Access Level', 'field' => "record.accessLevel", "is_required" => 0, "hidden" => 1),
             "Transcription" => array("title" => 'Transcription', 'field' => "record.transcription", "is_required" => 0, "hidden" => 1),
             "Show_Images" => array("title" => 'Show Images', 'field' => "", "is_required" => 0, "hidden" => 1),
         );
@@ -108,6 +109,7 @@ class DefaultFields {
             "Digitized_By" => array("title" => 'Digitized By', 'field' => "record.digitizedBy", "is_required" => 0, "hidden" => 1),
             "Digitized_When" => array("title" => 'Digitized When', 'field' => "record.digitizedWhen", "is_required" => 0, "hidden" => 1),
             "Urn" => array("title" => 'URN', 'field' => "record.urn", "is_required" => 0, "hidden" => 1),
+            "Access_Level" => array("title" => 'Access Level', 'field' => "record.accessLevel", "is_required" => 0, "hidden" => 1),
             "Transcription" => array("title" => 'Transcription', 'field' => "record.transcription", "is_required" => 0, "hidden" => 1),
             "Show_Images" => array("title" => 'Show Images', 'field' => "", "is_required" => 0, "hidden" => 1),
         );
@@ -154,6 +156,7 @@ class DefaultFields {
             "Digitized_By" => array("title" => 'Digitized By', 'field' => "record.digitizedBy", "is_required" => 0, "hidden" => 1),
             "Digitized_When" => array("title" => 'Digitized When', 'field' => "record.digitizedWhen", "is_required" => 0, "hidden" => 1),
             "Urn" => array("title" => 'URN', 'field' => "record.urn", "is_required" => 0, "hidden" => 1),
+            "Access_Level" => array("title" => 'Access Level', 'field' => "record.accessLevel", "is_required" => 0, "hidden" => 1),
             "Transcription" => array("title" => 'Transcription', 'field' => "record.transcription", "is_required" => 0, "hidden" => 1),
             "Show_Images" => array("title" => 'Show Images', 'field' => "", "is_required" => 0, "hidden" => 1),
         );
@@ -305,6 +308,7 @@ class DefaultFields {
         $tooltip['digitizedBy'] = '';
         $tooltip['digitizedWhen'] = '';
         $tooltip['urn'] = '';
+        $tooltip['accessLevel'] = '';
         $tooltip['transcription'] = '';
         $tooltip['alternateId'] = '';
         $tooltip['commercial'] = 'A drop down field to identify an object as commercial or unique in nature. Unique may also be used to mean rare.';
@@ -393,10 +397,18 @@ class DefaultFields {
                     }
                 }
                 if ($duplicate === false) {
-                    $new_array[$key][] = $val;
+                    if ($val['title'] == 'Access Level') {
+                        $urn_key = array_search('URN', array_column($new_array[$key], 'title'));
+                        $urn_key > 0 ? array_splice($new_array[$key], $urn_key + 1, 0, [$val] ) : $new_array[$key][] = $val;
+                    }
+                    else{
+                        $new_array[$key][] = $val;
+                    }
+                    
                 }
             }
         }
+        
         return $new_array;
     }
 
