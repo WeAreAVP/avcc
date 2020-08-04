@@ -30,7 +30,10 @@
 		"jms/job-queue-bundle": "dev-master", 
 		"pagerfanta/pagerfanta": "dev-master",
 		"wrep/bugsnag-php-symfony": "^1.0",
-                "stripe/stripe-php": "3.*"
+                "stripe/stripe-php": "4.*",
+                "knplabs/knp-gaufrette-bundle": "dev-master",
+                "amazonwebservices/aws-sdk-for-php": "dev-master",
+                "aws/aws-sdk-php": "^3.30"
 	},
 	"scripts": {
 		"post-install-cmd": [
