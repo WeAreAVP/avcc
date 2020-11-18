@@ -362,7 +362,7 @@ class DefaultFields {
                 return false;
             }
         } else if ((int) $id == 258) {
-            $expiry = strtotime("1st September 2020");
+            $expiry = strtotime("1st August 2021");
             if ($now < date("Y-m-d", $expiry)) {
                 return false;
 //                array("plan_id" => "avcc-2500-7500-annual");
