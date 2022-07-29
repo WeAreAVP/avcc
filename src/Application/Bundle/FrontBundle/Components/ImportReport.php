@@ -229,6 +229,7 @@ class ImportReport extends ContainerAware {
             $fields = new DefaultFields();
             $em = $this->container->get('doctrine')->getEntityManager();
             $rows = array();
+            $errors = [];
             foreach ($phpExcelObject->getWorksheetIterator() as $worksheet) {
                 foreach ($worksheet->getRowIterator() as $_row) {
                     $row = $_row->getRowIndex();
@@ -248,6 +249,11 @@ class ImportReport extends ContainerAware {
                             $rows[$row - 1]['description'] = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
                             $rows[$row - 1]['commercial'] = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
                             $rows[$row - 1]['contentDuration'] = $worksheet->getCellByColumnAndRow(11, $row)->getFormattedValue();
+                            if(empty($rows[$row - 1]['contentDuration'])){
+                                $rows[$row - 1]['contentDuration'] = null;
+                            } else if(substr_count($rows[$row - 1]['contentDuration'], '.') > 1) {
+                                $errors[] = 'Content Duration value ' . $rows[$row - 1]['contentDuration'] . ' at row ' . $row . ' is not valid. It should be float or h:m:s';
+                            }
                             $rows[$row - 1]['mediaDuration'] = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
                             $rows[$row - 1]['creationDate'] = $worksheet->getCellByColumnAndRow(13, $row)->getValue();
                             $rows[$row - 1]['contentDate'] = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
@@ -305,11 +311,12 @@ class ImportReport extends ContainerAware {
             }
             
             if ($rows) {
-                
                 $validation = $this->validateFormat($em, array_unique($formats));
-                if (empty($validation)) {
+                if (empty($validation) && empty($errors)) {
                     return $this->importRecords($rows, $user, $em, $insertType, $org_id);
-                } else {
+                } else if(!empty($errors)) {
+                    return array('errors' => array('validation' => $errors));
+                }else {
                     return array('errors' => $validation);
                 }
             }
@@ -601,6 +608,7 @@ class ImportReport extends ContainerAware {
                         }
                     }
                 }
+                break;
             }
             return $invalidValues;
         } else {
