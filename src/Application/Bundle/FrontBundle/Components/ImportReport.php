@@ -249,7 +249,7 @@ class ImportReport extends ContainerAware {
                             $rows[$row - 1]['description'] = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
                             $rows[$row - 1]['commercial'] = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
                             $rows[$row - 1]['contentDuration'] = $worksheet->getCellByColumnAndRow(11, $row)->getFormattedValue();
-                            if(empty($rows[$row - 1]['contentDuration'])){
+                            if(empty(trim($rows[$row - 1]['contentDuration']))){
                                 $rows[$row - 1]['contentDuration'] = null;
                             } else if(substr_count($rows[$row - 1]['contentDuration'], '.') > 1) {
                                 $errors[] = 'Content Duration value ' . $rows[$row - 1]['contentDuration'] . ' at row ' . $row . ' is not valid. It should be float or h:m:s';
