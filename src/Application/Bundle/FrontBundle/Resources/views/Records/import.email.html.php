@@ -15,7 +15,14 @@
     echo "$numberOfRecords records imported successfully.";
 } else if (isset($organization)) {
     echo "No. of record exceeds $plan_limit limit for organization $organization. Please upgrade your account by contacting $contact_person";
-} else {
+} else if (isset($errors) && array_key_exists('validation', $errors)){
+    ?>
+<div>Following issues found while importing records.</div>
+<?php 
+foreach ($errors['validation'] as $key => $value) {
+    echo '<p>' . $value . '<br /></p>';
+}
+ } else{
     ?>
     <div>Following issues found while importing records.</div>
     <?php
