@@ -38,7 +38,7 @@
                         <div class="pull-right">
                             <input type="file" name="mergetofile" class="required" required="required" /><br /><br />
                             <input type="hidden" name="emrecordIds" id="emrecordIds" value="" />
-                            <input type="hidden" name="emfiletype"  id="emfiletype" value="" />
+                            <input type="hidden" name="emfiletype" id="emfiletype" value="" />
                         </div>
                     </div>
                 </form>
@@ -75,17 +75,17 @@
                         <div class="pull-right">
                             <?php
                             if ($view['security']->isGranted('ROLE_SUPER_ADMIN')) {
-                                ?>
+                            ?>
                                 <div>
                                     <select id='organization' name="organization">
                                         <option value=''>select organization</option>
                                         <?php
                                         foreach ($organizations as $organization) {
-                                            ?>
+                                        ?>
                                             <option value="<?php echo $organization->getId(); ?>"><?php echo ucwords($organization->getName()); ?></option>
-                                            <?php
+                                        <?php
                                         }
-                                        ?>   
+                                        ?>
                                     </select>
                                     <br>
                                     <br>
@@ -93,11 +93,11 @@
                             <?php } ?>
 
                             <input type="file" name="importfile" class="required" required="required" id="importfile" /><br /><br />
-                            <input type="hidden" name="impfiletype"  id="impfiletype" value="" />
+                            <input type="hidden" name="impfiletype" id="impfiletype" value="" />
                         </div>
                     </div>
                     <div id="import_rec_1">
-                        <input type="hidden" name="existingRecords"  id="existingRecords" value="0" />
+                        <input type="hidden" name="existingRecords" id="existingRecords" value="0" />
                     </div>
 
                 </div>
@@ -105,24 +105,24 @@
                     <button type="button" name="close" id="close" class="button closeModal" data-dismiss="modal">No</button> &nbsp;
                     <?php
                     if ($view['security']->isGranted('ROLE_SUPER_ADMIN')) {
-                        ?>
+                    ?>
                         <button type="submit" name="submit" id="submit" class="button primary" onclick="return validateRecords(1);" value="0">Submit</button>
-                        <?php
+                    <?php
                     } else {
-                        ?>
+                    ?>
                         <button type="submit" name="submit" id="submit" class="button primary" onclick="return validateRecords(0);" value="0">Submit</button>
                     <?php } ?>
                 </div>
                 <div class="modal-footer" id="modal-footer_2" style="display: none;">
                     <button type="button" class="button closeModal" data-dismiss="modal" onclick="window.location.reload();">Cancel</button> &nbsp;
                     <button type="submit" name="" id="sub_1" class="button primary" onclick="addValue('sub_1', 1)" value="">Add New Records Only</button>
-                    <button type="submit" name=""  id="sub_2" class="button primary" onclick="addValue('sub_2', 2)" value="">Add New & Update Existing Records</button>
+                    <button type="submit" name="" id="sub_2" class="button primary" onclick="addValue('sub_2', 2)" value="">Add New & Update Existing Records</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<div id="messageModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true" style="display:none;">
+<div id="messageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true" style="display:none;">
     <div class='modal-dialog'>
         <div class='modal-content'>
             <div class="modal-header">
@@ -201,13 +201,13 @@
     </div>
 <?php } ?>
 <script>
-<?php if ($notification) { ?>
+    <?php if ($notification) { ?>
         $('#notificationModal').show();
         $('#notificationModal').modal({
             backdrop: 'static',
             keyboard: false
         });
-<?php } ?>
+    <?php } ?>
 
     function validateRecords(org_test) {
         $('#error_span').hide();
@@ -220,14 +220,14 @@
         }
         var validate_url = "<?php echo $view['router']->generate('validate_records') ?>";
         var fd = new FormData();
-        $('#importModal form').find('input').each(function () {
+        $('#importModal form').find('input').each(function() {
             if (this.type != "file") {
                 fd.append(this.name, $(this).val());
             }
         });
 
 
-        $('#importModal form').find('select').each(function () {
+        $('#importModal form').find('select').each(function() {
             if (this.type != "file") {
                 fd.append(this.name, $(this).val());
             }
@@ -248,9 +248,8 @@
             processData: false,
             contentType: false,
             dataType: "json",
-            success: function (response) {
-		    console.log(response);
-		    if (response.success == false) {
+            success: function(response) {
+                if (response.success == false) {
                     $('#error_span').html(response.message)
                     $('#error_span').show();
                     return false;
@@ -265,11 +264,11 @@
                     return false;
                 }
             },
-	    error: function (xhr, textStatus, errorThrown) {
-		    $('#error_span').html(xhr.statusText);
-                    $('#error_span').show();
-                    return false;
-    }
+            error: function(xhr, textStatus, errorThrown) {
+                $('#error_span').html(xhr.statusText);
+                $('#error_span').show();
+                return false;
+            }
         });
     }
 
@@ -277,6 +276,7 @@
         console.log("submittinggg...");
         $('#importModal form').submit();
     }
+
     function checkOrganization() {
         if ($('#organization').val() == '') {
             $('#error_span').show();
@@ -293,10 +293,11 @@
             $.ajax({
                 type: 'POST',
                 url: delUrl,
-                data: {records: selected},
+                data: {
+                    records: selected
+                },
                 dataType: 'json',
-                success: function (response)
-                {
+                success: function(response) {
                     //$.unblockUI();
                     window.location.reload();
                 }
