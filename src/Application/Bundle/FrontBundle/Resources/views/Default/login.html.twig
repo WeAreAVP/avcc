@@ -10,6 +10,11 @@
 			{% if error %}
                 <span class="has-error text-danger" style="margin-bottom: 10px;display:block;">{{ error }}</span>
 			{% endif %}
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <span class="text-success" style="margin-bottom: 10px;display:block;">
+                    {{ flashMessage }}
+                </span>
+            {% endfor %}
                 <div class="form-group">
                     <div class="email controls">
                         <input type="text" id="username" name="_username" placeholder="Email or username" class="form-control" data-rule-required="true" data-rule-email="true" required="required" autofocus>
@@ -44,4 +49,39 @@
                 </a>
             </div>
         </div>
+
+        <div id="passwordRequestModal"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true" style="display:none;">
+            <div class='modal-dialog'>
+                <div class='modal-content'>
+                    <div class="modal-header" style="background-color: black">
+                        <h4 id="heading" style="color: white">Security Protocol</h4>
+                    </div>
+                    <form  role="form" action="{{ path("message_settings") }}" method="post">
+                        <div class="modal-body">
+                            <div id="messageText" style="display:none;">
+                            <p>To enhance security, AVCC is requiring all users to reset their passwords. Please press the Magic Link button below to receive an email that will confirm your email address and allow you to create a new password. Thanks for your cooperation in helping us keep AVCC secure.</p>
+
+                            <p>If you have any questions about the process or would like verification that this is an official process developed by AVP, please feel free to contact us directly at <a href=“mailto:info@weareavp.com”>info@weareavp.com</a> or <a href=“tel:+1-917-475-9630">917-475-9630</a></p>
+                                <p><span style="font-size:13px;">Send magic link to reset password. <a href="{{sendEmailUrl}}" class="btn btn-primary">Click here</a><br/></span></p>                        
+                            </div>
+                        </div>
+                        <div class="modal-footer" id="modal-footer">                        
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+     
 {% endblock body %}
+   {% block view_javascripts %}
+    <script type="text/javascript">
+        {% if changeP %}
+            $('#passwordRequestModal').show();
+            $('#messageText').show();
+            $('#passwordRequestModal').modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+        {% endif %}
+    </script>
+{% endblock view_javascripts %}

@@ -185,6 +185,23 @@ class DefaultController extends Controller {
      * @return type
      */
     public function loginAction(Request $request) {
+        $changeP = $request->query->get("action");
+        $changeRequire = false;
+        $sendEmailUrl = "";
+        if($changeP) {
+            $useremail = base64_decode($changeP);
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('email' => $useremail));
+            if($user) {
+                $changeRequire = $user->getPasswordChangeRequest();
+                $sendEmailUrl = $this->generateUrl('password_change_request',["email" => $changeP, "sendEmail" => true]);
+            } else {
+                $changeRequire = false;
+                $sendEmailUrl = "";
+                $this->get('session')->getFlashBag()->add('error', 'User not found.');
+            }
+        }
+
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();
 // get the error if any (works with forward and redirect -- see below)
@@ -214,6 +231,8 @@ class DefaultController extends Controller {
                     'last_username' => $lastUsername,
                     'error' => $error,
                     'csrf_token' => $csrfToken,
+                    'changeP' => $changeRequire,
+                    "sendEmailUrl" => $sendEmailUrl
         ));
     }
 
@@ -512,4 +531,90 @@ class DefaultController extends Controller {
         }
     }
 
+    /**
+     * password change requrest
+     *
+     * @param Request $request
+     *
+     * @Route("/passwordChangeRequest/{email}/{sendEmail}", name="password_change_request")
+     * @Method({"GET","POST"})
+     * @Template()
+     */
+    public function passwordChangeRequestAction(Request $request, $email, $sendEmail = null) {
+        $em = $this->getDoctrine()->getManager();
+        $userEmail = base64_decode($email);
+       
+        $user = $em->getRepository('ApplicationFrontBundle:Users')->findOneBy(array('email' => $userEmail));
+        $error = "";
+        if($sendEmail){
+            $baseUrl = $this->container->getParameter('baseUrl');
+            $url = substr($baseUrl,0,-1).$this->generateUrl('password_change_request',["email" => $email]);
+
+            $rendered = $this->renderView('FOSUserBundle:Registration:password_change_email.txt.php', array(
+                'user' => $user,
+                'confirmationUrl' => $url
+            ));
+
+            $this->sendEmailChangePassword($rendered, "AVCC Password Reset Instructions", $this->container->getParameter('from_email'), $user->getEmail());
+            $this->get('session')->getFlashBag()->add('success', 'Please check your email.');
+            
+            return $this->redirect($this->generateUrl('login'));
+        }
+
+        if(strtolower($request->getMethod()) == "post") {
+            $password = $request->request->get('password');
+            if(!$request->request->get('password') || !$request->request->get('confirm_password')){
+                $error = "Required fields missing.";
+            }
+            
+            if($request->request->get('password') != $request->request->get('confirm_password')) {
+                $error = "Password mismatch.";
+            } 
+            $reg = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.@$!%*?&])(?=.{12,})/";
+            preg_match($reg, $password, $match);
+            if(!$match) {
+                $error = "Password must have at least 1 digit, 1 capital letter, 1 special character and min length should be 12.";
+            }
+            if(!$error) {
+                if (count($user) > 0) {
+                    $user->setPlainPassword($password);
+                    $user->setPasswordChangeRequest(0);
+                    $em->persist($user);
+                    $em->flush($user);
+                }
+                $this->get('session')->getFlashBag()->add('success', 'Password updated successfully.');
+                return $this->redirect($this->generateUrl('login'));
+            }
+        }
+        $csrfToken = $this->container->has('form.csrf_provider') ? $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate') : null;
+        $data = [
+            "email" => $email,
+            "csrfToken" => $csrfToken,
+            "error" => $error
+        ];
+        if (count($user) > 0) {
+            return $this->render('ApplicationFrontBundle:Default:password_change.html.twig', $data);
+        }
+    }
+
+      /**
+     * Send activation email to user.
+     *
+     * @param string $renderedTemplate
+     * @param string $fromEmail
+     * @param string $toEmail
+     *
+     * @return void
+     */
+    protected function sendEmailChangePassword($renderedTemplate, $subject, $fromEmail, $toEmail) {
+        // Render the email, use the first line as the subject, and the rest as the body
+        $subject = $subject;
+
+        $message = \Swift_Message::newInstance()
+                ->setSubject($subject)
+                ->setFrom($fromEmail)
+                ->setTo($toEmail)
+                ->setBody($renderedTemplate, 'text/html');
+        $this->get('mailer')->send($message);
+    }
 }

@@ -17,7 +17,7 @@
 #HOST=`/bin/hostname`
 PID_FILE="PIDs/queue_jobs.pid"
 OUTPUT_FILE="cronlogs/queue_jobs.log"
-BASEDIR="/home/avccqa/avcc/"
+BASEDIR="/var/www/avcc.weareavp.com/"
 DATE=`date`
 
 PHP_PATH=`which php`

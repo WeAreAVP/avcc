@@ -15,7 +15,7 @@
 
 PID_FILE="PIDs/backups.pid"
 OUTPUT_FILE="cronlogs/backups.log"
-BASEDIR="/home/avcc/avcc/"
+BASEDIR="/var/www/avcc.weareavp.com/"
 DATE=`date`
 
 PHP_PATH=`which php`

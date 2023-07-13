@@ -779,7 +779,7 @@ class RecordsController extends MyController {
                         $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 1);
                         $sphinxSearch->delete();
                         $em->remove($entity);
-                        $em->flush();
+                        $em->flush($entity);
                     } else if ($record->getMediaType()->getId() == 2) {
                         $entity = $em->getRepository('ApplicationFrontBundle:FilmRecords')->findOneBy(array('record' => $record->getId()));
 
@@ -790,7 +790,7 @@ class RecordsController extends MyController {
                         $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 2);
                         $sphinxSearch->delete();
                         $em->remove($entity);
-                        $em->flush();
+                        $em->flush($entity);
                     } else if ($record->getMediaType()->getId() == 3) {
                         $entity = $em->getRepository('ApplicationFrontBundle:VideoRecords')->findOneBy(array('record' => $record->getId()));
 
@@ -801,7 +801,7 @@ class RecordsController extends MyController {
                         $sphinxSearch = new SphinxSearch($em, $shpinxInfo, $entity->getRecord()->getId(), 3);
                         $sphinxSearch->delete();
                         $em->remove($entity);
-                        $em->flush();
+                        $em->flush($entity);
                     }
                 }
                 echo json_encode(array('success' => 'deleted'));
@@ -819,16 +819,16 @@ class RecordsController extends MyController {
         $criteria = $searchOn['criteriaArr'];
         while ($count == 0) {
             $records = $sphinxObj->select($user, $offset, 5000, 'id', 'asc', $criteria);
-            foreach ($records[0] as $record) {
+	    foreach ($records[0] as $record) {
                 $recordIds[] = $record['id'];
             }
             $totalFound = $records[1][1]['Value'];
+	    $totalFound = count($records[0]);
             $offset = $offset + 5000;
             if ($totalFound < 5000) {
                 $count++;
             }
         }
-
         return $recordIds;
     }
 

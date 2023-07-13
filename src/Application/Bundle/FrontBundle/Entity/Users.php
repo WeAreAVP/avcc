@@ -156,6 +156,13 @@ class Users extends BaseUser {
      */
     private $receiptRecipients;
     
+    /**
+     * @var string $passwordChangeRequest
+     *
+     * @ORM\Column(name="password_change_request", type="boolean", options={"default" = 1}, nullable=true)
+     */
+    private $passwordChangeRequest = 1;
+
 
     /**
      * Users constructor
@@ -478,6 +485,24 @@ class Users extends BaseUser {
      */
     public function setReceiptRecipients($receiptRecipients) {
         $this->receiptRecipients = $receiptRecipients;
+    }
+
+    /**
+     * Get Password change request 
+     *
+     * @return boolean
+     */
+    public function getPasswordChangeRequest() {
+        return (bool) $this->passwordChangeRequest;
+    }
+
+    /**
+     * Set Password change request 
+     *
+     * @param int $passwordChangeRequest
+     */
+    public function setPasswordChangeRequest($passwordChangeRequest) {
+        $this->passwordChangeRequest = $passwordChangeRequest;
     }
 
 }

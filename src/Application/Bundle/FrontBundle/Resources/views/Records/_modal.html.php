@@ -249,7 +249,8 @@
             contentType: false,
             dataType: "json",
             success: function (response) {
-                if (response.success == false) {
+		    console.log(response);
+		    if (response.success == false) {
                     $('#error_span').html(response.message)
                     $('#error_span').show();
                     return false;
@@ -263,7 +264,12 @@
                     $("#modal-footer_2").show();
                     return false;
                 }
-            }
+            },
+	    error: function (xhr, textStatus, errorThrown) {
+		    $('#error_span').html(xhr.statusText);
+                    $('#error_span').show();
+                    return false;
+    }
         });
     }
 

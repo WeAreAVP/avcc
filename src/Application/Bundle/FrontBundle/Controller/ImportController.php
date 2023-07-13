@@ -159,7 +159,7 @@ class ImportController extends Controller {
     public function validateImport(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $data = $request->request->all();
-        $type = $data['impfiletype'];
+	$type = $data['impfiletype'];
         if ($request->files->get('importfile')) {
             $originalFileName = $request->files->get('importfile')->getClientOriginalName();
             $uploadedFileSize = $request->files->get('importfile')->getClientSize();
@@ -170,7 +170,8 @@ class ImportController extends Controller {
                     mkdir($folderPath, 0777, TRUE);
                 $extension = $request->files->get('importfile')->getClientOriginalExtension();
                 $newFileName = $this->getUser()->getId() . "_import" . time() . "." . $extension;
-                if ($type == strtolower($extension)) {
+		//echo $type . '  '. $extension;exit();
+		if ($type == strtolower($extension)) {
                     $request->files->get('importfile')->move($folderPath, $newFileName);
 //                    if (!$request->files->get('importfile')->isValid()) {
 //                        echo 'file uploaded';
@@ -180,9 +181,9 @@ class ImportController extends Controller {
                     } else {
                         $organizationId = $this->getUser()->getOrganizations()->getId();
                     }
-
                     $import = new ImportReport($this->container);
-                    $validateFields = $import->validateUniqueIdVocab($newFileName, $organizationId);
+		    $validateFields = $import->validateUniqueIdVocab($newFileName, $organizationId);
+		 	
                     if ($validateFields) {
                         $message = array('success' => true, 'message' => implode("<br>", $validateFields), 'count' => count($validateFields));
                         echo json_encode($message);
